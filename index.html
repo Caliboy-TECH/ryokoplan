@@ -1,974 +1,198 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Ryokoplan — 일본 여행 AI 플래너. 동행 유형별 맞춤 일정, 예산 계산, 지도 동선까지 5분이면 완성.">
-<meta property="og:title" content="Ryokoplan — 일본 여행 AI 플래너">
-<meta property="og:description" content="가족·연인·혼자·친구 — 동행에 맞는 완벽한 일본 여행 일정을 5분이면 완성해드려요.">
-<meta property="og:image" content="https://ryokoplan.com/og-image.png">
-<meta property="og:url" content="https://ryokoplan.com">
-<title>Ryokoplan — 일본 여행 AI 플래너</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-<style>
-:root {
-  --ink: #1a1a1a;
-  --paper: #fafaf7;
-  --muted: #6b6b6b;
-  --border: #e0e0d8;
-  --accent: #c84b2f;
-  --accent-light: #fdf1ee;
-  --green: #2d6a4f;
-  --green-light: #eaf3ee;
-  --blue: #1a4a7a;
-  --blue-light: #eaf0f8;
-  --gold: #b8860b;
-  --radius: 12px;
-  --shadow: 0 2px 20px rgba(0,0,0,0.08);
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; }
-
-/* HEADER */
-header { padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: var(--paper); position: sticky; top: 0; z-index: 100; }
-.logo { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); letter-spacing: -0.5px; }
-.logo span { color: var(--accent); }
-.header-nav { display: flex; gap: 8px; }
-.btn-login { padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: white; font-size: 13px; font-weight: 500; cursor: pointer; color: var(--ink); font-family: 'Noto Sans KR', sans-serif; transition: all .15s; }
-.btn-login:hover { background: var(--ink); color: white; }
-
-/* HERO */
-.hero { max-width: 640px; margin: 0 auto; padding: 60px 24px 40px; text-align: center; }
-.hero-tag { font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: .1em; margin-bottom: 16px; }
-.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 52px); line-height: 1.2; margin-bottom: 16px; }
-.hero p { font-size: 16px; color: var(--muted); margin-bottom: 32px; line-height: 1.8; }
-.hero-stats { display: flex; justify-content: center; gap: 32px; margin-bottom: 40px; }
-.stat { text-align: center; }
-.stat-num { font-size: 22px; font-weight: 700; color: var(--ink); }
-.stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.btn-start { display: inline-flex; align-items: center; gap: 8px; padding: 16px 32px; background: var(--ink); color: white; border-radius: 50px; font-size: 15px; font-weight: 500; cursor: pointer; border: none; font-family: 'Noto Sans KR', sans-serif; transition: all .2s; }
-.btn-start:hover { background: var(--accent); transform: translateY(-2px); }
-
-/* PLANNER */
-.planner-wrap { max-width: 640px; margin: 0 auto; padding: 0 16px 60px; }
-.progress { display: flex; gap: 6px; margin-bottom: 28px; }
-.prog-dot { flex: 1; height: 3px; border-radius: 2px; background: var(--border); transition: background .3s; }
-.prog-dot.done { background: var(--ink); }
-.prog-dot.active { background: var(--muted); }
-
-.step { display: none; }
-.step.active { display: block; animation: fadeUp .3s ease; }
-@keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-
-.step-label { font-size: 11px; color: var(--muted); letter-spacing: .08em; margin-bottom: 6px; font-weight: 500; }
-.step-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-.step-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
-
-/* DEST GRID */
-.dest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
-.dest-card { border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px 10px; cursor: pointer; text-align: center; background: white; transition: all .15s; }
-.dest-card:hover { border-color: #aaa; background: #f8f8f5; }
-.dest-card.selected { border-color: var(--ink); background: #f5f5f0; }
-.dest-card .d-icon { font-size: 24px; margin-bottom: 6px; }
-.dest-card .d-name { font-size: 13px; font-weight: 700; }
-.dest-card .d-sub { font-size: 10px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
-.dest-card .d-badge { font-size: 9px; margin-top: 5px; padding: 2px 7px; border-radius: 20px; display: inline-block; }
-.badge-hot { background: #fdf1ee; color: var(--accent); }
-.badge-new { background: var(--blue-light); color: var(--blue); }
-.badge-rom { background: #fdf0f8; color: #9c3a7a; }
-
-.sec-label { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: .06em; margin: 16px 0 8px; }
-
-/* GROUP GRID */
-.group-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-.group-card { border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px; cursor: pointer; display: flex; align-items: center; gap: 12px; background: white; transition: all .15s; }
-.group-card:hover { border-color: #aaa; }
-.group-card.selected { border-color: var(--ink); background: #f5f5f0; }
-.g-icon { font-size: 22px; flex-shrink: 0; }
-.g-label { font-size: 13px; font-weight: 700; }
-.g-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-/* MEMBER */
-.member-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-.member-row { display: flex; align-items: center; gap: 12px; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; background: white; }
-.m-icon { font-size: 18px; width: 26px; text-align: center; }
-.m-info { flex: 1; }
-.m-label { font-size: 13px; font-weight: 500; }
-.m-sub { font-size: 11px; color: var(--muted); }
-.counter { display: flex; align-items: center; gap: 10px; margin-left: auto; }
-.cnt-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); background: white; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; color: var(--ink); transition: all .15s; }
-.cnt-btn:hover { background: var(--ink); color: white; border-color: var(--ink); }
-.cnt-num { font-size: 15px; font-weight: 700; min-width: 20px; text-align: center; }
-
-/* TOGGLE */
-.toggle-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-.toggle-row { display: flex; align-items: center; gap: 12px; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 13px 14px; cursor: pointer; background: white; transition: all .15s; }
-.toggle-row:hover { border-color: #aaa; }
-.toggle-row.on { border-color: var(--ink); background: #f8f8f5; }
-.t-icon { font-size: 18px; width: 26px; text-align: center; }
-.t-info { flex: 1; }
-.t-label { font-size: 13px; font-weight: 500; }
-.t-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
-.toggle-pill { width: 36px; height: 20px; border-radius: 10px; background: var(--border); position: relative; transition: background .2s; flex-shrink: 0; }
-.toggle-pill.on { background: var(--ink); }
-.toggle-pill::after { content: ''; position: absolute; width: 14px; height: 14px; border-radius: 50%; background: white; top: 3px; left: 3px; transition: left .2s; }
-.toggle-pill.on::after { left: 19px; }
-.auto-tag { font-size: 9px; padding: 2px 6px; border-radius: 20px; background: var(--blue-light); color: var(--blue); margin-left: 6px; font-weight: 500; }
-
-/* OPTIONS */
-.opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-.opt-card { border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px 14px; cursor: pointer; background: white; transition: all .15s; text-align: center; }
-.opt-card:hover { border-color: #aaa; }
-.opt-card.selected { border-color: var(--ink); background: #f5f5f0; }
-.opt-card .o-icon { font-size: 22px; margin-bottom: 6px; }
-.opt-card .o-label { font-size: 13px; font-weight: 700; }
-.opt-card .o-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-/* NAV */
-.nav { display: flex; gap: 8px; margin-top: 20px; }
-.btn-back { padding: 12px 20px; border-radius: 50px; border: 1px solid var(--border); background: white; font-size: 14px; cursor: pointer; color: var(--ink); font-family: 'Noto Sans KR', sans-serif; transition: all .15s; }
-.btn-back:hover { background: #f0f0ec; }
-.btn-next { flex: 1; padding: 14px 20px; border-radius: 50px; border: 1.5px solid var(--ink); background: var(--ink); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; transition: all .2s; }
-.btn-next:hover { background: var(--accent); border-color: var(--accent); }
-
-/* LOADING */
-.loading-screen { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 320px; text-align: center; }
-.loading-screen.active { display: flex; }
-.load-emoji { font-size: 56px; margin-bottom: 20px; animation: float 1.2s ease-in-out infinite; }
-@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
-.load-bar-wrap { width: 240px; height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 16px; overflow: hidden; }
-.load-bar { height: 100%; background: var(--ink); border-radius: 2px; width: 0%; transition: width .6s ease; }
-.load-msg { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
-.load-sub { font-size: 12px; color: var(--muted); }
-
-/* RESULT */
-.result-wrap { display: none; }
-.result-wrap.active { display: block; }
-.result-header { margin-bottom: 20px; }
-.result-title { font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 4px; }
-.result-sub { font-size: 14px; color: var(--muted); }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 20px; }
-.chip { font-size: 11px; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); background: white; }
-.chip.red { color: #a32d2d; border-color: #f09595; background: #fcebeb; }
-.chip.green { color: var(--green); border-color: #97c459; background: var(--green-light); }
-.chip.blue { color: var(--blue); border-color: #85b7eb; background: var(--blue-light); }
-.chip.pink { color: #9c3a7a; border-color: #f4c0d1; background: #fdf0f8; }
-
-/* RESULT TABS */
-.rtabs { display: flex; gap: 6px; margin-bottom: 20px; }
-.rtab { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 12px; font-weight: 700; cursor: pointer; text-align: center; color: var(--muted); background: white; transition: all .15s; font-family: 'Noto Sans KR', sans-serif; }
-.rtab:hover { background: #f5f5f0; }
-.rtab.active { background: var(--ink); color: white; border-color: var(--ink); }
-.rpane { display: none; }
-.rpane.active { display: block; }
-
-/* DAY CARD */
-.day-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 12px; background: white; box-shadow: var(--shadow); }
-.day-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--border); background: #fafaf7; }
-.day-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: var(--ink); color: white; }
-.day-title { font-size: 14px; font-weight: 700; flex: 1; }
-.day-cost { font-size: 12px; color: var(--muted); }
-.sched-item { display: flex; gap: 12px; padding: 11px 16px; border-bottom: 1px solid var(--border); align-items: flex-start; }
-.sched-item:last-child { border-bottom: none; }
-.si-time { font-size: 11px; color: var(--muted); min-width: 40px; padding-top: 2px; flex-shrink: 0; font-weight: 500; }
-.si-body { flex: 1; }
-.si-name { font-size: 13px; font-weight: 500; }
-.si-tag { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.si-badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); flex-shrink: 0; white-space: nowrap; }
-.si-badge.green { color: var(--green); border-color: #97c459; background: var(--green-light); }
-.si-badge.blue { color: var(--blue); border-color: #85b7eb; background: var(--blue-light); }
-.si-badge.red { color: #a32d2d; border-color: #f09595; background: #fcebeb; }
-.si-badge.pink { color: #9c3a7a; border-color: #f4c0d1; background: #fdf0f8; }
-.si-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-.si-cost { font-size: 10px; color: var(--muted); }
-
-/* BUDGET */
-.budget-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 16px; }
-.bud-card { background: #f5f5f0; border-radius: 10px; padding: 14px; text-align: center; }
-.bud-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
-.bud-val { font-size: 22px; font-weight: 700; }
-.bud-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
-.bud-breakdown { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: white; margin-bottom: 12px; }
-.bud-row { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid var(--border); }
-.bud-row:last-child { border-bottom: none; }
-.bud-icon { font-size: 16px; width: 22px; text-align: center; }
-.bud-cat { font-size: 13px; flex: 1; }
-.bud-bar-wrap { width: 80px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
-.bud-bar { height: 100%; background: var(--ink); border-radius: 2px; }
-.bud-amt { font-size: 12px; font-weight: 700; min-width: 70px; text-align: right; }
-
-/* JR PASS */
-.jr-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; background: white; margin-bottom: 12px; }
-.jr-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-.jr-result { padding: 12px; border-radius: 8px; font-size: 13px; line-height: 1.7; }
-.jr-save { background: var(--green-light); color: var(--green); }
-.jr-nosave { background: var(--accent-light); color: var(--accent); }
-
-/* MAP */
-.map-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 12px; }
-.map-header { padding: 14px 16px; border-bottom: 1px solid var(--border); }
-.map-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
-.map-sub { font-size: 11px; color: var(--muted); }
-.map-frame { background: #e8f0f8; height: 280px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-.map-svg { width: 100%; height: 100%; }
-.map-pins { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
-.map-pin-row { display: flex; align-items: center; gap: 10px; }
-.pin-circle { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; color: white; }
-.pin-name { font-size: 13px; font-weight: 500; }
-.pin-addr { font-size: 11px; color: var(--muted); }
-.map-btn { display: block; width: calc(100% - 32px); margin: 0 16px 16px; padding: 11px; border-radius: 8px; border: 1px solid var(--border); background: white; font-size: 13px; font-weight: 700; cursor: pointer; color: var(--ink); text-align: center; font-family: 'Noto Sans KR', sans-serif; transition: all .15s; }
-.map-btn:hover { background: var(--ink); color: white; }
-
-/* CHECKLIST */
-.check-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; background: white; margin-bottom: 12px; }
-.check-section { margin-bottom: 16px; }
-.check-section:last-child { margin-bottom: 0; }
-.check-sec-title { font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 8px; letter-spacing: .05em; }
-.check-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
-.check-item:last-child { border-bottom: none; }
-.check-box { width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all .15s; }
-.check-box.checked { background: var(--ink); border-color: var(--ink); }
-.check-box.checked::after { content: '✓'; color: white; font-size: 11px; font-weight: 700; }
-.check-text { font-size: 13px; }
-.check-text.checked { color: var(--muted); text-decoration: line-through; }
-
-/* EXCHANGE */
-.exchange-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; background: white; margin-bottom: 12px; }
-.exchange-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
-.exchange-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-.exchange-input { flex: 1; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; outline: none; }
-.exchange-input:focus { border-color: var(--ink); }
-.exchange-unit { font-size: 13px; font-weight: 700; color: var(--muted); min-width: 30px; }
-.exchange-result { font-size: 22px; font-weight: 700; color: var(--ink); text-align: center; padding: 12px; background: #f5f5f0; border-radius: 8px; margin-bottom: 10px; }
-.exchange-tips { font-size: 12px; color: var(--muted); line-height: 1.7; background: var(--blue-light); border-radius: 8px; padding: 10px 12px; }
-
-/* ACTION BTNS */
-.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
-.act-btn { padding: 13px; border-radius: 50px; border: 1.5px solid var(--border); background: white; font-size: 13px; font-weight: 700; cursor: pointer; color: var(--ink); text-align: center; font-family: 'Noto Sans KR', sans-serif; transition: all .15s; }
-.act-btn:hover { background: #f0f0ec; }
-.act-btn.primary { background: var(--ink); color: white; border-color: var(--ink); }
-.act-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
-
-/* AI BADGE */
-.ai-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); padding: 4px 10px; border: 1px solid var(--border); border-radius: 20px; margin-bottom: 16px; }
-.ai-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
-
-/* NOTE BOX */
-.note-box { background: #f8f8f5; border-radius: 10px; padding: 12px 14px; font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
-
-/* MOBILE */
-@media (max-width: 480px) {
-  .dest-grid { grid-template-columns: repeat(3,1fr); }
-  .dest-card { padding: 12px 6px; }
-  .dest-card .d-icon { font-size: 20px; }
-  .hero { padding: 40px 16px 32px; }
-  .budget-cards { grid-template-columns: repeat(3,1fr); }
-  .bud-val { font-size: 17px; }
-}
-
-/* FOOTER */
-footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 12px; color: var(--muted); }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ryokoplan — AI 여행 일정 만들기</title>
+  <style>
+    :root { --primary: #6C63FF; --primary-dark: #574fd6; --bg: #f7f8fc; --card: #ffffff; --text: #1a1a2e; --muted: #6b7280; --border: #e5e7eb; --success: #10b981; --radius: 16px; --shadow: 0 4px 24px rgba(108,99,255,0.10); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
+    header { background: linear-gradient(135deg, #6C63FF, #9b8ffc); color: white; padding: 48px 24px 56px; text-align: center; }
+    header .logo { font-size: 2rem; font-weight: 800; }
+    header .logo span { color: #FFD166; }
+    header p { margin-top: 8px; opacity: 0.9; }
+    main { max-width: 720px; margin: -28px auto 0; padding: 0 16px 60px; }
+    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px; margin-bottom: 24px; }
+    .card h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 20px; color: var(--primary); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    label { font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+    input, select { border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 14px; font-size: 0.95rem; outline: none; background: #fafafa; }
+    input:focus, select:focus { border-color: var(--primary); background: white; }
+    #generate-btn { width: 100%; margin-top: 24px; padding: 16px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 12px; font-size: 1.05rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    #generate-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin .7s linear infinite; display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #error-box { display: none; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 10px; padding: 14px; margin-top: 16px; color: #b91c1c; }
+    #result { display: none; }
+    .result-header { text-align: center; padding-bottom: 12px; border-bottom: 2px solid var(--border); margin-bottom: 24px; }
+    .result-header h3 { font-size: 1.4rem; font-weight: 800; }
+    .badge { background: #ede9fe; color: var(--primary); border-radius: 20px; padding: 3px 12px; font-size: 0.8rem; font-weight: 600; margin: 2px; display: inline-block; }
+    .day-block { margin-bottom: 28px; }
+    .day-title { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .day-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .activity { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .activity:last-child { border-bottom: none; }
+    .activity-time { min-width: 52px; font-size: 0.8rem; font-weight: 700; color: var(--primary); }
+    .activity-place { font-weight: 700; }
+    .activity-desc { font-size: 0.88rem; color: var(--muted); margin-top: 3px; }
+    .activity-tip { margin-top: 6px; font-size: 0.82rem; color: var(--success); background: #ecfdf5; border-radius: 6px; padding: 4px 10px; display: inline-block; }
+    .tips-section { margin-top: 24px; display: none; }
+    .tips-section h4 { font-weight: 700; margin-bottom: 10px; }
+    .tip-item::before { content: '💡 '; }
+    .tip-item { font-size: 0.88rem; color: var(--muted); margin-bottom: 6px; }
+    .budget-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 14px; font-size: 0.88rem; color: #92400e; margin-top: 16px; display: none; }
+    .affiliate { margin-top: 24px; }
+    .affiliate h4 { font-weight: 700; margin-bottom: 12px; }
+    .aff-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .aff-btn { display: block; text-align: center; padding: 12px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; text-decoration: none; }
+    .aff-booking { background: #003580; color: white; }
+    .aff-klook { background: #FF5722; color: white; }
+    .aff-agoda { background: #5392F9; color: white; }
+    #reset-btn { width: 100%; margin-top: 12px; padding: 13px; background: white; border: 2px solid var(--primary); color: var(--primary); border-radius: 12px; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
+    footer { text-align: center; padding: 24px; font-size: 0.8rem; color: var(--muted); }
+  </style>
 </head>
 <body>
-
 <header>
-  <div class="logo">Ryoko<span>plan</span></div>
-  <div class="header-nav">
-    <button class="btn-login" onclick="alert('카카오·네이버 로그인 준비 중이에요!')">로그인</button>
-  </div>
+  <div class="logo">ryoko<span>plan</span></div>
+  <p>✈️ AI가 나만의 여행 일정을 5초 만에 완성해 드려요</p>
 </header>
-
-<!-- HERO -->
-<div id="heroSection">
-  <div class="hero">
-    <div class="hero-tag">🗾 AI 일본 여행 플래너</div>
-    <h1>여행 계획,<br>이제 5분이면 돼요</h1>
-    <p>가족·연인·혼자·친구 — 동행에 맞는<br>완벽한 일본 여행 일정을 AI가 짜드려요.</p>
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-num">5분</div><div class="stat-label">일정 완성 시간</div></div>
-      <div class="stat"><div class="stat-num">12곳</div><div class="stat-label">일본 여행지</div></div>
-      <div class="stat"><div class="stat-num">무료</div><div class="stat-label">완전 무료</div></div>
-    </div>
-    <button class="btn-start" onclick="startPlanner()">지금 일정 만들기 →</button>
-  </div>
-</div>
-
-<!-- PLANNER -->
-<div class="planner-wrap" id="plannerSection" style="display:none;">
-  <div class="progress" id="progress">
-    <div class="prog-dot active" id="p0"></div>
-    <div class="prog-dot" id="p1"></div>
-    <div class="prog-dot" id="p2"></div>
-    <div class="prog-dot" id="p3"></div>
-    <div class="prog-dot" id="p4"></div>
-    <div class="prog-dot" id="p5"></div>
-  </div>
-
-  <!-- STEP 0: 여행지 -->
-  <div class="step active" id="step0">
-    <div class="step-label">STEP 1 OF 6</div>
-    <div class="step-title">어디로 가세요?</div>
-    <div class="step-sub">일본 인기 여행지를 골라주세요</div>
-    <div class="sec-label">CLASSIC</div>
-    <div class="dest-grid">
-      <div class="dest-card" data-val="hiroshima" onclick="pick(this,'dest')"><div class="d-icon">⛩</div><div class="d-name">히로시마</div><div class="d-sub">도리이·평화공원</div><div class="d-badge badge-hot">인기</div></div>
-      <div class="dest-card" data-val="kyoto" onclick="pick(this,'dest')"><div class="d-icon">🏯</div><div class="d-name">교토</div><div class="d-sub">금각사·기온</div><div class="d-badge badge-hot">인기</div></div>
-      <div class="dest-card" data-val="osaka" onclick="pick(this,'dest')"><div class="d-icon">🍜</div><div class="d-name">오사카</div><div class="d-sub">도톤보리·USJ</div><div class="d-badge badge-hot">인기</div></div>
-      <div class="dest-card" data-val="tokyo" onclick="pick(this,'dest')"><div class="d-icon">🗼</div><div class="d-name">도쿄</div><div class="d-sub">시부야·아사쿠사</div></div>
-      <div class="dest-card" data-val="fukuoka" onclick="pick(this,'dest')"><div class="d-icon">🍖</div><div class="d-name">후쿠오카</div><div class="d-sub">야타이·하카타</div></div>
-      <div class="dest-card" data-val="nara" onclick="pick(this,'dest')"><div class="d-icon">🦌</div><div class="d-name">나라</div><div class="d-sub">사슴공원·도다이지</div></div>
-    </div>
-    <div class="sec-label">HIDDEN GEM</div>
-    <div class="dest-grid">
-      <div class="dest-card" data-val="hakone" onclick="pick(this,'dest')"><div class="d-icon">🗻</div><div class="d-name">하코네</div><div class="d-sub">후지산·온천</div><div class="d-badge badge-rom">온천</div></div>
-      <div class="dest-card" data-val="sapporo" onclick="pick(this,'dest')"><div class="d-icon">❄️</div><div class="d-name">삿포로</div><div class="d-sub">설국·게요리</div><div class="d-badge badge-new">추천</div></div>
-      <div class="dest-card" data-val="okinawa" onclick="pick(this,'dest')"><div class="d-icon">🏖</div><div class="d-name">오키나와</div><div class="d-sub">에메랄드 바다</div><div class="d-badge badge-rom">커플</div></div>
-      <div class="dest-card" data-val="nagasaki" onclick="pick(this,'dest')"><div class="d-icon">🌃</div><div class="d-name">나가사키</div><div class="d-sub">야경·짬뽕</div><div class="d-badge badge-new">추천</div></div>
-      <div class="dest-card" data-val="kanazawa" onclick="pick(this,'dest')"><div class="d-icon">🌊</div><div class="d-name">가나자와</div><div class="d-sub">켄로쿠엔·해산물</div><div class="d-badge badge-new">추천</div></div>
-      <div class="dest-card" data-val="nikko" onclick="pick(this,'dest')"><div class="d-icon">🍂</div><div class="d-name">닛코</div><div class="d-sub">도쇼궁·폭포</div><div class="d-badge badge-new">추천</div></div>
-    </div>
-    <div class="nav"><button class="btn-next" onclick="next(0)">다음 →</button></div>
-  </div>
-
-  <!-- STEP 1: 동행 -->
-  <div class="step" id="step1">
-    <div class="step-label">STEP 2 OF 6</div>
-    <div class="step-title">누구랑 가세요?</div>
-    <div class="step-sub">동행에 따라 코스가 완전히 달라져요</div>
-    <div class="group-grid">
-      <div class="group-card" data-val="solo" onclick="pickGroup(this)"><div class="g-icon">🎒</div><div><div class="g-label">혼자</div><div class="g-sub">나만의 속도로</div></div></div>
-      <div class="group-card" data-val="couple" onclick="pickGroup(this)"><div class="g-icon">💑</div><div><div class="g-label">연인</div><div class="g-sub">로맨틱 코스</div></div></div>
-      <div class="group-card" data-val="friends_same" onclick="pickGroup(this)"><div class="g-icon">👯</div><div><div class="g-label">동성 친구</div><div class="g-sub">먹방·쇼핑·이자카야</div></div></div>
-      <div class="group-card" data-val="friends_mixed" onclick="pickGroup(this)"><div class="g-icon">🧑‍🤝‍🧑</div><div><div class="g-label">이성 친구</div><div class="g-sub">밸런스 코스</div></div></div>
-      <div class="group-card" data-val="family" onclick="pickGroup(this)"><div class="g-icon">👨‍👩‍👧‍👦</div><div><div class="g-label">가족</div><div class="g-sub">세대별 배려</div></div></div>
-      <div class="group-card" data-val="business" onclick="pickGroup(this)"><div class="g-icon">💼</div><div><div class="g-label">출장</div><div class="g-sub">효율·짧은 관광</div></div></div>
-    </div>
-    <div id="family-detail" style="display:none;">
-      <div class="sec-label">가족 구성원</div>
-      <div class="member-list">
-        <div class="member-row"><div class="m-icon">👤</div><div class="m-info"><div class="m-label">성인</div></div><div class="counter"><button class="cnt-btn" onclick="adj('adult',-1)">−</button><span class="cnt-num" id="cnt-adult">2</span><button class="cnt-btn" onclick="adj('adult',1)">+</button></div></div>
-        <div class="member-row"><div class="m-icon">👧</div><div class="m-info"><div class="m-label">어린이</div><div class="m-sub">만 5~17세</div></div><div class="counter"><button class="cnt-btn" onclick="adj('child',-1)">−</button><span class="cnt-num" id="cnt-child">0</span><button class="cnt-btn" onclick="adj('child',1)">+</button></div></div>
-        <div class="member-row"><div class="m-icon">👴</div><div class="m-info"><div class="m-label">어르신</div><div class="m-sub">느린 페이스·평지 우선</div></div><div class="counter"><button class="cnt-btn" onclick="adj('senior',-1)">−</button><span class="cnt-num" id="cnt-senior">0</span><button class="cnt-btn" onclick="adj('senior',1)">+</button></div></div>
-        <div class="member-row"><div class="m-icon">♿</div><div class="m-info"><div class="m-label">거동 불편</div><div class="m-sub">휠체어·배리어프리</div></div><div class="counter"><button class="cnt-btn" onclick="adj('mobility',-1)">−</button><span class="cnt-num" id="cnt-mobility">0</span><button class="cnt-btn" onclick="adj('mobility',1)">+</button></div></div>
+<main>
+  <div class="card" id="form-card">
+    <h2>🗺️ 어디로 떠나고 싶으세요?</h2>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>여행지 *</label>
+        <input type="text" id="destination" placeholder="예: 도쿄, 파리, 발리, 뉴욕" />
+      </div>
+      <div class="form-group">
+        <label>여행 기간</label>
+        <select id="duration">
+          <option value="1박 2일">1박 2일</option>
+          <option value="2박 3일">2박 3일</option>
+          <option value="3박 4일" selected>3박 4일</option>
+          <option value="4박 5일">4박 5일</option>
+          <option value="5박 6일">5박 6일</option>
+          <option value="1주일">1주일</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>여행 스타일</label>
+        <select id="style">
+          <option value="일반 관광">🏛️ 일반 관광</option>
+          <option value="맛집 위주">🍜 맛집 위주</option>
+          <option value="자연/힐링">🌿 자연/힐링</option>
+          <option value="쇼핑">🛍️ 쇼핑</option>
+          <option value="역사/문화">🎭 역사/문화</option>
+          <option value="액티비티">🏄 액티비티</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>예산</label>
+        <select id="budget">
+          <option value="절약 여행">💰 절약 여행</option>
+          <option value="적당한 예산" selected>💳 적당한 예산</option>
+          <option value="럭셔리">✨ 럭셔리</option>
+        </select>
       </div>
     </div>
-    <div id="solo-hint" style="display:none;" class="note-box">혼자 여행이시네요! 이자카야·쇼핑·야식 자동으로 넣어드려요 😄</div>
-    <div id="couple-hint" style="display:none;" class="note-box">연인 여행이시네요! 야경·온천·로맨틱 스팟 자동 포함이에요 💑</div>
-    <div class="nav"><button class="btn-back" onclick="prev(1)">← 뒤로</button><button class="btn-next" onclick="next(1)">다음 →</button></div>
+    <button id="generate-btn" onclick="generateItinerary()">
+      <span id="btn-icon">✈️</span>
+      <span id="btn-text">일정 만들기</span>
+      <div class="spinner" id="spinner"></div>
+    </button>
+    <div id="error-box"></div>
   </div>
-
-  <!-- STEP 2: 취향 -->
-  <div class="step" id="step2">
-    <div class="step-label">STEP 3 OF 6</div>
-    <div class="step-title">취향을 골라주세요</div>
-    <div class="step-sub" id="style-sub">복수 선택 가능해요</div>
-    <div class="toggle-list">
-      <div class="toggle-row" id="t-sightseeing" onclick="tog('sightseeing')"><div class="t-icon">🏛</div><div class="t-info"><div class="t-label">역사·관광</div><div class="t-sub">유적지, 세계유산, 박물관</div></div><div class="toggle-pill" id="tp-sightseeing"></div></div>
-      <div class="toggle-row" id="t-food" onclick="tog('food')"><div class="t-icon">🍜</div><div class="t-info"><div class="t-label">현지 먹방</div><div class="t-sub">숨은 맛집, 현지인 식당</div></div><div class="toggle-pill" id="tp-food"></div></div>
-      <div class="toggle-row" id="t-shopping" onclick="tog('shopping')"><div class="t-icon">🛍</div><div class="t-info"><div class="t-label">쇼핑 <span class="auto-tag" id="shop-auto" style="display:none;">자동</span></div><div class="t-sub">백화점, 드러그스토어, 기념품</div></div><div class="toggle-pill" id="tp-shopping"></div></div>
-      <div class="toggle-row" id="t-drink" onclick="tog('drink')"><div class="t-icon">🍺</div><div class="t-info"><div class="t-label">이자카야·선술집 <span class="auto-tag" id="drink-auto" style="display:none;">자동</span></div><div class="t-sub">야키토리, 혼술, 한잔</div></div><div class="toggle-pill" id="tp-drink"></div></div>
-      <div class="toggle-row" id="t-romance" onclick="tog('romance')"><div class="t-icon">🌙</div><div class="t-info"><div class="t-label">야경·로맨틱 <span class="auto-tag" id="romance-auto" style="display:none;">자동</span></div><div class="t-sub">야경 명소, 커플 카페, 온천</div></div><div class="toggle-pill" id="tp-romance"></div></div>
-      <div class="toggle-row" id="t-yashoku" onclick="tog('yashoku')"><div class="t-icon">🌛</div><div class="t-info"><div class="t-label">야식 <span class="auto-tag" id="yashoku-auto" style="display:none;">자동</span></div><div class="t-sub">심야 라멘, 편의점 야식</div></div><div class="toggle-pill" id="tp-yashoku"></div></div>
-    </div>
-    <div class="nav"><button class="btn-back" onclick="prev(2)">← 뒤로</button><button class="btn-next" onclick="next(2)">다음 →</button></div>
-  </div>
-
-  <!-- STEP 3: 기간 -->
-  <div class="step" id="step3">
-    <div class="step-label">STEP 4 OF 6</div>
-    <div class="step-title">여행 기간은요?</div>
-    <div class="opt-grid">
-      <div class="opt-card" data-val="1" onclick="pick(this,'days')"><div class="o-icon">🌅</div><div class="o-label">당일치기</div><div class="o-sub">핵심만 빠르게</div></div>
-      <div class="opt-card" data-val="2" onclick="pick(this,'days')"><div class="o-icon">🌙</div><div class="o-label">1박 2일</div><div class="o-sub">여유롭게</div></div>
-      <div class="opt-card" data-val="3" onclick="pick(this,'days')"><div class="o-icon">✨</div><div class="o-label">2박 3일</div><div class="o-sub">알차게</div></div>
-      <div class="opt-card" data-val="5" onclick="pick(this,'days')"><div class="o-icon">🗓</div><div class="o-label">4박 5일+</div><div class="o-sub">깊이 있게</div></div>
-    </div>
-    <div class="nav"><button class="btn-back" onclick="prev(3)">← 뒤로</button><button class="btn-next" onclick="next(3)">다음 →</button></div>
-  </div>
-
-  <!-- STEP 4: 이동 -->
-  <div class="step" id="step4">
-    <div class="step-label">STEP 5 OF 6</div>
-    <div class="step-title">이동 수단은요?</div>
-    <div class="opt-grid">
-      <div class="opt-card" data-val="car" onclick="pick(this,'move')"><div class="o-icon">🚗</div><div class="o-label">렌트카</div><div class="o-sub">자유롭게</div></div>
-      <div class="opt-card" data-val="train" onclick="pick(this,'move')"><div class="o-icon">🚃</div><div class="o-label">대중교통</div><div class="o-sub">JR·지하철</div></div>
-      <div class="opt-card" data-val="both" onclick="pick(this,'move')"><div class="o-icon">🔀</div><div class="o-label">혼합</div><div class="o-sub">상황에 따라</div></div>
-      <div class="opt-card" data-val="tour" onclick="pick(this,'move')"><div class="o-icon">🚌</div><div class="o-label">패키지</div><div class="o-sub">가이드 포함</div></div>
-    </div>
-    <div class="nav"><button class="btn-back" onclick="prev(4)">← 뒤로</button><button class="btn-next" onclick="next(4)">다음 →</button></div>
-  </div>
-
-  <!-- STEP 5: 예산 -->
-  <div class="step" id="step5">
-    <div class="step-label">STEP 6 OF 6</div>
-    <div class="step-title">하루 예산은요?</div>
-    <div class="step-sub">1인 기준 · 숙박 제외</div>
-    <div class="opt-grid">
-      <div class="opt-card" data-val="low" onclick="pick(this,'budget')"><div class="o-icon">💴</div><div class="o-label">알뜰</div><div class="o-sub">¥5,000~10,000</div></div>
-      <div class="opt-card" data-val="mid" onclick="pick(this,'budget')"><div class="o-icon">💰</div><div class="o-label">적당하게</div><div class="o-sub">¥10,000~20,000</div></div>
-      <div class="opt-card" data-val="high" onclick="pick(this,'budget')"><div class="o-icon">💎</div><div class="o-label">여유롭게</div><div class="o-sub">¥20,000~30,000</div></div>
-      <div class="opt-card" data-val="any" onclick="pick(this,'budget')"><div class="o-icon">🎯</div><div class="o-label">상관없어요</div><div class="o-sub">최고의 경험</div></div>
-    </div>
-    <div class="nav"><button class="btn-back" onclick="prev(5)">← 뒤로</button><button class="btn-next" onclick="startLoading()">일정 만들기 ✈</button></div>
-  </div>
-
-  <!-- 로딩 -->
-  <div class="loading-screen" id="loadingScreen">
-    <div class="load-emoji" id="loadEmoji">⛩</div>
-    <div class="load-bar-wrap"><div class="load-bar" id="loadBar"></div></div>
-    <div class="load-msg" id="loadMsg">여행 준비 중...</div>
-    <div class="load-sub" id="loadSub"></div>
-  </div>
-
-  <!-- 결과 -->
-  <div class="result-wrap" id="resultWrap">
+  <div class="card" id="result">
     <div class="result-header">
-      <div class="ai-badge"><div class="ai-dot"></div> AI가 생성한 맞춤 일정</div>
-      <div class="result-title" id="r-title"></div>
-      <div class="result-sub" id="r-sub"></div>
-      <div class="chips" id="r-chips"></div>
+      <h3 id="result-title"></h3>
+      <div id="result-meta"></div>
     </div>
-    <div class="rtabs">
-      <div class="rtab active" id="tab-sched" onclick="switchTab('sched')">📅 일정</div>
-      <div class="rtab" id="tab-map" onclick="switchTab('map')">🗺 지도</div>
-      <div class="rtab" id="tab-budget" onclick="switchTab('budget')">💰 예산</div>
-      <div class="rtab" id="tab-check" onclick="switchTab('check')">🎒 짐목록</div>
-      <div class="rtab" id="tab-jr" onclick="switchTab('jr')">🚃 JR패스</div>
+    <div id="itinerary-days"></div>
+    <div class="tips-section" id="tips-section"></div>
+    <div class="budget-box" id="budget-box"></div>
+    <div class="affiliate">
+      <h4>🏨 예약하고 떠나기</h4>
+      <div class="aff-grid">
+        <a class="aff-btn aff-booking" id="aff-booking" href="https://www.booking.com" target="_blank">🏨 Booking.com</a>
+        <a class="aff-btn aff-klook" id="aff-klook" href="https://www.klook.com" target="_blank">🎡 Klook</a>
+        <a class="aff-btn aff-agoda" id="aff-agoda" href="https://www.agoda.com" target="_blank">🌙 Agoda</a>
+      </div>
     </div>
-    <div class="rpane active" id="pane-sched"><div id="sched-body"></div></div>
-    <div class="rpane" id="pane-map"><div id="map-body"></div></div>
-    <div class="rpane" id="pane-budget"><div id="budget-body"></div></div>
-    <div class="rpane" id="pane-check"><div id="check-body"></div></div>
-    <div class="rpane" id="pane-jr"><div id="jr-body"></div></div>
-    <div class="action-grid">
-      <button class="act-btn primary" id="detail-btn">AI 상세 플랜 ↗</button>
-      <button class="act-btn" onclick="shareKakao()">카카오 공유</button>
-      <button class="act-btn" onclick="printPDF()">PDF 저장</button>
-      <button class="act-btn" onclick="restart()">← 다시 만들기</button>
-    </div>
+    <button id="reset-btn" onclick="resetForm()">🔄 다시 만들기</button>
   </div>
-</div>
-
-<footer>
-  © 2026 Ryokoplan · <a href="mailto:contact@ryokoplan.com" style="color:inherit;">contact@ryokoplan.com</a>
-</footer>
-
+</main>
+<footer>© 2025 Ryokoplan</footer>
 <script>
-// ===== 설정 =====
-const ANTHROPIC_API_KEY = 'YOUR_API_KEY_HERE'; // Vercel 환경변수로 교체 예정
-
-// ===== 상태 =====
-const S = {
-  dest:null, days:null, move:null, budget:null, groupType:null,
-  adult:2, child:0, senior:0, mobility:0,
-  styles:{sightseeing:false,food:false,shopping:false,drink:false,romance:false,yashoku:false}
-};
-
-const DN = {hiroshima:'히로시마',kyoto:'교토',osaka:'오사카',tokyo:'도쿄',fukuoka:'후쿠오카',nara:'나라',hakone:'하코네',sapporo:'삿포로',okinawa:'오키나와',nagasaki:'나가사키',kanazawa:'가나자와',nikko:'닛코'};
-const dN = {'1':'당일치기','2':'1박 2일','3':'2박 3일','5':'4박 5일+'};
-const gN = {solo:'혼자',couple:'연인',friends_same:'동성 친구',friends_mixed:'이성 친구',family:'가족',business:'출장'};
-
-// ===== 로딩 메시지 =====
-const MSGS = {
-  hiroshima:[{e:'⛩',m:'도리이 조수 시간 확인 중...',s:'만조 때가 제일 예뻐요'},{e:'🥞',m:'앗짱 오코노미야키 자리 맡는 중...',s:'예약 안 하면 못 앉아요'},{e:'🐍',m:'아나고메시 도시락 예약 중...',s:'100년 노포, 서두르는 중'},{e:'🍺',m:'이자카야 카운터 자리 확보 중...',s:'생맥주 차갑게 준비시키는 중'},{e:'🌸',m:'벚꽃 만개 시기 체크 중...',s:'4월 초중순이 절정이에요'}],
-  nara:[{e:'🦌',m:'사슴에게 먹이 사두는 중...',s:'사슴전병 ¥200이에요'},{e:'🦌',m:'사슴공원 사슴 수 세는 중...',s:'약 1,200마리 있대요'},{e:'🛕',m:'도다이지 대불님께 인사 드리는 중...',s:'높이 15m'},{e:'🍺',m:'이자카야 자리 맡아두는 중...',s:'사슴은 술 못 마셔요'}],
-  kyoto:[{e:'🏯',m:'금각사 반사 각도 계산 중...',s:'오전이 빛이 예뻐요'},{e:'🎋',m:'아라시야마 대나무 흔들어보는 중...',s:'바람 소리가 장관이에요'},{e:'🍵',m:'말차 아이스크림 준비 중...',s:'기온 거리에 많아요'},{e:'🏮',m:'기온 야경 조명 켜는 중...',s:'저녁 7시가 제일 예뻐요'}],
-  osaka:[{e:'🐙',m:'타코야키 반죽 만드는 중...',s:'도톤보리에서 꼭 드세요'},{e:'🎡',m:'유니버설 줄 길이 확인 중...',s:'해리포터 대기 120분이에요'},{e:'🍺',m:'나카스 포장마차 자리 맡는 중...',s:'혼자도 환영이에요'},{e:'🛍',m:'신사이바시 드러그스토어 재고 확인 중...',s:'로이히 파스 인기 폭발'}],
-  tokyo:[{e:'🗼',m:'도쿄타워 엘리베이터 줄 서는 중...',s:'전망대 대기 40분이에요'},{e:'🎮',m:'아키하바라 가챠 뽑는 중...',s:'뽑기 운 빌어드릴게요'},{e:'🍺',m:'시부야 이자카야 합석 확인 중...',s:'혼자도 OK'}],
-  hakone:[{e:'🗻',m:'후지산 구름 걷어내는 중...',s:'맑은 날이면 완벽해요'},{e:'♨️',m:'노천 온천 물 온도 확인 중...',s:'42도가 딱이에요'},{e:'💑',m:'커플 료칸 방 잡는 중...',s:'가이세키 저녁 포함으로'}],
-  okinawa:[{e:'🏖',m:'에메랄드 해변 파라솔 펼치는 중...',s:'물이 너무 맑아요'},{e:'🤿',m:'스노클링 장비 챙기는 중...',s:'산호초가 환상적이에요'},{e:'💑',m:'해변 일몰 자리 잡는 중...',s:'커플 여행 최고의 순간'}],
-  sapporo:[{e:'❄️',m:'눈 쌓인 길 치우는 중...',s:'방한 장비 필수예요'},{e:'🦀',m:'게 요리 냄비에 물 올리는 중...',s:'삿포로 게가 최고예요'},{e:'🍺',m:'삿포로 맥주 공장 예약 중...',s:'시음 포함이에요'}],
-  nagasaki:[{e:'🌃',m:'이나사야마 야경 조명 켜는 중...',s:'세계 3대 야경이에요'},{e:'🍜',m:'짬뽕 국물 끓이는 중...',s:'나가사키 짬뽕이 원조예요'}],
-  fukuoka:[{e:'🍜',m:'하카타 라멘 국물 끓이는 중...',s:'진한 돈코츠 기대하세요'},{e:'🏮',m:'나카스 야타이 자리 펼치는 중...',s:'강변 포장마차 낭만'},{e:'🍺',m:'이자카야 텐진 카운터 확보 중...',s:'혼자 여행의 꽃'}],
-  default:[{e:'✈️',m:'최적 동선 계산 중...',s:'걷는 거리 줄여드릴게요'},{e:'🗺',m:'맛집 리스트 뽑는 중...',s:'관광지 바가지 패스'},{e:'🍺',m:'이자카야 자리 맡아두는 중...',s:'여행의 마무리는 한잔'}]
-};
-
-function isSolo(){return S.groupType==='solo'||S.groupType==='business';}
-function isCouple(){return S.groupType==='couple';}
-function isFriends(){return S.groupType==='friends_same'||S.groupType==='friends_mixed';}
-
-function startPlanner(){
-  document.getElementById('heroSection').style.display='none';
-  document.getElementById('plannerSection').style.display='block';
-  window.scrollTo(0,0);
-}
-
-function pick(el,key){
-  const g=el.closest('.dest-grid,.opt-grid');
-  if(g)g.querySelectorAll('.dest-card,.opt-card').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected');
-  S[key]=el.dataset.val;
-}
-
-function pickGroup(el){
-  document.querySelectorAll('.group-card').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected');
-  S.groupType=el.dataset.val;
-  document.getElementById('family-detail').style.display=S.groupType==='family'?'block':'none';
-  document.getElementById('solo-hint').style.display=isSolo()?'block':'none';
-  document.getElementById('couple-hint').style.display=isCouple()?'block':'none';
-  ['shop-auto','drink-auto','yashoku-auto'].forEach(id=>document.getElementById(id).style.display=isSolo()?'inline':'none');
-  document.getElementById('romance-auto').style.display=isCouple()?'inline':'none';
-}
-
-function adj(k,d){
-  S[k]=Math.max(k==='adult'?1:0,S[k]+d);
-  document.getElementById('cnt-'+k).textContent=S[k];
-}
-
-function tog(k){
-  S.styles[k]=!S.styles[k];
-  document.getElementById('t-'+k).classList.toggle('on',S.styles[k]);
-  document.getElementById('tp-'+k).classList.toggle('on',S.styles[k]);
-}
-
-function updateProg(s){
-  for(let i=0;i<6;i++){
-    const d=document.getElementById('p'+i);
-    d.className='prog-dot';
-    if(i<s)d.classList.add('done');
-    else if(i===s)d.classList.add('active');
+  async function generateItinerary() {
+    const destination = document.getElementById('destination').value.trim();
+    if (!destination) { showError('여행지를 입력해 주세요!'); return; }
+    setLoading(true); hideError();
+    try {
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          destination,
+          duration: document.getElementById('duration').value,
+          style: document.getElementById('style').value,
+          budget: document.getElementById('budget').value
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || '서버 오류');
+      renderItinerary(data, destination);
+    } catch (err) {
+      showError('❌ ' + (err.message || '일정 생성 실패'));
+    } finally { setLoading(false); }
   }
-}
 
-function next(f){
-  if(f===1){
-    let sub='복수 선택 가능해요';
-    if(isSolo())sub='혼자 여행 — 이자카야·쇼핑·야식 자동 포함!';
-    else if(isCouple())sub='연인 여행 — 야경·로맨틱 스팟 자동 포함!';
-    else if(isFriends())sub='친구 여행 — 먹방·이자카야 추천!';
-    document.getElementById('style-sub').textContent=sub;
-  }
-  document.getElementById('step'+f).classList.remove('active');
-  document.getElementById('step'+(f+1)).classList.add('active');
-  updateProg(f+1);
-  window.scrollTo(0,0);
-}
-
-function prev(f){
-  document.getElementById('step'+f).classList.remove('active');
-  document.getElementById('step'+(f-1)).classList.add('active');
-  updateProg(f-1);
-  window.scrollTo(0,0);
-}
-
-function restart(){
-  document.getElementById('resultWrap').classList.remove('active');
-  document.getElementById('step0').classList.add('active');
-  updateProg(0);
-  window.scrollTo(0,0);
-}
-
-function switchTab(t){
-  ['sched','map','budget','check','jr'].forEach(x=>{
-    document.getElementById('tab-'+x).classList.toggle('active',x===t);
-    document.getElementById('pane-'+x).classList.toggle('active',x===t);
-  });
-}
-
-async function startLoading(){
-  document.getElementById('step5').classList.remove('active');
-  const screen=document.getElementById('loadingScreen');
-  screen.classList.add('active');
-
-  const dest=S.dest||'hiroshima';
-  let msgs=MSGS[dest]||MSGS.default;
-  if(isCouple())msgs=[{e:'💑',m:'커플 코스 특별 구성 중...',s:'로맨틱 뷰포인트 넣는 중'},...msgs];
-  if(isSolo())msgs=[{e:'🎒',m:'혼자 여행 자유 코스 짜는 중...',s:'아무도 기다리지 않아도 돼요'},...msgs];
-  if(S.mobility>0)msgs=[{e:'♿',m:'배리어프리 동선 확인 중...',s:'계단 없는 루트로 짤게요'},...msgs];
-
-  const bar=document.getElementById('loadBar');
-  const msgEl=document.getElementById('loadMsg');
-  const subEl=document.getElementById('loadSub');
-  const emoEl=document.getElementById('loadEmoji');
-  let step=0;const total=Math.min(msgs.length,5);
-
-  const tick=()=>{
-    if(step>=total){bar.style.width='100%';setTimeout(generateWithAI,300);return;}
-    const m=msgs[step%msgs.length];
-    emoEl.textContent=m.e;msgEl.textContent=m.m;subEl.textContent=m.s||'';
-    bar.style.width=Math.round((step+1)/total*100)+'%';
-    step++;setTimeout(tick,700);
-  };
-  tick();
-}
-
-// ===== Claude API 호출 =====
-async function generateWithAI(){
-  const dest=DN[S.dest]||'히로시마';
-  const days=dN[String(S.days)]||'2박 3일';
-  const group=gN[S.groupType]||'가족';
-  const solo=isSolo(),couple=isCouple();
-  const drink=S.styles.drink||solo||isFriends();
-  const shop=S.styles.shopping||solo;
-  const yashoku=S.styles.yashoku||solo;
-  const romance=S.styles.romance||couple;
-  const hasSenior=S.senior>0,hasMobility=S.mobility>0;
-
-  const prompt=`당신은 일본 여행 전문가입니다. 아래 조건으로 여행 일정을 JSON으로 생성해주세요.
-
-조건:
-- 여행지: ${dest}
-- 기간: ${days}
-- 동행: ${group}
-- 어르신 동반: ${hasSenior?'예':'아니오'} (예이면 평지 위주, 낮잠 타임 포함)
-- 휠체어: ${hasMobility?'예':'아니오'} (예이면 배리어프리 동선)
-- 이자카야: ${drink?'포함':'제외'}
-- 쇼핑: ${shop?'포함':'제외'}
-- 야식: ${yashoku?'포함':'제외'}
-- 로맨틱: ${romance?'포함':'제외'}
-- 혼자여행: ${solo?'예 (1인석, 카운터석 위주)':'아니오'}
-- 예산: ${S.budget==='low'?'알뜰':S.budget==='high'?'여유':S.budget==='any'?'최고급':'적당'}
-
-JSON 형식으로만 응답해주세요 (마크다운 없이):
-{
-  "days": [
-    {
-      "day": 1,
-      "title": "Day 제목",
-      "items": [
-        {
-          "time": "09:00",
-          "name": "장소명",
-          "tag": "설명",
-          "badge": "뱃지텍스트 또는 null",
-          "badgeType": "green/blue/red/pink 또는 null",
-          "cost": 숫자(엔화)
-        }
-      ]
-    }
-  ],
-  "tips": ["꿀팁1", "꿀팁2", "꿀팁3"],
-  "checklist": {
-    "필수서류": ["여권", "항공권"],
-    "의류": ["편한 운동화", "얇은 겉옷"],
-    "여행용품": ["보조배터리", "이어폰"],
-    "의약품": ["상비약", "모기기피제"],
-    "쇼핑목록": ["로이히 파스", "센카 폼클렌저"]
-  }
-}`;
-
-  try {
-    // API 키가 설정되지 않은 경우 폴백
-    if(ANTHROPIC_API_KEY==='YOUR_API_KEY_HERE'){
-      showResult(null);
-      return;
-    }
-
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':ANTHROPIC_API_KEY,'anthropic-version':'2023-06-01'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:prompt}]})
+  function renderItinerary(data, destination) {
+    document.getElementById('result-title').textContent = data.title || destination + ' 여행';
+    document.getElementById('result-meta').innerHTML = '<span class="badge">📅 ' + data.duration + '</span><span class="badge">📍 ' + (data.destination || destination) + '</span>';
+    const c = document.getElementById('itinerary-days');
+    c.innerHTML = '';
+    const icons = {'관광':'🏛️','식사':'🍽️','숙박':'🛏️','이동':'🚌','쇼핑':'🛍️','액티비티':'🎡','자연':'🌿','문화':'🎭'};
+    (data.days||[]).forEach(day => {
+      const b = document.createElement('div'); b.className = 'day-block';
+      b.innerHTML = '<div class="day-title">Day ' + day.day + ' · ' + (day.title||'') + '</div>';
+      (day.activities||[]).forEach(a => {
+        b.innerHTML += '<div class="activity"><div class="activity-time">' + (a.time||'') + '</div><div><div class="activity-place">' + (icons[a.category]||'📌') + ' ' + a.place + '</div><div class="activity-desc">' + a.description + '</div>' + (a.tip ? '<div class="activity-tip">💚 ' + a.tip + '</div>' : '') + '</div></div>';
+      });
+      c.appendChild(b);
     });
-    const data=await res.json();
-    const text=data.content[0].text.replace(/```json|```/g,'').trim();
-    const parsed=JSON.parse(text);
-    showResult(parsed);
-  } catch(e){
-    showResult(null);
+    const t = document.getElementById('tips-section');
+    if (data.tips&&data.tips.length) { t.innerHTML = '<h4>✅ 여행 팁</h4>' + data.tips.map(x=>'<div class="tip-item">'+x+'</div>').join(''); t.style.display='block'; }
+    const bb = document.getElementById('budget-box');
+    if (data.estimatedBudget) { bb.textContent = '💰 ' + data.estimatedBudget; bb.style.display='block'; }
+    const enc = encodeURIComponent(destination);
+    document.getElementById('aff-booking').href = 'https://www.booking.com/search.html?ss=' + enc;
+    document.getElementById('aff-klook').href = 'https://www.klook.com/search/?query=' + enc;
+    document.getElementById('aff-agoda').href = 'https://www.agoda.com/search?q=' + enc;
+    document.getElementById('form-card').style.display = 'none';
+    document.getElementById('result').style.display = 'block';
   }
-}
 
-function showResult(aiData){
-  document.getElementById('loadingScreen').classList.remove('active');
-  document.getElementById('resultWrap').classList.add('active');
-
-  const dest=S.dest||'hiroshima';
-  const days=parseInt(S.days||3);
-  const solo=isSolo(),couple=isCouple(),friends=isFriends();
-  const drink=S.styles.drink||solo||friends;
-  const shop=S.styles.shopping||solo;
-  const yashoku=S.styles.yashoku||solo;
-  const romance=S.styles.romance||couple;
-  const hasSenior=S.senior>0,hasMobility=S.mobility>0;
-
-  document.getElementById('r-title').textContent=(DN[dest]||dest)+' '+(dN[String(days)]||'2박 3일');
-  const total=S.adult+S.child+S.senior+S.mobility;
-  let subParts=[];
-  if(solo)subParts.push('혼자 여행');else if(couple)subParts.push('연인 여행');else if(friends)subParts.push('친구 여행');else subParts.push(total+'인 가족');
-  if(hasMobility)subParts.push('휠체어 동반');else if(hasSenior)subParts.push('어르신 동반');
-  document.getElementById('r-sub').textContent=subParts.join(' · ');
-
-  const chips=document.getElementById('r-chips');chips.innerHTML='';
-  const cd=[];
-  if(hasMobility)cd.push({t:'휠체어 배리어프리',cls:'red'});
-  if(hasSenior)cd.push({t:'어르신 페이스',cls:'red'});
-  if(couple)cd.push({t:'로맨틱 코스',cls:'pink'});
-  if(solo)cd.push({t:'혼자 최적화',cls:'green'});
-  if(drink)cd.push({t:'이자카야 포함',cls:''});
-  if(shop)cd.push({t:'쇼핑 포함',cls:''});
-  cd.forEach(c=>{const el=document.createElement('div');el.className='chip '+(c.cls||'');el.textContent=c.t;chips.appendChild(el);});
-
-  // 일정 빌드
-  buildSched(aiData,dest,days,solo,couple,friends,hasSenior,hasMobility,drink,shop,yashoku,romance);
-  buildMap(dest,days);
-  buildBudget(dest,days,solo,couple,shop,drink,yashoku,romance);
-  buildChecklist(aiData,dest,hasSenior,hasMobility,solo,couple);
-  buildJR(dest,days);
-
-  const prompt=`${DN[dest]||dest} ${dN[String(days)]||'2박 3일'} ${gN[S.groupType]||''} 여행 상세 플랜 짜줘${hasMobility?' 배리어프리':''}${solo?' 혼자도 OK 표시':''}${couple?' 로맨틱 스팟':''} 다 포함해서!`;
-  document.getElementById('detail-btn').onclick=()=>window.open('https://claude.ai/new?q='+encodeURIComponent(prompt),'_blank');
-
-  window.scrollTo(0,0);
-}
-
-function buildSched(aiData,dest,days,solo,couple,friends,senior,mobility,drink,shop,yashoku,romance){
-  const body=document.getElementById('sched-body');body.innerHTML='';
-  const schedules=aiData?aiData.days:getFallbackSchedule(dest,days,solo,couple,friends,senior,mobility,drink,shop,yashoku,romance);
-  schedules.forEach(day=>{
-    const dayCost=day.items.reduce((s,i)=>s+(i.cost||0),0);
-    const card=document.createElement('div');card.className='day-card';
-    let html=`<div class="day-header"><span class="day-badge">Day ${day.day}</span><span class="day-title">${day.title}</span><span class="day-cost">~¥${dayCost.toLocaleString()}</span></div>`;
-    day.items.forEach(item=>{
-      const bt=item.badgeType?' '+item.badgeType:'';
-      html+=`<div class="sched-item">
-        <div class="si-time">${item.time}</div>
-        <div class="si-body"><div class="si-name">${item.name}</div>${item.tag?`<div class="si-tag">${item.tag}</div>`:''}</div>
-        <div class="si-right">
-          ${item.badge?`<div class="si-badge${bt}">${item.badge}</div>`:''}
-          ${item.cost?`<div class="si-cost">~¥${item.cost.toLocaleString()}</div>`:''}
-        </div>
-      </div>`;
-    });
-    card.innerHTML=html;body.appendChild(card);
-  });
-}
-
-function getFallbackSchedule(dest,days,solo,couple,friends,senior,mobility,drink,shop,yashoku,romance){
-  // 히로시마 기본 일정 (API 없을 때 폴백)
-  const d1={day:1,title:couple?'도착·석양·로맨틱 저녁':solo?'도착·자유 탐방':'도착·첫 탐방',items:[
-    {time:'15:00',name:'공항 도착·렌트카 수령',tag:mobility?'무장애 차량 확인':null,badge:mobility?'배려':null,badgeType:mobility?'red':null,cost:15000},
-    {time:'16:00',name:mobility?'평화공원 외부 산책':'슛케이엔 정원',tag:couple?'둘이 걷기 좋아요':'4월 벚꽃 절정',cost:350},
-    {time:'17:30',name:'그랜드 프린스 호텔 체크인',badge:couple?'오션뷰 트윈':'오션뷰 요청',badgeType:'green',cost:0},
-    {time:'19:30',name:couple?'나다만 레스토랑 저녁':'앗짱 오코노미야키',tag:couple?'히로시마 식재료 코스':'구글 4.9점',badge:'예약 필수',badgeType:'blue',cost:couple?8000:1500},
-    ...(drink&&!couple?[{time:'21:30',name:solo?'야키토리 카운터 혼술':'돈짱 야키토리 2차',tag:solo?'1인석·마스터랑 대화':'생맥주 ¥450',badge:solo?'혼술 OK':'이자카야',badgeType:'blue',cost:2500}]:[]),
-    ...(romance?[{time:'21:30',name:'탑 오브 히로시마 야경 바',tag:'23층·오리지널 칵테일',badge:'야경 바',badgeType:'pink',cost:3000}]:[]),
-    ...(yashoku?[{time:'23:30',name:'이치란 라멘 야식',tag:'24시간·1인 칸막이',badge:'야식',cost:1200}]:[]),
-  ]};
-  if(days===1)return [{day:1,title:'히로시마 당일 핵심',items:[
-    {time:'09:00',name:'원폭 돔·평화공원',tag:'야외 무료',cost:200},
-    {time:'11:00',name:'히로시마 성',cost:370},
-    {time:'13:00',name:'오코노미야키 점심',cost:1300},
-    ...(shop?[{time:'15:00',name:'혼도리 쇼핑',badge:solo?'혼자도 OK':'쇼핑',badgeType:'blue',cost:15000}]:[]),
-    ...(drink?[{time:'17:30',name:solo?'이자카야 한잔':couple?'야경 바':'이자카야',badge:solo?'혼술 OK':'이자카야',badgeType:'blue',cost:2500}]:[]),
-  ]}];
-  const d2={day:2,title:couple?'미야지마·도리이·커플 산책':'미야지마·해상 도리이',items:[
-    {time:'08:00',name:'호텔 조식',tag:'세토내해 360도 뷰 뷔페',cost:2500},
-    {time:'09:00',name:'미야지마구치 선착장 출발',tag:'렌트카 30~40분·유료주차',badge:mobility?'휠체어 페리 확인':null,badgeType:mobility?'red':null,cost:1200},
-    {time:'09:30',name:'해상 도리이·이쓰쿠시마 신사',tag:couple?'도리이 앞 인생샷':mobility?'도보 5분 완전 평지':'세계유산',badge:couple?'포토스팟':null,badgeType:couple?'pink':null,cost:400},
-    ...(shop?[{time:'11:00',name:'미야지마 상점가',tag:solo?'혼자 천천히':couple?'커플 기념품':'모미지만주·굴꼬치',badge:couple?'커플쇼핑':solo?'혼자도 OK':'쇼핑',badgeType:'blue',cost:3000}]:[]),
-    {time:'11:30',name:'아나고메시 우에노 도시락',tag:'페리 타고 도리이 보며 식사!',badge:'100년 노포',badgeType:'green',cost:2800},
-    {time:'13:30',name:senior?'호텔 복귀·낮잠·온천':couple?'히로시마 성·둘이 산책':'히로시마 성',tag:senior?'체력 배분 필수':'',cost:370},
-    {time:'19:00',name:couple?'가이세키 코스 레스토랑':'호텔 레스토랑',badge:couple?'커플 추천':null,badgeType:couple?'pink':null,cost:couple?12000:4000},
-  ]};
-  const d3={day:3,title:'평화기념공원·'+(shop?'쇼핑·':'')+'귀국',items:[
-    {time:'09:30',name:'원폭 돔·평화기념공원',tag:mobility?'전체 배리어프리':couple?'둘이서 천천히':'',badge:mobility?'배리어프리':null,badgeType:mobility?'green':null,cost:200},
-    ...(shop?[{time:'11:00',name:solo?'혼도리·소고·파르코':couple?'혼도리·커플쇼핑':'혼도리·소고 쇼핑',tag:solo?'드러그스토어 필수':'면세 ¥5,000 이상',badge:solo?'혼자도 OK':couple?'커플쇼핑':'쇼핑',badgeType:'blue',cost:solo?20000:15000}]:[]),
-    {time:'12:30',name:'나가타야 오코노미야키',tag:'평화공원 도보 5분',cost:1300},
-    {time:'13:30',name:'공항 출발',tag:'55~60분 소요',cost:0},
-    {time:'16:00',name:'히로시마 출발→인천',badge:'✈',cost:0},
-  ]};
-  if(days<=2)return [d1,d2];
-  return [d1,d2,d3];
-}
-
-function buildMap(dest,days){
-  const body=document.getElementById('map-body');body.innerHTML='';
-  const spots={
-    hiroshima:{d1:[{name:'슛케이엔 정원',addr:'히로시마 시내',lat:34.40,lng:132.47,day:1},{name:'앗짱 오코노미야키',addr:'나카구 다테마치',lat:34.39,lng:132.46,day:1}],d2:[{name:'미야지마 도리이',addr:'이쓰쿠시마 신사',lat:34.30,lng:132.32,day:2},{name:'아나고메시 우에노',addr:'미야지마구치',lat:34.31,lng:132.30,day:2},{name:'히로시마 성',addr:'모토마치',lat:34.40,lng:132.46,day:2}],d3:[{name:'원폭 돔·평화공원',addr:'나카지마초',lat:34.39,lng:132.45,day:3},{name:'혼도리 상점가',addr:'나카구',lat:34.39,lng:132.46,day:3}]},
-    kyoto:{d1:[{name:'금각사',addr:'키타구',lat:35.03,lng:135.73,day:1},{name:'아라시야마',addr:'우쿄구',lat:35.01,lng:135.68,day:1},{name:'기온 거리',addr:'히가시야마구',lat:35.00,lng:135.78,day:1}]},
-    osaka:{d1:[{name:'도톤보리',addr:'나니와구',lat:34.67,lng:135.50,day:1},{name:'신사이바시',addr:'추오구',lat:34.67,lng:135.50,day:1}]},
-    default:{d1:[{name:'관광 명소',addr:'시내',lat:35.68,lng:139.69,day:1}]}
-  };
-  const sp=spots[dest]||spots.default;
-  const allSpots=[];
-  for(let d=1;d<=days;d++){const k='d'+d;if(sp[k])allSpots.push(...sp[k]);}
-  if(!allSpots.length&&sp.d1)allSpots.push(...sp.d1);
-
-  const colors=['#1a1a1a','#c84b2f','#1a4a7a'];
-  const lats=allSpots.map(s=>s.lat),lngs=allSpots.map(s=>s.lng);
-  const minLat=Math.min(...lats)-.02,maxLat=Math.max(...lats)+.02;
-  const minLng=Math.min(...lngs)-.02,maxLng=Math.max(...lngs)+.02;
-  const W=700,H=280;
-  let svgPins='';
-  allSpots.forEach((sp2,i)=>{
-    const x=Math.round((sp2.lng-minLng)/(maxLng-minLng)*(W-60)+30);
-    const y=Math.round((1-(sp2.lat-minLat)/(maxLat-minLat))*(H-60)+30);
-    const c=colors[(sp2.day-1)%colors.length];
-    svgPins+=`<circle cx="${x}" cy="${y}" r="14" fill="${c}" stroke="white" stroke-width="2.5"/>
-      <text x="${x}" y="${y+4}" text-anchor="middle" font-size="10" font-weight="700" fill="white">${i+1}</text>`;
-    if(i<allSpots.length-1){
-      const nx=Math.round((allSpots[i+1].lng-minLng)/(maxLng-minLng)*(W-60)+30);
-      const ny=Math.round((1-(allSpots[i+1].lat-minLat)/(maxLat-minLat))*(H-60)+30);
-      if(allSpots[i].day===allSpots[i+1].day)svgPins+=`<line x1="${x}" y1="${y}" x2="${nx}" y2="${ny}" stroke="${c}" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.5"/>`;
-    }
-  });
-
-  let pinsHTML='';
-  allSpots.forEach((sp2,i)=>{
-    const c=colors[(sp2.day-1)%colors.length];
-    pinsHTML+=`<div class="map-pin-row"><div class="pin-circle" style="background:${c};">${i+1}</div><div><div class="pin-name">${sp2.name}</div><div class="pin-addr">${sp2.addr} · Day ${sp2.day}</div></div></div>`;
-  });
-
-  const q=encodeURIComponent((DN[dest]||dest)+' 일본 관광지');
-  body.innerHTML=`<div class="map-card">
-    <div class="map-header"><div class="map-title">여행 동선 지도</div><div class="map-sub">색상 구분: Day1 검정 · Day2 빨강 · Day3 파랑</div></div>
-    <div class="map-frame"><svg viewBox="0 0 ${W} ${H}" style="width:100%;height:100%;"><rect width="${W}" height="${H}" fill="#dae8f4"/><text x="${W/2}" y="${H/2}" text-anchor="middle" font-size="14" fill="#90A4AE" opacity="0.5">${DN[dest]||dest} 동선</text>${svgPins}</svg></div>
-    <div class="map-pins">${pinsHTML}</div>
-    <button class="map-btn" onclick="window.open('https://www.google.com/maps/search/${q}','_blank')">구글맵에서 전체 동선 보기 →</button>
-  </div>`;
-}
-
-function buildBudget(dest,days,solo,couple,shop,drink,yashoku,romance){
-  const body=document.getElementById('budget-body');body.innerHTML='';
-  const base={food:22000,hotel:80000,transport:8000,shopping:25000,drink:12000,sight:12000};
-  const mul=S.budget==='low'?.6:S.budget==='high'?1.5:S.budget==='any'?1.8:1.0;
-  const pax=Math.max(1,S.adult+(S.child||0)+(S.senior||0)+(S.mobility||0));
-  const food=Math.round(base.food*mul);
-  const hotel=Math.round(base.hotel*days*mul);
-  const transport=Math.round(base.transport*days);
-  const shopping=shop?Math.round(base.shopping*mul):0;
-  const drinkCost=drink?Math.round(base.drink*mul*days):0;
-  const sight=Math.round(base.sight*days);
-  const total=food*days+hotel+transport+shopping+drinkCost+sight;
-  const rate=9.1;
-
-  const rows=[
-    {icon:'🏨',cat:`숙박 (${days}박)`,amt:hotel},
-    {icon:'🍽',cat:`식사 (${days}일)`,amt:food*days},
-    {icon:'🎟',cat:'입장료·관광',amt:sight},
-    ...(shop?[{icon:'🛍',cat:'쇼핑',amt:shopping}]:[]),
-    ...(drink?[{icon:'🍺',cat:'이자카야·주류',amt:drinkCost}]:[]),
-    {icon:'🚗',cat:'교통·이동',amt:transport},
-  ];
-  const maxAmt=Math.max(...rows.map(r=>r.amt));
-  let rowsHTML=rows.map(r=>`<div class="bud-row"><div class="bud-icon">${r.icon}</div><div class="bud-cat">${r.cat}</div><div class="bud-bar-wrap"><div class="bud-bar" style="width:${Math.round(r.amt/maxAmt*100)}%"></div></div><div class="bud-amt">¥${r.amt.toLocaleString()}</div></div>`).join('');
-  const tip=S.budget==='low'?'편의점 도시락·저가 숙소로 20~30% 절약 가능해요.':S.budget==='high'?'료칸·가이세키·프리미엄 투어로 특별한 경험을 해보세요.':'JR패스 구매 여부와 현지 환전 비율도 미리 체크하세요.';
-
-  // 환율 계산기
-  body.innerHTML=`
-    <div class="budget-cards">
-      <div class="bud-card"><div class="bud-label">1인 총 예상</div><div class="bud-val">¥${Math.round(total/1000)}만</div><div class="bud-sub">₩${Math.round(total*rate/10000)}만원</div></div>
-      <div class="bud-card"><div class="bud-label">${pax}인 합계</div><div class="bud-val">¥${Math.round(total*pax/1000)}만</div><div class="bud-sub">₩${Math.round(total*pax*rate/10000)}만원</div></div>
-      <div class="bud-card"><div class="bud-label">1일 평균</div><div class="bud-val">¥${Math.round(total/days/1000)}만</div><div class="bud-sub">1인 기준</div></div>
-    </div>
-    <div class="bud-breakdown">${rowsHTML}</div>
-    <div class="exchange-card">
-      <div class="exchange-title">💱 실시간 환율 계산기</div>
-      <div class="exchange-row">
-        <input class="exchange-input" type="number" id="jpy-input" value="10000" oninput="calcExchange()">
-        <span class="exchange-unit">¥</span>
-        <span style="font-size:20px;color:#aaa;">→</span>
-        <span class="exchange-unit">₩</span>
-      </div>
-      <div class="exchange-result" id="krw-result">₩91,000</div>
-      <div class="exchange-tips">💡 환전 팁 · 공항 환전 수수료 약 2~3% · 현지 ATM 수수료 약 1% · 트래블로그/트래블월렛 카드 수수료 0% 추천!</div>
-    </div>
-    <div class="note-box">💡 ${tip}</div>`;
-
-  calcExchange();
-}
-
-function calcExchange(){
-  const jpy=parseFloat(document.getElementById('jpy-input')?.value)||0;
-  const rate=9.1;
-  const krw=Math.round(jpy*rate);
-  const el=document.getElementById('krw-result');
-  if(el)el.textContent='₩'+krw.toLocaleString();
-}
-
-function buildChecklist(aiData,dest,senior,mobility,solo,couple){
-  const body=document.getElementById('check-body');body.innerHTML='';
-  const defaultList={
-    '필수 서류':['여권 (유효기간 6개월 이상)','항공권 출력본 또는 앱','여행자 보험 증서','숙소 예약 확인서'],
-    '의류·신발':['편한 운동화 (많이 걸어요)','얇은 겉옷·카디건','갈아입을 옷 일수만큼',...(mobility||senior?['지팡이·보조기구']:[])],'
-    여행 용품':['보조배터리 (필수!)','멀티 어댑터 (일본 220V)','이어폰','우산 또는 우비','에코백'],
-    '의약품':['상비약 (해열제·지사제·소화제)','모기기피제',...(senior?['혈압약 등 지참 약물','약 리스트 메모']:[])],'
-    쇼핑 목록 (드러그스토어)':['로이히 파스','센카 폼클렌저','메구리즘 안대','용각산','비오레 UV 선크림'],
-  };
-  const list=aiData?.checklist||defaultList;
-
-  let html='<div class="check-card">';
-  Object.entries(list).forEach(([sec,items])=>{
-    html+=`<div class="check-section"><div class="check-sec-title">${sec.toUpperCase()}</div>`;
-    items.forEach(item=>{
-      const id='chk-'+Math.random().toString(36).substr(2,6);
-      html+=`<div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">${item}</div></div>`;
-    });
-    html+='</div>';
-  });
-  html+='</div>';
-  body.innerHTML=html;
-}
-
-function toggleCheck(el){
-  const box=el.querySelector('.check-box');
-  const text=el.querySelector('.check-text');
-  box.classList.toggle('checked');
-  text.classList.toggle('checked');
-}
-
-function buildJR(dest,days){
-  const body=document.getElementById('jr-body');body.innerHTML='';
-  const jrPrices={'1day':3000,'2day':4800,'3day':6100,'5day':8700,'7day':10800,'14day':17200,'21day':21800};
-  const routes={
-    hiroshima:[{from:'신오사카',to:'히로시마',price:5720,jr:true},{from:'히로시마',to:'미야지마구치',price:410,jr:true}],
-    kyoto:[{from:'신오사카',to:'교토',price:570,jr:true},{from:'교토',to:'나라',price:720,jr:false}],
-    tokyo:[{from:'하네다',to:'신주쿠',price:560,jr:false},{from:'도쿄',to:'닛코',price:2780,jr:true}],
-    osaka:[{from:'신오사카',to:'유니버설',price:180,jr:true},{from:'난바',to:'교토',price:560,jr:false}],
-    default:[{from:'도쿄',to:'목적지',price:5000,jr:true}]
-  };
-  const myRoutes=routes[dest]||routes.default;
-  const totalWithoutJR=myRoutes.reduce((s,r)=>s+r.price*2,0);
-  const jrKey=days<=2?'2day':days<=3?'3day':'5day';
-  const jrPrice=jrPrices[jrKey]*days;
-  const save=totalWithoutJR-jrPrice;
-
-  let routeHTML=myRoutes.map(r=>`<div class="bud-row"><div class="bud-icon">${r.jr?'🚄':'🚃'}</div><div class="bud-cat">${r.from}→${r.to}</div><div style="font-size:11px;color:${r.jr?'#2d6a4f':'#c84b2f'}">${r.jr?'JR 포함':'JR 미포함'}</div><div class="bud-amt">¥${r.price.toLocaleString()}</div></div>`).join('');
-
-  body.innerHTML=`
-    <div class="jr-card">
-      <div class="jr-title">🚃 JR패스 계산기</div>
-      <div class="bud-breakdown" style="margin-bottom:12px;">${routeHTML}</div>
-      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;padding:0 2px;">
-        <span>개별 구매 합계</span><strong>¥${totalWithoutJR.toLocaleString()}</strong>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:12px;padding:0 2px;">
-        <span>JR패스 (${jrKey})</span><strong>¥${jrPrice.toLocaleString()}</strong>
-      </div>
-      <div class="jr-result ${save>0?'jr-save':'jr-nosave'}">
-        ${save>0?`✅ JR패스 구매하면 ¥${save.toLocaleString()} 절약!`:`❌ JR패스보다 개별 구매가 ¥${Math.abs(save).toLocaleString()} 더 저렴해요`}
-      </div>
-    </div>
-    <div class="note-box">💡 JR패스는 한국에서 미리 구매하는 게 훨씬 저렴해요. 현지 구매 시 가격이 달라요.</div>`;
-}
-
-function shareKakao(){
-  if(window.Kakao&&window.Kakao.isInitialized()){
-    window.Kakao.Share.sendDefault({
-      objectType:'feed',
-      content:{title:document.getElementById('r-title').textContent+' 여행 일정 완성!',description:'Ryokoplan AI가 짜준 맞춤 일정이에요. 나도 만들어보기 →',imageUrl:'https://ryokoplan.com/og-image.png',link:{mobileWebUrl:'https://ryokoplan.com',webUrl:'https://ryokoplan.com'}}
-    });
-  } else {
-    const text=`${document.getElementById('r-title').textContent} 여행 일정 완성! 👉 https://ryokoplan.com`;
-    if(navigator.share){navigator.share({title:'Ryokoplan',text,url:'https://ryokoplan.com'});}
-    else{navigator.clipboard.writeText(text);alert('링크가 복사됐어요! 카카오톡에 붙여넣기 하세요 😄');}
+  function resetForm() {
+    document.getElementById('form-card').style.display='block';
+    document.getElementById('result').style.display='none';
+    document.getElementById('destination').value='';
+    hideError();
   }
-}
-
-function printPDF(){
-  window.print();
-}
+  function setLoading(on) {
+    document.getElementById('generate-btn').disabled = on;
+    document.getElementById('spinner').style.display = on?'block':'none';
+    document.getElementById('btn-icon').style.display = on?'none':'inline';
+    document.getElementById('btn-text').textContent = on?'생성 중...':'일정 만들기';
+  }
+  function showError(m) { const e=document.getElementById('error-box'); e.textContent=m; e.style.display='block'; }
+  function hideError() { document.getElementById('error-box').style.display='none'; }
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('destination').addEventListener('keydown', e => { if(e.key==='Enter') generateItinerary(); });
+  });
 </script>
-
-
- <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
-<script>Kakao.init('60a0feda84e27bf09280566483641d2d');</script>
-
 </body>
 </html>
