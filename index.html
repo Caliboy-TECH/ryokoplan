@@ -337,7 +337,7 @@ function renderItinerary(data, destination) {
   if (data.estimatedBudget) { bb.textContent='💰 '+data.estimatedBudget; bb.style.display='block'; }
   const enc = encodeURIComponent(destination);
   document.getElementById('aff-booking').href='https://www.booking.com/search.html?ss='+enc;
-  document.getElementById('aff-klook').href='https://www.klook.com/search/?query='+enc;
+  document.getElementById('aff-klook').href='https://www.klook.com/search/?query='+enc+'&aff=116117';
   document.getElementById('aff-agoda').href='https://www.agoda.com/search?q='+enc;
   document.getElementById('form-card').style.display='none';
   document.getElementById('result').style.display='block';
