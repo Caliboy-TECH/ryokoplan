@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         max_tokens: 2000,
         messages: [{
           role: 'user',
-          content: `여행 일정을 만들어줘.\n목적지: ${destination}\n기간: ${duration || '3박 4일'}\n여행 스타일: ${style || '일반 관광'}\n예산: ${budget || '적당한 예산'}\n\n반드시 아래 JSON 형식으로만 응답해. 다른 텍스트 없이 JSON만:\n{\n  "title": "여행 제목",\n  "destination": "${destination}",\n  "duration": "${duration || '3박 4일'}",\n  "days": [\n    {\n      "day": 1,\n      "title": "Day 1 소제목",\n      "activities": [\n        {\n          "time": "09:00",\n          "place": "장소명",\n          "description": "활동 설명",\n          "category": "관광",\n          "tip": ""\n        }\n      ]\n    }\n  ],\n  "tips": ["팁1", "팁2"],\n  "estimatedBudget": "예상 예산"\n}`
+          content: '여행 일정을 만들어줘.\n목적지: ' + destination + '\n기간: ' + (duration || '3박 4일') + '\n여행 스타일: ' + (style || '일반 관광') + '\n예산: ' + (budget || '적당한 예산') + '\n\n반드시 아래 JSON 형식으로만 응답해. 다른 텍스트 없이 JSON만:\n{\n  "title": "여행 제목",\n  "destination": "' + destination + '",\n  "duration": "' + (duration || '3박 4일') + '",\n  "days": [\n    {\n      "day": 1,\n      "title": "Day 1 소제목",\n      "activities": [\n        {\n          "time": "09:00",\n          "place": "장소명",\n          "description": "활동 설명",\n          "category": "관광",\n          "tip": ""\n        }\n      ]\n    }\n  ],\n  "tips": ["팁1", "팁2"],\n  "estimatedBudget": "예상 예산"\n}'
         }]
       })
     });
@@ -45,4 +45,4 @@ export default async function handler(req, res) {
     console.error('generate error:', err);
     return res.status(500).json({ error: err.message || '일정 생성 실패' });
   }
-}
+};
