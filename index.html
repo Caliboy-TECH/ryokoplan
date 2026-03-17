@@ -4,72 +4,125 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ryokoplan — AI 여행 일정 만들기</title>
+  <meta name="description" content="AI가 당신만의 여행 일정을 5초 만에 완성해 드립니다" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #6C63FF; --primary-dark: #574fd6; --bg: #f7f8fc; --card: #ffffff; --text: #1a1a2e; --muted: #6b7280; --border: #e5e7eb; --success: #10b981; --radius: 16px; --shadow: 0 4px 24px rgba(108,99,255,0.10); }
+    :root {
+      --primary: #6C63FF; --primary-dark: #574fd6; --bg: #f7f8fc;
+      --card: #ffffff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --success: #10b981; --radius: 16px;
+      --shadow: 0 4px 24px rgba(108,99,255,0.10);
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
-    header { background: linear-gradient(135deg, #6C63FF, #9b8ffc); color: white; padding: 48px 24px 56px; text-align: center; }
-    header .logo { font-size: 2rem; font-weight: 800; }
+    body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); }
+    header { background: linear-gradient(135deg, #6C63FF, #9b8ffc); color: white; padding: 36px 24px 52px; text-align: center; position: relative; }
+    header .logo { font-size: 2rem; font-weight: 800; letter-spacing: -1px; }
     header .logo span { color: #FFD166; }
-    header p { margin-top: 8px; opacity: 0.9; }
+    header p { margin-top: 6px; opacity: 0.9; font-size: 0.95rem; }
+    .lang-switcher { position: absolute; top: 16px; right: 16px; display: flex; gap: 6px; }
+    .lang-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; border-radius: 20px; padding: 4px 12px; font-size: 0.8rem; cursor: pointer; transition: background .2s; }
+    .lang-btn.active, .lang-btn:hover { background: rgba(255,255,255,0.4); }
     main { max-width: 720px; margin: -28px auto 0; padding: 0 16px 60px; }
-    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px; margin-bottom: 24px; }
-    .card h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 20px; color: var(--primary); }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px; margin-bottom: 20px; }
+    .card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; color: var(--primary); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
     .form-group.full { grid-column: 1 / -1; }
-    label { font-size: 0.85rem; font-weight: 600; color: var(--muted); }
-    input, select { border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 14px; font-size: 0.95rem; outline: none; background: #fafafa; }
+    label { font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+    input, select { border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 13px; font-size: 0.93rem; font-family: inherit; color: var(--text); background: #fafafa; outline: none; transition: border-color .2s; }
     input:focus, select:focus { border-color: var(--primary); background: white; }
-    #generate-btn { width: 100%; margin-top: 24px; padding: 16px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 12px; font-size: 1.05rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    #generate-btn { width: 100%; margin-top: 20px; padding: 15px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity .2s, transform .1s; }
+    #generate-btn:hover:not(:disabled) { opacity: 0.92; transform: translateY(-1px); }
     #generate-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin .7s linear infinite; display: none; }
+    .spinner { width: 17px; height: 17px; border: 2.5px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin .7s linear infinite; display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    #error-box { display: none; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 10px; padding: 14px; margin-top: 16px; color: #b91c1c; }
+    #error-box { display: none; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 10px; padding: 13px 15px; margin-top: 14px; font-size: 0.88rem; color: #b91c1c; }
     #result { display: none; }
-    .result-header { text-align: center; padding-bottom: 12px; border-bottom: 2px solid var(--border); margin-bottom: 24px; }
-    .result-header h3 { font-size: 1.4rem; font-weight: 800; }
-    .badge { background: #ede9fe; color: var(--primary); border-radius: 20px; padding: 3px 12px; font-size: 0.8rem; font-weight: 600; margin: 2px; display: inline-block; }
-    .day-block { margin-bottom: 28px; }
-    .day-title { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .result-header { text-align: center; padding-bottom: 14px; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+    .result-header h3 { font-size: 1.35rem; font-weight: 800; }
+    .badge { background: #ede9fe; color: var(--primary); border-radius: 20px; padding: 3px 12px; font-size: 0.78rem; font-weight: 600; margin: 2px; display: inline-block; }
+    /* 액션 버튼들 */
+    .action-bar { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; justify-content: center; }
+    .action-btn { display: flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 10px; font-size: 0.83rem; font-weight: 600; font-family: inherit; cursor: pointer; border: none; transition: opacity .2s, transform .1s; }
+    .action-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-pdf { background: #ef4444; color: white; }
+    .btn-share { background: #3b82f6; color: white; }
+    .btn-save { background: #10b981; color: white; }
+    .btn-saved-list { background: #f59e0b; color: white; }
+    /* 일정 */
+    .day-block { margin-bottom: 24px; }
+    .day-title { font-size: 0.97rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
     .day-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-    .activity { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .activity { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
     .activity:last-child { border-bottom: none; }
-    .activity-time { min-width: 52px; font-size: 0.8rem; font-weight: 700; color: var(--primary); }
-    .activity-place { font-weight: 700; }
-    .activity-desc { font-size: 0.88rem; color: var(--muted); margin-top: 3px; }
-    .activity-tip { margin-top: 6px; font-size: 0.82rem; color: var(--success); background: #ecfdf5; border-radius: 6px; padding: 4px 10px; display: inline-block; }
-    .tips-section { margin-top: 24px; display: none; }
-    .tips-section h4 { font-weight: 700; margin-bottom: 10px; }
+    .activity-time { min-width: 50px; font-size: 0.78rem; font-weight: 700; color: var(--primary); padding-top: 2px; }
+    .activity-body { flex: 1; }
+    .activity-place { font-weight: 700; font-size: 0.93rem; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .map-btn { display: inline-flex; align-items: center; gap: 3px; background: #e8f5e9; color: #2e7d32; border: none; border-radius: 6px; padding: 2px 8px; font-size: 0.73rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: background .2s; }
+    .map-btn:hover { background: #c8e6c9; }
+    .activity-desc { font-size: 0.85rem; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+    .activity-tip { margin-top: 5px; font-size: 0.8rem; color: var(--success); background: #ecfdf5; border-radius: 6px; padding: 3px 9px; display: inline-block; }
+    .tips-section { margin-top: 20px; display: none; }
+    .tips-section h4 { font-weight: 700; margin-bottom: 8px; font-size: 0.92rem; }
     .tip-item::before { content: '💡 '; }
-    .tip-item { font-size: 0.88rem; color: var(--muted); margin-bottom: 6px; }
-    .budget-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 14px; font-size: 0.88rem; color: #92400e; margin-top: 16px; display: none; }
-    .affiliate { margin-top: 24px; }
-    .affiliate h4 { font-weight: 700; margin-bottom: 12px; }
-    .aff-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-    .aff-btn { display: block; text-align: center; padding: 12px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; text-decoration: none; }
+    .tip-item { font-size: 0.85rem; color: var(--muted); margin-bottom: 5px; }
+    .budget-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 12px 15px; font-size: 0.85rem; color: #92400e; margin-top: 14px; display: none; }
+    .affiliate { margin-top: 20px; }
+    .affiliate h4 { font-weight: 700; margin-bottom: 10px; font-size: 0.92rem; }
+    .aff-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    @media (max-width: 480px) { .aff-grid { grid-column: 1fr; } }
+    .aff-btn { display: block; text-align: center; padding: 11px 8px; border-radius: 10px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: opacity .2s; font-family: inherit; }
+    .aff-btn:hover { opacity: 0.85; }
     .aff-booking { background: #003580; color: white; }
     .aff-klook { background: #FF5722; color: white; }
     .aff-agoda { background: #5392F9; color: white; }
-    #reset-btn { width: 100%; margin-top: 12px; padding: 13px; background: white; border: 2px solid var(--primary); color: var(--primary); border-radius: 12px; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
-    footer { text-align: center; padding: 24px; font-size: 0.8rem; color: var(--muted); }
+    #reset-btn { width: 100%; margin-top: 10px; padding: 12px; background: white; border: 2px solid var(--primary); color: var(--primary); border-radius: 12px; font-size: 0.93rem; font-weight: 700; font-family: inherit; cursor: pointer; transition: background .2s; }
+    #reset-btn:hover { background: #f5f3ff; }
+    /* 저장된 일정 모달 */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: white; border-radius: 16px; padding: 24px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; }
+    .modal h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+    .saved-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; cursor: pointer; transition: background .2s; }
+    .saved-item:hover { background: #f5f3ff; }
+    .saved-item-info { flex: 1; }
+    .saved-item-title { font-weight: 700; font-size: 0.9rem; }
+    .saved-item-date { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+    .saved-item-del { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 1.1rem; padding: 4px 8px; }
+    .modal-close { width: 100%; margin-top: 14px; padding: 10px; background: var(--border); border: none; border-radius: 10px; font-family: inherit; font-weight: 600; cursor: pointer; }
+    /* 공유 토스트 */
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1a1a2e; color: white; padding: 12px 24px; border-radius: 30px; font-size: 0.88rem; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity .3s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+    footer { text-align: center; padding: 20px; font-size: 0.78rem; color: var(--muted); }
+    @media print {
+      header, .lang-switcher, .action-bar, .affiliate, #reset-btn, footer { display: none !important; }
+      .card { box-shadow: none; }
+      #result { display: block !important; }
+    }
   </style>
 </head>
 <body>
 <header>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('ko')">🇰🇷 한국어</button>
+    <button class="lang-btn" onclick="setLang('en')">🇺🇸 EN</button>
+    <button class="lang-btn" onclick="setLang('ja')">🇯🇵 JP</button>
+  </div>
   <div class="logo">ryoko<span>plan</span></div>
-  <p>✈️ AI가 나만의 여행 일정을 5초 만에 완성해 드려요</p>
+  <p id="header-sub">✈️ AI가 나만의 여행 일정을 5초 만에 완성해 드려요</p>
 </header>
+
 <main>
   <div class="card" id="form-card">
-    <h2>🗺️ 어디로 떠나고 싶으세요?</h2>
+    <h2 id="form-title">🗺️ 어디로 떠나고 싶으세요?</h2>
     <div class="form-grid">
       <div class="form-group full">
-        <label>여행지 *</label>
+        <label id="lbl-dest">여행지 *</label>
         <input type="text" id="destination" placeholder="예: 도쿄, 파리, 발리, 뉴욕" />
       </div>
       <div class="form-group">
-        <label>여행 기간</label>
+        <label id="lbl-dur">여행 기간</label>
         <select id="duration">
           <option value="1박 2일">1박 2일</option>
           <option value="2박 3일">2박 3일</option>
@@ -80,7 +133,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label>여행 스타일</label>
+        <label id="lbl-style">여행 스타일</label>
         <select id="style">
           <option value="일반 관광">🏛️ 일반 관광</option>
           <option value="맛집 위주">🍜 맛집 위주</option>
@@ -91,7 +144,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label>예산</label>
+        <label id="lbl-budget">예산</label>
         <select id="budget">
           <option value="절약 여행">💰 절약 여행</option>
           <option value="적당한 예산" selected>💳 적당한 예산</option>
@@ -105,94 +158,290 @@
       <div class="spinner" id="spinner"></div>
     </button>
     <div id="error-box"></div>
+
+    <!-- 저장된 일정 보기 버튼 -->
+    <div style="text-align:center; margin-top:14px;">
+      <button class="action-btn btn-saved-list" onclick="openSavedModal()" style="margin:auto;">
+        💾 <span id="lbl-saved-list">저장된 일정 보기</span>
+      </button>
+    </div>
   </div>
+
   <div class="card" id="result">
     <div class="result-header">
       <h3 id="result-title"></h3>
-      <div id="result-meta"></div>
+      <div id="result-meta" style="margin-top:6px;"></div>
     </div>
+
+    <!-- 액션 바 -->
+    <div class="action-bar">
+      <button class="action-btn btn-pdf" onclick="downloadPDF()">📄 <span id="lbl-pdf">PDF 저장</span></button>
+      <button class="action-btn btn-share" onclick="shareItinerary()">🔗 <span id="lbl-share">공유하기</span></button>
+      <button class="action-btn btn-save" onclick="saveItinerary()">💾 <span id="lbl-save">일정 저장</span></button>
+    </div>
+
     <div id="itinerary-days"></div>
     <div class="tips-section" id="tips-section"></div>
     <div class="budget-box" id="budget-box"></div>
+
     <div class="affiliate">
-      <h4>🏨 예약하고 떠나기</h4>
+      <h4 id="lbl-book">🏨 예약하고 떠나기</h4>
       <div class="aff-grid">
         <a class="aff-btn aff-booking" id="aff-booking" href="https://www.booking.com" target="_blank">🏨 Booking.com</a>
         <a class="aff-btn aff-klook" id="aff-klook" href="https://www.klook.com" target="_blank">🎡 Klook</a>
         <a class="aff-btn aff-agoda" id="aff-agoda" href="https://www.agoda.com" target="_blank">🌙 Agoda</a>
       </div>
     </div>
-    <button id="reset-btn" onclick="resetForm()">🔄 다시 만들기</button>
+    <button id="reset-btn" onclick="resetForm()">🔄 <span id="lbl-reset">다시 만들기</span></button>
   </div>
 </main>
-<footer>© 2025 Ryokoplan</footer>
+
+<footer>© 2025 Ryokoplan · contact@ryokoplan.com</footer>
+
+<!-- 저장된 일정 모달 -->
+<div class="modal-overlay" id="saved-modal">
+  <div class="modal">
+    <h3>💾 <span id="modal-title">저장된 일정</span></h3>
+    <div id="saved-list"></div>
+    <button class="modal-close" onclick="closeSavedModal()">✕ 닫기</button>
+  </div>
+</div>
+
+<!-- 토스트 -->
+<div class="toast" id="toast"></div>
+
 <script>
-  async function generateItinerary() {
-    const destination = document.getElementById('destination').value.trim();
-    if (!destination) { showError('여행지를 입력해 주세요!'); return; }
-    setLoading(true); hideError();
-    try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          destination,
-          duration: document.getElementById('duration').value,
-          style: document.getElementById('style').value,
-          budget: document.getElementById('budget').value
-        })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || '서버 오류');
-      renderItinerary(data, destination);
-    } catch (err) {
-      showError('❌ ' + (err.message || '일정 생성 실패'));
-    } finally { setLoading(false); }
+// ── 언어 설정 ──────────────────────────────
+const LANGS = {
+  ko: {
+    headerSub: '✈️ AI가 나만의 여행 일정을 5초 만에 완성해 드려요',
+    formTitle: '🗺️ 어디로 떠나고 싶으세요?',
+    lblDest: '여행지 *', lblDur: '여행 기간', lblStyle: '여행 스타일', lblBudget: '예산',
+    btnText: '일정 만들기', btnLoading: '생성 중...',
+    lblPdf: 'PDF 저장', lblShare: '공유하기', lblSave: '일정 저장',
+    lblSavedList: '저장된 일정 보기', lblBook: '🏨 예약하고 떠나기',
+    lblReset: '다시 만들기', modalTitle: '저장된 일정',
+    mapBtn: '🗺️ 지도', tipsTitle: '✅ 여행 팁',
+    shareCopied: '✅ 링크가 복사됐어요!', saved: '✅ 일정이 저장됐어요!',
+    noSaved: '저장된 일정이 없어요', destPlaceholder: '예: 도쿄, 파리, 발리, 뉴욕',
+    errDest: '여행지를 입력해 주세요! 🗺️',
+    apiPrompt: (dest, dur, style, budget) =>
+      '여행 일정을 만들어줘.\n목적지: '+dest+'\n기간: '+dur+'\n여행 스타일: '+style+'\n예산: '+budget+'\n\n반드시 아래 JSON 형식으로만 응답해. 다른 텍스트 없이 JSON만:\n{"title":"여행 제목","destination":"'+dest+'","duration":"'+dur+'","days":[{"day":1,"title":"Day 1 소제목","activities":[{"time":"09:00","place":"장소명","description":"활동 설명","category":"관광","tip":""}]}],"tips":["팁1","팁2"],"estimatedBudget":"예상 예산"}'
+  },
+  en: {
+    headerSub: '✈️ AI creates your perfect travel itinerary in seconds',
+    formTitle: '🗺️ Where do you want to go?',
+    lblDest: 'Destination *', lblDur: 'Duration', lblStyle: 'Travel Style', lblBudget: 'Budget',
+    btnText: 'Create Itinerary', btnLoading: 'Creating...',
+    lblPdf: 'Save PDF', lblShare: 'Share', lblSave: 'Save',
+    lblSavedList: 'Saved Itineraries', lblBook: '🏨 Book & Go',
+    lblReset: 'Start Over', modalTitle: 'Saved Itineraries',
+    mapBtn: '🗺️ Map', tipsTitle: '✅ Travel Tips',
+    shareCopied: '✅ Link copied!', saved: '✅ Itinerary saved!',
+    noSaved: 'No saved itineraries', destPlaceholder: 'e.g. Tokyo, Paris, Bali, New York',
+    errDest: 'Please enter a destination! 🗺️',
+    apiPrompt: (dest, dur, style, budget) =>
+      'Create a travel itinerary.\nDestination: '+dest+'\nDuration: '+dur+'\nStyle: '+style+'\nBudget: '+budget+'\n\nRespond ONLY with this JSON format, no other text:\n{"title":"Trip title","destination":"'+dest+'","duration":"'+dur+'","days":[{"day":1,"title":"Day 1 subtitle","activities":[{"time":"09:00","place":"Place name","description":"Activity description","category":"sightseeing","tip":""}]}],"tips":["tip1","tip2"],"estimatedBudget":"estimated budget"}'
+  },
+  ja: {
+    headerSub: '✈️ AIがあなただけの旅行プランを5秒で作成します',
+    formTitle: '🗺️ どこへ行きたいですか？',
+    lblDest: '目的地 *', lblDur: '旅行期間', lblStyle: '旅行スタイル', lblBudget: '予算',
+    btnText: 'プランを作成', btnLoading: '作成中...',
+    lblPdf: 'PDF保存', lblShare: 'シェア', lblSave: '保存',
+    lblSavedList: '保存したプラン', lblBook: '🏨 予約して出発',
+    lblReset: 'やり直す', modalTitle: '保存したプラン',
+    mapBtn: '🗺️ 地図', tipsTitle: '✅ 旅のヒント',
+    shareCopied: '✅ リンクをコピーしました！', saved: '✅ プランを保存しました！',
+    noSaved: '保存したプランはありません', destPlaceholder: '例：東京、パリ、バリ、ニューヨーク',
+    errDest: '目的地を入力してください！ 🗺️',
+    apiPrompt: (dest, dur, style, budget) =>
+      '旅行プランを作って。\n目的地: '+dest+'\n期間: '+dur+'\nスタイル: '+style+'\n予算: '+budget+'\n\n以下のJSON形式のみで回答して。他のテキストなし：\n{"title":"旅行タイトル","destination":"'+dest+'","duration":"'+dur+'","days":[{"day":1,"title":"1日目サブタイトル","activities":[{"time":"09:00","place":"場所名","description":"活動説明","category":"観光","tip":""}]}],"tips":["ヒント1","ヒント2"],"estimatedBudget":"予算目安"}'
   }
+};
 
-  function renderItinerary(data, destination) {
-    document.getElementById('result-title').textContent = data.title || destination + ' 여행';
-    document.getElementById('result-meta').innerHTML = '<span class="badge">📅 ' + data.duration + '</span><span class="badge">📍 ' + (data.destination || destination) + '</span>';
-    const c = document.getElementById('itinerary-days');
-    c.innerHTML = '';
-    const icons = {'관광':'🏛️','식사':'🍽️','숙박':'🛏️','이동':'🚌','쇼핑':'🛍️','액티비티':'🎡','자연':'🌿','문화':'🎭'};
-    (data.days||[]).forEach(day => {
-      const b = document.createElement('div'); b.className = 'day-block';
-      b.innerHTML = '<div class="day-title">Day ' + day.day + ' · ' + (day.title||'') + '</div>';
-      (day.activities||[]).forEach(a => {
-        b.innerHTML += '<div class="activity"><div class="activity-time">' + (a.time||'') + '</div><div><div class="activity-place">' + (icons[a.category]||'📌') + ' ' + a.place + '</div><div class="activity-desc">' + a.description + '</div>' + (a.tip ? '<div class="activity-tip">💚 ' + a.tip + '</div>' : '') + '</div></div>';
-      });
-      c.appendChild(b);
+let currentLang = 'ko';
+let currentData = null;
+
+function setLang(lang) {
+  currentLang = lang;
+  const L = LANGS[lang];
+  document.querySelectorAll('.lang-btn').forEach((b,i) => b.classList.toggle('active', ['ko','en','ja'][i]===lang));
+  document.getElementById('header-sub').textContent = L.headerSub;
+  document.getElementById('form-title').textContent = L.formTitle;
+  document.getElementById('lbl-dest').textContent = L.lblDest;
+  document.getElementById('lbl-dur').textContent = L.lblDur;
+  document.getElementById('lbl-style').textContent = L.lblStyle;
+  document.getElementById('lbl-budget').textContent = L.lblBudget;
+  document.getElementById('btn-text').textContent = L.btnText;
+  document.getElementById('lbl-pdf').textContent = L.lblPdf;
+  document.getElementById('lbl-share').textContent = L.lblShare;
+  document.getElementById('lbl-save').textContent = L.lblSave;
+  document.getElementById('lbl-saved-list').textContent = L.lblSavedList;
+  document.getElementById('lbl-book').textContent = L.lblBook;
+  document.getElementById('lbl-reset').textContent = L.lblReset;
+  document.getElementById('modal-title').textContent = L.modalTitle;
+  document.getElementById('destination').placeholder = L.destPlaceholder;
+}
+
+const CATEGORY_ICONS = {'관광':'🏛️','식사':'🍽️','숙박':'🛏️','이동':'🚌','쇼핑':'🛍️','액티비티':'🎡','자연':'🌿','문화':'🎭','sightseeing':'🏛️','food':'🍽️','accommodation':'🛏️','transport':'🚌','shopping':'🛍️','activity':'🎡','nature':'🌿','culture':'🎭','観光':'🏛️','食事':'🍽️','宿泊':'🛏️','移動':'🚌'};
+
+// ── 일정 생성 ──────────────────────────────
+async function generateItinerary() {
+  const destination = document.getElementById('destination').value.trim();
+  const L = LANGS[currentLang];
+  if (!destination) { showError(L.errDest); document.getElementById('destination').focus(); return; }
+  const duration = document.getElementById('duration').value;
+  const style = document.getElementById('style').value;
+  const budget = document.getElementById('budget').value;
+  setLoading(true); hideError();
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ destination, duration, style, budget, lang: currentLang, prompt: L.apiPrompt(destination, duration, style, budget) })
     });
-    const t = document.getElementById('tips-section');
-    if (data.tips&&data.tips.length) { t.innerHTML = '<h4>✅ 여행 팁</h4>' + data.tips.map(x=>'<div class="tip-item">'+x+'</div>').join(''); t.style.display='block'; }
-    const bb = document.getElementById('budget-box');
-    if (data.estimatedBudget) { bb.textContent = '💰 ' + data.estimatedBudget; bb.style.display='block'; }
-    const enc = encodeURIComponent(destination);
-    document.getElementById('aff-booking').href = 'https://www.booking.com/search.html?ss=' + enc;
-    document.getElementById('aff-klook').href = 'https://www.klook.com/search/?query=' + enc;
-    document.getElementById('aff-agoda').href = 'https://www.agoda.com/search?q=' + enc;
-    document.getElementById('form-card').style.display = 'none';
-    document.getElementById('result').style.display = 'block';
-  }
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Server error');
+    currentData = data;
+    renderItinerary(data, destination);
+  } catch (err) {
+    showError('❌ ' + (err.message || '일정 생성 실패'));
+  } finally { setLoading(false); }
+}
 
-  function resetForm() {
-    document.getElementById('form-card').style.display='block';
-    document.getElementById('result').style.display='none';
-    document.getElementById('destination').value='';
-    hideError();
-  }
-  function setLoading(on) {
-    document.getElementById('generate-btn').disabled = on;
-    document.getElementById('spinner').style.display = on?'block':'none';
-    document.getElementById('btn-icon').style.display = on?'none':'inline';
-    document.getElementById('btn-text').textContent = on?'생성 중...':'일정 만들기';
-  }
-  function showError(m) { const e=document.getElementById('error-box'); e.textContent=m; e.style.display='block'; }
-  function hideError() { document.getElementById('error-box').style.display='none'; }
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('destination').addEventListener('keydown', e => { if(e.key==='Enter') generateItinerary(); });
+// ── 렌더링 ──────────────────────────────
+function renderItinerary(data, destination) {
+  const L = LANGS[currentLang];
+  document.getElementById('result-title').textContent = data.title || destination;
+  document.getElementById('result-meta').innerHTML =
+    '<span class="badge">📅 '+data.duration+'</span><span class="badge">📍 '+(data.destination||destination)+'</span>';
+  const c = document.getElementById('itinerary-days');
+  c.innerHTML = '';
+  (data.days||[]).forEach(day => {
+    const b = document.createElement('div'); b.className = 'day-block';
+    b.innerHTML = '<div class="day-title">Day '+day.day+' · '+(day.title||'')+'</div>';
+    (day.activities||[]).forEach(a => {
+      const icon = CATEGORY_ICONS[a.category]||'📌';
+      const mapUrl = 'https://www.google.com/maps/search/'+encodeURIComponent(a.place+' '+(data.destination||destination));
+      b.innerHTML += '<div class="activity"><div class="activity-time">'+(a.time||'')+'</div><div class="activity-body"><div class="activity-place">'+icon+' '+a.place+'<a class="map-btn" href="'+mapUrl+'" target="_blank">'+L.mapBtn+'</a></div><div class="activity-desc">'+a.description+'</div>'+(a.tip?'<div class="activity-tip">💚 '+a.tip+'</div>':'')+'</div></div>';
+    });
+    c.appendChild(b);
   });
+  const t = document.getElementById('tips-section');
+  if (data.tips&&data.tips.length) {
+    t.innerHTML = '<h4>'+L.tipsTitle+'</h4>'+data.tips.map(x=>'<div class="tip-item">'+x+'</div>').join('');
+    t.style.display='block';
+  }
+  const bb = document.getElementById('budget-box');
+  if (data.estimatedBudget) { bb.textContent='💰 '+data.estimatedBudget; bb.style.display='block'; }
+  const enc = encodeURIComponent(destination);
+  document.getElementById('aff-booking').href='https://www.booking.com/search.html?ss='+enc;
+  document.getElementById('aff-klook').href='https://www.klook.com/search/?query='+enc;
+  document.getElementById('aff-agoda').href='https://www.agoda.com/search?q='+enc;
+  document.getElementById('form-card').style.display='none';
+  document.getElementById('result').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── PDF 저장 ──────────────────────────────
+function downloadPDF() {
+  window.print();
+}
+
+// ── 공유하기 (URL 복사) ──────────────────────────────
+function shareItinerary() {
+  if (!currentData) return;
+  const encoded = btoa(encodeURIComponent(JSON.stringify(currentData)));
+  const url = window.location.origin + '?share=' + encoded;
+  navigator.clipboard.writeText(url).then(() => {
+    showToast(LANGS[currentLang].shareCopied);
+  }).catch(() => {
+    prompt('아래 링크를 복사하세요:', url);
+  });
+}
+
+// ── 일정 저장 (로컬) ──────────────────────────────
+function saveItinerary() {
+  if (!currentData) return;
+  const saves = JSON.parse(localStorage.getItem('ryoko_saves')||'[]');
+  const item = { id: Date.now(), title: currentData.title, destination: currentData.destination, duration: currentData.duration, date: new Date().toLocaleDateString(), data: currentData };
+  saves.unshift(item);
+  if (saves.length > 20) saves.pop();
+  localStorage.setItem('ryoko_saves', JSON.stringify(saves));
+  showToast(LANGS[currentLang].saved);
+}
+
+// ── 저장된 일정 모달 ──────────────────────────────
+function openSavedModal() {
+  const saves = JSON.parse(localStorage.getItem('ryoko_saves')||'[]');
+  const list = document.getElementById('saved-list');
+  const L = LANGS[currentLang];
+  if (!saves.length) { list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px;">'+L.noSaved+'</p>'; }
+  else {
+    list.innerHTML = saves.map(s =>
+      '<div class="saved-item" onclick="loadSaved('+s.id+')"><div class="saved-item-info"><div class="saved-item-title">'+s.title+'</div><div class="saved-item-date">'+s.date+' · '+s.duration+'</div></div><button class="saved-item-del" onclick="deleteSaved(event,'+s.id+')">🗑️</button></div>'
+    ).join('');
+  }
+  document.getElementById('saved-modal').classList.add('open');
+}
+
+function closeSavedModal() {
+  document.getElementById('saved-modal').classList.remove('open');
+}
+
+function loadSaved(id) {
+  const saves = JSON.parse(localStorage.getItem('ryoko_saves')||'[]');
+  const item = saves.find(s=>s.id===id);
+  if (item) { currentData=item.data; renderItinerary(item.data, item.destination); closeSavedModal(); }
+}
+
+function deleteSaved(e, id) {
+  e.stopPropagation();
+  let saves = JSON.parse(localStorage.getItem('ryoko_saves')||'[]');
+  saves = saves.filter(s=>s.id!==id);
+  localStorage.setItem('ryoko_saves', JSON.stringify(saves));
+  openSavedModal();
+}
+
+// ── 공유 URL 자동 로드 ──────────────────────────────
+function checkShareUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const share = params.get('share');
+  if (share) {
+    try {
+      const data = JSON.parse(decodeURIComponent(atob(share)));
+      currentData = data;
+      renderItinerary(data, data.destination||'');
+    } catch(e) {}
+  }
+}
+
+// ── 유틸 ──────────────────────────────
+function resetForm() {
+  document.getElementById('form-card').style.display='block';
+  document.getElementById('result').style.display='none';
+  document.getElementById('destination').value='';
+  hideError(); currentData=null;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function setLoading(on) {
+  document.getElementById('generate-btn').disabled=on;
+  document.getElementById('spinner').style.display=on?'block':'none';
+  document.getElementById('btn-icon').style.display=on?'none':'inline';
+  document.getElementById('btn-text').textContent=on?LANGS[currentLang].btnLoading:LANGS[currentLang].btnText;
+}
+function showError(m){const e=document.getElementById('error-box');e.textContent=m;e.style.display='block';}
+function hideError(){document.getElementById('error-box').style.display='none';}
+function showToast(msg) {
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('destination').addEventListener('keydown', e=>{if(e.key==='Enter')generateItinerary();});
+  checkShareUrl();
+});
 </script>
 </body>
 </html>
