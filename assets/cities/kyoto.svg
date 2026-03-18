@@ -1,1 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none"><rect width="1600" height="900" rx="48" fill="#F6F0E7"/><rect width="1600" height="900" fill="url(#g)"/><circle cx="1300" cy="150" r="120" fill="#E8B86D" fill-opacity=".88"/><rect x="150" y="210" width="140" height="410" rx="28" fill="#8BB174" fill-opacity=".9"/><rect x="330" y="120" width="180" height="500" rx="28" fill="#ffffff" fill-opacity=".12" stroke="#ffffff" stroke-opacity=".28"/><rect x="540" y="250" width="160" height="370" rx="28" fill="#294B3A" fill-opacity=".88"/><rect x="760" y="160" width="220" height="460" rx="32" fill="#ffffff" fill-opacity=".12" stroke="#ffffff" stroke-opacity=".24"/><rect x="1030" y="290" width="170" height="330" rx="28" fill="#8BB174" fill-opacity=".82"/><rect x="1240" y="230" width="150" height="390" rx="28" fill="#294B3A" fill-opacity=".78"/><rect x="0" y="660" width="1600" height="240" fill="url(#fade)"/><text x="130" y="735" fill="#fffaf2" font-size="126" font-family="Inter, Arial, sans-serif" font-weight="800">Kyoto</text><text x="135" y="798" fill="#F6E8D6" font-size="36" font-family="Inter, Arial, sans-serif" font-weight="600">Ryokoplan city guide</text><defs><linearGradient id="g" x1="160" y1="80" x2="1440" y2="820" gradientUnits="userSpaceOnUse"><stop stop-color="#294B3A"/><stop offset=".52" stop-color="#8BB174"/><stop offset="1" stop-color="#102A43"/></linearGradient><linearGradient id="fade" x1="800" y1="660" x2="800" y2="900" gradientUnits="userSpaceOnUse"><stop stop-color="#102A43" stop-opacity="0"/><stop offset="1" stop-color="#102A43" stop-opacity=".72"/></linearGradient></defs></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#3A6B52"/>
+    <stop offset="1" stop-color="#102B3A"/>
+  </linearGradient>
+  <linearGradient id="fade" x1="0" y1="520" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#0B2236" stop-opacity="0"/>
+    <stop offset="1" stop-color="#0B2236" stop-opacity=".76"/>
+  </linearGradient>
+</defs>
+<rect width="1600" height="900" rx="54" fill="url(#sky)"/>
+<circle cx="1290" cy="150" r="115" fill="#E8C36A" fill-opacity=".92"/>
+
+<path d="M0 520C160 470 320 460 470 490C650 527 850 604 1080 568C1250 540 1420 470 1600 500V900H0V520Z" fill="#102B3A" fill-opacity=".3"/>
+<path d="M0 590C210 520 370 540 540 588C720 638 930 692 1160 650C1345 616 1490 560 1600 575V900H0V590Z" fill="#224A38" fill-opacity=".48"/>
+<path d="M230 600H420L392 560H258L230 600Z" fill="#EEDFC8"/>
+<rect x="272" y="524" width="106" height="38" fill="#F3E7D8"/>
+<path d="M250 524H400L360 490H290L250 524Z" fill="#D88653"/>
+<path d="M264 486H386L352 454H298L264 486Z" fill="#C66F4E"/>
+<path d="M282 450H368L342 420H308L282 450Z" fill="#B35B48"/>
+<rect x="318" y="376" width="14" height="44" fill="#F0E5D5"/>
+<path d="M1060 620H1180V500H1208V620H1328V648H1208V760H1180V648H1060V620Z" fill="#D96F4F"/>
+<path d="M1086 500H1156V474H1232V500H1302V528H1232V760H1156V528H1086V500Z" fill="#E2835E"/>
+<path d="M100 670C290 610 400 632 546 678C700 728 842 752 1030 720" stroke="#F8E6C8" stroke-opacity=".55" stroke-width="14" stroke-linecap="round"/>
+
+<rect y="620" width="1600" height="280" fill="url(#fade)"/>
+<text x="104" y="748" fill="#FFF9F0" font-size="118" font-family="Inter, Arial, sans-serif" font-weight="800">Kyoto</text>
+<text x="108" y="802" fill="#F7E6CF" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">pagoda · shrine path · quiet mornings</text>
+</svg>

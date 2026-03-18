@@ -1,1 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none"><rect width="1600" height="900" rx="48" fill="#F6F0E7"/><rect width="1600" height="900" fill="url(#g)"/><circle cx="1300" cy="150" r="120" fill="#F1C36B" fill-opacity=".88"/><rect x="150" y="210" width="140" height="410" rx="28" fill="#52B2D8" fill-opacity=".9"/><rect x="330" y="120" width="180" height="500" rx="28" fill="#ffffff" fill-opacity=".12" stroke="#ffffff" stroke-opacity=".28"/><rect x="540" y="250" width="160" height="370" rx="28" fill="#1E4F76" fill-opacity=".88"/><rect x="760" y="160" width="220" height="460" rx="32" fill="#ffffff" fill-opacity=".12" stroke="#ffffff" stroke-opacity=".24"/><rect x="1030" y="290" width="170" height="330" rx="28" fill="#52B2D8" fill-opacity=".82"/><rect x="1240" y="230" width="150" height="390" rx="28" fill="#1E4F76" fill-opacity=".78"/><rect x="0" y="660" width="1600" height="240" fill="url(#fade)"/><text x="130" y="735" fill="#fffaf2" font-size="126" font-family="Inter, Arial, sans-serif" font-weight="800">Busan</text><text x="135" y="798" fill="#F6E8D6" font-size="36" font-family="Inter, Arial, sans-serif" font-weight="600">Ryokoplan city guide</text><defs><linearGradient id="g" x1="160" y1="80" x2="1440" y2="820" gradientUnits="userSpaceOnUse"><stop stop-color="#1E4F76"/><stop offset=".52" stop-color="#52B2D8"/><stop offset="1" stop-color="#102A43"/></linearGradient><linearGradient id="fade" x1="800" y1="660" x2="800" y2="900" gradientUnits="userSpaceOnUse"><stop stop-color="#102A43" stop-opacity="0"/><stop offset="1" stop-color="#102A43" stop-opacity=".72"/></linearGradient></defs></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#47C0D8"/>
+    <stop offset="1" stop-color="#12304A"/>
+  </linearGradient>
+  <linearGradient id="fade" x1="0" y1="520" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#0B2236" stop-opacity="0"/>
+    <stop offset="1" stop-color="#0B2236" stop-opacity=".76"/>
+  </linearGradient>
+</defs>
+<rect width="1600" height="900" rx="54" fill="url(#sky)"/>
+<circle cx="1290" cy="150" r="115" fill="#FFBC77" fill-opacity=".92"/>
+
+<rect x="0" y="620" width="1600" height="280" fill="#0B2740" fill-opacity=".32"/>
+<path d="M0 620C190 596 314 654 468 650C666 646 812 580 1030 602C1210 620 1360 680 1600 650V900H0V620Z" fill="#0F3555" fill-opacity=".72"/>
+<path d="M170 620C240 548 310 520 382 520C454 520 522 548 592 620" stroke="#EAF7FF" stroke-width="18" stroke-linecap="round"/>
+<path d="M314 620V410" stroke="#EAF7FF" stroke-width="14" stroke-linecap="round"/>
+<path d="M448 620V438" stroke="#EAF7FF" stroke-width="14" stroke-linecap="round"/>
+<path d="M110 744C260 718 370 754 480 744C600 732 708 692 852 708C986 724 1090 774 1220 760C1336 748 1434 710 1520 720" stroke="#89E7FF" stroke-opacity=".7" stroke-width="10" stroke-linecap="round"/>
+<rect x="970" y="300" width="90" height="250" rx="16" fill="#1E4F79"/>
+<rect x="1084" y="250" width="118" height="300" rx="16" fill="#5ED0E6"/>
+<rect x="1232" y="205" width="105" height="345" rx="16" fill="#244F78"/>
+<rect x="170" y="462" width="74" height="74" rx="12" fill="#FFB26D"/>
+<rect x="250" y="426" width="86" height="110" rx="12" fill="#F18C61"/>
+<rect x="346" y="450" width="72" height="86" rx="12" fill="#F6D07D"/>
+<rect x="426" y="410" width="96" height="126" rx="12" fill="#74D1BD"/>
+
+<rect y="620" width="1600" height="280" fill="url(#fade)"/>
+<text x="104" y="748" fill="#FFF9F0" font-size="118" font-family="Inter, Arial, sans-serif" font-weight="800">Busan</text>
+<text x="108" y="802" fill="#F7E6CF" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">bridge · market coast · colorful hillside</text>
+</svg>

@@ -1,1 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none"><rect width="1600" height="900" rx="48" fill="#F6F0E7"/><rect width="1600" height="900" fill="url(#g)"/><circle cx="1300" cy="150" r="120" fill="#F0A963" fill-opacity=".88"/><rect x="150" y="210" width="140" height="410" rx="28" fill="#57B6A4" fill-opacity=".9"/><rect x="330" y="120" width="180" height="500" rx="28" fill="#ffffff" fill-opacity=".12" stroke="#ffffff" stroke-opacity=".28"/><rect x="540" y="250" width="160" height="370" rx="28" fill="#1B5670" fill-opacity=".88"/><rect x="760" y="160" width="220" height="460" rx="32" fill="#ffffff" fill-opacity=".12" stroke="#ffffff" stroke-opacity=".24"/><rect x="1030" y="290" width="170" height="330" rx="28" fill="#57B6A4" fill-opacity=".82"/><rect x="1240" y="230" width="150" height="390" rx="28" fill="#1B5670" fill-opacity=".78"/><rect x="0" y="660" width="1600" height="240" fill="url(#fade)"/><text x="130" y="735" fill="#fffaf2" font-size="126" font-family="Inter, Arial, sans-serif" font-weight="800">Fukuoka</text><text x="135" y="798" fill="#F6E8D6" font-size="36" font-family="Inter, Arial, sans-serif" font-weight="600">Ryokoplan city guide</text><defs><linearGradient id="g" x1="160" y1="80" x2="1440" y2="820" gradientUnits="userSpaceOnUse"><stop stop-color="#1B5670"/><stop offset=".52" stop-color="#57B6A4"/><stop offset="1" stop-color="#102A43"/></linearGradient><linearGradient id="fade" x1="800" y1="660" x2="800" y2="900" gradientUnits="userSpaceOnUse"><stop stop-color="#102A43" stop-opacity="0"/><stop offset="1" stop-color="#102A43" stop-opacity=".72"/></linearGradient></defs></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#5DC2C7"/>
+    <stop offset="1" stop-color="#15324C"/>
+  </linearGradient>
+  <linearGradient id="fade" x1="0" y1="520" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#0B2236" stop-opacity="0"/>
+    <stop offset="1" stop-color="#0B2236" stop-opacity=".76"/>
+  </linearGradient>
+</defs>
+<rect width="1600" height="900" rx="54" fill="url(#sky)"/>
+<circle cx="1290" cy="150" r="115" fill="#FFBB6A" fill-opacity=".92"/>
+
+<rect x="0" y="520" width="1600" height="180" fill="#12344F" fill-opacity=".34"/>
+<rect x="120" y="360" width="240" height="170" rx="20" fill="#F5E5CB"/>
+<path d="M102 360H378L332 312H148L102 360Z" fill="#D88552"/>
+<rect x="150" y="388" width="36" height="108" rx="8" fill="#2F7EA1"/><rect x="274" y="388" width="36" height="108" rx="8" fill="#2F7EA1"/>
+<rect x="540" y="170" width="200" height="430" rx="24" fill="#7FD8EE" fill-opacity=".25" stroke="#D7F9FF" stroke-opacity=".36"/>
+<rect x="760" y="260" width="150" height="340" rx="20" fill="#26547E"/>
+<rect x="970" y="220" width="180" height="380" rx="22" fill="#6AC8D5"/>
+<rect x="1250" y="140" width="28" height="460" rx="14" fill="#EAF9FF"/>
+<rect x="1216" y="140" width="96" height="24" rx="12" fill="#EAF9FF"/>
+<circle cx="1264" cy="110" r="18" fill="#EAF9FF"/>
+<path d="M0 720C180 690 300 742 456 734C650 724 826 674 1000 688C1176 702 1328 760 1600 736" stroke="#89ECF0" stroke-opacity=".8" stroke-width="10" stroke-linecap="round"/>
+
+<rect y="620" width="1600" height="280" fill="url(#fade)"/>
+<text x="104" y="748" fill="#FFF9F0" font-size="118" font-family="Inter, Arial, sans-serif" font-weight="800">Fukuoka</text>
+<text x="108" y="802" fill="#F7E6CF" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">yatai food stalls · canal city · easy waterfront</text>
+</svg>

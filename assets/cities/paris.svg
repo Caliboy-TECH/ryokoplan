@@ -1,1 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none"><rect width="1600" height="900" rx="48" fill="#F6F0E7"/><rect width="1600" height="900" fill="url(#g)"/><circle cx="1300" cy="150" r="120" fill="#F2C38B" fill-opacity=".88"/><rect x="150" y="210" width="140" height="410" rx="28" fill="#8BB8D8" fill-opacity=".9"/><rect x="330" y="120" width="180" height="500" rx="28" fill="#ffffff" fill-opacity=".12" stroke="#ffffff" stroke-opacity=".28"/><rect x="540" y="250" width="160" height="370" rx="28" fill="#355C7D" fill-opacity=".88"/><rect x="760" y="160" width="220" height="460" rx="32" fill="#ffffff" fill-opacity=".12" stroke="#ffffff" stroke-opacity=".24"/><rect x="1030" y="290" width="170" height="330" rx="28" fill="#8BB8D8" fill-opacity=".82"/><rect x="1240" y="230" width="150" height="390" rx="28" fill="#355C7D" fill-opacity=".78"/><rect x="0" y="660" width="1600" height="240" fill="url(#fade)"/><text x="130" y="735" fill="#fffaf2" font-size="126" font-family="Inter, Arial, sans-serif" font-weight="800">Paris</text><text x="135" y="798" fill="#F6E8D6" font-size="36" font-family="Inter, Arial, sans-serif" font-weight="600">Ryokoplan city guide</text><defs><linearGradient id="g" x1="160" y1="80" x2="1440" y2="820" gradientUnits="userSpaceOnUse"><stop stop-color="#355C7D"/><stop offset=".52" stop-color="#8BB8D8"/><stop offset="1" stop-color="#102A43"/></linearGradient><linearGradient id="fade" x1="800" y1="660" x2="800" y2="900" gradientUnits="userSpaceOnUse"><stop stop-color="#102A43" stop-opacity="0"/><stop offset="1" stop-color="#102A43" stop-opacity=".72"/></linearGradient></defs></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#8A7AC6"/>
+    <stop offset="1" stop-color="#16324A"/>
+  </linearGradient>
+  <linearGradient id="fade" x1="0" y1="520" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#0B2236" stop-opacity="0"/>
+    <stop offset="1" stop-color="#0B2236" stop-opacity=".76"/>
+  </linearGradient>
+</defs>
+<rect width="1600" height="900" rx="54" fill="url(#sky)"/>
+<circle cx="1290" cy="150" r="115" fill="#FFCC82" fill-opacity=".92"/>
+
+<rect x="0" y="540" width="1600" height="160" fill="#153149" fill-opacity=".34"/>
+<path d="M1120 610H1240L1204 506H1156L1120 610Z" fill="#F0E5D9"/>
+<path d="M1148 506H1212L1180 410L1148 506Z" fill="#E4D4C5"/>
+<path d="M1162 410H1198L1180 330L1162 410Z" fill="#DBC7B6"/>
+<path d="M1170 330H1190L1180 250L1170 330Z" fill="#D1B9A4"/>
+<rect x="220" y="260" width="200" height="300" rx="18" fill="#85D9F4" fill-opacity=".24" stroke="#E4F8FF" stroke-opacity=".3"/>
+<rect x="450" y="220" width="170" height="340" rx="18" fill="#2B567D"/>
+<rect x="660" y="170" width="230" height="390" rx="22" fill="#8ACCE5" fill-opacity=".22" stroke="#E4F8FF" stroke-opacity=".3"/>
+<path d="M0 700H1600" stroke="#F8E8D1" stroke-opacity=".48" stroke-width="16"/>
+<path d="M150 700C260 640 340 640 430 700" stroke="#F6E4CB" stroke-width="10" stroke-linecap="round"/>
+<path d="M1330 700C1420 642 1490 640 1570 700" stroke="#F6E4CB" stroke-width="10" stroke-linecap="round"/>
+
+<rect y="620" width="1600" height="280" fill="url(#fade)"/>
+<text x="104" y="748" fill="#FFF9F0" font-size="118" font-family="Inter, Arial, sans-serif" font-weight="800">Paris</text>
+<text x="108" y="802" fill="#F7E6CF" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">museums · walks · riverside cafés</text>
+</svg>
