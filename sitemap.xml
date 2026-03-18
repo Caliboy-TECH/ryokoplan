@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://ryokoplan.com/</loc></url>
-  <url><loc>https://ryokoplan.com/blog</loc></url>
-  <url><loc>https://ryokoplan.com/blog/tokyo-travel-guide</loc></url>
-  <url><loc>https://ryokoplan.com/blog/osaka-travel-guide</loc></url>
-  <url><loc>https://ryokoplan.com/blog/kyoto-travel-guide</loc></url>
-  <url><loc>https://ryokoplan.com/blog/seoul-travel-guide</loc></url>
-  <url><loc>https://ryokoplan.com/blog/busan-travel-guide</loc></url>
-  <url><loc>https://ryokoplan.com/blog/fukuoka-travel-guide</loc></url>
-  <url><loc>https://ryokoplan.com/blog/paris-travel-guide</loc></url>
+  <url><loc>https://ryokoplan.com/magazine</loc></url>
+  <url><loc>https://ryokoplan.com/my-trips</loc></url>
 </urlset>

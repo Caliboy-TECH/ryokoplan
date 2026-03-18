@@ -1,10 +1,7 @@
 {
+  "cleanUrls": true,
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/blog", "destination": "/blog/index.html" },
-    { "source": "/blog/tokyo-travel-guide", "destination": "/blog/tokyo-travel-guide/index.html" },
-    { "source": "/blog/osaka-travel-guide", "destination": "/blog/osaka-travel-guide/index.html" },
-    { "source": "/blog/paris-travel-guide", "destination": "/blog/paris-travel-guide/index.html" },
-    { "source": "/((?!api/|blog/|assets/|robots.txt|sitemap.xml).*)", "destination": "/index.html" }
+    { "source": "/magazine", "destination": "/magazine/index.html" },
+    { "source": "/my-trips", "destination": "/my-trips/index.html" }
   ]
 }
