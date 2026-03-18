@@ -75,8 +75,9 @@ window.RyokoPlanner = (() => {
     qs('resultDays').innerHTML = dayHtml || '<div class="summary-line">Sample trip ready</div>';
     const budget = data.budgetBreakdown || {};
     const entries = Array.isArray(budget) ? budget.map(x => [x.category, x.amount]) : Object.entries(budget);
-    qs('budgetList').innerHTML = entries.map(([k,v]) => `<div class="summary-line"><span>${k}</span><span>${v}</span></div>`).join('');
-    qs('checklistList').innerHTML = (data.checklist || []).map(item => `<div class="summary-line"><span>${item}</span><span>✓</span></div>`).join('');
+    qs('budgetList').innerHTML = (entries.length ? entries : Object.entries(samplePlans.tokyo.budgetBreakdown)).map(([k,v]) => `<div class="summary-line"><span>${k}</span><span>${v}</span></div>`).join('');
+    const checklist = (data.checklist || []).length ? data.checklist : samplePlans.tokyo.checklist;
+    qs('checklistList').innerHTML = checklist.map(item => `<div class="summary-line"><span>${item}</span><span>✓</span></div>`).join('');
     window.currentTripPayload = { ...readForm(), planData:data, title:data.title || data.destination };
     window.RyokoStorage.addRecentTrip({ ...window.currentTripPayload, destination:data.destination || readForm().destination });
   }
