@@ -142,3 +142,39 @@ textarea{min-height:92px;resize:vertical}
   .form-grid,.option-grid,.city-grid,.samples-grid,.tips-grid,.trips-grid,.story-grid{grid-template-columns:1fr}
   .route-card{max-width:160px}
 }
+
+.result-hero-card{padding-bottom:20px}
+.result-title-wrap{display:grid;gap:4px}
+.summary-line-lg{padding:14px 16px;font-size:16px;background:linear-gradient(180deg,#fff8f0 0%,#fffdf9 100%)}
+.result-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.meta-card{padding:14px;border-radius:18px;background:var(--surface-2);border:1px solid var(--line)}
+.meta-card .meta-label{display:block;font-size:12px;font-weight:800;color:#9a734b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.meta-card .meta-value{display:block;font-size:15px;font-weight:800;line-height:1.45}
+.result-section-head{margin-bottom:10px}
+.result-split-grid{display:grid;gap:12px}
+.day-card-list{display:grid;gap:12px}
+.day-card{border:1px solid var(--line);border-radius:22px;padding:16px;background:linear-gradient(180deg,#fffdf9 0%,#fff8f0 100%)}
+.day-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
+.day-badge{display:inline-flex;align-items:center;justify-content:center;min-width:68px;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:800;color:#9a734b}
+.day-title{margin:0;font-size:19px;letter-spacing:-.03em}
+.day-intro{margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.65}
+.place-list{display:grid;gap:10px;margin-top:14px}
+.place-item{display:grid;grid-template-columns:auto 1fr;gap:10px;padding:12px;border-radius:16px;background:#fff;border:1px solid rgba(232,223,209,.9)}
+.place-index{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#fff5eb;border:1px solid #f4d6bc;font-size:12px;font-weight:800;color:#b96732}
+.place-name{font-weight:800;font-size:14px;line-height:1.45}
+.place-reason{margin-top:4px;color:var(--muted);font-size:13px;line-height:1.55}
+.day-tip{margin-top:12px;padding:12px 13px;border-radius:16px;background:#edf3f7;color:var(--secondary);font-size:13px;line-height:1.6}
+.tip-card-line,.budget-card-line,.check-item{display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:16px;background:var(--surface-2);border:1px solid rgba(232,223,209,.8)}
+.tip-icon,.check-icon{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:800;flex:0 0 auto}
+.tip-text,.check-text{line-height:1.6;font-size:14px}
+.budget-card-line{justify-content:space-between;align-items:center}
+.budget-card-line strong{font-size:14px}
+.budget-card-line span:last-child{font-weight:800}
+.checklist-grid{display:grid;gap:10px}
+@media (min-width:760px){
+  .result-split-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:759px){
+  .result-meta-grid{grid-template-columns:1fr}
+  .day-card-top{flex-direction:column}
+}

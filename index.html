@@ -92,29 +92,63 @@
         </div>
 
         <div class="result-wrap">
-          <div class="example-card">
+          <div class="example-card result-hero-card">
             <div class="section-head">
               <div>
                 <h2 class="section-title" data-t="planner.exampleTitle">이런 식으로 여행이 만들어져요</h2>
                 <p class="section-desc" data-t="planner.exampleDesc">처음 써보더라도 바로 감이 오도록, 예시 일정 하나를 먼저 보여드릴게요.</p>
               </div>
             </div>
-            <div class="summary-line"><strong id="resultTitle">Tokyo · 3N4D · Couple · Local Mode</strong></div>
-            <p id="resultSummary" class="section-desc" style="margin:10px 0 0">대표 지역과 조용한 동네를 균형 있게 엮어, 너무 빡빡하지 않으면서도 도쿄다운 흐름을 느낄 수 있는 일정이에요.</p>
-            <div id="resultDays" class="example-summary"></div>
+            <div class="result-title-wrap">
+              <div class="summary-line summary-line-lg"><strong id="resultTitle">Tokyo · 3N4D · Couple · Local Mode</strong></div>
+              <p id="resultSummary" class="section-desc" style="margin:10px 0 0">대표 지역과 조용한 동네를 균형 있게 엮어, 너무 빡빡하지 않으면서도 도쿄다운 흐름을 느낄 수 있는 일정이에요.</p>
+            </div>
+            <div id="resultMeta" class="result-meta-grid"></div>
             <div class="cta-row">
               <button id="exampleBtn" class="secondary-btn" data-t="planner.exampleBtn">이 예시로 시작하기</button>
             </div>
           </div>
 
           <div class="example-card">
-            <h3 class="section-title" data-t="planner.budgetTitle">예상 예산</h3>
-            <div id="budgetList" class="example-summary"></div>
+            <div class="section-head result-section-head">
+              <div>
+                <h3 class="section-title" data-t="planner.planDaysTitle">Day by Day</h3>
+                <p class="section-desc" data-t="planner.planDaysDesc">Each day keeps the route compact, readable, and easy to follow on mobile.</p>
+              </div>
+            </div>
+            <div id="resultDays" class="day-card-list"></div>
+          </div>
+
+          <div class="result-split-grid">
+            <div class="example-card">
+              <div class="section-head result-section-head">
+                <div>
+                  <h3 class="section-title" data-t="planner.localTipsTitle">현지 팁</h3>
+                  <p class="section-desc" data-t="planner.localTipsDesc">작지만 실제로 여행 퀄리티를 바꾸는 팁들입니다.</p>
+                </div>
+              </div>
+              <div id="localTipsList" class="example-summary"></div>
+            </div>
+
+            <div class="example-card">
+              <div class="section-head result-section-head">
+                <div>
+                  <h3 class="section-title" data-t="planner.budgetTitle">예상 예산</h3>
+                  <p id="budgetSummary" class="section-desc"></p>
+                </div>
+              </div>
+              <div id="budgetList" class="example-summary"></div>
+            </div>
           </div>
 
           <div class="example-card">
-            <h3 class="section-title" data-t="planner.checklistTitle">여행 체크리스트</h3>
-            <div id="checklistList" class="example-summary"></div>
+            <div class="section-head result-section-head">
+              <div>
+                <h3 class="section-title" data-t="planner.checklistTitle">여행 체크리스트</h3>
+                <p class="section-desc" data-t="planner.checklistDesc">예약, 준비물, 출발 전 확인용으로 바로 쓸 수 있게 정리했어요.</p>
+              </div>
+            </div>
+            <div id="checklistList" class="checklist-grid"></div>
             <div class="cta-row">
               <button id="pdfTripBtn" class="secondary-btn" data-t="planner.savePDF">PDF로 저장</button>
               <button id="shareTripBtn" class="secondary-btn" data-t="planner.share">공유하기</button>
