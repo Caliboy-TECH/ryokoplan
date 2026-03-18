@@ -18,6 +18,7 @@
   <meta name="twitter:description" content="Elegant AI trip planning with budget breakdown, traveler traits, and local hidden-gem mode." />
   <meta name="twitter:image" content="https://ryokoplan.com/assets/og-cover.png" />
   <link rel="canonical" href="https://ryokoplan.com/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
   <link rel="alternate" hreflang="ko" href="https://ryokoplan.com/?lang=ko" />
   <link rel="alternate" hreflang="en" href="https://ryokoplan.com/?lang=en" />
   <link rel="alternate" hreflang="ja" href="https://ryokoplan.com/?lang=ja" />
@@ -98,6 +99,14 @@
     .brand-plan { color: #d58f52; }
     .brand-copy span { color: var(--muted); font-size: 0.84rem; }
     .nav-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .brand-name{display:inline-flex;gap:0;}
+    .brand-ryoko{color:#163a5a !important;}
+    .brand-plan{color:#d89152 !important;}
+    .toggle-btn{position:relative;width:88px;height:48px;border-radius:999px;border:none;background:linear-gradient(135deg,#f3c177,#f0bf7c 45%,#8bd1cf);box-shadow:inset 0 2px 6px rgba(255,255,255,.35),0 8px 18px rgba(47,126,161,.12);}
+    .toggle-btn::after{content:"";position:absolute;top:5px;left:5px;width:38px;height:38px;border-radius:50%;background:white;box-shadow:0 6px 14px rgba(17,40,60,.18);transition:transform .22s ease;}
+    .toggle-btn.active::after{transform:translateX(40px);}
+    .action-btn{background:rgba(255,255,255,.9);border-color:rgba(39,68,99,.1);padding:10px 14px;}
+    .action-btn:hover{background:#fff;}
     .lang-switcher { display: flex; gap: 8px; flex-wrap: wrap; }
     .lang-btn, .ghost-btn, .cta-btn, .chip, .pill-btn, .action-btn, .toggle-btn {
       font: inherit; cursor: pointer; border: 1px solid transparent;
@@ -156,7 +165,7 @@
       display: flex; flex-direction: column; justify-content: space-between;
       background:
         linear-gradient(180deg, rgba(24,59,84,0.28), rgba(24,59,84,0.72)),
-        url('https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=80') center/cover;
+        url('/assets/cities/tokyo.svg') center/cover;
       position: relative; overflow: hidden;
     }
     .preview-card::after {
@@ -173,7 +182,7 @@
     .stat-box strong { font-size: 1.1rem; display: block; }
     .stat-box span { font-size: 0.86rem; color: rgba(23,50,77,0.72); }
     .preview-route {
-      padding: 18px; border-radius: 22px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22);
+      padding: 18px; border-radius: 22px; background: rgba(14,39,57,0.54); border: 1px solid rgba(255,255,255,0.18);
       color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.35);
     }
     .preview-route small { color: rgba(255,255,255,0.82); }
@@ -391,14 +400,15 @@
     <div class="shell topbar-inner">
       <a href="/" class="brand">
         <div class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <img src="/assets/logo-mark.svg" alt="Ryokoplan logo" style="width:34px;height:34px;display:block;"/>
+          <!--
             <rect x="8" y="14" width="48" height="8" rx="4" fill="#D58F52"/>
             <rect x="14" y="22" width="36" height="6" rx="3" fill="#E8B072"/>
             <rect x="18" y="28" width="5" height="18" rx="2.5" fill="#2F7EA1"/>
             <rect x="41" y="28" width="5" height="18" rx="2.5" fill="#2F7EA1"/>
             <path d="M22 48C28 41.5 36 41.5 42 48" stroke="#69B7A8" stroke-width="4" stroke-linecap="round"/>
             <circle cx="47" cy="16" r="5" fill="#F4C46C"/>
-          </svg>
+          -->
         </div>
         <div class="brand-copy">
           <strong class="brand-name"><span class="brand-ryoko">Ryoko</span><span class="brand-plan">plan</span></strong>
@@ -677,19 +687,20 @@
 
   <div class="toast" id="toast"></div>
 
-  <script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
     const TRANSLATIONS = {
       ko: {
         htmlLang: 'ko', brandTagline: 'Travel Planner', blogLink: '블로그',
         heroEyebrow: '감도와 실용성을 모두 챙긴 여행 플래닝',
-        heroTitle: '부티크 여행 가이드처럼 짜주는 여행 플래너.',
+        heroTitle: '감도 있게, 실제로 쓰기 좋은 여행 플래너.',
         heroLead: 'AI 툴처럼 차갑게 보이기보다, 실제 여행 서비스처럼 느껴지도록. 현지 골목, 무리 없는 동선, 계절별 준비물까지 한 번에 정리합니다.',
         pill1: '4개 언어 지원', pill2: '예산 항목별 분리', pill3: '계절별 체크리스트', pill4: '현지인 모드',
         previewBadge: '실시간 일정 미리보기', previewTitle: '도쿄 · 3박 4일', stat1: '4개 언어', stat1sub: '즉시 전환 가능', stat2: '예산 분리', stat2sub: '항공 · 숙박 · 식비 · 교통', previewLabel: '샘플 동선', previewRoute: '아사쿠사 → 기요스미 → 시모키타자와 숨은 카페',
         plannerTitle: '여행 만들기', plannerSub: '누구와 가는지, 어떤 템포를 원하는지, 유명 명소 중심인지 현지인 숨은 장소 중심인지 알려주세요.',
         lblDestination: '여행지 *', helperDestination: '도시, 국가 또는 지역', lblDuration: '여행 기간', lblStyle: '여행 스타일', lblBudget: '예산 수준', lblCompanion: '누구와 함께?', lblTraits: '여행자 특성', helperTraits: '동선, 속도, 체크리스트에 반영됩니다', lblLocalMode: '현지인 모드', localModeSub: '관광객 코스보다 숨은 로컬 스팟 우선', lblNotes: '추가 요청', destinationPlaceholder: '예: 도쿄, 오사카, 파리, 교토', notesPlaceholder: '예: 느린 일정, 카페 많이, 무리 없는 동선, 미슐랭 1회',
-        generate: '일정 생성하기', generating: '생성 중...', savedBtn: '💾 저장된 일정', statusNote: '결과에는 일자별 일정, 여행 팁, 예산 breakdown, 체크리스트가 함께 포함됩니다.',
-        emptyTitle: '완성된 여행 일정이 여기에 표시됩니다.', emptyCopy: '생성 후 링크 공유, 로컬 저장, PDF 출력까지 바로 가능합니다.',
+        generate: '일정 생성하기', generating: '동선을 짜는 중...', savedBtn: '💾 저장된 일정', statusNote: '결과에는 일자별 일정, 여행 팁, 예산 breakdown, 체크리스트가 함께 포함됩니다.',
+        emptyTitle: '여행 플랜이 여기서 살아납니다.', emptyCopy: '생성 후 링크 공유, 로컬 저장, PDF 출력까지 바로 가능합니다.',
         tipsHeading: '여행 팁', checklistHeading: '체크리스트', budgetHeading: '예산 breakdown', summaryHeading: '플랜 요약', pdf: '📄 PDF', share: '🔗 공유', save: '💾 저장', regenerate: '✨ 다시 생성',
         feature1Title: '더 똑똑한 동선', feature1Copy: '하루 일정이 지역별로 묶여서 이동이 무리하지 않고 현실적으로 느껴집니다.', feature2Title: '여행자 맞춤 설계', feature2Copy: '어르신, 보행 불편, 반려동물, 유아 동반 여부가 속도와 교통수단, 준비물에 반영됩니다.', feature3Title: '바로 활용 가능', feature3Copy: '공유 링크, PDF 출력, SEO용 블로그 구조까지 실제 서비스 운영에 맞게 준비했습니다.',
         blogEyebrow: '여행 인사이트', blogTitle: 'Ryokoplan 블로그 추천 글', blogSub: '실제 여행 검색 의도에 맞는 글로 유입을 만들고, 플래너 사용으로 자연스럽게 이어지게 설계했습니다.', blogCta: '전체 글 보기',
@@ -698,13 +709,13 @@
       },
       en: {
         htmlLang: 'en', brandTagline: 'AI Travel Planner', blogLink: 'Blog',
-        heroEyebrow: 'Designed for memorable, effortless travel', heroTitle: 'Trip planning that feels like a boutique travel guide.', heroLead: 'From hidden local spots to accessible routing and season-based packing lists, Ryokoplan turns one prompt into a trip plan you can actually use.', pill1: '4-language output', pill2: 'Budget by category', pill3: 'Checklist by season', pill4: 'Local mode', previewBadge: 'Live itinerary preview', previewTitle: 'Tokyo · 3 Nights 4 Days', stat1: '4 languages', stat1sub: 'Ready to switch instantly', stat2: 'Budget split', stat2sub: 'Flight · Hotel · Food · Transit', previewLabel: 'Sample route', previewRoute: 'Asakusa → Kiyosumi → Shimokitazawa hidden cafes', plannerTitle: 'Build your trip', plannerSub: 'Tell us who you are traveling with, what pace you prefer, and whether to prioritize iconic highlights or local hidden gems.', lblDestination: 'Destination *', helperDestination: 'City, country, or region', lblDuration: 'Travel duration', lblStyle: 'Travel style', lblBudget: 'Budget level', lblCompanion: 'Who are you traveling with?', lblTraits: 'Traveler traits', helperTraits: 'Used in routing, pacing, and checklist', lblLocalMode: 'Local mode', localModeSub: 'Less tourist checklist, more hidden local gems', lblNotes: 'Extra notes', destinationPlaceholder: 'e.g. Tokyo, Osaka, Paris, Kyoto', notesPlaceholder: 'e.g. slower pace, more cafes, low walking load, one Michelin dinner', generate: 'Generate itinerary', generating: 'Generating...', savedBtn: '💾 Saved trips', statusNote: 'Your result includes daily plans, travel tips, budget breakdown, and a smart checklist.', emptyTitle: 'Your polished itinerary will appear here.', emptyCopy: 'Once generated, you can share it as a link, save it locally, or export it as PDF.', tipsHeading: 'Travel tips', checklistHeading: 'Checklist', budgetHeading: 'Budget breakdown', summaryHeading: 'Plan summary', pdf: '📄 PDF', share: '🔗 Share', save: '💾 Save', regenerate: '✨ Regenerate', feature1Title: 'Smarter routing', feature1Copy: 'Each day is grouped by area and pace so the plan feels realistic instead of random.', feature2Title: 'Traveler-aware planning', feature2Copy: 'Mobility needs, elderly travelers, pets, and kids shape pacing, transport choices, and must-pack items.', feature3Title: 'Ready to use', feature3Copy: 'Shareable links, printable PDF, and SEO-driven blog pages make Ryokoplan practical to operate.', blogEyebrow: 'Travel inspiration', blogTitle: 'Featured guides from the Ryokoplan blog', blogSub: 'Publish destination pages around real travel intent and guide users naturally into the planner.', blogCta: 'View all posts', savedTitle: 'Saved itineraries', close: 'Close', noSaved: 'No saved itineraries yet.', delete: 'Delete', shareCopied: 'Share link copied.', saveDone: 'Itinerary saved.', errDestination: 'Please enter a destination.', errGeneric: 'Failed to generate itinerary.', itineraryFor: 'Trip plan', localModeOn: 'Local mode ON', localModeOff: 'Tourist mode', companionBadge: 'With', traitsBadge: 'Traits', summaryBudget: 'Estimated total budget', summaryFocus: 'Recommended focus', partnerBooking: 'Find hotels', partnerKlook: 'Find activities', partnerAgoda: 'Compare stays', blogCardLabelTokyo: 'Tokyo · 2026 guide', blogCardLabelOsaka: 'Osaka · 2026 guide', blogCardLabelParis: 'Paris · 2026 guide'
+        heroEyebrow: 'Designed for memorable, effortless travel', heroTitle: 'Trip planning that feels thoughtful, polished, and actually usable.', heroLead: 'From hidden local spots to accessible routing and season-based packing lists, Ryokoplan turns one prompt into a trip plan you can actually use.', pill1: '4-language output', pill2: 'Budget by category', pill3: 'Checklist by season', pill4: 'Local mode', previewBadge: 'Live itinerary preview', previewTitle: 'Tokyo · 3 Nights 4 Days', stat1: '4 languages', stat1sub: 'Ready to switch instantly', stat2: 'Budget split', stat2sub: 'Flight · Hotel · Food · Transit', previewLabel: 'Sample route', previewRoute: 'Asakusa → Kiyosumi → Shimokitazawa hidden cafes', plannerTitle: 'Build your trip', plannerSub: 'Tell us who you are traveling with, what pace you prefer, and whether to prioritize iconic highlights or local hidden gems.', lblDestination: 'Destination *', helperDestination: 'City, country, or region', lblDuration: 'Travel duration', lblStyle: 'Travel style', lblBudget: 'Budget level', lblCompanion: 'Who are you traveling with?', lblTraits: 'Traveler traits', helperTraits: 'Used in routing, pacing, and checklist', lblLocalMode: 'Local mode', localModeSub: 'Less tourist checklist, more hidden local gems', lblNotes: 'Extra notes', destinationPlaceholder: 'e.g. Tokyo, Osaka, Paris, Kyoto', notesPlaceholder: 'e.g. slower pace, more cafes, low walking load, one Michelin dinner', generate: 'Generate itinerary', generating: 'Mapping your trip...', savedBtn: '💾 Saved trips', statusNote: 'Your result includes daily plans, travel tips, budget breakdown, and a smart checklist.', emptyTitle: 'Your polished itinerary will appear here.', emptyCopy: 'Once generated, you can share it as a link, save it locally, or export it as PDF.', tipsHeading: 'Travel tips', checklistHeading: 'Checklist', budgetHeading: 'Budget breakdown', summaryHeading: 'Plan summary', pdf: '📄 PDF', share: '🔗 Share', save: '💾 Save', regenerate: '✨ Regenerate', feature1Title: 'Smarter routing', feature1Copy: 'Each day is grouped by area and pace so the plan feels realistic instead of random.', feature2Title: 'Traveler-aware planning', feature2Copy: 'Mobility needs, elderly travelers, pets, and kids shape pacing, transport choices, and must-pack items.', feature3Title: 'Ready to use', feature3Copy: 'Shareable links, printable PDF, and SEO-driven blog pages make Ryokoplan practical to operate.', blogEyebrow: 'Travel inspiration', blogTitle: 'Featured guides from the Ryokoplan blog', blogSub: 'Publish destination pages around real travel intent and guide users naturally into the planner.', blogCta: 'View all posts', savedTitle: 'Saved itineraries', close: 'Close', noSaved: 'No saved itineraries yet.', delete: 'Delete', shareCopied: 'Share link copied.', saveDone: 'Itinerary saved.', errDestination: 'Please enter a destination.', errGeneric: 'Failed to generate itinerary.', itineraryFor: 'Trip plan', localModeOn: 'Local mode ON', localModeOff: 'Tourist mode', companionBadge: 'With', traitsBadge: 'Traits', summaryBudget: 'Estimated total budget', summaryFocus: 'Recommended focus', partnerBooking: 'Find hotels', partnerKlook: 'Find activities', partnerAgoda: 'Compare stays', blogCardLabelTokyo: 'Tokyo · 2026 guide', blogCardLabelOsaka: 'Osaka · 2026 guide', blogCardLabelParis: 'Paris · 2026 guide'
       },
       ja: {
-        htmlLang: 'ja', brandTagline: 'Travel Planner', blogLink: 'ブログ', heroEyebrow: '旅サービスらしく見えて使いやすく', heroTitle: 'ブティック旅行ガイドのような旅プラン。', heroLead: '無機質なAIツールではなく、実際の旅サービスのように。ローカルな街歩き、無理のない動線、季節ごとの持ち物まで一度に整えます。', pill1: '4言語対応', pill2: '費目別予算', pill3: '季節別チェックリスト', pill4: 'ローカルモード', previewBadge: 'リアルタイム旅程プレビュー', previewTitle: '東京 · 3泊4日', stat1: '4言語', stat1sub: 'すぐ切り替え可能', stat2: '予算内訳', stat2sub: '航空券・宿泊・食事・交通', previewLabel: 'サンプルルート', previewRoute: '浅草 → 清澄白河 → 下北沢の隠れカフェ', plannerTitle: '旅を作る', plannerSub: '誰と行くか、どんなペースか、有名スポット重視かローカル重視かを教えてください。', lblDestination: '目的地 *', helperDestination: '都市・国・地域', lblDuration: '旅行期間', lblStyle: '旅行スタイル', lblBudget: '予算レベル', lblCompanion: '誰と行きますか？', lblTraits: '旅行者の特性', helperTraits: '動線・ペース・チェックリストに反映', lblLocalMode: 'ローカルモード', localModeSub: '定番観光よりも隠れたローカルスポットを優先', lblNotes: '追加メモ', destinationPlaceholder: '例：東京、大阪、パリ、京都', notesPlaceholder: '例：ゆっくり、カフェ多め、歩行少なめ、ミシュラン1回', generate: 'プラン作成', generating: '作成中...', savedBtn: '💾 保存済み', statusNote: '結果には日別プラン、旅のヒント、予算内訳、チェックリストが含まれます。', emptyTitle: '完成した旅程がここに表示されます。', emptyCopy: '生成後はリンク共有、ローカル保存、PDF出力がすぐ可能です。', tipsHeading: '旅のヒント', checklistHeading: 'チェックリスト', budgetHeading: '予算内訳', summaryHeading: 'プラン概要', pdf: '📄 PDF', share: '🔗 シェア', save: '💾 保存', regenerate: '✨ 再生成', feature1Title: 'より賢い動線', feature1Copy: '1日の予定をエリアごとにまとめるので、無理のない現実的な旅程になります。', feature2Title: '旅行者に合わせた設計', feature2Copy: '高齢者、移動配慮、ペット連れ、子ども連れを考慮して速度や交通、持ち物を調整します。', feature3Title: 'すぐ使える', feature3Copy: '共有リンク、PDF出力、SEO向けブログ構造まで実運用を意識して整えました。', blogEyebrow: '旅のインスピレーション', blogTitle: 'Ryokoplanブログの注目記事', blogSub: '実際の検索意図に合う記事で流入を作り、自然にプランナー利用へつなげます。', blogCta: '記事一覧を見る', savedTitle: '保存したプラン', close: '閉じる', noSaved: '保存したプランはまだありません。', delete: '削除', shareCopied: '共有リンクをコピーしました。', saveDone: 'プランを保存しました。', errDestination: '目的地を入力してください。', errGeneric: '旅程の生成に失敗しました。', itineraryFor: '旅行プラン', localModeOn: 'ローカルモード ON', localModeOff: '観光モード', companionBadge: '同行', traitsBadge: '特性', summaryBudget: '予想合計予算', summaryFocus: 'おすすめポイント', partnerBooking: 'ホテルを探す', partnerKlook: '体験を探す', partnerAgoda: '宿を比較', blogCardLabelTokyo: '東京 · 2026ガイド', blogCardLabelOsaka: '大阪 · 2026ガイド', blogCardLabelParis: 'パリ · 2026ガイド'
+        htmlLang: 'ja', brandTagline: 'Travel Planner', blogLink: 'ブログ', heroEyebrow: '旅サービスらしく見えて使いやすく', heroTitle: '感度も実用性もある旅プラン。', heroLead: '無機質なAIツールではなく、実際の旅サービスのように。ローカルな街歩き、無理のない動線、季節ごとの持ち物まで一度に整えます。', pill1: '4言語対応', pill2: '費目別予算', pill3: '季節別チェックリスト', pill4: 'ローカルモード', previewBadge: 'リアルタイム旅程プレビュー', previewTitle: '東京 · 3泊4日', stat1: '4言語', stat1sub: 'すぐ切り替え可能', stat2: '予算内訳', stat2sub: '航空券・宿泊・食事・交通', previewLabel: 'サンプルルート', previewRoute: '浅草 → 清澄白河 → 下北沢の隠れカフェ', plannerTitle: '旅を作る', plannerSub: '誰と行くか、どんなペースか、有名スポット重視かローカル重視かを教えてください。', lblDestination: '目的地 *', helperDestination: '都市・国・地域', lblDuration: '旅行期間', lblStyle: '旅行スタイル', lblBudget: '予算レベル', lblCompanion: '誰と行きますか？', lblTraits: '旅行者の特性', helperTraits: '動線・ペース・チェックリストに反映', lblLocalMode: 'ローカルモード', localModeSub: '定番観光よりも隠れたローカルスポットを優先', lblNotes: '追加メモ', destinationPlaceholder: '例：東京、大阪、パリ、京都', notesPlaceholder: '例：ゆっくり、カフェ多め、歩行少なめ、ミシュラン1回', generate: 'プラン作成', generating: '動線を組み立て中...', savedBtn: '💾 保存済み', statusNote: '結果には日別プラン、旅のヒント、予算内訳、チェックリストが含まれます。', emptyTitle: '完成した旅程がここに表示されます。', emptyCopy: '生成後はリンク共有、ローカル保存、PDF出力がすぐ可能です。', tipsHeading: '旅のヒント', checklistHeading: 'チェックリスト', budgetHeading: '予算内訳', summaryHeading: 'プラン概要', pdf: '📄 PDF', share: '🔗 シェア', save: '💾 保存', regenerate: '✨ 再生成', feature1Title: 'より賢い動線', feature1Copy: '1日の予定をエリアごとにまとめるので、無理のない現実的な旅程になります。', feature2Title: '旅行者に合わせた設計', feature2Copy: '高齢者、移動配慮、ペット連れ、子ども連れを考慮して速度や交通、持ち物を調整します。', feature3Title: 'すぐ使える', feature3Copy: '共有リンク、PDF出力、SEO向けブログ構造まで実運用を意識して整えました。', blogEyebrow: '旅のインスピレーション', blogTitle: 'Ryokoplanブログの注目記事', blogSub: '実際の検索意図に合う記事で流入を作り、自然にプランナー利用へつなげます。', blogCta: '記事一覧を見る', savedTitle: '保存したプラン', close: '閉じる', noSaved: '保存したプランはまだありません。', delete: '削除', shareCopied: '共有リンクをコピーしました。', saveDone: 'プランを保存しました。', errDestination: '目的地を入力してください。', errGeneric: '旅程の生成に失敗しました。', itineraryFor: '旅行プラン', localModeOn: 'ローカルモード ON', localModeOff: '観光モード', companionBadge: '同行', traitsBadge: '特性', summaryBudget: '予想合計予算', summaryFocus: 'おすすめポイント', partnerBooking: 'ホテルを探す', partnerKlook: '体験を探す', partnerAgoda: '宿を比較', blogCardLabelTokyo: '東京 · 2026ガイド', blogCardLabelOsaka: '大阪 · 2026ガイド', blogCardLabelParis: 'パリ · 2026ガイド'
       },
       zh: {
-        htmlLang: 'zh-Hans', brandTagline: 'Travel Planner', blogLink: '博客', heroEyebrow: '看起来更像旅行服务，而不是技术工具', heroTitle: '像精品旅行指南一样生成的行程。', heroLead: '减少冰冷的 AI 工具感，更像真正的旅行服务。把本地街区、顺路动线和按季节整理的出行清单一次做好。', pill1: '四语切换', pill2: '预算分类', pill3: '季节清单', pill4: '本地人模式', previewBadge: '实时行程预览', previewTitle: '东京 · 3晚4天', stat1: '4种语言', stat1sub: '可即时切换', stat2: '预算拆分', stat2sub: '机票 · 住宿 · 餐饮 · 交通', previewLabel: '示例路线', previewRoute: '浅草 → 清澄白河 → 下北泽隐藏咖啡馆', plannerTitle: '创建你的行程', plannerSub: '告诉我们你和谁一起出行、喜欢什么节奏，以及更想看经典景点还是本地隐藏地点。', lblDestination: '目的地 *', helperDestination: '城市、国家或地区', lblDuration: '旅行时长', lblStyle: '旅行风格', lblBudget: '预算级别', lblCompanion: '和谁一起旅行？', lblTraits: '旅行者特征', helperTraits: '会影响路线、节奏和清单', lblLocalMode: '本地人模式', localModeSub: '弱化游客打卡，优先隐藏本地景点', lblNotes: '额外说明', destinationPlaceholder: '例如：东京、大阪、巴黎、京都', notesPlaceholder: '例如：节奏慢一点、多去咖啡馆、少走路、安排一次米其林', generate: '生成行程', generating: '生成中...', savedBtn: '💾 已保存行程', statusNote: '结果将包含每日计划、旅行建议、预算明细和智能清单。', emptyTitle: '精致的旅行行程会显示在这里。', emptyCopy: '生成后可以直接分享链接、本地保存，或导出为 PDF。', tipsHeading: '旅行建议', checklistHeading: '出行清单', budgetHeading: '预算明细', summaryHeading: '行程摘要', pdf: '📄 PDF', share: '🔗 分享', save: '💾 保存', regenerate: '✨ 重新生成', feature1Title: '更聪明的动线', feature1Copy: '每天按区域和节奏组织，不会像随机拼接，而是更真实可执行。', feature2Title: '旅行者适配', feature2Copy: '长者、行动不便、携宠、带小孩都会影响节奏、交通方式和打包建议。', feature3Title: '拿来就能用', feature3Copy: '支持分享链接、PDF打印，以及适合 SEO 的博客结构，方便真正上线运营。', blogEyebrow: '旅行灵感', blogTitle: 'Ryokoplan 博客精选指南', blogSub: '围绕真实旅行搜索意图发布内容，再自然引导用户进入 AI 行程规划。', blogCta: '查看全部文章', savedTitle: '已保存行程', close: '关闭', noSaved: '还没有保存的行程。', delete: '删除', shareCopied: '分享链接已复制。', saveDone: '行程已保存。', errDestination: '请输入目的地。', errGeneric: '生成行程失败。', itineraryFor: '旅行计划', localModeOn: '本地人模式 ON', localModeOff: '游客模式', companionBadge: '同行', traitsBadge: '特征', summaryBudget: '预计总预算', summaryFocus: '推荐重点', partnerBooking: '找酒店', partnerKlook: '找活动', partnerAgoda: '比较住宿', blogCardLabelTokyo: '东京 · 2026 指南', blogCardLabelOsaka: '大阪 · 2026 指南', blogCardLabelParis: '巴黎 · 2026 指南'
+        htmlLang: 'zh-Hans', brandTagline: 'Travel Planner', blogLink: '博客', heroEyebrow: '看起来更像旅行服务，而不是技术工具', heroTitle: '更有品味、也真正好用的旅行规划。', heroLead: '减少冰冷的 AI 工具感，更像真正的旅行服务。把本地街区、顺路动线和按季节整理的出行清单一次做好。', pill1: '四语切换', pill2: '预算分类', pill3: '季节清单', pill4: '本地人模式', previewBadge: '实时行程预览', previewTitle: '东京 · 3晚4天', stat1: '4种语言', stat1sub: '可即时切换', stat2: '预算拆分', stat2sub: '机票 · 住宿 · 餐饮 · 交通', previewLabel: '示例路线', previewRoute: '浅草 → 清澄白河 → 下北泽隐藏咖啡馆', plannerTitle: '创建你的行程', plannerSub: '告诉我们你和谁一起出行、喜欢什么节奏，以及更想看经典景点还是本地隐藏地点。', lblDestination: '目的地 *', helperDestination: '城市、国家或地区', lblDuration: '旅行时长', lblStyle: '旅行风格', lblBudget: '预算级别', lblCompanion: '和谁一起旅行？', lblTraits: '旅行者特征', helperTraits: '会影响路线、节奏和清单', lblLocalMode: '本地人模式', localModeSub: '弱化游客打卡，优先隐藏本地景点', lblNotes: '额外说明', destinationPlaceholder: '例如：东京、大阪、巴黎、京都', notesPlaceholder: '例如：节奏慢一点、多去咖啡馆、少走路、安排一次米其林', generate: '生成行程', generating: '正在整理路线...', savedBtn: '💾 已保存行程', statusNote: '结果将包含每日计划、旅行建议、预算明细和智能清单。', emptyTitle: '精致的旅行行程会显示在这里。', emptyCopy: '生成后可以直接分享链接、本地保存，或导出为 PDF。', tipsHeading: '旅行建议', checklistHeading: '出行清单', budgetHeading: '预算明细', summaryHeading: '行程摘要', pdf: '📄 PDF', share: '🔗 分享', save: '💾 保存', regenerate: '✨ 重新生成', feature1Title: '更聪明的动线', feature1Copy: '每天按区域和节奏组织，不会像随机拼接，而是更真实可执行。', feature2Title: '旅行者适配', feature2Copy: '长者、行动不便、携宠、带小孩都会影响节奏、交通方式和打包建议。', feature3Title: '拿来就能用', feature3Copy: '支持分享链接、PDF打印，以及适合 SEO 的博客结构，方便真正上线运营。', blogEyebrow: '旅行灵感', blogTitle: 'Ryokoplan 博客精选指南', blogSub: '围绕真实旅行搜索意图发布内容，再自然引导用户进入 AI 行程规划。', blogCta: '查看全部文章', savedTitle: '已保存行程', close: '关闭', noSaved: '还没有保存的行程。', delete: '删除', shareCopied: '分享链接已复制。', saveDone: '行程已保存。', errDestination: '请输入目的地。', errGeneric: '生成行程失败。', itineraryFor: '旅行计划', localModeOn: '本地人模式 ON', localModeOff: '游客模式', companionBadge: '同行', traitsBadge: '特征', summaryBudget: '预计总预算', summaryFocus: '推荐重点', partnerBooking: '找酒店', partnerKlook: '找活动', partnerAgoda: '比较住宿', blogCardLabelTokyo: '东京 · 2026 指南', blogCardLabelOsaka: '大阪 · 2026 指南', blogCardLabelParis: '巴黎 · 2026 指南'
       }
     };
 
@@ -980,19 +991,36 @@
 
     function shareItinerary() {
       if (!currentResult) return;
-      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(currentResult))));
-      const url = `${window.location.origin}${window.location.pathname}?lang=${currentLang}&share=${encoded}`;
+      const encoded = encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(currentResult)))));
+      const url = `${window.location.origin}${window.location.pathname}?lang=${currentLang}#plan=${encoded}`;
+      if (navigator.share) {
+        navigator.share({ title: currentResult.title || 'Ryokoplan', text: currentResult.destination || 'Ryokoplan trip', url })
+          .catch(() => navigator.clipboard.writeText(url).then(() => showToast(TRANSLATIONS[currentLang].shareCopied)).catch(() => window.prompt('Copy this link', url)));
+        return;
+      }
       navigator.clipboard.writeText(url)
         .then(() => showToast(TRANSLATIONS[currentLang].shareCopied))
         .catch(() => window.prompt('Copy this link', url));
     }
 
+    async function exportPdf() {
+      if (!currentResult) return;
+      const target = document.getElementById('result-card');
+      const filename = `${(currentResult.destination || 'ryokoplan').toString().replace(/\s+/g,'-').toLowerCase()}-itinerary.pdf`;
+      try {
+        await html2pdf().set({ margin: 10, filename, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, scrollY: 0 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, pagebreak: { mode: ['css','legacy'] } }).from(target).save();
+      } catch (error) {
+        console.error(error);
+        window.print();
+      }
+    }
+
     function loadSharedIfExists() {
       const params = new URLSearchParams(window.location.search);
-      const share = params.get('share');
+      const share = window.location.hash.startsWith('#plan=') ? window.location.hash.slice(6) : params.get('share');
       if (!share) return;
       try {
-        currentResult = JSON.parse(decodeURIComponent(escape(atob(share))));
+        currentResult = JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(share)))));
         renderResult(currentResult, false);
       } catch (error) {
         console.error('Invalid shared itinerary', error);
@@ -1011,7 +1039,7 @@
         applyTranslations();
       }
       if (event.target.id === 'generate-btn' || event.target.id === 'secondary-generate') generateItinerary();
-      if (event.target.id === 'action-pdf') window.print();
+      if (event.target.id === 'action-pdf') exportPdf();
       if (event.target.id === 'action-share') shareItinerary();
       if (event.target.id === 'action-save') saveItinerary();
       if (event.target.id === 'open-saved') openSaved();
