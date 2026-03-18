@@ -1,100 +1,192 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ryokoplan | AI Travel Planner</title>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <title>Ryokoplan | Mobile-first AI Travel Planner</title>
+  <meta name="description" content="A mobile-first AI travel planner with editorial city guides, local-mode routing, smart budgeting, and multilingual trip plans." />
+  <meta property="og:title" content="Ryokoplan | AI Travel Planner" />
+  <meta property="og:description" content="Read city guides like a magazine and turn them into a usable trip plan." />
+  <meta property="og:image" content="https://ryokoplan.com/assets/hero-magazine.png" />
+  <meta name="theme-color" content="#fcf8f1" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
-<header class="site-header">
-  <div class="container inner">
-    <a class="brand" href="/">
-      <div class="brand-mark">
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="10" y="14" width="44" height="12" rx="6" fill="#E9B05F"/>
-          <rect x="16" y="24" width="6" height="25" rx="3" fill="#2A93A7"/>
-          <rect x="42" y="24" width="6" height="25" rx="3" fill="#2A93A7"/>
-          <path d="M18 46C23 50 28 52 32 52C36 52 41 50 46 46" stroke="#2A93A7" stroke-width="6" stroke-linecap="round"/>
-          <circle cx="48" cy="18" r="7" fill="#F1C26A"/>
-        </svg>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <div class="brand-row">
+        <a href="/" class="brand">
+          <span class="brand-mark"><img src="/assets/logo-mark.svg" alt="Ryokoplan"></span>
+          <span class="brand-copy">
+            <span class="brand-name"><span class="brand-ryoko">Ryoko</span><span class="brand-plan">plan</span></span>
+            <small>Travel Planner</small>
+          </span>
+        </a>
+        <div class="header-chips">
+          <a href="/blog" class="chip-btn magazine" data-i18n="magazine">매거진</a>
+          <button class="chip-btn mytrip" id="savedBtn" data-i18n="myTrips">내 여정</button>
+        </div>
       </div>
-      <div class="brand-text"><div class="top"><span class="ryoko">Ryoko</span><span class="plan">plan</span></div><div class="sub">Travel Planner</div></div>
-    </a>
-    <div class="header-actions">
-      <a class="pill blog" href="blog/" data-i18n="blog">블로그</a>
-      <a class="pill" href="#saved" data-i18n="trips">내 여정</a>
-      <button class="pill lang-btn" data-lang="ko">한국어</button>
-      <button class="pill lang-btn" data-lang="en">EN</button>
-      <button class="pill lang-btn" data-lang="ja">日本語</button>
-      <button class="pill lang-btn" data-lang="zh">简体中文</button>
-    </div>
-  </div>
-</header>
-<main class="container">
-  <section class="grid-hero">
-    <div class="card hero-copy">
-      <div class="badge" data-i18n="badge">감도와 실용성을 모두 챙긴 여행 플래닝</div>
-      <h1 class="hero-title" data-i18n="heroTitle">취향도 실용성도 챙긴 여행 플래너.</h1>
-      <p class="hero-desc" data-i18n="heroDesc">AI 툴처럼 차갑게 보이기보다, 실제 여행 서비스처럼 느껴지도록. 현지 골목, 무리 없는 동선, 계절별 준비물까지 한 번에 정리합니다.</p>
-      <div class="feature-pills">
-        <span class="pill" data-i18n="fp1">4개 언어 지원</span>
-        <span class="pill" data-i18n="fp2">예산 항목별 분리</span>
-        <span class="pill" data-i18n="fp3">계절별 체크리스트</span>
-        <span class="pill" data-i18n="fp4">현지인 모드</span>
+      <div class="chip-row">
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="ko">한국어</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ja">日本語</button>
+          <button class="lang-btn" data-lang="zh">简体中文</button>
+        </div>
       </div>
     </div>
-    <div class="card hero-visual">
-      <img src="assets/cities/tokyo.png" alt="Tokyo preview" />
-      <div class="overlay"></div>
-      <div class="info-box top"><h4 data-i18n="fp1">4개 언어 지원</h4><p>한국어 · English · 日本語 · 简体中文</p></div>
-      <div class="info-box mid"><h4 data-i18n="fp2">예산 항목별 분리</h4><p>항공 · 숙박 · 식비 · 교통 · 입장료</p></div>
-      <div class="info-box route"><h4 data-i18n="routeLabel">샘플 동선</h4><p data-i18n="routeText">아사쿠사 → 기요스미 → 시모키타자와 숨은 카페</p></div>
-    </div>
-  </section>
+  </header>
 
-  <section class="two-col">
-    <div class="card form-card">
-      <h2 class="section-title" data-i18n="formTitle">여행 만들기</h2>
-      <p class="section-desc" data-i18n="formDesc">누구와 가는지, 어떤 템포를 원하는지, 유명 명소 중심인지 현지인 숨은 장소 중심인지 알려주세요.</p>
-      <div class="form-grid">
-        <div class="field full"><label data-i18n="destination">여행지</label><input data-i18n-placeholder="destinationPH" placeholder="예: 도쿄, 오사카, 파리, 교토"></div>
-        <div class="field"><label data-i18n="duration">여행 기간</label><select id="duration"></select></div>
-        <div class="field"><label data-i18n="style">여행 스타일</label><select id="style"></select></div>
-        <div class="field"><label data-i18n="budget">예산 수준</label><select id="budget"></select></div>
-        <div class="field"><label data-i18n="withWho">누구와 함께?</label><select id="withWho"></select></div>
-        <div class="field full"><label data-i18n="traits">여행자 특성</label>
-          <div class="trait-grid">
-            <div class="checkpill"><input type="checkbox"><span data-i18n="mobility">몸이 불편한 분</span></div>
-            <div class="checkpill"><input type="checkbox"><span data-i18n="senior">어르신</span></div>
-            <div class="checkpill"><input type="checkbox"><span data-i18n="kids">유아동반</span></div>
-            <div class="checkpill"><input type="checkbox"><span data-i18n="pets">반려동물</span></div>
+  <main>
+    <section class="hero">
+      <div class="shell hero-card">
+        <div class="hero-media" id="previewMain">
+          <div class="hero-content">
+            <span class="eyebrow" data-i18n="eyebrow">도시를 읽고, 바로 여행으로 이어지는 플래닝</span>
+            <h1 data-i18n="heroTitle">모바일에서 더 자연스럽게 쓰는 여행 플래너.</h1>
+            <p class="hero-copy" data-i18n="heroCopy">도시 매거진처럼 읽고, 일정 앱처럼 바로 저장하고, 실제 여행 동선처럼 자연스럽게 짜주는 Ryokoplan.</p>
+            <div class="hero-actions">
+              <a href="#planner" class="primary-btn" data-i18n="startPlanning">여행 계획 시작</a>
+              <a href="/blog" class="ghost-btn" data-i18n="viewMagazine">매거진 보기</a>
+            </div>
+            <div class="preview-mini">
+              <div class="mini-card"><strong data-i18n="mini1t">도시 가이드 + 일정</strong><span data-i18n="mini1c">읽다가 바로 여행 플랜으로 전환할 수 있어요.</span></div>
+              <div class="mini-card"><strong data-i18n="mini2t">공유하기 좋은 결과</strong><span data-i18n="mini2c">모바일에서 열었을 때 보기 좋은 구성으로 정리합니다.</span></div>
+            </div>
           </div>
         </div>
-        <div class="field full">
-          <div class="toggle"><div><strong data-i18n="localMode">현지인 모드</strong><div style="color:#6f8198;margin-top:4px" data-i18n="localModeDesc">관광객 코스보다 숨은 로컬 스팟 우선</div></div><div class="switch"></div></div>
-        </div>
-        <div class="field full"><label data-i18n="notes">추가 요청</label><textarea data-i18n-placeholder="notesPH" placeholder="예: 느린 일정, 카페 많이, 무리 없는 동선, 미술관 1회"></textarea></div>
       </div>
-      <div class="cta-row"><button class="btn primary" data-i18n="generate">여정 만들기</button><button class="btn secondary" id="saved" data-i18n="save">저장된 일정</button></div>
-    </div>
-    <div class="card result-card">
-      <div class="result-shell">
-        <div class="result-banner"><h3 data-i18n="resultTitle">여행 플랜이 여기서 살아납니다.</h3><p data-i18n="resultDesc">샘플 카드, 도시 이미지, 저장한 여정을 여기에서 빠르게 볼 수 있게 바꿨습니다.</p></div>
-        <div class="preview-large">
-          <img src="assets/cities/tokyo.png" alt="Tokyo preview">
-          <div class="overlay"></div>
-          <div class="preview-note"><strong data-i18n="previewTitle">여행 친화적인 미리보기</strong><p data-i18n="previewDesc">도시 이미지를 먼저 보여주고, 공유했을 때도 무엇을 보는지 바로 이해되게 구성합니다.</p></div>
-          <div class="preview-route"><strong data-i18n="routeLabel">샘플 동선</strong><div data-i18n="routeText">아사쿠사 → 기요스미 → 시모키타자와 숨은 카페</div></div>
+    </section>
+
+    <section class="magazine-strip">
+      <div class="shell magazine-card">
+        <div class="magazine-copy">
+          <h2 data-i18n="magTitle">일본·한국 도시 가이드를 매거진처럼 읽어보세요.</h2>
+          <p data-i18n="magCopy">도쿄, 오사카, 교토, 서울, 부산, 후쿠오카. 검색 의도에 맞는 도시 가이드와 실제 일정 흐름이 자연스럽게 이어집니다.</p>
+          <div class="hero-actions" style="margin-top:16px">
+            <a href="#planner" class="primary-btn" data-i18n="startPlanning">여행 계획 시작</a>
+            <a href="/blog" class="ghost-btn" data-i18n="viewMagazine">매거진 보기</a>
+          </div>
+          <div class="city-pills">
+            <span data-city-pill>도쿄</span><span data-city-pill>오사카</span><span data-city-pill>교토</span><span data-city-pill>서울</span><span data-city-pill>부산</span><span data-city-pill>후쿠오카</span>
+          </div>
         </div>
-        <div class="thumb-row">
-          <div class="thumb-card"><img src="assets/cities/kyoto.png" alt="Kyoto"><div class="tag" data-i18n="tag1">조용한 거리</div></div>
-          <div class="thumb-card"><img src="assets/cities/busan.png" alt="Busan"><div class="tag" data-i18n="tag2">바다 뷰 하루</div></div>
+        <div class="magazine-visual" id="magazineVisual">
+          <div class="magazine-overlay" data-i18n="magOverlay">도시 이미지와 가이드를 같은 톤으로 정리해, 읽는 경험과 플래닝 경험이 끊기지 않도록 구성했습니다.</div>
         </div>
       </div>
-    </div>
-  </section>
-</main>
-<script src="assets/app.js"></script>
+    </section>
+
+    <section class="shell main-grid" id="planner">
+      <section class="panel form-panel">
+        <h3 data-i18n="planTitle">여행 만들기</h3>
+        <p class="panel-sub" data-i18n="planSub">누구와 가는지, 어떤 페이스를 원하는지, 현지 로컬 스팟을 얼마나 섞을지 알려주세요.</p>
+        <div class="field-grid">
+          <div class="field full">
+            <label><span data-i18n="destination">여행지</span> <span class="hint" data-i18n="destinationHint">도시, 국가 또는 지역</span></label>
+            <input id="destination" type="text" placeholder="예: 도쿄, 오사카, 파리, 교토" />
+          </div>
+          <div class="field">
+            <label data-i18n="duration">여행 기간</label>
+            <select id="duration"></select>
+          </div>
+          <div class="field">
+            <label data-i18n="style">여행 스타일</label>
+            <select id="style"></select>
+          </div>
+          <div class="field">
+            <label data-i18n="budget">예산 수준</label>
+            <select id="budget"></select>
+          </div>
+          <div class="field">
+            <label data-i18n="companion">누구와 함께?</label>
+            <select id="companion"></select>
+          </div>
+          <div class="field full">
+            <label><span data-i18n="traits">여행자 특성</span> <span class="hint" data-i18n="traitsHint">동선, 속도, 체크리스트에 반영됩니다</span></label>
+            <div class="check-grid">
+              <label class="check-card"><input class="trait-input" type="checkbox" value="mobility"><span data-trait-label>몸이 불편한 분</span></label>
+              <label class="check-card"><input class="trait-input" type="checkbox" value="senior"><span data-trait-label>어르신</span></label>
+              <label class="check-card"><input class="trait-input" type="checkbox" value="kids"><span data-trait-label>유아동반</span></label>
+              <label class="check-card"><input class="trait-input" type="checkbox" value="pets"><span data-trait-label>반려동물</span></label>
+            </div>
+          </div>
+          <div class="field full">
+            <div class="toggle-card">
+              <div class="toggle-copy"><strong data-i18n="localMode">현지인 모드</strong><small data-i18n="localModeDesc">관광객 코스보다 숨은 로컬 스팟 우선</small></div>
+              <button id="localToggle" class="toggle" aria-label="toggle local mode"></button>
+            </div>
+          </div>
+          <div class="field full">
+            <label data-i18n="notes">추가 요청</label>
+            <textarea id="notes" placeholder="예: 느린 일정, 카페 많이, 무리 없는 동선, 미술관 1회"></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button id="generateBtn" class="submit-btn" data-i18n="generate">일정 생성하기</button>
+          <button id="savedBtn2" class="small-btn" onclick="document.getElementById('savedBtn').click()" data-i18n="saved">저장된 일정</button>
+        </div>
+        <p class="form-foot">결과에는 일자별 일정, 여행 팁, 예산 breakdown, 체크리스트가 함께 포함됩니다.</p>
+        <div id="errorBox" class="error"></div>
+      </section>
+
+      <section class="panel result-panel">
+        <div class="result-wrap">
+          <div class="empty-state" id="emptyState">
+            <strong data-i18n="resultReady">여행 플랜이 여기서 살아납니다.</strong>
+            <div data-i18n="resultReadySub">생성 후 링크 공유, 로컬 저장, PDF 출력까지 바로 가능합니다.</div>
+          </div>
+
+          <div class="preview-top-card" id="previewTop">
+            <div class="inner">
+              <span class="badge" data-i18n="previewBadge">Tokyo preview</span>
+              <div>
+                <div class="preview-title" data-i18n="previewTitle">Travel-friendly route logic</div>
+                <div style="margin-top:8px;max-width:22ch;color:rgba(255,255,255,.9)" data-i18n="previewText">Area-based pacing, simpler transfers, and a plan that still feels worth sharing.</div>
+              </div>
+              <div class="preview-route">
+                <small data-i18n="routeLabel">샘플 동선</small>
+                <strong data-i18n="routeValue">아사쿠사 → 기요스미 → 시모키타자와 숨은 카페</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="thumb-grid">
+            <div class="thumb" style="background-image:url('/assets/cities/kyoto.png')"><span data-i18n="thumb1">조용한 거리</span></div>
+            <div class="thumb" style="background-image:url('/assets/cities/busan.png')"><span data-i18n="thumb2">바다 보는 하루</span></div>
+          </div>
+
+          <article class="result-card" id="resultCard">
+            <div class="result-header">
+              <h4 id="resultTitle">Trip title</h4>
+              <div id="resultMeta" class="result-meta"></div>
+            </div>
+            <div class="section-title" data-i18n="tripSummary">플랜 요약</div>
+            <ul id="summaryList" class="summary-list"></ul>
+            <div class="section-title" data-i18n="practicalTips">현지 팁</div>
+            <ul id="tipsList" class="tips-list"></ul>
+            <div class="section-title" data-i18n="budgetTitle">예산 breakdown</div>
+            <ul id="budgetList" class="budget-list"></ul>
+            <div class="section-title" data-i18n="checklist">체크리스트</div>
+            <ul id="checklistList" class="checklist-list"></ul>
+            <div class="section-title">Days</div>
+            <div id="daysList" class="days-list"></div>
+            <div class="action-row">
+              <button class="small-btn" id="shareBtn" data-i18n="share">공유 링크 복사</button>
+              <button class="small-btn" id="pdfBtn" data-i18n="pdf">PDF 저장</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer shell">© 2026 Ryokoplan · Planner + magazine in one mobile-first flow.</footer>
+  <script type="module" src="/assets/app.js"></script>
 </body>
 </html>

@@ -1,71 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ryokoplan Blog</title>
-  <link rel="stylesheet" href="../assets/styles.css" />
+  <title>Ryokoplan Magazine</title>
+  <meta name="description" content="A mobile-first travel magazine for Tokyo, Osaka, Kyoto, Seoul, Busan, and Fukuoka city guides." />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
-<header class="site-header">
-  <div class="container inner">
-    <a class="brand" href="../">
-      <div class="brand-mark">
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="10" y="14" width="44" height="12" rx="6" fill="#E9B05F"/>
-          <rect x="16" y="24" width="6" height="25" rx="3" fill="#2A93A7"/>
-          <rect x="42" y="24" width="6" height="25" rx="3" fill="#2A93A7"/>
-          <path d="M18 46C23 50 28 52 32 52C36 52 41 50 46 46" stroke="#2A93A7" stroke-width="6" stroke-linecap="round"/>
-          <circle cx="48" cy="18" r="7" fill="#F1C26A"/>
-        </svg>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <div class="brand-row">
+        <a href="/" class="brand">
+          <span class="brand-mark"><img src="/assets/logo-mark.svg" alt="Ryokoplan"></span>
+          <span class="brand-copy"><span class="brand-name"><span class="brand-ryoko">Ryoko</span><span class="brand-plan">plan</span></span><small>Travel Magazine</small></span>
+        </a>
+        <div class="header-chips">
+          <a href="/" class="chip-btn" data-i18n="planner">플래너</a>
+          <span class="chip-btn magazine" data-i18n="magazine">매거진</span>
+        </div>
       </div>
-      <div class="brand-text"><div class="top"><span class="ryoko">Ryoko</span><span class="plan">plan</span></div><div class="sub">Travel Planner</div></div>
-    </a>
-    <div class="header-actions">
-      <a class="pill" href="../" data-i18n="planner">플래너</a>
-      <button class="pill lang-btn" data-lang="ko">한국어</button>
-      <button class="pill lang-btn" data-lang="en">EN</button>
-      <button class="pill lang-btn" data-lang="ja">日本語</button>
-      <button class="pill lang-btn" data-lang="zh">简体中文</button>
-    </div>
-  </div>
-</header>
-<main class="container">
-  <section class="grid-hero">
-    <div class="card hero-copy">
-      <div class="badge" data-i18n="blogBadge">Ryokoplan Blog</div>
-      <h1 class="hero-title" data-i18n="blogTitle">일본·한국 도시 가이드를 언어별로 읽어보세요.</h1>
-      <p class="hero-desc" data-i18n="blogDesc">도쿄, 오사카, 교토, 서울, 부산, 후쿠오카를 중심으로 실제 여행 검색 의도에 맞는 도시 가이드를 모았습니다.</p>
-      <div class="cta-row">
-        <a class="btn primary" href="../" data-i18n="openPlanner">플래너 열기</a>
-        <a class="btn secondary" href="#tokyo" data-i18n="openTokyo">도쿄 가이드 읽기</a>
-      </div>
-      <div class="city-tags">
-        <span class="pill" data-city-chip>도쿄</span>
-        <span class="pill" data-city-chip>오사카</span>
-        <span class="pill" data-city-chip>교토</span>
-        <span class="pill" data-city-chip>서울</span>
-        <span class="pill" data-city-chip>부산</span>
-        <span class="pill" data-city-chip>후쿠오카</span>
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="ko">한국어</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ja">日本語</button>
+        <button class="lang-btn" data-lang="zh">简体中文</button>
       </div>
     </div>
-    <div class="card hero-visual">
-      <img src="../assets/cities/hero_blog.png" alt="Blog hero">
-      <div class="overlay"></div>
-      <div class="info-box route"><h4 data-i18n="previewTitle">여행 친화적인 미리보기</h4><p data-i18n="previewDesc">도시 이미지를 먼저 보여주고, 공유했을 때도 무엇을 보는지 바로 이해되게 구성합니다.</p></div>
-    </div>
-  </section>
+  </header>
 
-  <section class="cards-grid">
-    <article class="card city-card" id="tokyo"><div class="image-wrap"><img src="../assets/cities/tokyo.png" alt="Tokyo"></div><div class="body"><div class="meta">Tokyo · 8 min</div><h3 class="card-title">Tokyo Travel Guide: area logic, food zones, first-trip rhythm</h3><p class="card-desc">Divide the city by neighborhood so you spend less time in transit and keep the day flowing.</p></div></article>
-    <article class="card city-card"><div class="image-wrap"><img src="../assets/cities/osaka.png" alt="Osaka"></div><div class="body"><div class="meta">Osaka · 7 min</div><h3 class="card-title">Osaka Travel Guide: food route, family pace, easy side trips</h3><p class="card-desc">A more practical way to group Dotonbori, Umeda, and nearby stops without rushing.</p></div></article>
-    <article class="card city-card"><div class="image-wrap"><img src="../assets/cities/kyoto.png" alt="Kyoto"></div><div class="body"><div class="meta">Kyoto · 7 min</div><h3 class="card-title">Kyoto Travel Guide: temple hours, quiet lanes, seasonal mood</h3><p class="card-desc">Use softer time blocks to avoid crowd spikes and keep Kyoto calm and walkable.</p></div></article>
-    <article class="card city-card"><div class="image-wrap"><img src="../assets/cities/seoul.png" alt="Seoul"></div><div class="body"><div class="meta">Seoul · 8 min</div><h3 class="card-title">Seoul Travel Guide: café neighborhoods, palace loop, night view</h3><p class="card-desc">A balanced first Seoul day that mixes view points, cafés, and light evening walks.</p></div></article>
-    <article class="card city-card"><div class="image-wrap"><img src="../assets/cities/busan.png" alt="Busan"></div><div class="body"><div class="meta">Busan · 6 min</div><h3 class="card-title">Busan Travel Guide: sea views, market meals, coastal rhythm</h3><p class="card-desc">Bundle beach, lookout, and market energy into one route that still feels easy.</p></div></article>
-    <article class="card city-card"><div class="image-wrap"><img src="../assets/cities/fukuoka.png" alt="Fukuoka"></div><div class="body"><div class="meta">Fukuoka · 6 min</div><h3 class="card-title">Fukuoka Travel Guide: canal city, yatai mood, compact days</h3><p class="card-desc">A short-stay structure that makes the most of Fukuoka's calm, food-led pace.</p></div></article>
-  </section>
-  <div class="footer">© 2026 Ryokoplan</div>
-</main>
-<script src="../assets/app.js"></script>
+  <main class="shell">
+    <section class="magazine-hero">
+      <div class="magazine-heading">
+        <div class="panel">
+          <span class="eyebrow">Ryokoplan Magazine</span>
+          <h2 data-i18n="magTitle">일본·한국 도시 가이드를 매거진처럼 읽어보세요.</h2>
+          <p class="panel-sub" data-i18n="magCopy">도쿄, 오사카, 교토, 서울, 부산, 후쿠오카. 검색 의도에 맞는 도시 가이드와 실제 일정 흐름이 자연스럽게 이어집니다.</p>
+          <div class="hero-actions" style="margin-top:8px">
+            <a href="/" class="primary-btn" data-i18n="startPlanning">여행 계획 시작</a>
+            <a href="/blog" class="ghost-btn" data-i18n="viewMagazine">매거진 보기</a>
+          </div>
+          <div class="city-pills">
+            <span data-city-pill>도쿄</span><span data-city-pill>오사카</span><span data-city-pill>교토</span><span data-city-pill>서울</span><span data-city-pill>부산</span><span data-city-pill>후쿠오카</span>
+          </div>
+        </div>
+        <div class="magazine-visual" id="magazineVisual">
+          <div class="magazine-overlay" data-i18n="magOverlay">도시 이미지와 가이드를 같은 톤으로 정리해, 읽는 경험과 플래닝 경험이 끊기지 않도록 구성했습니다.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="magazine-grid" id="magazineGrid"></section>
+  </main>
+
+  <footer class="footer shell">© 2026 Ryokoplan Magazine</footer>
+  <script type="module" src="/assets/app.js"></script>
 </body>
 </html>
