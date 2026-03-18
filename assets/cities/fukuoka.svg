@@ -1,30 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
 <defs>
   <linearGradient id="sky" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#5DC2C7"/>
-    <stop offset="1" stop-color="#15324C"/>
+    <stop stop-color="#5fd6bf"/>
+    <stop offset="1" stop-color="#133d63"/>
   </linearGradient>
   <linearGradient id="fade" x1="0" y1="520" x2="0" y2="900" gradientUnits="userSpaceOnUse">
     <stop stop-color="#0B2236" stop-opacity="0"/>
-    <stop offset="1" stop-color="#0B2236" stop-opacity=".76"/>
+    <stop offset="1" stop-color="#0B2236" stop-opacity=".72"/>
   </linearGradient>
 </defs>
 <rect width="1600" height="900" rx="54" fill="url(#sky)"/>
-<circle cx="1290" cy="150" r="115" fill="#FFBB6A" fill-opacity=".92"/>
-
-<rect x="0" y="520" width="1600" height="180" fill="#12344F" fill-opacity=".34"/>
-<rect x="120" y="360" width="240" height="170" rx="20" fill="#F5E5CB"/>
-<path d="M102 360H378L332 312H148L102 360Z" fill="#D88552"/>
-<rect x="150" y="388" width="36" height="108" rx="8" fill="#2F7EA1"/><rect x="274" y="388" width="36" height="108" rx="8" fill="#2F7EA1"/>
-<rect x="540" y="170" width="200" height="430" rx="24" fill="#7FD8EE" fill-opacity=".25" stroke="#D7F9FF" stroke-opacity=".36"/>
-<rect x="760" y="260" width="150" height="340" rx="20" fill="#26547E"/>
-<rect x="970" y="220" width="180" height="380" rx="22" fill="#6AC8D5"/>
-<rect x="1250" y="140" width="28" height="460" rx="14" fill="#EAF9FF"/>
-<rect x="1216" y="140" width="96" height="24" rx="12" fill="#EAF9FF"/>
-<circle cx="1264" cy="110" r="18" fill="#EAF9FF"/>
-<path d="M0 720C180 690 300 742 456 734C650 724 826 674 1000 688C1176 702 1328 760 1600 736" stroke="#89ECF0" stroke-opacity=".8" stroke-width="10" stroke-linecap="round"/>
-
+<rect x="0" y="0" width="1600" height="900" fill="url(#fade)" opacity=".2"/>
+<circle cx="1290" cy="170" r="120" fill="#F2B36E"/><path d="M0 570C180 530 320 532 500 570C710 616 870 622 1080 582C1280 544 1430 542 1600 566V900H0V570Z" fill="#0F3557"/><path d="M0 660C220 644 350 658 550 700C760 744 930 750 1160 706C1342 670 1476 664 1600 676V900H0V660Z" fill="#2CA4C2" opacity=".58"/><rect x="150" y="340" width="320" height="20" rx="10" fill="#E6D0AF"/><rect x="184" y="360" width="26" height="160" rx="13" fill="#D58F52"/><rect x="264" y="360" width="26" height="160" rx="13" fill="#D58F52"/><rect x="344" y="360" width="26" height="160" rx="13" fill="#D58F52"/><path d="M174 392H454" stroke="#FFE8C5" stroke-width="10" stroke-linecap="round"/><path d="M174 430H454" stroke="#FFE8C5" stroke-width="10" stroke-linecap="round"/><path d="M174 468H454" stroke="#FFE8C5" stroke-width="10" stroke-linecap="round"/><rect x="980" y="200" width="30" height="320" rx="15" fill="#D7F4FF"/><polygon points="995,132 948,200 1042,200" fill="#F4C46C"/><rect x="1100" y="250" width="160" height="270" rx="18" fill="#7ED6EA" fill-opacity=".25" stroke="#D7F7FF" stroke-opacity=".45"/>
 <rect y="620" width="1600" height="280" fill="url(#fade)"/>
-<text x="104" y="748" fill="#FFF9F0" font-size="118" font-family="Inter, Arial, sans-serif" font-weight="800">Fukuoka</text>
-<text x="108" y="802" fill="#F7E6CF" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">yatai food stalls · canal city · easy waterfront</text>
+<text x="104" y="760" fill="#FFF9F0" font-size="112" font-family="Inter, Arial, sans-serif" font-weight="800">Fukuoka</text>
+<text x="108" y="810" fill="#F7E6CF" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">yatai · tower · quick food trip</text>
 </svg>

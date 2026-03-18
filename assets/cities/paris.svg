@@ -1,30 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
 <defs>
   <linearGradient id="sky" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#8A7AC6"/>
-    <stop offset="1" stop-color="#16324A"/>
+    <stop stop-color="#b9b8f4"/>
+    <stop offset="1" stop-color="#24385c"/>
   </linearGradient>
   <linearGradient id="fade" x1="0" y1="520" x2="0" y2="900" gradientUnits="userSpaceOnUse">
     <stop stop-color="#0B2236" stop-opacity="0"/>
-    <stop offset="1" stop-color="#0B2236" stop-opacity=".76"/>
+    <stop offset="1" stop-color="#0B2236" stop-opacity=".72"/>
   </linearGradient>
 </defs>
 <rect width="1600" height="900" rx="54" fill="url(#sky)"/>
-<circle cx="1290" cy="150" r="115" fill="#FFCC82" fill-opacity=".92"/>
-
-<rect x="0" y="540" width="1600" height="160" fill="#153149" fill-opacity=".34"/>
-<path d="M1120 610H1240L1204 506H1156L1120 610Z" fill="#F0E5D9"/>
-<path d="M1148 506H1212L1180 410L1148 506Z" fill="#E4D4C5"/>
-<path d="M1162 410H1198L1180 330L1162 410Z" fill="#DBC7B6"/>
-<path d="M1170 330H1190L1180 250L1170 330Z" fill="#D1B9A4"/>
-<rect x="220" y="260" width="200" height="300" rx="18" fill="#85D9F4" fill-opacity=".24" stroke="#E4F8FF" stroke-opacity=".3"/>
-<rect x="450" y="220" width="170" height="340" rx="18" fill="#2B567D"/>
-<rect x="660" y="170" width="230" height="390" rx="22" fill="#8ACCE5" fill-opacity=".22" stroke="#E4F8FF" stroke-opacity=".3"/>
-<path d="M0 700H1600" stroke="#F8E8D1" stroke-opacity=".48" stroke-width="16"/>
-<path d="M150 700C260 640 340 640 430 700" stroke="#F6E4CB" stroke-width="10" stroke-linecap="round"/>
-<path d="M1330 700C1420 642 1490 640 1570 700" stroke="#F6E4CB" stroke-width="10" stroke-linecap="round"/>
-
+<rect x="0" y="0" width="1600" height="900" fill="url(#fade)" opacity=".2"/>
+<circle cx="1330" cy="156" r="118" fill="#F6C88F"/><path d="M0 620H1600V900H0V620Z" fill="#17324D"/><rect x="770" y="164" width="22" height="380" rx="11" fill="#F0DCC5"/><polygon points="781,92 726,164 836,164" fill="#F0DCC5"/><path d="M742 252H820" stroke="#F0DCC5" stroke-width="16" stroke-linecap="round"/><path d="M718 340H844" stroke="#F0DCC5" stroke-width="14" stroke-linecap="round"/><path d="M688 540C730 420 832 420 874 540" stroke="#F0DCC5" stroke-width="20" stroke-linecap="round"/><path d="M0 640C210 602 362 618 550 664C760 716 942 724 1180 672C1360 634 1470 624 1600 638" stroke="#E7D8C3" stroke-width="14" fill="none" opacity=".85"/><g opacity=".95"><circle cx="290" cy="430" r="32" fill="#FFDBAA"/><rect x="280" y="460" width="20" height="88" rx="10" fill="#EEDAC0"/><circle cx="1210" cy="430" r="32" fill="#FFDBAA"/><rect x="1200" y="460" width="20" height="88" rx="10" fill="#EEDAC0"/></g>
 <rect y="620" width="1600" height="280" fill="url(#fade)"/>
-<text x="104" y="748" fill="#FFF9F0" font-size="118" font-family="Inter, Arial, sans-serif" font-weight="800">Paris</text>
-<text x="108" y="802" fill="#F7E6CF" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">museums · walks · riverside cafés</text>
+<text x="104" y="760" fill="#FFF9F0" font-size="112" font-family="Inter, Arial, sans-serif" font-weight="800">Paris</text>
+<text x="108" y="810" fill="#F7E6CF" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">eiffel · bridges · cafés</text>
 </svg>

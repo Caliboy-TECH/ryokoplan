@@ -98,7 +98,10 @@
     .brand-ryoko { color: #14395b; }
     .brand-plan { color: #d58f52; }
     .brand-copy span { color: var(--muted); font-size: 0.84rem; }
-    .nav-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .nav-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+    .nav-shortcuts{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end;}
+    .blog-nav-btn{background:linear-gradient(135deg,#f0b26e,#ffd39b); color:#17324d; border-color:rgba(185,129,63,.18); font-weight:800;}
+    .mytrip-btn{background:rgba(105,183,168,.14); color:#17324d; border-color:rgba(105,183,168,.28); font-weight:700;}
     .brand-name{display:inline-flex;gap:0;}
     .brand-ryoko{color:#163a5a !important;}
     .brand-plan{color:#d89152 !important;}
@@ -107,7 +110,7 @@
     .toggle-btn.active::after{transform:translateX(40px);}
     .action-btn{background:rgba(255,255,255,.9);border-color:rgba(39,68,99,.1);padding:10px 14px;}
     .action-btn:hover{background:#fff;}
-    .lang-switcher { display: flex; gap: 8px; flex-wrap: wrap; align-items:center; }
+    .lang-switcher { display: flex; gap: 8px; flex-wrap: wrap; align-items:center; justify-content:flex-end; }
     .lang-btn, .ghost-btn, .cta-btn, .chip, .pill-btn, .action-btn, .toggle-btn {
       font: inherit; cursor: pointer; border: 1px solid transparent;
     }
@@ -385,6 +388,12 @@
       color: var(--text); opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 70;
     }
     .toast.show { opacity: 1; }
+    .share-modal{position:fixed; inset:0; background:rgba(3,7,14,.62); display:none; align-items:center; justify-content:center; z-index:75; padding:18px;}
+    .share-modal.open{display:flex;}
+    .share-box{width:min(620px,100%); border-radius:28px; padding:24px;}
+    .share-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:18px;}
+    .share-box .action-btn{min-height:52px; justify-content:flex-start; padding-inline:16px;}
+    .share-note{margin-top:14px; color:var(--muted); line-height:1.65; font-size:.92rem;}
     .spinner {
       width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(47,126,161,0.18); border-top-color: #2f7ea1;
       animation: spin .8s linear infinite; display: none;
@@ -398,11 +407,13 @@
     @media (max-width: 720px) {
       .shell { width: min(var(--max), calc(100% - 20px)); }
       .topbar-inner { min-height: 70px; padding: 12px 0; align-items: flex-start; }
-      .nav-actions { width: 100%; display:grid; grid-template-columns:1fr; }
+      .brand{align-items:flex-start;}
+      .nav-actions { width: 100%; align-items:flex-start; }
+      .nav-shortcuts{width:100%; justify-content:flex-start;}
       .lang-switcher { width: 100%; display:flex; flex-wrap:nowrap; overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch; }
       .lang-switcher::-webkit-scrollbar{ display:none; }
-      .lang-btn { flex:0 0 auto; padding:10px 14px; white-space:nowrap; }
-      .ghost-btn { justify-content:center; width:max-content; }
+      .lang-btn { flex:0 0 auto; padding:10px 12px; white-space:nowrap; min-width:auto; }
+      .ghost-btn, .blog-nav-btn, .mytrip-btn { justify-content:center; width:auto; padding:10px 14px; }
       .brand-copy strong { font-size: 1.05rem; }
       .brand-copy span { font-size: 0.8rem; }
       .hero-panel, .panel, .saved-box { padding: 20px; }
@@ -453,7 +464,10 @@
         </div>
       </a>
       <div class="nav-actions">
-        <a href="/blog" class="ghost-btn" id="blog-link">Blog</a>
+        <div class="nav-shortcuts">
+          <a href="/blog" class="ghost-btn blog-nav-btn" id="blog-link">Blog</a>
+          <button type="button" class="ghost-btn mytrip-btn" id="top-my-trip">내 여정</button>
+        </div>
         <div class="lang-switcher">
           <button class="lang-btn active" data-lang="ko">한국어</button>
           <button class="lang-btn" data-lang="en">EN</button>
@@ -743,13 +757,31 @@
     </div>
   </div>
 
+  <div class="share-modal" id="share-modal">
+    <div class="share-box glass">
+      <h3 id="share-title" style="margin:0;font-size:1.35rem;letter-spacing:-0.03em;">여정 공유</h3>
+      <p class="share-note" id="share-note">링크 복사, 기기 공유, 이메일/메신저용 공유 중 원하는 방식을 고르세요.</p>
+      <div class="share-grid">
+        <button class="action-btn" type="button" id="share-native">📲 앱으로 공유</button>
+        <button class="action-btn" type="button" id="share-copy">🔗 링크 복사</button>
+        <button class="action-btn" type="button" id="share-email">✉️ 이메일</button>
+        <button class="action-btn" type="button" id="share-telegram">📨 Telegram</button>
+        <button class="action-btn" type="button" id="share-line">💬 LINE</button>
+        <button class="action-btn" type="button" id="share-x">📝 X / Twitter</button>
+      </div>
+      <div class="share-note" id="share-note-small">카카오톡 같은 앱에서는 사이트 카드가 먼저 보이고, 링크를 열면 저장된 일정이 복원됩니다.</div>
+      <div style="margin-top:16px;display:flex;justify-content:flex-end;"><button class="ghost-btn" type="button" id="close-share">✕ 닫기</button></div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
 <script>
     const TRANSLATIONS = {
       ko: {
-        htmlLang: 'ko', brandTagline: 'Travel Planner', blogLink: '블로그',
+        htmlLang: 'ko', brandTagline: 'Travel Planner', blogLink: '블로그', myTrip: '내 여정', shareTitle:'여정 공유', shareNote:'링크 복사, 기기 공유, 이메일/메신저용 공유 중 원하는 방식을 고르세요.', shareNative:'📲 앱으로 공유', shareCopy:'🔗 링크 복사', shareEmail:'✉️ 이메일', shareTelegram:'📨 Telegram', shareLine:'💬 LINE', shareX:'📝 X / Twitter', closeShare:'✕ 닫기',
         heroEyebrow: '감도와 실용성을 모두 챙긴 여행 플래닝',
         heroTitle: '취향도 실용성도 챙긴 여행 플래너.',
         heroLead: 'AI 툴처럼 차갑게 보이기보다, 실제 여행 서비스처럼 느껴지도록. 현지 골목, 무리 없는 동선, 계절별 준비물까지 한 번에 정리합니다.',
@@ -766,14 +798,14 @@
         shareCopied: '공유 링크가 복사되었습니다. 받은 사람이 열면 같은 일정이 보입니다.', saveDone: '일정이 저장되었습니다.', errDestination: '여행지를 입력해 주세요.', errGeneric: '일정 생성에 실패했습니다.', itineraryFor: '여행 일정', localModeOn: '현지인 모드 ON', localModeOff: '관광객 모드', companionBadge: '동행', traitsBadge: '특성', summaryBudget: '총 예상 예산', summaryFocus: '추천 포인트', partnerBooking: '호텔 찾기', partnerKlook: '액티비티 찾기', partnerAgoda: '숙소 비교', blogCardLabelTokyo: '도쿄 · 2026 가이드', blogCardLabelOsaka: '오사카 · 2026 가이드', blogCardLabelParis: '파리 · 2026 가이드'
       },
       en: {
-        htmlLang: 'en', brandTagline: 'AI Travel Planner', blogLink: 'Blog',
-        heroEyebrow: 'Designed for memorable, effortless travel', heroTitle: 'Tasteful trip planning that is practical enough to use.', heroLead: 'From hidden local spots to accessible routing and season-based packing lists, Ryokoplan turns one prompt into a trip plan you can actually use.', pill1: '4-language output', pill2: 'Budget by category', pill3: 'Checklist by season', pill4: 'Local mode', previewBadge: 'Live itinerary preview', previewTitle: 'Tokyo · 3 Nights 4 Days', stat1: '4 languages', stat1sub: 'Ready to switch instantly', stat2: 'Budget split', stat2sub: 'Flight · Hotel · Food · Transit', previewLabel: 'Sample route', previewRoute: 'Asakusa → Kiyosumi → Shimokitazawa hidden cafes', plannerTitle: 'Build your trip', plannerSub: 'Tell us who you are traveling with, what pace you prefer, and whether to prioritize iconic highlights or local hidden gems.', lblDestination: 'Destination *', helperDestination: 'City, country, or region', lblDuration: 'Travel duration', lblStyle: 'Travel style', lblBudget: 'Budget level', lblCompanion: 'Who are you traveling with?', lblTraits: 'Traveler traits', helperTraits: 'Used in routing, pacing, and checklist', lblLocalMode: 'Local mode', localModeSub: 'Less tourist checklist, more hidden local gems', lblNotes: 'Extra notes', destinationPlaceholder: 'e.g. Tokyo, Osaka, Paris, Kyoto', notesPlaceholder: 'e.g. slower pace, more cafes, low walking load, one Michelin dinner', generate: 'Generate itinerary', generating: 'Finding the best route...', savedBtn: '💾 Saved trips', statusNote: 'Your result includes daily plans, travel tips, budget breakdown, and a smart checklist.', emptyTitle: 'Your polished itinerary will appear here.', emptyCopy: 'Once generated, you can share it as a link, save it locally, or export it as PDF.', tipsHeading: 'Travel tips', checklistHeading: 'Checklist', budgetHeading: 'Budget breakdown', summaryHeading: 'Plan summary', pdf: '📄 Save PDF', share: '🔗 Share', save: '💾 Save', regenerate: '✨ Regenerate', feature1Title: 'Smarter routing', feature1Copy: 'Each day is grouped by area and pace so the plan feels realistic instead of random.', feature2Title: 'Traveler-aware planning', feature2Copy: 'Mobility needs, elderly travelers, pets, and kids shape pacing, transport choices, and must-pack items.', feature3Title: 'Ready to use', feature3Copy: 'Shareable links, printable PDF, and SEO-driven blog pages make Ryokoplan practical to operate.', blogEyebrow: 'Travel inspiration', blogTitle: 'Featured guides from the Ryokoplan blog', blogSub: 'Publish destination pages around real travel intent and guide users naturally into the planner.', blogCta: 'View all posts', savedTitle: 'Saved itineraries', close: 'Close', noSaved: 'No saved itineraries yet.', delete: 'Delete', shareCopied: 'Share link copied. Opening it will restore the same itinerary.', saveDone: 'Itinerary saved.', errDestination: 'Please enter a destination.', errGeneric: 'Failed to generate itinerary.', itineraryFor: 'Trip plan', localModeOn: 'Local mode ON', localModeOff: 'Tourist mode', companionBadge: 'With', traitsBadge: 'Traits', summaryBudget: 'Estimated total budget', summaryFocus: 'Recommended focus', partnerBooking: 'Find hotels', partnerKlook: 'Find activities', partnerAgoda: 'Compare stays', blogCardLabelTokyo: 'Tokyo · 2026 guide', blogCardLabelOsaka: 'Osaka · 2026 guide', blogCardLabelParis: 'Paris · 2026 guide'
+        htmlLang: 'en', brandTagline: 'AI Travel Planner', blogLink: 'Blog', myTrip: 'My trips', shareTitle:'Share this trip', shareNote:'Choose the easiest way to send your itinerary: native sharing, link copy, or app links.', shareNative:'📲 Share with apps', shareCopy:'🔗 Copy link', shareEmail:'✉️ Email', shareTelegram:'📨 Telegram', shareLine:'💬 LINE', shareX:'📝 X / Twitter', closeShare:'✕ Close',
+        heroEyebrow: 'Designed for memorable, effortless travel', heroTitle: 'Tasteful trip planning that is practical enough to use.', heroLead: 'From hidden local spots to accessible routing and season-based packing lists, Ryokoplan turns one prompt into a trip plan you can actually use.', pill1: '4-language output', pill2: 'Budget by category', pill3: 'Checklist by season', pill4: 'Local mode', previewBadge: 'Live itinerary preview', previewTitle: 'Tokyo · 3 Nights 4 Days', stat1: '4 languages', stat1sub: 'Ready to switch instantly', stat2: 'Budget split', stat2sub: 'Flight · Hotel · Food · Transit', previewLabel: 'Sample route', previewRoute: 'Asakusa → Kiyosumi → Shimokitazawa hidden cafes', plannerTitle: 'Build your trip', plannerSub: 'Tell us who you are traveling with, what pace you prefer, and whether to prioritize iconic highlights or local hidden gems.', lblDestination: 'Destination *', helperDestination: 'City, country, or region', lblDuration: 'Travel duration', lblStyle: 'Travel style', lblBudget: 'Budget level', lblCompanion: 'Who are you traveling with?', lblTraits: 'Traveler traits', helperTraits: 'Used in routing, pacing, and checklist', lblLocalMode: 'Local mode', localModeSub: 'Less tourist checklist, more hidden local gems', lblNotes: 'Extra notes', destinationPlaceholder: 'e.g. Tokyo, Osaka, Paris, Kyoto', notesPlaceholder: 'e.g. slower pace, more cafes, low walking load, one Michelin dinner', generate: 'Generate itinerary', generating: 'Sketching your best route...', savedBtn: '💾 Saved trips', statusNote: 'Your result includes daily plans, travel tips, budget breakdown, and a smart checklist.', emptyTitle: 'Your polished itinerary will appear here.', emptyCopy: 'Once generated, you can share it as a link, save it locally, or export it as PDF.', tipsHeading: 'Travel tips', checklistHeading: 'Checklist', budgetHeading: 'Budget breakdown', summaryHeading: 'Plan summary', pdf: '📄 Save PDF', share: '🔗 Share', save: '💾 Save', regenerate: '✨ Regenerate', feature1Title: 'Smarter routing', feature1Copy: 'Each day is grouped by area and pace so the plan feels realistic instead of random.', feature2Title: 'Traveler-aware planning', feature2Copy: 'Mobility needs, elderly travelers, pets, and kids shape pacing, transport choices, and must-pack items.', feature3Title: 'Ready to use', feature3Copy: 'Shareable links, printable PDF, and SEO-driven blog pages make Ryokoplan practical to operate.', blogEyebrow: 'Travel inspiration', blogTitle: 'Featured guides from the Ryokoplan blog', blogSub: 'Publish destination pages around real travel intent and guide users naturally into the planner.', blogCta: 'View all posts', savedTitle: 'Saved itineraries', close: 'Close', noSaved: 'No saved itineraries yet.', delete: 'Delete', shareCopied: 'Share link copied. Opening it will restore the same itinerary.', saveDone: 'Itinerary saved.', errDestination: 'Please enter a destination.', errGeneric: 'Failed to generate itinerary.', itineraryFor: 'Trip plan', localModeOn: 'Local mode ON', localModeOff: 'Tourist mode', companionBadge: 'With', traitsBadge: 'Traits', summaryBudget: 'Estimated total budget', summaryFocus: 'Recommended focus', partnerBooking: 'Find hotels', partnerKlook: 'Find activities', partnerAgoda: 'Compare stays', blogCardLabelTokyo: 'Tokyo · 2026 guide', blogCardLabelOsaka: 'Osaka · 2026 guide', blogCardLabelParis: 'Paris · 2026 guide'
       },
       ja: {
-        htmlLang: 'ja', brandTagline: 'Travel Planner', blogLink: 'ブログ', heroEyebrow: '旅サービスらしく見えて使いやすく', heroTitle: 'センスも実用性もある旅プラン。', heroLead: '無機質なAIツールではなく、実際の旅サービスのように。ローカルな街歩き、無理のない動線、季節ごとの持ち物まで一度に整えます。', pill1: '4言語対応', pill2: '費目別予算', pill3: '季節別チェックリスト', pill4: 'ローカルモード', previewBadge: 'リアルタイム旅程プレビュー', previewTitle: '東京 · 3泊4日', stat1: '4言語', stat1sub: 'すぐ切り替え可能', stat2: '予算内訳', stat2sub: '航空券・宿泊・食事・交通', previewLabel: 'サンプルルート', previewRoute: '浅草 → 清澄白河 → 下北沢の隠れカフェ', plannerTitle: '旅を作る', plannerSub: '誰と行くか、どんなペースか、有名スポット重視かローカル重視かを教えてください。', lblDestination: '目的地 *', helperDestination: '都市・国・地域', lblDuration: '旅行期間', lblStyle: '旅行スタイル', lblBudget: '予算レベル', lblCompanion: '誰と行きますか？', lblTraits: '旅行者の特性', helperTraits: '動線・ペース・チェックリストに反映', lblLocalMode: 'ローカルモード', localModeSub: '定番観光よりも隠れたローカルスポットを優先', lblNotes: '追加メモ', destinationPlaceholder: '例：東京、大阪、パリ、京都', notesPlaceholder: '例：ゆっくり、カフェ多め、歩行少なめ、ミシュラン1回', generate: 'プラン作成', generating: 'いい流れを探しています...', savedBtn: '💾 保存済み', statusNote: '結果には日別プラン、旅のヒント、予算内訳、チェックリストが含まれます。', emptyTitle: '完成した旅程がここに表示されます。', emptyCopy: '生成後はリンク共有、ローカル保存、PDF出力がすぐ可能です。', emptyMiniTitle:'旅向けの動線設計', emptyMiniCopy:'エリアごとに整理し、乗り換えを減らして実際に使いやすい流れに整えます。', emptyRouteLabel:'サンプルルート', emptyRouteCopy:'浅草 → 清澄白河 → 下北沢の隠れカフェ', emptyThumb1:'静かな街歩き', emptyThumb2:'海辺の一日', tipsHeading: '旅のヒント', checklistHeading: 'チェックリスト', budgetHeading: '予算内訳', summaryHeading: 'プラン概要', pdf: '📄 PDF保存', share: '🔗 シェア', save: '💾 保存', regenerate: '✨ 再生成', feature1Title: 'より賢い動線', feature1Copy: '1日の予定をエリアごとにまとめるので、無理のない現実的な旅程になります。', feature2Title: '旅行者に合わせた設計', feature2Copy: '高齢者、移動配慮、ペット連れ、子ども連れを考慮して速度や交通、持ち物を調整します。', feature3Title: 'すぐ使える', feature3Copy: '共有リンク、PDF出力、SEO向けブログ構造まで実運用を意識して整えました。', blogEyebrow: '旅のインスピレーション', blogTitle: 'Ryokoplanブログの注目記事', blogSub: '実際の検索意図に合う記事で流入を作り、自然にプランナー利用へつなげます。', blogCta: '記事一覧を見る', savedTitle: '保存したプラン', close: '閉じる', noSaved: '保存したプランはまだありません。', delete: '削除', shareCopied: '共有リンクをコピーしました。同じ旅程を開けます。', saveDone: 'プランを保存しました。', errDestination: '目的地を入力してください。', errGeneric: '旅程の生成に失敗しました。', itineraryFor: '旅行プラン', localModeOn: 'ローカルモード ON', localModeOff: '観光モード', companionBadge: '同行', traitsBadge: '特性', summaryBudget: '予想合計予算', summaryFocus: 'おすすめポイント', partnerBooking: 'ホテルを探す', partnerKlook: '体験を探す', partnerAgoda: '宿を比較', blogCardLabelTokyo: '東京 · 2026ガイド', blogCardLabelOsaka: '大阪 · 2026ガイド', blogCardLabelParis: 'パリ · 2026ガイド'
+        htmlLang: 'ja', brandTagline: 'Travel Planner', blogLink: 'ブログ', myTrip: '自分の旅程', shareTitle:'旅程を共有', shareNote:'ネイティブ共有、リンクコピー、メールやメッセンジャー共有から選べます。', shareNative:'📲 アプリで共有', shareCopy:'🔗 リンクをコピー', shareEmail:'✉️ メール', shareTelegram:'📨 Telegram', shareLine:'💬 LINE', shareX:'📝 X / Twitter', closeShare:'✕ 閉じる', heroEyebrow: '旅サービスらしく見えて使いやすく', heroTitle: 'センスも実用性もある旅プラン。', heroLead: '無機質なAIツールではなく、実際の旅サービスのように。ローカルな街歩き、無理のない動線、季節ごとの持ち物まで一度に整えます。', pill1: '4言語対応', pill2: '費目別予算', pill3: '季節別チェックリスト', pill4: 'ローカルモード', previewBadge: 'リアルタイム旅程プレビュー', previewTitle: '東京 · 3泊4日', stat1: '4言語', stat1sub: 'すぐ切り替え可能', stat2: '予算内訳', stat2sub: '航空券・宿泊・食事・交通', previewLabel: 'サンプルルート', previewRoute: '浅草 → 清澄白河 → 下北沢の隠れカフェ', plannerTitle: '旅を作る', plannerSub: '誰と行くか、どんなペースか、有名スポット重視かローカル重視かを教えてください。', lblDestination: '目的地 *', helperDestination: '都市・国・地域', lblDuration: '旅行期間', lblStyle: '旅行スタイル', lblBudget: '予算レベル', lblCompanion: '誰と行きますか？', lblTraits: '旅行者の特性', helperTraits: '動線・ペース・チェックリストに反映', lblLocalMode: 'ローカルモード', localModeSub: '定番観光よりも隠れたローカルスポットを優先', lblNotes: '追加メモ', destinationPlaceholder: '例：東京、大阪、パリ、京都', notesPlaceholder: '例：ゆっくり、カフェ多め、歩行少なめ、ミシュラン1回', generate: 'プラン作成', generating: 'ちょうどいい流れを組んでいます...', savedBtn: '💾 保存済み', statusNote: '結果には日別プラン、旅のヒント、予算内訳、チェックリストが含まれます。', emptyTitle: '完成した旅程がここに表示されます。', emptyCopy: '生成後はリンク共有、ローカル保存、PDF出力がすぐ可能です。', emptyMiniTitle:'旅向けの動線設計', emptyMiniCopy:'エリアごとに整理し、乗り換えを減らして実際に使いやすい流れに整えます。', emptyRouteLabel:'サンプルルート', emptyRouteCopy:'浅草 → 清澄白河 → 下北沢の隠れカフェ', emptyThumb1:'静かな街歩き', emptyThumb2:'海辺の一日', tipsHeading: '旅のヒント', checklistHeading: 'チェックリスト', budgetHeading: '予算内訳', summaryHeading: 'プラン概要', pdf: '📄 PDF保存', share: '🔗 シェア', save: '💾 保存', regenerate: '✨ 再生成', feature1Title: 'より賢い動線', feature1Copy: '1日の予定をエリアごとにまとめるので、無理のない現実的な旅程になります。', feature2Title: '旅行者に合わせた設計', feature2Copy: '高齢者、移動配慮、ペット連れ、子ども連れを考慮して速度や交通、持ち物を調整します。', feature3Title: 'すぐ使える', feature3Copy: '共有リンク、PDF出力、SEO向けブログ構造まで実運用を意識して整えました。', blogEyebrow: '旅のインスピレーション', blogTitle: 'Ryokoplanブログの注目記事', blogSub: '実際の検索意図に合う記事で流入を作り、自然にプランナー利用へつなげます。', blogCta: '記事一覧を見る', savedTitle: '保存したプラン', close: '閉じる', noSaved: '保存したプランはまだありません。', delete: '削除', shareCopied: '共有リンクをコピーしました。同じ旅程を開けます。', saveDone: 'プランを保存しました。', errDestination: '目的地を入力してください。', errGeneric: '旅程の生成に失敗しました。', itineraryFor: '旅行プラン', localModeOn: 'ローカルモード ON', localModeOff: '観光モード', companionBadge: '同行', traitsBadge: '特性', summaryBudget: '予想合計予算', summaryFocus: 'おすすめポイント', partnerBooking: 'ホテルを探す', partnerKlook: '体験を探す', partnerAgoda: '宿を比較', blogCardLabelTokyo: '東京 · 2026ガイド', blogCardLabelOsaka: '大阪 · 2026ガイド', blogCardLabelParis: 'パリ · 2026ガイド'
       },
       zh: {
-        htmlLang: 'zh-Hans', brandTagline: 'Travel Planner', blogLink: '博客', heroEyebrow: '看起来更像旅行服务，而不是技术工具', heroTitle: '兼顾品味与实用的旅行规划。', heroLead: '减少冰冷的 AI 工具感，更像真正的旅行服务。把本地街区、顺路动线和按季节整理的出行清单一次做好。', pill1: '四语切换', pill2: '预算分类', pill3: '季节清单', pill4: '本地人模式', previewBadge: '实时行程预览', previewTitle: '东京 · 3晚4天', stat1: '4种语言', stat1sub: '可即时切换', stat2: '预算拆分', stat2sub: '机票 · 住宿 · 餐饮 · 交通', previewLabel: '示例路线', previewRoute: '浅草 → 清澄白河 → 下北泽隐藏咖啡馆', plannerTitle: '创建你的行程', plannerSub: '告诉我们你和谁一起出行、喜欢什么节奏，以及更想看经典景点还是本地隐藏地点。', lblDestination: '目的地 *', helperDestination: '城市、国家或地区', lblDuration: '旅行时长', lblStyle: '旅行风格', lblBudget: '预算级别', lblCompanion: '和谁一起旅行？', lblTraits: '旅行者特征', helperTraits: '会影响路线、节奏和清单', lblLocalMode: '本地人模式', localModeSub: '弱化游客打卡，优先隐藏本地景点', lblNotes: '额外说明', destinationPlaceholder: '例如：东京、大阪、巴黎、京都', notesPlaceholder: '例如：节奏慢一点、多去咖啡馆、少走路、安排一次米其林', generate: '生成行程', generating: '正在寻找更顺的路线...', savedBtn: '💾 已保存行程', statusNote: '结果将包含每日计划、旅行建议、预算明细和智能清单。', emptyTitle: '精致的旅行行程会显示在这里。', emptyCopy: '生成后可以直接分享链接、本地保存，或导出为 PDF。', emptyMiniTitle:'更适合旅行的路线逻辑', emptyMiniCopy:'按区域组织，减少换乘，让行程真正可执行也更值得分享。', emptyRouteLabel:'示例路线', emptyRouteCopy:'浅草 → 清澄白河 → 下北泽隐藏咖啡馆', emptyThumb1:'安静街区', emptyThumb2:'海边一天', tipsHeading: '旅行建议', checklistHeading: '出行清单', budgetHeading: '预算明细', summaryHeading: '行程摘要', pdf: '📄 保存 PDF', share: '🔗 分享', save: '💾 保存', regenerate: '✨ 重新生成', feature1Title: '更聪明的动线', feature1Copy: '每天按区域和节奏组织，不会像随机拼接，而是更真实可执行。', feature2Title: '旅行者适配', feature2Copy: '长者、行动不便、携宠、带小孩都会影响节奏、交通方式和打包建议。', feature3Title: '拿来就能用', feature3Copy: '支持分享链接、PDF打印，以及适合 SEO 的博客结构，方便真正上线运营。', blogEyebrow: '旅行灵感', blogTitle: 'Ryokoplan 博客精选指南', blogSub: '围绕真实旅行搜索意图发布内容，再自然引导用户进入 AI 行程规划。', blogCta: '查看全部文章', savedTitle: '已保存行程', close: '关闭', noSaved: '还没有保存的行程。', delete: '删除', shareCopied: '分享链接已复制，打开后会恢复同一行程。', saveDone: '行程已保存。', errDestination: '请输入目的地。', errGeneric: '生成行程失败。', itineraryFor: '旅行计划', localModeOn: '本地人模式 ON', localModeOff: '游客模式', companionBadge: '同行', traitsBadge: '特征', summaryBudget: '预计总预算', summaryFocus: '推荐重点', partnerBooking: '找酒店', partnerKlook: '找活动', partnerAgoda: '比较住宿', blogCardLabelTokyo: '东京 · 2026 指南', blogCardLabelOsaka: '大阪 · 2026 指南', blogCardLabelParis: '巴黎 · 2026 指南'
+        htmlLang: 'zh-Hans', brandTagline: 'Travel Planner', blogLink: '博客', myTrip: '我的行程', shareTitle:'分享行程', shareNote:'可选择系统分享、复制链接，或通过邮件/聊天应用发送。', shareNative:'📲 用应用分享', shareCopy:'🔗 复制链接', shareEmail:'✉️ 邮件', shareTelegram:'📨 Telegram', shareLine:'💬 LINE', shareX:'📝 X / Twitter', closeShare:'✕ 关闭', heroEyebrow: '看起来更像旅行服务，而不是技术工具', heroTitle: '兼顾品味与实用的旅行规划。', heroLead: '减少冰冷的 AI 工具感，更像真正的旅行服务。把本地街区、顺路动线和按季节整理的出行清单一次做好。', pill1: '四语切换', pill2: '预算分类', pill3: '季节清单', pill4: '本地人模式', previewBadge: '实时行程预览', previewTitle: '东京 · 3晚4天', stat1: '4种语言', stat1sub: '可即时切换', stat2: '预算拆分', stat2sub: '机票 · 住宿 · 餐饮 · 交通', previewLabel: '示例路线', previewRoute: '浅草 → 清澄白河 → 下北泽隐藏咖啡馆', plannerTitle: '创建你的行程', plannerSub: '告诉我们你和谁一起出行、喜欢什么节奏，以及更想看经典景点还是本地隐藏地点。', lblDestination: '目的地 *', helperDestination: '城市、国家或地区', lblDuration: '旅行时长', lblStyle: '旅行风格', lblBudget: '预算级别', lblCompanion: '和谁一起旅行？', lblTraits: '旅行者特征', helperTraits: '会影响路线、节奏和清单', lblLocalMode: '本地人模式', localModeSub: '弱化游客打卡，优先隐藏本地景点', lblNotes: '额外说明', destinationPlaceholder: '例如：东京、大阪、巴黎、京都', notesPlaceholder: '例如：节奏慢一点、多去咖啡馆、少走路、安排一次米其林', generate: '生成行程', generating: '正在整理更顺的行程...', savedBtn: '💾 已保存行程', statusNote: '结果将包含每日计划、旅行建议、预算明细和智能清单。', emptyTitle: '精致的旅行行程会显示在这里。', emptyCopy: '生成后可以直接分享链接、本地保存，或导出为 PDF。', emptyMiniTitle:'更适合旅行的路线逻辑', emptyMiniCopy:'按区域组织，减少换乘，让行程真正可执行也更值得分享。', emptyRouteLabel:'示例路线', emptyRouteCopy:'浅草 → 清澄白河 → 下北泽隐藏咖啡馆', emptyThumb1:'安静街区', emptyThumb2:'海边一天', tipsHeading: '旅行建议', checklistHeading: '出行清单', budgetHeading: '预算明细', summaryHeading: '行程摘要', pdf: '📄 保存 PDF', share: '🔗 分享', save: '💾 保存', regenerate: '✨ 重新生成', feature1Title: '更聪明的动线', feature1Copy: '每天按区域和节奏组织，不会像随机拼接，而是更真实可执行。', feature2Title: '旅行者适配', feature2Copy: '长者、行动不便、携宠、带小孩都会影响节奏、交通方式和打包建议。', feature3Title: '拿来就能用', feature3Copy: '支持分享链接、PDF打印，以及适合 SEO 的博客结构，方便真正上线运营。', blogEyebrow: '旅行灵感', blogTitle: 'Ryokoplan 博客精选指南', blogSub: '围绕真实旅行搜索意图发布内容，再自然引导用户进入 AI 行程规划。', blogCta: '查看全部文章', savedTitle: '已保存行程', close: '关闭', noSaved: '还没有保存的行程。', delete: '删除', shareCopied: '分享链接已复制，打开后会恢复同一行程。', saveDone: '行程已保存。', errDestination: '请输入目的地。', errGeneric: '生成行程失败。', itineraryFor: '旅行计划', localModeOn: '本地人模式 ON', localModeOff: '游客模式', companionBadge: '同行', traitsBadge: '特征', summaryBudget: '预计总预算', summaryFocus: '推荐重点', partnerBooking: '找酒店', partnerKlook: '找活动', partnerAgoda: '比较住宿', blogCardLabelTokyo: '东京 · 2026 指南', blogCardLabelOsaka: '大阪 · 2026 指南', blogCardLabelParis: '巴黎 · 2026 指南'
       }
     };
 
@@ -844,7 +876,7 @@
       setText('hero-eyebrow', t.heroEyebrow); setText('hero-title', t.heroTitle); setText('hero-lead', t.heroLead);
       setText('pill-1', t.pill1); setText('pill-2', t.pill2); setText('pill-3', t.pill3); setText('pill-4', t.pill4);
       setText('preview-badge', t.previewBadge); setText('preview-title', t.previewTitle); setText('stat-1', t.stat1); setText('stat-1-sub', t.stat1sub); setText('stat-2', t.stat2); setText('stat-2-sub', t.stat2sub); setText('preview-label', t.previewLabel); setText('preview-route', t.previewRoute);
-      setText('planner-title', t.plannerTitle); setText('planner-sub', t.plannerSub); setText('lbl-destination', t.lblDestination); setText('helper-destination', t.helperDestination); setText('lbl-duration', t.lblDuration); setText('lbl-style', t.lblStyle); setText('lbl-budget', t.lblBudget); setText('lbl-companion', t.lblCompanion); setText('lbl-traits', t.lblTraits); setText('helper-traits', t.helperTraits); setText('lbl-local-mode', t.lblLocalMode); setText('local-mode-sub', t.localModeSub); setText('lbl-notes', t.lblNotes); setText('generate-text', t.generate); setText('open-saved', t.savedBtn); setText('status-note', t.statusNote); setText('empty-title', t.emptyTitle); setText('empty-copy', t.emptyCopy); setText('tips-heading', t.tipsHeading); setText('checklist-heading', t.checklistHeading); setText('budget-heading', t.budgetHeading); setText('summary-heading', t.summaryHeading); setText('action-pdf', t.pdf); setText('action-share', t.share); setText('action-save', t.save); setText('empty-mini-title', t.emptyMiniTitle || 'Traveler-friendly route logic'); setText('empty-mini-copy', t.emptyMiniCopy || 'Area-based pacing, simpler transfers, and a plan that still feels worth sharing.'); setText('empty-route-label', t.emptyRouteLabel || 'Sample route'); setText('empty-route-copy', t.emptyRouteCopy || 'Asakusa → Kiyosumi → Shimokitazawa cafés'); setText('empty-thumb-label-1', t.emptyThumb1 || 'Quiet streets'); setText('empty-thumb-label-2', t.emptyThumb2 || 'Sea view day'); setText('secondary-generate', t.regenerate); setText('feature-1-title', t.feature1Title); setText('feature-1-copy', t.feature1Copy); setText('feature-2-title', t.feature2Title); setText('feature-2-copy', t.feature2Copy); setText('feature-3-title', t.feature3Title); setText('feature-3-copy', t.feature3Copy); setText('blog-eyebrow', t.blogEyebrow); setText('blog-title', t.blogTitle); setText('blog-sub', t.blogSub); setText('blog-cta', t.blogCta); setText('saved-title', t.savedTitle); setText('close-saved', `✕ ${t.close}`);
+      setText('planner-title', t.plannerTitle); setText('planner-sub', t.plannerSub); setText('lbl-destination', t.lblDestination); setText('helper-destination', t.helperDestination); setText('lbl-duration', t.lblDuration); setText('lbl-style', t.lblStyle); setText('lbl-budget', t.lblBudget); setText('lbl-companion', t.lblCompanion); setText('lbl-traits', t.lblTraits); setText('helper-traits', t.helperTraits); setText('lbl-local-mode', t.lblLocalMode); setText('local-mode-sub', t.localModeSub); setText('lbl-notes', t.lblNotes); setText('generate-text', t.generate); setText('open-saved', t.savedBtn); setText('status-note', t.statusNote); setText('empty-title', t.emptyTitle); setText('empty-copy', t.emptyCopy); setText('tips-heading', t.tipsHeading); setText('checklist-heading', t.checklistHeading); setText('budget-heading', t.budgetHeading); setText('summary-heading', t.summaryHeading); setText('action-pdf', t.pdf); setText('action-share', t.share); setText('action-save', t.save); setText('empty-mini-title', t.emptyMiniTitle || 'Traveler-friendly route logic'); setText('empty-mini-copy', t.emptyMiniCopy || 'Area-based pacing, simpler transfers, and a plan that still feels worth sharing.'); setText('empty-route-label', t.emptyRouteLabel || 'Sample route'); setText('empty-route-copy', t.emptyRouteCopy || 'Asakusa → Kiyosumi → Shimokitazawa cafés'); setText('empty-thumb-label-1', t.emptyThumb1 || 'Quiet streets'); setText('empty-thumb-label-2', t.emptyThumb2 || 'Sea view day'); setText('secondary-generate', t.regenerate); setText('feature-1-title', t.feature1Title); setText('feature-1-copy', t.feature1Copy); setText('feature-2-title', t.feature2Title); setText('feature-2-copy', t.feature2Copy); setText('feature-3-title', t.feature3Title); setText('feature-3-copy', t.feature3Copy); setText('blog-eyebrow', t.blogEyebrow); setText('blog-title', t.blogTitle); setText('blog-sub', t.blogSub); setText('blog-cta', t.blogCta); setText('saved-title', t.savedTitle); setText('close-saved', `✕ ${t.close}`); setText('top-my-trip', t.myTrip || 'My trips'); setText('share-title', t.shareTitle || 'Share this trip'); setText('share-note', t.shareNote || 'Choose how to share this itinerary.'); setText('share-native', t.shareNative || '📲 Share with apps'); setText('share-copy', t.shareCopy || '🔗 Copy link'); setText('share-email', t.shareEmail || '✉️ Email'); setText('share-telegram', t.shareTelegram || '📨 Telegram'); setText('share-line', t.shareLine || '💬 LINE'); setText('share-x', t.shareX || '📝 X / Twitter'); setText('close-share', t.closeShare || '✕ Close');
       setText('partner-booking', t.partnerBooking); setText('partner-klook', t.partnerKlook); setText('partner-agoda', t.partnerAgoda);
       $('destination').placeholder = t.destinationPlaceholder;
       $('notes').placeholder = t.notesPlaceholder;
@@ -894,6 +926,9 @@
     }
 
     async function compressPlanForUrl(plan) {
+      try {
+        if (window.LZString) return 'lz:' + LZString.compressToEncodedURIComponent(JSON.stringify(plan));
+      } catch (error) {}
       const json = new TextEncoder().encode(JSON.stringify(plan));
       if ('CompressionStream' in window) {
         const cs = new CompressionStream('gzip');
@@ -913,6 +948,9 @@
         while (s.length % 4) s += '=';
         return s;
       };
+      if (value.startsWith('lz:') && window.LZString) {
+        return JSON.parse(LZString.decompressFromEncodedURIComponent(value.slice(3)));
+      }
       if (value.startsWith('gz:') && 'DecompressionStream' in window) {
         const binary = atob(restoreB64(value.slice(3)));
         const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
@@ -923,6 +961,19 @@
       }
       const raw = value.startsWith('b64:') ? value.slice(4) : value;
       return JSON.parse(decodeURIComponent(escape(atob(restoreB64(raw)))));
+    }
+
+    function buildSharePayload() {
+      if (!currentResult) return null;
+      const title = currentResult.title || 'Ryokoplan';
+      const summary = [currentResult.destination || '', currentResult.duration || '', (currentResult.summary || []).slice(0,2).join(' · ')].filter(Boolean).join(' · ');
+      return compressPlanForUrl(currentResult).then(encoded => ({
+        url: `${window.location.origin}${window.location.pathname}?lang=${currentLang}&share=${encodeURIComponent(encoded)}`,
+        title,
+        text: `${title}${summary ? `
+${summary}` : ''}
+Ryokoplan`
+      }));
     }
 
     function setLoading(on) {
@@ -1105,101 +1156,94 @@
       renderSaved();
     }
 
-    async function shareItinerary() {
+    function openShareModal() { $('share-modal').classList.add('open'); }
+    function closeShareModal() { $('share-modal').classList.remove('open'); }
+
+    async function shareItinerary(forceModal = false) {
       if (!currentResult) return;
-      const encoded = await compressPlanForUrl(currentResult);
-      const url = `${window.location.origin}${window.location.pathname}?lang=${currentLang}&share=${encodeURIComponent(encoded)}`;
-      const shareText = `${currentResult.title || 'Ryokoplan'}
-${currentResult.destination || ''}`.trim();
-      if (navigator.share) {
-        navigator.share({ title: currentResult.title || 'Ryokoplan', text: shareText, url })
-          .catch(async () => {
-            try { await navigator.clipboard.writeText(url); showToast(TRANSLATIONS[currentLang].shareCopied); }
-            catch { window.prompt('Copy this link', url); }
-          });
+      const payload = await buildSharePayload();
+      if (!payload) return;
+      if (navigator.share && !forceModal) {
+        try {
+          await navigator.share(payload);
+          return;
+        } catch (error) {
+          if (String(error).includes('AbortError')) return;
+        }
+      }
+      openShareModal();
+    }
+
+    async function shareByChannel(type) {
+      const payload = await buildSharePayload();
+      if (!payload) return;
+      const encUrl = encodeURIComponent(payload.url);
+      const encText = encodeURIComponent(payload.text);
+      if (type === 'copy') {
+        await navigator.clipboard.writeText(payload.url);
+        showToast(TRANSLATIONS[currentLang].shareCopied);
+        closeShareModal();
         return;
       }
-      try {
-        await navigator.clipboard.writeText(url);
-        showToast(TRANSLATIONS[currentLang].shareCopied);
-      } catch (error) {
-        window.prompt('Copy this link', url);
+      if (type === 'native' && navigator.share) {
+        try { await navigator.share(payload); closeShareModal(); } catch (error) {}
+        return;
       }
+      const urlMap = {
+        email: `mailto:?subject=${encodeURIComponent(payload.title)}&body=${encText}%0A%0A${encUrl}`,
+        telegram: `https://t.me/share/url?url=${encUrl}&text=${encText}`,
+        line: `https://social-plugins.line.me/lineit/share?url=${encUrl}`,
+        x: `https://twitter.com/intent/tweet?url=${encUrl}&text=${encText}`
+      };
+      const link = urlMap[type];
+      if (link) window.open(link, '_blank', 'noopener');
     }
 
     async function exportPdf() {
       if (!currentResult) return;
-      const printWindow = window.open('', '_blank');
-      if (!printWindow) {
-        showToast('Popup blocked. Please allow popups to save PDF.');
+      if (!(window.jspdf && window.jspdf.jsPDF)) {
+        showToast('PDF module failed to load.');
         return;
       }
-      const title = (currentResult.title || 'Ryokoplan Itinerary').replace(/</g,'&lt;');
-      const content = $('result-card').innerHTML;
-      printWindow.document.write(`<!doctype html><html><head><meta charset="utf-8"/><title>${title}</title><style>
-        body{font-family:Inter,Arial,sans-serif;margin:0;padding:24px;color:#17324d;background:#fff}
-        h1,h2,h3,h4{margin:0 0 10px}
-        .result-actions,.partner-grid{display:none!important}
-        .result-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid #d8dde6}
-        .meta-badges,.section-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-        .badge{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;font-size:12px;background:#f3f7fb;border:1px solid #d7e5f1}
-        .day-list{display:grid;gap:16px;margin-top:22px}
-        .day-card,.info-card,.activity{border:1px solid #dbe4ec;border-radius:18px;padding:14px;background:#fff}
-        .activity{display:grid;grid-template-columns:70px 1fr;gap:14px}
-        .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
-        .list{display:grid;gap:8px;line-height:1.65}
-        .list-item,.budget-row{display:flex;justify-content:space-between;gap:12px}
-        .activity-desc{margin-top:6px;color:#5e7187;line-height:1.6}
-        .activity-tip{margin-top:8px;display:inline-flex;padding:6px 10px;border-radius:999px;background:#eef9f4;color:#216951;border:1px solid #cfeee1;font-size:12px}
-        .map-link{display:inline-flex;margin-top:6px;padding:6px 10px;border-radius:999px;background:#eef6fb;border:1px solid #d4e5f0;font-size:12px;text-decoration:none;color:#17324d}
-        @media print{body{padding:0}}
-      </style></head><body>${content}${'<scr'+'ipt>'}window.onload=()=>setTimeout(()=>window.print(),300);${'</scr'+'ipt>'}</body></html>`);
-      printWindow.document.close();
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+      const margin = 44;
+      const pageW = doc.internal.pageSize.getWidth();
+      const pageH = doc.internal.pageSize.getHeight();
+      const maxW = pageW - margin * 2;
+      let y = margin;
+      const ensure = h => { if (y + h > pageH - margin) { doc.addPage(); y = margin; } };
+      const textBlock = (text, size = 11, color=[94,113,135], gap=8) => {
+        doc.setFont('helvetica', 'normal'); doc.setFontSize(size); doc.setTextColor(...color);
+        const lines = doc.splitTextToSize(String(text || ''), maxW);
+        const height = lines.length * (size + 4);
+        ensure(height + gap); doc.text(lines, margin, y); y += height + gap;
+      };
+      const heading = (text, size=18) => { ensure(size+18); doc.setFont('helvetica','bold'); doc.setFontSize(size); doc.setTextColor(23,50,77); doc.text(String(text||''), margin, y); y += size + 10; };
+      const divider = () => { ensure(12); doc.setDrawColor(220,228,235); doc.line(margin, y, pageW-margin, y); y += 16; };
+      heading(currentResult.title || 'Ryokoplan itinerary', 22);
+      textBlock(`${currentResult.destination || ''} · ${currentResult.duration || ''}`.replace(/^ · | · $/g,''), 12, [143,108,70], 10);
+      if (currentResult.summary?.length) textBlock(currentResult.summary.join(' · '), 11, [94,113,135], 14);
+      divider();
+      (currentResult.days || []).forEach(day => {
+        heading(`Day ${day.day} · ${day.title || ''}`, 16);
+        if (day.area) textBlock(day.area, 11, [143,108,70], 8);
+        (day.activities || []).forEach(act => {
+          doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(47,126,161);
+          ensure(16); doc.text(`${act.time || ''}`, margin, y); 
+          doc.setFont('helvetica','bold'); doc.setTextColor(23,50,77); 
+          doc.text(doc.splitTextToSize(`${act.place || ''}`, maxW-72), margin+72, y);
+          y += 16;
+          textBlock(act.description || '', 11, [94,113,135], 4);
+          if (act.tip) textBlock(`Tip: ${act.tip}`, 10, [46,158,119], 8);
+        });
+        y += 6; divider();
+      });
+      if (currentResult.tips?.length) { heading('Travel tips', 15); currentResult.tips.forEach(t => textBlock(`• ${t}`, 11, [94,113,135], 4)); y += 8; }
+      if (currentResult.checklist?.length) { divider(); heading('Checklist', 15); currentResult.checklist.forEach(t => textBlock(`• ${t}`, 11, [94,113,135], 4)); y += 8; }
+      if (currentResult.budgetBreakdown?.length) { divider(); heading('Budget breakdown', 15); currentResult.budgetBreakdown.forEach(r => textBlock(`• ${r.category}: ${r.amount}`, 11, [94,113,135], 4)); }
+      const filename = `${(currentResult.destination || 'ryokoplan').replace(/\s+/g,'-').toLowerCase()}-itinerary.pdf`;
+      doc.save(filename);
     }
 
-    async function loadSharedIfExists() {
-      const params = new URLSearchParams(window.location.search);
-      const share = params.get('share') || (window.location.hash.startsWith('#plan=') ? window.location.hash.slice(6) : '');
-      if (!share) return;
-      try {
-        currentResult = await decompressPlanFromUrl(share);
-        renderResult(currentResult, false);
-      } catch (error) {
-        console.error('Invalid shared itinerary', error);
-      }
-    }
 
-    function toggleLocalMode() {
-      $('local-mode').classList.toggle('active');
-      $('local-mode').setAttribute('aria-pressed', String($('local-mode').classList.contains('active')));
-    }
-
-    document.addEventListener('click', (event) => {
-      const langButton = event.target.closest('.lang-btn');
-      if (langButton) {
-        currentLang = langButton.dataset.lang;
-        applyTranslations();
-      }
-      if (event.target.id === 'generate-btn' || event.target.id === 'secondary-generate') generateItinerary();
-      if (event.target.id === 'action-pdf') exportPdf();
-      if (event.target.id === 'action-share') shareItinerary();
-      if (event.target.id === 'action-save') saveItinerary();
-      if (event.target.id === 'open-saved') openSaved();
-      if (event.target.id === 'close-saved' || event.target.id === 'saved-modal') closeSaved();
-      if (event.target.id === 'local-mode') toggleLocalMode();
-      const loadBtn = event.target.closest('[data-id]');
-      if (loadBtn && loadBtn.classList.contains('saved-main')) loadSaved(loadBtn.dataset.id);
-      const deleteBtn = event.target.closest('[data-delete-id]');
-      if (deleteBtn) deleteSaved(deleteBtn.dataset.deleteId);
-    });
-
-    $('destination').addEventListener('keydown', (event) => { if (event.key === 'Enter') generateItinerary(); });
-    $('destination').addEventListener('input', (event) => updateVisualPreview(event.target.value));
-
-    applyTranslations();
-    renderSaved();
-    loadSharedIfExists();
-    updateVisualPreview($('destination').value || 'Tokyo');
-  </script>
-</body>
-</html>

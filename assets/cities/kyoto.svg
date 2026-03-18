@@ -1,30 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
 <defs>
   <linearGradient id="sky" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#3A6B52"/>
-    <stop offset="1" stop-color="#102B3A"/>
+    <stop stop-color="#96c87f"/>
+    <stop offset="1" stop-color="#1b4f46"/>
   </linearGradient>
   <linearGradient id="fade" x1="0" y1="520" x2="0" y2="900" gradientUnits="userSpaceOnUse">
     <stop stop-color="#0B2236" stop-opacity="0"/>
-    <stop offset="1" stop-color="#0B2236" stop-opacity=".76"/>
+    <stop offset="1" stop-color="#0B2236" stop-opacity=".72"/>
   </linearGradient>
 </defs>
 <rect width="1600" height="900" rx="54" fill="url(#sky)"/>
-<circle cx="1290" cy="150" r="115" fill="#E8C36A" fill-opacity=".92"/>
-
-<path d="M0 520C160 470 320 460 470 490C650 527 850 604 1080 568C1250 540 1420 470 1600 500V900H0V520Z" fill="#102B3A" fill-opacity=".3"/>
-<path d="M0 590C210 520 370 540 540 588C720 638 930 692 1160 650C1345 616 1490 560 1600 575V900H0V590Z" fill="#224A38" fill-opacity=".48"/>
-<path d="M230 600H420L392 560H258L230 600Z" fill="#EEDFC8"/>
-<rect x="272" y="524" width="106" height="38" fill="#F3E7D8"/>
-<path d="M250 524H400L360 490H290L250 524Z" fill="#D88653"/>
-<path d="M264 486H386L352 454H298L264 486Z" fill="#C66F4E"/>
-<path d="M282 450H368L342 420H308L282 450Z" fill="#B35B48"/>
-<rect x="318" y="376" width="14" height="44" fill="#F0E5D5"/>
-<path d="M1060 620H1180V500H1208V620H1328V648H1208V760H1180V648H1060V620Z" fill="#D96F4F"/>
-<path d="M1086 500H1156V474H1232V500H1302V528H1232V760H1156V528H1086V500Z" fill="#E2835E"/>
-<path d="M100 670C290 610 400 632 546 678C700 728 842 752 1030 720" stroke="#F8E6C8" stroke-opacity=".55" stroke-width="14" stroke-linecap="round"/>
-
+<rect x="0" y="0" width="1600" height="900" fill="url(#fade)" opacity=".2"/>
+<circle cx="1320" cy="170" r="118" fill="#F0C06A"/><path d="M0 420C180 300 300 300 480 390C640 470 810 500 980 450C1170 392 1350 280 1600 340V900H0V420Z" fill="#8AB374" opacity=".58"/><path d="M0 520C160 420 350 420 540 500C760 590 960 590 1200 490C1340 430 1460 400 1600 430V900H0V520Z" fill="#5E8A63" opacity=".58"/><rect x="154" y="420" width="240" height="30" rx="14" fill="#D14C49"/><rect x="186" y="450" width="32" height="220" rx="12" fill="#D14C49"/><rect x="330" y="450" width="32" height="220" rx="12" fill="#D14C49"/><rect x="630" y="330" width="28" height="340" rx="14" fill="#C16A40"/><path d="M510 330H780L646 210L510 330Z" fill="#E2A462"/><path d="M542 378H750L646 286L542 378Z" fill="#F2C98E"/><rect x="562" y="378" width="168" height="24" rx="12" fill="#B86A42"/><rect x="578" y="402" width="136" height="114" rx="18" fill="#3D5F4C" fill-opacity=".55"/><rect x="930" y="368" width="250" height="34" rx="17" fill="#C98B54"/><rect x="962" y="402" width="32" height="160" rx="14" fill="#C98B54"/><rect x="1116" y="402" width="32" height="160" rx="14" fill="#C98B54"/><path d="M1000 562c34-38 74-54 132-54s98 16 132 54" stroke="#CBEFDC" stroke-width="14" stroke-linecap="round"/>
 <rect y="620" width="1600" height="280" fill="url(#fade)"/>
-<text x="104" y="748" fill="#FFF9F0" font-size="118" font-family="Inter, Arial, sans-serif" font-weight="800">Kyoto</text>
-<text x="108" y="802" fill="#F7E6CF" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">pagoda · shrine path · quiet mornings</text>
+<text x="104" y="760" fill="#FFF9F0" font-size="112" font-family="Inter, Arial, sans-serif" font-weight="800">Kyoto</text>
+<text x="108" y="810" fill="#F7E6CF" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">pagoda · torii · quiet lanes</text>
 </svg>
