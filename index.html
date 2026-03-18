@@ -1247,3 +1247,91 @@ Ryokoplan`
     }
 
 
+
+
+    function toggleLocalMode(force) {
+      const el = $('local-mode');
+      const next = typeof force === 'boolean' ? force : !el.classList.contains('active');
+      el.classList.toggle('active', next);
+      el.setAttribute('aria-pressed', next ? 'true' : 'false');
+    }
+
+    async function restoreSharedPlanFromUrl() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        let token = params.get('share');
+        if (!token && window.location.hash) {
+          const hash = window.location.hash.replace(/^#/, '');
+          const hashParams = new URLSearchParams(hash);
+          token = hashParams.get('plan') || token;
+        }
+        if (!token) return;
+        const restored = await decodePlanFromUrl(token);
+        if (!restored) return;
+        currentResult = restored;
+        if (restored.lang && TRANSLATIONS[restored.lang]) currentLang = restored.lang;
+        applyTranslations();
+        renderResult(currentResult, false);
+      } catch (error) {
+        console.error('Failed to restore shared plan', error);
+      }
+    }
+
+    function bindEvents() {
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentLang = btn.dataset.lang || 'ko';
+          applyTranslations();
+        });
+      });
+
+      $('generate-btn')?.addEventListener('click', generateItinerary);
+      $('secondary-generate')?.addEventListener('click', generateItinerary);
+      $('action-save')?.addEventListener('click', saveItinerary);
+      $('action-share')?.addEventListener('click', () => shareItinerary(false));
+      $('action-pdf')?.addEventListener('click', exportPdf);
+      $('open-saved')?.addEventListener('click', openSaved);
+      $('top-my-trip')?.addEventListener('click', openSaved);
+      $('close-saved')?.addEventListener('click', closeSaved);
+      $('close-share')?.addEventListener('click', closeShareModal);
+      $('share-native')?.addEventListener('click', () => shareByChannel('native'));
+      $('share-copy')?.addEventListener('click', () => shareByChannel('copy'));
+      $('share-email')?.addEventListener('click', () => shareByChannel('email'));
+      $('share-telegram')?.addEventListener('click', () => shareByChannel('telegram'));
+      $('share-line')?.addEventListener('click', () => shareByChannel('line'));
+      $('share-x')?.addEventListener('click', () => shareByChannel('x'));
+      $('local-mode')?.addEventListener('click', () => toggleLocalMode());
+
+      $('saved-list')?.addEventListener('click', (event) => {
+        const delBtn = event.target.closest('[data-delete-id]');
+        if (delBtn) {
+          deleteSaved(delBtn.dataset.deleteId);
+          return;
+        }
+        const item = event.target.closest('[data-id]');
+        if (item) loadSaved(item.dataset.id);
+      });
+
+      window.addEventListener('click', (event) => {
+        if (event.target === $('saved-modal')) closeSaved();
+        if (event.target === $('share-modal')) closeShareModal();
+      });
+
+      $('destination')?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') generateItinerary();
+      });
+    }
+
+    async function initPage() {
+      bindEvents();
+      applyTranslations();
+      renderSaved();
+      hideError();
+      toggleLocalMode(false);
+      await restoreSharedPlanFromUrl();
+    }
+
+    initPage();
+  </script>
+</body>
+</html>
