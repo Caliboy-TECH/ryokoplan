@@ -3,448 +3,985 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ryokoplan — AI 여행 일정 만들기</title>
-  <meta name="description" content="AI가 당신만의 여행 일정을 5초 만에 완성해 드립니다" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <title>Ryokoplan | AI Travel Planner for Japan & Global Trips</title>
+  <meta name="description" content="Plan elegant, personalized trips in seconds with multilingual AI itineraries, budget breakdowns, local-mode hidden gems, and smart travel checklists." />
+  <meta name="keywords" content="AI travel planner, Japan trip planner, itinerary generator, travel checklist, budget breakdown, Ryokoplan" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Ryokoplan | AI Travel Planner" />
+  <meta property="og:description" content="Build multilingual AI travel itineraries with smarter budgeting, traveler-aware planning, and local hidden-gem mode." />
+  <meta property="og:url" content="https://ryokoplan.com/" />
+  <meta property="og:image" content="https://ryokoplan.com/assets/og-cover.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ryokoplan | AI Travel Planner" />
+  <meta name="twitter:description" content="Elegant AI trip planning with budget breakdown, traveler traits, and local hidden-gem mode." />
+  <meta name="twitter:image" content="https://ryokoplan.com/assets/og-cover.svg" />
+  <link rel="canonical" href="https://ryokoplan.com/" />
+  <link rel="alternate" hreflang="ko" href="https://ryokoplan.com/?lang=ko" />
+  <link rel="alternate" hreflang="en" href="https://ryokoplan.com/?lang=en" />
+  <link rel="alternate" hreflang="ja" href="https://ryokoplan.com/?lang=ja" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://ryokoplan.com/?lang=zh" />
+  <link rel="alternate" hreflang="x-default" href="https://ryokoplan.com/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #6C63FF; --primary-dark: #574fd6; --bg: #f7f8fc;
-      --card: #ffffff; --text: #1a1a2e; --muted: #6b7280;
-      --border: #e5e7eb; --success: #10b981; --radius: 16px;
-      --shadow: 0 4px 24px rgba(108,99,255,0.10);
+      --bg: #07111f;
+      --bg-soft: #0c1830;
+      --card: rgba(11, 20, 38, 0.78);
+      --card-strong: rgba(10, 18, 33, 0.96);
+      --line: rgba(255,255,255,0.08);
+      --text: #f4f7fb;
+      --muted: #a8b2c5;
+      --accent: #89b4ff;
+      --accent-2: #6ee7d8;
+      --accent-3: #c4b5fd;
+      --gold: #f6d98d;
+      --danger: #fb7185;
+      --success: #34d399;
+      --shadow: 0 30px 80px rgba(0,0,0,0.35);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --max: 1240px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); }
-    header { background: linear-gradient(135deg, #6C63FF, #9b8ffc); color: white; padding: 36px 24px 52px; text-align: center; position: relative; }
-    header .logo { font-size: 2rem; font-weight: 800; letter-spacing: -1px; }
-    header .logo span { color: #FFD166; }
-    header p { margin-top: 6px; opacity: 0.9; font-size: 0.95rem; }
-    .lang-switcher { position: absolute; top: 16px; right: 16px; display: flex; gap: 6px; }
-    .lang-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; border-radius: 20px; padding: 4px 12px; font-size: 0.8rem; cursor: pointer; transition: background .2s; }
-    .lang-btn.active, .lang-btn:hover { background: rgba(255,255,255,0.4); }
-    main { max-width: 720px; margin: -28px auto 0; padding: 0 16px 60px; }
-    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px; margin-bottom: 20px; }
-    .card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; color: var(--primary); }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    @media (max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
-    .form-group { display: flex; flex-direction: column; gap: 5px; }
-    .form-group.full { grid-column: 1 / -1; }
-    label { font-size: 0.82rem; font-weight: 600; color: var(--muted); }
-    input, select { border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 13px; font-size: 0.93rem; font-family: inherit; color: var(--text); background: #fafafa; outline: none; transition: border-color .2s; }
-    input:focus, select:focus { border-color: var(--primary); background: white; }
-    #generate-btn { width: 100%; margin-top: 20px; padding: 15px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity .2s, transform .1s; }
-    #generate-btn:hover:not(:disabled) { opacity: 0.92; transform: translateY(-1px); }
-    #generate-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .spinner { width: 17px; height: 17px; border: 2.5px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin .7s linear infinite; display: none; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #error-box { display: none; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 10px; padding: 13px 15px; margin-top: 14px; font-size: 0.88rem; color: #b91c1c; }
-    #result { display: none; }
-    .result-header { text-align: center; padding-bottom: 14px; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
-    .result-header h3 { font-size: 1.35rem; font-weight: 800; }
-    .badge { background: #ede9fe; color: var(--primary); border-radius: 20px; padding: 3px 12px; font-size: 0.78rem; font-weight: 600; margin: 2px; display: inline-block; }
-    /* 액션 버튼들 */
-    .action-bar { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; justify-content: center; }
-    .action-btn { display: flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 10px; font-size: 0.83rem; font-weight: 600; font-family: inherit; cursor: pointer; border: none; transition: opacity .2s, transform .1s; }
-    .action-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-    .btn-pdf { background: #ef4444; color: white; }
-    .btn-share { background: #3b82f6; color: white; }
-    .btn-save { background: #10b981; color: white; }
-    .btn-saved-list { background: #f59e0b; color: white; }
-    /* 일정 */
-    .day-block { margin-bottom: 24px; }
-    .day-title { font-size: 0.97rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-    .day-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-    .activity { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
-    .activity:last-child { border-bottom: none; }
-    .activity-time { min-width: 50px; font-size: 0.78rem; font-weight: 700; color: var(--primary); padding-top: 2px; }
-    .activity-body { flex: 1; }
-    .activity-place { font-weight: 700; font-size: 0.93rem; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .map-btn { display: inline-flex; align-items: center; gap: 3px; background: #e8f5e9; color: #2e7d32; border: none; border-radius: 6px; padding: 2px 8px; font-size: 0.73rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: background .2s; }
-    .map-btn:hover { background: #c8e6c9; }
-    .activity-desc { font-size: 0.85rem; color: var(--muted); margin-top: 3px; line-height: 1.5; }
-    .activity-tip { margin-top: 5px; font-size: 0.8rem; color: var(--success); background: #ecfdf5; border-radius: 6px; padding: 3px 9px; display: inline-block; }
-    .tips-section { margin-top: 20px; display: none; }
-    .tips-section h4 { font-weight: 700; margin-bottom: 8px; font-size: 0.92rem; }
-    .tip-item::before { content: '💡 '; }
-    .tip-item { font-size: 0.85rem; color: var(--muted); margin-bottom: 5px; }
-    .budget-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 12px 15px; font-size: 0.85rem; color: #92400e; margin-top: 14px; display: none; }
-    .affiliate { margin-top: 20px; }
-    .affiliate h4 { font-weight: 700; margin-bottom: 10px; font-size: 0.92rem; }
-    .aff-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-    @media (max-width: 480px) { .aff-grid { grid-column: 1fr; } }
-    .aff-btn { display: block; text-align: center; padding: 11px 8px; border-radius: 10px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: opacity .2s; font-family: inherit; }
-    .aff-btn:hover { opacity: 0.85; }
-    .aff-booking { background: #003580; color: white; }
-    .aff-klook { background: #FF5722; color: white; }
-    .aff-agoda { background: #5392F9; color: white; }
-    #reset-btn { width: 100%; margin-top: 10px; padding: 12px; background: white; border: 2px solid var(--primary); color: var(--primary); border-radius: 12px; font-size: 0.93rem; font-weight: 700; font-family: inherit; cursor: pointer; transition: background .2s; }
-    #reset-btn:hover { background: #f5f3ff; }
-    /* 저장된 일정 모달 */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
-    .modal-overlay.open { display: flex; }
-    .modal { background: white; border-radius: 16px; padding: 24px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; }
-    .modal h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
-    .saved-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; cursor: pointer; transition: background .2s; }
-    .saved-item:hover { background: #f5f3ff; }
-    .saved-item-info { flex: 1; }
-    .saved-item-title { font-weight: 700; font-size: 0.9rem; }
-    .saved-item-date { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
-    .saved-item-del { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 1.1rem; padding: 4px 8px; }
-    .modal-close { width: 100%; margin-top: 14px; padding: 10px; background: var(--border); border: none; border-radius: 10px; font-family: inherit; font-weight: 600; cursor: pointer; }
-    /* 공유 토스트 */
-    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1a1a2e; color: white; padding: 12px 24px; border-radius: 30px; font-size: 0.88rem; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity .3s; pointer-events: none; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(137,180,255,0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(110,231,216,0.12), transparent 24%),
+        linear-gradient(180deg, #06101e 0%, #081120 48%, #050b15 100%);
+      font-family: Inter, "Noto Sans KR", "Noto Sans JP", "Noto Sans SC", sans-serif;
+    }
+    a { color: inherit; }
+    .shell { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: rgba(6, 12, 23, 0.55);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 76px;
+      gap: 18px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-mark {
+      width: 42px; height: 42px; border-radius: 14px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, rgba(137,180,255,0.35), rgba(196,181,253,0.25));
+      border: 1px solid rgba(255,255,255,0.14);
+      font-weight: 800;
+    }
+    .brand-copy strong { display: block; font-size: 1rem; letter-spacing: -0.03em; }
+    .brand-copy span { color: var(--muted); font-size: 0.84rem; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .lang-switcher { display: flex; gap: 8px; flex-wrap: wrap; }
+    .lang-btn, .ghost-btn, .cta-btn, .chip, .pill-btn, .action-btn, .toggle-btn {
+      font: inherit; cursor: pointer; border: 1px solid transparent;
+    }
+    .lang-btn {
+      padding: 9px 12px; border-radius: 999px; color: var(--muted);
+      background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06);
+      transition: .2s ease;
+    }
+    .lang-btn.active, .lang-btn:hover {
+      color: white; border-color: rgba(137,180,255,0.45);
+      background: rgba(137,180,255,0.14);
+    }
+    .ghost-btn, .cta-btn, .pill-btn, .action-btn {
+      text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border-radius: 999px;
+      transition: transform .18s ease, opacity .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .ghost-btn:hover, .cta-btn:hover, .pill-btn:hover, .action-btn:hover { transform: translateY(-1px); }
+    .ghost-btn { padding: 11px 15px; background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.08); }
+    .cta-btn {
+      padding: 13px 18px;
+      background: linear-gradient(135deg, #7fb5ff, #8f9bff 50%, #7bead5);
+      color: #04101f; font-weight: 800;
+    }
+    .hero { padding: 54px 0 28px; }
+    .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 22px; align-items: stretch; }
+    .hero-panel { border-radius: 32px; padding: 34px; position: relative; overflow: hidden; }
+    .hero-panel::before {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(137,180,255,0.18), transparent 30%), radial-gradient(circle at 80% 0%, rgba(110,231,216,0.12), transparent 26%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
+      border-radius: 999px; color: var(--gold);
+      background: rgba(246,217,141,0.08); border: 1px solid rgba(246,217,141,0.16);
+      font-size: 0.86rem; font-weight: 700;
+    }
+    h1 {
+      margin: 18px 0 14px; font-size: clamp(2.2rem, 5vw, 4.4rem);
+      line-height: 0.98; letter-spacing: -0.05em;
+    }
+    .hero-lead {
+      margin: 0; color: var(--muted); max-width: 700px; line-height: 1.72; font-size: 1.03rem;
+    }
+    .hero-points { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill-btn {
+      padding: 10px 14px; background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.07); color: #e7edf8;
+    }
+    .preview-card {
+      height: 100%; min-height: 420px; border-radius: 32px; padding: 24px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      background:
+        linear-gradient(180deg, rgba(12,19,35,0.92), rgba(9,14,28,0.95)),
+        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80') center/cover;
+      position: relative; overflow: hidden;
+    }
+    .preview-card::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(6,10,20,0.15), rgba(6,10,20,0.85));
+    }
+    .preview-card > * { position: relative; z-index: 1; }
+    .preview-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+    .stat-stack { display: grid; gap: 10px; }
+    .stat-box {
+      padding: 14px 16px; border-radius: 18px; background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-box strong { font-size: 1.1rem; display: block; }
+    .stat-box span { font-size: 0.86rem; color: rgba(255,255,255,0.74); }
+    .preview-route {
+      padding: 18px; border-radius: 22px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .preview-route small { color: rgba(255,255,255,0.72); }
+    .preview-route strong { display: block; margin-top: 6px; font-size: 1.15rem; }
+    .section { padding: 18px 0; }
+    .planner-layout { display: grid; grid-template-columns: 0.94fr 1.06fr; gap: 20px; align-items: start; }
+    .panel { border-radius: var(--radius-xl); padding: 24px; }
+    .panel h2 { margin: 0 0 8px; font-size: 1.35rem; letter-spacing: -0.03em; }
+    .panel-sub { color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field.full { grid-column: 1 / -1; }
+    .label-row { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+    label { font-size: 0.9rem; font-weight: 700; color: #dce7f6; }
+    .helper { color: var(--muted); font-size: 0.78rem; }
+    input, select, textarea {
+      width: 100%; border-radius: 14px; padding: 14px 15px;
+      background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text); font: inherit; outline: none; transition: .2s ease;
+    }
+    input::placeholder, textarea::placeholder { color: #8d99ad; }
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(137,180,255,0.6); background: rgba(255,255,255,0.065);
+      box-shadow: 0 0 0 4px rgba(137,180,255,0.12);
+    }
+    select option { color: #08111d; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      padding: 11px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08);
+      color: #dbe5f5; transition: .2s ease;
+    }
+    .chip.active { background: rgba(137,180,255,0.16); border-color: rgba(137,180,255,0.44); color: white; }
+    .checkbox-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+    .check-item {
+      display: flex; align-items: center; gap: 10px; padding: 13px 14px;
+      border-radius: 16px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .check-item input { width: 18px; height: 18px; accent-color: #8ab6ff; }
+    .toggle-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 14px 15px; border-radius: 18px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .toggle-copy small { color: var(--muted); display: block; margin-top: 4px; line-height: 1.6; }
+    .toggle-btn {
+      width: 72px; height: 38px; border-radius: 999px; position: relative;
+      background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1);
+    }
+    .toggle-btn::after {
+      content: ""; position: absolute; top: 4px; left: 4px; width: 28px; height: 28px; border-radius: 50%; background: white;
+      transition: .2s ease;
+    }
+    .toggle-btn.active { background: linear-gradient(135deg, rgba(137,180,255,0.75), rgba(110,231,216,0.65)); }
+    .toggle-btn.active::after { transform: translateX(34px); }
+    .submit-wrap { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+    .submit-btn {
+      flex: 1 1 260px; min-height: 56px; border: none; border-radius: 18px;
+      background: linear-gradient(135deg, #86b8ff, #98a2ff 50%, #72ead2);
+      color: #06101e; font: inherit; font-weight: 800; font-size: 1rem; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: .2s ease;
+    }
+    .submit-btn:hover { transform: translateY(-1px); }
+    .submit-btn:disabled { opacity: .65; cursor: not-allowed; }
+    .mini-btn {
+      min-height: 56px; padding: 0 18px; border-radius: 18px; background: rgba(255,255,255,0.045); color: white;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .error-box {
+      display: none; margin-top: 16px; padding: 14px 15px; border-radius: 16px;
+      color: #ffe3e8; background: rgba(251,113,133,0.11); border: 1px solid rgba(251,113,133,0.32);
+    }
+    .status-note { margin-top: 14px; color: var(--muted); font-size: .86rem; }
+    .result-panel { position: sticky; top: 94px; }
+    .result-empty {
+      display: grid; gap: 14px; padding: 28px; border-radius: 24px; background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.12);
+      color: var(--muted);
+    }
+    .result-card { display: none; }
+    .result-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; flex-wrap: wrap; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .result-head h3 { margin: 0; font-size: clamp(1.55rem, 2vw, 2rem); letter-spacing: -0.04em; }
+    .meta-badges, .section-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; font-size: .82rem;
+      background: rgba(137,180,255,0.1); border: 1px solid rgba(137,180,255,0.18); color: #dce7f8;
+    }
+    .result-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .action-btn { padding: 12px 15px; background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); color: #f2f6fb; }
+    .day-list { margin-top: 22px; display: grid; gap: 16px; }
+    .day-card {
+      border-radius: 22px; padding: 18px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .day-header { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 14px; }
+    .day-header strong { font-size: 1.06rem; }
+    .activity-list { display: grid; gap: 12px; }
+    .activity {
+      display: grid; grid-template-columns: 70px 1fr; gap: 14px; padding: 14px; border-radius: 18px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    }
+    .activity-time { color: var(--accent); font-weight: 800; font-size: 0.9rem; }
+    .activity-place { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 700; }
+    .activity-desc { color: var(--muted); margin-top: 6px; line-height: 1.7; }
+    .activity-tip { margin-top: 9px; color: #dffdf4; background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.22); display: inline-flex; padding: 6px 10px; border-radius: 999px; font-size: .82rem; }
+    .map-link {
+      display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-size: .78rem; color: #e7f0ff;
+      background: rgba(137,180,255,0.12); border: 1px solid rgba(137,180,255,0.2); padding: 6px 10px; border-radius: 999px;
+    }
+    .info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+    .info-card {
+      border-radius: 20px; padding: 18px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .info-card h4 { margin: 0 0 10px; font-size: 0.98rem; }
+    .list { display: grid; gap: 9px; color: var(--muted); line-height: 1.65; }
+    .list-item { display: flex; gap: 10px; }
+    .budget-row { display: flex; justify-content: space-between; gap: 12px; }
+    .budget-row strong { color: white; }
+    .partner-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+    .partner-link {
+      text-decoration: none; padding: 14px 16px; border-radius: 18px; text-align: center; font-weight: 700;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .saved-modal {
+      position: fixed; inset: 0; background: rgba(3,7,14,0.74); display: none; align-items: center; justify-content: center;
+      z-index: 60; padding: 18px;
+    }
+    .saved-modal.open { display: flex; }
+    .saved-box { width: min(640px, 100%); border-radius: 28px; padding: 24px; }
+    .saved-list { display: grid; gap: 12px; max-height: 58vh; overflow: auto; margin-top: 18px; }
+    .saved-item {
+      display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 14px;
+      border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .saved-main { cursor: pointer; flex: 1; }
+    .saved-main strong { display: block; }
+    .saved-main span { color: var(--muted); font-size: .85rem; }
+    .delete-btn {
+      border: none; background: rgba(251,113,133,0.12); color: #ffd8df; border-radius: 12px; padding: 10px 12px; cursor: pointer;
+    }
+    .feature-strip, .blog-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .mini-card { border-radius: 24px; padding: 22px; }
+    .mini-card h3 { margin: 14px 0 8px; font-size: 1.08rem; }
+    .mini-card p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .icon-bubble {
+      width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; font-size: 1.15rem;
+      background: rgba(137,180,255,0.12); border: 1px solid rgba(137,180,255,0.18);
+    }
+    .blog-card {
+      display: flex; flex-direction: column; border-radius: 28px; overflow: hidden; text-decoration: none;
+      background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .blog-cover { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
+    .blog-body { padding: 20px; }
+    .blog-meta { color: var(--muted); font-size: .82rem; margin-bottom: 10px; }
+    .blog-body h3 { margin: 0 0 10px; font-size: 1.14rem; }
+    .blog-body p { margin: 0; color: var(--muted); line-height: 1.7; }
+    footer { padding: 34px 0 46px; color: var(--muted); }
+    .footer-box {
+      display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .toast {
+      position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%);
+      padding: 12px 18px; border-radius: 999px; background: rgba(8,16,28,0.94); border: 1px solid rgba(255,255,255,0.08);
+      color: white; opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 70;
+    }
     .toast.show { opacity: 1; }
-    footer { text-align: center; padding: 20px; font-size: 0.78rem; color: var(--muted); }
+    .spinner {
+      width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(6,16,31,0.24); border-top-color: #06101e;
+      animation: spin .8s linear infinite; display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 1080px) {
+      .hero-grid, .planner-layout, .feature-strip, .blog-strip { grid-template-columns: 1fr; }
+      .result-panel { position: static; }
+    }
+    @media (max-width: 720px) {
+      .shell { width: min(var(--max), calc(100% - 20px)); }
+      .topbar-inner { min-height: 70px; padding: 10px 0; }
+      .hero-panel, .panel, .saved-box { padding: 20px; }
+      .form-grid, .checkbox-grid, .info-grid, .partner-grid { grid-template-columns: 1fr; }
+      .activity { grid-template-columns: 1fr; }
+      h1 { font-size: 2.45rem; }
+    }
     @media print {
-      header, .lang-switcher, .action-bar, .affiliate, #reset-btn, footer { display: none !important; }
-      .card { box-shadow: none; }
-      #result { display: block !important; }
+      .topbar, .hero, .feature-section, .blog-section, .saved-modal, .result-actions, .partner-grid, footer, #open-saved, #generate-btn, #secondary-generate { display: none !important; }
+      body { background: white; color: #111827; }
+      .panel, .day-card, .info-card, .activity { background: white !important; color: #111827; box-shadow: none !important; border-color: #d1d5db !important; }
+      .result-card { display: block !important; }
+      .planner-layout { display: block; }
     }
   </style>
-  <script data-noptimize="1" data-cfasync="false" data-wpfc-render="false">
-  (function () { var script = document.createElement("script"); script.async = 1; script.src = 'https://tpembars.com/NTA5MDEx.js?t=509011'; document.head.appendChild(script); })();
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Ryokoplan",
+    "url": "https://ryokoplan.com/",
+    "applicationCategory": "TravelApplication",
+    "operatingSystem": "Web",
+    "description": "AI travel planner that generates multilingual itineraries with local-mode recommendations, budget breakdowns, and travel checklists."
+  }
   </script>
 </head>
 <body>
-<header>
-  <div class="lang-switcher">
-    <button class="lang-btn active" onclick="setLang('ko')">🇰🇷 한국어</button>
-    <button class="lang-btn" onclick="setLang('en')">🇺🇸 EN</button>
-    <button class="lang-btn" onclick="setLang('ja')">🇯🇵 JP</button>
-  </div>
-  <div class="logo">ryoko<span>plan</span></div>
-  <p id="header-sub">✈️ AI가 나만의 여행 일정을 5초 만에 완성해 드려요</p>
-</header>
-
-<main>
-  <div class="card" id="form-card">
-    <h2 id="form-title">🗺️ 어디로 떠나고 싶으세요?</h2>
-    <div class="form-grid">
-      <div class="form-group full">
-        <label id="lbl-dest">여행지 *</label>
-        <input type="text" id="destination" placeholder="예: 도쿄, 파리, 발리, 뉴욕" />
+  <div class="topbar">
+    <div class="shell topbar-inner">
+      <a href="/" class="brand">
+        <div class="brand-mark">旅</div>
+        <div class="brand-copy">
+          <strong>Ryokoplan</strong>
+          <span id="brand-tagline">AI Travel Planner</span>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <a href="/blog" class="ghost-btn" id="blog-link">Blog</a>
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="ko">한국어</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ja">日本語</button>
+          <button class="lang-btn" data-lang="zh">简体中文</button>
+        </div>
       </div>
-      <div class="form-group">
-        <label id="lbl-dur">여행 기간</label>
-        <select id="duration">
-          <option value="1박 2일">1박 2일</option>
-          <option value="2박 3일">2박 3일</option>
-          <option value="3박 4일" selected>3박 4일</option>
-          <option value="4박 5일">4박 5일</option>
-          <option value="5박 6일">5박 6일</option>
-          <option value="1주일">1주일</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label id="lbl-style">여행 스타일</label>
-        <select id="style">
-          <option value="일반 관광">🏛️ 일반 관광</option>
-          <option value="맛집 위주">🍜 맛집 위주</option>
-          <option value="자연/힐링">🌿 자연/힐링</option>
-          <option value="쇼핑">🛍️ 쇼핑</option>
-          <option value="역사/문화">🎭 역사/문화</option>
-          <option value="액티비티">🏄 액티비티</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label id="lbl-budget">예산</label>
-        <select id="budget">
-          <option value="절약 여행">💰 절약 여행</option>
-          <option value="적당한 예산" selected>💳 적당한 예산</option>
-          <option value="럭셔리">✨ 럭셔리</option>
-        </select>
-      </div>
-    </div>
-    <button id="generate-btn" onclick="generateItinerary()">
-      <span id="btn-icon">✈️</span>
-      <span id="btn-text">일정 만들기</span>
-      <div class="spinner" id="spinner"></div>
-    </button>
-    <div id="error-box"></div>
-
-    <!-- 저장된 일정 보기 버튼 -->
-    <div style="text-align:center; margin-top:14px;">
-      <button class="action-btn btn-saved-list" onclick="openSavedModal()" style="margin:auto;">
-        💾 <span id="lbl-saved-list">저장된 일정 보기</span>
-      </button>
     </div>
   </div>
 
-  <div class="card" id="result">
-    <div class="result-header">
-      <h3 id="result-title"></h3>
-      <div id="result-meta" style="margin-top:6px;"></div>
-    </div>
-
-    <!-- 액션 바 -->
-    <div class="action-bar">
-      <button class="action-btn btn-pdf" onclick="downloadPDF()">📄 <span id="lbl-pdf">PDF 저장</span></button>
-      <button class="action-btn btn-share" onclick="shareItinerary()">🔗 <span id="lbl-share">공유하기</span></button>
-      <button class="action-btn btn-save" onclick="saveItinerary()">💾 <span id="lbl-save">일정 저장</span></button>
-    </div>
-
-    <div id="itinerary-days"></div>
-    <div class="tips-section" id="tips-section"></div>
-    <div class="budget-box" id="budget-box"></div>
-
-    <div class="affiliate">
-      <h4 id="lbl-book">🏨 예약하고 떠나기</h4>
-      <div class="aff-grid">
-        <a class="aff-btn aff-booking" id="aff-booking" href="https://www.booking.com" target="_blank">🏨 Booking.com</a>
-        <a class="aff-btn aff-klook" id="aff-klook" href="https://www.klook.com" target="_blank">🎡 Klook</a>
-        <a class="aff-btn aff-agoda" id="aff-agoda" href="https://www.agoda.com" target="_blank">🌙 Agoda</a>
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div class="hero-panel glass">
+        <div class="eyebrow" id="hero-eyebrow">Designed for stylish, practical travelers</div>
+        <h1 id="hero-title">AI itineraries that feel like a premium travel concierge.</h1>
+        <p class="hero-lead" id="hero-lead">From hidden local spots to accessible routes and smart packing lists, Ryokoplan turns one prompt into a travel plan you can actually use.</p>
+        <div class="hero-points">
+          <span class="pill-btn" id="pill-1">Multilingual output</span>
+          <span class="pill-btn" id="pill-2">Budget by category</span>
+          <span class="pill-btn" id="pill-3">Checklist by season</span>
+          <span class="pill-btn" id="pill-4">Local-mode discoveries</span>
+        </div>
+      </div>
+      <div class="preview-card glass" aria-hidden="true">
+        <div class="preview-top">
+          <div>
+            <div class="eyebrow" id="preview-badge">Live itinerary preview</div>
+            <h3 id="preview-title" style="margin:14px 0 0;font-size:1.6rem;letter-spacing:-0.04em;">Tokyo · 3 Nights 4 Days</h3>
+          </div>
+          <div class="stat-stack">
+            <div class="stat-box">
+              <strong id="stat-1">4 languages</strong>
+              <span id="stat-1-sub">Ready to switch instantly</span>
+            </div>
+            <div class="stat-box">
+              <strong id="stat-2">Budget split</strong>
+              <span id="stat-2-sub">Flight · Hotel · Food · Transit</span>
+            </div>
+          </div>
+        </div>
+        <div class="preview-route">
+          <small id="preview-label">Sample route</small>
+          <strong id="preview-route">Asakusa → Kiyosumi → Shimokitazawa hidden cafes</strong>
+        </div>
       </div>
     </div>
-    <button id="reset-btn" onclick="resetForm()">🔄 <span id="lbl-reset">다시 만들기</span></button>
+  </section>
+
+  <section class="section">
+    <div class="shell planner-layout">
+      <div class="panel glass">
+        <h2 id="planner-title">Build your trip</h2>
+        <p class="panel-sub" id="planner-sub">Tell us who you are traveling with, what kind of pace you want, and whether to prioritize iconic highlights or hidden local gems.</p>
+
+        <div class="form-grid">
+          <div class="field full">
+            <div class="label-row">
+              <label for="destination" id="lbl-destination">Destination *</label>
+              <span class="helper" id="helper-destination">City, country, or region</span>
+            </div>
+            <input id="destination" type="text" placeholder="예: 도쿄, 오사카, 파리, 교토" />
+          </div>
+
+          <div class="field">
+            <label for="duration" id="lbl-duration">Travel duration</label>
+            <select id="duration"></select>
+          </div>
+
+          <div class="field">
+            <label for="style" id="lbl-style">Travel style</label>
+            <select id="style"></select>
+          </div>
+
+          <div class="field">
+            <label for="budget" id="lbl-budget">Budget level</label>
+            <select id="budget"></select>
+          </div>
+
+          <div class="field">
+            <label for="companion" id="lbl-companion">Who are you traveling with?</label>
+            <select id="companion"></select>
+          </div>
+
+          <div class="field full">
+            <div class="label-row">
+              <label id="lbl-traits">Traveler traits</label>
+              <span class="helper" id="helper-traits">Used in routing, pacing, and checklist</span>
+            </div>
+            <div class="checkbox-grid" id="traits-grid"></div>
+          </div>
+
+          <div class="field full">
+            <div class="toggle-row">
+              <div class="toggle-copy">
+                <strong id="lbl-local-mode">Local mode</strong>
+                <small id="local-mode-sub">Tourist highlights off · hidden gems on</small>
+              </div>
+              <button class="toggle-btn" id="local-mode" type="button" aria-pressed="false"></button>
+            </div>
+          </div>
+
+          <div class="field full">
+            <label for="notes" id="lbl-notes">Extra notes</label>
+            <textarea id="notes" rows="4" placeholder="예: 느린 일정, 카페 많이, 무리 없는 동선, 미슐랭 1회"></textarea>
+          </div>
+        </div>
+
+        <div class="submit-wrap">
+          <button class="submit-btn" id="generate-btn" type="button">
+            <span id="generate-icon">✈️</span>
+            <span id="generate-text">Generate itinerary</span>
+            <span class="spinner" id="spinner"></span>
+          </button>
+          <button class="mini-btn ghost-btn" id="open-saved" type="button">💾 Saved</button>
+        </div>
+
+        <div class="error-box" id="error-box"></div>
+        <div class="status-note" id="status-note">Your result includes daily plan, travel tips, budget breakdown, and a smart checklist.</div>
+      </div>
+
+      <div class="panel glass result-panel">
+        <div class="result-empty" id="result-empty">
+          <strong id="empty-title">Your polished itinerary will appear here.</strong>
+          <span id="empty-copy">Once generated, you can save it locally, share it as a link, or export it as PDF.</span>
+        </div>
+
+        <div class="result-card" id="result-card">
+          <div class="result-head">
+            <div>
+              <h3 id="result-title"></h3>
+              <div class="meta-badges" id="result-meta"></div>
+            </div>
+            <div class="section-badges" id="result-mode"></div>
+          </div>
+
+          <div class="result-actions">
+            <button class="action-btn" type="button" id="action-pdf">📄 PDF</button>
+            <button class="action-btn" type="button" id="action-share">🔗 Share</button>
+            <button class="action-btn" type="button" id="action-save">💾 Save</button>
+            <button class="action-btn" type="button" id="secondary-generate">✨ Regenerate</button>
+          </div>
+
+          <div class="day-list" id="day-list"></div>
+
+          <div class="info-grid">
+            <div class="info-card">
+              <h4 id="tips-heading">Travel tips</h4>
+              <div class="list" id="tips-list"></div>
+            </div>
+            <div class="info-card">
+              <h4 id="checklist-heading">Checklist</h4>
+              <div class="list" id="checklist-list"></div>
+            </div>
+            <div class="info-card">
+              <h4 id="budget-heading">Budget breakdown</h4>
+              <div class="list" id="budget-list"></div>
+            </div>
+            <div class="info-card">
+              <h4 id="summary-heading">Plan summary</h4>
+              <div class="list" id="summary-list"></div>
+            </div>
+          </div>
+
+          <div class="partner-grid">
+            <a class="partner-link" id="partner-booking" href="https://www.booking.com" target="_blank" rel="noopener">Booking.com</a>
+            <a class="partner-link" id="partner-klook" href="https://www.klook.com" target="_blank" rel="noopener">Klook</a>
+            <a class="partner-link" id="partner-agoda" href="https://www.agoda.com" target="_blank" rel="noopener">Agoda</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section feature-section">
+    <div class="shell">
+      <div class="feature-strip">
+        <div class="mini-card glass">
+          <div class="icon-bubble">🧭</div>
+          <h3 id="feature-1-title">Smarter routing</h3>
+          <p id="feature-1-copy">Daily plans are grouped by area and pace, so the itinerary feels realistic instead of random.</p>
+        </div>
+        <div class="mini-card glass">
+          <div class="icon-bubble">♿</div>
+          <h3 id="feature-2-title">Traveler-aware planning</h3>
+          <p id="feature-2-copy">Elderly travelers, mobility needs, pets, and kids influence pacing, transport choices, and must-pack items.</p>
+        </div>
+        <div class="mini-card glass">
+          <div class="icon-bubble">📝</div>
+          <h3 id="feature-3-title">Ready to use</h3>
+          <p id="feature-3-copy">Shareable links, PDF printing, and blog-driven SEO pages make Ryokoplan practical for both users and discovery.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section blog-section">
+    <div class="shell">
+      <div style="display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:18px;">
+        <div>
+          <div class="eyebrow" id="blog-eyebrow">Travel inspiration</div>
+          <h2 id="blog-title" style="margin:14px 0 8px;font-size:clamp(1.8rem,3vw,2.5rem);letter-spacing:-0.04em;">Featured guides from the Ryokoplan blog</h2>
+          <p class="panel-sub" id="blog-sub" style="margin:0;max-width:720px;">SEO-friendly destination pages help users discover the planner through actual travel intent searches.</p>
+        </div>
+        <a href="/blog" class="ghost-btn" id="blog-cta">View all posts</a>
+      </div>
+      <div class="blog-strip">
+        <a class="blog-card" href="/blog/tokyo-travel-guide">
+          <img class="blog-cover" src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=80" alt="Tokyo" />
+          <div class="blog-body">
+            <div class="blog-meta">Tokyo · 2026 guide</div>
+            <h3>Tokyo Travel Guide</h3>
+            <p>Neighborhood-by-neighborhood suggestions, transit logic, food zones, and the best seasons to plan your trip.</p>
+          </div>
+        </a>
+        <a class="blog-card" href="/blog/osaka-travel-guide">
+          <img class="blog-cover" src="https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=1200&q=80" alt="Osaka" />
+          <div class="blog-body">
+            <div class="blog-meta">Osaka · 2026 guide</div>
+            <h3>Osaka Travel Guide</h3>
+            <p>From Dotonbori classics to local side streets, with family-friendly pacing and smart day-trip ideas.</p>
+          </div>
+        </a>
+        <a class="blog-card" href="/blog/paris-travel-guide">
+          <img class="blog-cover" src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1200&q=80" alt="Paris" />
+          <div class="blog-body">
+            <div class="blog-meta">Paris · 2026 guide</div>
+            <h3>Paris Travel Guide</h3>
+            <p>Elegant neighborhood planning, museum pacing, cafe strategy, and how to avoid a rushed first visit.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="shell footer-box">
+      <div>© 2026 Ryokoplan · contact@ryokoplan.com</div>
+      <div><a href="/blog">Blog</a> · <a href="https://ryokoplan.com">ryokoplan.com</a></div>
+    </div>
+  </footer>
+
+  <div class="saved-modal" id="saved-modal">
+    <div class="saved-box glass">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
+        <h3 id="saved-title" style="margin:0;font-size:1.25rem;">Saved itineraries</h3>
+        <button class="ghost-btn" id="close-saved" type="button">✕</button>
+      </div>
+      <div class="saved-list" id="saved-list"></div>
+    </div>
   </div>
-</main>
 
-<footer>© 2025 Ryokoplan · contact@ryokoplan.com</footer>
+  <div class="toast" id="toast"></div>
 
-<!-- 저장된 일정 모달 -->
-<div class="modal-overlay" id="saved-modal">
-  <div class="modal">
-    <h3>💾 <span id="modal-title">저장된 일정</span></h3>
-    <div id="saved-list"></div>
-    <button class="modal-close" onclick="closeSavedModal()">✕ 닫기</button>
-  </div>
-</div>
+  <script>
+    const TRANSLATIONS = {
+      ko: {
+        htmlLang: 'ko', brandTagline: 'AI 여행 플래너', blogLink: '블로그',
+        heroEyebrow: '감도와 실용성을 모두 챙긴 여행 플래닝',
+        heroTitle: '프리미엄 컨시어지처럼 짜주는 AI 여행 일정.',
+        heroLead: '숨은 현지 스팟, 이동 약자 배려 동선, 계절 맞춤 체크리스트까지. Ryokoplan은 한 번의 입력을 실제로 쓰기 좋은 여행 계획으로 바꿔줍니다.',
+        pill1: '4개 언어 지원', pill2: '예산 항목별 분리', pill3: '계절별 체크리스트', pill4: '현지인 모드',
+        previewBadge: '실시간 일정 미리보기', previewTitle: '도쿄 · 3박 4일', stat1: '4개 언어', stat1sub: '즉시 전환 가능', stat2: '예산 분리', stat2sub: '항공 · 숙박 · 식비 · 교통', previewLabel: '샘플 동선', previewRoute: '아사쿠사 → 기요스미 → 시모키타자와 숨은 카페',
+        plannerTitle: '여행 만들기', plannerSub: '누구와 가는지, 어떤 템포를 원하는지, 유명 명소 중심인지 현지인 숨은 장소 중심인지 알려주세요.',
+        lblDestination: '여행지 *', helperDestination: '도시, 국가 또는 지역', lblDuration: '여행 기간', lblStyle: '여행 스타일', lblBudget: '예산 수준', lblCompanion: '누구와 함께?', lblTraits: '여행자 특성', helperTraits: '동선, 속도, 체크리스트에 반영됩니다', lblLocalMode: '현지인 모드', localModeSub: '관광객 코스보다 숨은 로컬 스팟 우선', lblNotes: '추가 요청', destinationPlaceholder: '예: 도쿄, 오사카, 파리, 교토', notesPlaceholder: '예: 느린 일정, 카페 많이, 무리 없는 동선, 미슐랭 1회',
+        generate: '일정 생성하기', generating: '생성 중...', savedBtn: '💾 저장된 일정', statusNote: '결과에는 일자별 일정, 여행 팁, 예산 breakdown, 체크리스트가 함께 포함됩니다.',
+        emptyTitle: '완성된 여행 일정이 여기에 표시됩니다.', emptyCopy: '생성 후 링크 공유, 로컬 저장, PDF 출력까지 바로 가능합니다.',
+        tipsHeading: '여행 팁', checklistHeading: '체크리스트', budgetHeading: '예산 breakdown', summaryHeading: '플랜 요약', pdf: '📄 PDF', share: '🔗 공유', save: '💾 저장', regenerate: '✨ 다시 생성',
+        feature1Title: '더 똑똑한 동선', feature1Copy: '하루 일정이 지역별로 묶여서 이동이 무리하지 않고 현실적으로 느껴집니다.', feature2Title: '여행자 맞춤 설계', feature2Copy: '어르신, 보행 불편, 반려동물, 유아 동반 여부가 속도와 교통수단, 준비물에 반영됩니다.', feature3Title: '바로 활용 가능', feature3Copy: '공유 링크, PDF 출력, SEO용 블로그 구조까지 실제 서비스 운영에 맞게 준비했습니다.',
+        blogEyebrow: '여행 인사이트', blogTitle: 'Ryokoplan 블로그 추천 글', blogSub: '실제 여행 검색 의도에 맞는 글로 유입을 만들고, 플래너 사용으로 자연스럽게 이어지게 설계했습니다.', blogCta: '전체 글 보기',
+        savedTitle: '저장된 일정', close: '닫기', noSaved: '저장된 일정이 없습니다.', delete: '삭제',
+        shareCopied: '공유 링크가 복사되었습니다.', saveDone: '일정이 저장되었습니다.', errDestination: '여행지를 입력해 주세요.', errGeneric: '일정 생성에 실패했습니다.', itineraryFor: '여행 일정', localModeOn: '현지인 모드 ON', localModeOff: '관광객 모드', companionBadge: '동행', traitsBadge: '특성', summaryBudget: '총 예상 예산', summaryFocus: '추천 포인트', partnerBooking: '호텔 찾기', partnerKlook: '액티비티 찾기', partnerAgoda: '숙소 비교', blogCardLabelTokyo: '도쿄 · 2026 가이드', blogCardLabelOsaka: '오사카 · 2026 가이드', blogCardLabelParis: '파리 · 2026 가이드'
+      },
+      en: {
+        htmlLang: 'en', brandTagline: 'AI Travel Planner', blogLink: 'Blog',
+        heroEyebrow: 'Designed for stylish, practical travelers', heroTitle: 'AI itineraries that feel like a premium travel concierge.', heroLead: 'From hidden local spots to accessible routing and season-based packing lists, Ryokoplan turns one prompt into a trip plan you can actually use.', pill1: '4-language output', pill2: 'Budget by category', pill3: 'Checklist by season', pill4: 'Local mode', previewBadge: 'Live itinerary preview', previewTitle: 'Tokyo · 3 Nights 4 Days', stat1: '4 languages', stat1sub: 'Ready to switch instantly', stat2: 'Budget split', stat2sub: 'Flight · Hotel · Food · Transit', previewLabel: 'Sample route', previewRoute: 'Asakusa → Kiyosumi → Shimokitazawa hidden cafes', plannerTitle: 'Build your trip', plannerSub: 'Tell us who you are traveling with, what pace you prefer, and whether to prioritize iconic highlights or local hidden gems.', lblDestination: 'Destination *', helperDestination: 'City, country, or region', lblDuration: 'Travel duration', lblStyle: 'Travel style', lblBudget: 'Budget level', lblCompanion: 'Who are you traveling with?', lblTraits: 'Traveler traits', helperTraits: 'Used in routing, pacing, and checklist', lblLocalMode: 'Local mode', localModeSub: 'Less tourist checklist, more hidden local gems', lblNotes: 'Extra notes', destinationPlaceholder: 'e.g. Tokyo, Osaka, Paris, Kyoto', notesPlaceholder: 'e.g. slower pace, more cafes, low walking load, one Michelin dinner', generate: 'Generate itinerary', generating: 'Generating...', savedBtn: '💾 Saved trips', statusNote: 'Your result includes daily plans, travel tips, budget breakdown, and a smart checklist.', emptyTitle: 'Your polished itinerary will appear here.', emptyCopy: 'Once generated, you can share it as a link, save it locally, or export it as PDF.', tipsHeading: 'Travel tips', checklistHeading: 'Checklist', budgetHeading: 'Budget breakdown', summaryHeading: 'Plan summary', pdf: '📄 PDF', share: '🔗 Share', save: '💾 Save', regenerate: '✨ Regenerate', feature1Title: 'Smarter routing', feature1Copy: 'Each day is grouped by area and pace so the plan feels realistic instead of random.', feature2Title: 'Traveler-aware planning', feature2Copy: 'Mobility needs, elderly travelers, pets, and kids shape pacing, transport choices, and must-pack items.', feature3Title: 'Ready to use', feature3Copy: 'Shareable links, printable PDF, and SEO-driven blog pages make Ryokoplan practical to operate.', blogEyebrow: 'Travel inspiration', blogTitle: 'Featured guides from the Ryokoplan blog', blogSub: 'Publish destination pages around real travel intent and guide users naturally into the planner.', blogCta: 'View all posts', savedTitle: 'Saved itineraries', close: 'Close', noSaved: 'No saved itineraries yet.', delete: 'Delete', shareCopied: 'Share link copied.', saveDone: 'Itinerary saved.', errDestination: 'Please enter a destination.', errGeneric: 'Failed to generate itinerary.', itineraryFor: 'Trip plan', localModeOn: 'Local mode ON', localModeOff: 'Tourist mode', companionBadge: 'With', traitsBadge: 'Traits', summaryBudget: 'Estimated total budget', summaryFocus: 'Recommended focus', partnerBooking: 'Find hotels', partnerKlook: 'Find activities', partnerAgoda: 'Compare stays', blogCardLabelTokyo: 'Tokyo · 2026 guide', blogCardLabelOsaka: 'Osaka · 2026 guide', blogCardLabelParis: 'Paris · 2026 guide'
+      },
+      ja: {
+        htmlLang: 'ja', brandTagline: 'AI旅行プランナー', blogLink: 'ブログ', heroEyebrow: '上質さと実用性を両立した旅設計', heroTitle: 'プレミアムコンシェルジュのように組むAI旅行プラン。', heroLead: '隠れたローカルスポット、移動に配慮したルート、季節に合った持ち物チェックまで。Ryokoplanは入力ひとつで使える旅程に変えます。', pill1: '4言語対応', pill2: '費目別予算', pill3: '季節別チェックリスト', pill4: 'ローカルモード', previewBadge: 'リアルタイム旅程プレビュー', previewTitle: '東京 · 3泊4日', stat1: '4言語', stat1sub: 'すぐ切り替え可能', stat2: '予算内訳', stat2sub: '航空券・宿泊・食事・交通', previewLabel: 'サンプルルート', previewRoute: '浅草 → 清澄白河 → 下北沢の隠れカフェ', plannerTitle: '旅を作る', plannerSub: '誰と行くか、どんなペースか、有名スポット重視かローカル重視かを教えてください。', lblDestination: '目的地 *', helperDestination: '都市・国・地域', lblDuration: '旅行期間', lblStyle: '旅行スタイル', lblBudget: '予算レベル', lblCompanion: '誰と行きますか？', lblTraits: '旅行者の特性', helperTraits: '動線・ペース・チェックリストに反映', lblLocalMode: 'ローカルモード', localModeSub: '定番観光よりも隠れたローカルスポットを優先', lblNotes: '追加メモ', destinationPlaceholder: '例：東京、大阪、パリ、京都', notesPlaceholder: '例：ゆっくり、カフェ多め、歩行少なめ、ミシュラン1回', generate: 'プラン作成', generating: '作成中...', savedBtn: '💾 保存済み', statusNote: '結果には日別プラン、旅のヒント、予算内訳、チェックリストが含まれます。', emptyTitle: '完成した旅程がここに表示されます。', emptyCopy: '生成後はリンク共有、ローカル保存、PDF出力がすぐ可能です。', tipsHeading: '旅のヒント', checklistHeading: 'チェックリスト', budgetHeading: '予算内訳', summaryHeading: 'プラン概要', pdf: '📄 PDF', share: '🔗 シェア', save: '💾 保存', regenerate: '✨ 再生成', feature1Title: 'より賢い動線', feature1Copy: '1日の予定をエリアごとにまとめるので、無理のない現実的な旅程になります。', feature2Title: '旅行者に合わせた設計', feature2Copy: '高齢者、移動配慮、ペット連れ、子ども連れを考慮して速度や交通、持ち物を調整します。', feature3Title: 'すぐ使える', feature3Copy: '共有リンク、PDF出力、SEO向けブログ構造まで実運用を意識して整えました。', blogEyebrow: '旅のインスピレーション', blogTitle: 'Ryokoplanブログの注目記事', blogSub: '実際の検索意図に合う記事で流入を作り、自然にプランナー利用へつなげます。', blogCta: '記事一覧を見る', savedTitle: '保存したプラン', close: '閉じる', noSaved: '保存したプランはまだありません。', delete: '削除', shareCopied: '共有リンクをコピーしました。', saveDone: 'プランを保存しました。', errDestination: '目的地を入力してください。', errGeneric: '旅程の生成に失敗しました。', itineraryFor: '旅行プラン', localModeOn: 'ローカルモード ON', localModeOff: '観光モード', companionBadge: '同行', traitsBadge: '特性', summaryBudget: '予想合計予算', summaryFocus: 'おすすめポイント', partnerBooking: 'ホテルを探す', partnerKlook: '体験を探す', partnerAgoda: '宿を比較', blogCardLabelTokyo: '東京 · 2026ガイド', blogCardLabelOsaka: '大阪 · 2026ガイド', blogCardLabelParis: 'パリ · 2026ガイド'
+      },
+      zh: {
+        htmlLang: 'zh-Hans', brandTagline: 'AI旅行规划器', blogLink: '博客', heroEyebrow: '兼顾质感与实用性的旅行规划', heroTitle: '像高端旅行礼宾一样生成的 AI 行程。', heroLead: '从本地隐藏景点到无障碍动线，再到按季节生成的出行清单，Ryokoplan 能把一次输入变成真正可用的旅行计划。', pill1: '四语切换', pill2: '预算分类', pill3: '季节清单', pill4: '本地人模式', previewBadge: '实时行程预览', previewTitle: '东京 · 3晚4天', stat1: '4种语言', stat1sub: '可即时切换', stat2: '预算拆分', stat2sub: '机票 · 住宿 · 餐饮 · 交通', previewLabel: '示例路线', previewRoute: '浅草 → 清澄白河 → 下北泽隐藏咖啡馆', plannerTitle: '创建你的行程', plannerSub: '告诉我们你和谁一起出行、喜欢什么节奏，以及更想看经典景点还是本地隐藏地点。', lblDestination: '目的地 *', helperDestination: '城市、国家或地区', lblDuration: '旅行时长', lblStyle: '旅行风格', lblBudget: '预算级别', lblCompanion: '和谁一起旅行？', lblTraits: '旅行者特征', helperTraits: '会影响路线、节奏和清单', lblLocalMode: '本地人模式', localModeSub: '弱化游客打卡，优先隐藏本地景点', lblNotes: '额外说明', destinationPlaceholder: '例如：东京、大阪、巴黎、京都', notesPlaceholder: '例如：节奏慢一点、多去咖啡馆、少走路、安排一次米其林', generate: '生成行程', generating: '生成中...', savedBtn: '💾 已保存行程', statusNote: '结果将包含每日计划、旅行建议、预算明细和智能清单。', emptyTitle: '精致的旅行行程会显示在这里。', emptyCopy: '生成后可以直接分享链接、本地保存，或导出为 PDF。', tipsHeading: '旅行建议', checklistHeading: '出行清单', budgetHeading: '预算明细', summaryHeading: '行程摘要', pdf: '📄 PDF', share: '🔗 分享', save: '💾 保存', regenerate: '✨ 重新生成', feature1Title: '更聪明的动线', feature1Copy: '每天按区域和节奏组织，不会像随机拼接，而是更真实可执行。', feature2Title: '旅行者适配', feature2Copy: '长者、行动不便、携宠、带小孩都会影响节奏、交通方式和打包建议。', feature3Title: '拿来就能用', feature3Copy: '支持分享链接、PDF打印，以及适合 SEO 的博客结构，方便真正上线运营。', blogEyebrow: '旅行灵感', blogTitle: 'Ryokoplan 博客精选指南', blogSub: '围绕真实旅行搜索意图发布内容，再自然引导用户进入 AI 行程规划。', blogCta: '查看全部文章', savedTitle: '已保存行程', close: '关闭', noSaved: '还没有保存的行程。', delete: '删除', shareCopied: '分享链接已复制。', saveDone: '行程已保存。', errDestination: '请输入目的地。', errGeneric: '生成行程失败。', itineraryFor: '旅行计划', localModeOn: '本地人模式 ON', localModeOff: '游客模式', companionBadge: '同行', traitsBadge: '特征', summaryBudget: '预计总预算', summaryFocus: '推荐重点', partnerBooking: '找酒店', partnerKlook: '找活动', partnerAgoda: '比较住宿', blogCardLabelTokyo: '东京 · 2026 指南', blogCardLabelOsaka: '大阪 · 2026 指南', blogCardLabelParis: '巴黎 · 2026 指南'
+      }
+    };
 
-<!-- 토스트 -->
-<div class="toast" id="toast"></div>
+    const OPTION_DATA = {
+      duration: [
+        { value: '1n2d', labels: { ko: '1박 2일', en: '1 Night 2 Days', ja: '1泊2日', zh: '1晚2天' } },
+        { value: '2n3d', labels: { ko: '2박 3일', en: '2 Nights 3 Days', ja: '2泊3日', zh: '2晚3天' } },
+        { value: '3n4d', labels: { ko: '3박 4일', en: '3 Nights 4 Days', ja: '3泊4日', zh: '3晚4天' }, selected: true },
+        { value: '4n5d', labels: { ko: '4박 5일', en: '4 Nights 5 Days', ja: '4泊5日', zh: '4晚5天' } },
+        { value: '5n6d', labels: { ko: '5박 6일', en: '5 Nights 6 Days', ja: '5泊6日', zh: '5晚6天' } },
+        { value: '1w', labels: { ko: '1주일', en: '1 Week', ja: '1週間', zh: '1周' } }
+      ],
+      style: [
+        { value: 'classic', labels: { ko: '일반 관광', en: 'Classic sightseeing', ja: '定番観光', zh: '经典观光' } },
+        { value: 'food', labels: { ko: '맛집 위주', en: 'Food-focused', ja: 'グルメ重視', zh: '美食优先' } },
+        { value: 'nature', labels: { ko: '자연/힐링', en: 'Nature & slow travel', ja: '自然・癒やし', zh: '自然疗愈' } },
+        { value: 'shopping', labels: { ko: '쇼핑', en: 'Shopping', ja: 'ショッピング', zh: '购物' } },
+        { value: 'culture', labels: { ko: '역사/문화', en: 'History & culture', ja: '歴史・文化', zh: '历史文化' } },
+        { value: 'activity', labels: { ko: '액티비티', en: 'Activities', ja: 'アクティビティ', zh: '活动体验' } }
+      ],
+      budget: [
+        { value: 'light', labels: { ko: '절약 여행', en: 'Budget-friendly', ja: '節約旅行', zh: '省钱型' } },
+        { value: 'balanced', labels: { ko: '적당한 예산', en: 'Balanced', ja: 'ほどよい予算', zh: '适中预算' }, selected: true },
+        { value: 'luxury', labels: { ko: '럭셔리', en: 'Luxury', ja: 'ラグジュアリー', zh: '高端奢享' } }
+      ],
+      companion: [
+        { value: 'solo', labels: { ko: '혼자', en: 'Solo', ja: 'ひとり旅', zh: '独自旅行' } },
+        { value: 'couple', labels: { ko: '커플', en: 'Couple', ja: 'カップル', zh: '情侣' } },
+        { value: 'family', labels: { ko: '가족', en: 'Family', ja: '家族', zh: '家庭' } },
+        { value: 'friends', labels: { ko: '친구', en: 'Friends', ja: '友達', zh: '朋友' } }
+      ],
+      traits: [
+        { value: 'mobility', labels: { ko: '몸이 불편한 분', en: 'Mobility support needed', ja: '移動サポートが必要', zh: '行动需要照顾' } },
+        { value: 'senior', labels: { ko: '어르신', en: 'Senior travelers', ja: '高齢者同行', zh: '有长者同行' } },
+        { value: 'kids', labels: { ko: '유아동반', en: 'Traveling with young kids', ja: '乳幼児連れ', zh: '携带幼儿' } },
+        { value: 'pet', labels: { ko: '반려동물', en: 'Traveling with pets', ja: 'ペット同伴', zh: '携带宠物' } }
+      ]
+    };
 
-<script>
-// ── 언어 설정 ──────────────────────────────
-const LANGS = {
-  ko: {
-    headerSub: '✈️ AI가 나만의 여행 일정을 5초 만에 완성해 드려요',
-    formTitle: '🗺️ 어디로 떠나고 싶으세요?',
-    lblDest: '여행지 *', lblDur: '여행 기간', lblStyle: '여행 스타일', lblBudget: '예산',
-    btnText: '일정 만들기', btnLoading: '생성 중...',
-    lblPdf: 'PDF 저장', lblShare: '공유하기', lblSave: '일정 저장',
-    lblSavedList: '저장된 일정 보기', lblBook: '🏨 예약하고 떠나기',
-    lblReset: '다시 만들기', modalTitle: '저장된 일정',
-    mapBtn: '🗺️ 지도', tipsTitle: '✅ 여행 팁',
-    shareCopied: '✅ 링크가 복사됐어요!', saved: '✅ 일정이 저장됐어요!',
-    noSaved: '저장된 일정이 없어요', destPlaceholder: '예: 도쿄, 파리, 발리, 뉴욕',
-    errDest: '여행지를 입력해 주세요! 🗺️',
-    apiPrompt: (dest, dur, style, budget) =>
-      '여행 일정을 만들어줘.\n목적지: '+dest+'\n기간: '+dur+'\n여행 스타일: '+style+'\n예산: '+budget+'\n\n반드시 아래 JSON 형식으로만 응답해. 다른 텍스트 없이 JSON만:\n{"title":"여행 제목","destination":"'+dest+'","duration":"'+dur+'","days":[{"day":1,"title":"Day 1 소제목","activities":[{"time":"09:00","place":"장소명","description":"활동 설명","category":"관광","tip":""}]}],"tips":["팁1","팁2"],"estimatedBudget":"예상 예산"}'
-  },
-  en: {
-    headerSub: '✈️ AI creates your perfect travel itinerary in seconds',
-    formTitle: '🗺️ Where do you want to go?',
-    lblDest: 'Destination *', lblDur: 'Duration', lblStyle: 'Travel Style', lblBudget: 'Budget',
-    btnText: 'Create Itinerary', btnLoading: 'Creating...',
-    lblPdf: 'Save PDF', lblShare: 'Share', lblSave: 'Save',
-    lblSavedList: 'Saved Itineraries', lblBook: '🏨 Book & Go',
-    lblReset: 'Start Over', modalTitle: 'Saved Itineraries',
-    mapBtn: '🗺️ Map', tipsTitle: '✅ Travel Tips',
-    shareCopied: '✅ Link copied!', saved: '✅ Itinerary saved!',
-    noSaved: 'No saved itineraries', destPlaceholder: 'e.g. Tokyo, Paris, Bali, New York',
-    errDest: 'Please enter a destination! 🗺️',
-    apiPrompt: (dest, dur, style, budget) =>
-      'Create a travel itinerary.\nDestination: '+dest+'\nDuration: '+dur+'\nStyle: '+style+'\nBudget: '+budget+'\n\nRespond ONLY with this JSON format, no other text:\n{"title":"Trip title","destination":"'+dest+'","duration":"'+dur+'","days":[{"day":1,"title":"Day 1 subtitle","activities":[{"time":"09:00","place":"Place name","description":"Activity description","category":"sightseeing","tip":""}]}],"tips":["tip1","tip2"],"estimatedBudget":"estimated budget"}'
-  },
-  ja: {
-    headerSub: '✈️ AIがあなただけの旅行プランを5秒で作成します',
-    formTitle: '🗺️ どこへ行きたいですか？',
-    lblDest: '目的地 *', lblDur: '旅行期間', lblStyle: '旅行スタイル', lblBudget: '予算',
-    btnText: 'プランを作成', btnLoading: '作成中...',
-    lblPdf: 'PDF保存', lblShare: 'シェア', lblSave: '保存',
-    lblSavedList: '保存したプラン', lblBook: '🏨 予約して出発',
-    lblReset: 'やり直す', modalTitle: '保存したプラン',
-    mapBtn: '🗺️ 地図', tipsTitle: '✅ 旅のヒント',
-    shareCopied: '✅ リンクをコピーしました！', saved: '✅ プランを保存しました！',
-    noSaved: '保存したプランはありません', destPlaceholder: '例：東京、パリ、バリ、ニューヨーク',
-    errDest: '目的地を入力してください！ 🗺️',
-    apiPrompt: (dest, dur, style, budget) =>
-      '旅行プランを作って。\n目的地: '+dest+'\n期間: '+dur+'\nスタイル: '+style+'\n予算: '+budget+'\n\n以下のJSON形式のみで回答して。他のテキストなし：\n{"title":"旅行タイトル","destination":"'+dest+'","duration":"'+dur+'","days":[{"day":1,"title":"1日目サブタイトル","activities":[{"time":"09:00","place":"場所名","description":"活動説明","category":"観光","tip":""}]}],"tips":["ヒント1","ヒント2"],"estimatedBudget":"予算目安"}'
-  }
-};
+    const CATEGORY_ICONS = { sightseeing: '🏛️', food: '🍽️', cafe: '☕', transport: '🚆', stay: '🛏️', shopping: '🛍️', nature: '🌿', culture: '🎭', activity: '🎟️', photo: '📸', hidden: '🧭' };
 
-let currentLang = 'ko';
-let currentData = null;
+    let currentLang = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('ryokoplan_lang') || 'ko';
+    if (!TRANSLATIONS[currentLang]) currentLang = 'ko';
+    let currentResult = null;
 
-function setLang(lang) {
-  currentLang = lang;
-  const L = LANGS[lang];
-  document.querySelectorAll('.lang-btn').forEach((b,i) => b.classList.toggle('active', ['ko','en','ja'][i]===lang));
-  document.getElementById('header-sub').textContent = L.headerSub;
-  document.getElementById('form-title').textContent = L.formTitle;
-  document.getElementById('lbl-dest').textContent = L.lblDest;
-  document.getElementById('lbl-dur').textContent = L.lblDur;
-  document.getElementById('lbl-style').textContent = L.lblStyle;
-  document.getElementById('lbl-budget').textContent = L.lblBudget;
-  document.getElementById('btn-text').textContent = L.btnText;
-  document.getElementById('lbl-pdf').textContent = L.lblPdf;
-  document.getElementById('lbl-share').textContent = L.lblShare;
-  document.getElementById('lbl-save').textContent = L.lblSave;
-  document.getElementById('lbl-saved-list').textContent = L.lblSavedList;
-  document.getElementById('lbl-book').textContent = L.lblBook;
-  document.getElementById('lbl-reset').textContent = L.lblReset;
-  document.getElementById('modal-title').textContent = L.modalTitle;
-  document.getElementById('destination').placeholder = L.destPlaceholder;
-}
+    const $ = (id) => document.getElementById(id);
 
-const CATEGORY_ICONS = {'관광':'🏛️','식사':'🍽️','숙박':'🛏️','이동':'🚌','쇼핑':'🛍️','액티비티':'🎡','자연':'🌿','문화':'🎭','sightseeing':'🏛️','food':'🍽️','accommodation':'🛏️','transport':'🚌','shopping':'🛍️','activity':'🎡','nature':'🌿','culture':'🎭','観光':'🏛️','食事':'🍽️','宿泊':'🛏️','移動':'🚌'};
+    function renderSelect(id, dataset) {
+      const el = $(id);
+      el.innerHTML = dataset.map(item => `<option value="${item.value}" ${item.selected ? 'selected' : ''}>${item.labels[currentLang]}</option>`).join('');
+    }
 
-// ── 일정 생성 ──────────────────────────────
-async function generateItinerary() {
-  const destination = document.getElementById('destination').value.trim();
-  const L = LANGS[currentLang];
-  if (!destination) { showError(L.errDest); document.getElementById('destination').focus(); return; }
-  const duration = document.getElementById('duration').value;
-  const style = document.getElementById('style').value;
-  const budget = document.getElementById('budget').value;
-  setLoading(true); hideError();
-  try {
-    const res = await fetch('/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ destination, duration, style, budget, lang: currentLang, prompt: L.apiPrompt(destination, duration, style, budget) })
+    function renderTraits() {
+      $('traits-grid').innerHTML = OPTION_DATA.traits.map(item => `
+        <label class="check-item">
+          <input type="checkbox" value="${item.value}" />
+          <span>${item.labels[currentLang]}</span>
+        </label>
+      `).join('');
+    }
+
+    function setText(id, value) { const el = $(id); if (el) el.textContent = value; }
+
+    function applyTranslations() {
+      const t = TRANSLATIONS[currentLang];
+      document.documentElement.lang = t.htmlLang;
+      setText('brand-tagline', t.brandTagline); setText('blog-link', t.blogLink);
+      setText('hero-eyebrow', t.heroEyebrow); setText('hero-title', t.heroTitle); setText('hero-lead', t.heroLead);
+      setText('pill-1', t.pill1); setText('pill-2', t.pill2); setText('pill-3', t.pill3); setText('pill-4', t.pill4);
+      setText('preview-badge', t.previewBadge); setText('preview-title', t.previewTitle); setText('stat-1', t.stat1); setText('stat-1-sub', t.stat1sub); setText('stat-2', t.stat2); setText('stat-2-sub', t.stat2sub); setText('preview-label', t.previewLabel); setText('preview-route', t.previewRoute);
+      setText('planner-title', t.plannerTitle); setText('planner-sub', t.plannerSub); setText('lbl-destination', t.lblDestination); setText('helper-destination', t.helperDestination); setText('lbl-duration', t.lblDuration); setText('lbl-style', t.lblStyle); setText('lbl-budget', t.lblBudget); setText('lbl-companion', t.lblCompanion); setText('lbl-traits', t.lblTraits); setText('helper-traits', t.helperTraits); setText('lbl-local-mode', t.lblLocalMode); setText('local-mode-sub', t.localModeSub); setText('lbl-notes', t.lblNotes); setText('generate-text', t.generate); setText('open-saved', t.savedBtn); setText('status-note', t.statusNote); setText('empty-title', t.emptyTitle); setText('empty-copy', t.emptyCopy); setText('tips-heading', t.tipsHeading); setText('checklist-heading', t.checklistHeading); setText('budget-heading', t.budgetHeading); setText('summary-heading', t.summaryHeading); setText('action-pdf', t.pdf); setText('action-share', t.share); setText('action-save', t.save); setText('secondary-generate', t.regenerate); setText('feature-1-title', t.feature1Title); setText('feature-1-copy', t.feature1Copy); setText('feature-2-title', t.feature2Title); setText('feature-2-copy', t.feature2Copy); setText('feature-3-title', t.feature3Title); setText('feature-3-copy', t.feature3Copy); setText('blog-eyebrow', t.blogEyebrow); setText('blog-title', t.blogTitle); setText('blog-sub', t.blogSub); setText('blog-cta', t.blogCta); setText('saved-title', t.savedTitle); setText('close-saved', `✕ ${t.close}`);
+      setText('partner-booking', t.partnerBooking); setText('partner-klook', t.partnerKlook); setText('partner-agoda', t.partnerAgoda);
+      $('destination').placeholder = t.destinationPlaceholder;
+      $('notes').placeholder = t.notesPlaceholder;
+      renderSelect('duration', OPTION_DATA.duration); renderSelect('style', OPTION_DATA.style); renderSelect('budget', OPTION_DATA.budget); renderSelect('companion', OPTION_DATA.companion); renderTraits();
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === currentLang));
+      localStorage.setItem('ryokoplan_lang', currentLang);
+      const params = new URLSearchParams(window.location.search);
+      params.set('lang', currentLang);
+      history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+      if (currentResult) renderResult(currentResult, false);
+      renderSaved();
+    }
+
+    function gatherTraits() {
+      return [...document.querySelectorAll('#traits-grid input:checked')].map(input => input.value);
+    }
+
+    function optionLabel(group, value) {
+      const item = OPTION_DATA[group].find(x => x.value === value);
+      return item ? item.labels[currentLang] : value;
+    }
+
+    function setLoading(on) {
+      $('generate-btn').disabled = on;
+      $('spinner').style.display = on ? 'inline-block' : 'none';
+      $('generate-icon').style.display = on ? 'none' : 'inline';
+      $('generate-text').textContent = on ? TRANSLATIONS[currentLang].generating : TRANSLATIONS[currentLang].generate;
+    }
+
+    function showError(message) {
+      $('error-box').style.display = 'block';
+      $('error-box').textContent = message;
+    }
+
+    function hideError() { $('error-box').style.display = 'none'; }
+
+    function showToast(message) {
+      const toast = $('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    async function generateItinerary() {
+      hideError();
+      const destination = $('destination').value.trim();
+      if (!destination) {
+        showError(TRANSLATIONS[currentLang].errDestination);
+        $('destination').focus();
+        return;
+      }
+      const payload = {
+        lang: currentLang,
+        destination,
+        duration: optionLabel('duration', $('duration').value),
+        durationKey: $('duration').value,
+        style: optionLabel('style', $('style').value),
+        styleKey: $('style').value,
+        budget: optionLabel('budget', $('budget').value),
+        budgetKey: $('budget').value,
+        companion: optionLabel('companion', $('companion').value),
+        companionKey: $('companion').value,
+        travelerTraits: gatherTraits().map(v => optionLabel('traits', v)),
+        travelerTraitKeys: gatherTraits(),
+        localMode: $('local-mode').classList.contains('active'),
+        notes: $('notes').value.trim()
+      };
+      setLoading(true);
+      try {
+        const res = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || TRANSLATIONS[currentLang].errGeneric);
+        currentResult = { ...data, requestMeta: payload };
+        renderResult(currentResult, true);
+      } catch (error) {
+        showError(error.message || TRANSLATIONS[currentLang].errGeneric);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    function asListItems(items, prefix = '•') {
+      return (items || []).map(item => `<div class="list-item"><span>${prefix}</span><span>${item}</span></div>`).join('');
+    }
+
+    function renderResult(data, scrollIntoView = true) {
+      const t = TRANSLATIONS[currentLang];
+      $('result-empty').style.display = 'none';
+      $('result-card').style.display = 'block';
+      $('result-title').textContent = data.title || `${data.destination} ${t.itineraryFor}`;
+      const meta = [
+        `<span class="badge">📍 ${data.destination || data.requestMeta.destination}</span>`,
+        `<span class="badge">📅 ${data.duration || data.requestMeta.duration}</span>`,
+        `<span class="badge">👥 ${t.companionBadge}: ${data.companion || data.requestMeta.companion}</span>`
+      ];
+      $('result-meta').innerHTML = meta.join('');
+      const modeBadges = [
+        `<span class="badge">${data.localMode ? '🧭' : '🗺️'} ${data.localMode ? t.localModeOn : t.localModeOff}</span>`
+      ];
+      if ((data.travelerTraits || []).length) modeBadges.push(`<span class="badge">♿ ${t.traitsBadge}: ${data.travelerTraits.join(', ')}</span>`);
+      $('result-mode').innerHTML = modeBadges.join('');
+
+      $('day-list').innerHTML = (data.days || []).map(day => `
+        <section class="day-card">
+          <div class="day-header"><strong>Day ${day.day} · ${day.title || ''}</strong><span style="color:var(--muted);">${day.area || ''}</span></div>
+          <div class="activity-list">
+            ${(day.activities || []).map(activity => {
+              const icon = CATEGORY_ICONS[activity.category] || '📌';
+              const place = activity.place || '';
+              const mapUrl = `https://www.google.com/maps/search/${encodeURIComponent(`${place} ${data.destination || data.requestMeta.destination}`)}`;
+              return `
+                <article class="activity">
+                  <div class="activity-time">${activity.time || ''}</div>
+                  <div>
+                    <div class="activity-place">${icon} ${place} <a class="map-link" href="${mapUrl}" target="_blank" rel="noopener">Map</a></div>
+                    <div class="activity-desc">${activity.description || ''}</div>
+                    ${activity.tip ? `<div class="activity-tip">💡 ${activity.tip}</div>` : ''}
+                  </div>
+                </article>
+              `;
+            }).join('')}
+          </div>
+        </section>
+      `).join('');
+
+      $('tips-list').innerHTML = asListItems(data.tips || []);
+      $('checklist-list').innerHTML = asListItems(data.checklist || []);
+      $('budget-list').innerHTML = (data.budgetBreakdown || []).map(row => `<div class="budget-row"><span>${row.category}</span><strong>${row.amount}</strong></div>`).join('');
+      $('summary-list').innerHTML = `
+        <div class="list-item"><span>•</span><span>${t.summaryBudget}: ${data.estimatedBudget || '-'}</span></div>
+        <div class="list-item"><span>•</span><span>${t.summaryFocus}: ${data.focusSummary || data.style || data.requestMeta.style}</span></div>
+        <div class="list-item"><span>•</span><span>${(data.summary || []).join(' · ') || data.requestMeta.notes || '-'}</span></div>
+      `;
+
+      const encodedDestination = encodeURIComponent(data.destination || data.requestMeta.destination || '');
+      $('partner-booking').href = `https://www.booking.com/searchresults.html?ss=${encodedDestination}`;
+      $('partner-klook').href = `https://www.klook.com/search/result/?query=${encodedDestination}`;
+      $('partner-agoda').href = `https://www.agoda.com/search?city=${encodedDestination}`;
+
+      if (scrollIntoView) $('result-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function saveItinerary() {
+      if (!currentResult) return;
+      const items = JSON.parse(localStorage.getItem('ryokoplan_saved') || '[]');
+      items.unshift({
+        id: Date.now(),
+        savedAt: new Date().toISOString(),
+        lang: currentLang,
+        title: currentResult.title,
+        destination: currentResult.destination,
+        duration: currentResult.duration,
+        data: currentResult
+      });
+      localStorage.setItem('ryokoplan_saved', JSON.stringify(items.slice(0, 20)));
+      renderSaved();
+      showToast(TRANSLATIONS[currentLang].saveDone);
+    }
+
+    function renderSaved() {
+      const t = TRANSLATIONS[currentLang];
+      const items = JSON.parse(localStorage.getItem('ryokoplan_saved') || '[]');
+      if (!items.length) {
+        $('saved-list').innerHTML = `<div class="saved-item"><div class="saved-main"><strong>${t.noSaved}</strong></div></div>`;
+        return;
+      }
+      $('saved-list').innerHTML = items.map(item => `
+        <div class="saved-item">
+          <div class="saved-main" data-id="${item.id}">
+            <strong>${item.title}</strong>
+            <span>${item.destination} · ${item.duration}</span>
+          </div>
+          <button class="delete-btn" data-delete-id="${item.id}" type="button">${t.delete}</button>
+        </div>
+      `).join('');
+    }
+
+    function openSaved() { $('saved-modal').classList.add('open'); }
+    function closeSaved() { $('saved-modal').classList.remove('open'); }
+
+    function loadSaved(id) {
+      const items = JSON.parse(localStorage.getItem('ryokoplan_saved') || '[]');
+      const found = items.find(item => String(item.id) === String(id));
+      if (!found) return;
+      currentLang = found.lang || currentLang;
+      applyTranslations();
+      currentResult = found.data;
+      renderResult(currentResult, true);
+      closeSaved();
+    }
+
+    function deleteSaved(id) {
+      const items = JSON.parse(localStorage.getItem('ryokoplan_saved') || '[]').filter(item => String(item.id) !== String(id));
+      localStorage.setItem('ryokoplan_saved', JSON.stringify(items));
+      renderSaved();
+    }
+
+    function shareItinerary() {
+      if (!currentResult) return;
+      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(currentResult))));
+      const url = `${window.location.origin}${window.location.pathname}?lang=${currentLang}&share=${encoded}`;
+      navigator.clipboard.writeText(url)
+        .then(() => showToast(TRANSLATIONS[currentLang].shareCopied))
+        .catch(() => window.prompt('Copy this link', url));
+    }
+
+    function loadSharedIfExists() {
+      const params = new URLSearchParams(window.location.search);
+      const share = params.get('share');
+      if (!share) return;
+      try {
+        currentResult = JSON.parse(decodeURIComponent(escape(atob(share))));
+        renderResult(currentResult, false);
+      } catch (error) {
+        console.error('Invalid shared itinerary', error);
+      }
+    }
+
+    function toggleLocalMode() {
+      $('local-mode').classList.toggle('active');
+      $('local-mode').setAttribute('aria-pressed', String($('local-mode').classList.contains('active')));
+    }
+
+    document.addEventListener('click', (event) => {
+      const langButton = event.target.closest('.lang-btn');
+      if (langButton) {
+        currentLang = langButton.dataset.lang;
+        applyTranslations();
+      }
+      if (event.target.id === 'generate-btn' || event.target.id === 'secondary-generate') generateItinerary();
+      if (event.target.id === 'action-pdf') window.print();
+      if (event.target.id === 'action-share') shareItinerary();
+      if (event.target.id === 'action-save') saveItinerary();
+      if (event.target.id === 'open-saved') openSaved();
+      if (event.target.id === 'close-saved' || event.target.id === 'saved-modal') closeSaved();
+      if (event.target.id === 'local-mode') toggleLocalMode();
+      const loadBtn = event.target.closest('[data-id]');
+      if (loadBtn && loadBtn.classList.contains('saved-main')) loadSaved(loadBtn.dataset.id);
+      const deleteBtn = event.target.closest('[data-delete-id]');
+      if (deleteBtn) deleteSaved(deleteBtn.dataset.deleteId);
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Server error');
-    currentData = data;
-    renderItinerary(data, destination);
-  } catch (err) {
-    showError('❌ ' + (err.message || '일정 생성 실패'));
-  } finally { setLoading(false); }
-}
 
-// ── 렌더링 ──────────────────────────────
-function renderItinerary(data, destination) {
-  const L = LANGS[currentLang];
-  document.getElementById('result-title').textContent = data.title || destination;
-  document.getElementById('result-meta').innerHTML =
-    '<span class="badge">📅 '+data.duration+'</span><span class="badge">📍 '+(data.destination||destination)+'</span>';
-  const c = document.getElementById('itinerary-days');
-  c.innerHTML = '';
-  (data.days||[]).forEach(day => {
-    const b = document.createElement('div'); b.className = 'day-block';
-    b.innerHTML = '<div class="day-title">Day '+day.day+' · '+(day.title||'')+'</div>';
-    (day.activities||[]).forEach(a => {
-      const icon = CATEGORY_ICONS[a.category]||'📌';
-      const mapUrl = 'https://www.google.com/maps/search/'+encodeURIComponent(a.place+' '+(data.destination||destination));
-      b.innerHTML += '<div class="activity"><div class="activity-time">'+(a.time||'')+'</div><div class="activity-body"><div class="activity-place">'+icon+' '+a.place+'<a class="map-btn" href="'+mapUrl+'" target="_blank">'+L.mapBtn+'</a></div><div class="activity-desc">'+a.description+'</div>'+(a.tip?'<div class="activity-tip">💚 '+a.tip+'</div>':'')+'</div></div>';
-    });
-    c.appendChild(b);
-  });
-  const t = document.getElementById('tips-section');
-  if (data.tips&&data.tips.length) {
-    t.innerHTML = '<h4>'+L.tipsTitle+'</h4>'+data.tips.map(x=>'<div class="tip-item">'+x+'</div>').join('');
-    t.style.display='block';
-  }
-  const bb = document.getElementById('budget-box');
-  if (data.estimatedBudget) { bb.textContent='💰 '+data.estimatedBudget; bb.style.display='block'; }
-  const enc = encodeURIComponent(destination);
-  document.getElementById('aff-booking').href='https://tp.media/r?marker=509011&p=4&u=https%3A%2F%2Fwww.booking.com%2Fsearch.html%3Fss%3D'+encodeURIComponent(enc);
-  document.getElementById('aff-klook').href='https://www.klook.com/search/?query='+enc+'&aff=116117';
-  document.getElementById('aff-agoda').href='https://tp.media/r?marker=509011&p=242&u=https%3A%2F%2Fwww.agoda.com%2Fsearch%3Fq%3D'+encodeURIComponent(enc);
-  document.getElementById('form-card').style.display='none';
-  document.getElementById('result').style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+    $('destination').addEventListener('keydown', (event) => { if (event.key === 'Enter') generateItinerary(); });
 
-// ── PDF 저장 ──────────────────────────────
-function downloadPDF() {
-  window.print();
-}
-
-// ── 공유하기 (URL 복사) ──────────────────────────────
-function shareItinerary() {
-  if (!currentData) return;
-  const encoded = btoa(encodeURIComponent(JSON.stringify(currentData)));
-  const url = window.location.origin + '?share=' + encoded;
-  navigator.clipboard.writeText(url).then(() => {
-    showToast(LANGS[currentLang].shareCopied);
-  }).catch(() => {
-    prompt('아래 링크를 복사하세요:', url);
-  });
-}
-
-// ── 일정 저장 (로컬) ──────────────────────────────
-function saveItinerary() {
-  if (!currentData) return;
-  const saves = JSON.parse(localStorage.getItem('ryoko_saves')||'[]');
-  const item = { id: Date.now(), title: currentData.title, destination: currentData.destination, duration: currentData.duration, date: new Date().toLocaleDateString(), data: currentData };
-  saves.unshift(item);
-  if (saves.length > 20) saves.pop();
-  localStorage.setItem('ryoko_saves', JSON.stringify(saves));
-  showToast(LANGS[currentLang].saved);
-}
-
-// ── 저장된 일정 모달 ──────────────────────────────
-function openSavedModal() {
-  const saves = JSON.parse(localStorage.getItem('ryoko_saves')||'[]');
-  const list = document.getElementById('saved-list');
-  const L = LANGS[currentLang];
-  if (!saves.length) { list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px;">'+L.noSaved+'</p>'; }
-  else {
-    list.innerHTML = saves.map(s =>
-      '<div class="saved-item" onclick="loadSaved('+s.id+')"><div class="saved-item-info"><div class="saved-item-title">'+s.title+'</div><div class="saved-item-date">'+s.date+' · '+s.duration+'</div></div><button class="saved-item-del" onclick="deleteSaved(event,'+s.id+')">🗑️</button></div>'
-    ).join('');
-  }
-  document.getElementById('saved-modal').classList.add('open');
-}
-
-function closeSavedModal() {
-  document.getElementById('saved-modal').classList.remove('open');
-}
-
-function loadSaved(id) {
-  const saves = JSON.parse(localStorage.getItem('ryoko_saves')||'[]');
-  const item = saves.find(s=>s.id===id);
-  if (item) { currentData=item.data; renderItinerary(item.data, item.destination); closeSavedModal(); }
-}
-
-function deleteSaved(e, id) {
-  e.stopPropagation();
-  let saves = JSON.parse(localStorage.getItem('ryoko_saves')||'[]');
-  saves = saves.filter(s=>s.id!==id);
-  localStorage.setItem('ryoko_saves', JSON.stringify(saves));
-  openSavedModal();
-}
-
-// ── 공유 URL 자동 로드 ──────────────────────────────
-function checkShareUrl() {
-  const params = new URLSearchParams(window.location.search);
-  const share = params.get('share');
-  if (share) {
-    try {
-      const data = JSON.parse(decodeURIComponent(atob(share)));
-      currentData = data;
-      renderItinerary(data, data.destination||'');
-    } catch(e) {}
-  }
-}
-
-// ── 유틸 ──────────────────────────────
-function resetForm() {
-  document.getElementById('form-card').style.display='block';
-  document.getElementById('result').style.display='none';
-  document.getElementById('destination').value='';
-  hideError(); currentData=null;
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function setLoading(on) {
-  document.getElementById('generate-btn').disabled=on;
-  document.getElementById('spinner').style.display=on?'block':'none';
-  document.getElementById('btn-icon').style.display=on?'none':'inline';
-  document.getElementById('btn-text').textContent=on?LANGS[currentLang].btnLoading:LANGS[currentLang].btnText;
-}
-function showError(m){const e=document.getElementById('error-box');e.textContent=m;e.style.display='block';}
-function hideError(){document.getElementById('error-box').style.display='none';}
-function showToast(msg) {
-  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('destination').addEventListener('keydown', e=>{if(e.key==='Enter')generateItinerary();});
-  checkShareUrl();
-});
-</script>
+    applyTranslations();
+    renderSaved();
+    loadSharedIfExists();
+  </script>
 </body>
 </html>

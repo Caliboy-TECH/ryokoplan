@@ -1,0 +1,19 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#06101E"/>
+  <circle cx="170" cy="110" r="200" fill="#89B4FF" fill-opacity="0.16"/>
+  <circle cx="1020" cy="80" r="180" fill="#6EE7D8" fill-opacity="0.14"/>
+  <circle cx="1020" cy="540" r="220" fill="#C4B5FD" fill-opacity="0.12"/>
+  <rect x="70" y="76" width="1060" height="478" rx="34" fill="white" fill-opacity="0.04" stroke="white" stroke-opacity="0.12"/>
+  <text x="108" y="210" fill="white" font-family="Inter, Arial, sans-serif" font-size="74" font-weight="800">Ryokoplan</text>
+  <text x="108" y="288" fill="#DCE7F8" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="500">AI itineraries with local mode, budget breakdown,</text>
+  <text x="108" y="336" fill="#DCE7F8" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="500">traveler-aware planning, and smart checklists.</text>
+  <rect x="108" y="406" width="268" height="58" rx="29" fill="url(#paint0_linear_1_2)"/>
+  <text x="142" y="444" fill="#06101E" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="800">ryokoplan.com</text>
+  <defs>
+    <linearGradient id="paint0_linear_1_2" x1="108" y1="435" x2="376" y2="435" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#86B8FF"/>
+      <stop offset="0.5" stop-color="#98A2FF"/>
+      <stop offset="1" stop-color="#72EAD2"/>
+    </linearGradient>
+  </defs>
+</svg>
