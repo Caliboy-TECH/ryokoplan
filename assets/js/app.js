@@ -135,6 +135,75 @@ window.RyokoApp = (() => {
     }));
   }
 
+
+
+  function initEditorialChrome(){
+    const page = document.body.dataset.page || 'planner';
+    const labels = {
+      planner: { kicker: 'Planner flow', title: 'Start from a city mood, then turn it into a usable trip.', chips: ['Japan / Korea focus', 'Magazine-led planning', 'Save / Share / PDF'] },
+      magazine: { kicker: 'Magazine flow', title: 'Read the city first so the plan feels more intentional.', chips: ['City guides', 'Sample routes', 'Local rhythm'] },
+      trips: { kicker: 'My Trips flow', title: 'Return to saved, recent, and shared trips without losing context.', chips: ['Saved trips', 'Recent plans', 'Shared links'] }
+    };
+    const data = labels[page] || labels.planner;
+    const header = document.querySelector('.top-bar');
+    if (header && !document.querySelector('.page-signal')) {
+      const wrap = document.createElement('div');
+      wrap.className = 'page-signal';
+      wrap.innerHTML = `
+        <div class="page-signal-card">
+          <div class="page-signal-copy">
+            <strong>${data.kicker}</strong>
+            <span>${data.title}</span>
+          </div>
+          <div class="page-signal-chips">${data.chips.map(chip => `<span class="page-signal-chip">${chip}</span>`).join('')}</div>
+        </div>`;
+      header.insertAdjacentElement('afterend', wrap);
+    }
+
+    if (!document.querySelector('.reading-progress')) {
+      const progress = document.createElement('div');
+      progress.className = 'reading-progress';
+      document.body.appendChild(progress);
+      const sync = () => {
+        const max = Math.max(document.documentElement.scrollHeight - innerHeight, 1);
+        const pct = Math.min(Math.max(scrollY / max, 0), 1);
+        progress.style.transform = `scaleX(${pct})`;
+        document.body.classList.toggle('is-scrolled', scrollY > 12);
+      };
+      sync();
+      window.addEventListener('scroll', sync, { passive: true });
+      window.addEventListener('resize', sync);
+    }
+
+    document.querySelectorAll('.top-actions .nav-chip,[data-nav],.mobile-dock-item').forEach(link => {
+      const href = link.getAttribute('href') || '';
+      const current = (page === 'planner' && (href === './' || href === '../' || /index\.html$/.test(href)))
+        || (page === 'magazine' && /magazine\/?$/.test(href))
+        || (page === 'trips' && /my-trips\/?$/.test(href));
+      if (current) link.classList.add('is-current');
+    });
+
+    const targets = [...document.querySelectorAll('.hero-card, .info-card, .editorial-panel, .route-strip-card, .finder-card, .district-card, .example-card, .trip-card, .meta-card, .section-head')];
+    targets.forEach((el, index) => {
+      if (el.hasAttribute('data-reveal')) return;
+      el.setAttribute('data-reveal', '');
+      el.style.transitionDelay = `${Math.min(index * 22, 180)}ms`;
+    });
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -5% 0px' });
+      targets.forEach(el => io.observe(el));
+    } else {
+      targets.forEach(el => el.classList.add('is-visible'));
+    }
+  }
+
   function initCommon(){
     applyTranslations();
     bindLanguageButtons();
@@ -143,6 +212,7 @@ window.RyokoApp = (() => {
     document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
     renderMobileDock();
     initHomePresets();
+    initEditorialChrome();
   }
   function cityCardTemplate(city){
     return `

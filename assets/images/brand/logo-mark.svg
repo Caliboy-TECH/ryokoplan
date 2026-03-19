@@ -1,15 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
 <defs>
-  <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0%" stop-color="#ffb07c"/>
-    <stop offset="100%" stop-color="#f07c4c"/>
+  <linearGradient id="bg" x1="10" y1="8" x2="55" y2="56" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#FFF7EF"/>
+    <stop offset="1" stop-color="#FFF0E3"/>
+  </linearGradient>
+  <linearGradient id="navy" x1="18" y1="14" x2="36" y2="41" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#28486D"/>
+    <stop offset="1" stop-color="#15273A"/>
+  </linearGradient>
+  <linearGradient id="coral" x1="24" y1="28" x2="49" y2="50" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#FF9C70"/>
+    <stop offset="1" stop-color="#E86C3E"/>
   </linearGradient>
 </defs>
-<rect width="512" height="512" rx="128" fill="#fff8f0"/>
-<path d="M118 153c34-20 83-30 138-30 77 0 129 27 129 68 0 44-56 72-133 72-29 0-57-4-79-11l-6 4c-14 10-32 29-42 54-4 10-17 11-23 2-15-24-13-56 4-86-16-14-25-31-25-49 0-9 2-17 7-24 8-11 18-20 30-27z" fill="url(#g)"/>
-<path d="M356 314c-24 41-81 70-147 70-25 0-50-4-72-11l-28 21c-12 9-29-2-25-17l11-43c-17-15-27-33-27-53 0-13 4-25 11-36 4-6 12-7 18-3 26 18 65 29 110 29 83 0 153-38 170-90 1-4 6-6 10-4 42 20 67 50 67 83 0 21-10 40-28 54l11 42c4 15-13 27-25 18l-29-22c-12 4-24 7-37 9z" fill="#24415a" opacity=".92"/>
-<circle cx="170" cy="215" r="14" fill="#fff8f0"/>
-<circle cx="220" cy="215" r="14" fill="#fff8f0"/>
-<circle cx="286" cy="336" r="10" fill="#fff8f0"/>
-<circle cx="326" cy="336" r="10" fill="#fff8f0"/>
+<rect x="4" y="4" width="56" height="56" rx="18" fill="url(#bg)"/>
+<rect x="4.5" y="4.5" width="55" height="55" rx="17.5" stroke="#E7DCCF"/>
+<path d="M18 21.5C18 19.567 19.567 18 21.5 18H35.2C37.133 18 38.7 19.567 38.7 21.5V24.3C38.7 26.233 37.133 27.8 35.2 27.8H25.9V44C25.9 45.049 25.049 45.9 24 45.9H19.9C18.851 45.9 18 45.049 18 44V21.5Z" fill="url(#navy)"/>
+<path d="M28.8 32.2C28.8 30.267 30.367 28.7 32.3 28.7H42.5C44.433 28.7 46 30.267 46 32.2V42.5C46 44.433 44.433 46 42.5 46H32.3C30.367 46 28.8 44.433 28.8 42.5V32.2Z" fill="url(#coral)"/>
+<path d="M33.4 38.6H41.4" stroke="#FFF8F1" stroke-width="2.5" stroke-linecap="round"/>
+<path d="M37.4 34.6V42.6" stroke="#FFF8F1" stroke-width="2.5" stroke-linecap="round"/>
 </svg>
