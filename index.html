@@ -53,6 +53,18 @@
             <button class="primary-btn" onclick="document.querySelector('.planner-shell').scrollIntoView({behavior:'smooth'})" data-t="planner.start">여행 시작하기</button>
             <a class="secondary-btn" data-nav="magazine" data-t="planner.browse">매거진 보기</a>
           </div>
+          <div class="hero-stat-row">
+            <div class="hero-stat-card">
+              <span class="hero-stat-label">Focus</span>
+              <strong>Japan & Korea</strong>
+              <span>좁고 깊게 읽는 도시 가이드</span>
+            </div>
+            <div class="hero-stat-card">
+              <span class="hero-stat-label">Flow</span>
+              <strong>Read → Plan → Save</strong>
+              <span>읽고 바로 일정으로 이어지는 구조</span>
+            </div>
+          </div>
         </div>
         <div class="hero-card hero-visual">
           <img src="assets/images/hero/main-hero-japan.png" alt="Ryokoplan hero">
@@ -74,6 +86,106 @@
           <button class="chip" data-quick-city="Fukuoka">Fukuoka</button>
           <button class="chip" data-quick-city="Seoul">Seoul</button>
           <button class="chip" data-quick-city="Busan">Busan</button>
+        </div>
+      </section>
+
+      <section class="section home-editorial-grid">
+        <article class="editorial-panel editorial-feature">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Start from a travel mood</span>
+              <h2 class="section-title">지금 끌리는 방식으로 여행을 시작하세요</h2>
+              <p class="section-desc">도시 이름부터 고르지 않아도 됩니다. 분위기, 페이스, 목적부터 잡으면 플래너가 훨씬 자연스럽게 출발해요.</p>
+            </div>
+          </div>
+          <div class="mood-grid">
+            <button class="mood-card" data-home-preset='{"destination":"Tokyo","style":"city highlights + hidden gems","companion":"couple","duration":"3n4d","notes":"Balance big neighborhoods with slower local pockets."}'>
+              <span class="mood-kicker">Fast city</span>
+              <strong>Tokyo layers</strong>
+              <p>Big landmarks, neighborhood rhythm, and one slower evening.</p>
+            </button>
+            <button class="mood-card" data-home-preset='{"destination":"Kyoto","style":"slow + quiet","companion":"solo","duration":"2n3d","notes":"Prioritize alleys, temples, cafes, and walkable pacing."}'>
+              <span class="mood-kicker">Slow day</span>
+              <strong>Kyoto reset</strong>
+              <p>Quiet streets, temple districts, and a softer route with less rushing.</p>
+            </button>
+            <button class="mood-card" data-home-preset='{"destination":"Fukuoka","style":"food + local neighborhoods","companion":"friends","duration":"2n3d","notes":"Build around food stops, riverside walks, and compact movement."}'>
+              <span class="mood-kicker">Food-led</span>
+              <strong>Fukuoka bites</strong>
+              <p>Compact food trip with easy movement and strong local energy.</p>
+            </button>
+            <button class="mood-card" data-home-preset='{"destination":"Busan","style":"coastal + easy pace","companion":"family","duration":"2n3d","notes":"Keep it scenic, gentle, and easy for mixed ages."}'>
+              <span class="mood-kicker">Coast mode</span>
+              <strong>Busan breeze</strong>
+              <p>Sea views, easier pacing, and stops that feel open and relaxed.</p>
+            </button>
+          </div>
+        </article>
+
+        <aside class="editorial-panel editorial-side">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">What makes it useful</span>
+              <h2 class="section-title">검색보다 빠르게 감이 오게</h2>
+            </div>
+          </div>
+          <div class="editorial-lines">
+            <div class="editorial-line">
+              <strong>도시를 먼저 읽고</strong>
+              <span>vibe, pace, district 감각을 잡은 뒤 플래너로 넘어갑니다.</span>
+            </div>
+            <div class="editorial-line">
+              <strong>바로 쓰는 결과</strong>
+              <span>day title, places, local tips, budget, checklist까지 한 번에 정리됩니다.</span>
+            </div>
+            <div class="editorial-line">
+              <strong>저장하고 다시 돌아오기</strong>
+              <span>My Trips에서 최근 일정, 저장한 플랜, 공유받은 여정을 다시 봅니다.</span>
+            </div>
+          </div>
+          <div class="mini-cta-stack">
+            <a class="soft-btn" href="./magazine/">City guides</a>
+            <a class="soft-btn" href="./my-trips/">Saved trips</a>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section home-route-strip">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Featured routes</span>
+            <h2 class="section-title">바로 시작하기 좋은 샘플 흐름</h2>
+            <p class="section-desc">완전히 처음이어도, 하나를 눌러서 바로 값이 채워진 상태로 시작할 수 있게 만들었습니다.</p>
+          </div>
+        </div>
+        <div class="route-strip-grid">
+          <article class="route-strip-card">
+            <div class="route-strip-meta">Tokyo · 3N4D · Couple</div>
+            <h3>First trip, but not too touristy</h3>
+            <p>대표 지역은 놓치지 않으면서도, 하루 하나씩 덜 붐비는 포인트를 섞은 균형형 루트.</p>
+            <div class="card-actions">
+              <a class="soft-btn" href="./example/tokyo-3n4d-first-trip.html">Read sample</a>
+              <button class="ghost-btn" data-home-preset='{"destination":"Tokyo","style":"balanced first trip + local pockets","companion":"couple","duration":"3n4d","notes":"First trip route with one calm neighborhood each day."}'>Use this setup</button>
+            </div>
+          </article>
+          <article class="route-strip-card">
+            <div class="route-strip-meta">Seoul · 2N3D · Friends</div>
+            <h3>City energy without overpacking</h3>
+            <p>동네 vibe 차이를 느끼면서도 이동이 과하지 않게, 낮과 밤의 리듬을 나눠서 짠 서울형 루트.</p>
+            <div class="card-actions">
+              <a class="soft-btn" href="./example/seoul-2n3d-city-vibes.html">Read sample</a>
+              <button class="ghost-btn" data-home-preset='{"destination":"Seoul","style":"city vibes + food + neighborhoods","companion":"friends","duration":"2n3d","notes":"Keep the route social, walkable, and not too packed."}'>Use this setup</button>
+            </div>
+          </article>
+          <article class="route-strip-card">
+            <div class="route-strip-meta">Jeju · 3N4D · Family</div>
+            <h3>Scenic, easy, and slower by design</h3>
+            <p>풍경과 휴식을 우선에 두고, 체력 소모를 줄이면서도 제주다운 장면은 놓치지 않는 타입.</p>
+            <div class="card-actions">
+              <a class="soft-btn" href="./city/jeju.html">Read city guide</a>
+              <button class="ghost-btn" data-home-preset='{"destination":"Jeju","style":"scenic + easy pace","companion":"family","duration":"3n4d","notes":"Keep transfers simple and build around views, food, and rest."}'>Use this setup</button>
+            </div>
+          </article>
         </div>
       </section>
 

@@ -108,6 +108,33 @@ window.RyokoApp = (() => {
     apply();
   }
 
+
+  function initHomePresets(){
+    const presetButtons = [...document.querySelectorAll('[data-home-preset]')];
+    if (!presetButtons.length) return;
+    presetButtons.forEach(btn => btn.addEventListener('click', () => {
+      let preset = {};
+      try { preset = JSON.parse(btn.dataset.homePreset || '{}'); } catch {}
+      const destination = document.getElementById('destination');
+      const duration = document.getElementById('duration');
+      const companion = document.getElementById('companion');
+      const style = document.getElementById('style');
+      const notes = document.getElementById('notes');
+      if (destination && preset.destination) destination.value = preset.destination;
+      if (duration && preset.duration) duration.value = preset.duration;
+      if (companion && preset.companion) companion.value = preset.companion;
+      if (style && preset.style) style.value = preset.style;
+      if (notes && preset.notes) notes.value = preset.notes;
+      document.querySelector('.planner-shell')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      [destination, duration, companion, style, notes].forEach(el => {
+        if (!el) return;
+        el.classList.add('is-focused');
+        setTimeout(() => el.classList.remove('is-focused'), 900);
+      });
+      if (destination) destination.focus({ preventScroll: true });
+    }));
+  }
+
   function initCommon(){
     applyTranslations();
     bindLanguageButtons();
@@ -115,6 +142,7 @@ window.RyokoApp = (() => {
     document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
     document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
     renderMobileDock();
+    initHomePresets();
   }
   function cityCardTemplate(city){
     return `
