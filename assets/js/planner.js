@@ -100,6 +100,75 @@ window.RyokoPlanner = (() => {
     const raw = String(key || '').trim();
     return map[raw.toLowerCase()] || raw.charAt(0).toUpperCase() + raw.slice(1);
   }
+  function storageKey(destination='trip'){
+    return `ryoko:savedPlaces:${String(destination).toLowerCase()}`;
+  }
+  function getSavedPlaces(destination='trip'){
+    try { return JSON.parse(localStorage.getItem(storageKey(destination)) || '[]'); } catch { return []; }
+  }
+  function setSavedPlaces(destination='trip', places=[]){
+    localStorage.setItem(storageKey(destination), JSON.stringify(places));
+  }
+  function toggleSavedPlace(destination, placeName){
+    const saved = new Set(getSavedPlaces(destination));
+    if (saved.has(placeName)) saved.delete(placeName); else saved.add(placeName);
+    const result = [...saved];
+    setSavedPlaces(destination, result);
+    return result;
+  }
+  function smoothJump(targetId){
+    document.getElementById(targetId)?.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+  function bindJumpChips(){
+    document.querySelectorAll('[data-jump-target]').forEach(btn => btn.addEventListener('click', () => smoothJump(btn.dataset.jumpTarget)));
+    document.querySelectorAll('[data-sticky-jump]').forEach(btn => btn.addEventListener('click', () => smoothJump(btn.dataset.stickyJump)));
+  }
+  function bindStickyBar(){
+    const bar = qs('resultStickyBar');
+    const anchor = qs('resultDaysSection');
+    if (!bar || !anchor) return;
+    const onScroll = () => {
+      const rect = anchor.getBoundingClientRect();
+      bar.classList.toggle('is-visible', rect.top < window.innerHeight * 0.55);
+      updateActiveJumpChip();
+    };
+    window.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  }
+  function updateStickyCopy(data){
+    if (qs('stickyTripTitle')) qs('stickyTripTitle').textContent = data.title || `${data.destination || 'Trip'} Plan`;
+    if (qs('stickyTripMeta')) qs('stickyTripMeta').textContent = [textValue(data.vibe,''), textValue(data.pace,'')].filter(Boolean).join(' · ') || 'Jump, save, share, or export';
+  }
+  function updateActiveJumpChip(){
+    const sections = ['resultTop','resultDaysSection','localTipsSection','budgetSection','checklistSection'];
+    let active = 'resultTop';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= 120) active = id;
+    });
+    document.querySelectorAll('[data-jump-target]').forEach(btn => btn.classList.toggle('is-active', btn.dataset.jumpTarget === active));
+  }
+  function bindDayInteractions(){
+    document.querySelectorAll('.day-card-header').forEach(header => header.addEventListener('click', () => {
+      const card = header.closest('.day-card');
+      if (!card) return;
+      const toggle = card.querySelector('.day-toggle');
+      const isOpen = card.classList.toggle('is-open');
+      if (toggle) toggle.textContent = isOpen ? '−' : '+';
+    }));
+    document.querySelectorAll('.place-save').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const destination = btn.dataset.destination || 'trip';
+      const place = btn.dataset.place || '';
+      const saved = toggleSavedPlace(destination, place);
+      const isSaved = saved.includes(place);
+      btn.classList.toggle('is-saved', isSaved);
+      btn.setAttribute('aria-pressed', String(isSaved));
+      btn.textContent = isSaved ? '♥' : '♡';
+    }));
+  }
   function updateShareMeta(data){
     const title = data?.title || 'Ryokoplan';
     const desc = normalizeSummary(data) || 'Read the city. Plan the trip.';
@@ -179,31 +248,46 @@ window.RyokoPlanner = (() => {
       </div>`).join('');
   }
   function renderDays(data){
-    const days = (data.days || []).map(day => {
+    const destination = textValue(data.destination, readForm().destination || 'Trip');
+    const savedPlaces = getSavedPlaces(destination);
+    const days = (data.days || []).map((day, dayIndex) => {
       const places = normalizePlaces(day);
+      const compact = places.slice(0, 3).map(place => `<span class="day-mini-chip">${escapeHtml(place.name)}</span>`).join('');
+      const isOpen = dayIndex === 0 ? ' is-open' : '';
       return `
-        <article class="day-card">
-          <div class="day-card-top">
-            <div>
-              <span class="day-badge">${getDayLabel(day.day)}</span>
-              <h3 class="day-title">${textValue(day.title, `Day ${day.day}`)}</h3>
-              <p class="day-intro">${textValue(day.intro || day.summary, '')}</p>
+        <article class="day-card${isOpen}">
+          <div class="day-card-header">
+            <div class="day-card-top">
+              <div>
+                <span class="day-badge">${getDayLabel(day.day)}</span>
+                <h3 class="day-title">${escapeHtml(textValue(day.title, `Day ${day.day}`))}</h3>
+                <p class="day-intro">${escapeHtml(textValue(day.intro || day.summary, ''))}</p>
+              </div>
             </div>
+            <button class="day-toggle" aria-label="Toggle day">${dayIndex === 0 ? '−' : '+'}</button>
           </div>
-          <div class="place-list">
-            ${places.map((place, idx) => `
-              <div class="place-item">
-                <div class="place-index">${idx + 1}</div>
-                <div>
-                  <div class="place-name">${place.name}</div>
-                  <div class="place-reason">${place.reason}</div>
-                </div>
-              </div>`).join('')}
+          <div class="day-card-summary">${compact}</div>
+          <div class="day-card-body">
+            <div class="place-list">
+              ${places.map((place, idx) => {
+                const saved = savedPlaces.includes(place.name);
+                return `
+                <div class="place-item">
+                  <div class="place-index">${idx + 1}</div>
+                  <div class="place-copy">
+                    <div class="place-name">${escapeHtml(place.name)}</div>
+                    <div class="place-reason">${escapeHtml(place.reason)}</div>
+                  </div>
+                  <button class="place-save${saved ? ' is-saved' : ''}" data-destination="${escapeHtml(destination)}" data-place="${escapeHtml(place.name)}" aria-pressed="${saved ? 'true' : 'false'}">${saved ? '♥' : '♡'}</button>
+                </div>`;
+              }).join('')}
+            </div>
+            ${day.localTip ? `<div class="day-tip">${escapeHtml(day.localTip)}</div>` : ''}
           </div>
-          ${day.localTip ? `<div class="day-tip">${day.localTip}</div>` : ''}
         </article>`;
     }).join('');
     qs('resultDays').innerHTML = days || '<div class="summary-line">Sample trip ready</div>';
+    bindDayInteractions();
   }
   function renderBudget(data){
     const budget = data.budgetBreakdown || {};
@@ -227,6 +311,7 @@ window.RyokoPlanner = (() => {
     renderTips(data);
     renderBudget(data);
     renderChecklist(data);
+    updateStickyCopy(data);
     updateShareMeta(data);
     window.currentTripPayload = { ...readForm(), planData:data, title:data.title || data.destination };
     window.RyokoStorage.addRecentTrip({ ...window.currentTripPayload, destination:data.destination || readForm().destination });
@@ -422,9 +507,14 @@ window.RyokoPlanner = (() => {
     qs('localToggle').addEventListener('click', () => qs('localToggle').classList.toggle('on'));
     qs('submitBtn').addEventListener('click', generate);
     qs('exampleBtn').addEventListener('click', () => useExample('tokyo'));
+    bindJumpChips();
+    bindStickyBar();
     qs('saveTripBtn').addEventListener('click', saveCurrentTrip);
     qs('shareTripBtn').addEventListener('click', shareCurrentTrip);
     qs('pdfTripBtn').addEventListener('click', savePdf);
+    qs('stickySaveBtn')?.addEventListener('click', saveCurrentTrip);
+    qs('stickyShareBtn')?.addEventListener('click', shareCurrentTrip);
+    qs('stickyPdfBtn')?.addEventListener('click', savePdf);
     loadSharedTrip();
     if (!window.currentTripPayload) renderPlan(samplePlans.tokyo);
   }

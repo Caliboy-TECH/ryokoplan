@@ -102,7 +102,7 @@
         </div>
 
         <div class="result-wrap">
-          <div class="example-card result-hero-card">
+          <div class="example-card result-hero-card" id="resultTop">
             <div class="section-head">
               <div>
                 <h2 class="section-title" data-t="planner.exampleTitle">이런 식으로 여행이 만들어져요</h2>
@@ -114,12 +114,19 @@
               <p id="resultSummary" class="section-desc" style="margin:10px 0 0">대표 지역과 조용한 동네를 균형 있게 엮어, 너무 빡빡하지 않으면서도 도쿄다운 흐름을 느낄 수 있는 일정이에요.</p>
             </div>
             <div id="resultMeta" class="result-meta-grid"></div>
+            <div class="result-jump-row" id="resultJumpRow">
+              <button class="jump-chip is-active" data-jump-target="resultTop">Overview</button>
+              <button class="jump-chip" data-jump-target="resultDaysSection">Days</button>
+              <button class="jump-chip" data-jump-target="localTipsSection">Tips</button>
+              <button class="jump-chip" data-jump-target="budgetSection">Budget</button>
+              <button class="jump-chip" data-jump-target="checklistSection">Checklist</button>
+            </div>
             <div class="cta-row">
               <button id="exampleBtn" class="secondary-btn" data-t="planner.exampleBtn">이 예시로 시작하기</button>
             </div>
           </div>
 
-          <div class="example-card">
+          <div class="example-card" id="resultDaysSection">
             <div class="section-head result-section-head">
               <div>
                 <h3 class="section-title" data-t="planner.planDaysTitle">Day by Day</h3>
@@ -130,7 +137,7 @@
           </div>
 
           <div class="result-split-grid">
-            <div class="example-card">
+            <div class="example-card" id="localTipsSection">
               <div class="section-head result-section-head">
                 <div>
                   <h3 class="section-title" data-t="planner.localTipsTitle">현지 팁</h3>
@@ -140,7 +147,7 @@
               <div id="localTipsList" class="example-summary"></div>
             </div>
 
-            <div class="example-card">
+            <div class="example-card" id="budgetSection">
               <div class="section-head result-section-head">
                 <div>
                   <h3 class="section-title" data-t="planner.budgetTitle">예상 예산</h3>
@@ -151,7 +158,7 @@
             </div>
           </div>
 
-          <div class="example-card">
+          <div class="example-card" id="checklistSection">
             <div class="section-head result-section-head">
               <div>
                 <h3 class="section-title" data-t="planner.checklistTitle">여행 체크리스트</h3>
@@ -204,6 +211,19 @@
 
       <div class="footer">Ryokoplan V2 starter · mobile-first travel planner + magazine</div>
     </div>
+      <div class="result-sticky-bar" id="resultStickyBar">
+        <div class="result-sticky-copy">
+          <strong id="stickyTripTitle">Tokyo Trip Plan</strong>
+          <span id="stickyTripMeta">Jump, save, share, or export</span>
+        </div>
+        <div class="result-sticky-actions">
+          <button class="ghost-btn" data-sticky-jump="resultDaysSection">Days</button>
+          <button id="stickySaveBtn" class="secondary-btn">Save</button>
+          <button id="stickyShareBtn" class="secondary-btn">Share</button>
+          <button id="stickyPdfBtn" class="primary-btn">PDF</button>
+        </div>
+      </div>
+
   </main>
 
   <script src="assets/js/i18n.js"></script>
