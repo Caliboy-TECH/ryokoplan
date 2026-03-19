@@ -87,6 +87,35 @@ window.RyokoPlanner = (() => {
     if (typeof v === 'object') return Object.values(v).flat().filter(Boolean).join(' · ') || fallback;
     return String(v || fallback);
   }
+  function escapeHtml(value=''){
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  function budgetLabel(key){
+    const map = { flight:'Flight', hotel:'Hotel', food:'Food', transit:'Transit', admission:'Admission', activities:'Activities', transport:'Transport' };
+    const raw = String(key || '').trim();
+    return map[raw.toLowerCase()] || raw.charAt(0).toUpperCase() + raw.slice(1);
+  }
+  function updateShareMeta(data){
+    const title = data?.title || 'Ryokoplan';
+    const desc = normalizeSummary(data) || 'Read the city. Plan the trip.';
+    document.title = `${title} — Ryokoplan`;
+    const entries = {
+      'meta[name="description"]': desc,
+      'meta[property="og:title"]': title,
+      'meta[property="og:description"]': desc,
+      'meta[name="twitter:title"]': title,
+      'meta[name="twitter:description"]': desc
+    };
+    Object.entries(entries).forEach(([selector, value]) => {
+      const node = document.querySelector(selector);
+      if (node && value) node.setAttribute('content', value);
+    });
+  }
   function refreshOptions(){
     qs('duration').innerHTML = options(window.RyokoApp.t('options.durations'));
     qs('companion').innerHTML = options(window.RyokoApp.t('options.companions'));
@@ -198,6 +227,7 @@ window.RyokoPlanner = (() => {
     renderTips(data);
     renderBudget(data);
     renderChecklist(data);
+    updateShareMeta(data);
     window.currentTripPayload = { ...readForm(), planData:data, title:data.title || data.destination };
     window.RyokoStorage.addRecentTrip({ ...window.currentTripPayload, destination:data.destination || readForm().destination });
   }
@@ -235,26 +265,134 @@ window.RyokoPlanner = (() => {
     if (!window.currentTripPayload) return alert('Generate a plan first.');
     const code = window.RyokoStorage.encodeShare(window.currentTripPayload);
     const url = `${location.origin}${location.pathname}?trip=${encodeURIComponent(code)}`;
-    const shareData = { title: window.currentTripPayload.title || 'Ryokoplan Trip', text: `${window.currentTripPayload.destination} trip from Ryokoplan`, url };
+    const data = window.currentTripPayload.planData || {};
+    const shareText = [textValue(data.summary, ''), textValue(data.bestFor, '')].filter(Boolean).join(' · ');
+    const shareData = {
+      title: window.currentTripPayload.title || 'Ryokoplan Trip',
+      text: shareText || `${window.currentTripPayload.destination} trip from Ryokoplan`,
+      url
+    };
     if (navigator.share) {
-      try { await navigator.share(shareData); } catch {}
-      return;
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch {}
     }
-    await navigator.clipboard.writeText(`${shareData.text}\n${url}`);
-    alert('Link copied.');
+    try {
+      await navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${url}`);
+      alert('Link copied.');
+    } catch {
+      window.prompt('Copy this link', url);
+    }
   }
   function savePdf(){
     const printWindow = window.open('', '_blank');
     if (!printWindow || !window.currentTripPayload) return alert('Generate a plan first.');
-    const data = window.currentTripPayload.planData;
+    const data = window.currentTripPayload.planData || {};
+    const destination = escapeHtml(window.currentTripPayload.destination || data.destination || 'Trip');
+    const title = escapeHtml(data.title || `${destination} Trip Plan`);
+    const summary = escapeHtml(normalizeSummary(data));
+    const budgetSummary = escapeHtml(textValue(data.budgetSummary, ''));
+    const generatedAt = new Date().toLocaleDateString(window.RyokoApp.lang === 'ko' ? 'ko-KR' : 'en-US', { year:'numeric', month:'long', day:'numeric' });
+    const metaCards = [
+      { label: 'Vibe', value: textValue(data.vibe, '-') },
+      { label: 'Pace', value: textValue(data.pace, '-') },
+      { label: 'Best for', value: textValue(data.bestFor, '-') }
+    ].map(item => `<div class="meta-card"><span class="meta-label">${escapeHtml(item.label)}</span><strong>${escapeHtml(item.value)}</strong></div>`).join('');
     const daysHtml = (data.days || []).map(d => {
-      const places = normalizePlaces(d).map(p => `<li><strong>${p.name}</strong> — ${p.reason}</li>`).join('');
-      return `<h3>Day ${d.day} · ${textValue(d.title)}</h3><p>${textValue(d.intro || '')}</p><ul>${places}</ul>${d.localTip ? `<p><em>${d.localTip}</em></p>` : ''}`;
+      const places = normalizePlaces(d).map((p, idx) => `
+        <div class="place-row">
+          <div class="place-no">${idx + 1}</div>
+          <div>
+            <strong>${escapeHtml(p.name)}</strong>
+            <p>${escapeHtml(p.reason)}</p>
+          </div>
+        </div>`).join('');
+      return `
+        <section class="day-block">
+          <div class="day-top">
+            <span class="day-chip">Day ${escapeHtml(d.day)}</span>
+            <div>
+              <h3>${escapeHtml(textValue(d.title, `Day ${d.day}`))}</h3>
+              <p class="day-intro">${escapeHtml(textValue(d.intro || '', ''))}</p>
+            </div>
+          </div>
+          <div class="places">${places}</div>
+          ${d.localTip ? `<div class="tip-inline"><strong>Local tip</strong><span>${escapeHtml(textValue(d.localTip, ''))}</span></div>` : ''}
+        </section>`;
     }).join('');
-    const budgetRows = (Array.isArray(data.budgetBreakdown)?data.budgetBreakdown.map(x=>[x.category,x.amount]):Object.entries(data.budgetBreakdown || {})).map(([k,v])=>`<div class="row"><span>${k}</span><span>${v}</span></div>`).join('');
-    const tipsHtml = (data.localTips || []).map(i => `<li>${i}</li>`).join('');
-    const checklistHtml = (data.checklist || []).map(i => `<li>${i}</li>`).join('');
-    printWindow.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${data.title}</title><style>body{font-family:Arial,sans-serif;padding:32px;color:#1f2937;line-height:1.65}h1{margin:0 0 8px}h2{margin-top:28px}h3{margin-top:18px}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.meta div{padding:12px;border:1px solid #eee;border-radius:12px;background:#faf8f4}.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee}ul{padding-left:18px}</style></head><body><h1>${data.title || ''}</h1><p>${normalizeSummary(data)}</p><div class="meta"><div><strong>Vibe</strong><br>${textValue(data.vibe,'-')}</div><div><strong>Pace</strong><br>${textValue(data.pace,'-')}</div><div><strong>Best for</strong><br>${textValue(data.bestFor,'-')}</div></div><h2>Day by Day</h2>${daysHtml}<h2>Local Tips</h2><ul>${tipsHtml}</ul><h2>Budget</h2><p>${textValue(data.budgetSummary,'')}</p>${budgetRows}<h2>Checklist</h2><ul>${checklistHtml}</ul><script>window.onload=()=>setTimeout(()=>window.print(),200)<\/script></body></html>`);
+    const budgetRows = (Array.isArray(data.budgetBreakdown) ? data.budgetBreakdown.map(x => [x.category, x.amount]) : Object.entries(data.budgetBreakdown || {}))
+      .map(([k,v])=>`<div class="budget-row"><span>${escapeHtml(budgetLabel(k))}</span><strong>${escapeHtml(v)}</strong></div>`).join('');
+    const tipsHtml = (data.localTips || []).map(i => `<div class="list-row"><span class="dot">•</span><span>${escapeHtml(i)}</span></div>`).join('');
+    const checklistHtml = (data.checklist || []).map(i => `<div class="list-row"><span class="dot">✓</span><span>${escapeHtml(i)}</span></div>`).join('');
+    printWindow.document.write(`<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${title}</title>
+<style>
+  :root{--bg:#fffdf9;--paper:#ffffff;--ink:#15273a;--muted:#667085;--line:#e8dfd1;--soft:#f7f3ec;--soft2:#fff5eb;--coral:#f07c4c}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif;line-height:1.6}
+  .page{padding:28px}
+  .cover{padding:28px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,#fffdf9 0%,#f7f3ec 100%)}
+  .eyebrow{display:inline-block;padding:8px 12px;border-radius:999px;background:var(--soft2);color:#b96732;font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+  h1{margin:14px 0 10px;font-size:30px;line-height:1.12}
+  .summary{margin:0;color:var(--muted);font-size:15px}
+  .meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  .meta-card{padding:14px;border-radius:18px;background:#fff;border:1px solid var(--line)}
+  .meta-label{display:block;font-size:11px;font-weight:700;color:#9a734b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+  .section{margin-top:18px;padding:20px;border:1px solid var(--line);border-radius:24px;background:var(--paper)}
+  .section h2{margin:0 0 12px;font-size:20px}
+  .day-block{padding:16px;border-radius:18px;background:linear-gradient(180deg,#fffdf9 0%,#fff8f0 100%);border:1px solid var(--line);margin-bottom:14px}
+  .day-top{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:flex-start}
+  .day-chip{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:700;color:#9a734b}
+  .day-block h3{margin:0 0 6px;font-size:18px;line-height:1.3}
+  .day-intro{margin:0;color:var(--muted);font-size:14px}
+  .places{display:grid;gap:10px;margin-top:14px}
+  .place-row{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:12px;border-radius:16px;background:#fff;border:1px solid #f0e8dc}
+  .place-no{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--soft2);border:1px solid #f4d6bc;font-weight:700;color:#b96732;font-size:12px}
+  .place-row p{margin:4px 0 0;color:var(--muted);font-size:13px}
+  .tip-inline{margin-top:12px;padding:12px 14px;border-radius:16px;background:#edf3f7}
+  .tip-inline strong{display:block;margin-bottom:4px}
+  .budget-row,.list-row{display:grid;grid-template-columns:1fr auto;gap:16px;padding:12px 0;border-bottom:1px solid #f0e8dc}
+  .list-row{grid-template-columns:auto 1fr;align-items:start}
+  .dot{font-weight:700;color:#b96732}
+  .budget-note{margin:0 0 8px;color:var(--muted)}
+  .footer-note{margin-top:18px;color:var(--muted);font-size:12px;text-align:right}
+  @media print{.page{padding:18px}}
+</style>
+</head>
+<body>
+  <main class="page">
+    <section class="cover">
+      <span class="eyebrow">Ryokoplan · Planner PDF</span>
+      <h1>${title}</h1>
+      <p class="summary">${summary}</p>
+      <div class="meta-grid">${metaCards}</div>
+    </section>
+    <section class="section">
+      <h2>Day by Day</h2>
+      ${daysHtml}
+    </section>
+    <section class="section">
+      <h2>Local Tips</h2>
+      ${tipsHtml}
+    </section>
+    <section class="section">
+      <h2>Budget</h2>
+      <p class="budget-note">${budgetSummary}</p>
+      ${budgetRows}
+    </section>
+    <section class="section">
+      <h2>Checklist</h2>
+      ${checklistHtml}
+    </section>
+    <div class="footer-note">${escapeHtml(destination)} · Generated on ${escapeHtml(generatedAt)} · Ryokoplan</div>
+  </main>
+<script>window.onload=()=>setTimeout(()=>window.print(),220)<\/script>
+</body>
+</html>`);
     printWindow.document.close();
   }
 

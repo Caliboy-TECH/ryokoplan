@@ -1,11 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-<rect width="1200" height="630" fill="#f7f3ec"/>
-<rect x="60" y="60" width="1080" height="510" rx="42" fill="#fffdf9" stroke="#e8dfd1"/>
-<rect x="640" y="110" width="430" height="360" rx="30" fill="#24415a"/>
-<circle cx="865" cy="290" r="120" fill="#f07c4c" opacity="0.18"/>
-<text x="110" y="210" font-family="Arial, sans-serif" font-size="38" fill="#6b7280">Japan &amp; Korea Travel Planner</text>
-<text x="110" y="290" font-family="Arial, sans-serif" font-weight="700" font-size="82" fill="#1f2937">Ryoko</text>
-<text x="390" y="290" font-family="Arial, sans-serif" font-weight="700" font-size="82" fill="#f07c4c">plan</text>
-<text x="110" y="380" font-family="Arial, sans-serif" font-size="42" fill="#1f2937">Read the city. Plan the trip.</text>
-<text x="110" y="445" font-family="Arial, sans-serif" font-size="30" fill="#6b7280">Magazine-inspired trip planning for Japan and Korea.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Ryokoplan Open Graph Cover">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f7f3ec"/>
+      <stop offset="100%" stop-color="#fffdf9"/>
+    </linearGradient>
+    <linearGradient id="navy" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#15273a"/>
+      <stop offset="100%" stop-color="#24415a"/>
+    </linearGradient>
+    <linearGradient id="coral" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f5986f"/>
+      <stop offset="100%" stop-color="#f07c4c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="46" y="46" width="1108" height="538" rx="42" fill="#fffdf9" stroke="#e8dfd1"/>
+  <rect x="694" y="94" width="394" height="442" rx="34" fill="url(#navy)"/>
+  <rect x="724" y="126" width="334" height="182" rx="26" fill="#f2e5d7"/>
+  <rect x="724" y="328" width="334" height="54" rx="18" fill="#ffffff" opacity="0.96"/>
+  <rect x="724" y="396" width="160" height="104" rx="22" fill="#ffffff" opacity="0.96"/>
+  <rect x="898" y="396" width="160" height="104" rx="22" fill="#fff3ea"/>
+  <circle cx="972" cy="210" r="92" fill="url(#coral)" opacity="0.18"/>
+  <path d="M808 226c20-42 60-68 116-68 53 0 87 23 113 54-31 24-56 49-76 78-14-17-31-32-51-42-24 11-44 28-60 48-18-20-30-43-42-70z" fill="#24415a" opacity="0.92"/>
+  <text x="110" y="160" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#9a734b">JAPAN &amp; KOREA TRAVEL PLANNER</text>
+  <text x="110" y="262" font-family="Arial, sans-serif" font-size="90" font-weight="700" fill="#15273a">Ryoko</text>
+  <text x="398" y="262" font-family="Arial, sans-serif" font-size="90" font-weight="700" fill="#f07c4c">plan</text>
+  <text x="110" y="338" font-family="Arial, sans-serif" font-size="48" font-weight="700" fill="#15273a">Read the city.</text>
+  <text x="110" y="396" font-family="Arial, sans-serif" font-size="48" font-weight="700" fill="#15273a">Plan the trip.</text>
+  <text x="110" y="468" font-family="Arial, sans-serif" font-size="28" fill="#667085">Mobile-first planner, city magazine, and saved trips for Japan and Korea.</text>
+  <rect x="110" y="510" width="302" height="44" rx="22" fill="#fff3ea" stroke="#f4d6bc"/>
+  <text x="140" y="539" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#b96732">Planner · Magazine · My Trips</text>
 </svg>
