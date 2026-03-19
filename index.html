@@ -189,10 +189,81 @@
         </div>
       </section>
 
+      <section class="section onboarding-section">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Start faster</span>
+            <h2 class="section-title">입력을 줄이고도 바로 시작되게</h2>
+            <p class="section-desc">도시, 동행, 페이스를 하나씩 고르면 플래너 값이 미리 채워집니다. 처음 쓰는 사람도 고민보다 선택부터 시작하게 만들었어요.</p>
+          </div>
+        </div>
+        <div class="onboarding-grid">
+          <article class="onboarding-card">
+            <span class="onboarding-step">1</span>
+            <strong>Pick a city</strong>
+            <div class="mini-chip-row">
+              <button class="mini-chip" data-plan-preset='{"destination":"Tokyo","duration":"3n4d"}'>Tokyo</button>
+              <button class="mini-chip" data-plan-preset='{"destination":"Seoul","duration":"2n3d"}'>Seoul</button>
+              <button class="mini-chip" data-plan-preset='{"destination":"Jeju","duration":"3n4d"}'>Jeju</button>
+              <button class="mini-chip" data-plan-preset='{"destination":"Fukuoka","duration":"2n3d"}'>Fukuoka</button>
+            </div>
+            <p>대표 도시 하나만 고르면 추천 길이까지 먼저 잡아줍니다.</p>
+          </article>
+          <article class="onboarding-card">
+            <span class="onboarding-step">2</span>
+            <strong>Pick your pace</strong>
+            <div class="mini-chip-row">
+              <button class="mini-chip" data-plan-preset='{"style":"city highlights + hidden gems","notes":"Keep the pace readable with one major area and one slower pocket each day."}'>Balanced</button>
+              <button class="mini-chip" data-plan-preset='{"style":"slow + quiet","notes":"Prioritize calmer streets, soft pacing, and fewer transfers."}'>Slow</button>
+              <button class="mini-chip" data-plan-preset='{"style":"food + local neighborhoods","notes":"Build the route around local food stops and easy movement."}'>Food-led</button>
+              <button class="mini-chip" data-plan-preset='{"style":"scenic + easy pace","notes":"Keep it open, scenic, and comfortable for mixed ages."}'>Scenic</button>
+            </div>
+            <p>여행 스타일을 먼저 고르면 notes도 자연스럽게 보정됩니다.</p>
+          </article>
+          <article class="onboarding-card">
+            <span class="onboarding-step">3</span>
+            <strong>Pick who it is for</strong>
+            <div class="mini-chip-row">
+              <button class="mini-chip" data-plan-preset='{"companion":"solo","notes":"I want a route that feels easy to do alone without dead time."}'>Solo</button>
+              <button class="mini-chip" data-plan-preset='{"companion":"couple","notes":"Mix memorable spots with one softer evening each day."}'>Couple</button>
+              <button class="mini-chip" data-plan-preset='{"companion":"friends","notes":"Keep the route social, flexible, and good for shared meals."}'>Friends</button>
+              <button class="mini-chip" data-plan-preset='{"companion":"family","notes":"Keep transfers simple and pacing comfortable for mixed ages."}'>Family</button>
+            </div>
+            <p>동행 타입을 고르면 결과 문장도 훨씬 자연스러워집니다.</p>
+          </article>
+        </div>
+      </section>
+
       <section class="section planner-grid">
         <div class="planner-shell">
-          <h2 class="form-title" data-t="planner.formTitle">당신에게 맞는 여행을 만들어볼게요</h2>
-          <p class="form-desc" data-t="planner.formDesc">누구와 가는지, 어떤 템포를 원하는지 알려주세요.</p>
+          <div class="planner-onboarding-bar">
+            <div>
+              <span class="eyebrow">Planner setup</span>
+              <h2 class="form-title" data-t="planner.formTitle">당신에게 맞는 여행을 만들어볼게요</h2>
+                          </div>
+            <div class="trip-recipe-card" id="tripRecipeCard">
+              <span class="trip-recipe-kicker">Ready to generate</span>
+              <strong id="tripRecipeTitle">Tokyo · 3N4D · Couple</strong>
+              <p id="tripRecipeDesc">Pick a city, mood, and who you are traveling with. We will turn it into a cleaner day-by-day route.</p>
+              <div class="trip-recipe-meter"><span id="tripRecipeFill"></span></div>
+            </div>
+          </div>
+                    <div class="planner-helper-panel">
+            <div class="planner-helper-head">
+              <strong>Quick combinations</strong>
+              <span>한 번 눌러서 바로 채우기</span>
+            </div>
+            <div class="planner-helper-chips">
+              <button class="soft-chip" data-plan-preset='{"destination":"Tokyo","duration":"3n4d","companion":"couple","style":"balanced first trip + local pockets","notes":"First trip route with one calm neighborhood each day."}'>Tokyo first trip</button>
+              <button class="soft-chip" data-plan-preset='{"destination":"Kyoto","duration":"2n3d","companion":"solo","style":"slow + quiet","notes":"Prioritize alleys, temples, cafes, and walkable pacing."}'>Kyoto slow reset</button>
+              <button class="soft-chip" data-plan-preset='{"destination":"Busan","duration":"2n3d","companion":"family","style":"coastal + easy pace","notes":"Keep it scenic, gentle, and easy for mixed ages."}'>Busan with family</button>
+              <button class="soft-chip" data-plan-preset='{"destination":"Seoul","duration":"2n3d","companion":"friends","style":"city vibes + food + neighborhoods","notes":"Keep the route social, walkable, and not too packed."}'>Seoul with friends</button>
+            </div>
+            <div class="planner-hint-lines" id="plannerHintLines">
+              <div class="planner-hint-line"><strong>Best when</strong><span>you want a quick first version without overthinking the inputs.</span></div>
+              <div class="planner-hint-line"><strong>What changes</strong><span>style, companion, and notes combine to shape the pacing and place mix.</span></div>
+            </div>
+          </div>
           <div class="form-grid">
             <div class="field full"><label data-t="planner.destination">어디로 가나요?</label><input id="destination" class="input" data-t-placeholder="planner.destinationPH" placeholder="도시를 입력하거나 선택하세요"></div>
             <div class="field"><label data-t="planner.duration">여행 기간</label><select id="duration"></select></div>

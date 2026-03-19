@@ -109,6 +109,70 @@ window.RyokoApp = (() => {
   }
 
 
+  function applyPlannerPreset(preset={}){
+    const destination = document.getElementById('destination');
+    const duration = document.getElementById('duration');
+    const companion = document.getElementById('companion');
+    const style = document.getElementById('style');
+    const notes = document.getElementById('notes');
+    if (destination && preset.destination) destination.value = preset.destination;
+    if (duration && preset.duration) duration.value = preset.duration;
+    if (companion && preset.companion) companion.value = preset.companion;
+    if (style && preset.style) style.value = preset.style;
+    if (notes && preset.notes) notes.value = preset.notes;
+    [destination, duration, companion, style, notes].forEach(el => {
+      if (!el) return;
+      el.dispatchEvent(new Event('change', { bubbles:true }));
+      el.classList.add('is-focused');
+      setTimeout(() => el.classList.remove('is-focused'), 900);
+    });
+  }
+
+  function syncPlannerRecipe(){
+    if (document.body.dataset.page !== 'planner') return;
+    const destination = document.getElementById('destination')?.value?.trim() || 'Pick a city';
+    const duration = document.getElementById('duration')?.value || 'duration';
+    const companion = document.getElementById('companion')?.value || 'who';
+    const style = document.getElementById('style')?.value || 'travel style';
+    const notes = document.getElementById('notes')?.value?.trim() || '';
+    const localMode = document.getElementById('localToggle')?.classList.contains('on');
+    const title = document.getElementById('tripRecipeTitle');
+    const desc = document.getElementById('tripRecipeDesc');
+    const fill = document.getElementById('tripRecipeFill');
+    const hints = document.getElementById('plannerHintLines');
+    const complete = [document.getElementById('destination')?.value?.trim(), document.getElementById('duration')?.value, document.getElementById('companion')?.value, document.getElementById('style')?.value].filter(Boolean).length;
+    if (title) title.textContent = `${destination} · ${duration} · ${companion}`;
+    if (desc) desc.textContent = `${style}${localMode ? ' · local mode on' : ''}${notes ? ' · ' + notes : ''}`;
+    if (fill) fill.style.width = `${25 + complete * 18.75}%`;
+    if (hints) {
+      const lines = [
+        `<div class="planner-hint-line"><strong>Best when</strong><span>${companion ? `you are planning for ${companion} and want the route to feel intentional.` : 'you want a quick first version without overthinking the inputs.'}</span></div>`,
+        `<div class="planner-hint-line"><strong>What changes</strong><span>${style ? `${style} will shape the pacing, neighborhood mix, and stop density.` : 'style, companion, and notes combine to shape the pacing and place mix.'}</span></div>`
+      ];
+      hints.innerHTML = lines.join('');
+    }
+  }
+
+  function initPlannerOnboarding(){
+    if (document.body.dataset.page !== 'planner') return;
+    document.querySelectorAll('[data-plan-preset]').forEach(btn => btn.addEventListener('click', () => {
+      let preset = {};
+      try { preset = JSON.parse(btn.dataset.planPreset || '{}'); } catch {}
+      applyPlannerPreset(preset);
+      document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
+      document.getElementById('destination')?.focus({ preventScroll:true });
+      syncPlannerRecipe();
+    }));
+    ['destination','duration','companion','style','notes'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('input', syncPlannerRecipe);
+      el.addEventListener('change', syncPlannerRecipe);
+    });
+    document.getElementById('localToggle')?.addEventListener('click', () => setTimeout(syncPlannerRecipe, 0));
+    syncPlannerRecipe();
+  }
+
   function initHomePresets(){
     const presetButtons = [...document.querySelectorAll('[data-home-preset]')];
     if (!presetButtons.length) return;
@@ -120,18 +184,10 @@ window.RyokoApp = (() => {
       const companion = document.getElementById('companion');
       const style = document.getElementById('style');
       const notes = document.getElementById('notes');
-      if (destination && preset.destination) destination.value = preset.destination;
-      if (duration && preset.duration) duration.value = preset.duration;
-      if (companion && preset.companion) companion.value = preset.companion;
-      if (style && preset.style) style.value = preset.style;
-      if (notes && preset.notes) notes.value = preset.notes;
+      applyPlannerPreset(preset);
       document.querySelector('.planner-shell')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      [destination, duration, companion, style, notes].forEach(el => {
-        if (!el) return;
-        el.classList.add('is-focused');
-        setTimeout(() => el.classList.remove('is-focused'), 900);
-      });
       if (destination) destination.focus({ preventScroll: true });
+      syncPlannerRecipe();
     }));
   }
 
@@ -212,6 +268,7 @@ window.RyokoApp = (() => {
     document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
     renderMobileDock();
     initHomePresets();
+    initPlannerOnboarding();
     initEditorialChrome();
   }
   function cityCardTemplate(city){

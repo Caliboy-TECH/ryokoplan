@@ -411,3 +411,31 @@ body.is-scrolled .top-bar{background:rgba(255,253,249,.94);box-shadow:0 12px 26p
   .page-signal-card{padding:12px;align-items:flex-start;flex-direction:column}
   .page-signal-chips{justify-content:flex-start}
 }
+
+
+.onboarding-section{padding-top:8px}
+.onboarding-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.onboarding-card{padding:18px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(180deg,#fffdf9 0%,#fff7ef 100%);box-shadow:0 12px 32px rgba(21,39,58,.06)}
+.onboarding-step{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:999px;background:#15273a;color:#fff;font-weight:800;font-size:13px;margin-bottom:10px}
+.onboarding-card strong{display:block;font-size:18px;margin-bottom:12px;color:#15273a}
+.onboarding-card p{margin:12px 0 0;color:#667085;font-size:14px;line-height:1.55}
+.mini-chip-row{display:flex;flex-wrap:wrap;gap:8px}
+.mini-chip,.soft-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 12px;font-size:13px;font-weight:700;color:#15273a;cursor:pointer;transition:all .2s ease}
+.mini-chip:hover,.soft-chip:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(21,39,58,.08);border-color:#f07c4c}
+.planner-onboarding-bar{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:16px;align-items:start;margin-bottom:18px}
+.trip-recipe-card{padding:16px 18px;border-radius:24px;background:linear-gradient(135deg,rgba(240,124,76,.12),rgba(21,39,58,.05));border:1px solid rgba(240,124,76,.22)}
+.trip-recipe-kicker{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#b96732;font-weight:800;margin-bottom:10px}
+.trip-recipe-card strong{display:block;font-size:18px;color:#15273a;margin-bottom:8px}
+.trip-recipe-card p{margin:0;color:#51606f;font-size:14px;line-height:1.55}
+.trip-recipe-meter{height:8px;border-radius:999px;background:rgba(21,39,58,.08);overflow:hidden;margin-top:14px}
+.trip-recipe-meter span{display:block;height:100%;width:25%;background:linear-gradient(90deg,#15273a,#f07c4c);border-radius:999px;transition:width .25s ease}
+.planner-helper-panel{margin-bottom:16px;padding:16px;border:1px solid var(--line);border-radius:22px;background:#fffaf3}
+.planner-helper-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:12px}
+.planner-helper-head strong{font-size:16px;color:#15273a}
+.planner-helper-head span{font-size:13px;color:#8a6670}
+.planner-helper-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.planner-hint-lines{display:grid;gap:10px}
+.planner-hint-line{display:grid;grid-template-columns:100px 1fr;gap:12px;padding-top:10px;border-top:1px dashed rgba(21,39,58,.1)}
+.planner-hint-line strong{font-size:13px;color:#15273a}
+.planner-hint-line span{font-size:13px;color:#667085;line-height:1.5}
+@media (max-width: 960px){.onboarding-grid,.planner-onboarding-bar{grid-template-columns:1fr}.planner-hint-line{grid-template-columns:1fr;gap:4px}}
