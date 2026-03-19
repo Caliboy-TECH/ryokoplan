@@ -257,6 +257,13 @@ window.RyokoPlanner = (() => {
     printWindow.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${data.title}</title><style>body{font-family:Arial,sans-serif;padding:32px;color:#1f2937;line-height:1.65}h1{margin:0 0 8px}h2{margin-top:28px}h3{margin-top:18px}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.meta div{padding:12px;border:1px solid #eee;border-radius:12px;background:#faf8f4}.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee}ul{padding-left:18px}</style></head><body><h1>${data.title || ''}</h1><p>${normalizeSummary(data)}</p><div class="meta"><div><strong>Vibe</strong><br>${textValue(data.vibe,'-')}</div><div><strong>Pace</strong><br>${textValue(data.pace,'-')}</div><div><strong>Best for</strong><br>${textValue(data.bestFor,'-')}</div></div><h2>Day by Day</h2>${daysHtml}<h2>Local Tips</h2><ul>${tipsHtml}</ul><h2>Budget</h2><p>${textValue(data.budgetSummary,'')}</p>${budgetRows}<h2>Checklist</h2><ul>${checklistHtml}</ul><script>window.onload=()=>setTimeout(()=>window.print(),200)<\/script></body></html>`);
     printWindow.document.close();
   }
+
+  function applyPresetFromQuery(){
+    const params = new URLSearchParams(location.search);
+    const destination = params.get('destination');
+    if (destination && qs('destination')) qs('destination').value = destination;
+  }
+
   function loadSharedTrip(){
     const code = new URLSearchParams(location.search).get('trip');
     if (!code) return;
@@ -272,6 +279,7 @@ window.RyokoPlanner = (() => {
     if (!document.body.dataset.page || document.body.dataset.page !== 'planner') return;
     refreshOptions();
     bindSelectionChips();
+    applyPresetFromQuery();
     window.addEventListener('ryoko:langchange', refreshOptions);
     qs('localToggle').addEventListener('click', () => qs('localToggle').classList.toggle('on'));
     qs('submitBtn').addEventListener('click', generate);

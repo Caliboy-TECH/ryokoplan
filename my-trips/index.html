@@ -1,1 +1,233 @@
-<!doctype html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Ryokoplan — My Trips</title><link rel="icon" href="../assets/images/brand/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/css/styles.css"></head><body data-page="trips"><header class="top-bar"><div class="container top-bar-inner"><a class="brand" href="../"><span class="brand-mark"><img src="../assets/images/brand/logo-mark.svg" alt="Ryokoplan"></span><span class="brand-copy"><span class="brand-title"><span class="ryoko">Ryoko</span><span class="plan">plan</span></span><span class="brand-sub" data-t="nav.travelPlanner">Travel Planner</span></span></a><div class="top-actions"><div class="lang-switch"><button class="lang-btn" data-lang-btn="ko">KR</button><button class="lang-btn" data-lang-btn="en">EN</button></div><a class="nav-chip" data-nav="planner" data-t="nav.planner">Planner</a><a class="nav-chip magazine" data-nav="magazine" data-t="nav.magazine">Magazine</a></div></div></header><main class="page"><div class="container"><section class="hero-card hero-copy"><span class="eyebrow" data-t="trips.heroLabel">My Trips</span><h1 data-t="trips.heroTitle">저장한 여정을 다시 꺼내보세요</h1><p data-t="trips.heroDesc">최근 만든 일정, 저장한 플랜, 공유받은 여행까지 한곳에서 쉽게 다시 보고 이어서 정리할 수 있어요.</p><div class="hero-actions"><a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a><a class="secondary-btn" data-nav="magazine" data-t="trips.browse">매거진 보기</a></div></section><section class="section"><div class="section-head"><div><h2 class="section-title" data-t="trips.tabLead">원하는 방식으로 찾아보세요</h2></div></div><div class="trip-tabs"><button class="tab-btn active" data-tab="saved" data-t="trips.saved">저장됨</button><button class="tab-btn" data-tab="recent" data-t="trips.recent">최근</button><button class="tab-btn" data-tab="shared" data-t="trips.shared">공유받은 일정</button></div></section><section id="savedSection" class="section"><div class="section-head"><div><h2 class="section-title" data-t="trips.savedTitle">저장한 일정</h2><p class="section-desc" data-t="trips.savedDesc">마음에 들었던 일정은 저장해두고, 필요할 때 다시 꺼내볼 수 있어요.</p></div></div><div id="savedGrid" class="trips-grid"></div><div id="savedEmpty" class="empty-state hidden"><h3 data-t="trips.emptySaved">아직 저장된 여정이 없어요</h3><p data-t="trips.emptySavedDesc">마음에 드는 여행 계획을 저장해두면 다음에 더 빠르게 다시 꺼내볼 수 있어요.</p><div class="cta-row" style="justify-content:center;margin-top:14px"><a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a></div></div></section><section id="recentSection" class="section hidden"><div class="section-head"><div><h2 class="section-title" data-t="trips.recentTitle">최근 본 일정</h2><p class="section-desc" data-t="trips.recentDesc">방금 만들었거나 다시 열어본 일정은 여기서 빠르게 이어볼 수 있어요.</p></div></div><div id="recentGrid" class="trips-grid"></div><div id="recentEmpty" class="empty-state hidden"><h3 data-t="trips.emptyRecent">아직 최근 일정이 없어요</h3><p data-t="trips.emptyRecentDesc">도시를 고르고, 당신에게 맞는 첫 여행을 만들어보세요.</p></div></section><section id="sharedSection" class="section hidden"><div class="section-head"><div><h2 class="section-title" data-t="trips.sharedTitle">공유받은 일정</h2><p class="section-desc" data-t="trips.sharedDesc">다른 사람이 보낸 링크로 열어본 일정도 따로 모아둘 수 있어요.</p></div></div><div id="sharedGrid" class="trips-grid"></div><div id="sharedEmpty" class="empty-state hidden"><h3 data-t="trips.emptyShared">아직 공유받은 일정이 없어요</h3><p data-t="trips.emptySharedDesc">누군가 보낸 여행 링크를 열면 여기에 다시 모아볼 수 있어요.</p></div></section><section class="section util-grid"><article class="info-card" style="padding:18px"><h3 class="card-title" data-t="trips.util1">저장한 일정 다시 열기</h3><p class="card-copy" data-t="trips.util1d">한 번 만든 여정은 언제든 다시 볼 수 있어요.</p></article><article class="info-card" style="padding:18px"><h3 class="card-title" data-t="trips.util2">공유 링크 정리하기</h3><p class="card-copy" data-t="trips.util2d">공유받은 일정도 내 흐름 안에서 관리해보세요.</p></article><article class="info-card" style="padding:18px"><h3 class="card-title" data-t="trips.util3">마음에 드는 일정 복제하기</h3><p class="card-copy" data-t="trips.util3d">예시 일정이나 예전 플랜을 바탕으로 새 여행을 빠르게 시작할 수 있어요.</p></article></section><section class="section footer-cta"><h2 data-t="trips.footerTitle">다음 여행도, 같은 자리에서 이어가세요</h2><p data-t="trips.footerDesc">읽었던 가이드, 저장한 일정, 공유받은 여행까지 Ryokoplan 안에서 하나의 흐름으로 이어집니다.</p><div class="cta-row"><a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a><a class="secondary-btn" data-nav="magazine" data-t="trips.browse">매거진 보기</a></div></section><div class="footer">Ryokoplan My Trips</div></div></main><script src="../assets/js/i18n.js"></script><script src="../assets/js/storage.js"></script><script src="../assets/js/app.js"></script><script>window.addEventListener('DOMContentLoaded',()=>{const $=id=>document.getElementById(id);const sections={saved:$('savedSection'),recent:$('recentSection'),shared:$('sharedSection')};document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');Object.values(sections).forEach(s=>s.classList.add('hidden'));sections[btn.dataset.tab].classList.remove('hidden');}));const imgMap={Tokyo:'../assets/images/cities/tokyo.png',Osaka:'../assets/images/cities/osaka.png',Kyoto:'../assets/images/cities/kyoto.png',Fukuoka:'../assets/images/cities/fukuoka.png',Seoul:'../assets/images/cities/seoul.png',Busan:'../assets/images/cities/busan.png'};function card(item,mode){return `<article class="trip-card"><div class="card-image"><img src="${imgMap[item.destination]||'../assets/images/hero/planner-preview.png'}"></div><div class="card-body"><div class="meta">${item.duration||''} · ${item.companion||''}</div><h3 class="card-title">${item.title||item.destination}</h3><p class="card-copy">${item.planData?.summary||item.notes||''}</p><div class="card-actions"><a class="soft-btn" href="../?trip=${encodeURIComponent(window.RyokoStorage.encodeShare(item))}">${window.RyokoApp.t('trips.tripOpen')}</a>${mode!=='saved'?`<button class="ghost-btn" data-save='${item.id}'>${window.RyokoApp.t('trips.tripAdd')}</button>`:''}${mode==='saved'?`<button class="ghost-btn" data-delete='${item.id}'>${window.RyokoApp.t('trips.tripDelete')}</button>`:''}</div></div></article>`}function render(){const saved=window.RyokoStorage.getSavedTrips(),recent=window.RyokoStorage.getRecentTrips(),shared=window.RyokoStorage.getSharedTrips();$('savedGrid').innerHTML=saved.map(x=>card(x,'saved')).join('');$('recentGrid').innerHTML=recent.map(x=>card(x,'recent')).join('');$('sharedGrid').innerHTML=shared.map(x=>card(x,'shared')).join('');$('savedEmpty').classList.toggle('hidden',saved.length>0);$('recentEmpty').classList.toggle('hidden',recent.length>0);$('sharedEmpty').classList.toggle('hidden',shared.length>0);document.querySelectorAll('[data-delete]').forEach(btn=>btn.addEventListener('click',()=>{window.RyokoStorage.deleteSavedTrip(btn.dataset.delete);render();}));document.querySelectorAll('[data-save]').forEach(btn=>btn.addEventListener('click',()=>{const item=[...recent,...shared].find(x=>x.id===btn.dataset.save);if(item){window.RyokoStorage.saveTrip(item);render();}}));}render();window.addEventListener('ryoko:langchange',render);});</script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ryokoplan — My Trips</title>
+  <link rel="icon" href="../assets/images/brand/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-page="trips">
+  <header class="top-bar">
+    <div class="container top-bar-inner">
+      <a class="brand" href="../">
+        <span class="brand-mark"><img src="../assets/images/brand/logo-mark.svg" alt="Ryokoplan"></span>
+        <span class="brand-copy">
+          <span class="brand-title"><span class="ryoko">Ryoko</span><span class="plan">plan</span></span>
+          <span class="brand-sub" data-t="nav.travelPlanner">Travel Planner</span>
+        </span>
+      </a>
+      <div class="top-actions">
+        <div class="lang-switch">
+          <button class="lang-btn" data-lang-btn="ko">KR</button>
+          <button class="lang-btn" data-lang-btn="en">EN</button>
+        </div>
+        <a class="nav-chip" data-nav="planner" data-t="nav.planner">Planner</a>
+        <a class="nav-chip magazine" data-nav="magazine" data-t="nav.magazine">Magazine</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero-card hero-copy">
+        <span class="eyebrow" data-t="trips.heroLabel">My Trips</span>
+        <h1 data-t="trips.heroTitle">저장한 여정을 다시 꺼내보세요</h1>
+        <p data-t="trips.heroDesc">최근 만든 일정, 저장한 플랜, 공유받은 여행까지 한곳에서 쉽게 다시 보고 이어서 정리할 수 있어요.</p>
+        <div class="hero-actions">
+          <a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a>
+          <a class="secondary-btn" data-nav="magazine" data-t="trips.browse">매거진 보기</a>
+        </div>
+      </section>
+
+      <section class="section trip-search-card info-card">
+        <div>
+          <h2 class="section-title" data-t="trips.searchTitle">저장한 흐름을 빠르게 다시 찾기</h2>
+          <p class="section-desc" data-t="trips.searchDesc">도시명이나 제목으로 검색하면 저장한 일정과 최근 여정을 바로 좁혀볼 수 있어요.</p>
+        </div>
+        <div class="search-row">
+          <input id="tripSearch" class="input" placeholder="Search trips">
+          <button id="clearSearchBtn" class="secondary-btn" data-t="trips.clearSearch">지우기</button>
+        </div>
+      </section>
+
+      <section class="section trip-stat-grid">
+        <article class="stat-card info-card"><span class="stat-label" data-t="trips.saved">저장됨</span><span id="savedCount" class="stat-value">0</span><span class="stat-copy" data-t="trips.statSavedDesc">마음에 드는 플랜을 다시 꺼내볼 수 있어요.</span></article>
+        <article class="stat-card info-card"><span class="stat-label" data-t="trips.recent">최근</span><span id="recentCount" class="stat-value">0</span><span class="stat-copy" data-t="trips.statRecentDesc">방금 만든 일정으로 빠르게 복귀할 수 있어요.</span></article>
+        <article class="stat-card info-card"><span class="stat-label" data-t="trips.shared">공유받은 일정</span><span id="sharedCount" class="stat-value">0</span><span class="stat-copy" data-t="trips.statSharedDesc">다른 사람이 보낸 링크도 다시 모아볼 수 있어요.</span></article>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div><h2 class="section-title" data-t="trips.tabLead">원하는 방식으로 찾아보세요</h2></div>
+        </div>
+        <div class="trip-tabs">
+          <button class="tab-btn active" data-tab="saved" data-t="trips.saved">저장됨</button>
+          <button class="tab-btn" data-tab="recent" data-t="trips.recent">최근</button>
+          <button class="tab-btn" data-tab="shared" data-t="trips.shared">공유받은 일정</button>
+        </div>
+      </section>
+
+      <section id="savedSection" class="section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title" data-t="trips.savedTitle">저장한 일정</h2>
+            <p class="section-desc" data-t="trips.savedDesc">마음에 들었던 일정은 저장해두고, 필요할 때 다시 꺼내볼 수 있어요.</p>
+          </div>
+        </div>
+        <div id="savedGrid" class="trips-grid"></div>
+        <div id="savedEmpty" class="empty-state hidden info-card"><h3 data-t="trips.emptySaved">아직 저장된 여정이 없어요</h3><p data-t="trips.emptySavedDesc">마음에 드는 여행 계획을 저장해두면 다음에 더 빠르게 다시 꺼내볼 수 있어요.</p><div class="cta-row" style="justify-content:center;margin-top:14px"><a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a></div></div>
+      </section>
+
+      <section id="recentSection" class="section hidden">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title" data-t="trips.recentTitle">최근 본 일정</h2>
+            <p class="section-desc" data-t="trips.recentDesc">방금 만들었거나 다시 열어본 일정은 여기서 빠르게 이어볼 수 있어요.</p>
+          </div>
+        </div>
+        <div id="recentGrid" class="trips-grid"></div>
+        <div id="recentEmpty" class="empty-state hidden info-card"><h3 data-t="trips.emptyRecent">아직 최근 일정이 없어요</h3><p data-t="trips.emptyRecentDesc">도시를 고르고, 당신에게 맞는 첫 여행을 만들어보세요.</p></div>
+      </section>
+
+      <section id="sharedSection" class="section hidden">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title" data-t="trips.sharedTitle">공유받은 일정</h2>
+            <p class="section-desc" data-t="trips.sharedDesc">다른 사람이 보낸 링크로 열어본 일정도 따로 모아둘 수 있어요.</p>
+          </div>
+        </div>
+        <div id="sharedGrid" class="trips-grid"></div>
+        <div id="sharedEmpty" class="empty-state hidden info-card"><h3 data-t="trips.emptyShared">아직 공유받은 일정이 없어요</h3><p data-t="trips.emptySharedDesc">누군가 보낸 여행 링크를 열면 여기에 다시 모아볼 수 있어요.</p></div>
+      </section>
+
+      <section class="section utility-banner info-card">
+        <h3 data-t="trips.utilTitle">내 여행을 더 쉽게 이어가세요</h3>
+        <p data-t="trips.footerDesc">읽었던 가이드, 저장한 일정, 공유받은 여행까지 Ryokoplan 안에서 하나의 흐름으로 이어집니다.</p>
+        <div class="cta-row">
+          <a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a>
+          <a class="secondary-btn" data-nav="magazine" data-t="trips.browse">매거진 보기</a>
+        </div>
+      </section>
+
+      <section class="section util-grid">
+        <article class="info-card" style="padding:18px"><h3 class="card-title" data-t="trips.util1">저장한 일정 다시 열기</h3><p class="card-copy" data-t="trips.util1d">한 번 만든 여정은 언제든 다시 볼 수 있어요.</p></article>
+        <article class="info-card" style="padding:18px"><h3 class="card-title" data-t="trips.util2">공유 링크 정리하기</h3><p class="card-copy" data-t="trips.util2d">공유받은 일정도 내 흐름 안에서 관리해보세요.</p></article>
+        <article class="info-card" style="padding:18px"><h3 class="card-title" data-t="trips.util3">마음에 드는 일정 복제하기</h3><p class="card-copy" data-t="trips.util3d">예시 일정이나 예전 플랜을 바탕으로 새 여행을 빠르게 시작할 수 있어요.</p></article>
+      </section>
+
+      <div class="footer">Ryokoplan My Trips</div>
+    </div>
+  </main>
+
+  <script src="../assets/js/i18n.js"></script>
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const $ = id => document.getElementById(id);
+      const sections = { saved: $('savedSection'), recent: $('recentSection'), shared: $('sharedSection') };
+      const imgMap = {
+        Tokyo:'../assets/images/cities/tokyo.png', Osaka:'../assets/images/cities/osaka.png', Kyoto:'../assets/images/cities/kyoto.png',
+        Fukuoka:'../assets/images/cities/fukuoka.png', Seoul:'../assets/images/cities/seoul.png', Busan:'../assets/images/cities/busan.png',
+        Jeju:'../assets/images/cities/jeju.png', Gyeongju:'../assets/images/cities/gyeongju.png'
+      };
+
+      function activeTab(name){
+        document.querySelectorAll('[data-tab]').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === name));
+        Object.entries(sections).forEach(([key, section]) => section.classList.toggle('hidden', key !== name));
+      }
+      document.querySelectorAll('[data-tab]').forEach(btn => btn.addEventListener('click', () => activeTab(btn.dataset.tab)));
+
+      function textIncludes(item, query){
+        const blob = [item.title, item.destination, item.duration, item.companion, item.notes, item.planData?.summary, item.planData?.vibe, item.planData?.bestFor].filter(Boolean).join(' ').toLowerCase();
+        return blob.includes(query.toLowerCase());
+      }
+      function shareUrl(item){
+        const plannerUrl = new URL(window.RyokoApp.navHref('planner'), location.href);
+        plannerUrl.searchParams.set('trip', window.RyokoStorage.encodeShare(item));
+        return plannerUrl.toString();
+      }
+      function card(item, mode){
+        const meta = item.planData || {};
+        const chips = [item.destination, item.duration, item.companion, meta.vibe].filter(Boolean).slice(0,4)
+          .map(value => `<span class="trip-mini-chip">${value}</span>`).join('');
+        return `
+          <article class="trip-card rich info-card">
+            <div class="card-image"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.png'}" alt="${item.destination || 'Trip'}"></div>
+            <div class="card-body">
+              <div class="meta">${mode === 'saved' ? window.RyokoApp.t('trips.saved') : mode === 'recent' ? window.RyokoApp.t('trips.recent') : window.RyokoApp.t('trips.shared')}</div>
+              <h3 class="card-title">${item.title || item.destination || 'Trip'}</h3>
+              <div class="trip-chip-row">${chips}</div>
+              <p class="card-copy clamp-3">${meta.summary || item.notes || ''}</p>
+              <div class="card-actions">
+                <a class="soft-btn" href="${shareUrl(item)}">${window.RyokoApp.t('trips.tripOpen')}</a>
+                <button class="ghost-btn" data-copy="${item.id}">${window.RyokoApp.t('trips.tripShare')}</button>
+                ${mode !== 'saved' ? `<button class="ghost-btn" data-save="${item.id}">${window.RyokoApp.t('trips.tripAdd')}</button>` : `<button class="ghost-btn" data-duplicate="${item.id}">${window.RyokoApp.t('trips.tripDuplicate')}</button>`}
+                ${mode === 'saved' ? `<button class="ghost-btn" data-delete="${item.id}">${window.RyokoApp.t('trips.tripDelete')}</button>` : ''}
+              </div>
+            </div>
+          </article>`;
+      }
+
+      function bindActions(saved, recent, shared){
+        document.querySelectorAll('[data-delete]').forEach(btn => btn.addEventListener('click', () => {
+          window.RyokoStorage.deleteSavedTrip(btn.dataset.delete);
+          render();
+        }));
+        document.querySelectorAll('[data-save]').forEach(btn => btn.addEventListener('click', () => {
+          const item = [...recent, ...shared].find(x => x.id === btn.dataset.save);
+          if (item) {
+            window.RyokoStorage.saveTrip(item);
+            render();
+          }
+        }));
+        document.querySelectorAll('[data-duplicate]').forEach(btn => btn.addEventListener('click', () => {
+          window.RyokoStorage.duplicateTrip(btn.dataset.duplicate);
+          render();
+        }));
+        document.querySelectorAll('[data-copy]').forEach(btn => btn.addEventListener('click', async () => {
+          const item = [...saved, ...recent, ...shared].find(x => x.id === btn.dataset.copy);
+          if (!item) return;
+          await navigator.clipboard.writeText(shareUrl(item));
+          alert('Link copied.');
+        }));
+      }
+
+      function render(){
+        const query = $('tripSearch').value.trim();
+        const saved = window.RyokoStorage.getSavedTrips();
+        const recent = window.RyokoStorage.getRecentTrips();
+        const shared = window.RyokoStorage.getSharedTrips();
+        const fsaved = query ? saved.filter(item => textIncludes(item, query)) : saved;
+        const frecent = query ? recent.filter(item => textIncludes(item, query)) : recent;
+        const fshared = query ? shared.filter(item => textIncludes(item, query)) : shared;
+
+        $('savedCount').textContent = saved.length;
+        $('recentCount').textContent = recent.length;
+        $('sharedCount').textContent = shared.length;
+
+        $('savedGrid').innerHTML = fsaved.map(x => card(x, 'saved')).join('');
+        $('recentGrid').innerHTML = frecent.map(x => card(x, 'recent')).join('');
+        $('sharedGrid').innerHTML = fshared.map(x => card(x, 'shared')).join('');
+
+        $('savedEmpty').classList.toggle('hidden', fsaved.length > 0);
+        $('recentEmpty').classList.toggle('hidden', frecent.length > 0);
+        $('sharedEmpty').classList.toggle('hidden', fshared.length > 0);
+
+        bindActions(saved, recent, shared);
+      }
+
+      $('tripSearch').addEventListener('input', render);
+      $('clearSearchBtn').addEventListener('click', () => {
+        $('tripSearch').value = '';
+        render();
+      });
+
+      render();
+      activeTab('saved');
+      window.addEventListener('ryoko:langchange', render);
+    });
+  </script>
+</body>
+</html>

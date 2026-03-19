@@ -16,6 +16,7 @@ window.RyokoApp = (() => {
     localStorage.setItem('ryoko_lang_v2', lang);
     applyTranslations();
     document.querySelectorAll('[data-lang-btn]').forEach(btn => btn.classList.toggle('active', btn.dataset.langBtn === lang));
+    renderMobileDock();
     window.dispatchEvent(new CustomEvent('ryoko:langchange', { detail: { lang } }));
   }
   function applyTranslations(root=document){
@@ -34,12 +35,41 @@ window.RyokoApp = (() => {
       btn.classList.toggle('active', btn.dataset.langBtn === lang);
     });
   }
+  function navHref(target){
+    if (target === 'magazine') return `${pathRoot}magazine/`;
+    if (target === 'planner') return `${pathRoot}index.html`.replace('./index.html','./').replace('../index.html','../');
+    if (target === 'trips') return `${pathRoot}my-trips/`;
+    return '#';
+  }
+  function renderMobileDock(){
+    let dock = document.querySelector('.mobile-dock');
+    if (!dock) {
+      dock = document.createElement('nav');
+      dock.className = 'mobile-dock';
+      document.body.appendChild(dock);
+    }
+    const page = document.body.dataset.page || 'planner';
+    dock.innerHTML = `
+      <a class="mobile-dock-item ${page === 'planner' ? 'active' : ''}" href="${navHref('planner')}">
+        <span class="mobile-dock-icon">●</span>
+        <span class="mobile-dock-label">${t('nav.planner') || 'Planner'}</span>
+      </a>
+      <a class="mobile-dock-item ${page === 'magazine' ? 'active' : ''}" href="${navHref('magazine')}">
+        <span class="mobile-dock-icon">◆</span>
+        <span class="mobile-dock-label">${t('nav.magazine') || 'Magazine'}</span>
+      </a>
+      <a class="mobile-dock-item ${page === 'trips' ? 'active' : ''}" href="${navHref('trips')}">
+        <span class="mobile-dock-icon">■</span>
+        <span class="mobile-dock-label">${t('nav.trips') || 'My Trips'}</span>
+      </a>`;
+  }
   function initCommon(){
     applyTranslations();
     bindLanguageButtons();
-    document.querySelectorAll('[data-nav="magazine"]').forEach(a => a.setAttribute('href', `${pathRoot}magazine/`));
-    document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', `${pathRoot}index.html`.replace('./index.html','./').replace('../index.html','../')));
-    document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', `${pathRoot}my-trips/`));
+    document.querySelectorAll('[data-nav="magazine"]').forEach(a => a.setAttribute('href', navHref('magazine')));
+    document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
+    document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
+    renderMobileDock();
   }
   function cityCardTemplate(city){
     return `
@@ -56,6 +86,6 @@ window.RyokoApp = (() => {
         </div>
       </article>`;
   }
-  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, cityCardTemplate, get lang(){return lang;}, pathRoot };
+  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, cityCardTemplate, get lang(){return lang;}, pathRoot, navHref };
 })();
 window.addEventListener('DOMContentLoaded', () => window.RyokoApp.initCommon());
