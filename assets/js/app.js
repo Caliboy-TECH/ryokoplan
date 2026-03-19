@@ -63,6 +63,51 @@ window.RyokoApp = (() => {
         <span class="mobile-dock-label">${t('nav.trips') || 'My Trips'}</span>
       </a>`;
   }
+
+  function initMagazine(){
+    if (document.body.dataset.page !== 'magazine') return;
+    const cards = [...document.querySelectorAll('.finder-card')];
+    if (!cards.length) return;
+    const searchInput = document.getElementById('magazineCitySearch');
+    const countryTabs = [...document.querySelectorAll('[data-country-filter]')];
+    const vibeTabs = [...document.querySelectorAll('[data-vibe-filter]')];
+    const empty = document.getElementById('finderEmptyState');
+    let country = 'all';
+    let vibe = 'all';
+    let query = '';
+
+    function apply(){
+      let visible = 0;
+      cards.forEach(card => {
+        const matchesCountry = country === 'all' || card.dataset.country === country;
+        const vibeList = String(card.dataset.vibe || '').split(/\s+/).filter(Boolean);
+        const matchesVibe = vibe === 'all' || vibeList.includes(vibe);
+        const haystack = `${card.dataset.search || ''} ${card.textContent || ''}`.toLowerCase();
+        const matchesQuery = !query || haystack.includes(query);
+        const show = matchesCountry && matchesVibe && matchesQuery;
+        card.classList.toggle('is-hidden', !show);
+        if (show) visible += 1;
+      });
+      if (empty) empty.hidden = visible !== 0;
+    }
+
+    countryTabs.forEach(btn => btn.addEventListener('click', () => {
+      country = btn.dataset.countryFilter;
+      countryTabs.forEach(tab => tab.classList.toggle('active', tab === btn));
+      apply();
+    }));
+    vibeTabs.forEach(btn => btn.addEventListener('click', () => {
+      vibe = btn.dataset.vibeFilter;
+      vibeTabs.forEach(tab => tab.classList.toggle('active', tab === btn));
+      apply();
+    }));
+    searchInput?.addEventListener('input', e => {
+      query = String(e.target.value || '').trim().toLowerCase();
+      apply();
+    });
+    apply();
+  }
+
   function initCommon(){
     applyTranslations();
     bindLanguageButtons();
@@ -86,6 +131,6 @@ window.RyokoApp = (() => {
         </div>
       </article>`;
   }
-  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, cityCardTemplate, get lang(){return lang;}, pathRoot, navHref };
+  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, get lang(){return lang;}, pathRoot, navHref };
 })();
-window.addEventListener('DOMContentLoaded', () => window.RyokoApp.initCommon());
+window.addEventListener('DOMContentLoaded', () => { window.RyokoApp.initCommon(); window.RyokoApp.initMagazine(); });
