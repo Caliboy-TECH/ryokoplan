@@ -40,15 +40,44 @@
         </div>
       </section>
 
+      <section class="section trip-vault-grid">
+        <article id="continueCard" class="trip-continue-card info-card"></article>
+        <article class="trip-side-panel info-card">
+          <div class="trip-side-header">
+            <div>
+              <div class="eyebrow trip-mini-eyebrow">Collections</div>
+              <h2 class="section-title trip-tight-title">Quick collections</h2>
+            </div>
+          </div>
+          <div id="collectionChips" class="trip-collection-chips"></div>
+          <div class="trip-side-divider"></div>
+          <div>
+            <h3 class="card-title">Import a shared trip</h3>
+            <p class="card-copy">Paste a Ryokoplan shared link and keep it here for later.</p>
+            <div class="trip-import-stack">
+              <input id="sharedImportInput" class="input" placeholder="https://...trip=...">
+              <button id="sharedImportBtn" class="primary-btn">Import link</button>
+            </div>
+            <p id="sharedImportMessage" class="trip-inline-message"></p>
+          </div>
+        </article>
+      </section>
+
       <section class="section trip-search-card info-card">
         <div>
           <h2 class="section-title" data-t="trips.searchTitle">저장한 흐름을 빠르게 다시 찾기</h2>
           <p class="section-desc" data-t="trips.searchDesc">도시명이나 제목으로 검색하면 저장한 일정과 최근 여정을 바로 좁혀볼 수 있어요.</p>
         </div>
-        <div class="search-row">
+        <div class="search-row trip-search-row">
           <input id="tripSearch" class="input" placeholder="Search trips">
+          <select id="tripSort" class="input trip-sort-select">
+            <option value="recent">Newest first</option>
+            <option value="city">By city</option>
+            <option value="title">By title</option>
+          </select>
           <button id="clearSearchBtn" class="secondary-btn" data-t="trips.clearSearch">지우기</button>
         </div>
+        <div id="tripFilterChips" class="trip-filter-chips"></div>
       </section>
 
       <section class="section trip-stat-grid">
@@ -110,12 +139,6 @@
         </div>
       </section>
 
-      <section class="section util-grid">
-        <article class="info-card" style="padding:18px"><h3 class="card-title" data-t="trips.util1">저장한 일정 다시 열기</h3><p class="card-copy" data-t="trips.util1d">한 번 만든 여정은 언제든 다시 볼 수 있어요.</p></article>
-        <article class="info-card" style="padding:18px"><h3 class="card-title" data-t="trips.util2">공유 링크 정리하기</h3><p class="card-copy" data-t="trips.util2d">공유받은 일정도 내 흐름 안에서 관리해보세요.</p></article>
-        <article class="info-card" style="padding:18px"><h3 class="card-title" data-t="trips.util3">마음에 드는 일정 복제하기</h3><p class="card-copy" data-t="trips.util3d">예시 일정이나 예전 플랜을 바탕으로 새 여행을 빠르게 시작할 수 있어요.</p></article>
-      </section>
-
       <div class="footer">Ryokoplan My Trips</div>
     </div>
   </main>
@@ -132,7 +155,70 @@
         Fukuoka:'../assets/images/cities/fukuoka.png', Seoul:'../assets/images/cities/seoul.png', Busan:'../assets/images/cities/busan.png',
         Jeju:'../assets/images/cities/jeju.png', Gyeongju:'../assets/images/cities/gyeongju.png'
       };
+      const copyByLang = {
+        ko: {
+          continueTitle: 'Continue your trip flow',
+          continueDesc: '가장 최근에 열어본 여정부터 바로 이어서 볼 수 있어요.',
+          noContinue: '아직 이어볼 여정이 없어요',
+          noContinueDesc: '플래너에서 첫 일정을 만들거나, 공유 링크를 열어보세요.',
+          useAsBase: '이 일정으로 이어가기',
+          saveAsMine: '내 여정에 저장',
+          remove: '제거',
+          imported: '공유 링크를 My Trips에 추가했어요.',
+          importFail: 'Ryokoplan 공유 링크를 확인해 주세요.',
+          linkCopied: '링크를 복사했어요.',
+          collectionsAll: '전체',
+          filterAll: '전체',
+          filterSaved: '저장됨',
+          filterRecent: '최근',
+          filterShared: '공유',
+          sortRecent: '최신순',
+          sortCity: '도시순',
+          sortTitle: '제목순',
+          importedLabel: '직접 가져온 링크',
+          continueMeta: '가장 최근에 다시 본 일정',
+          tripBase: '이 일정으로 새 여행 시작',
+          tripSaved: '저장한 내 여정',
+          tripRecent: '최근 본 흐름',
+          tripShared: '공유받은 일정',
+          lastUpdated: 'Updated',
+          importTitle: '공유 링크 모아두기',
+          importDesc: '누가 보낸 일정이든 붙여넣고 다시 꺼내보세요.'
+        },
+        en: {
+          continueTitle: 'Continue your trip flow',
+          continueDesc: 'Jump back into the last trip you opened or shaped.',
+          noContinue: 'No trip to continue yet',
+          noContinueDesc: 'Create your first plan or import a shared Ryokoplan link.',
+          useAsBase: 'Continue this trip',
+          saveAsMine: 'Save to My Trips',
+          remove: 'Remove',
+          imported: 'Shared trip added to My Trips.',
+          importFail: 'Check that this is a Ryokoplan shared link.',
+          linkCopied: 'Link copied.',
+          collectionsAll: 'All',
+          filterAll: 'All',
+          filterSaved: 'Saved',
+          filterRecent: 'Recent',
+          filterShared: 'Shared',
+          sortRecent: 'Newest first',
+          sortCity: 'By city',
+          sortTitle: 'By title',
+          importedLabel: 'Imported link',
+          continueMeta: 'Most recent trip to reopen',
+          tripBase: 'Use this trip as a new base',
+          tripSaved: 'Saved to My Trips',
+          tripRecent: 'Recently opened',
+          tripShared: 'Shared itinerary',
+          lastUpdated: 'Updated',
+          importTitle: 'Collect shared links',
+          importDesc: 'Paste any Ryokoplan itinerary link and keep it here.'
+        }
+      };
+      let activeCollection = 'all';
+      let activeModeFilter = 'all';
 
+      function langCopy(){ return copyByLang[window.RyokoApp.lang] || copyByLang.en; }
       function activeTab(name){
         document.querySelectorAll('[data-tab]').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === name));
         Object.entries(sections).forEach(([key, section]) => section.classList.toggle('hidden', key !== name));
@@ -143,10 +229,41 @@
         const blob = [item.title, item.destination, item.duration, item.companion, item.notes, item.planData?.summary, item.planData?.vibe, item.planData?.bestFor].filter(Boolean).join(' ').toLowerCase();
         return blob.includes(query.toLowerCase());
       }
+      function getMetaSummary(item){
+        return item.planData?.summary || item.notes || item.planData?.vibe || '';
+      }
+      function getTimestamp(item){
+        return item.savedAt || item.viewedAt || item.sharedViewedAt || item.createdAt || '';
+      }
       function shareUrl(item){
         const plannerUrl = new URL(window.RyokoApp.navHref('planner'), location.href);
         plannerUrl.searchParams.set('trip', window.RyokoStorage.encodeShare(item));
         return plannerUrl.toString();
+      }
+      function formatDate(value){
+        if (!value) return '';
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) return '';
+        return new Intl.DateTimeFormat(window.RyokoApp.lang === 'ko' ? 'ko-KR' : 'en-US', { month:'short', day:'numeric' }).format(d);
+      }
+      function sortItems(items){
+        const mode = $('tripSort').value;
+        return [...items].sort((a, b) => {
+          if (mode === 'city') return String(a.destination || '').localeCompare(String(b.destination || '')) || String(a.title || '').localeCompare(String(b.title || ''));
+          if (mode === 'title') return String(a.title || a.destination || '').localeCompare(String(b.title || b.destination || ''));
+          return new Date(getTimestamp(b) || 0) - new Date(getTimestamp(a) || 0);
+        });
+      }
+      function filterItems(items, mode){
+        const query = $('tripSearch').value.trim();
+        let list = query ? items.filter(item => textIncludes(item, query)) : [...items];
+        if (activeCollection !== 'all') list = list.filter(item => String(item.destination || '').toLowerCase() === activeCollection);
+        if (activeModeFilter !== 'all') list = activeModeFilter === mode ? list : [];
+        return sortItems(list);
+      }
+      function tripModeLabel(mode){
+        const copy = langCopy();
+        return mode === 'saved' ? copy.tripSaved : mode === 'recent' ? copy.tripRecent : copy.tripShared;
       }
       function card(item, mode){
         const meta = item.planData || {};
@@ -156,23 +273,121 @@
           <article class="trip-card rich info-card">
             <div class="card-image"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.png'}" alt="${item.destination || 'Trip'}"></div>
             <div class="card-body">
-              <div class="meta">${mode === 'saved' ? window.RyokoApp.t('trips.saved') : mode === 'recent' ? window.RyokoApp.t('trips.recent') : window.RyokoApp.t('trips.shared')}</div>
+              <div class="trip-card-topline">
+                <div class="meta">${tripModeLabel(mode)}</div>
+                <div class="trip-card-date">${langCopy().lastUpdated} ${formatDate(getTimestamp(item))}</div>
+              </div>
               <h3 class="card-title">${item.title || item.destination || 'Trip'}</h3>
               <div class="trip-chip-row">${chips}</div>
-              <p class="card-copy clamp-3">${meta.summary || item.notes || ''}</p>
-              <div class="card-actions">
+              <p class="card-copy clamp-3">${getMetaSummary(item)}</p>
+              <div class="trip-card-footer-note">${meta.bestFor || item.notes || ''}</div>
+              <div class="card-actions trip-card-actions">
                 <a class="soft-btn" href="${shareUrl(item)}">${window.RyokoApp.t('trips.tripOpen')}</a>
                 <button class="ghost-btn" data-copy="${item.id}">${window.RyokoApp.t('trips.tripShare')}</button>
-                ${mode !== 'saved' ? `<button class="ghost-btn" data-save="${item.id}">${window.RyokoApp.t('trips.tripAdd')}</button>` : `<button class="ghost-btn" data-duplicate="${item.id}">${window.RyokoApp.t('trips.tripDuplicate')}</button>`}
-                ${mode === 'saved' ? `<button class="ghost-btn" data-delete="${item.id}">${window.RyokoApp.t('trips.tripDelete')}</button>` : ''}
+                ${mode !== 'saved' ? `<button class="ghost-btn" data-save="${item.id}">${langCopy().saveAsMine}</button>` : `<button class="ghost-btn" data-duplicate="${item.id}">${window.RyokoApp.t('trips.tripDuplicate')}</button>`}
+                <button class="ghost-btn" data-delete-mode="${mode}" data-delete="${item.id}">${langCopy().remove}</button>
               </div>
             </div>
           </article>`;
       }
-
+      function renderContinueCard(saved, recent, shared){
+        const latest = sortItems([...saved, ...recent, ...shared])[0];
+        const copy = langCopy();
+        if (!latest) {
+          $('continueCard').innerHTML = `
+            <div class="trip-continue-copy">
+              <div class="eyebrow">Trip vault</div>
+              <h2 class="section-title trip-tight-title">${copy.noContinue}</h2>
+              <p class="section-desc">${copy.noContinueDesc}</p>
+              <div class="hero-actions"><a class="primary-btn" data-nav="planner">${window.RyokoApp.t('trips.openPlanner')}</a></div>
+            </div>`;
+          return;
+        }
+        const meta = latest.planData || {};
+        $('continueCard').innerHTML = `
+          <div class="trip-continue-media"><img src="${imgMap[latest.destination] || '../assets/images/hero/planner-preview.png'}" alt="${latest.destination || 'Trip'}"></div>
+          <div class="trip-continue-copy">
+            <div class="eyebrow">${copy.continueMeta}</div>
+            <h2 class="section-title trip-tight-title">${latest.title || latest.destination || 'Trip'}</h2>
+            <p class="section-desc">${meta.summary || latest.notes || copy.continueDesc}</p>
+            <div class="trip-chip-row">${[latest.destination, latest.duration, latest.companion, meta.vibe].filter(Boolean).map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}</div>
+            <div class="hero-actions">
+              <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
+              <button class="secondary-btn" data-copy="${latest.id}">${window.RyokoApp.t('trips.tripShare')}</button>
+            </div>
+          </div>`;
+      }
+      function renderCollections(saved, recent, shared){
+        const copy = langCopy();
+        const all = [...saved, ...recent, ...shared];
+        const counts = all.reduce((acc, item) => {
+          const key = String(item.destination || 'Other').trim();
+          if (!key) return acc;
+          acc[key] = (acc[key] || 0) + 1;
+          return acc;
+        }, {});
+        const rows = [['all', copy.collectionsAll, all.length], ...Object.entries(counts).sort((a,b) => b[1]-a[1] || a[0].localeCompare(b[0])).slice(0,8).map(([city,count]) => [city.toLowerCase(), city, count])];
+        $('collectionChips').innerHTML = rows.map(([value, label, count]) => `
+          <button class="trip-collection-chip ${activeCollection === value ? 'active' : ''}" data-collection="${value}">
+            <span>${label}</span><strong>${count}</strong>
+          </button>`).join('');
+        document.querySelectorAll('[data-collection]').forEach(btn => btn.addEventListener('click', () => {
+          activeCollection = btn.dataset.collection;
+          render();
+        }));
+      }
+      function renderModeFilters(){
+        const copy = langCopy();
+        const rows = [
+          ['all', copy.filterAll],
+          ['saved', copy.filterSaved],
+          ['recent', copy.filterRecent],
+          ['shared', copy.filterShared]
+        ];
+        $('tripFilterChips').innerHTML = rows.map(([value, label]) => `<button class="trip-filter-chip ${activeModeFilter === value ? 'active' : ''}" data-mode-filter="${value}">${label}</button>`).join('');
+        document.querySelectorAll('[data-mode-filter]').forEach(btn => btn.addEventListener('click', () => {
+          activeModeFilter = btn.dataset.modeFilter;
+          const tabTarget = activeModeFilter === 'all' ? 'saved' : activeModeFilter;
+          activeTab(tabTarget);
+          render();
+        }));
+        const sort = $('tripSort');
+        sort.options[0].textContent = copy.sortRecent;
+        sort.options[1].textContent = copy.sortCity;
+        sort.options[2].textContent = copy.sortTitle;
+      }
+      function parseSharedInput(value){
+        try {
+          const raw = String(value || '').trim();
+          if (!raw) return null;
+          const url = new URL(raw, location.href);
+          const code = url.searchParams.get('trip') || raw;
+          return window.RyokoStorage.decodeShare(decodeURIComponent(code));
+        } catch {
+          return window.RyokoStorage.decodeShare(String(value || '').trim());
+        }
+      }
+      async function copyText(text){
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch {
+          const input = document.createElement('textarea');
+          input.value = text;
+          document.body.appendChild(input);
+          input.select();
+          document.execCommand('copy');
+          input.remove();
+          return true;
+        }
+      }
       function bindActions(saved, recent, shared){
         document.querySelectorAll('[data-delete]').forEach(btn => btn.addEventListener('click', () => {
-          window.RyokoStorage.deleteSavedTrip(btn.dataset.delete);
+          const id = btn.dataset.delete;
+          const mode = btn.dataset.deleteMode;
+          if (mode === 'saved') window.RyokoStorage.deleteSavedTrip(id);
+          if (mode === 'recent') window.RyokoStorage.deleteRecentTrip(id);
+          if (mode === 'shared') window.RyokoStorage.deleteSharedTrip(id);
           render();
         }));
         document.querySelectorAll('[data-save]').forEach(btn => btn.addEventListener('click', () => {
@@ -189,19 +404,33 @@
         document.querySelectorAll('[data-copy]').forEach(btn => btn.addEventListener('click', async () => {
           const item = [...saved, ...recent, ...shared].find(x => x.id === btn.dataset.copy);
           if (!item) return;
-          await navigator.clipboard.writeText(shareUrl(item));
-          alert('Link copied.');
+          await copyText(shareUrl(item));
+          const msg = $('sharedImportMessage');
+          msg.textContent = langCopy().linkCopied;
         }));
+        $('sharedImportBtn').onclick = () => {
+          const payload = parseSharedInput($('sharedImportInput').value);
+          const msg = $('sharedImportMessage');
+          if (!payload) {
+            msg.textContent = langCopy().importFail;
+            msg.classList.add('is-error');
+            return;
+          }
+          msg.classList.remove('is-error');
+          window.RyokoStorage.addSharedTrip({ ...payload, importedFromLink: true });
+          $('sharedImportInput').value = '';
+          msg.textContent = langCopy().imported;
+          activeTab('shared');
+          render();
+        };
       }
-
       function render(){
-        const query = $('tripSearch').value.trim();
         const saved = window.RyokoStorage.getSavedTrips();
         const recent = window.RyokoStorage.getRecentTrips();
         const shared = window.RyokoStorage.getSharedTrips();
-        const fsaved = query ? saved.filter(item => textIncludes(item, query)) : saved;
-        const frecent = query ? recent.filter(item => textIncludes(item, query)) : recent;
-        const fshared = query ? shared.filter(item => textIncludes(item, query)) : shared;
+        const fsaved = filterItems(saved, 'saved');
+        const frecent = filterItems(recent, 'recent');
+        const fshared = filterItems(shared, 'shared');
 
         $('savedCount').textContent = saved.length;
         $('recentCount').textContent = recent.length;
@@ -215,12 +444,18 @@
         $('recentEmpty').classList.toggle('hidden', frecent.length > 0);
         $('sharedEmpty').classList.toggle('hidden', fshared.length > 0);
 
+        renderContinueCard(saved, recent, shared);
+        renderCollections(saved, recent, shared);
+        renderModeFilters();
         bindActions(saved, recent, shared);
       }
 
       $('tripSearch').addEventListener('input', render);
+      $('tripSort').addEventListener('change', render);
       $('clearSearchBtn').addEventListener('click', () => {
         $('tripSearch').value = '';
+        activeCollection = 'all';
+        activeModeFilter = 'all';
         render();
       });
 

@@ -34,6 +34,8 @@ window.RyokoStorage = (() => {
   function getRecentTrips(){ return read(RECENT_KEY); }
   function getSharedTrips(){ return read(SHARED_KEY); }
   function deleteSavedTrip(id){ write(SAVED_KEY, read(SAVED_KEY).filter(x => x.id !== id)); }
+  function deleteRecentTrip(id){ write(RECENT_KEY, read(RECENT_KEY).filter(x => x.id !== id)); }
+  function deleteSharedTrip(id){ write(SHARED_KEY, read(SHARED_KEY).filter(x => x.id !== id)); }
   function duplicateTrip(id){
     const source = [...getSavedTrips(), ...getRecentTrips(), ...getSharedTrips()].find(x => x.id === id);
     if(!source) return null;
@@ -46,5 +48,18 @@ window.RyokoStorage = (() => {
   function decodeShare(encoded){
     try{ return JSON.parse(decodeURIComponent(escape(atob(encoded)))); }catch{return null;}
   }
-  return { saveTrip, addRecentTrip, addSharedTrip, getSavedTrips, getRecentTrips, getSharedTrips, deleteSavedTrip, duplicateTrip, encodeShare, decodeShare };
+  return {
+    saveTrip,
+    addRecentTrip,
+    addSharedTrip,
+    getSavedTrips,
+    getRecentTrips,
+    getSharedTrips,
+    deleteSavedTrip,
+    deleteRecentTrip,
+    deleteSharedTrip,
+    duplicateTrip,
+    encodeShare,
+    decodeShare
+  };
 })();
