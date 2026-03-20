@@ -472,3 +472,14 @@ body.is-scrolled .top-bar{background:rgba(255,253,249,.94);box-shadow:0 12px 26p
   .trip-sort-select{max-width:none}
   .trip-search-row{grid-template-columns:1fr}
 }
+
+
+.pill-select{display:flex;flex-wrap:wrap;gap:10px}
+.pill-select.compact{gap:8px}
+.pill-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:11px 14px;font-size:13px;font-weight:800;color:#15273a;cursor:pointer;transition:all .2s ease}
+.pill-btn.active{background:linear-gradient(135deg,#15273a,#27445d);color:#fff;border-color:#15273a;box-shadow:0 12px 24px rgba(21,39,58,.16)}
+.pill-btn:hover{transform:translateY(-1px);border-color:#f07c4c}
+.planner-dual-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.result-signature-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.result-signature-chip{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:rgba(240,124,76,.12);border:1px solid rgba(240,124,76,.22);font-size:12px;font-weight:800;color:#b96732}
+@media (max-width: 720px){.planner-dual-grid{grid-template-columns:1fr}}

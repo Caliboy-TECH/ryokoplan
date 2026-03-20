@@ -11,6 +11,9 @@ window.RyokoPlanner = (() => {
       vibe: 'Layered, stylish, urban',
       pace: 'Balanced with built-in breaks',
       bestFor: 'First-timers who still want local texture',
+      tripMood: 'Editorial city glow',
+      dayDensity: 'Balanced days',
+      budgetMode: 'Balanced spend',
       budgetSummary: 'A mid-range Tokyo trip with one nicer dinner, café stops, and efficient train rides across the city.',
       budgetBreakdown: { flight: '$320–520', hotel: '$480–760', food: '$160–260', transit: '$40–70', admission: '$35–70' },
       checklist: ['Reserve one popular dinner in advance', 'Load Suica or another transit card', 'Bring comfortable shoes for station walking', 'Keep one flexible rain-friendly indoor stop'],
@@ -52,6 +55,9 @@ window.RyokoPlanner = (() => {
       vibe: 'Trendy, walkable, contrast-heavy',
       pace: 'Compact but not rushed',
       bestFor: 'Friends who want cafés, streets, and night views',
+      tripMood: 'Vivid city social',
+      dayDensity: 'Balanced days',
+      budgetMode: 'Balanced spend',
       budgetSummary: 'Works well as a city-focused short trip with moderate food spending and easy subway movement.',
       budgetBreakdown: { flight: '$0–180', hotel: '$220–420', food: '$120–200', transit: '$20–40', admission: '$20–50' },
       checklist: ['Check café opening hours by neighborhood', 'Use a T-money card for easy subway transfers', 'Keep one pair of shoes for longer walking blocks', 'Book a popular dinner or bar if it matters to you'],
@@ -205,6 +211,18 @@ window.RyokoPlanner = (() => {
       document.querySelector('.planner-shell')?.scrollIntoView({behavior:'smooth', block:'start'});
     }));
   }
+  function getSelectedPill(group, fallback=''){
+    return document.querySelector(`[data-pill-group="${group}"].active`)?.dataset.pillValue || fallback;
+  }
+  function prettyPillValue(group, value=''){
+    const key = String(value || '').toLowerCase();
+    const maps = {
+      tripMood: { balanced:'Balanced mood', editorial:'Editorial mood', soft:'Soft mood', vivid:'Vivid mood' },
+      dayDensity: { light:'Light days', balanced:'Balanced days', full:'Full days' },
+      budgetMode: { smart:'Smart spend', balanced:'Balanced spend', treat:'Treat-worthy' }
+    };
+    return maps[group]?.[key] || value;
+  }
   function readForm(){
     return {
       destination: qs('destination').value.trim(),
@@ -213,6 +231,9 @@ window.RyokoPlanner = (() => {
       style: qs('style').value || '',
       travelerTraits: [...document.querySelectorAll('#needsGrid input:checked')].map(i => i.value),
       localMode: qs('localToggle').classList.contains('on'),
+      tripMood: getSelectedPill('tripMood', 'balanced'),
+      dayDensity: getSelectedPill('dayDensity', 'balanced'),
+      budgetMode: getSelectedPill('budgetMode', 'balanced'),
       notes: qs('notes').value.trim(),
       language: window.RyokoApp.lang,
       lang: window.RyokoApp.lang
@@ -246,6 +267,18 @@ window.RyokoPlanner = (() => {
         <span class="meta-label">${item.label}</span>
         <span class="meta-value">${item.value}</span>
       </div>`).join('');
+  }
+  function renderSignature(data){
+    const form = readForm();
+    const chips = [
+      textValue(data.tripMood, prettyPillValue('tripMood', form.tripMood || 'balanced')),
+      textValue(data.dayDensity, prettyPillValue('dayDensity', form.dayDensity || 'balanced')),
+      textValue(data.budgetMode, prettyPillValue('budgetMode', form.budgetMode || 'balanced')),
+      form.localMode ? 'Local mode on' : 'Classic routing'
+    ].filter(Boolean);
+    const node = qs('resultSignature');
+    if (!node) return;
+    node.innerHTML = chips.map(item => `<span class="result-signature-chip">${escapeHtml(item)}</span>`).join('');
   }
   function renderDays(data){
     const destination = textValue(data.destination, readForm().destination || 'Trip');
@@ -378,6 +411,7 @@ window.RyokoPlanner = (() => {
     const title = escapeHtml(data.title || `${destination} Trip Plan`);
     const summary = escapeHtml(normalizeSummary(data));
     const budgetSummary = escapeHtml(textValue(data.budgetSummary, ''));
+    const signature = [textValue(data.tripMood,''), textValue(data.dayDensity,''), textValue(data.budgetMode,''), window.currentTripPayload.localMode ? 'Local mode on' : 'Classic routing'].filter(Boolean).join(' · ');
     const generatedAt = new Date().toLocaleDateString(window.RyokoApp.lang === 'ko' ? 'ko-KR' : 'en-US', { year:'numeric', month:'long', day:'numeric' });
     const metaCards = [
       { label: 'Vibe', value: textValue(data.vibe, '-') },
@@ -454,6 +488,7 @@ window.RyokoPlanner = (() => {
       <span class="eyebrow">Ryokoplan · Planner PDF</span>
       <h1>${title}</h1>
       <p class="summary">${summary}</p>
+      ${signature ? `<p class="summary" style="margin-top:8px;font-weight:700;color:#9a734b">${escapeHtml(signature)}</p>` : ''}
       <div class="meta-grid">${metaCards}</div>
     </section>
     <section class="section">
@@ -495,6 +530,9 @@ window.RyokoPlanner = (() => {
     window.currentTripPayload = payload;
     if (payload.destination) qs('destination').value = payload.destination;
     if (payload.notes) qs('notes').value = payload.notes;
+    if (payload.tripMood) document.querySelectorAll('[data-pill-group="tripMood"]').forEach(btn => btn.classList.toggle('active', btn.dataset.pillValue === payload.tripMood));
+    if (payload.dayDensity) document.querySelectorAll('[data-pill-group="dayDensity"]').forEach(btn => btn.classList.toggle('active', btn.dataset.pillValue === payload.dayDensity));
+    if (payload.budgetMode) document.querySelectorAll('[data-pill-group="budgetMode"]').forEach(btn => btn.classList.toggle('active', btn.dataset.pillValue === payload.budgetMode));
     renderPlan(payload.planData || payload);
     window.RyokoStorage.addSharedTrip(payload);
   }

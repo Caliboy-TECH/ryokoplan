@@ -13,7 +13,7 @@ module.exports = async function handler(req, res) {
   const uiLanguage = languageNames[pickedLang] || 'English';
   const traitLine = travelerTraits.length ? travelerTraits.join(', ') : 'None';
 
-  function defaultPlan() {
+  function defaultPlan(overrides = {}) {
     const isKo = pickedLang === 'ko';
     return {
       title: `${destination} · ${duration || (isKo ? '3박 4일' : '3N4D')} · ${companion || (isKo ? '혼자' : 'Solo')}`,
@@ -144,6 +144,9 @@ module.exports = async function handler(req, res) {
     return {
       title: toText(raw.title || raw.tripTitle || raw.name, base.title),
       summary: toText(raw.summary || raw.overview || raw.description || raw.focusSummary, base.summary),
+      tripMood: toText(raw.tripMood || raw.trip_mood || raw.signatureMood, base.tripMood),
+      dayDensity: toText(raw.dayDensity || raw.day_density || raw.density, base.dayDensity),
+      budgetMode: toText(raw.budgetMode || raw.budget_mode || raw.spendMode, base.budgetMode),
       vibe: toText(raw.vibe || raw.mood, base.vibe),
       pace: toText(raw.pace || raw.tempo, base.pace),
       bestFor: toText(raw.bestFor || raw.best_for || raw.suitedFor, base.bestFor),
@@ -174,11 +177,17 @@ Trip inputs:
 - Traveler traits: ${traitLine}
 - Local mode: ${localMode ? 'On' : 'Off'}
 - Notes: ${notes || 'None'}
+- Trip mood: ${req.body?.tripMood || 'balanced'}
+- Day density: ${req.body?.dayDensity || 'balanced'}
+- Budget rhythm: ${req.body?.budgetMode || 'balanced'}
 
 Return EXACTLY this schema:
 {
   "title": "...",
   "summary": "one short paragraph",
+  "tripMood": "2 to 4 words",
+  "dayDensity": "Light days / Balanced days / Full days",
+  "budgetMode": "Smart spend / Balanced spend / Treat-worthy",
   "vibe": "3 to 6 words",
   "pace": "3 to 8 words",
   "bestFor": "short phrase",
@@ -217,7 +226,7 @@ Rules:
 - Output JSON only.`;
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return res.status(200).json(defaultPlan());
+  if (!apiKey) return res.status(200).json(defaultPlan({ tripMood: req.body?.tripMood, dayDensity: req.body?.dayDensity, budgetMode: req.body?.budgetMode }));
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -241,6 +250,6 @@ Rules:
     const parsed = parseJsonFromText(raw);
     return res.status(200).json(normalizePlan(parsed));
   } catch (error) {
-    return res.status(200).json(defaultPlan());
+    return res.status(200).json(defaultPlan({ tripMood: req.body?.tripMood, dayDensity: req.body?.dayDensity, budgetMode: req.body?.budgetMode }));
   }
 };

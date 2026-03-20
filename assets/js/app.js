@@ -109,6 +109,22 @@ window.RyokoApp = (() => {
   }
 
 
+  function setPillValue(group, value){
+    if (!group || !value) return;
+    const buttons = [...document.querySelectorAll(`[data-pill-group="${group}"]`)];
+    if (!buttons.length) return;
+    let matched = false;
+    buttons.forEach(btn => {
+      const active = btn.dataset.pillValue === value;
+      btn.classList.toggle('active', active);
+      if (active) matched = true;
+    });
+    if (!matched) buttons[0]?.classList.add('active');
+  }
+  function getPillValue(group){
+    return document.querySelector(`[data-pill-group="${group}"].active`)?.dataset.pillValue || '';
+  }
+
   function applyPlannerPreset(preset={}){
     const destination = document.getElementById('destination');
     const duration = document.getElementById('duration');
@@ -120,6 +136,9 @@ window.RyokoApp = (() => {
     if (companion && preset.companion) companion.value = preset.companion;
     if (style && preset.style) style.value = preset.style;
     if (notes && preset.notes) notes.value = preset.notes;
+    if (preset.tripMood) setPillValue('tripMood', preset.tripMood);
+    if (preset.dayDensity) setPillValue('dayDensity', preset.dayDensity);
+    if (preset.budgetMode) setPillValue('budgetMode', preset.budgetMode);
     [destination, duration, companion, style, notes].forEach(el => {
       if (!el) return;
       el.dispatchEvent(new Event('change', { bubbles:true }));
@@ -136,18 +155,21 @@ window.RyokoApp = (() => {
     const style = document.getElementById('style')?.value || 'travel style';
     const notes = document.getElementById('notes')?.value?.trim() || '';
     const localMode = document.getElementById('localToggle')?.classList.contains('on');
+    const tripMood = getPillValue('tripMood') || 'balanced';
+    const dayDensity = getPillValue('dayDensity') || 'balanced';
+    const budgetMode = getPillValue('budgetMode') || 'balanced';
     const title = document.getElementById('tripRecipeTitle');
     const desc = document.getElementById('tripRecipeDesc');
     const fill = document.getElementById('tripRecipeFill');
     const hints = document.getElementById('plannerHintLines');
     const complete = [document.getElementById('destination')?.value?.trim(), document.getElementById('duration')?.value, document.getElementById('companion')?.value, document.getElementById('style')?.value].filter(Boolean).length;
     if (title) title.textContent = `${destination} · ${duration} · ${companion}`;
-    if (desc) desc.textContent = `${style}${localMode ? ' · local mode on' : ''}${notes ? ' · ' + notes : ''}`;
+    if (desc) desc.textContent = `${style}${localMode ? ' · local mode on' : ''} · ${tripMood} mood · ${dayDensity} density · ${budgetMode} spend${notes ? ' · ' + notes : ''}`;
     if (fill) fill.style.width = `${25 + complete * 18.75}%`;
     if (hints) {
       const lines = [
         `<div class="planner-hint-line"><strong>Best when</strong><span>${companion ? `you are planning for ${companion} and want the route to feel intentional.` : 'you want a quick first version without overthinking the inputs.'}</span></div>`,
-        `<div class="planner-hint-line"><strong>What changes</strong><span>${style ? `${style} will shape the pacing, neighborhood mix, and stop density.` : 'style, companion, and notes combine to shape the pacing and place mix.'}</span></div>`
+        `<div class="planner-hint-line"><strong>What changes</strong><span>${style ? `${style} will shape the pacing, neighborhood mix, and stop density.` : 'style, companion, and notes combine to shape the pacing and place mix.'} ${tripMood ? `The ${tripMood} mood changes how polished or playful the route feels.` : ''} ${budgetMode ? `${budgetMode} spending adjusts where nicer moments are placed.` : ''}</span></div>`
       ];
       hints.innerHTML = lines.join('');
     }
@@ -170,6 +192,11 @@ window.RyokoApp = (() => {
       el.addEventListener('change', syncPlannerRecipe);
     });
     document.getElementById('localToggle')?.addEventListener('click', () => setTimeout(syncPlannerRecipe, 0));
+    document.querySelectorAll('[data-pill-group]').forEach(btn => btn.addEventListener('click', () => {
+      const group = btn.dataset.pillGroup;
+      setPillValue(group, btn.dataset.pillValue || '');
+      syncPlannerRecipe();
+    }));
     syncPlannerRecipe();
   }
 

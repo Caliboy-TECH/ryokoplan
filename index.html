@@ -278,6 +278,33 @@
               </div>
             </div>
             <div class="field full"><label data-t="planner.notes">추가 요청</label><textarea id="notes" data-t-placeholder="planner.notesPH" placeholder="예: 많이 걷는 일정은 피하고 싶어요"></textarea></div>
+            <div class="field full">
+              <label data-t="planner.tripMood">Trip mood</label>
+              <div class="pill-select" id="tripMoodPills">
+                <button type="button" class="pill-btn active" data-pill-group="tripMood" data-pill-value="balanced" data-t="planner.moodBalanced">Balanced</button>
+                <button type="button" class="pill-btn" data-pill-group="tripMood" data-pill-value="editorial" data-t="planner.moodEditorial">Editorial</button>
+                <button type="button" class="pill-btn" data-pill-group="tripMood" data-pill-value="soft" data-t="planner.moodSoft">Soft</button>
+                <button type="button" class="pill-btn" data-pill-group="tripMood" data-pill-value="vivid" data-t="planner.moodVivid">Vivid</button>
+              </div>
+            </div>
+            <div class="field full planner-dual-grid">
+              <div>
+                <label data-t="planner.dayDensity">Day density</label>
+                <div class="pill-select compact" id="dayDensityPills">
+                  <button type="button" class="pill-btn" data-pill-group="dayDensity" data-pill-value="light" data-t="planner.densityLight">Light</button>
+                  <button type="button" class="pill-btn active" data-pill-group="dayDensity" data-pill-value="balanced" data-t="planner.densityBalanced">Balanced</button>
+                  <button type="button" class="pill-btn" data-pill-group="dayDensity" data-pill-value="full" data-t="planner.densityFull">Full</button>
+                </div>
+              </div>
+              <div>
+                <label data-t="planner.budgetMode">Budget rhythm</label>
+                <div class="pill-select compact" id="budgetModePills">
+                  <button type="button" class="pill-btn" data-pill-group="budgetMode" data-pill-value="smart" data-t="planner.budgetSmart">Smart</button>
+                  <button type="button" class="pill-btn active" data-pill-group="budgetMode" data-pill-value="balanced" data-t="planner.budgetBalanced">Balanced</button>
+                  <button type="button" class="pill-btn" data-pill-group="budgetMode" data-pill-value="treat" data-t="planner.budgetTreat">Treat-worthy</button>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="cta-row">
             <button id="submitBtn" class="primary-btn" data-t="planner.submit">내 여행 만들기</button>
@@ -297,6 +324,7 @@
               <p id="resultSummary" class="section-desc" style="margin:10px 0 0">대표 지역과 조용한 동네를 균형 있게 엮어, 너무 빡빡하지 않으면서도 도쿄다운 흐름을 느낄 수 있는 일정이에요.</p>
             </div>
             <div id="resultMeta" class="result-meta-grid"></div>
+            <div id="resultSignature" class="result-signature-row"></div>
             <div class="result-jump-row" id="resultJumpRow">
               <button class="jump-chip is-active" data-jump-target="resultTop">Overview</button>
               <button class="jump-chip" data-jump-target="resultDaysSection">Days</button>
