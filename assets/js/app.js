@@ -7,6 +7,35 @@ window.RyokoApp = (() => {
     return depth > 1 ? '../' : depth === 1 ? (location.pathname.endsWith('/') ? '../' : '') : './';
   })();
 
+
+  const cityLoopMap = {
+    tokyo: { name:'Tokyo', country:'Japan', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html', image:'assets/images/cities/tokyo.png', vibe:'fast city' },
+    osaka: { name:'Osaka', country:'Japan', guide:'city/osaka.html', example:'example/osaka-2n3d-family.html', image:'assets/images/cities/osaka.png', vibe:'food energy' },
+    kyoto: { name:'Kyoto', country:'Japan', guide:'city/kyoto.html', example:'example/kyoto-2n3d-slow-trip.html', image:'assets/images/cities/kyoto.png', vibe:'slow reset' },
+    fukuoka: { name:'Fukuoka', country:'Japan', guide:'city/fukuoka.html', example:'example/fukuoka-2n3d-food-trip.html', image:'assets/images/cities/fukuoka.png', vibe:'compact local' },
+    seoul: { name:'Seoul', country:'Korea', guide:'city/seoul.html', example:'example/seoul-2n3d-city-vibes.html', image:'assets/images/cities/seoul.png', vibe:'city social' },
+    busan: { name:'Busan', country:'Korea', guide:'city/busan.html', example:'example/busan-2n3d-with-parents.html', image:'assets/images/cities/busan.png', vibe:'coast mode' },
+    jeju: { name:'Jeju', country:'Korea', guide:'city/jeju.html', example:'city/jeju.html', image:'assets/images/cities/jeju.png', vibe:'scenic ease' },
+    gyeongju: { name:'Gyeongju', country:'Korea', guide:'city/gyeongju.html', example:'city/gyeongju.html', image:'assets/images/cities/gyeongju.png', vibe:'history slow' }
+  };
+  const loopPairs = {
+    tokyo:['kyoto','fukuoka','seoul'], osaka:['kyoto','fukuoka','tokyo'], kyoto:['osaka','tokyo','gyeongju'], fukuoka:['osaka','busan','tokyo'],
+    seoul:['busan','jeju','tokyo'], busan:['jeju','seoul','fukuoka'], jeju:['busan','seoul','gyeongju'], gyeongju:['busan','kyoto','seoul']
+  };
+  function slugifyCity(value=''){
+    return String(value || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  function resolvePath(rel=''){
+    if (!rel) return '#';
+    return `${pathRoot}${rel}`.replace('././','./').replace('.././','../');
+  }
+  function getCityLoopData(city=''){
+    return cityLoopMap[slugifyCity(city)] || null;
+  }
+  function getRelatedCities(city=''){
+    return (loopPairs[slugifyCity(city)] || []).map(key => cityLoopMap[key]).filter(Boolean);
+  }
+
   function t(path){
     const dict = window.RYOKO_TRANSLATIONS?.[lang] || window.RYOKO_TRANSLATIONS?.ko || {};
     return path.split('.').reduce((acc, key) => acc?.[key], dict) ?? '';
@@ -313,6 +342,6 @@ window.RyokoApp = (() => {
         </div>
       </article>`;
   }
-  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, get lang(){return lang;}, pathRoot, navHref };
+  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, slugifyCity, resolvePath, get lang(){return lang;}, pathRoot, navHref };
 })();
 window.addEventListener('DOMContentLoaded', () => { window.RyokoApp.initCommon(); window.RyokoApp.initMagazine(); });

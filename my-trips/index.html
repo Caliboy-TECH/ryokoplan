@@ -130,6 +130,22 @@
         <div id="sharedEmpty" class="empty-state hidden info-card"><h3 data-t="trips.emptyShared">아직 공유받은 일정이 없어요</h3><p data-t="trips.emptySharedDesc">누군가 보낸 여행 링크를 열면 여기에 다시 모아볼 수 있어요.</p></div>
       </section>
 
+
+
+      <section class="section trip-loop-panel" id="tripLoopPanel">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Recommendation loop</span>
+            <h2 class="section-title">Turn saved trips into your next read</h2>
+            <p class="section-desc">My Trips should not be a dead end. Reopen the route, read the matching guide, or branch into a related city.</p>
+          </div>
+        </div>
+        <div class="trip-loop-grid">
+          <div class="trip-loop-card" id="tripLoopMain"></div>
+          <div class="trip-loop-side" id="tripLoopSide"></div>
+        </div>
+      </section>
+
       <section class="section utility-banner info-card">
         <h3 data-t="trips.utilTitle">내 여행을 더 쉽게 이어가세요</h3>
         <p data-t="trips.footerDesc">읽었던 가이드, 저장한 일정, 공유받은 여행까지 Ryokoplan 안에서 하나의 흐름으로 이어집니다.</p>
@@ -424,6 +440,54 @@
           render();
         };
       }
+      function renderTripLoop(saved, recent, shared){
+        const main = $('tripLoopMain');
+        const side = $('tripLoopSide');
+        if (!main || !side) return;
+        const anchor = saved[0] || recent[0] || shared[0] || null;
+        if (!anchor) {
+          main.innerHTML = `
+            <span class="eyebrow">No saved loop yet</span>
+            <h3>Build one trip, then the loop gets smarter</h3>
+            <p>Once you save or reopen a trip, My Trips can recommend which guide or sample route to open next.</p>
+            <div class="card-actions"><a class="primary-btn" href="../">Open Planner</a><a class="secondary-btn" href="../magazine/">Open Magazine</a></div>`;
+          side.innerHTML = `
+            <h3>Good starting points</h3>
+            <div class="trip-loop-list">
+              <article><h4>Tokyo guide</h4><p>Fast city, strong first route, and lots of branching options.</p></article>
+              <article><h4>Busan sample</h4><p>Good for scenic pacing and mixed-age travel.</p></article>
+            </div>`;
+          return;
+        }
+        const current = window.RyokoApp.getCityLoopData(anchor.destination) || { name: anchor.destination || 'Trip', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
+        const related = window.RyokoApp.getRelatedCities(anchor.destination).slice(0,3);
+        main.innerHTML = `
+          <span class="eyebrow">From your vault</span>
+          <h3>${current.name} can lead the next step too</h3>
+          <p>${(anchor.planData?.summary || anchor.notes || 'Use your saved trip as a base, then deepen it with a city guide or branch to a related city.').slice(0, 180)}</p>
+          <div class="trip-loop-destinations">
+            <span class="trip-loop-chip">${current.name}</span>
+            ${related.map(city => `<span class="trip-loop-chip">${city.name}</span>`).join('')}
+          </div>
+          <div class="card-actions">
+            <a class="primary-btn" href="../${current.guide}">Read ${current.name}</a>
+            <a class="secondary-btn" href="../${current.example}">Open sample</a>
+            <a class="soft-btn" href="../?destination=${encodeURIComponent(current.name)}">Plan again</a>
+          </div>`;
+        side.innerHTML = `
+          <h3>Related branches</h3>
+          <div class="trip-loop-list">
+            ${related.map(city => `
+              <article>
+                <h4>${city.name}</h4>
+                <p>${city.vibe} is a strong next read after ${current.name}.</p>
+                <div class="card-actions" style="margin-top:10px">
+                  <a class="soft-btn" href="../${city.guide}">Guide</a>
+                  <a class="ghost-btn" href="../${city.example}">Sample</a>
+                </div>
+              </article>`).join('')}
+          </div>`;
+      }
       function render(){
         const saved = window.RyokoStorage.getSavedTrips();
         const recent = window.RyokoStorage.getRecentTrips();
@@ -446,6 +510,7 @@
 
         renderContinueCard(saved, recent, shared);
         renderCollections(saved, recent, shared);
+        renderTripLoop(saved, recent, shared);
         renderModeFilters();
         bindActions(saved, recent, shared);
       }

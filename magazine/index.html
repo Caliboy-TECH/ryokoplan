@@ -67,6 +67,21 @@
         </div>
       </section>
 
+      <section class="section trip-loop-panel" id="magazineLoopPanel">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Back into the loop</span>
+            <h2 class="section-title">Continue from what you already touched</h2>
+            <p class="section-desc">Use your recent or saved trips as the next entry point instead of starting from zero again.</p>
+          </div>
+        </div>
+        <div class="trip-loop-grid">
+          <div class="trip-loop-card" id="magazineLoopMain"></div>
+          <div class="trip-loop-side" id="magazineLoopSide"></div>
+        </div>
+      </section>
+
+
       <section class="section quick-start-board">
         <div class="section-head">
           <div>
@@ -211,14 +226,74 @@
   </main>
 
   <script src="../assets/js/i18n.js"></script>
+  <script src="../assets/js/storage.js"></script>
   <script src="../assets/js/app.js"></script>
   <script>
+    function plannerHrefForCity(city){
+      return `../?destination=${encodeURIComponent(city)}`;
+    }
     document.querySelectorAll('[data-start-city]').forEach(btn => {
       btn.addEventListener('click', () => {
         const city = btn.dataset.startCity;
-        location.href = `../?destination=${encodeURIComponent(city)}`;
+        location.href = plannerHrefForCity(city);
       });
     });
+
+    function renderMagazineLoop(){
+      const saved = window.RyokoStorage.getSavedTrips();
+      const recent = window.RyokoStorage.getRecentTrips();
+      const base = recent[0] || saved[0] || null;
+      const main = document.getElementById('magazineLoopMain');
+      const side = document.getElementById('magazineLoopSide');
+      if (!main || !side) return;
+      if (!base) {
+        main.innerHTML = `
+          <span class="eyebrow">Fresh start</span>
+          <h3>Pick one city guide, then open Planner with context</h3>
+          <p>You do not need a saved trip yet. Magazine can be the fastest way to build your first strong route.</p>
+          <div class="card-actions">
+            <a class="primary-btn" href="../city/tokyo.html">Read Tokyo</a>
+            <a class="secondary-btn" href="../">Open Planner</a>
+          </div>`;
+        side.innerHTML = `
+          <h3>Good first entries</h3>
+          <div class="trip-loop-list">
+            <article><h4>Tokyo</h4><p>Fast city energy with an easy first-sample route.</p></article>
+            <article><h4>Kyoto</h4><p>Slower pacing if you want calmer anchors.</p></article>
+            <article><h4>Busan</h4><p>Coast, food, and easier movement in one flow.</p></article>
+          </div>`;
+        return;
+      }
+      const current = window.RyokoApp.getCityLoopData(base.destination) || { name: base.destination || 'your trip', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
+      const related = window.RyokoApp.getRelatedCities(base.destination).slice(0,3);
+      main.innerHTML = `
+        <span class="eyebrow">Continue from ${current.name}</span>
+        <h3>${base.title || current.name + ' trip'} already exists in your flow</h3>
+        <p>${(base.planData?.summary || base.notes || 'You already shaped this city once. Read the guide again or reopen the trip with more context.').slice(0, 180)}</p>
+        <div class="trip-loop-destinations">
+          <span class="trip-loop-chip">${current.name}</span>
+          ${(related.map(city => `<span class="trip-loop-chip">${city.name}</span>`).join(''))}
+        </div>
+        <div class="card-actions">
+          <a class="primary-btn" href="${plannerHrefForCity(base.destination || current.name)}">Plan ${current.name}</a>
+          <a class="secondary-btn" href="../${current.guide}">Read guide</a>
+          <a class="soft-btn" href="../my-trips/">My Trips</a>
+        </div>`;
+      side.innerHTML = `
+        <h3>Where to go next</h3>
+        <div class="trip-loop-list">
+          ${related.map(city => `
+            <article>
+              <h4>${city.name}</h4>
+              <p>${city.vibe} works well as the next branch after ${current.name}.</p>
+              <div class="card-actions" style="margin-top:10px">
+                <a class="soft-btn" href="../${city.guide}">Guide</a>
+                <a class="ghost-btn" href="../${city.example}">Sample</a>
+              </div>
+            </article>`).join('')}
+        </div>`;
+    }
+    renderMagazineLoop();
   </script>
 </body>
 </html>

@@ -483,3 +483,28 @@ body.is-scrolled .top-bar{background:rgba(255,253,249,.94);box-shadow:0 12px 26p
 .result-signature-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .result-signature-chip{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:rgba(240,124,76,.12);border:1px solid rgba(240,124,76,.22);font-size:12px;font-weight:800;color:#b96732}
 @media (max-width: 720px){.planner-dual-grid{grid-template-columns:1fr}}
+
+.result-loop-section{margin-top:20px;background:linear-gradient(180deg,#fffdfa 0%,#fff6ee 100%)}
+.loop-feature{padding:20px;border-radius:24px;background:linear-gradient(135deg,rgba(21,39,58,.95),rgba(36,57,79,.92));color:#fff;border:1px solid rgba(255,255,255,.08);margin-bottom:14px}
+.loop-feature .section-desc,.loop-feature p{color:rgba(255,255,255,.82)}
+.loop-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.loop-card{padding:18px;border-radius:22px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.loop-card-top{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.loop-card-vibe{font-size:12px;color:var(--muted)}
+.loop-card h3{margin:0;font-size:20px}
+.loop-card p{margin:0;color:var(--muted)}
+.loop-feature-copy h3{margin:8px 0 8px;font-size:26px;line-height:1.18}
+.loop-feature-copy p{margin:0 0 14px}
+.trip-loop-panel{padding:20px;border-radius:24px;background:linear-gradient(180deg,#fffdfa 0%,#fff5ec 100%);border:1px solid var(--line)}
+.trip-loop-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.trip-loop-card,.trip-loop-side{padding:18px;border-radius:22px;background:#fff;border:1px solid var(--line)}
+.trip-loop-destinations{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 16px}
+.trip-loop-chip{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;border:1px solid var(--line);background:#fff8f1;color:var(--ink);font-weight:700}
+.trip-loop-list{display:grid;gap:12px}
+.trip-loop-list article{padding:14px;border-radius:18px;background:#fcfaf6;border:1px solid var(--line)}
+.trip-loop-list h4,.trip-loop-side h3{margin:0 0 6px}
+.trip-loop-list p,.trip-loop-side p{margin:0;color:var(--muted)}
+@media (max-width: 900px){
+  .loop-grid,.trip-loop-grid{grid-template-columns:1fr}
+  .loop-feature-copy h3{font-size:22px}
+}

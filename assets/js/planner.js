@@ -332,6 +332,59 @@ window.RyokoPlanner = (() => {
     const tips = Array.isArray(data.localTips) && data.localTips.length ? data.localTips : samplePlans.tokyo.localTips;
     qs('localTipsList').innerHTML = tips.map(item => `<div class="tip-card-line"><span class="tip-icon">i</span><div class="tip-text">${item}</div></div>`).join('');
   }
+
+  function renderLoopSection(data){
+    const node = qs('resultLoopSection');
+    if (!node) return;
+    const baseCity = textValue(data.destination, readForm().destination || 'Tokyo');
+    const current = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, guide:'magazine/', example:'magazine/' };
+    const related = window.RyokoApp.getRelatedCities(baseCity).slice(0, 3);
+    const recent = (window.RyokoStorage.getRecentTrips?.() || []).filter(item => String(item.destination || '').toLowerCase() !== String(baseCity).toLowerCase()).slice(0, 1);
+    const relatedCards = related.map(city => `
+      <article class="loop-card info-card">
+        <div class="loop-card-top"><span class="eyebrow">${escapeHtml(city.country)}</span><span class="loop-card-vibe">${escapeHtml(city.vibe)}</span></div>
+        <h3>${escapeHtml(city.name)}</h3>
+        <p>Read the city guide first, then turn that mood into a cleaner route.</p>
+        <div class="card-actions">
+          <a class="soft-btn" href="${window.RyokoApp.resolvePath(city.guide)}">City guide</a>
+          <a class="ghost-btn" href="${window.RyokoApp.resolvePath(city.example)}">Sample route</a>
+        </div>
+      </article>`).join('');
+    const continueCard = recent[0] ? `
+      <article class="loop-feature info-card">
+        <div class="loop-feature-copy">
+          <span class="eyebrow">Keep the loop going</span>
+          <h3>Jump back into ${escapeHtml(recent[0].destination || 'your recent trip')}</h3>
+          <p>${escapeHtml((recent[0].planData?.summary || recent[0].notes || 'You already have another trip flow ready to reopen.').slice(0, 180))}</p>
+          <div class="card-actions">
+            <a class="primary-btn" href="${location.pathname}?trip=${encodeURIComponent(window.RyokoStorage.encodeShare(recent[0]))}">Open recent trip</a>
+            <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">My Trips</a>
+          </div>
+        </div>
+      </article>` : `
+      <article class="loop-feature info-card">
+        <div class="loop-feature-copy">
+          <span class="eyebrow">Keep the loop going</span>
+          <h3>Read ${escapeHtml(current.name)} deeper, then save the plan</h3>
+          <p>Use the city guide to sharpen the vibe, keep this plan in My Trips, and come back with stronger context next time.</p>
+          <div class="card-actions">
+            <a class="primary-btn" href="${window.RyokoApp.resolvePath(current.guide)}">Read city guide</a>
+            <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">Open My Trips</a>
+          </div>
+        </div>
+      </article>`;
+    node.innerHTML = `
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Next step loop</span>
+          <h2 class="section-title">Don’t stop at one result</h2>
+          <p class="section-desc">Read a related city, reopen a saved trip, or use a sample route to keep the Ryokoplan loop moving.</p>
+        </div>
+      </div>
+      ${continueCard}
+      <div class="loop-grid">${relatedCards}</div>`;
+  }
+
   function renderChecklist(data){
     const checklist = (data.checklist || []).length ? data.checklist : samplePlans.tokyo.checklist;
     qs('checklistList').innerHTML = checklist.map(item => `<div class="check-item"><span class="check-icon">✓</span><div class="check-text">${item}</div></div>`).join('');
@@ -344,6 +397,7 @@ window.RyokoPlanner = (() => {
     renderTips(data);
     renderBudget(data);
     renderChecklist(data);
+    renderLoopSection(data);
     updateStickyCopy(data);
     updateShareMeta(data);
     window.currentTripPayload = { ...readForm(), planData:data, title:data.title || data.destination };
