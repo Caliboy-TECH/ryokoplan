@@ -268,6 +268,64 @@ window.RyokoPlanner = (() => {
         <span class="meta-value">${item.value}</span>
       </div>`).join('');
   }
+  function cityImageFor(destination=''){
+    const slug = String(destination || '').trim().toLowerCase();
+    const map = {
+      tokyo:'assets/images/cities/tokyo.png', osaka:'assets/images/cities/osaka.png', kyoto:'assets/images/cities/kyoto.png',
+      fukuoka:'assets/images/cities/fukuoka.png', seoul:'assets/images/cities/seoul.png', busan:'assets/images/cities/busan.png',
+      jeju:'assets/images/cities/jeju.png', gyeongju:'assets/images/cities/gyeongju.png'
+    };
+    return map[slug] || 'assets/images/hero/planner-preview.png';
+  }
+  function exampleImageFor(destination=''){
+    const slug = String(destination || '').trim().toLowerCase();
+    const map = {
+      tokyo:'assets/images/examples/tokyo-first-trip.png', osaka:'assets/images/examples/osaka-family.png', kyoto:'assets/images/examples/kyoto-slow.png',
+      fukuoka:'assets/images/examples/fukuoka-food.png', seoul:'assets/images/examples/seoul-city-vibes.png', busan:'assets/images/examples/busan-parents.png',
+      jeju:'assets/images/cities/jeju.png', gyeongju:'assets/images/cities/gyeongju.png'
+    };
+    return map[slug] || cityImageFor(destination);
+  }
+  function uiCopy(ko, en){
+    return (window.RyokoApp?.lang || 'ko') === 'ko' ? ko : en;
+  }
+  function summarizeRouteShape(data){
+    const days = Array.isArray(data.days) ? data.days.length : 0;
+    const placeCount = (data.days || []).reduce((acc, day) => acc + normalizePlaces(day).length, 0);
+    if (!days) return 'A compact route with one clear anchor per day';
+    if (days <= 2) return `${days} focused day${days > 1 ? 's' : ''} with ${placeCount || 'a few'} easy stops`;
+    if (days <= 4) return `${days} editorial days with clear anchors and softer pockets`;
+    return `${days} days layered with readable movement and lighter resets`;
+  }
+  function buildEditorNote(data){
+    const firstTip = Array.isArray(data.localTips) && data.localTips[0] ? textValue(data.localTips[0], '') : '';
+    const opening = textValue(data.days?.[0]?.title, 'The opening day stays intentionally gentle');
+    const ending = textValue(data.days?.[data.days.length - 1]?.title, 'the final stretch stays light');
+    return firstTip || `${opening} so the route settles in smoothly, and ${ending.toLowerCase()} instead of feeling overloaded.`;
+  }
+  function renderEditorialHero(data){
+    const destination = textValue(data.destination, readForm().destination || 'Trip');
+    const eyebrow = qs('resultEyebrow');
+    const rhythm = qs('resultFactRhythm');
+    const shape = qs('resultFactShape');
+    const best = qs('resultFactBest');
+    const note = qs('resultEditorNoteText');
+    const visual = qs('resultEditorialVisual');
+    const visualTitle = qs('resultVisualTitle');
+    const visualDesc = qs('resultVisualDesc');
+    const visualKicker = qs('resultVisualKicker');
+    if (eyebrow) eyebrow.textContent = `${destination} editorial brief`;
+    if (rhythm) rhythm.textContent = textValue(data.pace, 'Balanced city pacing');
+    if (shape) shape.textContent = summarizeRouteShape(data);
+    if (best) best.textContent = textValue(data.bestFor, 'Travelers who want a smoother route');
+    if (note) note.textContent = buildEditorNote(data);
+    if (visual) {
+      visual.style.backgroundImage = `linear-gradient(180deg, rgba(17,27,45,0.08) 0%, rgba(17,27,45,0.58) 100%), url("${cityImageFor(destination)}")`;
+    }
+    if (visualTitle) visualTitle.textContent = `${destination} editorial flow`;
+    if (visualDesc) visualDesc.textContent = textValue(data.summary, 'Built like a readable magazine route instead of a crowded checklist.');
+    if (visualKicker) visualKicker.textContent = textValue(data.vibe, 'City cover');
+  }
   function renderSignature(data){
     const form = readForm();
     const chips = [
@@ -333,6 +391,58 @@ window.RyokoPlanner = (() => {
     qs('localTipsList').innerHTML = tips.map(item => `<div class="tip-card-line"><span class="tip-icon">i</span><div class="tip-text">${item}</div></div>`).join('');
   }
 
+  function renderVisualStory(data){
+    const node = qs('resultVisualStoryGrid');
+    if (!node) return;
+    const baseCity = textValue(data.destination, readForm().destination || 'Tokyo');
+    const current = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, country:'', guide:'magazine/', example:'magazine/', image: cityImageFor(baseCity), vibe:'editorial route' };
+    const related = window.RyokoApp.getRelatedCities(baseCity)[0] || current;
+    const dayOne = data.days?.[0] || {};
+    const dayOnePlaces = normalizePlaces(dayOne).slice(0,3).map(place => place.name).join(' · ');
+    const title = qs('visualStoryTitle');
+    const desc = qs('visualStoryDesc');
+    const eyebrow = qs('visualStoryEyebrow');
+    if (eyebrow) eyebrow.textContent = uiCopy('비주얼 루트 노트', 'Visual route notes');
+    if (title) title.textContent = uiCopy('결과를 기사형 패키지처럼 읽게 만듭니다', 'See the result like an editorial package');
+    if (desc) desc.textContent = uiCopy('도시 커버, 이번 루트의 분위기, 그리고 다음으로 가지를 칠 수 있는 도시까지 한 번에 보여줍니다.', 'A city cover, one route mood frame, and one next branch keep the result from feeling like a plain checklist.');
+    const cards = [
+      {
+        kicker: uiCopy('City cover', 'City cover'),
+        title: `${current.name}`,
+        text: textValue(data.summary, uiCopy('이 여정의 전체 리듬을 먼저 잡아주는 대표 컷입니다.', 'This is the cover frame that sets the route tone first.')),
+        image: window.RyokoApp.resolvePath(current.image || cityImageFor(baseCity)),
+        actionLabel: uiCopy('도시 가이드', 'City guide'),
+        actionHref: window.RyokoApp.resolvePath(current.guide)
+      },
+      {
+        kicker: uiCopy('Route mood', 'Route mood'),
+        title: textValue(dayOne.title, uiCopy('첫날의 리듬', 'Opening rhythm')),
+        text: dayOnePlaces || uiCopy('첫날은 강한 앵커와 부드러운 포켓을 섞어 과밀하지 않게 시작합니다.', 'Day one mixes one anchor and softer pockets so the route opens cleanly.'),
+        image: window.RyokoApp.resolvePath(exampleImageFor(baseCity)),
+        actionLabel: uiCopy('샘플 보기', 'Read sample'),
+        actionHref: window.RyokoApp.resolvePath(current.example)
+      },
+      {
+        kicker: uiCopy('Next branch', 'Next branch'),
+        title: uiCopy(`${related.name}까지 이어서 읽기`, `Branch into ${related.name}`),
+        text: uiCopy(`${related.vibe} 톤의 도시를 이어서 읽으면 다음 저장 루프가 더 자연스럽게 이어집니다.`, `A ${related.vibe} city keeps the next save-and-read loop moving naturally.`),
+        image: window.RyokoApp.resolvePath(related.image || cityImageFor(related.name)),
+        actionLabel: uiCopy('다음 도시', 'Next city'),
+        actionHref: window.RyokoApp.resolvePath(related.guide)
+      }
+    ];
+    node.innerHTML = cards.map((card, idx) => `
+      <article class="visual-story-card${idx === 0 ? ' is-feature' : ''}">
+        <div class="visual-story-image" style="background-image:linear-gradient(180deg, rgba(16,23,38,0.06), rgba(16,23,38,0.62)), url('${card.image}')"></div>
+        <div class="visual-story-body">
+          <span class="visual-story-kicker">${escapeHtml(card.kicker)}</span>
+          <h3>${escapeHtml(card.title)}</h3>
+          <p>${escapeHtml(card.text)}</p>
+          <a class="soft-btn" href="${card.actionHref}">${escapeHtml(card.actionLabel)}</a>
+        </div>
+      </article>`).join('');
+  }
+
   function renderLoopSection(data){
     const node = qs('resultLoopSection');
     if (!node) return;
@@ -393,7 +503,9 @@ window.RyokoPlanner = (() => {
     qs('resultTitle').textContent = data.title || `${data.destination} Trip Plan`;
     qs('resultSummary').textContent = normalizeSummary(data);
     renderMeta(data);
+    renderEditorialHero(data);
     renderDays(data);
+    renderVisualStory(data);
     renderTips(data);
     renderBudget(data);
     renderChecklist(data);
