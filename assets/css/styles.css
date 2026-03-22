@@ -627,3 +627,54 @@ html,body{background:
   .city-detail-visual .glass-note{max-width:none}
   .card-image{aspect-ratio:16/9}
 }
+
+/* visual refresh: cleaner editorial photo treatment */
+.hero-visual,.city-detail-visual,.editorial-hero,.card-image{
+  background:#f4eee5;
+  overflow:hidden;
+}
+.hero-visual img,.city-detail-visual img,.editorial-hero img,.card-image img{
+  transform:none;
+  filter:saturate(1.01) contrast(1.02) brightness(.99);
+  object-position:center center;
+}
+.hero-visual::before,.city-detail-visual::before,.card-image::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(255,250,244,.04),rgba(255,250,244,.02) 42%,rgba(19,30,42,.18) 100%);
+  z-index:1;
+  pointer-events:none;
+}
+.card-image{
+  aspect-ratio:16/10;
+  background:linear-gradient(180deg,#f7f1e8 0%,#efe6da 100%);
+}
+.card-image::after,.city-detail-visual::after,.hero-visual::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.24);
+}
+.city-detail-visual{
+  min-height:380px;
+}
+.city-detail-visual .glass-note{
+  background:rgba(255,252,247,.90);
+  backdrop-filter:blur(10px);
+}
+.hero-card,.city-card,.sample-card,.example-card,.trip-card,.finder-card,.route-strip-card,.editorial-panel,.info-card{
+  box-shadow:0 18px 46px rgba(20,33,48,.06);
+}
+.hero-card:hover,.city-card:hover,.sample-card:hover,.example-card:hover,.trip-card:hover,.finder-card:hover,.route-strip-card:hover,.info-card:hover{
+  box-shadow:0 22px 54px rgba(20,33,48,.09);
+}
+.hero-visual img{
+  object-fit:cover;
+  min-height:100%;
+}
+@media (max-width: 759px){
+  .card-image{aspect-ratio:16/11;}
+  .city-detail-visual{min-height:320px;}
+}
