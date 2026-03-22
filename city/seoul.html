@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,35 +7,25 @@
   <link rel="icon" href="../assets/images/brand/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
-<body data-page="magazine">
+<body data-page="magazine" data-city-slug="seoul">
   <header class="top-bar">
     <div class="container top-bar-inner">
       <a class="brand" href="../">
         <span class="brand-mark"><img src="../assets/images/brand/logo-mark.svg" alt="Ryokoplan"></span>
         <span class="brand-copy">
           <span class="brand-title"><span class="ryoko">Ryoko</span><span class="plan">plan</span></span>
-          <span class="brand-sub">Travel Planner</span>
+          <span class="brand-sub" data-t="nav.travelPlanner">Travel Planner</span>
         </span>
       </a>
       <div class="top-actions">
-        <a class="nav-chip" href="../">Planner</a>
-        <a class="nav-chip magazine" href="../magazine/">Magazine</a>
-        <a class="nav-chip trips" href="../my-trips/">My Trips</a>
+        <div class="lang-switch"><button class="lang-btn" data-lang-btn="ko">KR</button><button class="lang-btn" data-lang-btn="en">EN</button></div>
+        <a class="nav-chip" data-nav="planner" data-t="nav.planner">Planner</a>
+        <a class="nav-chip magazine" href="../magazine/" data-t="nav.magazine">Magazine</a>
+        <a class="nav-chip trips" data-nav="trips" data-t="nav.trips">My Trips</a>
       </div>
     </div>
   </header>
-  <main class="page">
-    <div class="container">
-<section class="city-detail-hero hero-card">
-<div class="city-detail-copy"><span class="eyebrow">Korea City Guide</span><h1>Seoul</h1><p class="city-detail-lead">Dense, stylish, and constantly shifting—best when each day has a clear neighborhood mood.</p><div class="mini-vibe-row"><span class="mini-vibe-chip">Late-night food</span><span class="mini-vibe-chip">Café culture</span><span class="mini-vibe-chip">Design pockets</span><span class="mini-vibe-chip">Steep contrasts</span></div><div class="hero-actions"><a class="primary-btn" href="../?destination=Seoul">Plan Seoul</a><a class="secondary-btn" href="../example/seoul-2n3d-city-vibes.html">See sample plan</a></div></div>
-<div class="city-detail-visual"><img src="../assets/images/cities/seoul.png" alt="Seoul"><div class="glass-note"><strong>Why it works</strong><span>Seoul gets much easier when you plan by neighborhood personality.</span></div></div></section>
-<section class="section city-meta-strip"><article class="meta-card"><span class="meta-label">Best for</span><span class="meta-value">Cafés, design, nightlife, beauty shopping, layered neighborhoods</span></article><article class="meta-card"><span class="meta-label">Suggested pace</span><span class="meta-value">3 nights gives a good first read; 4 nights opens up slower pockets.</span></article><article class="meta-card"><span class="meta-label">Best season</span><span class="meta-value">Spring and autumn are easiest for walking-heavy days.</span></article></section>
-<section class="section city-reading-grid"><article class="info-card editorial-panel"><div class="section-head compact"><div><h2 class="section-title">Where to focus</h2><p class="section-desc">Pick districts that match your energy instead of trying to touch everything.</p></div></div><div class="district-grid"><article class="district-card info-card"><h3>Seongsu</h3><p>Design shops, cafés, and the easiest modern Seoul mood for many travelers.</p></article><article class="district-card info-card"><h3>Euljiro &amp; Jongno</h3><p>Best for contrast: old signs, craft streets, bars, and layered history.</p></article><article class="district-card info-card"><h3>Yeonnam &amp; Mangwon</h3><p>Good for softer walking, bakery stops, and neighborhood-scale wandering.</p></article></div></article><article class="info-card editorial-panel"><div class="section-head compact"><div><h2 class="section-title">Food and local rhythm</h2><p class="section-desc">What shapes the feel of the city more than a list of famous places.</p></div></div><ul class="editorial-bullets"><li>Late-night Korean meals are part of the city rhythm, not just a dinner choice</li><li>Café density makes slower afternoons very easy to build</li><li>Department stores and underground malls work well for weather-proof shopping blocks</li></ul><div class="editorial-budget-note"><strong>Budget feel</strong><p>Shopping and café spending can swell quickly, so leave room in the budget if aesthetics matter to you.</p></div></article></section>
-<section class="section"><div class="section-head"><div><h2 class="section-title">Sample rhythm for Seoul</h2><p class="section-desc">A realistic way to think about pacing before you generate a custom plan.</p></div></div><article class="example-card info-card"><div class="editorial-kicker">Sample itinerary</div><h3 class="editorial-example-title">Seoul 2N3D City Vibes</h3><div class="example-summary editorial-summary"><div class="summary-line editorial-line"><span>Day 1 · Easy entry</span><span>Check in, one dinner area, and a short neighborhood walk.</span></div><div class="summary-line editorial-line"><span>Day 2 · Core mood route</span><span>A design-heavy district in the afternoon, then food and night energy later.</span></div><div class="summary-line editorial-line"><span>Day 3 · Softer ending</span><span>Bakery, souvenir browsing, and one quieter district before departure.</span></div></div><div class="cta-row"><a class="primary-btn" href="../example/seoul-2n3d-city-vibes.html">Open full example</a><a class="ghost-btn" href="../?destination=Seoul">Customize in Planner</a></div></article></section>
-<section class="section city-reading-grid"><article class="info-card editorial-panel"><div class="section-head compact"><div><h2 class="section-title">Local tips</h2><p class="section-desc">The small adjustments that make the city feel easier and more intentional.</p></div></div><ul class="editorial-bullets"><li>Travel time can look short on a map but still feel draining if you jump neighborhoods too often.</li><li>Plan one late start after a nightlife-heavy evening—Seoul rewards that flexibility.</li><li>Use river walks, palace grounds, or quieter café districts to balance high-energy zones.</li></ul></article><article class="info-card editorial-panel"><div class="section-head compact"><div><h2 class="section-title">Keep in mind</h2><p class="section-desc">Tiny prep choices that improve the trip immediately.</p></div></div><ul class="editorial-bullets"><li>Avoid crossing the city too many times in one day.</li><li>Build coffee and rest stops into the route on purpose.</li><li>Subway is excellent, but short taxi hops can save energy at night.</li></ul></article></section>
-<section class="section footer-cta info-card city-final-cta"><h2>Read the city, then make it yours</h2><p>Use this guide as the tone reference, then generate a trip that matches your travel style, pace, and who you are going with.</p><div class="cta-row"><a class="primary-btn" href="../?destination=Seoul">Open Planner</a><a class="secondary-btn" href="../magazine/">Back to Magazine</a></div></section>
-<div class="footer">Ryokoplan Magazine</div></div>
-  </main>
+  <main class="page"><div class="container"><div id="cityPageRoot"></div></div></main>
   <script src="../assets/js/i18n.js"></script>
   <script src="../assets/js/app.js"></script>
 </body>

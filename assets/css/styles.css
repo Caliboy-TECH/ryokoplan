@@ -678,3 +678,22 @@ html,body{background:
   .card-image{aspect-ratio:16/11;}
   .city-detail-visual{min-height:320px;}
 }
+
+
+.magazine-led-hero{grid-template-columns:1.15fr .95fr;align-items:stretch}
+.magazine-loop-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+.loop-main-card,.loop-side-card{padding:24px;border-radius:28px;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border:1px solid rgba(20,35,60,.08)}
+.trip-loop-list{display:grid;gap:10px;margin-top:14px}
+.trip-loop-item{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:18px;background:rgba(245,240,234,.8);color:#18304f;text-decoration:none}
+.trip-loop-item span{color:#6c7688;font-size:13px}
+.city-finder-section .finder-toolbar{display:grid;gap:14px;padding:16px;border-radius:24px;margin-bottom:18px}
+.finder-group{display:flex;gap:10px;flex-wrap:wrap}
+.finder-search{background:rgba(255,255,255,.88)}
+.city-hero-polish .city-detail-visual img{min-height:420px;object-fit:cover}
+.city-hero-polish .city-detail-copy{padding-right:8px}
+.city-hero-polish .glass-note{background:linear-gradient(180deg,rgba(16,32,54,.78),rgba(16,32,54,.6));color:#fff;border:1px solid rgba(255,255,255,.12)}
+.city-hero-polish .glass-note span{color:rgba(255,255,255,.82)}
+.editorial-lines.compact{gap:14px}
+.magazine-home-v2 .hero-feature-card,.magazine-home-v2 .hero-side-card,.loop-main-card,.loop-side-card{box-shadow:0 22px 70px rgba(19,36,61,.08)}
+.magazine-home-v2 .finder-card .card-image img,.city-card .card-image img{aspect-ratio:4/3;object-fit:cover}
+@media (max-width: 900px){.magazine-led-hero,.magazine-loop-grid{grid-template-columns:1fr}.city-hero-polish .city-detail-visual img{min-height:320px}}
