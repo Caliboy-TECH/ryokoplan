@@ -22,6 +22,40 @@ window.RyokoApp = (() => {
     tokyo:['kyoto','fukuoka','seoul'], osaka:['kyoto','fukuoka','tokyo'], kyoto:['osaka','tokyo','gyeongju'], fukuoka:['osaka','busan','tokyo'],
     seoul:['busan','jeju','tokyo'], busan:['jeju','seoul','fukuoka'], jeju:['busan','seoul','gyeongju'], gyeongju:['busan','kyoto','seoul']
   };
+  const cityVoiceMap = {
+    tokyo: {
+      ko: { strap: '밀도는 높고, 루트는 더 가볍게.', reward: '한 동네씩 읽을수록 좋음', watch: '환승 과적 금지', mood: 'sharp / layered / late' },
+      en: { strap: 'High density, lighter routing.', reward: 'Better one neighborhood at a time', watch: 'Do not overload transit', mood: 'sharp / layered / late' }
+    },
+    osaka: {
+      ko: { strap: '많이 보기보다, 잘 먹고 쉽게 즐기기.', reward: '식사 타이밍이 여행 퀄리티를 만듦', watch: '큰 구역 두 개를 한날에 깊게 넣지 않기', mood: 'warm / easy / lively' },
+      en: { strap: 'Less coverage, more easy fun.', reward: 'Meal timing shapes the trip', watch: 'Do not go deep on two big zones in one day', mood: 'warm / easy / lively' }
+    },
+    kyoto: {
+      ko: { strap: '적게 넣을수록, 더 오래 남는 도시.', reward: '여백과 산책이 핵심', watch: '체크리스트식 이동 금지', mood: 'quiet / scenic / slow' },
+      en: { strap: 'The less you force, the better it lands.', reward: 'Space and walking matter most', watch: 'Avoid checklist pacing', mood: 'quiet / scenic / slow' }
+    },
+    fukuoka: {
+      ko: { strap: '짧아도 만족도가 잘 나오는 콤팩트 시티.', reward: '가볍게 먹고 걷기 좋음', watch: '무리한 당일치기 확장 금지', mood: 'compact / tasty / relaxed' },
+      en: { strap: 'A compact city that pays off fast.', reward: 'Easy food-and-walk rhythm', watch: 'Do not over-expand the route', mood: 'compact / tasty / relaxed' }
+    },
+    seoul: {
+      ko: { strap: '동네 차이가 곧 여행의 톤이 됩니다.', reward: '어느 구역을 묶느냐가 핵심', watch: '강남·성수·홍대를 무심코 한날에 다 넣지 않기', mood: 'social / layered / quick' },
+      en: { strap: 'Neighborhood contrast becomes the trip tone.', reward: 'Grouping the right zones matters most', watch: 'Do not casually stack too many major districts', mood: 'social / layered / quick' }
+    },
+    busan: {
+      ko: { strap: '풍경이 먼저, 속도는 그다음.', reward: '뷰와 쉬는 타이밍이 좋을수록 만족', watch: '오르막·이동 피로 과소평가 금지', mood: 'open / scenic / breezy' },
+      en: { strap: 'Views first, speed second.', reward: 'Rest timing improves the trip', watch: 'Do not underestimate hills and transfers', mood: 'open / scenic / breezy' }
+    },
+    jeju: {
+      ko: { strap: '목적지보다 여정 감각이 중요한 섬.', reward: '풍경 사이의 여백이 좋음', watch: '이동시간을 너무 가볍게 보지 않기', mood: 'airy / scenic / soft' },
+      en: { strap: 'On Jeju, the journey matters as much as the stop.', reward: 'The spaces between views matter', watch: 'Do not underweight drive time', mood: 'airy / scenic / soft' }
+    },
+    gyeongju: {
+      ko: { strap: '장면보다 템포가 먼저인 역사 도시.', reward: '느린 산책과 저녁 무드가 강함', watch: '낮 시간에만 몰아보지 않기', mood: 'heritage / calm / textured' },
+      en: { strap: 'A heritage city shaped by tempo, not volume.', reward: 'Slow walks and evening mood land best', watch: 'Do not compress it into daytime only', mood: 'heritage / calm / textured' }
+    }
+  };
   function slugifyCity(value=''){
     return String(value || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   }
@@ -34,6 +68,12 @@ window.RyokoApp = (() => {
   }
   function getRelatedCities(city=''){
     return (loopPairs[slugifyCity(city)] || []).map(key => cityLoopMap[key]).filter(Boolean);
+  }
+  function getCityVoice(city=''){
+    const slug = slugifyCity(city);
+    const entry = cityVoiceMap[slug];
+    if (!entry) return null;
+    return entry[lang] || entry.en || null;
   }
 
   function t(path){
@@ -419,8 +459,8 @@ window.RyokoApp = (() => {
     const guideLabel = lang === 'ko' ? '도시 가이드' : 'City Guide';
     root.innerHTML = `
       <section class="city-detail-hero hero-card city-hero-polish city-hero-magazine">
-        <div class="city-detail-copy city-copy-magazine"><span class="eyebrow">${data.eyebrow}</span><h1>${entry.planner}</h1><p class="city-detail-lead">${data.lead}</p><div class="mini-vibe-row">${data.chips.map(ch => `<span class="mini-vibe-chip">${ch}</span>`).join('')}</div><div class="city-editor-note"><strong>${lang === 'ko' ? '편집 메모' : 'Editorial note'}</strong><span>${data.whyDesc}</span></div><div class="hero-actions hero-actions-strong"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? entry.planner + ' 여행 짜기' : 'Plan ' + entry.planner}</a><a class="ghost-btn" href="../example/${entry.example}">${lang === 'ko' ? '샘플 일정 보기' : 'See sample plan'}</a></div></div>
-        <div class="city-detail-visual city-visual-stack"><img src="../${entry.image}" alt="${entry.planner}"><div class="glass-note strong"><strong>${data.why}</strong><span>${data.bestFor}</span></div><div class="visual-stack-card route-card dark strong"><strong>${lang === 'ko' ? 'Read first' : 'Read first'}</strong><span>${data.pace}</span></div><div class="visual-stack-card light city-stack-meta"><strong>${lang === 'ko' ? 'Best season' : 'Best season'}</strong><span>${data.season}</span></div></div>
+        <div class="city-detail-copy city-copy-magazine"><span class="eyebrow">${data.eyebrow}</span><h1>${entry.planner}</h1><p class="city-detail-lead">${data.lead}</p><div class="city-strapline">${(getCityVoice(entry.planner)?.strap || '')}</div><div class="mini-vibe-row">${data.chips.map(ch => `<span class="mini-vibe-chip">${ch}</span>`).join('')}</div><div class="city-voice-strip"><span class="city-voice-pill"><strong>${lang === 'ko' ? 'Rewards' : 'Rewards'}</strong><span>${(getCityVoice(entry.planner)?.reward || '')}</span></span><span class="city-voice-pill"><strong>${lang === 'ko' ? 'Watch' : 'Watch'}</strong><span>${(getCityVoice(entry.planner)?.watch || '')}</span></span><span class="city-voice-pill"><strong>${lang === 'ko' ? 'Tone' : 'Tone'}</strong><span>${(getCityVoice(entry.planner)?.mood || '')}</span></span></div><div class="city-editor-note"><strong>${lang === 'ko' ? '편집 메모' : 'Editorial note'}</strong><span>${data.whyDesc}</span></div><div class="hero-actions hero-actions-strong"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? entry.planner + ' 여행 짜기' : 'Plan ' + entry.planner}</a><a class="ghost-btn" href="../example/${entry.example}">${lang === 'ko' ? '샘플 일정 보기' : 'See sample plan'}</a></div></div>
+        <div class="city-detail-visual city-visual-stack"><img src="../${entry.image}" alt="${entry.planner}"><div class="glass-note strong"><strong>${data.why}</strong><span>${data.bestFor}</span></div><div class="visual-stack-card route-card dark strong"><strong>${lang === 'ko' ? 'Read first' : 'Read first'}</strong><span>${(getCityVoice(entry.planner)?.strap || data.pace)}</span></div><div class="visual-stack-card light city-stack-meta"><strong>${lang === 'ko' ? 'Best season' : 'Best season'}</strong><span>${data.season}</span></div></div>
       </section>
       <section class="section city-quicknav-wrap"><div class="city-quicknav"><a class="jump-chip" href="#city-overview">${lang === 'ko' ? 'Overview' : 'Overview'}</a><a class="jump-chip" href="#city-districts">${lang === 'ko' ? 'Districts' : 'Districts'}</a><a class="jump-chip" href="#city-sample">${lang === 'ko' ? 'Sample' : 'Sample'}</a><a class="jump-chip" href="#city-tips">${lang === 'ko' ? 'Tips' : 'Tips'}</a></div></section>
       <section class="section city-overview-composition" id="city-overview"><div class="city-overview-lead"><div class="editorial-kicker">${lang === 'ko' ? 'Overview' : 'Overview'}</div><h2 class="section-title">${lang === 'ko' ? entry.planner + ' at a glance' : entry.planner + ' at a glance'}</h2><p class="section-desc">${data.whyDesc}</p></div><div class="city-meta-strip"><article class="meta-card feature"><span class="meta-label">${lang === 'ko' ? 'Best for' : 'Best for'}</span><span class="meta-value">${data.bestFor}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? 'Suggested pace' : 'Suggested pace'}</span><span class="meta-value">${data.pace}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? 'Best season' : 'Best season'}</span><span class="meta-value">${data.season}</span></article></div></section>
@@ -446,7 +486,7 @@ window.RyokoApp = (() => {
     const title = lang === 'ko' ? entry.titleKo : entry.titleEn;
     const lead = lang === 'ko' ? entry.koLead : entry.enLead;
     root.innerHTML = `
-      <section class="city-detail-hero hero-card city-hero-polish city-hero-magazine"><div class="city-detail-copy city-copy-magazine"><span class="eyebrow">${lang === 'ko' ? 'Plan Example' : 'Plan Example'}</span><h1>${title}</h1><p class="city-detail-lead">${lead}</p><div class="mini-vibe-row"><span class="mini-vibe-chip">${entry.city}</span><span class="mini-vibe-chip">${cityData.pace}</span><span class="mini-vibe-chip">${cityData.bestFor.split(',')[0]}</span></div><div class="city-editor-note"><strong>${lang === 'ko' ? "Use this as a base" : "Use this as a base"}</strong><span>${lang === 'ko' ? '리스트를 그대로 복사하기보다, 하루 밀도와 동네 조합을 가져가는 편이 좋습니다.' : 'Use the structure and pacing more than the exact list.'}</span></div><div class="hero-actions hero-actions-strong"><a class="primary-btn" href="${plannerUrlForCity(entry.city)}">${lang === 'ko' ? '플래너에서 커스텀' : 'Customize in Planner'}</a><a class="ghost-btn" href="../city/${entry.guide}">${lang === 'ko' ? '도시 가이드 읽기' : 'Read city guide'}</a></div></div><div class="city-detail-visual city-visual-stack"><img src="../${entry.image}" alt="${title}"><div class="route-card dark strong"><strong>${lang === 'ko' ? 'Example itinerary' : 'Example itinerary'}</strong><span>${lang === 'ko' ? '하루별 구조, 예산 감각, 현지 팁까지 한 번에.' : 'Day-by-day structure, budget feel, and local tips in one view.'}</span></div><div class="visual-stack-card light city-stack-meta"><strong>${lang === 'ko' ? 'City mood' : 'City mood'}</strong><span>${cityData.bestFor.split(',')[0]}</span></div></div></section>
+      <section class="city-detail-hero hero-card city-hero-polish city-hero-magazine"><div class="city-detail-copy city-copy-magazine"><span class="eyebrow">${lang === 'ko' ? 'Plan Example' : 'Plan Example'}</span><h1>${title}</h1><p class="city-detail-lead">${lead}</p><div class="mini-vibe-row"><span class="mini-vibe-chip">${entry.city}</span><span class="mini-vibe-chip">${cityData.pace}</span><span class="mini-vibe-chip">${cityData.bestFor.split(',')[0]}</span></div><div class="city-editor-note"><strong>${lang === 'ko' ? "Use this as a base" : "Use this as a base"}</strong><span>${lang === 'ko' ? '리스트보다 구조를 가져가고, 도시는 그 도시다운 템포로 남겨두는 편이 좋습니다.' : 'Borrow the structure first, and keep the city in its own natural tempo.'}</span></div><div class="city-strapline compact">${(getCityVoice(entry.city)?.strap || '')}</div><div class="hero-actions hero-actions-strong"><a class="primary-btn" href="${plannerUrlForCity(entry.city)}">${lang === 'ko' ? '플래너에서 커스텀' : 'Customize in Planner'}</a><a class="ghost-btn" href="../city/${entry.guide}">${lang === 'ko' ? '도시 가이드 읽기' : 'Read city guide'}</a></div></div><div class="city-detail-visual city-visual-stack"><img src="../${entry.image}" alt="${title}"><div class="route-card dark strong"><strong>${lang === 'ko' ? 'Example itinerary' : 'Example itinerary'}</strong><span>${lang === 'ko' ? '하루별 구조, 예산 감각, 현지 팁까지 한 번에.' : 'Day-by-day structure, budget feel, and local tips in one view.'}</span></div><div class="visual-stack-card light city-stack-meta"><strong>${lang === 'ko' ? 'City mood' : 'City mood'}</strong><span>${cityData.bestFor.split(',')[0]}</span></div></div></section>
       <section class="section city-quicknav-wrap"><div class="city-quicknav"><a class="jump-chip" href="#example-flow">${lang === 'ko' ? 'Flow' : 'Flow'}</a><a class="jump-chip" href="#example-why">${lang === 'ko' ? 'Why it works' : 'Why it works'}</a><a class="jump-chip" href="#example-next">${lang === 'ko' ? 'Next move' : 'Next move'}</a></div></section>
       <section class="section city-overview-composition"><div class="city-overview-lead"><div class="editorial-kicker">${lang === 'ko' ? 'At a glance' : 'At a glance'}</div><h2 class="section-title">${lang === 'ko' ? '샘플 구조를 먼저 읽어보세요' : 'Read the structure first'}</h2><p class="section-desc">${lang === 'ko' ? '이 예시는 장소 리스트보다 하루 리듬을 가져가는 데 더 큰 가치가 있습니다.' : 'This example is more useful as a pacing reference than as a strict checklist.'}</p></div><div class="city-meta-strip"><article class="meta-card feature"><span class="meta-label">${lang === 'ko' ? 'Best for' : 'Best for'}</span><span class="meta-value">${cityData.bestFor}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? 'Suggested pace' : 'Suggested pace'}</span><span class="meta-value">${cityData.pace}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? 'Budget feel' : 'Budget feel'}</span><span class="meta-value">${cityData.budgetFeel}</span></article></div></section>
       <section class="section" id="example-flow"><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? 'Day by day' : 'Day by day'}</div><h2 class="section-title">${lang === 'ko' ? '이렇게 흐릅니다' : 'How the trip flows'}</h2><div class="example-summary editorial-summary timeline-style">${sample.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div></article></section>
@@ -715,6 +755,6 @@ window.RyokoApp = (() => {
         </div>
       </article>`;
   }
-  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, slugifyCity, resolvePath, applyPlannerPreset, get lang(){return lang;}, pathRoot, navHref };
+  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, getCityVoice, slugifyCity, resolvePath, applyPlannerPreset, get lang(){return lang;}, pathRoot, navHref };
 })();
 window.addEventListener('DOMContentLoaded', () => { window.RyokoApp.initCommon(); window.RyokoApp.initMagazine(); });

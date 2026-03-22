@@ -315,7 +315,8 @@ window.RyokoPlanner = (() => {
     const visualTitle = qs('resultVisualTitle');
     const visualDesc = qs('resultVisualDesc');
     const visualKicker = qs('resultVisualKicker');
-    if (eyebrow) eyebrow.textContent = `${destination} editorial brief`;
+    const voice = window.RyokoApp?.getCityVoice?.(destination);
+    if (eyebrow) eyebrow.textContent = uiCopy(`${destination} 루트 노트`, `${destination} route note`);
     if (rhythm) rhythm.textContent = textValue(data.pace, 'Balanced city pacing');
     if (shape) shape.textContent = summarizeRouteShape(data);
     if (best) best.textContent = textValue(data.bestFor, 'Travelers who want a smoother route');
@@ -323,19 +324,20 @@ window.RyokoPlanner = (() => {
     if (visual) {
       visual.style.backgroundImage = `linear-gradient(180deg, rgba(17,27,45,0.08) 0%, rgba(17,27,45,0.58) 100%), url("${cityImageFor(destination)}")`;
     }
-    if (visualTitle) visualTitle.textContent = `${destination} editorial flow`;
+    if (visualTitle) visualTitle.textContent = voice?.strap || uiCopy(`${destination} 에디토리얼 플로우`, `${destination} editorial flow`);
     if (visualDesc) visualDesc.textContent = textValue(data.summary, 'Built like a readable magazine route instead of a crowded checklist.');
-    if (visualKicker) visualKicker.textContent = textValue(data.vibe, 'City cover');
+    if (visualKicker) visualKicker.textContent = voice?.mood || textValue(data.vibe, 'City cover');
   }
   function buildMicroBrief(data){
     const firstDay = data.days?.[0] || {};
     const lastDay = data.days?.[data.days?.length - 1] || {};
     const firstPlace = normalizePlaces(firstDay)[0]?.name || textValue(firstDay.title, uiCopy('첫날 시작', 'Opening day'));
     const lastMove = normalizePlaces(lastDay).slice(-1)[0]?.name || textValue(lastDay.title, uiCopy('마지막 날', 'Final day'));
+    const voice = window.RyokoApp?.getCityVoice?.(data.destination || readForm().destination || '');
     return [
-      { kicker: uiCopy('첫 장면', 'First scene'), text: uiCopy(`${firstPlace}부터 시작해 도시의 첫인상을 자연스럽게 잡습니다.`, `Start around ${firstPlace} to set the city’s opening mood cleanly.`) },
-      { kicker: uiCopy('에너지 배분', 'Energy line'), text: buildEditorNote(data) },
-      { kicker: uiCopy('잘 맞는 여행자', 'Best suited to'), text: textValue(data.bestFor, uiCopy('도시를 무리 없이 읽고 싶은 여행자', 'Travelers who want a smoother, better-paced city route.')) }
+      { kicker: uiCopy('시작점', 'Start clean'), text: uiCopy(`${firstPlace} 쪽에서 시작하면 첫 인상이 덜 산만합니다.`, `Start around ${firstPlace} for a cleaner opening tone.`) },
+      { kicker: uiCopy('리듬 유지', 'Keep the rhythm'), text: voice?.watch || buildEditorNote(data) },
+      { kicker: uiCopy('이 일정의 결', 'Trip tone'), text: voice?.strap || textValue(data.bestFor, uiCopy('도시를 무리 없이 읽고 싶은 여행자', 'Travelers who want a smoother, better-paced city route.')) }
     ];
   }
   function renderSignature(data){

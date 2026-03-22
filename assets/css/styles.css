@@ -1083,3 +1083,58 @@ html,body{background:
   .city-detail-copy h1,
   .result-main-title{max-width:none}
 }
+
+
+/* Tone development v2 */
+.city-strapline{
+  margin:10px 0 0;
+  font-size:1.02rem;
+  line-height:1.45;
+  font-weight:700;
+  letter-spacing:-0.01em;
+  color:#132743;
+}
+.city-strapline.compact{
+  margin-top:12px;
+  font-size:.96rem;
+  font-weight:600;
+  color:#35516f;
+}
+.city-voice-strip{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin:16px 0 18px;
+}
+.city-voice-pill{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  padding:12px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,0.88);
+  border:1px solid rgba(20,43,72,0.08);
+  box-shadow:0 10px 26px rgba(17,33,58,0.06);
+}
+.city-voice-pill strong{
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:#f06f5a;
+}
+.city-voice-pill span{
+  font-size:.92rem;
+  line-height:1.45;
+  color:#21364f;
+}
+.top-story-card strong{
+  letter-spacing:-0.02em;
+}
+.top-story-card span:last-child{
+  line-height:1.5;
+}
+@media (max-width: 768px){
+  .city-voice-strip{
+    grid-template-columns:1fr;
+  }
+}
