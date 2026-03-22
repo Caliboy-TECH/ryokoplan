@@ -56,6 +56,170 @@ window.RyokoApp = (() => {
       en: { strap: 'A heritage city shaped by tempo, not volume.', reward: 'Slow walks and evening mood land best', watch: 'Do not compress it into daytime only', mood: 'heritage / calm / textured' }
     }
   };
+
+  const citySectionMap = {
+    tokyo: {
+      ko: {
+        moduleEyebrow:'Tokyo edit',
+        moduleTitle:'도쿄는 큰 장면보다 구간 편집이 중요합니다',
+        moduleDesc:'하루에 하나의 큰 앵커와 하나의 리셋 구간만 두면 도쿄가 훨씬 덜 피곤하고 더 선명하게 남습니다.',
+        modules:[
+          {type:'timing', title:'Best windows', items:[['오전 9–11시','아사쿠사, 우에노처럼 첫 장면이 중요한 곳'],['오후 2–5시','기요스미, 다이칸야마처럼 쉬는 동네'],['저녁 7시 이후','시부야, 신주쿠, 이자카야 골목 무드']]},
+          {type:'pair', title:'Good pairings', items:[['시부야 → 오모테산도','에너지와 정돈감이 자연스럽게 이어짐'],['아사쿠사 → 우에노','초행에도 동선 이해가 쉬움'],['긴자 → 도쿄역 주변','마지막 쇼핑/식사와 이동 연결이 좋음']]}
+        ]
+      },
+      en: {
+        moduleEyebrow:'Tokyo edit',
+        moduleTitle:'Tokyo works better when the route is edited in chunks',
+        moduleDesc:'One big anchor and one reset zone per day usually lands better than trying to stack every famous stop.',
+        modules:[
+          {type:'timing', title:'Best windows', items:[['9–11 am','Asakusa, Ueno, and first-scene districts'],['2–5 pm','Kiyosumi, Daikanyama, and calmer reset zones'],['After 7 pm','Shibuya, Shinjuku, and izakaya blocks']]},
+          {type:'pair', title:'Good pairings', items:[['Shibuya → Omotesando','Energy flows into a more polished city tone'],['Asakusa → Ueno','Easy routing for first-timers'],['Ginza → Tokyo Station','A clean close for food, shopping, and departure prep']]}
+        ]
+      }
+    },
+    osaka: {
+      ko: {
+        moduleEyebrow:'Osaka edit',
+        moduleTitle:'오사카는 보기보다 먹고 쉬는 간격이 중요합니다',
+        moduleDesc:'관광 스폿보다 식사 타이밍과 쉬운 이동이 여행 만족도를 크게 좌우합니다.',
+        modules:[
+          {type:'timing', title:'Meal rhythm', items:[['점심 전','시장/상점가 쪽으로 먼저 진입'],['오후','카페나 쇼핑 아케이드로 템포 완화'],['저녁','도톤보리·우메다 중 한 축만 깊게']]},
+          {type:'watch', title:'Do not force', items:[['USJ + 도톤보리 심야','체력 소모가 큼'],['교토/나라와 동시 깊게','2박 3일엔 오사카 무드가 약해짐'],['큰 쇼핑 구역 2개 이상','비슷한 피로가 겹침']]}
+        ]
+      },
+      en: {
+        moduleEyebrow:'Osaka edit',
+        moduleTitle:'In Osaka, meal spacing matters more than coverage',
+        moduleDesc:'Food timing and easy movement often shape the trip more than adding one more sightseeing block.',
+        modules:[
+          {type:'timing', title:'Meal rhythm', items:[['Before lunch','Enter through market streets or food-heavy areas'],['Afternoon','Use cafés or arcades to soften the tempo'],['Night','Go deep on either Dotonbori or Umeda, not both']]},
+          {type:'watch', title:'Do not force', items:[['USJ plus late-night Dotonbori','The fatigue stacks fast'],['Deep Kyoto/Nara add-ons','A 2N3D Osaka trip loses its own mood'],['Too many shopping zones','The day starts to feel repetitive']]}
+        ]
+      }
+    },
+    kyoto: {
+      ko: {
+        moduleEyebrow:'Kyoto edit',
+        moduleTitle:'교토는 비워둘수록 더 좋아집니다',
+        moduleDesc:'보는 개수보다 조용한 시간대와 걷는 리듬을 확보하는 쪽이 훨씬 중요합니다.',
+        modules:[
+          {type:'timing', title:'Quiet windows', items:[['이른 아침','기온, 산넨자카, 아라시야마'],['점심 이후','강변, 카페, 작은 정원'],['해질 무렵','산책 + 저녁 한 곳만 깊게']]},
+          {type:'pair', title:'Better pacing', items:[['동쪽 교토 하루','기온/청수사권을 한 축으로'],['북쪽 사원 + 카페','이동보다 템포 중심'],['강변 산책 + 저녁','마지막 장면용으로 강함']]}
+        ]
+      },
+      en: {
+        moduleEyebrow:'Kyoto edit',
+        moduleTitle:'Kyoto usually improves when you leave more room',
+        moduleDesc:'Quiet hours and walkable pacing matter far more than trying to count more temples.',
+        modules:[
+          {type:'timing', title:'Quiet windows', items:[['Early morning','Gion, Sannenzaka, Arashiyama'],['After lunch','River walks, cafés, and smaller gardens'],['Toward sunset','One strong walk plus one good dinner']]},
+          {type:'pair', title:'Better pacing', items:[['East Kyoto day','Keep Gion and Kiyomizu on one axis'],['North temples + café drift','Tempo over transfer volume'],['River walk + dinner close','A stronger ending than one more checklist stop']]}
+        ]
+      }
+    },
+    fukuoka: {
+      ko: {
+        moduleEyebrow:'Fukuoka edit',
+        moduleTitle:'후쿠오카는 짧게 가도 리듬이 잘 나오는 도시입니다',
+        moduleDesc:'이 도시는 욕심내기보다 compact하게 먹고 걷고 쉬는 구성이 강합니다.',
+        modules:[
+          {type:'pair', title:'Strong combinations', items:[['하카타역권 → 캐널시티','도착일용으로 안정적'],['오호리공원 → 텐진','산책과 도심 리듬이 좋음'],['야타이 → 늦은 산책','짧은 밤에도 만족감 큼']]},
+          {type:'watch', title:'Keep it compact', items:[['무리한 근교 확장','후쿠오카 장점이 흐려짐'],['너무 많은 카페/쇼핑','도시 자체가 작아 중복감이 빨리 옴'],['체크아웃 날 과한 이동','마지막 날은 하카타 중심이 편함']]}
+        ]
+      },
+      en: {
+        moduleEyebrow:'Fukuoka edit',
+        moduleTitle:'Fukuoka pays off when the trip stays compact',
+        moduleDesc:'Its strength is not volume, but how easily food, walks, and soft city energy fit together.',
+        modules:[
+          {type:'pair', title:'Strong combinations', items:[['Hakata area → Canal City','A stable arrival-day route'],['Ohori Park → Tenjin','Walk-first rhythm with city access'],['Yatai → late stroll','A short night can still feel complete']]},
+          {type:'watch', title:'Keep it compact', items:[['Overextending to too many side trips','The city loses its own advantage'],['Too many similar cafés or shops','The overlap shows quickly'],['Heavy checkout-day movement','Hakata-centered endings feel cleaner']]}
+        ]
+      }
+    },
+    seoul: {
+      ko: {
+        moduleEyebrow:'Seoul edit',
+        moduleTitle:'서울은 동네 조합이 곧 여행 톤이 됩니다',
+        moduleDesc:'어디를 넣느냐보다 어떤 구역을 같이 묶느냐가 훨씬 중요합니다.',
+        modules:[
+          {type:'pair', title:'Good neighborhood sets', items:[['성수 → 서울숲 → 뚝섬','요즘 서울 무드'],['을지로 → 광장시장 → 종로','도시 텍스처가 강함'],['홍대 → 연남 → 망원','친구와 가볍게 풀기 좋음']]},
+          {type:'watch', title:'Avoid stacking', items:[['강남 + 성수 + 홍대','이동 피로가 큼'],['낮과 밤 무드 미스매치','동네 성격이 너무 달라짐'],['주말 피크만 고려 안 함','대기와 이동이 갑자기 커짐']]}
+        ]
+      },
+      en: {
+        moduleEyebrow:'Seoul edit',
+        moduleTitle:'In Seoul, the neighborhood mix becomes the trip tone',
+        moduleDesc:'The city feels best when the right zones are grouped together instead of stacked at random.',
+        modules:[
+          {type:'pair', title:'Good neighborhood sets', items:[['Seongsu → Seoul Forest → Ttukseom','Current Seoul mood, walkable and social'],['Euljiro → Gwangjang → Jongno','Strong city texture'],['Hongdae → Yeonnam → Mangwon','Easy with friends and café energy']]},
+          {type:'watch', title:'Avoid stacking', items:[['Gangnam + Seongsu + Hongdae in one day','Transfers pile up fast'],['Day/night mismatch','The mood can feel disjointed'],['Ignoring weekend peaks','Waiting and crowd fatigue jump quickly']]}
+        ]
+      }
+    },
+    busan: {
+      ko: {
+        moduleEyebrow:'Busan edit',
+        moduleTitle:'부산은 뷰와 휴식 타이밍이 핵심입니다',
+        moduleDesc:'장소 수보다 풍경을 어떻게 배치하고 언제 쉬는지가 만족도를 크게 좌우합니다.',
+        modules:[
+          {type:'timing', title:'View windows', items:[['오전','감천·송도처럼 공기감 좋은 구간'],['오후','해운대·광안리 카페/산책'],['저녁','야경 포인트는 한 곳만 길게']]},
+          {type:'watch', title:'Fatigue checks', items:[['오르막 많은 코스 연속','피로 누적이 큼'],['시장+바다+전망대 과적','장면이 겹치며 흐려짐'],['부모님 동행 시 무리한 환승','택시 활용이 더 나을 수 있음']]}
+        ]
+      },
+      en: {
+        moduleEyebrow:'Busan edit',
+        moduleTitle:'Busan gets better when views and rests are placed well',
+        moduleDesc:'The trip quality often comes from how you space scenery and downtime, not from adding more stops.',
+        modules:[
+          {type:'timing', title:'View windows', items:[['Morning','Gamcheon or Songdo when the air feels cleaner'],['Afternoon','Haeundae or Gwangalli walks and cafés'],['Night','Go long on one night-view point, not several']]},
+          {type:'watch', title:'Fatigue checks', items:[['Too many hilly routes in sequence','The tiredness stacks'],['Market + sea + observatory overload','The scenes start to blur together'],['Heavy transfers with parents','Taxis may actually protect the trip better']]}
+        ]
+      }
+    },
+    jeju: {
+      ko: {
+        moduleEyebrow:'Jeju edit',
+        moduleTitle:'제주는 목적지보다 드라이브 리듬이 중요합니다',
+        moduleDesc:'같은 동선 안에 풍경, 카페, 쉬는 구간이 어떻게 섞이는지가 여행 퀄리티를 바꿉니다.',
+        modules:[
+          {type:'pair', title:'Soft route shapes', items:[['동쪽 해안 라인','성산/섭지코지/카페'],['서쪽 노을 라인','애월/협재/저녁 바다'],['한라산 주변 + 숙소 휴식','비 오는 날 대안으로 좋음']]},
+          {type:'watch', title:'Drive reality', items:[['하루에 섬 반 바퀴 이상','운전 피로가 큼'],['풍경 포인트 과다','결국 사진만 남고 리듬이 사라짐'],['날씨 변수 무시','제주는 날씨에 따라 만족도 편차가 큼']]}
+        ]
+      },
+      en: {
+        moduleEyebrow:'Jeju edit',
+        moduleTitle:'On Jeju, drive rhythm matters more than destination count',
+        moduleDesc:'The island feels better when scenery, cafés, and pauses sit naturally on the same line.',
+        modules:[
+          {type:'pair', title:'Soft route shapes', items:[['East coast line','Seongsan, Seopjikoji, and scenic cafés'],['West sunset line','Aewol, Hyeopjae, and evening sea stops'],['Hallasan side + hotel reset','Useful on rainier or lower-energy days']]},
+          {type:'watch', title:'Drive reality', items:[['More than half the island in one day','Driver fatigue jumps quickly'],['Too many scenic points','The trip becomes a photo sweep'],['Ignoring weather shifts','Jeju satisfaction swings hard with conditions']]}
+        ]
+      }
+    },
+    gyeongju: {
+      ko: {
+        moduleEyebrow:'Gyeongju edit',
+        moduleTitle:'경주는 낮보다 저녁 무드까지 봐야 완성됩니다',
+        moduleDesc:'역사 유적만 보는 도시가 아니라, 걷는 속도와 해 질 무렵 분위기까지 포함해서 읽어야 좋습니다.',
+        modules:[
+          {type:'timing', title:'Best tempo', items:[['오전','대릉원·첨성대처럼 상징 장면'],['오후','황리단길·한옥 카페로 템포 완화'],['저녁','동궁과 월지, 조명 켜진 산책']]},
+          {type:'pair', title:'What pairs well', items:[['유적 + 카페','과한 역사 피로를 줄임'],['한옥 거리 + 저녁 산책','경주다운 마지막 장면'],['자전거/도보 중심','도시 결을 느끼기 쉬움']]}
+        ]
+      },
+      en: {
+        moduleEyebrow:'Gyeongju edit',
+        moduleTitle:'Gyeongju lands best when evening mood is part of the plan',
+        moduleDesc:'It is not just a heritage city by daylight. The slower pace and dusk atmosphere matter just as much.',
+        modules:[
+          {type:'timing', title:'Best tempo', items:[['Morning','Daereungwon, Cheomseongdae, and signature scenes'],['Afternoon','Hwangridan-gil and hanok cafés to soften the pace'],['Evening','Donggung and Wolji plus a lit-up walk']]},
+          {type:'pair', title:'What pairs well', items:[['Heritage + café','Reduces monument fatigue'],['Hanok street + evening walk','A stronger Gyeongju ending'],['Bike or foot routes','Makes the city texture easier to feel']]}
+        ]
+      }
+    }
+  };
+
   function slugifyCity(value=''){
     return String(value || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   }
@@ -448,6 +612,18 @@ window.RyokoApp = (() => {
     side.innerHTML = `<h3>${lang === 'ko' ? '다음으로 잘 이어지는 도시' : 'Cities that connect well next'}</h3><div class="trip-loop-list">${related.map(item => `<a class="trip-loop-item" href="../${item.guide}"><strong>${item.name}</strong><span>${item.vibe}</span></a>`).join('')}</div>`;
   }
 
+
+  function renderCityModules(citySlug, cityName){
+    const entry = citySectionMap[citySlug];
+    const data = entry?.[lang] || entry?.en;
+    if (!data) return '';
+    const blocks = (data.modules || []).map(block => {
+      const rows = (block.items || []).map(item => `<li><strong>${item[0]}</strong><span>${item[1]}</span></li>`).join('');
+      return `<article class="info-card editorial-panel city-module-card city-module-${block.type}"><div class="section-head compact"><div><div class="editorial-kicker">${data.moduleEyebrow}</div><h2 class="section-title">${block.title}</h2><p class="section-desc">${data.moduleDesc}</p></div></div><ul class="editorial-pair-list">${rows}</ul></article>`;
+    }).join('');
+    return `<section class="section city-modules-band"><div class="section-head"><div><span class="eyebrow">${data.moduleEyebrow}</span><h2 class="section-title">${data.moduleTitle}</h2><p class="section-desc">${data.moduleDesc}</p></div></div><div class="city-module-grid">${blocks}</div></section>`;
+  }
+
   function renderCityPage(){
     const slug = document.body.dataset.citySlug;
     if (!slug) return;
@@ -464,6 +640,7 @@ window.RyokoApp = (() => {
       </section>
       <section class="section city-quicknav-wrap"><div class="city-quicknav"><a class="jump-chip" href="#city-overview">${lang === 'ko' ? 'Overview' : 'Overview'}</a><a class="jump-chip" href="#city-districts">${lang === 'ko' ? 'Districts' : 'Districts'}</a><a class="jump-chip" href="#city-sample">${lang === 'ko' ? 'Sample' : 'Sample'}</a><a class="jump-chip" href="#city-tips">${lang === 'ko' ? 'Tips' : 'Tips'}</a></div></section>
       <section class="section city-overview-composition" id="city-overview"><div class="city-overview-lead"><div class="editorial-kicker">${lang === 'ko' ? 'Overview' : 'Overview'}</div><h2 class="section-title">${lang === 'ko' ? entry.planner + ' at a glance' : entry.planner + ' at a glance'}</h2><p class="section-desc">${data.whyDesc}</p></div><div class="city-meta-strip"><article class="meta-card feature"><span class="meta-label">${lang === 'ko' ? 'Best for' : 'Best for'}</span><span class="meta-value">${data.bestFor}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? 'Suggested pace' : 'Suggested pace'}</span><span class="meta-value">${data.pace}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? 'Best season' : 'Best season'}</span><span class="meta-value">${data.season}</span></article></div></section>
+      ${renderCityModules(slug, entry.planner)}
       <section class="section city-reading-grid city-reading-grid-rich" id="city-districts"><article class="info-card editorial-panel"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? 'Where to start' : 'Where to start'}</div><h2 class="section-title">${data.focusTitle}</h2><p class="section-desc">${data.focusDesc}</p></div></div><div class="district-grid district-grid-rich">${data.districts.map((d,i) => `<article class="district-card info-card district-card-rich"><span class="district-index">0${i+1}</span><span class="district-label">${lang === 'ko' ? 'District pick' : 'District pick'}</span><h3>${d[0]}</h3><p>${d[1]}</p></article>`).join('')}</div></article><article class="info-card editorial-panel editorial-panel-contrast"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? 'How it feels' : 'How it feels'}</div><h2 class="section-title">${data.foodTitle}</h2><p class="section-desc">${data.foodDesc}</p></div></div><ul class="editorial-bullets">${data.foodBullets.map(item => `<li>${item}</li>`).join('')}</ul><div class="editorial-budget-note"><strong>${lang === 'ko' ? 'Budget feel' : 'Budget feel'}</strong><p>${data.budgetFeel}</p></div></article></section>
       <section class="section city-section-band"><article class="cover-story-card story-band"><div class="editorial-kicker">${lang === 'ko' ? '편집 포인트' : 'Editorial framing'}</div><h3>${lang === 'ko' ? '좋은 여행은 장소보다 템포를 먼저 맞출 때 생깁니다' : 'Trips usually improve when the tempo lands before the checklist does'}</h3><p>${data.lead}</p></article></section>
       <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? 'Sample route' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? 'Sample itinerary' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : 'Customize in Planner'}</a></div></article></section>

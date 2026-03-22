@@ -1138,3 +1138,49 @@ html,body{background:
     grid-template-columns:1fr;
   }
 }
+
+.city-modules-band {
+  margin-top: 10px;
+}
+.city-module-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.city-module-card {
+  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,243,236,.9));
+  border: 1px solid rgba(24,52,86,.08);
+}
+.city-module-card.city-module-watch {
+  background: linear-gradient(180deg, rgba(255,250,247,.98), rgba(247,239,234,.92));
+}
+.editorial-pair-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.editorial-pair-list li {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(24,52,86,.06);
+}
+.editorial-pair-list li strong {
+  font-size: 13px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #203a5c;
+}
+.editorial-pair-list li span {
+  color: #536273;
+  line-height: 1.6;
+}
+@media (max-width: 900px) {
+  .city-module-grid {
+    grid-template-columns: 1fr;
+  }
+}
