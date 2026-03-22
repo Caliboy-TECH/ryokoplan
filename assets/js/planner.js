@@ -137,6 +137,7 @@ window.RyokoPlanner = (() => {
       const rect = anchor.getBoundingClientRect();
       bar.classList.toggle('is-visible', rect.top < window.innerHeight * 0.55);
       updateActiveJumpChip();
+      updateActiveDayRail();
     };
     window.addEventListener('scroll', onScroll, { passive:true });
     onScroll();
@@ -146,7 +147,7 @@ window.RyokoPlanner = (() => {
     if (qs('stickyTripMeta')) qs('stickyTripMeta').textContent = [textValue(data.vibe,''), textValue(data.pace,'')].filter(Boolean).join(' · ') || 'Jump, save, share, or export';
   }
   function updateActiveJumpChip(){
-    const sections = ['resultTop','resultDaysSection','localTipsSection','budgetSection','checklistSection'];
+    const sections = ['resultTop','resultDayRailSection','resultDaysSection','localTipsSection','budgetSection','checklistSection'];
     let active = 'resultTop';
     sections.forEach(id => {
       const el = document.getElementById(id);
@@ -326,6 +327,17 @@ window.RyokoPlanner = (() => {
     if (visualDesc) visualDesc.textContent = textValue(data.summary, 'Built like a readable magazine route instead of a crowded checklist.');
     if (visualKicker) visualKicker.textContent = textValue(data.vibe, 'City cover');
   }
+  function buildMicroBrief(data){
+    const firstDay = data.days?.[0] || {};
+    const lastDay = data.days?.[data.days?.length - 1] || {};
+    const firstPlace = normalizePlaces(firstDay)[0]?.name || textValue(firstDay.title, uiCopy('첫날 시작', 'Opening day'));
+    const lastMove = normalizePlaces(lastDay).slice(-1)[0]?.name || textValue(lastDay.title, uiCopy('마지막 날', 'Final day'));
+    return [
+      { kicker: uiCopy('Open strong', 'Open strong'), text: uiCopy(`${firstPlace}부터 시작해 첫 인상을 깔끔하게 잡습니다.`, `Start around ${firstPlace} to set the opening rhythm cleanly.`) },
+      { kicker: uiCopy('Protect energy', 'Protect energy'), text: buildEditorNote(data) },
+      { kicker: uiCopy('Save this for', 'Save this for'), text: textValue(data.bestFor, uiCopy('가볍게 읽히는 도시 루트를 원하는 여행자', 'Travelers who want a smoother city route.')) }
+    ];
+  }
   function renderSignature(data){
     const form = readForm();
     const chips = [
@@ -337,6 +349,45 @@ window.RyokoPlanner = (() => {
     const node = qs('resultSignature');
     if (!node) return;
     node.innerHTML = chips.map(item => `<span class="result-signature-chip">${escapeHtml(item)}</span>`).join('');
+    const brief = qs('resultMicroBrief');
+    if (brief) {
+      brief.innerHTML = buildMicroBrief(data).map(item => `
+        <article class="micro-brief-card">
+          <span class="micro-brief-kicker">${escapeHtml(item.kicker)}</span>
+          <p>${escapeHtml(item.text)}</p>
+        </article>`).join('');
+    }
+  }
+  function renderDayRail(data){
+    const rail = qs('resultDayRail');
+    const eyebrow = qs('dayRailEyebrow');
+    const title = qs('dayRailTitle');
+    if (!rail) return;
+    if (eyebrow) eyebrow.textContent = uiCopy('루트 리듬', 'Route rhythm');
+    if (title) title.textContent = uiCopy('하루씩 가볍게 이동하면서 읽어보세요', 'Jump through the trip one day at a time');
+    rail.innerHTML = (data.days || []).map((day, idx) => {
+      const places = normalizePlaces(day);
+      const target = `dayCard${day.day || idx + 1}`;
+      return `
+        <button class="day-rail-chip${idx === 0 ? ' is-active' : ''}" data-day-jump="${target}">
+          <span class="day-rail-kicker">${escapeHtml(getDayLabel(day.day || idx + 1))}</span>
+          <strong>${escapeHtml(textValue(day.title, uiCopy('하루 일정', 'Day route')))}</strong>
+          <small>${escapeHtml(String(places.length || 0))} ${uiCopy('stops', 'stops')}</small>
+        </button>`;
+    }).join('');
+    document.querySelectorAll('[data-day-jump]').forEach(btn => btn.addEventListener('click', () => smoothJump(btn.dataset.dayJump)));
+  }
+  function updateActiveDayRail(){
+    const chips = [...document.querySelectorAll('[data-day-jump]')];
+    if (!chips.length) return;
+    let active = chips[0]?.dataset.dayJump;
+    chips.forEach(btn => {
+      const el = document.getElementById(btn.dataset.dayJump);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.32) active = btn.dataset.dayJump;
+    });
+    chips.forEach(btn => btn.classList.toggle('is-active', btn.dataset.dayJump === active));
   }
   function renderDays(data){
     const destination = textValue(data.destination, readForm().destination || 'Trip');
@@ -346,7 +397,7 @@ window.RyokoPlanner = (() => {
       const compact = places.slice(0, 3).map(place => `<span class="day-mini-chip">${escapeHtml(place.name)}</span>`).join('');
       const isOpen = dayIndex === 0 ? ' is-open' : '';
       return `
-        <article class="day-card${isOpen}">
+        <article class="day-card${isOpen}" id="dayCard${day.day || dayIndex + 1}">
           <div class="day-card-header">
             <div class="day-card-top">
               <div>
@@ -379,6 +430,7 @@ window.RyokoPlanner = (() => {
     }).join('');
     qs('resultDays').innerHTML = days || '<div class="summary-line">Sample trip ready</div>';
     bindDayInteractions();
+    updateActiveDayRail();
   }
   function renderBudget(data){
     const budget = data.budgetBreakdown || {};
@@ -504,6 +556,7 @@ window.RyokoPlanner = (() => {
     qs('resultSummary').textContent = normalizeSummary(data);
     renderMeta(data);
     renderEditorialHero(data);
+    renderDayRail(data);
     renderDays(data);
     renderVisualStory(data);
     renderTips(data);
