@@ -788,3 +788,56 @@ html,body{background:
   .hero-actions-strong,.cta-row-priority{display:grid;grid-template-columns:1fr;gap:10px}
   .hero-actions-strong .primary-btn,.cta-row-priority .primary-btn{min-width:0}
 }
+
+
+/* City/editorial layout polish v3 */
+.city-hero-magazine{position:relative;isolation:isolate;overflow:hidden}
+.city-hero-magazine::before{content:'';position:absolute;inset:-20% auto auto -10%;width:320px;height:320px;background:radial-gradient(circle,rgba(255,200,146,.22),transparent 70%);pointer-events:none}
+.city-copy-magazine{gap:14px}
+.city-visual-stack{position:relative;min-height:360px}
+.city-visual-stack::after{content:'';position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(180deg,rgba(17,28,43,0) 0%, rgba(17,28,43,.12) 60%, rgba(17,28,43,.3) 100%);pointer-events:none}
+.city-visual-stack .visual-stack-card{position:absolute;right:18px;border-radius:20px;padding:14px 16px;max-width:220px;z-index:2;box-shadow:0 18px 38px rgba(17,28,43,.18)}
+.city-visual-stack .visual-stack-card strong{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.city-visual-stack .visual-stack-card span{display:block;font-size:13px;line-height:1.5}
+.city-visual-stack .visual-stack-card.light{bottom:18px;background:rgba(255,251,246,.95);border:1px solid rgba(236,216,192,.95);color:var(--secondary)}
+.city-visual-stack .route-card{left:18px;right:auto;bottom:18px;max-width:240px;z-index:2}
+.city-overview-composition{display:grid;gap:14px;align-items:end}
+.city-overview-lead{display:grid;gap:10px}
+.city-overview-lead .section-title{margin:0}
+.city-reading-grid-rich{gap:14px}
+.district-grid-rich{gap:12px}
+.district-card-rich{position:relative;padding:18px 18px 18px 58px;background:linear-gradient(180deg,#fffdf9 0%,#fff9f1 100%)}
+.district-index{position:absolute;left:16px;top:18px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#15273a;color:#fff;font-size:11px;font-weight:800;letter-spacing:.06em}
+.story-band{padding:26px 24px;background:linear-gradient(135deg,#132436 0%,#203952 100%);color:#fff;border:none;box-shadow:0 24px 52px rgba(17,28,43,.18)}
+.story-band h3{margin:0 0 10px;font-size:28px;line-height:1.18;letter-spacing:-.04em}
+.story-band p{margin:0;color:rgba(255,255,255,.82);max-width:68ch;line-height:1.75}
+.story-band .editorial-kicker{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:#ffc28f}
+.editorial-panel-contrast{background:linear-gradient(180deg,#fff8ee 0%,#fffefb 100%)}
+.editorial-panel-soft{background:linear-gradient(180deg,#fffefa 0%,#fff8f4 100%)}
+.example-card-expanded{padding:22px}
+.timeline-style{display:grid;gap:12px}
+.timeline-line{display:grid;grid-template-columns:54px 1fr;align-items:flex-start;gap:14px;padding:16px 16px 16px 14px}
+.timeline-index{display:grid;place-items:center;width:40px;height:40px;border-radius:14px;background:#15273a;color:#fff;font-size:12px;font-weight:800;letter-spacing:.06em}
+.timeline-line div{display:grid;gap:6px}
+.timeline-line div strong{font-size:15px;color:var(--secondary)}
+.timeline-line div span{color:var(--muted);line-height:1.68;font-size:14px}
+.city-section-band{padding-top:2px}
+@media (min-width:760px){
+  .city-overview-composition{grid-template-columns:.9fr 1.1fr}
+  .district-grid-rich{grid-template-columns:1fr}
+}
+@media (min-width:1020px){
+  .district-grid-rich{grid-template-columns:1fr 1fr}
+  .city-hero-magazine{grid-template-columns:.96fr 1.04fr}
+  .city-copy-magazine{padding:34px 30px 34px 30px}
+  .city-visual-stack{min-height:470px}
+  .city-overview-composition{grid-template-columns:.72fr 1.28fr}
+}
+@media (max-width:760px){
+  .city-visual-stack .route-card,.city-visual-stack .visual-stack-card{left:14px;right:14px;max-width:none}
+  .city-visual-stack .route-card{bottom:82px}
+  .city-visual-stack .visual-stack-card.light{bottom:18px}
+  .story-band h3{font-size:24px}
+  .timeline-line{grid-template-columns:44px 1fr;padding:14px}
+  .timeline-index{width:34px;height:34px;border-radius:12px}
+}
