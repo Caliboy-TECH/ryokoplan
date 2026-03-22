@@ -508,3 +508,40 @@ body.is-scrolled .top-bar{background:rgba(255,253,249,.94);box-shadow:0 12px 26p
   .loop-grid,.trip-loop-grid{grid-template-columns:1fr}
   .loop-feature-copy h3{font-size:22px}
 }
+
+
+/* Shared trip + community detail */
+.shared-trip-banner{margin-top:16px;padding:18px 18px 16px;border:1px solid rgba(25,44,79,.08);background:linear-gradient(180deg,rgba(255,247,240,.95),rgba(255,255,255,.98))}
+.shared-trip-banner.hidden{display:none}
+.shared-trip-banner-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.shared-trip-banner-note{display:flex;justify-content:space-between;gap:12px;margin-top:10px;font-size:12px;color:#6d7688}
+.shared-spotlight-card{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.3fr);gap:18px;padding:16px}
+.shared-spotlight-media img{width:100%;height:100%;min-height:230px;object-fit:cover;border-radius:22px}
+.shared-spotlight-copy{display:flex;flex-direction:column;gap:12px}
+.shared-spotlight-note{display:grid;gap:4px;padding:12px 14px;border-radius:16px;background:#f7f8fc;color:#4a5670;font-size:13px}
+.trip-detail-modal{position:fixed;inset:0;z-index:80;display:grid;place-items:end center}
+.trip-detail-modal.hidden{display:none}
+.trip-detail-backdrop{position:absolute;inset:0;background:rgba(11,19,34,.52);backdrop-filter:blur(5px)}
+.trip-detail-sheet{position:relative;z-index:1;width:min(980px,100% - 18px);max-height:min(88vh,980px);overflow:auto;margin:18px;padding:18px;border-radius:28px}
+.trip-detail-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border:none;border-radius:999px;background:#f3f5fa;font-size:24px;line-height:1;cursor:pointer}
+.trip-detail-hero{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.2fr);gap:18px;margin-bottom:16px}
+.trip-detail-media img{width:100%;height:100%;min-height:240px;object-fit:cover;border-radius:22px}
+.trip-detail-copy{display:flex;flex-direction:column;gap:12px;padding-top:8px}
+.trip-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.trip-detail-panel{padding:16px}
+.trip-detail-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.trip-detail-stats div{padding:12px 14px;border-radius:16px;background:#f7f8fc}
+.trip-detail-stats span{display:block;font-size:12px;color:#6d7688}
+.trip-detail-stats strong{display:block;margin-top:4px;font-size:18px;color:#1e2a43}
+.trip-detail-day-list,.trip-detail-branch-list{display:grid;gap:10px}
+.trip-detail-day{padding:12px 14px;border-radius:16px;background:#fafbfe}
+.trip-detail-day p{margin:6px 0 0;color:#667188;font-size:13px;line-height:1.5}
+.trip-detail-list{margin:8px 0 0;padding-left:18px;color:#57637b;display:grid;gap:8px}
+.trip-detail-branch{display:grid;gap:5px;padding:12px 14px;border-radius:16px;background:#f8f8fd;color:inherit;text-decoration:none}
+.trip-detail-branch span{color:#667188;font-size:13px}
+body.modal-open{overflow:hidden}
+@media (max-width: 860px){
+  .shared-spotlight-card,.trip-detail-hero,.trip-detail-grid{grid-template-columns:1fr}
+  .trip-detail-sheet{width:min(100% - 14px,100%);margin:10px;padding:14px;border-radius:22px}
+  .shared-trip-banner-note,.shared-trip-banner-head{display:grid;justify-content:stretch}
+}

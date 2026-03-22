@@ -397,6 +397,7 @@ window.RyokoPlanner = (() => {
     renderTips(data);
     renderBudget(data);
     renderChecklist(data);
+    renderSharedTripBanner(window.sharedTripSource || null);
     renderLoopSection(data);
     updateStickyCopy(data);
     updateShareMeta(data);
@@ -570,6 +571,75 @@ window.RyokoPlanner = (() => {
     printWindow.document.close();
   }
 
+  function sharedBannerCopy(){
+    return window.RyokoApp.lang === 'ko'
+      ? {
+          kicker:'공유받은 일정',
+          title:'누군가 만든 흐름에서 바로 시작했어요',
+          desc:'공유 링크로 들어온 일정입니다. 그대로 저장하거나, 내 취향에 맞게 다시 다듬을 수 있어요.',
+          openGuide:'도시 가이드 보기',
+          save:'내 여정에 저장',
+          duplicate:'이 흐름으로 다시 만들기',
+          source:'Shared trip context'
+        }
+      : {
+          kicker:'Shared trip',
+          title:'You started from someone else’s itinerary',
+          desc:'This plan came in through a shared link. Keep it as-is, save it to your vault, or reshape it into your own version.',
+          openGuide:'Read city guide',
+          save:'Save to My Trips',
+          duplicate:'Use as my base',
+          source:'Shared trip context'
+        };
+  }
+  function renderSharedTripBanner(payload){
+    const node = qs('sharedTripBanner');
+    if (!node) return;
+    if (!payload) {
+      node.classList.add('hidden');
+      node.innerHTML = '';
+      return;
+    }
+    const copy = sharedBannerCopy();
+    const data = payload.planData || payload;
+    const city = window.RyokoApp.getCityLoopData(payload.destination || data.destination || '') || null;
+    const guideHref = city ? window.RyokoApp.resolvePath(city.guide) : window.RyokoApp.navHref('magazine');
+    const chips = [payload.destination || data.destination, payload.duration || data.duration, payload.companion || data.companion, data.vibe, data.pace].filter(Boolean).slice(0,5)
+      .map(value => `<span class="trip-mini-chip">${escapeHtml(value)}</span>`).join('');
+    node.classList.remove('hidden');
+    node.innerHTML = `
+      <div class="shared-trip-banner-head">
+        <span class="eyebrow">${copy.kicker}</span>
+        <strong>${copy.title}</strong>
+      </div>
+      <p class="card-copy">${escapeHtml(normalizeSummary(data) || copy.desc)}</p>
+      <div class="trip-chip-row">${chips}</div>
+      <div class="shared-trip-banner-note">
+        <span>${copy.source}</span>
+        <strong>${escapeHtml(data.bestFor || payload.notes || '')}</strong>
+      </div>
+      <div class="card-actions">
+        <button class="secondary-btn" id="sharedBannerSaveBtn">${copy.save}</button>
+        <button class="ghost-btn" id="sharedBannerDuplicateBtn">${copy.duplicate}</button>
+        <a class="soft-btn" href="${guideHref}">${copy.openGuide}</a>
+      </div>`;
+    qs('sharedBannerSaveBtn')?.addEventListener('click', saveCurrentTrip);
+    qs('sharedBannerDuplicateBtn')?.addEventListener('click', () => {
+      const formPayload = {
+        destination: payload.destination || data.destination || '',
+        duration: payload.duration || data.duration || '',
+        companion: payload.companion || data.companion || '',
+        style: payload.style || data.style || '',
+        notes: payload.notes || normalizeSummary(data) || '',
+        tripMood: payload.tripMood || data.tripMood || 'balanced',
+        dayDensity: payload.dayDensity || data.dayDensity || 'balanced',
+        budgetMode: payload.budgetMode || data.budgetMode || 'balanced'
+      };
+      if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(formPayload);
+      document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  }
+
   function applyPresetFromQuery(){
     const params = new URLSearchParams(location.search);
     const destination = params.get('destination');
@@ -581,7 +651,8 @@ window.RyokoPlanner = (() => {
     if (!code) return;
     const payload = window.RyokoStorage.decodeShare(code);
     if (!payload) return;
-    window.currentTripPayload = payload;
+    window.sharedTripSource = { ...payload, importedFromLink: true };
+    window.currentTripPayload = { ...payload, sharedSource: 'link' };
     if (payload.destination) qs('destination').value = payload.destination;
     if (payload.notes) qs('notes').value = payload.notes;
     if (payload.tripMood) document.querySelectorAll('[data-pill-group="tripMood"]').forEach(btn => btn.classList.toggle('active', btn.dataset.pillValue === payload.tripMood));

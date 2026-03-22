@@ -132,6 +132,17 @@
 
 
 
+      <section class="section shared-trip-spotlight" id="sharedSpotlightSection">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Shared trip spotlight</span>
+            <h2 class="section-title">A shared itinerary should feel worth keeping</h2>
+            <p class="section-desc">Open the details, save it to your vault, or turn it into your own version without losing the original context.</p>
+          </div>
+        </div>
+        <div id="sharedSpotlight" class="shared-spotlight-card info-card"></div>
+      </section>
+
       <section class="section trip-loop-panel" id="tripLoopPanel">
         <div class="section-head">
           <div>
@@ -156,6 +167,13 @@
       </section>
 
       <div class="footer">Ryokoplan My Trips</div>
+    </div>
+      <div id="tripDetailModal" class="trip-detail-modal hidden" aria-hidden="true">
+      <div class="trip-detail-backdrop" data-close-detail></div>
+      <div class="trip-detail-sheet info-card">
+        <button class="trip-detail-close" type="button" data-close-detail aria-label="Close">×</button>
+        <div id="tripDetailContent"></div>
+      </div>
     </div>
   </main>
 
@@ -299,6 +317,7 @@
               <div class="trip-card-footer-note">${meta.bestFor || item.notes || ''}</div>
               <div class="card-actions trip-card-actions">
                 <a class="soft-btn" href="${shareUrl(item)}">${window.RyokoApp.t('trips.tripOpen')}</a>
+                <button class="ghost-btn" data-detail-mode="${mode}" data-detail="${item.id}">${window.RyokoApp.t('common.details') || 'Details'}</button>
                 <button class="ghost-btn" data-copy="${item.id}">${window.RyokoApp.t('trips.tripShare')}</button>
                 ${mode !== 'saved' ? `<button class="ghost-btn" data-save="${item.id}">${langCopy().saveAsMine}</button>` : `<button class="ghost-btn" data-duplicate="${item.id}">${window.RyokoApp.t('trips.tripDuplicate')}</button>`}
                 <button class="ghost-btn" data-delete-mode="${mode}" data-delete="${item.id}">${langCopy().remove}</button>
@@ -397,6 +416,122 @@
           return true;
         }
       }
+      function detailMeta(item){
+        const data = item.planData || {};
+        return {
+          days: Array.isArray(data.days) ? data.days.length : 0,
+          tips: Array.isArray(data.localTips) ? data.localTips.length : 0,
+          checklist: Array.isArray(data.checklist) ? data.checklist.length : 0
+        };
+      }
+      function renderSharedSpotlight(shared){
+        const node = $('sharedSpotlight');
+        const section = $('sharedSpotlightSection');
+        if (!node || !section) return;
+        const item = shared[0];
+        if (!item) {
+          section.classList.add('hidden');
+          return;
+        }
+        section.classList.remove('hidden');
+        const city = window.RyokoApp.getCityLoopData(item.destination) || { name:item.destination || 'Trip', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
+        const meta = detailMeta(item);
+        node.innerHTML = `
+          <div class="shared-spotlight-media"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.png'}" alt="${item.destination || 'Trip'}"></div>
+          <div class="shared-spotlight-copy">
+            <div class="trip-card-topline">
+              <div class="meta">${langCopy().tripShared}</div>
+              <div class="trip-card-date">${langCopy().lastUpdated} ${formatDate(getTimestamp(item))}</div>
+            </div>
+            <h3 class="section-title trip-tight-title">${item.title || item.destination || 'Trip'}</h3>
+            <p class="section-desc">${getMetaSummary(item) || 'A shared itinerary that can be saved, reopened, or turned into your own version.'}</p>
+            <div class="trip-chip-row">
+              ${[item.destination, item.duration, item.companion, item.planData?.vibe].filter(Boolean).map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}
+              <span class="trip-mini-chip">${meta.days} days</span>
+              <span class="trip-mini-chip">${meta.tips} tips</span>
+            </div>
+            <div class="shared-spotlight-note">
+              <strong>Why keep it?</strong>
+              <span>${item.importedFromLink ? 'It was imported from a shared link, so keeping it here makes it easier to revisit later.' : 'Shared trips become better when you can save them, compare them, and branch into your own version.'}</span>
+            </div>
+            <div class="card-actions">
+              <a class="primary-btn" href="${shareUrl(item)}">Open shared trip</a>
+              <button class="secondary-btn" data-detail-mode="shared" data-detail="${item.id}">${window.RyokoApp.t('common.details') || 'Details'}</button>
+              <button class="soft-btn" data-save="${item.id}">${langCopy().saveAsMine}</button>
+              <a class="soft-btn" href="../${city.guide}">Read ${city.name}</a>
+            </div>
+          </div>`;
+      }
+      function openDetailModal(item, mode){
+        const modal = $('tripDetailModal');
+        const content = $('tripDetailContent');
+        if (!modal || !content || !item) return;
+        const data = item.planData || {};
+        const city = window.RyokoApp.getCityLoopData(item.destination) || { name:item.destination || 'Trip', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
+        const related = window.RyokoApp.getRelatedCities(item.destination).slice(0,3);
+        const days = Array.isArray(data.days) ? data.days : [];
+        const dayPreview = days.slice(0,3).map(day => `<article class="trip-detail-day"><strong>${day.title || ('Day ' + day.day)}</strong><p>${(day.intro || '').slice(0,120)}</p></article>`).join('');
+        const tips = (Array.isArray(data.localTips) ? data.localTips : []).slice(0,3).map(t => `<li>${t}</li>`).join('');
+        const summary = getMetaSummary(item) || 'A trip you can reopen, save, or turn into a new plan.';
+        content.innerHTML = `
+          <div class="trip-detail-hero">
+            <div class="trip-detail-media"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.png'}" alt="${item.destination || 'Trip'}"></div>
+            <div class="trip-detail-copy">
+              <div class="meta">${tripModeLabel(mode)}</div>
+              <h2>${item.title || item.destination || 'Trip'}</h2>
+              <p>${summary}</p>
+              <div class="trip-chip-row">
+                ${[item.destination, item.duration, item.companion, data.vibe, data.pace, data.bestFor].filter(Boolean).slice(0,6).map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}
+              </div>
+              <div class="card-actions">
+                <a class="primary-btn" href="${shareUrl(item)}">Open trip</a>
+                ${mode !== 'saved' ? `<button class="secondary-btn" data-save="${item.id}">${langCopy().saveAsMine}</button>` : `<button class="secondary-btn" data-duplicate="${item.id}">${window.RyokoApp.t('trips.tripDuplicate')}</button>`}
+                <a class="soft-btn" href="../${city.guide}">Read ${city.name}</a>
+              </div>
+            </div>
+          </div>
+          <div class="trip-detail-grid">
+            <article class="info-card trip-detail-panel">
+              <h3>Trip snapshot</h3>
+              <div class="trip-detail-stats">
+                <div><span>Days</span><strong>${days.length || '—'}</strong></div>
+                <div><span>Tips</span><strong>${(data.localTips || []).length || '—'}</strong></div>
+                <div><span>Checklist</span><strong>${(data.checklist || []).length || '—'}</strong></div>
+                <div><span>Updated</span><strong>${formatDate(getTimestamp(item)) || '—'}</strong></div>
+              </div>
+              <p class="card-copy">${item.importedFromLink ? 'This one was imported from a shared Ryokoplan link and can now live inside your own trip vault.' : 'This trip is already inside your vault, so it is easy to reopen or branch from here.'}</p>
+            </article>
+            <article class="info-card trip-detail-panel">
+              <h3>Day rhythm preview</h3>
+              <div class="trip-detail-day-list">${dayPreview || '<p class="card-copy">No day preview available yet.</p>'}</div>
+            </article>
+            <article class="info-card trip-detail-panel">
+              <h3>Local tips preview</h3>
+              ${tips ? `<ul class="trip-detail-list">${tips}</ul>` : '<p class="card-copy">No extra local tips stored on this trip yet.</p>'}
+            </article>
+            <article class="info-card trip-detail-panel">
+              <h3>Branch next</h3>
+              <div class="trip-detail-branch-list">
+                <a class="trip-detail-branch" href="../${city.example}">
+                  <strong>${city.name} sample route</strong>
+                  <span>Use a sample to compare against this shared trip.</span>
+                </a>
+                ${related.map(rel => `<a class="trip-detail-branch" href="../${rel.guide}"><strong>${rel.name}</strong><span>${rel.vibe} is a strong next read after ${city.name}.</span></a>`).join('')}
+              </div>
+            </article>
+          </div>`;
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+      }
+      function closeDetailModal(){
+        const modal = $('tripDetailModal');
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      }
+
       function bindActions(saved, recent, shared){
         document.querySelectorAll('[data-delete]').forEach(btn => btn.addEventListener('click', () => {
           const id = btn.dataset.delete;
@@ -417,6 +552,11 @@
           window.RyokoStorage.duplicateTrip(btn.dataset.duplicate);
           render();
         }));
+        document.querySelectorAll('[data-detail]').forEach(btn => btn.addEventListener('click', () => {
+          const pool = [...saved, ...recent, ...shared];
+          const item = pool.find(x => x.id === btn.dataset.detail);
+          openDetailModal(item, btn.dataset.detailMode || 'saved');
+        }));
         document.querySelectorAll('[data-copy]').forEach(btn => btn.addEventListener('click', async () => {
           const item = [...saved, ...recent, ...shared].find(x => x.id === btn.dataset.copy);
           if (!item) return;
@@ -424,6 +564,7 @@
           const msg = $('sharedImportMessage');
           msg.textContent = langCopy().linkCopied;
         }));
+        document.querySelectorAll('[data-close-detail]').forEach(btn => btn.onclick = closeDetailModal);
         $('sharedImportBtn').onclick = () => {
           const payload = parseSharedInput($('sharedImportInput').value);
           const msg = $('sharedImportMessage');
@@ -510,6 +651,7 @@
 
         renderContinueCard(saved, recent, shared);
         renderCollections(saved, recent, shared);
+        renderSharedSpotlight(shared);
         renderTripLoop(saved, recent, shared);
         renderModeFilters();
         bindActions(saved, recent, shared);
@@ -526,6 +668,9 @@
 
       render();
       activeTab('saved');
+      window.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeDetailModal();
+      });
       window.addEventListener('ryoko:langchange', render);
     });
   </script>
