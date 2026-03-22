@@ -11,7 +11,7 @@ window.RyokoPlanner = (() => {
       vibe: 'Layered, stylish, urban',
       pace: 'Balanced with built-in breaks',
       bestFor: 'First-timers who still want local texture',
-      tripMood: 'Editorial city glow',
+      tripMood: 'Magazine-led city glow',
       dayDensity: 'Balanced days',
       budgetMode: 'Balanced spend',
       budgetSummary: 'A mid-range Tokyo trip with one nicer dinner, café stops, and efficient train rides across the city.',
@@ -178,7 +178,7 @@ window.RyokoPlanner = (() => {
   }
   function updateShareMeta(data){
     const title = data?.title || 'Ryokoplan';
-    const desc = normalizeSummary(data) || 'Read the city. Plan the trip.';
+    const desc = normalizeSummary(data) || 'Read the city. Shape a better trip.';
     document.title = `${title} — Ryokoplan`;
     const entries = {
       'meta[name="description"]': desc,
@@ -333,9 +333,9 @@ window.RyokoPlanner = (() => {
     const firstPlace = normalizePlaces(firstDay)[0]?.name || textValue(firstDay.title, uiCopy('첫날 시작', 'Opening day'));
     const lastMove = normalizePlaces(lastDay).slice(-1)[0]?.name || textValue(lastDay.title, uiCopy('마지막 날', 'Final day'));
     return [
-      { kicker: uiCopy('Open strong', 'Open strong'), text: uiCopy(`${firstPlace}부터 시작해 첫 인상을 깔끔하게 잡습니다.`, `Start around ${firstPlace} to set the opening rhythm cleanly.`) },
-      { kicker: uiCopy('Protect energy', 'Protect energy'), text: buildEditorNote(data) },
-      { kicker: uiCopy('Save this for', 'Save this for'), text: textValue(data.bestFor, uiCopy('가볍게 읽히는 도시 루트를 원하는 여행자', 'Travelers who want a smoother city route.')) }
+      { kicker: uiCopy('첫 장면', 'First scene'), text: uiCopy(`${firstPlace}부터 시작해 도시의 첫인상을 자연스럽게 잡습니다.`, `Start around ${firstPlace} to set the city’s opening mood cleanly.`) },
+      { kicker: uiCopy('에너지 배분', 'Energy line'), text: buildEditorNote(data) },
+      { kicker: uiCopy('잘 맞는 여행자', 'Best suited to'), text: textValue(data.bestFor, uiCopy('도시를 무리 없이 읽고 싶은 여행자', 'Travelers who want a smoother, better-paced city route.')) }
     ];
   }
   function renderSignature(data){
@@ -506,7 +506,7 @@ window.RyokoPlanner = (() => {
       <article class="loop-card info-card">
         <div class="loop-card-top"><span class="eyebrow">${escapeHtml(city.country)}</span><span class="loop-card-vibe">${escapeHtml(city.vibe)}</span></div>
         <h3>${escapeHtml(city.name)}</h3>
-        <p>Read the city guide first, then turn that mood into a cleaner route.</p>
+        <p>Start from the city guide, then turn that mood into a calmer, cleaner route.</p>
         <div class="card-actions">
           <a class="soft-btn" href="${window.RyokoApp.resolvePath(city.guide)}">City guide</a>
           <a class="ghost-btn" href="${window.RyokoApp.resolvePath(city.example)}">Sample route</a>
@@ -633,7 +633,7 @@ window.RyokoPlanner = (() => {
           pdfTag: 'Ryokoplan · Editorial PDF',
           vibe: 'Vibe', pace: 'Pace', bestFor: 'Best for',
           quickRhythm: 'Rhythm', quickShape: 'Route shape', quickWorks: 'Works best for',
-          editorsTake: 'Editor’s take', dayByDay: 'Day by day', localTips: 'Local tips', budget: 'Budget', checklist: 'Checklist',
+          editorsTake: uiCopy('편집 메모','Editorial note'), dayByDay: 'Day by day', localTips: 'Local tips', budget: 'Budget', checklist: 'Checklist',
           cityCover: 'City cover', routeMood: 'Route mood', nextBranch: 'Next branch',
           localTip: 'Local tip', generatedOn: '생성일',
           classicRouting: 'Classic routing', localModeOn: 'Local mode on',
@@ -645,7 +645,7 @@ window.RyokoPlanner = (() => {
           pdfTag: 'Ryokoplan · Editorial PDF',
           vibe: 'Vibe', pace: 'Pace', bestFor: 'Best for',
           quickRhythm: 'Rhythm', quickShape: 'Route shape', quickWorks: 'Works best for',
-          editorsTake: 'Editor’s take', dayByDay: 'Day by day', localTips: 'Local tips', budget: 'Budget', checklist: 'Checklist',
+          editorsTake: uiCopy('편집 메모','Editorial note'), dayByDay: 'Day by day', localTips: 'Local tips', budget: 'Budget', checklist: 'Checklist',
           cityCover: 'City cover', routeMood: 'Route mood', nextBranch: 'Next branch',
           localTip: 'Local tip', generatedOn: 'Generated on',
           classicRouting: 'Classic routing', localModeOn: 'Local mode on',

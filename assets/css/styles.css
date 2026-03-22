@@ -974,3 +974,112 @@ html,body{background:
   .result-day-rail{grid-template-columns:1fr}
   .day-rail-chip{padding:15px 14px}
 }
+
+
+:root{
+  --editorial-serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+}
+.hero-copy-magazine h1,
+.city-detail-copy h1,
+.section-head .section-title,
+.result-main-title,
+.cover-story-body h3,
+.collection-card h3,
+.footer-cta h2{
+  font-family:var(--editorial-serif);
+  letter-spacing:-.03em;
+}
+.hero-copy-magazine h1,
+.city-detail-copy h1{
+  max-width:11ch;
+  text-wrap:balance;
+}
+.cover-kicker,
+.collection-kicker,
+.editorial-kicker,
+.page-signal-copy strong,
+.meta-card .meta-label,
+.result-fact-card span,
+.editor-note-kicker{
+  letter-spacing:.09em;
+}
+.page-signal-card{
+  background:linear-gradient(180deg, rgba(255,250,244,.94), rgba(255,253,249,.98));
+  box-shadow:0 14px 36px rgba(22,34,48,.05);
+}
+.page-signal-copy span{max-width:52ch}
+.hero-magazine .hero-copy-magazine{
+  background:linear-gradient(180deg,#fffdf9 0%,#fff7ef 52%,#fff3ea 100%);
+}
+.hero-copy-magazine .hero-desc,
+.city-detail-lead,
+.section-desc,
+.card-copy,
+.collection-card p{
+  color:#556270;
+}
+.primary-btn{
+  box-shadow:0 14px 30px rgba(229,103,50,.22);
+}
+.secondary-btn,
+.ghost-btn,
+.soft-btn{
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.secondary-btn:hover,
+.ghost-btn:hover,
+.soft-btn:hover,
+.nav-chip:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 24px rgba(21,39,58,.08);
+}
+.cover-story-card,
+.editorial-panel,
+.dispatch-card,
+.result-hero-card,
+.day-card{
+  box-shadow:0 16px 36px rgba(23,37,55,.055);
+}
+.result-editor-note{
+  background:linear-gradient(180deg,rgba(18,33,50,.98) 0%,rgba(28,48,71,.96) 100%);
+}
+.result-editor-note p{font-size:14.5px}
+.result-visual-card .story-kicker,
+.story-kicker,
+.caption-kicker{
+  font-weight:900;
+  letter-spacing:.09em;
+}
+.cover-story-body h3,
+.result-main-title,
+.city-overview-lead .section-title{
+  text-wrap:balance;
+}
+.city-editor-note,
+.result-editor-note,
+.dispatch-card.info-card{
+  position:relative;
+  overflow:hidden;
+}
+.city-editor-note::after,
+.result-editor-note::after,
+.dispatch-card.info-card::after{
+  content:"";
+  position:absolute;
+  inset:auto -30px -34px auto;
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(240,124,76,.16) 0%, rgba(240,124,76,0) 70%);
+  pointer-events:none;
+}
+.top-story-card strong,
+.hero-stat-card strong,
+.summary-line strong{
+  font-family:var(--editorial-serif);
+}
+@media (max-width:759px){
+  .hero-copy-magazine h1,
+  .city-detail-copy h1,
+  .result-main-title{max-width:none}
+}
