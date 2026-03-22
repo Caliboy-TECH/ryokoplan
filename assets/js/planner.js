@@ -574,17 +574,75 @@ window.RyokoPlanner = (() => {
     const printWindow = window.open('', '_blank');
     if (!printWindow || !window.currentTripPayload) return alert('Generate a plan first.');
     const data = window.currentTripPayload.planData || {};
-    const destination = escapeHtml(window.currentTripPayload.destination || data.destination || 'Trip');
-    const title = escapeHtml(data.title || `${destination} Trip Plan`);
+    const lang = window.RyokoApp?.lang || 'en';
+    const copy = lang === 'ko'
+      ? {
+          pdfTag: 'Ryokoplan · Editorial PDF',
+          vibe: 'Vibe', pace: 'Pace', bestFor: 'Best for',
+          quickRhythm: 'Rhythm', quickShape: 'Route shape', quickWorks: 'Works best for',
+          editorsTake: 'Editor’s take', dayByDay: 'Day by day', localTips: 'Local tips', budget: 'Budget', checklist: 'Checklist',
+          cityCover: 'City cover', routeMood: 'Route mood', nextBranch: 'Next branch',
+          localTip: 'Local tip', generatedOn: '생성일',
+          classicRouting: 'Classic routing', localModeOn: 'Local mode on',
+          cityCoverText: '이 여정 전체의 톤을 먼저 잡아주는 커버 컷입니다.',
+          routeMoodText: '첫날의 리듬과 주요 앵커를 한 번에 읽을 수 있게 정리한 비주얼 노트입니다.',
+          nextBranchText: '다음 도시로 자연스럽게 이어질 수 있는 추천 가지입니다.'
+        }
+      : {
+          pdfTag: 'Ryokoplan · Editorial PDF',
+          vibe: 'Vibe', pace: 'Pace', bestFor: 'Best for',
+          quickRhythm: 'Rhythm', quickShape: 'Route shape', quickWorks: 'Works best for',
+          editorsTake: 'Editor’s take', dayByDay: 'Day by day', localTips: 'Local tips', budget: 'Budget', checklist: 'Checklist',
+          cityCover: 'City cover', routeMood: 'Route mood', nextBranch: 'Next branch',
+          localTip: 'Local tip', generatedOn: 'Generated on',
+          classicRouting: 'Classic routing', localModeOn: 'Local mode on',
+          cityCoverText: 'The cover frame that sets the tone of this itinerary first.',
+          routeMoodText: 'A visual note that lets you read day one rhythm and key anchors at a glance.',
+          nextBranchText: 'A natural next city branch to keep the reading-and-saving loop moving.'
+        };
+    const rawDestination = window.currentTripPayload.destination || data.destination || 'Trip';
+    const destination = escapeHtml(rawDestination);
+    const title = escapeHtml(data.title || `${rawDestination} Trip Plan`);
     const summary = escapeHtml(normalizeSummary(data));
     const budgetSummary = escapeHtml(textValue(data.budgetSummary, ''));
-    const signature = [textValue(data.tripMood,''), textValue(data.dayDensity,''), textValue(data.budgetMode,''), window.currentTripPayload.localMode ? 'Local mode on' : 'Classic routing'].filter(Boolean).join(' · ');
-    const generatedAt = new Date().toLocaleDateString(window.RyokoApp.lang === 'ko' ? 'ko-KR' : 'en-US', { year:'numeric', month:'long', day:'numeric' });
+    const signature = [
+      textValue(data.tripMood,''),
+      textValue(data.dayDensity,''),
+      textValue(data.budgetMode,''),
+      window.currentTripPayload.localMode ? copy.localModeOn : copy.classicRouting
+    ].filter(Boolean).join(' · ');
+    const generatedAt = new Date().toLocaleDateString(lang === 'ko' ? 'ko-KR' : 'en-US', { year:'numeric', month:'long', day:'numeric' });
+    const quickFacts = [
+      { label: copy.quickRhythm, value: textValue(data.pace, '-') },
+      { label: copy.quickShape, value: summarizeRouteShape(data) },
+      { label: copy.quickWorks, value: textValue(data.bestFor, '-') }
+    ].map(item => `<div class="meta-card quick"><span class="meta-label">${escapeHtml(item.label)}</span><strong>${escapeHtml(item.value)}</strong></div>`).join('');
     const metaCards = [
-      { label: 'Vibe', value: textValue(data.vibe, '-') },
-      { label: 'Pace', value: textValue(data.pace, '-') },
-      { label: 'Best for', value: textValue(data.bestFor, '-') }
+      { label: copy.vibe, value: textValue(data.vibe, '-') },
+      { label: copy.pace, value: textValue(data.pace, '-') },
+      { label: copy.bestFor, value: textValue(data.bestFor, '-') }
     ].map(item => `<div class="meta-card"><span class="meta-label">${escapeHtml(item.label)}</span><strong>${escapeHtml(item.value)}</strong></div>`).join('');
+    const editorNote = escapeHtml(buildEditorNote(data));
+    const coverImage = window.RyokoApp.resolvePath(cityImageFor(rawDestination));
+    const routeMoodImage = window.RyokoApp.resolvePath(exampleImageFor(rawDestination));
+    const related = window.RyokoApp.getRelatedCities(rawDestination)[0] || window.RyokoApp.getCityLoopData(rawDestination) || { name: rawDestination, image: cityImageFor(rawDestination), vibe:'editorial route' };
+    const relatedName = textValue(related.name, rawDestination);
+    const relatedImage = window.RyokoApp.resolvePath(related.image || cityImageFor(relatedName));
+    const dayOne = data.days?.[0] || {};
+    const dayOnePlaces = normalizePlaces(dayOne).slice(0,3).map(place => place.name).join(' · ');
+    const visualCards = [
+      { kicker: copy.cityCover, title: rawDestination, text: textValue(data.summary, copy.cityCoverText), image: coverImage },
+      { kicker: copy.routeMood, title: textValue(dayOne.title, lang === 'ko' ? '첫날의 리듬' : 'Opening rhythm'), text: dayOnePlaces || copy.routeMoodText, image: routeMoodImage },
+      { kicker: copy.nextBranch, title: lang === 'ko' ? `${relatedName}까지 이어보기` : `Branch into ${relatedName}`, text: lang === 'ko' ? `${textValue(related.vibe, 'editorial route')} 톤의 도시로 다음 탐색을 이어갈 수 있습니다.` : `This ${textValue(related.vibe, 'editorial route')} city is the cleanest next branch from here.`, image: relatedImage }
+    ].map(card => `
+      <article class="story-card">
+        <div class="story-image" style="background-image:linear-gradient(180deg, rgba(17,27,45,0.08), rgba(17,27,45,0.58)), url('${card.image}')"></div>
+        <div class="story-body">
+          <span class="story-kicker">${escapeHtml(card.kicker)}</span>
+          <h3>${escapeHtml(card.title)}</h3>
+          <p>${escapeHtml(card.text)}</p>
+        </div>
+      </article>`).join('');
     const daysHtml = (data.days || []).map(d => {
       const places = normalizePlaces(d).map((p, idx) => `
         <div class="place-row">
@@ -604,80 +662,127 @@ window.RyokoPlanner = (() => {
             </div>
           </div>
           <div class="places">${places}</div>
-          ${d.localTip ? `<div class="tip-inline"><strong>Local tip</strong><span>${escapeHtml(textValue(d.localTip, ''))}</span></div>` : ''}
+          ${d.localTip ? `<div class="tip-inline"><strong>${escapeHtml(copy.localTip)}</strong><span>${escapeHtml(textValue(d.localTip, ''))}</span></div>` : ''}
         </section>`;
     }).join('');
     const budgetRows = (Array.isArray(data.budgetBreakdown) ? data.budgetBreakdown.map(x => [x.category, x.amount]) : Object.entries(data.budgetBreakdown || {}))
       .map(([k,v])=>`<div class="budget-row"><span>${escapeHtml(budgetLabel(k))}</span><strong>${escapeHtml(v)}</strong></div>`).join('');
-    const tipsHtml = (data.localTips || []).map(i => `<div class="list-row"><span class="dot">•</span><span>${escapeHtml(i)}</span></div>`).join('');
-    const checklistHtml = (data.checklist || []).map(i => `<div class="list-row"><span class="dot">✓</span><span>${escapeHtml(i)}</span></div>`).join('');
+    const tipsSource = (data.localTips || []).length ? data.localTips : [lang === 'ko' ? '이동 사이에 15분 정도의 여백을 남겨두면 전체 리듬이 훨씬 좋아집니다.' : 'Leave a 15-minute pocket between anchors to keep the route feeling light.'];
+    const checklistSource = (data.checklist || []).length ? data.checklist : [lang === 'ko' ? '교통/영업시간을 마지막으로 한 번 더 확인하세요.' : 'Do one last check on transport timing and opening hours.'];
+    const tipsHtml = tipsSource.map(i => `<div class="list-row"><span class="dot">•</span><span>${escapeHtml(i)}</span></div>`).join('');
+    const checklistHtml = checklistSource.map(i => `<div class="list-row"><span class="dot">✓</span><span>${escapeHtml(i)}</span></div>`).join('');
     printWindow.document.write(`<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>${title}</title>
 <style>
-  :root{--bg:#fffdf9;--paper:#ffffff;--ink:#15273a;--muted:#667085;--line:#e8dfd1;--soft:#f7f3ec;--soft2:#fff5eb;--coral:#f07c4c}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif;line-height:1.6}
-  .page{padding:28px}
-  .cover{padding:28px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,#fffdf9 0%,#f7f3ec 100%)}
+  :root{--bg:#fcfaf6;--paper:#ffffff;--ink:#15273a;--muted:#667085;--line:#e7dfd3;--soft:#f8f3eb;--soft2:#fff4ea;--navy:#17324f;--coral:#f07c4c;--blue:#edf3f7}
+  *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif;line-height:1.58}
+  .page{padding:26px}
+  .cover{padding:26px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,#fffdf9 0%,#f7f2ea 100%)}
+  .cover-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:stretch}
+  .cover-copy{display:flex;flex-direction:column;justify-content:space-between}
   .eyebrow{display:inline-block;padding:8px 12px;border-radius:999px;background:var(--soft2);color:#b96732;font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
-  h1{margin:14px 0 10px;font-size:30px;line-height:1.12}
+  h1{margin:14px 0 10px;font-size:30px;line-height:1.08}
   .summary{margin:0;color:var(--muted);font-size:15px}
-  .meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  .signature{margin-top:10px;font-weight:700;color:#9a734b}
+  .hero-visual{min-height:280px;border-radius:24px;background-size:cover;background-position:center;position:relative;overflow:hidden}
+  .hero-note{position:absolute;left:16px;right:16px;bottom:16px;padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.7)}
+  .hero-note .meta-label{margin-bottom:4px}
+  .meta-grid,.facts-grid,.story-grid{display:grid;gap:12px}
+  .meta-grid{grid-template-columns:repeat(3,1fr);margin-top:18px}
+  .facts-grid{grid-template-columns:repeat(3,1fr);margin-top:16px}
   .meta-card{padding:14px;border-radius:18px;background:#fff;border:1px solid var(--line)}
-  .meta-label{display:block;font-size:11px;font-weight:700;color:#9a734b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+  .meta-card.quick{background:linear-gradient(180deg,#fffdf9 0%,#fff7ef 100%)}
+  .meta-label,.story-kicker{display:block;font-size:11px;font-weight:700;color:#9a734b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
   .section{margin-top:18px;padding:20px;border:1px solid var(--line);border-radius:24px;background:var(--paper)}
+  .section.dark{background:linear-gradient(180deg,#18324f 0%,#102033 100%);color:#f8fafc;border-color:#17324f}
   .section h2{margin:0 0 12px;font-size:20px}
-  .day-block{padding:16px;border-radius:18px;background:linear-gradient(180deg,#fffdf9 0%,#fff8f0 100%);border:1px solid var(--line);margin-bottom:14px}
-  .day-top{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:flex-start}
+  .section.dark h2,.section.dark p,.section.dark .story-kicker{color:#f8fafc}
+  .story-grid{grid-template-columns:repeat(3,1fr)}
+  .story-card{border-radius:22px;overflow:hidden;background:#fff;border:1px solid var(--line)}
+  .story-image{height:160px;background-size:cover;background-position:center}
+  .story-body{padding:14px}
+  .story-body h3{margin:0 0 6px;font-size:18px;line-height:1.22}
+  .story-body p{margin:0;color:var(--muted);font-size:13px}
+  .section.dark .story-card{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12)}
+  .section.dark .story-body p{color:#d6e3f0}
+  .day-block{padding:16px;border-radius:18px;background:linear-gradient(180deg,#fffdf9 0%,#fff8f0 100%);border:1px solid var(--line);margin-bottom:14px;position:relative;overflow:hidden}
+  .day-block::before{content:"";position:absolute;left:12px;top:16px;bottom:16px;width:3px;border-radius:999px;background:linear-gradient(180deg,#f4c8ab,#f07c4c)}
+  .day-top{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:flex-start;padding-left:12px}
   .day-chip{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:700;color:#9a734b}
   .day-block h3{margin:0 0 6px;font-size:18px;line-height:1.3}
   .day-intro{margin:0;color:var(--muted);font-size:14px}
-  .places{display:grid;gap:10px;margin-top:14px}
+  .places{display:grid;gap:10px;margin-top:14px;padding-left:12px}
   .place-row{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:12px;border-radius:16px;background:#fff;border:1px solid #f0e8dc}
   .place-no{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--soft2);border:1px solid #f4d6bc;font-weight:700;color:#b96732;font-size:12px}
   .place-row p{margin:4px 0 0;color:var(--muted);font-size:13px}
-  .tip-inline{margin-top:12px;padding:12px 14px;border-radius:16px;background:#edf3f7}
+  .tip-inline{margin:12px 0 0 12px;padding:12px 14px;border-radius:16px;background:var(--blue)}
   .tip-inline strong{display:block;margin-bottom:4px}
   .budget-row,.list-row{display:grid;grid-template-columns:1fr auto;gap:16px;padding:12px 0;border-bottom:1px solid #f0e8dc}
   .list-row{grid-template-columns:auto 1fr;align-items:start}
   .dot{font-weight:700;color:#b96732}
   .budget-note{margin:0 0 8px;color:var(--muted)}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   .footer-note{margin-top:18px;color:var(--muted);font-size:12px;text-align:right}
-  @media print{.page{padding:18px}}
+  @page{size:A4;margin:12mm}
+  @media print{.page{padding:0}.section,.cover,.story-card,.day-block{break-inside:avoid}.story-grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
   <main class="page">
     <section class="cover">
-      <span class="eyebrow">Ryokoplan · Planner PDF</span>
-      <h1>${title}</h1>
-      <p class="summary">${summary}</p>
-      ${signature ? `<p class="summary" style="margin-top:8px;font-weight:700;color:#9a734b">${escapeHtml(signature)}</p>` : ''}
-      <div class="meta-grid">${metaCards}</div>
+      <div class="cover-grid">
+        <div class="cover-copy">
+          <div>
+            <span class="eyebrow">${escapeHtml(copy.pdfTag)}</span>
+            <h1>${title}</h1>
+            <p class="summary">${summary}</p>
+            ${signature ? `<p class="summary signature">${escapeHtml(signature)}</p>` : ''}
+            <div class="facts-grid">${quickFacts}</div>
+          </div>
+          <div>
+            <div class="meta-grid">${metaCards}</div>
+          </div>
+        </div>
+        <div class="hero-visual" style="background-image:linear-gradient(180deg, rgba(16,23,38,0.06), rgba(16,23,38,0.58)), url('${coverImage}')">
+          <div class="hero-note">
+            <span class="meta-label">${escapeHtml(copy.editorsTake)}</span>
+            <strong>${escapeHtml(rawDestination)} editorial flow</strong>
+            <p class="summary" style="margin-top:6px">${editorNote}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section dark">
+      <h2>${lang === 'ko' ? 'Visual story' : 'Visual story'}</h2>
+      <p>${lang === 'ko' ? '도시 커버, 이번 루트의 분위기, 그리고 다음 도시까지 한 번에 읽을 수 있는 PDF용 스토리 패키지입니다.' : 'A PDF-ready story package that keeps the city cover, current route mood, and next branch on one spread.'}</p>
+      <div class="story-grid">${visualCards}</div>
     </section>
     <section class="section">
-      <h2>Day by Day</h2>
+      <h2>${escapeHtml(copy.dayByDay)}</h2>
       ${daysHtml}
     </section>
-    <section class="section">
-      <h2>Local Tips</h2>
-      ${tipsHtml}
+    <section class="split">
+      <section class="section">
+        <h2>${escapeHtml(copy.localTips)}</h2>
+        ${tipsHtml}
+      </section>
+      <section class="section">
+        <h2>${escapeHtml(copy.checklist)}</h2>
+        ${checklistHtml}
+      </section>
     </section>
     <section class="section">
-      <h2>Budget</h2>
+      <h2>${escapeHtml(copy.budget)}</h2>
       <p class="budget-note">${budgetSummary}</p>
       ${budgetRows}
     </section>
-    <section class="section">
-      <h2>Checklist</h2>
-      ${checklistHtml}
-    </section>
-    <div class="footer-note">${escapeHtml(destination)} · Generated on ${escapeHtml(generatedAt)} · Ryokoplan</div>
+    <div class="footer-note">${destination} · ${escapeHtml(copy.generatedOn)} ${escapeHtml(generatedAt)} · Ryokoplan</div>
   </main>
-<script>window.onload=()=>setTimeout(()=>window.print(),220)<\/script>
+<script>window.onload=()=>setTimeout(()=>window.print(),260)<\/script>
 </body>
 </html>`);
     printWindow.document.close();
