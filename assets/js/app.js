@@ -322,6 +322,40 @@ window.RyokoApp = (() => {
           </article>
         </div>
       </section>
+      <section class="section magazine-cover-strip">
+        <div class="section-head">
+          <div><span class="eyebrow">${lang === 'ko' ? 'Front page edit' : 'Front page edit'}</span><h2 class="section-title">${lang === 'ko' ? '이번 주 매거진 커버' : 'This week's magazine cover'}</h2><p class="section-desc">${lang === 'ko' ? '도시를 읽고 싶게 만드는 첫 화면 리듬을 더 강하게 잡았습니다.' : 'The first screen now behaves more like an editorial desk than a simple destination grid.'}</p></div>
+        </div>
+        <div class="cover-desk-grid cover-desk-grid-magazine">
+          <article class="cover-story-card cover-story-card-large">
+            <div class="cover-story-media"><img src="../assets/images/hero/main-hero-japan.png" alt="Japan editorial cover"></div>
+            <div class="cover-story-body">
+              <span class="collection-kicker">Japan edit</span>
+              <h3>${lang === 'ko' ? '도시를 리듬과 온도로 읽는 방식' : 'Reading cities by rhythm, pace, and temperature'}</h3>
+              <p>${lang === 'ko' ? 'Tokyo, Osaka, Kyoto, Fukuoka를 빠른 도시와 느린 도시의 균형으로 편집했습니다.' : 'Tokyo, Osaka, Kyoto, and Fukuoka are framed through contrasting pace instead of a flat list.'}</p>
+              <div class="cta-row"><a class="primary-btn" href="../city/tokyo.html">${lang === 'ko' ? '도시 가이드 열기' : 'Open city guides'}</a><a class="secondary-btn" href="../example/tokyo-3n4d-first-trip.html">${lang === 'ko' ? '샘플 루트 보기' : 'See a sample route'}</a></div>
+            </div>
+          </article>
+          <div class="cover-desk-side">
+            <article class="cover-story-card cover-story-card-compact">
+              <div class="cover-story-media compact"><img src="../assets/images/hero/main-hero-korea.png" alt="Korea editorial cover"></div>
+              <div class="cover-story-body compact">
+                <span class="collection-kicker">Korea edit</span>
+                <h3>${lang === 'ko' ? 'Seoul부터 Jeju까지, 성격이 다른 도시들' : 'From Seoul to Jeju, cities with different tones'}</h3>
+                <p>${lang === 'ko' ? '친구, 커플, 가족, 슬로우 트립까지 다양한 출발점을 더 직관적으로 보여줍니다.' : 'Different starting points for friends, couples, families, and slow trips are clearer at a glance.'}</p>
+              </div>
+            </article>
+            <article class="dispatch-card info-card">
+              <span class="collection-kicker">${lang === 'ko' ? 'Desk notes' : 'Desk notes'}</span>
+              <div class="dispatch-lines">
+                <div><strong>${lang === 'ko' ? '도시 무드' : 'City mood'}</strong><span>${lang === 'ko' ? 'Fast city, slow reset, food-led, coast mode로 먼저 좁힙니다.' : 'Filter first by fast city, slow reset, food-led, or coast mode.'}</span></div>
+                <div><strong>${lang === 'ko' ? '샘플 흐름' : 'Sample flow'}</strong><span>${lang === 'ko' ? '좋은 일정이 어떤 템포로 보이는지 먼저 읽게 합니다.' : 'Let readers see how a strong route actually flows before they generate.'}</span></div>
+                <div><strong>${lang === 'ko' ? '플래너 연결' : 'Planner bridge'}</strong><span>${lang === 'ko' ? '마음에 드는 도시와 무드에서 바로 플래너로 연결됩니다.' : 'Every strong city or route can jump directly into Planner.'}</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
       <section class="section magazine-loop-section">
         <div class="section-head"><div><span class="eyebrow">${data.loopEyebrow}</span><h2 class="section-title">${data.loopTitle}</h2><p class="section-desc">${data.loopDesc}</p></div></div>
         <div class="magazine-loop-grid"><article class="loop-main-card info-card" id="magazineLoopMain"></article><aside class="loop-side-card info-card" id="magazineLoopSide"></aside></div>

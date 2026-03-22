@@ -841,3 +841,50 @@ html,body{background:
   .timeline-line{grid-template-columns:44px 1fr;padding:14px}
   .timeline-index{width:34px;height:34px;border-radius:12px}
 }
+
+
+.home-cover-desk,.magazine-cover-strip{position:relative}
+.cover-desk-grid{display:grid;grid-template-columns:1.5fr .95fr;gap:16px}
+.cover-desk-side{display:grid;gap:16px}
+.cover-story-card{background:linear-gradient(180deg,#fffdfa 0%,#fff7ef 100%);border:1px solid var(--line);border-radius:30px;box-shadow:var(--shadow);overflow:hidden;display:grid}
+.cover-story-card-large{grid-template-columns:1.08fr .92fr;min-height:420px}
+.cover-story-card-compact{grid-template-columns:.96fr 1.04fr;min-height:200px}
+.cover-story-media{position:relative;min-height:100%;overflow:hidden;background:#eadfce}
+.cover-story-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,25,38,.04) 0%,rgba(12,25,38,.12) 100%)}
+.cover-story-media img{width:100%;height:100%;object-fit:cover}
+.cover-story-media.compact{min-height:220px}
+.cover-story-body{padding:28px 24px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.cover-story-body.compact{padding:22px 20px}
+.cover-story-body h3{margin:0;font-size:clamp(28px,3.4vw,40px);line-height:1.02;letter-spacing:-.04em}
+.cover-story-body.compact h3{font-size:clamp(22px,2.6vw,30px)}
+.cover-story-body p{margin:0;color:var(--muted);font-size:15px;line-height:1.7}
+.dispatch-card{padding:20px 18px;border-radius:28px;background:linear-gradient(180deg,#fff 0%,#f7f3ec 100%)}
+.dispatch-lines{display:grid;gap:14px;margin-top:14px}
+.dispatch-lines div{display:grid;gap:5px;padding:14px 0;border-top:1px solid rgba(232,223,209,.82)}
+.dispatch-lines div:first-child{padding-top:0;border-top:none}
+.dispatch-lines strong{font-size:14px;letter-spacing:-.01em}
+.dispatch-lines span{color:var(--muted);font-size:14px;line-height:1.6}
+.top-story-ribbon{margin-top:2px}
+.home-cover-desk + .top-story-ribbon{margin-top:4px}
+.magazine-cover-strip .section-head,.home-cover-desk .section-head{margin-bottom:14px}
+.cover-desk-grid-magazine .cover-story-card{background:linear-gradient(180deg,#fffcf7 0%,#fff6ed 100%)}
+.cover-desk-grid-magazine .cover-story-card-large{min-height:390px}
+.cover-desk-grid-magazine .dispatch-card{background:linear-gradient(180deg,#ffffff 0%,#f1efe8 100%)}
+.hero-magazine .hero-copy-magazine{background:linear-gradient(180deg,#fffdfa 0%,#fff6ee 100%)}
+.hero-magazine .hero-visual-magazine{background:linear-gradient(180deg,#fdf8f2 0%,#f6efe5 100%)}
+.home-editorial-grid,.home-route-strip,.onboarding-section,.planner-grid{position:relative}
+.home-editorial-grid::before,.home-route-strip::before,.onboarding-section::before{content:"";position:absolute;left:-10px;right:-10px;top:16px;bottom:-6px;border-radius:34px;background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,0));pointer-events:none;z-index:0}
+.home-editorial-grid > *, .home-route-strip > *, .onboarding-section > *{position:relative;z-index:1}
+.magazine-home-v2 .section{margin-top:18px}
+.magazine-loop-grid,.editorial-bento .bento-grid{align-items:stretch}
+@media (max-width: 980px){
+  .cover-desk-grid,.cover-story-card-large,.cover-story-card-compact{grid-template-columns:1fr}
+  .cover-story-card-large{min-height:auto}
+  .cover-story-media{min-height:240px}
+}
+@media (max-width: 720px){
+  .cover-story-body{padding:20px 18px}
+  .cover-story-body h3{font-size:30px}
+  .cover-story-body.compact h3{font-size:24px}
+  .dispatch-card{padding:18px 16px}
+}
