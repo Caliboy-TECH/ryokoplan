@@ -45,9 +45,10 @@
 
   <main class="page">
     <div class="container">
-      <section class="hero">
-        <div class="hero-card hero-copy">
+      <section class="hero hero-magazine">
+        <div class="hero-card hero-copy hero-copy-magazine">
           <span class="eyebrow" data-t="planner.heroLabel">Japan & Korea Travel Planner</span>
+          <div class="cover-kicker" data-t="planner.homeCoverKicker">Cover story · Japan & Korea city magazine</div>
           <h1 data-t="planner.heroTitle">도시를 읽고, 바로 여행을 짜세요</h1>
           <p data-t="planner.heroDesc">일본과 한국 도시 가이드, 예시 일정, AI 플래너를 한곳에서.</p>
           <div class="hero-actions">
@@ -57,20 +58,84 @@
           <div class="hero-stat-row">
             <div class="hero-stat-card">
               <span class="hero-stat-label">Focus</span>
-              <strong>Japan & Korea</strong>
-              <span>좁고 깊게 읽는 도시 가이드</span>
+              <strong>Japan &amp; Korea</strong>
+              <span data-t="planner.homeFocusCopy">좁고 깊게 읽는 도시 가이드</span>
             </div>
             <div class="hero-stat-card">
               <span class="hero-stat-label">Flow</span>
               <strong>Read → Plan → Save</strong>
-              <span>읽고 바로 일정으로 이어지는 구조</span>
+              <span data-t="planner.homeFlowCopy">읽고 바로 일정으로 이어지는 구조</span>
             </div>
           </div>
         </div>
-        <div class="hero-card hero-visual">
-          <img src="assets/images/hero/main-hero-japan.png" alt="Ryokoplan hero">
-          <div class="route-card"><strong>Tokyo</strong><span>3N4D · Couple · Local mode</span></div>
-          <div class="glass-note"><strong data-t="planner.heroTitle">도시를 읽고, 바로 여행을 짜세요</strong><span data-t="planner.exampleDesc">처음 써보더라도 바로 감이 오도록, 예시 일정 하나를 먼저 보여드릴게요.</span></div>
+        <div class="hero-card hero-visual hero-visual-magazine">
+          <div class="hero-visual-grid">
+            <figure class="hero-visual-main">
+              <img src="assets/images/hero/main-hero-japan.png" alt="Ryokoplan hero Japan">
+              <figcaption class="image-caption">
+                <span class="caption-kicker">Japan edit</span>
+                <strong data-t="planner.homeVisualTitleA">Tokyo, Osaka, Kyoto, Fukuoka</strong>
+                <span data-t="planner.homeVisualDescA">도시 분위기를 먼저 읽고, 그다음 일정으로 연결합니다.</span>
+              </figcaption>
+            </figure>
+            <figure class="hero-visual-sub">
+              <img src="assets/images/hero/main-hero-korea.png" alt="Ryokoplan hero Korea">
+              <figcaption class="image-caption compact">
+                <span class="caption-kicker">Korea edit</span>
+                <strong data-t="planner.homeVisualTitleB">Seoul, Busan, Jeju, Gyeongju</strong>
+                <span data-t="planner.homeVisualDescB">도시별 리듬과 샘플 루트를 바로 읽을 수 있습니다.</span>
+              </figcaption>
+            </figure>
+          </div>
+          <div class="route-card editorial-badge"><strong>Editorial trip planning</strong><span data-t="planner.homeEditorialBadge">Magazine first · planner ready</span></div>
+        </div>
+      </section>
+
+      <section class="section home-intro-stack">
+        <div class="cover-story-card editorial-panel">
+          <div class="cover-story-head">
+            <div>
+              <span class="eyebrow" data-t="planner.homeStoryEyebrow">This week’s city edit</span>
+              <h2 class="section-title" data-t="planner.homeStoryTitle">읽고 바로 출발하고 싶어지는 도시 흐름부터 보여줍니다</h2>
+              <p class="section-desc" data-t="planner.homeStoryDesc">랜드마크 목록보다, 어떤 동네를 어떤 리듬으로 묶어야 좋은 여행이 되는지부터 먼저 제안합니다.</p>
+            </div>
+            <a class="soft-btn" href="./magazine/" data-t="planner.homeStoryBtn">Open city magazine</a>
+          </div>
+          <div class="cover-story-grid">
+            <article class="cover-story-line">
+              <span class="story-index">01</span>
+              <div>
+                <strong data-t="planner.homeStoryCard1Title">도시 감각 먼저</strong>
+                <p data-t="planner.homeStoryCard1Desc">Tokyo는 layered, Kyoto는 slower, Busan은 scenic이라는 감각부터 먼저 잡습니다.</p>
+              </div>
+            </article>
+            <article class="cover-story-line">
+              <span class="story-index">02</span>
+              <div>
+                <strong data-t="planner.homeStoryCard2Title">샘플 루트로 이해</strong>
+                <p data-t="planner.homeStoryCard2Desc">좋은 일정이 어떤 밀도와 흐름으로 보이는지 예시 일정에서 바로 확인합니다.</p>
+              </div>
+            </article>
+            <article class="cover-story-line">
+              <span class="story-index">03</span>
+              <div>
+                <strong data-t="planner.homeStoryCard3Title">플래너로 즉시 전환</strong>
+                <p data-t="planner.homeStoryCard3Desc">마음에 드는 도시와 무드를 누르면 값이 자동으로 채워진 상태로 바로 시작합니다.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="mini-editorial-grid">
+          <article class="mini-editorial-card">
+            <span class="eyebrow">Planner</span>
+            <h3 data-t="planner.homeMiniA">입력은 가볍게, 결과는 풍부하게</h3>
+            <p data-t="planner.homeMiniADesc">vibe, pace, best for, local tips, budget, checklist까지 한 번에 정리됩니다.</p>
+          </article>
+          <article class="mini-editorial-card">
+            <span class="eyebrow">My Trips</span>
+            <h3 data-t="planner.homeMiniB">저장하고 다시 이어지는 구조</h3>
+            <p data-t="planner.homeMiniBDesc">읽고 끝나는 대신, 저장한 일정과 공유받은 일정을 다시 꺼내고 확장할 수 있습니다.</p>
+          </article>
         </div>
       </section>
 
