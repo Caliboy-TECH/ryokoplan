@@ -2146,3 +2146,10 @@ body[data-page="planner"] .top-bar{z-index:62}
 .hero-title-split .hero-line{display:block;white-space:nowrap;word-break:keep-all;overflow-wrap:normal;}
 body[data-page="planner"] .hero.hero-magazine h1.hero-title-split{max-width:none !important;}
 @media (max-width:759px){body[data-page="planner"] .hero.hero-magazine h1.hero-title-split{font-size:clamp(32px,8.9vw,40px);line-height:.98;} }
+
+.hero-title-fixed{display:flex !important;flex-direction:column !important;align-items:flex-start !important;gap:.02em !important;}
+.hero-title-fixed .hero-line{display:block !important;white-space:nowrap !important;line-height:1.02 !important;}
+@media (max-width:759px){
+  .hero-title-fixed{font-size:clamp(31px,8.6vw,39px) !important;line-height:1 !important;}
+}
+.top-actions .nav-chip,.hero-actions a,.mobile-dock-item{pointer-events:auto !important;cursor:pointer !important;}

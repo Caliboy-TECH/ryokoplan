@@ -430,9 +430,9 @@ window.RyokoApp = (() => {
     });
   }
   function navHref(target){
-    if (target === 'magazine') return new URL('magazine/index.html', document.baseURI).toString();
-    if (target === 'planner') return new URL('index.html', document.baseURI).toString();
-    if (target === 'trips') return new URL('my-trips/index.html', document.baseURI).toString();
+    if (target === 'magazine') return resolvePath('magazine/index.html');
+    if (target === 'planner') return resolvePath('index.html');
+    if (target === 'trips') return resolvePath('my-trips/index.html');
     return '#';
   }
   function renderMobileDock(){
@@ -2139,11 +2139,16 @@ function getSeasonalEditorialCollections(){
         if (planner) planner.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
-      if (navTarget.tagName === 'A') return;
       const href = target ? navHref(target) : rawHref;
-      if (!href) return;
+      if (!href || href === '#') return;
+      if (navTarget.tagName === 'A') {
+        if ((target === 'magazine' || target === 'planner' || target === 'trips') && rawHref !== href) {
+          navTarget.setAttribute('href', href);
+        }
+        return;
+      }
       e.preventDefault();
-      window.location.href = href;
+      window.location.assign(href);
     }, true);
     renderMobileDock();
     initHomePresets();
