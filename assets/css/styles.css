@@ -1563,3 +1563,16 @@ html,body{background:
 @media (max-width: 720px){
   .example-logic-lines .editorial-line strong{min-width:88px}
 }
+
+
+.trip-archive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.trip-archive-card{display:grid;gap:14px}
+.trip-archive-collections{display:grid;gap:12px}
+.trip-archive-line{display:grid;gap:10px;padding:14px;border-radius:18px;background:linear-gradient(180deg,#fffdfa,#fff);border:1px solid rgba(229,218,203,.92)}
+.trip-archive-topline{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.trip-archive-topline strong{font-size:16px;letter-spacing:-.02em}
+.trip-archive-topline span{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.trip-archive-copy{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.trip-archive-empty{display:grid;gap:6px;padding:14px;border-radius:18px;background:#fbf7f0;border:1px dashed rgba(210,184,153,.9);color:var(--muted)}
+.trip-archive-empty strong{color:var(--text);font-size:15px}
+@media (max-width: 900px){.trip-archive-grid{grid-template-columns:1fr}}

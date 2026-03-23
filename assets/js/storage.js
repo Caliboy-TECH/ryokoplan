@@ -2,6 +2,7 @@ window.RyokoStorage = (() => {
   const SAVED_KEY = 'ryoko_saved_trips_v2';
   const RECENT_KEY = 'ryoko_recent_trips_v2';
   const SHARED_KEY = 'ryoko_shared_trips_v2';
+  const SAVED_PLACE_PREFIX = 'ryoko:savedPlaces:';
 
   const read = key => {
     try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; }
@@ -36,6 +37,24 @@ window.RyokoStorage = (() => {
   function deleteSavedTrip(id){ write(SAVED_KEY, read(SAVED_KEY).filter(x => x.id !== id)); }
   function deleteRecentTrip(id){ write(RECENT_KEY, read(RECENT_KEY).filter(x => x.id !== id)); }
   function deleteSharedTrip(id){ write(SHARED_KEY, read(SHARED_KEY).filter(x => x.id !== id)); }
+
+  function getSavedPlaceCollections(){
+    try {
+      return Object.keys(localStorage)
+        .filter(key => key.startsWith(SAVED_PLACE_PREFIX))
+        .map(key => {
+          const raw = key.slice(SAVED_PLACE_PREFIX.length);
+          let places = [];
+          try { places = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
+          const city = raw.replace(/(^.|-.)/g, match => match.replace('-', '').toUpperCase());
+          return { city, slug: raw, places: Array.isArray(places) ? places : [] };
+        })
+        .filter(entry => entry.places.length);
+    } catch {
+      return [];
+    }
+  }
+
   function duplicateTrip(id){
     const source = [...getSavedTrips(), ...getRecentTrips(), ...getSharedTrips()].find(x => x.id === id);
     if(!source) return null;
@@ -55,6 +74,7 @@ window.RyokoStorage = (() => {
     getSavedTrips,
     getRecentTrips,
     getSharedTrips,
+    getSavedPlaceCollections,
     deleteSavedTrip,
     deleteRecentTrip,
     deleteSharedTrip,

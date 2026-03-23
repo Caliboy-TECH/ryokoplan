@@ -86,6 +86,21 @@
         <article class="stat-card info-card"><span class="stat-label" data-t="trips.shared">공유받은 일정</span><span id="sharedCount" class="stat-value">0</span><span class="stat-copy" data-t="trips.statSharedDesc">다른 사람이 보낸 링크도 다시 모아볼 수 있어요.</span></article>
       </section>
 
+      <section class="section trip-archive-grid">
+        <article class="collection-card info-card trip-archive-card">
+          <span class="collection-kicker">Saved places</span>
+          <h3>Places you marked along the way</h3>
+          <p>Hearts from your planner results now collect here, so My Trips feels more like a real travel archive.</p>
+          <div id="savedPlacesCollections" class="trip-archive-collections"></div>
+        </article>
+        <article class="collection-card info-card trip-archive-card">
+          <span class="collection-kicker">Saved routes</span>
+          <h3>Route collections by city</h3>
+          <p>Group repeat plans by city, compare route shapes, and reopen the strongest base when you need it again.</p>
+          <div id="savedRouteCollections" class="trip-archive-collections"></div>
+        </article>
+      </section>
+
       <section class="section">
         <div class="section-head">
           <div><h2 class="section-title" data-t="trips.tabLead">원하는 방식으로 찾아보세요</h2></div>
@@ -371,6 +386,53 @@
           render();
         }));
       }
+      function renderSavedPlacesArchive(){
+        const target = $('savedPlacesCollections');
+        if (!target) return;
+        const collections = (window.RyokoStorage.getSavedPlaceCollections?.() || []).sort((a, b) => b.places.length - a.places.length || String(a.city || '').localeCompare(String(b.city || '')));
+        if (!collections.length) {
+          target.innerHTML = `<div class="trip-archive-empty"><strong>No saved places yet</strong><span>Tap hearts inside planner results and your place archive will start to build itself.</span></div>`;
+          return;
+        }
+        target.innerHTML = collections.slice(0, 6).map(entry => `
+          <article class="trip-archive-line">
+            <div class="trip-archive-topline">
+              <strong>${entry.city}</strong>
+              <span>${entry.places.length} saved</span>
+            </div>
+            <div class="trip-chip-row">${entry.places.slice(0,5).map(place => `<span class="trip-mini-chip">${place}</span>`).join('')}</div>
+            <a class="soft-btn" href="../?destination=${encodeURIComponent(entry.city)}">Plan from ${entry.city}</a>
+          </article>`).join('');
+      }
+      function renderSavedRouteArchive(saved, recent, shared){
+        const target = $('savedRouteCollections');
+        if (!target) return;
+        const groups = [...saved, ...recent, ...shared].reduce((acc, item) => {
+          const city = String(item.destination || 'Other').trim() || 'Other';
+          (acc[city] ||= []).push(item);
+          return acc;
+        }, {});
+        const rows = Object.entries(groups).sort((a,b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+        if (!rows.length) {
+          target.innerHTML = `<div class="trip-archive-empty"><strong>No route archive yet</strong><span>Save or reopen a trip and city collections will appear here automatically.</span></div>`;
+          return;
+        }
+        target.innerHTML = rows.slice(0, 6).map(([city, items]) => {
+          const latest = sortItems(items)[0];
+          const label = latest?.planData?.vibe || latest?.duration || 'Route base';
+          return `
+            <article class="trip-archive-line">
+              <div class="trip-archive-topline">
+                <strong>${city}</strong>
+                <span>${items.length} route${items.length > 1 ? 's' : ''}</span>
+              </div>
+              <p class="trip-archive-copy">${getMetaSummary(latest) || 'A reusable route base for this city.'}</p>
+              <div class="trip-chip-row">${items.slice(0,4).map(item => `<span class="trip-mini-chip">${item.title || label}</span>`).join('')}</div>
+              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">Open latest</a><a class="ghost-btn" href="../city/${city.toLowerCase()}.html">Read city</a></div>
+            </article>`;
+        }).join('');
+      }
+
       function renderModeFilters(){
         const copy = langCopy();
         const rows = [
