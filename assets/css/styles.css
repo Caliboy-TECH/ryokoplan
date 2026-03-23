@@ -1763,3 +1763,15 @@ html,body{background:
 .route-club-card .meta{background:rgba(255,124,91,.12);color:#8f3f28}
 .route-club-card .trip-card-date{font-weight:700;color:rgba(21,39,58,.62)}
 .route-club-section .section-head{margin-bottom:16px}
+
+
+.community-desk-section{margin-top:18px}
+.community-shelf-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.community-shelf{padding:16px;border-radius:24px;background:linear-gradient(180deg,#fffdfa 0%,#fff7ef 100%);border:1px solid var(--line);display:grid;gap:14px}
+.community-shelf-head{display:flex;align-items:center;justify-content:space-between}
+.community-route-card{padding:16px;border-radius:20px;background:#fff;border:1px solid var(--line);display:grid;gap:10px}
+.community-route-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.community-route-card h3{margin:0;font-size:18px;line-height:1.3}
+.community-route-card p{margin:0;color:var(--muted)}
+.community-desk-section-magazine{margin-top:8px}
+@media (max-width: 1100px){.community-shelf-grid{grid-template-columns:1fr}}

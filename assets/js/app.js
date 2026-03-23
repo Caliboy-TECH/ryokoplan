@@ -928,6 +928,105 @@ window.RyokoApp = (() => {
     return items;
   }
 
+
+  function communityCardMarkup(item, copy){
+    const title = item.title?.[lang] || item.title?.en || item.city || '';
+    const desc = item.desc?.[lang] || item.desc?.en || item.summaryKo || item.summaryEn || '';
+    const guide = item.guide || item.guideUrl || '#';
+    const example = item.example || guide;
+    const destination = item.preset?.destination || item.city || '';
+    const tags = item.tags || [];
+    const label = item.kind === 'club' ? copy.clubLabel : (item.kind === 'pick' ? copy.pickLabel : copy.branchLabel);
+    return `
+      <article class="community-route-card info-card">
+        <div class="community-route-top"><span class="collection-kicker">${label}</span><span class="meta-inline">${destination}</span></div>
+        <h3>${title}</h3>
+        <p>${desc}</p>
+        <div class="trip-chip-row">${tags.slice(0,4).map(tag => `<span class="trip-mini-chip">${tag}</span>`).join('')}</div>
+        <div class="card-actions public-route-actions">
+          <a class="soft-btn" href="${guide}">${copy.guide}</a>
+          <a class="ghost-btn" href="${example}">${copy.sample}</a>
+          <button class="primary-btn community-plan-btn" data-community-preset='${JSON.stringify(item.preset || {})}'>${copy.save}</button>
+        </div>
+      </article>`;
+  }
+
+  function getCommunityCollections(){
+    const guideBase = resolvePath('') === './' ? './' : '../';
+    return {
+      picks: [
+        { kind:'pick', title:{ko:'Tokyo dense weekend edit', en:'Tokyo dense weekend edit'}, desc:{ko:'대표 구역은 챙기되 하루 한 구간은 숨을 쉬게 두는 도쿄 베이스.', en:'A Tokyo base that hits the big districts but still leaves one softer pocket each day.'}, tags:['tokyo','weekend','dense','city'], guide:`${guideBase}city/tokyo.html`, example:`${guideBase}example/tokyo-3n4d-first-trip.html`, preset:{destination:'Tokyo',duration:'2n3d',companion:'friends',style:'city highlights + food + some breathing room',notes:'Protect one softer pocket each day.'}},
+        { kind:'pick', title:{ko:'Quiet Kyoto reset', en:'Quiet Kyoto reset'}, desc:{ko:'많이 넣지 않고 아침 장면과 저녁 산책을 남기는 교토 베이스.', en:'A Kyoto base shaped around quieter mornings and a softer evening walk.'}, tags:['kyoto','slow','quiet','solo'], guide:`${guideBase}city/kyoto.html`, example:`${guideBase}example/kyoto-2n3d-slow-trip.html`, preset:{destination:'Kyoto',duration:'2n3d',companion:'solo',style:'slow culture + tea + walks',notes:'Keep the route light and leave room.'}},
+        { kind:'pick', title:{ko:'Busan easy view rhythm', en:'Busan easy view rhythm'}, desc:{ko:'언덕 피로를 줄이고 뷰 타이밍을 먼저 맞추는 부산 베이스.', en:'A Busan base built around view timing and lower fatigue.'}, tags:['busan','coast','parents','easy'], guide:`${guideBase}city/busan.html`, example:`${guideBase}example/busan-2n3d-with-parents.html`, preset:{destination:'Busan',duration:'2n3d',companion:'family',style:'sea views + easy pace',notes:'Let views lead and protect rest windows.'}}
+      ],
+      trending: [
+        { kind:'club', title:{ko:'Seoul rainy-day fallback', en:'Seoul rainy-day fallback'}, desc:{ko:'실내 밀도와 동네 이동을 가볍게 유지하는 서울 우천일 베이스.', en:'A Seoul fallback that keeps the day indoor-friendly while staying neighborhood-led.'}, tags:['seoul','rainy','city','fallback'], guide:`${guideBase}city/seoul.html`, example:`${guideBase}example/seoul-2n3d-city-vibes.html`, preset:{destination:'Seoul',duration:'2n3d',companion:'couple',style:'indoor spots + coffee + neighborhoods',notes:'Keep transfers short.'}},
+        { kind:'club', title:{ko:'Fukuoka food weekend', en:'Fukuoka food weekend'}, desc:{ko:'먹고 걷고 쉬는 리듬이 잘 맞는 컴팩트 후쿠오카 베이스.', en:'A compact Fukuoka weekend shaped by food spacing and easy walks.'}, tags:['fukuoka','food','weekend','friends'], guide:`${guideBase}city/fukuoka.html`, example:`${guideBase}example/fukuoka-2n3d-food-trip.html`, preset:{destination:'Fukuoka',duration:'2n3d',companion:'friends',style:'local food + cafes + neighborhoods',notes:'Let meals shape the route.'}},
+        { kind:'club', title:{ko:'Jeju soft drive base', en:'Jeju soft drive base'}, desc:{ko:'무리한 체크리스트 대신 도로와 풍경의 여백을 남기는 제주 베이스.', en:'A softer Jeju base that leaves room for roads, wind, and wider scenery.'}, tags:['jeju','drive','coast','soft'], guide:`${guideBase}city/jeju.html`, example:`${guideBase}city/jeju.html`, preset:{destination:'Jeju',duration:'3n4d',companion:'family',style:'scenic drives + cafes + coast',notes:'Do not underweight drive time.'}}
+      ],
+      branches: [
+        { kind:'branch', title:{ko:'Tokyo → Seoul', en:'Tokyo → Seoul'}, desc:{ko:'밀도 높은 도시 리듬 다음에 동네 대비가 좋은 서울로 연결하는 흐름.', en:'A strong next move when you want neighborhood contrast after a denser Tokyo rhythm.'}, tags:['tokyo','seoul','next','city'], guide:`${guideBase}city/seoul.html`, example:`${guideBase}example/seoul-2n3d-city-vibes.html`, preset:{destination:'Seoul',duration:'2n3d',companion:'friends',style:'neighborhoods + late coffee + city rhythm',notes:'Use contrast, not repetition.'}},
+        { kind:'branch', title:{ko:'Kyoto → Gyeongju', en:'Kyoto → Gyeongju'}, desc:{ko:'조용한 역사 도시의 결을 다른 방식으로 이어보는 다음 분기.', en:'A softer branch when you want another history-led city without repeating Kyoto too hard.'}, tags:['kyoto','gyeongju','next','quiet'], guide:`${guideBase}city/gyeongju.html`, example:`${guideBase}city/gyeongju.html`, preset:{destination:'Gyeongju',duration:'2n3d',companion:'couple',style:'history + quiet walks + calm pace',notes:'Keep the tempo soft.'}},
+        { kind:'branch', title:{ko:'Busan → Jeju', en:'Busan → Jeju'}, desc:{ko:'바다 리듬은 유지하되 밀도를 낮추고 풍경을 더 여는 연결.', en:'A coast-led branch that lowers density and opens the scenery further.'}, tags:['busan','jeju','next','coast'], guide:`${guideBase}city/jeju.html`, example:`${guideBase}city/jeju.html`, preset:{destination:'Jeju',duration:'3n4d',companion:'family',style:'coast + drives + slower meals',notes:'Let the island breathe.'}}
+      ]
+    };
+  }
+
+  function wireCommunityButtons(scope){
+    scope.querySelectorAll('.community-plan-btn').forEach(btn => btn.addEventListener('click', () => {
+      try { window.RyokoApp.applyPlannerPreset(JSON.parse(btn.dataset.communityPreset || '{}')); } catch(e) {}
+      if (document.body.dataset.page === 'planner') {
+        document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
+      } else {
+        location.href = plannerUrlForCity((JSON.parse(btn.dataset.communityPreset || '{}').destination) || '');
+      }
+    }));
+  }
+
+  function renderHomeCommunityDesk(){
+    if (document.body.dataset.page !== 'planner') return;
+    const root = document.getElementById('homeCommunityRoot');
+    if (!root) return;
+    const copy = (lang === 'ko') ? {
+      eyebrow:'Route club', title:'에디터 픽과 다음 분기까지 한 번에 보기', desc:'도시를 고르는 것에서 끝내지 않고, 지금 잘 먹히는 베이스와 다음으로 연결되는 분기를 같이 보여줍니다.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide:'City guide', sample:'Sample route', save:'내 베이스로 쓰기'
+    } : {
+      eyebrow:'Route club', title:'See editor picks and next branches together', desc:'This does more than pick a city. It puts strong current bases and smoother next branches in one place.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide:'City guide', sample:'Sample route', save:'Use as my base'
+    };
+    const data = getCommunityCollections();
+    root.innerHTML = `
+      <section class="section community-desk-section">
+        <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
+        <div class="community-shelf-grid">
+          <article class="community-shelf info-card"><div class="community-shelf-head"><span class="collection-kicker">${copy.picks}</span></div>${data.picks.map(item => communityCardMarkup(item, copy)).join('')}</article>
+          <article class="community-shelf info-card"><div class="community-shelf-head"><span class="collection-kicker">${copy.trending}</span></div>${data.trending.map(item => communityCardMarkup(item, copy)).join('')}</article>
+          <article class="community-shelf info-card"><div class="community-shelf-head"><span class="collection-kicker">${copy.branches}</span></div>${data.branches.map(item => communityCardMarkup(item, copy)).join('')}</article>
+        </div>
+      </section>`;
+    wireCommunityButtons(root);
+  }
+
+  function renderMagazineCommunityDesk(){
+    if (document.body.dataset.page !== 'magazine') return;
+    const host = document.getElementById('magazineCommunityRoot');
+    if (!host) return;
+    const copy = (lang === 'ko') ? {
+      eyebrow:'Route club', title:'지금 잘 먹히는 공개 베이스와 다음 도시 분기', desc:'매거진을 읽고 끝나지 않게, 에디터 픽과 다음으로 잘 이어지는 도시를 한 셸프에 모았습니다.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide:'City guide', sample:'Sample route', save:'플래너로 이어가기'
+    } : {
+      eyebrow:'Route club', title:'Public bases that work now, plus the next city branch', desc:'This keeps the magazine from ending on reading alone by grouping editor picks and smoother next-city branches in one shelf.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide:'City guide', sample:'Sample route', save:'Continue in Planner'
+    };
+    const data = getCommunityCollections();
+    host.innerHTML = `
+      <section class="section community-desk-section community-desk-section-magazine">
+        <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
+        <div class="community-shelf-grid">
+          <article class="community-shelf info-card"><div class="community-shelf-head"><span class="collection-kicker">${copy.picks}</span></div>${data.picks.map(item => communityCardMarkup(item, copy)).join('')}</article>
+          <article class="community-shelf info-card"><div class="community-shelf-head"><span class="collection-kicker">${copy.trending}</span></div>${data.trending.map(item => communityCardMarkup(item, copy)).join('')}</article>
+          <article class="community-shelf info-card"><div class="community-shelf-head"><span class="collection-kicker">${copy.branches}</span></div>${data.branches.map(item => communityCardMarkup(item, copy)).join('')}</article>
+        </div>
+      </section>`;
+    wireCommunityButtons(host);
+  }
+
   function renderHomeDiscovery(){
     if (document.body.dataset.page !== 'planner') return;
     const root = document.getElementById('homeDiscoveryRoot');
@@ -1000,6 +1099,7 @@ window.RyokoApp = (() => {
   function initMagazine(){
     if (document.body.dataset.page !== 'magazine') return;
     renderMagazineLoop();
+    renderMagazineCommunityDesk();
     const cards = [...document.querySelectorAll('.finder-card')];
     if (!cards.length) return;
     const searchInput = document.getElementById('magazineCitySearch');
@@ -1258,6 +1358,7 @@ window.RyokoApp = (() => {
     initHomePresets();
     initPlannerOnboarding();
     renderHomeDiscovery();
+    renderHomeCommunityDesk();
     initEditorialChrome();
   }
   function cityCardTemplate(city){
