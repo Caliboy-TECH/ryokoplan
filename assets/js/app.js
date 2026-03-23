@@ -1405,9 +1405,9 @@ function getSeasonalEditorialCollections(){
       anchor.insertAdjacentElement('afterend', root);
     }
     const copy = (lang === 'ko') ? {
-      eyebrow:'Seasonal archive', title:'나중에 다시 꺼내 쓰는 계절별 베이스 셸프', desc:'마이트립스 안에도 시즌성과 상황별 베이스를 따로 보관해두면, 다음 여행이 더 빨리 시작됩니다.', guide:'City guide', sample:'Sample route', plan:'Save as my base'
+      eyebrow:'Seasonal archive', title:'나중에 다시 꺼내 쓰는 계절별 베이스 셸프', desc:'마이트립스 안에도 시즌성과 상황별 베이스를 따로 보관해두면, 다음 여행이 더 빨리 시작됩니다.', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample route', plan: lang==='ja' ? '自分のベースとして保存' : lang==='zhHant' ? '存成我的基底' : 'Save as my base'
     } : {
-      eyebrow:'季節のアーカイブ', title:'あとでまた開ける季節の棚', desc:'Keeping seasonal and situation-led bases inside My Trips makes the next trip much easier to start.', guide:'City guide', sample:'Sample route', plan:'Save as my base'
+      eyebrow:'季節のアーカイブ', title:'あとでまた開ける季節の棚', desc:'Keeping seasonal and situation-led bases inside My Trips makes the next trip much easier to start.', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample route', plan: lang==='ja' ? '自分のベースとして保存' : lang==='zhHant' ? '存成我的基底' : 'Save as my base'
     };
     const items = getSeasonalEditorialCollections().archive;
     root.innerHTML = `
@@ -1456,7 +1456,7 @@ function getSeasonalEditorialCollections(){
     if (document.body.dataset.page !== 'planner') return;
     const root = document.getElementById('homeCommunityRoot');
     if (!root) return;
-    const copyMap = { ko:{eyebrow:'Route club', title:'에디터 픽과 다음 분기까지 한 번에 보기', desc:'도시를 고르는 것에서 끝내지 않고, 지금 잘 먹히는 베이스와 다음으로 연결되는 분기를 같이 보여줍니다.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide:'City guide', sample:'Sample route', save:'내 베이스로 쓰기'}, en:{eyebrow:'Route club', title:'See editor picks and next branches together', desc:'This does more than pick a city. It puts strong current bases and smoother next branches in one place.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide:'City guide', sample:'Sample route', save:'Use as my base'}, ja:{eyebrow:'ルートクラブ', title:'エディターピックと次の分岐を一緒に見る', desc:'都市を選ぶだけで終わらず、今よくはまるベースと次につながる分岐を一緒に見せます。', picks:'エディターピック', trending:'注目ベース', branches:'次の分岐', guide:'都市ガイド', sample:'サンプルルート', save:'自分のベースに使う'}, zhHant:{eyebrow:'路線俱樂部', title:'把編輯精選和下一個分支一起看', desc:'不只幫你選城市，也把現在好用的基底和接下來的分支一起放在這裡。', picks:'編輯精選', trending:'熱門基底', branches:'下一個分支', guide:'城市指南', sample:'範例路線', save:'存成我的基底'}};
+    const copyMap = { ko:{eyebrow:'Route club', title:'에디터 픽과 다음 분기까지 한 번에 보기', desc:'도시를 고르는 것에서 끝내지 않고, 지금 잘 먹히는 베이스와 다음으로 연결되는 분기를 같이 보여줍니다.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample route', save: lang==='ja' ? '自分のベースに使う' : lang==='zhHant' ? '用作我的基底' : 'Use as my base'}, en:{eyebrow:'Route club', title:'See editor picks and next branches together', desc:'This does more than pick a city. It puts strong current bases and smoother next branches in one place.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample route', save:'Use as my base'}, ja:{eyebrow:'ルートクラブ', title:'エディターピックと次の分岐を一緒に見る', desc:'都市を選ぶだけで終わらず、今よくはまるベースと次につながる分岐を一緒に見せます。', picks:'エディターピック', trending:'注目ベース', branches:'次の分岐', guide:'都市ガイド', sample:'サンプルルート', save:'自分のベースに使う'}, zhHant:{eyebrow:'路線俱樂部', title:'把編輯精選和下一個分支一起看', desc:'不只幫你選城市，也把現在好用的基底和接下來的分支一起放在這裡。', picks:'編輯精選', trending:'熱門基底', branches:'下一個分支', guide:'城市指南', sample:'範例路線', save:'存成我的基底'}};
     const copy = copyMap[lang] || copyMap.en;
     const data = getCommunityCollections();
     root.innerHTML = `
@@ -1476,7 +1476,7 @@ function getSeasonalEditorialCollections(){
     if (document.body.dataset.page !== 'magazine') return;
     const host = document.getElementById('magazineCommunityRoot');
     if (!host) return;
-    const copyMap = { ko:{eyebrow:'Route club', title:'지금 잘 먹히는 공개 베이스와 다음 도시 분기', desc:'매거진을 읽고 끝나지 않게, 에디터 픽과 다음으로 잘 이어지는 도시를 한 셸프에 모았습니다.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide:'City guide', sample:'Sample route', save:'플래너로 이어가기'}, en:{eyebrow:'Route club', title:'Public bases that work now, plus the next city branch', desc:'This keeps the magazine from ending on reading alone by grouping editor picks and smoother next-city branches in one shelf.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide:'City guide', sample:'Sample route', save:'Continue in Planner'}, ja:{eyebrow:'ルートクラブ', title:'今よくはまる公開ベースと次の都市分岐', desc:'マガジンを読んで終わらせず、エディターピックと次に続く都市分岐を一つの棚にまとめました。', picks:'エディターピック', trending:'注目ベース', branches:'次の分岐', guide:'都市ガイド', sample:'サンプルルート', save:'Planner へつなぐ'}, zhHant:{eyebrow:'路線俱樂部', title:'現在好用的公開基底與下一座城市分支', desc:'不讓城市誌停在閱讀，而是把編輯精選與下一個城市分支放進同一個架上。', picks:'編輯精選', trending:'熱門基底', branches:'下一個分支', guide:'城市指南', sample:'範例路線', save:'接到 Planner'}};
+    const copyMap = { ko:{eyebrow:'Route club', title:'지금 잘 먹히는 공개 베이스와 다음 도시 분기', desc:'매거진을 읽고 끝나지 않게, 에디터 픽과 다음으로 잘 이어지는 도시를 한 셸프에 모았습니다.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample route', save: lang==='ja' ? 'プランナーへ進む' : lang==='zhHant' ? '接到規劃器' : 'Continue in Planner'}, en:{eyebrow:'Route club', title:'Public bases that work now, plus the next city branch', desc:'This keeps the magazine from ending on reading alone by grouping editor picks and smoother next-city branches in one shelf.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample route', save:'Continue in Planner'}, ja:{eyebrow:'ルートクラブ', title:'今よくはまる公開ベースと次の都市分岐', desc:'マガジンを読んで終わらせず、エディターピックと次に続く都市分岐を一つの棚にまとめました。', picks:'エディターピック', trending:'注目ベース', branches:'次の分岐', guide:'都市ガイド', sample:'サンプルルート', save:'Planner へつなぐ'}, zhHant:{eyebrow:'路線俱樂部', title:'現在好用的公開基底與下一座城市分支', desc:'不讓城市誌停在閱讀，而是把編輯精選與下一個城市分支放進同一個架上。', picks:'編輯精選', trending:'熱門基底', branches:'下一個分支', guide:'城市指南', sample:'範例路線', save:'接到 Planner'}};
     const copy = copyMap[lang] || copyMap.en;
     const data = getCommunityCollections();
     host.innerHTML = `
@@ -1505,7 +1505,7 @@ function getSeasonalEditorialCollections(){
       en: {
         eyebrow:'Quick find', title:'Narrow the trip by mood or use case', desc:'You do not need a city name first. Start from a weekend, a rainy day, or a better pace for parents and move from there.',
         placeholder:'Search by city, mood, or use case', all:'All', weekend:'Weekend', rainy:'Rainy day', parents:'With parents', food:'Food-led', coast:'Coast', empty:'If nothing fits yet, start with the city magazine first.',
-        guide:'City guide', sample:'Sample route', plan:'Use as base', matches:'matches', helper:'Suggested searches'
+        guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample route', plan:'Use as base', matches:'matches', helper:'Suggested searches'
       },
       ja: {
         eyebrow:'クイック検索', title:'ムードや旅の条件からすぐ絞り込む', desc:'都市名が先に浮かばなくても大丈夫です。週末、雨の日、親との旅のような条件から先に始められます。',
@@ -1619,7 +1619,7 @@ function getSeasonalEditorialCollections(){
     const tagLabel = top.map(tag => tag.replace('-', ' ')).join(' · ');
     const copyMap = {
       ko: { eyebrow:'Your rhythm', title:'최근 반응한 신호를 바탕으로 다시 고른 셸프', desc:`최근 읽은 베이스에서 ${tagLabel} 결이 더 자주 보였습니다. 앞단 큐레이션도 그 신호를 먼저 보여줍니다.`, guide:'도시 가이드', sample:'샘플 루트', plan: page === 'home' ? '이 베이스로 시작' : '플래너로 이어가기' },
-      en: { eyebrow:'Your rhythm', title:'A shelf reshaped by the signals you keep opening', desc:`Your recent reads leaned toward ${tagLabel}. This shelf pushes those tones forward first.`, guide:'City guide', sample:'Sample route', plan: page === 'home' ? 'Start from this base' : 'Continue in Planner' },
+      en: { eyebrow:'Your rhythm', title:'A shelf reshaped by the signals you keep opening', desc:`Your recent reads leaned toward ${tagLabel}. This shelf pushes those tones forward first.`, guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample route', plan: page === 'home' ? 'Start from this base' : 'Continue in Planner' },
       ja: { eyebrow:'あなたのリズム', title:'最近ひらいた気配から組み直した棚', desc:`最近よく開いたベースには ${tagLabel} の流れが見えました。最初の棚もそのトーンを少し前に出しています。`, guide:'都市ガイド', sample:'サンプルルート', plan: page === 'home' ? 'このベースから始める' : 'Planner へつなぐ' },
       zhHant: { eyebrow:'你的節奏', title:'依照你最近常打開的訊號重新排過的架子', desc:`你最近打開的基底裡，${tagLabel} 這種節奏更常出現。前面的策展也會先把這些調性往前放。`, guide:'城市指南', sample:'範例路線', plan: page === 'home' ? '從這個基底開始' : '接到 Planner' }
     };
