@@ -406,7 +406,7 @@ window.RyokoApp = (() => {
   function applyTranslations(root=document){
     root.querySelectorAll('[data-t]').forEach(el => {
       const value = t(el.dataset.t);
-      if (value) el.textContent = value;
+      if (value) { if (el.hasAttribute('data-t-html')) el.innerHTML = String(value).replace(/\n/g,'<br>'); else el.textContent = value; }
     });
     root.querySelectorAll('[data-t-placeholder]').forEach(el => {
       const value = t(el.dataset.tPlaceholder);
@@ -1829,7 +1829,7 @@ function getSeasonalEditorialCollections(){
     const page = document.body.dataset.page || 'planner';
     const labels = {
       ko: {
-        planner: { kicker: 'Planner note', title: '도시 무드를 먼저 잡고, 바로 저장 가능한 일정으로 연결합니다.', chips: ['East Asia city edit', 'Magazine-led planning', 'Save / Share / PDF'] },
+        planner: { kicker: 'Planner note', title: '도시 분위기를 먼저 읽고, 저장 가능한 여행 계획으로 이어갑니다.', chips: ['East Asia city edit', 'Magazine-led planning', 'Save / Share / PDF'] },
         magazine: { kicker: 'Magazine note', title: '도시를 읽는 흐름이 좋아야 플랜도 더 자연스럽게 짜입니다.', chips: ['City guides', 'Sample routes', 'Local rhythm'] },
         trips: { kicker: 'My Trips note', title: '저장한 일정과 공유받은 일정을 한 흐름 안에서 다시 꺼내봅니다.', chips: ['Saved trips', 'Recent plans', 'Shared links'] }
       },
@@ -2115,80 +2115,6 @@ function getSeasonalEditorialCollections(){
   };
 
 
-  function patchVisiblePlannerCopy(){
-    if (document.body.dataset.page !== 'planner') return;
-    const map = {
-      ko: {
-        title:'도시를 읽고,\n여행을 시작하세요.',
-        desc:'도시를 먼저 읽고, 바로 여행 흐름으로 이어가세요.',
-        start:'여행 계획짜기',
-        browse:'매거진 보기',
-        coverA:'홈 커버',
-        coverB:'동아시아 시티 에디트',
-        eyebrow:'동아시아 시티 에디트',
-        kicker:'에디토리얼 커버 · 동아시아 시티 매거진',
-        noteTitle:'브랜드 문장',
-        noteBody:'도시를 먼저 읽고, 그다음 여행을 만듭니다.\n이 한 문장을 기준으로 홈, 매거진, 도시 가이드, 결과 화면을 같은 결로 정리합니다.'
-      },
-      en: {
-        title:'Read the city.\nStart the trip.',
-        desc:'Read the city first, then move straight into a better trip flow.',
-        start:'Plan this trip',
-        browse:'Open magazine',
-        coverA:'Home cover',
-        coverB:'East Asia city edit',
-        eyebrow:'East Asia city edit',
-        kicker:'Editorial cover · East Asia city magazine',
-        noteTitle:'Brand line',
-        noteBody:'Read the city. Then build the trip.\nThis line keeps the homepage, magazine, city guides, and results in one consistent tone.'
-      },
-      ja: {
-        title:'都市を読んで、\n旅を始めよう。',
-        desc:'都市を先に読み、そのまま旅の流れへつなげます。',
-        start:'旅の計画を始める',
-        browse:'Magazine を見る',
-        coverA:'ホームカバー',
-        coverB:'東アジア・シティエディット',
-        eyebrow:'東アジア・シティエディット',
-        kicker:'エディトリアルカバー · 東アジアシティマガジン',
-        noteTitle:'ブランド文',
-        noteBody:'街を読んでから、旅を組み立てる。\nこの一文を軸に、ホーム、マガジン、都市ガイド、結果画面まで同じトーンでつないでいます。'
-      },
-      zhHant: {
-        title:'先讀城市，\n再開始旅程。',
-        desc:'先讀城市，再自然接到更好的旅程節奏。',
-        start:'開始規劃旅程',
-        browse:'看城市誌',
-        coverA:'首頁封面',
-        coverB:'東亞城市編輯選',
-        eyebrow:'東亞城市編輯選',
-        kicker:'編輯封面 · 東亞城市誌',
-        noteTitle:'品牌句',
-        noteBody:'先讀城市，再開始旅程。\n這句話把首頁、城市誌、城市指南與結果頁串成同一種語氣。'
-      }
-    };
-    const copy = map[lang] || map.en;
-    const title = document.querySelector('.hero.hero-magazine h1');
-    if (title) title.textContent = copy.title;
-    const desc = document.querySelector('.hero.hero-magazine .hero-copy > p');
-    if (desc) desc.textContent = copy.desc;
-    const primary = document.querySelector('.hero.hero-magazine .hero-actions .primary-btn');
-    if (primary) primary.textContent = copy.start;
-    const secondary = document.querySelector('.hero.hero-magazine .hero-actions .secondary-btn');
-    if (secondary) secondary.textContent = copy.browse;
-    const pills = document.querySelectorAll('.hero.hero-magazine .cover-meta-row .cover-meta-pill');
-    if (pills[0]) pills[0].textContent = copy.coverA;
-    if (pills[1]) pills[1].textContent = copy.coverB;
-    const eyebrow = document.querySelector('.hero.hero-magazine .eyebrow');
-    if (eyebrow) eyebrow.textContent = copy.eyebrow;
-    const kicker = document.querySelector('.hero.hero-magazine .cover-kicker');
-    if (kicker) kicker.textContent = copy.kicker;
-    const noteTitle = document.querySelector('.brand-manifesto-note strong');
-    if (noteTitle) noteTitle.textContent = copy.noteTitle;
-    const noteBody = document.querySelector('.brand-manifesto-note p');
-    if (noteBody) noteBody.textContent = copy.noteBody;
-  }
-
   function initCommon(){
     document.documentElement.lang = lang;
     renderMagazineLanding();
@@ -2198,7 +2124,6 @@ function getSeasonalEditorialCollections(){
     localizeLangButtonLabels();
     localizeStaticIndexSections();
     localizeExtendedStaticSections();
-    patchVisiblePlannerCopy();
     bindLanguageButtons();
     document.querySelectorAll('[data-nav="magazine"]').forEach(a => a.setAttribute('href', navHref('magazine')));
     document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
@@ -2206,12 +2131,10 @@ function getSeasonalEditorialCollections(){
     document.addEventListener('click', (e) => {
       const navTarget = e.target.closest('[data-nav]');
       if (!navTarget) return;
+      const href = navTarget.getAttribute('href');
       const target = navTarget.dataset.nav;
-      const href = navTarget.getAttribute('href') || (target ? navHref(target) : '');
-      if (!href || !target) return;
-      if (href.startsWith('#')) return;
-      e.preventDefault();
-      window.location.assign(href);
+      if (href) { if (navTarget.tagName !== 'A') window.location.href = href; return; }
+      if (target) window.location.href = navHref(target);
     });
     renderMobileDock();
     initHomePresets();
@@ -2236,8 +2159,7 @@ function getSeasonalEditorialCollections(){
       renderTripsSeasonalDesk();
       localizeLangButtonLabels();
       localizeStaticIndexSections();
-      localizeExtendedStaticSections();
-      patchVisiblePlannerCopy();
+    localizeExtendedStaticSections();
     });
     initEditorialChrome();
   }

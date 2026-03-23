@@ -2128,7 +2128,9 @@ body[data-page="planner"] .top-bar{z-index:62}
   .brand-manifesto-note p,.brand-manifesto-card .section-title,.brand-manifesto-card .section-desc{white-space:normal}
 }
 
-#plannerStart{scroll-margin-top:110px;}
-.hero.hero-magazine h1{word-break:keep-all;overflow-wrap:normal;text-wrap:pretty;}
-@media (max-width:720px){body[data-page='planner'] .hero.hero-magazine h1{max-width:5.5ch;line-height:.95}}
-@media (min-width:721px){body[data-page='planner'] .hero.hero-magazine h1{max-width:7.2ch;line-height:.96}}
+.hero.hero-magazine h1{word-break:keep-all;overflow-wrap:normal;text-wrap:initial;}
+.hero.hero-magazine h1 .hero-line{display:block;white-space:nowrap;}
+@media (max-width:760px){
+  body[data-page="planner"] .hero.hero-magazine h1{max-width:unset;width:min(100%,8.2ch);}
+  body[data-page="planner"] .hero.hero-magazine h1 .hero-line{display:block;white-space:nowrap;}
+}

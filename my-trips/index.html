@@ -19,7 +19,7 @@
       </a>
       <div class="top-actions">
         <div class="lang-switch"><button class="lang-btn" data-lang-btn="ko">KR</button><button class="lang-btn" data-lang-btn="en">EN</button><button class="lang-btn" data-lang-btn="ja">JP</button><button class="lang-btn" data-lang-btn="zhHant">繁體</button></div>
-        <a class="nav-chip" data-nav="planner" data-t="nav.planner">Planner</a>
+        <a class="nav-chip" data-nav="planner" href="../index.html" data-t="nav.planner">Planner</a>
         <a class="nav-chip magazine" data-nav="magazine" href="../magazine/index.html" data-t="nav.magazine">Magazine</a>
       </div>
     </div>
@@ -32,7 +32,7 @@
         <h1 data-t="trips.heroTitle">저장한 여정을 다시 꺼내보세요</h1>
         <p data-t="trips.heroDesc">최근 만든 일정, 저장한 플랜, 공유받은 여행까지 한곳에서 쉽게 다시 보고 이어서 정리할 수 있어요.</p>
         <div class="hero-actions">
-          <a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a>
+          <a class="primary-btn" data-nav="planner" href="../index.html#planner-start" data-t="trips.openPlanner">플래너 열기</a>
           <a class="secondary-btn" data-nav="magazine" href="../magazine/index.html" data-t="trips.browse">매거진 보기</a>
         </div>
       </section>
@@ -163,7 +163,7 @@
           </div>
         </div>
         <div id="savedGrid" class="trips-grid"></div>
-        <div id="savedEmpty" class="empty-state hidden info-card"><h3 data-t="trips.emptySaved">아직 저장된 여정이 없어요</h3><p data-t="trips.emptySavedDesc">마음에 드는 여행 계획을 저장해두면 다음에 더 빠르게 다시 꺼내볼 수 있어요.</p><div class="cta-row" style="justify-content:center;margin-top:14px"><a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a></div></div>
+        <div id="savedEmpty" class="empty-state hidden info-card"><h3 data-t="trips.emptySaved">아직 저장된 여정이 없어요</h3><p data-t="trips.emptySavedDesc">마음에 드는 여행 계획을 저장해두면 다음에 더 빠르게 다시 꺼내볼 수 있어요.</p><div class="cta-row" style="justify-content:center;margin-top:14px"><a class="primary-btn" data-nav="planner" href="../index.html#planner-start" data-t="trips.openPlanner">플래너 열기</a></div></div>
       </section>
 
       <section id="recentSection" class="section hidden">
@@ -219,7 +219,7 @@
         <h3 data-t="trips.utilTitle">내 여행을 더 쉽게 이어가세요</h3>
         <p data-t="trips.footerDesc">읽었던 가이드, 저장한 일정, 공유받은 여행까지 Ryokoplan 안에서 하나의 흐름으로 이어집니다.</p>
         <div class="cta-row">
-          <a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a>
+          <a class="primary-btn" data-nav="planner" href="../index.html#planner-start" data-t="trips.openPlanner">플래너 열기</a>
           <a class="secondary-btn" data-nav="magazine" href="../magazine/index.html" data-t="trips.browse">매거진 보기</a>
         </div>
       </section>
@@ -561,7 +561,7 @@
               <div class="eyebrow">Trip vault</div>
               <h2 class="section-title trip-tight-title">${copy.noContinue}</h2>
               <p class="section-desc">${copy.noContinueDesc}</p>
-              <div class="hero-actions"><a class="primary-btn" data-nav="planner">${window.RyokoApp.t('trips.openPlanner')}</a></div>
+              <div class="hero-actions"><a class="primary-btn" data-nav="planner" href="../index.html#planner-start">${window.RyokoApp.t('trips.openPlanner')}</a></div>
             </div>`;
           return;
         }
