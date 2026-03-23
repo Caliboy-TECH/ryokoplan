@@ -2127,3 +2127,5 @@ body[data-page="planner"] .top-bar{z-index:62}
   body[data-page="planner"] .hero.hero-magazine h1{white-space:pre-line;line-height:0.96;max-width:6.2ch}
   .brand-manifesto-note p,.brand-manifesto-card .section-title,.brand-manifesto-card .section-desc{white-space:normal}
 }
+
+.hero-title-split{display:flex;flex-direction:column;align-items:flex-start;gap:.06em;line-height:.94;word-break:keep-all;overflow-wrap:normal}.hero-title-split span{display:block;white-space:nowrap}@media (max-width: 767px){.hero-title-split{font-size:clamp(2.7rem,11vw,4.4rem);line-height:.92;letter-spacing:-0.04em}.hero-title-split span{white-space:normal;word-break:keep-all}}

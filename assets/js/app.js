@@ -430,9 +430,9 @@ window.RyokoApp = (() => {
     });
   }
   function navHref(target){
-    if (target === 'magazine') return `${pathRoot}magazine/`;
-    if (target === 'planner') return `${pathRoot}index.html`.replace('./index.html','./').replace('../index.html','../');
-    if (target === 'trips') return `${pathRoot}my-trips/`;
+    if (target === 'magazine') return `${pathRoot}magazine/index.html`;
+    if (target === 'planner') return `${pathRoot}index.html`;
+    if (target === 'trips') return `${pathRoot}my-trips/index.html`;
     return '#';
   }
   function renderMobileDock(){
@@ -2155,12 +2155,12 @@ function getSeasonalEditorialCollections(){
     document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
     document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
     document.addEventListener('click', (e) => {
-      const navTarget = e.target.closest('[data-nav]');
+      const navTarget = e.target.closest('[data-nav="planner-start"]');
       if (!navTarget) return;
-      const href = navTarget.getAttribute('href');
-      if (href) return;
-      const target = navTarget.dataset.nav;
-      if (target) window.location.href = navHref(target);
+      e.preventDefault();
+      const plannerShell = document.querySelector('.planner-shell');
+      if (plannerShell) plannerShell.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else window.location.href = navHref('planner');
     });
     renderMobileDock();
     initHomePresets();
