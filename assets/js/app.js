@@ -1883,8 +1883,8 @@ function getSeasonalEditorialCollections(){
     document.querySelectorAll('.top-actions .nav-chip,[data-nav],.mobile-dock-item').forEach(link => {
       const href = link.getAttribute('href') || '';
       const current = (page === 'planner' && (href === './' || href === '../' || /index\.html$/.test(href)))
-        || (page === 'magazine' && /magazine\/?$/.test(href))
-        || (page === 'trips' && /my-trips\/?$/.test(href));
+        || (page === 'magazine' && /magazine(?:\/index\.html)?\/?$/.test(href))
+        || (page === 'trips' && /my-trips(?:\/index\.html)?\/?$/.test(href));
       if (current) link.classList.add('is-current');
     });
 
@@ -2129,13 +2129,22 @@ function getSeasonalEditorialCollections(){
     document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
     document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
     document.addEventListener('click', (e) => {
-      const navTarget = e.target.closest('[data-nav]');
+      const navTarget = e.target.closest('[data-nav], a[href$="/magazine/index.html"], a[href$="magazine/index.html"], a[href$="/my-trips/index.html"], a[href$="my-trips/index.html"], a[href$="/index.html"], a[href="#planner-start"]');
       if (!navTarget) return;
-      const href = navTarget.getAttribute('href');
       const target = navTarget.dataset.nav;
-      if (href) { if (navTarget.tagName !== 'A') window.location.href = href; return; }
-      if (target) window.location.href = navHref(target);
-    });
+      const href = navTarget.getAttribute('href') || (target ? navHref(target) : '');
+      if (!href) return;
+      if (href === '#planner-start') {
+        e.preventDefault();
+        const planner = document.querySelector('#planner-start') || document.querySelector('.planner-shell');
+        if (planner) planner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      if (navTarget.tagName === 'A' || target) {
+        e.preventDefault();
+        window.location.assign(href);
+      }
+    }, true);
     renderMobileDock();
     initHomePresets();
     initPlannerOnboarding();

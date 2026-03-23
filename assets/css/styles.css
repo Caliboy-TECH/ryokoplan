@@ -2134,3 +2134,9 @@ body[data-page="planner"] .top-bar{z-index:62}
   body[data-page="planner"] .hero.hero-magazine h1{max-width:unset;width:min(100%,8.2ch);}
   body[data-page="planner"] .hero.hero-magazine h1 .hero-line{display:block;white-space:nowrap;}
 }
+
+.hero.hero-magazine h1{white-space:normal !important; max-width:none !important;}
+.hero.hero-magazine h1 .hero-line{display:block;white-space:nowrap;}
+@media (max-width: 640px){
+  body[data-page="planner"] .hero.hero-magazine h1{font-size:clamp(31px,8.2vw,39px);line-height:1.02;letter-spacing:-.05em;}
+}
