@@ -2129,19 +2129,20 @@ function getSeasonalEditorialCollections(){
     document.querySelectorAll('[data-nav="magazine"]').forEach(a => a.setAttribute('href', navHref('magazine')));
     document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
     document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
+    document.querySelectorAll('[data-nav="planner-start"]').forEach(a => a.setAttribute('href', '#planner-start'));
+
     document.addEventListener('click', (e) => {
-      const navTarget = e.target.closest('[data-nav], a[href$="/magazine/index.html"], a[href$="magazine/index.html"], a[href$="/my-trips/index.html"], a[href$="my-trips/index.html"], a[href="#planner-start"]');
+      const navTarget = e.target.closest('[data-nav="planner"], [data-nav="planner-start"], a[href="#planner-start"], a[href$="index.html#planner-start"]');
       if (!navTarget) return;
       const target = navTarget.dataset.nav;
       const rawHref = navTarget.getAttribute('href') || '';
       const plannerTarget = target === 'planner-start' || rawHref === '#planner-start' || target === 'planner' || rawHref.endsWith('#planner-start');
-      if (plannerTarget) {
-        if ((document.body?.dataset?.page || 'planner') === 'planner') {
-          e.preventDefault();
-          const planner = document.querySelector('#planner-start') || document.querySelector('.planner-shell');
-          if (planner) planner.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          return;
-        }
+      if (!plannerTarget) return;
+      if ((document.body?.dataset?.page || 'planner') === 'planner') {
+        e.preventDefault();
+        const planner = document.querySelector('#planner-start') || document.querySelector('.planner-shell');
+        if (planner) planner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
       }
       const href = target ? navHref(target) : rawHref;
       if (!href || href === '#') return;
