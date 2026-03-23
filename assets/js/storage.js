@@ -60,6 +60,12 @@ window.RyokoStorage = (() => {
     if(!source) return null;
     return saveTrip({...source, id: uid(), title: `${source.title || source.destination} Copy`});
   }
+  function makeMyVersion(source){
+    if(!source) return null;
+    const baseTitle = source.title || source.destination || 'Trip';
+    const nextNotes = [source.notes, 'Saved as a personal version from a shared or reopened route.'].filter(Boolean).join(' ');
+    return saveTrip({...source, id: uid(), title: `My version — ${baseTitle}`, notes: nextNotes, importedFromLink: false, sourceTripId: source.id, sourceMode: source.sharedViewedAt ? 'shared' : source.savedAt ? 'saved' : 'recent'});
+  }
   function encodeShare(payload){
     const json = JSON.stringify(payload);
     return btoa(unescape(encodeURIComponent(json)));
@@ -79,6 +85,7 @@ window.RyokoStorage = (() => {
     deleteRecentTrip,
     deleteSharedTrip,
     duplicateTrip,
+    makeMyVersion,
     encodeShare,
     decodeShare
   };

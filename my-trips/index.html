@@ -101,6 +101,17 @@
         </article>
       </section>
 
+      <section class="section collection-lab-section">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow" data-lang-ko="도시 컬렉션" data-lang-en="City collections">도시 컬렉션</span>
+            <h2 class="section-title" data-lang-ko="저장된 여정을 도시 단위로 다시 읽기" data-lang-en="Read your saved routes city by city">저장된 여정을 도시 단위로 다시 읽기</h2>
+            <p class="section-desc" data-lang-ko="저장한 여정, 최근 열어본 일정, 공유받은 루트를 도시별 컬렉션으로 묶어 두면 다시 시작하기가 훨씬 쉬워집니다." data-lang-en="Grouping saved, recent, and shared routes by city makes it much easier to reopen the strongest base later.">저장한 여정, 최근 열어본 일정, 공유받은 루트를 도시별 컬렉션으로 묶어 두면 다시 시작하기가 훨씬 쉬워집니다.</p>
+          </div>
+        </div>
+        <div id="cityCollectionsGrid" class="city-collections-grid"></div>
+      </section>
+
       <section class="section">
         <div class="section-head">
           <div><h2 class="section-title" data-t="trips.tabLead">원하는 방식으로 찾아보세요</h2></div>
@@ -232,7 +243,19 @@
           tripShared: '공유받은 일정',
           lastUpdated: 'Updated',
           importTitle: '공유 링크 모아두기',
-          importDesc: '누가 보낸 일정이든 붙여넣고 다시 꺼내보세요.'
+          importDesc: '누가 보낸 일정이든 붙여넣고 다시 꺼내보세요.',
+          makeMyVersion: '내 버전 만들기',
+          cityCollectionsEmptyTitle: '아직 도시 컬렉션이 없어요',
+          cityCollectionsEmptyDesc: '저장하거나 공유받은 여정이 쌓이면 도시별 컬렉션이 여기 모입니다.',
+          collectionRoutes: '개 루트',
+          collectionPlaces: '개 장소 저장',
+          collectionOpen: '최근 루트 열기',
+          collectionGuide: '도시 가이드',
+          collectionExample: '샘플 루트',
+          collectionMixed: '저장/최근/공유가 함께 쌓인 아카이브',
+          collectionSavedOnly: '저장한 여정 중심의 아카이브',
+          collectionSharedHeavy: '공유받은 일정 비중이 높은 도시',
+          collectionRecentHeavy: '최근 열어본 루트가 많은 도시'
         },
         en: {
           continueTitle: 'Continue your trip flow',
@@ -261,7 +284,19 @@
           tripShared: 'Shared itinerary',
           lastUpdated: 'Updated',
           importTitle: 'Collect shared links',
-          importDesc: 'Paste any Ryokoplan itinerary link and keep it here.'
+          importDesc: 'Paste any Ryokoplan itinerary link and keep it here.',
+          makeMyVersion: 'Make my version',
+          cityCollectionsEmptyTitle: 'No city collections yet',
+          cityCollectionsEmptyDesc: 'As saved, recent, and shared trips build up, city collections will appear here automatically.',
+          collectionRoutes: 'routes',
+          collectionPlaces: 'saved places',
+          collectionOpen: 'Open latest',
+          collectionGuide: 'Read city',
+          collectionExample: 'Sample route',
+          collectionMixed: 'A mixed archive of saved, recent, and shared routes',
+          collectionSavedOnly: 'Mostly built from your saved routes',
+          collectionSharedHeavy: 'A city with a stronger shared-trip mix',
+          collectionRecentHeavy: 'A city you reopened often recently'
         }
       };
       let activeCollection = 'all';
@@ -433,6 +468,66 @@
         }).join('');
       }
 
+      function collectionNote(items){
+        const savedCount = items.filter(item => item.savedAt).length;
+        const sharedCount = items.filter(item => item.sharedViewedAt).length;
+        const recentCount = items.filter(item => item.viewedAt && !item.savedAt).length;
+        const copy = langCopy();
+        if (sharedCount >= savedCount && sharedCount >= recentCount && sharedCount > 0) return copy.collectionSharedHeavy;
+        if (recentCount > savedCount && recentCount > 0) return copy.collectionRecentHeavy;
+        if (savedCount === items.length) return copy.collectionSavedOnly;
+        return copy.collectionMixed;
+      }
+      function renderCityCollections(saved, recent, shared){
+        const target = $('cityCollectionsGrid');
+        if (!target) return;
+        const all = [...saved, ...recent, ...shared];
+        const placeCollections = (window.RyokoStorage.getSavedPlaceCollections?.() || []).reduce((acc, entry) => {
+          acc[String(entry.city || '').trim().toLowerCase()] = entry.places || [];
+          return acc;
+        }, {});
+        const groups = all.reduce((acc, item) => {
+          const city = String(item.destination || '').trim();
+          if (!city) return acc;
+          (acc[city] ||= []).push(item);
+          return acc;
+        }, {});
+        const rows = Object.entries(groups).sort((a,b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+        if (!rows.length) {
+          target.innerHTML = `<article class="city-collection-card info-card city-collection-empty"><h3>${langCopy().cityCollectionsEmptyTitle}</h3><p>${langCopy().cityCollectionsEmptyDesc}</p></article>`;
+          return;
+        }
+        target.innerHTML = rows.map(([city, items]) => {
+          const latest = sortItems(items)[0];
+          const cityKey = city.toLowerCase();
+          const loop = window.RyokoApp.getCityLoopData(city) || {};
+          const places = placeCollections[cityKey] || [];
+          const chips = [latest?.duration, latest?.companion, latest?.planData?.vibe, latest?.planData?.bestFor].filter(Boolean).slice(0,3);
+          return `
+            <article class="city-collection-card info-card">
+              <div class="city-collection-cover"><img src="${imgMap[city] || '../assets/images/hero/planner-preview.png'}" alt="${city}"></div>
+              <div class="city-collection-body">
+                <div class="trip-card-topline"><div class="meta">${city}</div><div class="trip-card-date">${items.length} ${langCopy().collectionRoutes}</div></div>
+                <h3 class="card-title">${latest?.title || city}</h3>
+                <p class="card-copy">${collectionNote(items)}</p>
+                <div class="trip-chip-row">
+                  ${chips.map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}
+                  ${places.length ? `<span class="trip-mini-chip">${places.length} ${langCopy().collectionPlaces}</span>` : ''}
+                </div>
+                <div class="city-collection-stack">
+                  <div class="city-collection-snippet"><strong>${latest?.title || city}</strong><span>${getMetaSummary(latest) || ''}</span></div>
+                  ${places.length ? `<div class="city-collection-places">${places.slice(0,4).map(place => `<span class="trip-mini-chip">${place}</span>`).join('')}</div>` : ''}
+                </div>
+                <div class="card-actions city-collection-actions">
+                  <a class="primary-btn" href="${shareUrl(latest)}">${langCopy().collectionOpen}</a>
+                  <a class="soft-btn" href="../${loop.guide || `city/${cityKey}.html`}">${langCopy().collectionGuide}</a>
+                  <a class="ghost-btn" href="../${loop.example || `city/${cityKey}.html`}">${langCopy().collectionExample}</a>
+                </div>
+              </div>
+            </article>`;
+        }).join('');
+      }
+
       function renderModeFilters(){
         const copy = langCopy();
         const rows = [
@@ -520,6 +615,7 @@
               <a class="primary-btn" href="${shareUrl(item)}">Open shared trip</a>
               <button class="secondary-btn" data-detail-mode="shared" data-detail="${item.id}">${window.RyokoApp.t('common.details') || 'Details'}</button>
               <button class="soft-btn" data-save="${item.id}">${langCopy().saveAsMine}</button>
+              <button class="ghost-btn" data-my-version="${item.id}">${langCopy().makeMyVersion}</button>
               <a class="soft-btn" href="../${city.guide}">Read ${city.name}</a>
             </div>
           </div>`;
@@ -547,7 +643,7 @@
               </div>
               <div class="card-actions">
                 <a class="primary-btn" href="${shareUrl(item)}">Open trip</a>
-                ${mode !== 'saved' ? `<button class="secondary-btn" data-save="${item.id}">${langCopy().saveAsMine}</button>` : `<button class="secondary-btn" data-duplicate="${item.id}">${window.RyokoApp.t('trips.tripDuplicate')}</button>`}
+                ${mode !== 'saved' ? `<button class="secondary-btn" data-save="${item.id}">${langCopy().saveAsMine}</button><button class="ghost-btn" data-my-version="${item.id}">${langCopy().makeMyVersion}</button>` : `<button class="secondary-btn" data-duplicate="${item.id}">${window.RyokoApp.t('trips.tripDuplicate')}</button>`}
                 <a class="soft-btn" href="../${city.guide}">Read ${city.name}</a>
               </div>
             </div>
@@ -613,6 +709,14 @@
         document.querySelectorAll('[data-duplicate]').forEach(btn => btn.addEventListener('click', () => {
           window.RyokoStorage.duplicateTrip(btn.dataset.duplicate);
           render();
+        }));
+        document.querySelectorAll('[data-my-version]').forEach(btn => btn.addEventListener('click', () => {
+          const pool = [...saved, ...recent, ...shared];
+          const item = pool.find(x => x.id === btn.dataset.myVersion);
+          if (item) {
+            window.RyokoStorage.makeMyVersion?.(item);
+            render();
+          }
         }));
         document.querySelectorAll('[data-detail]').forEach(btn => btn.addEventListener('click', () => {
           const pool = [...saved, ...recent, ...shared];
@@ -715,6 +819,7 @@
         renderCollections(saved, recent, shared);
         renderSharedSpotlight(shared);
         renderTripLoop(saved, recent, shared);
+        renderCityCollections(saved, recent, shared);
         renderModeFilters();
         bindActions(saved, recent, shared);
       }
