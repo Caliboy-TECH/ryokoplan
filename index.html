@@ -34,8 +34,8 @@
       </a>
       <div class="top-actions">
         <div class="lang-switch"><button class="lang-btn" data-lang-btn="ko">KR</button><button class="lang-btn" data-lang-btn="en">EN</button><button class="lang-btn" data-lang-btn="ja">JP</button><button class="lang-btn" data-lang-btn="zhHant">繁體</button></div>
-        <a class="nav-chip magazine" data-nav="magazine" href="./magazine/" data-t="nav.magazine">Magazine</a>
-        <a class="nav-chip trips" data-nav="trips" href="./my-trips/" data-t="nav.trips">My Trips</a>
+        <a class="nav-chip magazine" data-nav="magazine" href="./magazine/index.html" data-t="nav.magazine">Magazine</a>
+        <a class="nav-chip trips" data-nav="trips" href="./my-trips/index.html" data-t="nav.trips">My Trips</a>
       </div>
     </div>
   </header>
@@ -47,11 +47,11 @@
           <div class="cover-meta-row"><span class="cover-meta-pill">Home cover</span><span class="cover-meta-pill">East Asia city edit</span></div><span class="eyebrow" data-t="planner.heroLabel" data-t="planner.heroLabel">East Asia City Edit</span>
           <div class="cover-kicker" data-t="planner.homeCoverKicker">Editorial cover · East Asia city magazine</div>
           <h1 data-t="planner.heroTitle">도시를 읽고,
-여행을 시작하세요</h1>
-          <p data-t="planner.heroDesc">동아시아 도시 가이드, 예시 일정, 플래너를 한곳에서.</p>
+여행을 시작하세요.</h1>
+          <p data-t="planner.heroDesc">도시를 먼저 읽고, 바로 여행 흐름으로 이어가세요.</p>
           <div class="cover-note-line"><strong data-lang-ko="커버 노트" data-lang-en="Cover note">커버 노트</strong><span data-lang-ko="도시 커버, 샘플 루트, 플래너가 한 톤으로 이어지게 첫 장면 구조를 다시 맞췄습니다." data-lang-en="The first scene now keeps city covers, sample routes, and Planner in one shared editorial tone.">도시 커버, 샘플 루트, 플래너가 한 톤으로 이어지게 첫 장면 구조를 다시 맞췄습니다.</span></div><div class="hero-actions cover-actions-row">
-            <button class="primary-btn" onclick="document.querySelector('.planner-shell').scrollIntoView({behavior:'smooth'})" data-t="planner.start">여행 시작하기</button>
-            <a class="secondary-btn" data-nav="magazine" href="./magazine/" data-t="planner.browse">매거진 보기</a>
+            <a class="primary-btn" href="#plannerStart" data-t="planner.start">여행 계획짜기</a>
+            <a class="secondary-btn" data-nav="magazine" href="./magazine/index.html" data-t="planner.browse">매거진 보기</a>
           </div>
           <div class="hero-stat-row">
             <div class="hero-stat-card">
@@ -136,7 +136,7 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
               <h3 data-lang-ko="빠른 도시와 느린 도시를 한 화면에서 읽기" data-lang-en="Read fast cities and slow cities in one editorial sweep">빠른 도시와 느린 도시를 한 화면에서 읽기</h3>
               <p data-lang-ko="Tokyo부터 Macau까지, Japan · Korea · Greater China의 결을 하나의 city edit으로 보여줍니다." data-lang-en="From Tokyo to Macau, Japan · Korea · Greater China are framed as one city edit rather than a flat destination list.">Tokyo부터 Macau까지, Japan · Korea · Greater China의 결을 하나의 city edit으로 보여줍니다.</p>
               <div class="cta-row">
-                <a class="primary-btn" data-nav="magazine" href="./magazine/" data-lang-ko="매거진 열기" data-lang-en="Open magazine" data-lang-ja="Magazine を開く" data-lang-zhhant="打開雜誌">매거진 열기</a>
+                <a class="primary-btn" data-nav="magazine" href="./magazine/index.html" data-lang-ko="매거진 열기" data-lang-en="Open magazine" data-lang-ja="Magazine を開く" data-lang-zhhant="打開雜誌">매거진 열기</a>
                 <a class="secondary-btn" href="example/tokyo-3n4d-first-trip.html" data-lang-ko="샘플 일정 보기" data-lang-en="Open sample route">샘플 일정 보기</a>
               </div>
             </div>
@@ -185,7 +185,7 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
               <h2 class="section-title" data-t="planner.homeStoryTitle">읽고 바로 출발하고 싶어지는 도시 흐름부터 보여줍니다</h2>
               <p class="section-desc" data-t="planner.homeStoryDesc">랜드마크 목록보다, 어떤 동네를 어떤 리듬으로 묶어야 좋은 여행이 되는지부터 먼저 제안합니다.</p>
             </div>
-            <a class="soft-btn" href="./magazine/" data-t="planner.homeStoryBtn">Open city magazine</a>
+            <a class="soft-btn" href="./magazine/index.html" data-t="planner.homeStoryBtn">Open city magazine</a>
           </div>
           <div class="cover-story-grid">
             <article class="cover-story-line">
@@ -307,8 +307,8 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
             </div>
           </div>
           <div class="mini-cta-stack">
-            <a class="soft-btn" href="./magazine/">City guides</a>
-            <a class="soft-btn" href="./my-trips/">Saved trips</a>
+            <a class="soft-btn" href="./magazine/index.html">City guides</a>
+            <a class="soft-btn" href="./my-trips/index.html">Saved trips</a>
           </div>
         </aside>
       </section>
@@ -360,7 +360,7 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
             <h2 class="section-title" data-lang-ko="지금 바로 꺼내 쓰기 좋은 도시 베이스" data-lang-en="City bases worth using right now">지금 바로 꺼내 쓰기 좋은 도시 베이스</h2>
             <p class="section-desc" data-lang-ko="매번 처음부터 고르기보다, 계절·상황·동행 기준으로 바로 시작할 수 있는 베이스를 따로 묶었습니다." data-lang-en="Instead of starting from zero every time, these dispatches give you a better base by season, situation, and companion.">매번 처음부터 고르기보다, 계절·상황·동행 기준으로 바로 시작할 수 있는 베이스를 따로 묶었습니다.</p>
           </div>
-          <a class="soft-btn" href="./my-trips/" data-lang-ko="컬렉션 보러가기" data-lang-en="Open collections">컬렉션 보러가기</a>
+          <a class="soft-btn" href="./my-trips/index.html" data-lang-ko="컬렉션 보러가기" data-lang-en="Open collections">컬렉션 보러가기</a>
         </div>
         <div class="dispatch-edit-grid">
           <article class="dispatch-edit-card feature">
@@ -446,7 +446,7 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
       </section>
 
       <section class="section planner-grid">
-        <div class="planner-shell">
+        <div class="planner-shell" id="plannerStart">
           <div class="planner-onboarding-bar">
             <div>
               <span class="eyebrow">Planner setup</span>
@@ -675,7 +675,7 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
       <section class="section footer-cta">
         <h2 data-t="planner.footerTitle">검색보다 빠르게, 더 나은 여행 계획으로</h2>
         <p data-t="planner.footerDesc">읽고, 고르고, 바로 일정으로 바꿔보세요.</p>
-        <div class="cta-row"><button class="primary-btn" onclick="document.querySelector('.planner-shell').scrollIntoView({behavior:'smooth'})" data-t="planner.start">여행 시작하기</button><a class="secondary-btn" data-nav="magazine" href="./magazine/" data-t="planner.browse">매거진 보기</a><a class="secondary-btn" data-nav="trips" href="./my-trips/" data-t="planner.myTripsBannerBtn">내 여정 보기</a></div>
+        <div class="cta-row"><a class="primary-btn" href="#plannerStart" data-t="planner.start">여행 계획짜기</a><a class="secondary-btn" data-nav="magazine" href="./magazine/index.html" data-t="planner.browse">매거진 보기</a><a class="secondary-btn" data-nav="trips" href="./my-trips/index.html" data-t="planner.myTripsBannerBtn">내 여정 보기</a></div>
       </section>
 
       <div class="footer">Ryokoplan V2 starter · mobile-first travel planner + magazine</div>
