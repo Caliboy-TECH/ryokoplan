@@ -1972,14 +1972,16 @@ html,body{background:
 /* mobile hero compact pass */
 @media (max-width: 720px){
   .top-bar{padding:10px 0 8px}
-  .top-bar-inner{align-items:center;gap:10px}
+  .top-bar-inner{display:grid;grid-template-columns:1fr;align-items:center;gap:10px}
+  .brand{width:100%;justify-content:flex-start}
   .brand-mark{width:54px;height:54px;border-radius:18px}
-  .brand-title{font-size:34px;letter-spacing:-.06em}
+  .brand-title{font-size:32px;letter-spacing:-.06em}
   .brand-sub{display:none}
-  .top-actions{gap:8px}
+  .top-actions{width:100%;gap:8px;justify-content:flex-end}
   .top-actions .nav-chip{display:none !important}
-  .lang-switch{padding:3px}
-  .lang-btn{min-width:46px;height:42px;font-size:13px}
+  .lang-switch{display:flex;flex-wrap:nowrap;justify-content:flex-end;gap:8px;width:100%;max-width:none;margin-left:0;padding:0}
+  .lang-btn{flex:0 0 auto;min-width:58px;height:44px;padding:0 14px;font-size:14px}
+  .lang-btn[data-lang-btn="zhHant"]{min-width:76px;padding:0 16px}
 
   body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home{gap:0;margin-top:10px;padding:0;border:none;background:transparent;box-shadow:none}
   body[data-page="planner"] .hero.hero-magazine .cover-visual-column{order:0;padding:0}
@@ -2024,9 +2026,18 @@ body[data-page="planner"] .top-bar{z-index:62}
 @media (max-width: 768px){
   .brandbar{align-items:flex-start;gap:14px;}
   .brandcopy{min-width:0;}
-  .lang-switch{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;max-width:320px;margin-left:auto;}
-  .lang-btn{min-width:0;width:100%;height:48px;border-radius:999px;padding:0 10px;font-size:14px;font-weight:800;}
-  body[data-page="planner"] .lang-switch{gap:10px;grid-template-columns:repeat(4,minmax(0,1fr));}
-  body[data-page="planner"] .lang-btn{width:100%;height:48px;border-radius:999px;font-size:14px;}
-  body[data-page="magazine"] .lang-btn{width:100%;height:48px;}
+  .lang-switch{display:flex;flex-wrap:nowrap;gap:8px;width:100%;max-width:none;margin-left:0;justify-content:flex-end;}
+  .lang-btn{min-width:58px;width:auto;height:44px;border-radius:999px;padding:0 14px;font-size:14px;font-weight:800;}
+  .lang-btn[data-lang-btn="zhHant"]{min-width:76px;padding:0 16px;}
+  body[data-page="planner"] .lang-switch{gap:8px;}
+  body[data-page="planner"] .lang-btn{width:auto;height:44px;border-radius:999px;font-size:14px;}
+  body[data-page="magazine"] .lang-btn{width:auto;height:44px;}
+}
+
+
+@media (max-width: 390px){
+  .brand-title{font-size:30px}
+  .lang-switch{gap:6px}
+  .lang-btn{min-width:54px;height:42px;padding:0 12px;font-size:13px}
+  .lang-btn[data-lang-btn="zhHant"]{min-width:70px;padding:0 14px}
 }
