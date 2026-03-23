@@ -1975,6 +1975,24 @@ function getSeasonalEditorialCollections(){
     const page = document.body.dataset.page;
     const maps = {
       planner: {
+        ko: {
+          '.brand-manifesto-note strong':'브랜드 문장',
+          '.brand-manifesto-note p':'도시를 먼저 읽고, 그다음 여행을 만듭니다.\n이 한 문장을 기준으로 홈, 매거진, 도시 가이드, 결과 화면을 같은 결로 정리합니다.',
+          '.home-cover-desk .eyebrow':'이번 주 커버',
+          '.home-cover-desk .section-title':'도시를 먼저 읽게 만드는 홈 편집본',
+          '.home-cover-desk .section-desc':'플래너를 바로 여는 대신, 이번 주에 잘 맞는 도시 흐름과 샘플 루트를 먼저 보여줍니다.',
+          '.cover-story-card-large .primary-btn':'매거진 열기',
+          '.cover-story-card-large .secondary-btn':'샘플 일정 보기'
+        },
+        en: {
+          '.brand-manifesto-note strong':'Brand line',
+          '.brand-manifesto-note p':'Read the city. Then build the trip.\nThis line keeps the homepage, magazine, city guides, and results in one consistent tone.',
+          '.home-cover-desk .eyebrow':'This week’s cover',
+          '.home-cover-desk .section-title':'A homepage edit that makes you read the city first',
+          '.home-cover-desk .section-desc':'Instead of opening with a form, the homepage now shows city flow and sample routes first.',
+          '.cover-story-card-large .primary-btn':'Open magazine',
+          '.cover-story-card-large .secondary-btn':'Open sample route'
+        },
         ja: {
           '.brand-manifesto .eyebrow':'ブランド方向',
           '.brand-manifesto-card .section-title':'Ryokoplan はツールより都市エディトリアルに近いです',
@@ -2110,6 +2128,14 @@ function getSeasonalEditorialCollections(){
     document.querySelectorAll('[data-nav="magazine"]').forEach(a => a.setAttribute('href', navHref('magazine')));
     document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
     document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
+    document.addEventListener('click', (e) => {
+      const navTarget = e.target.closest('[data-nav]');
+      if (!navTarget) return;
+      const href = navTarget.getAttribute('href');
+      if (href) return;
+      const target = navTarget.dataset.nav;
+      if (target) window.location.href = navHref(target);
+    });
     renderMobileDock();
     initHomePresets();
     initPlannerOnboarding();

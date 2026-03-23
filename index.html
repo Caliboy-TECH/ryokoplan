@@ -34,8 +34,8 @@
       </a>
       <div class="top-actions">
         <div class="lang-switch"><button class="lang-btn" data-lang-btn="ko">KR</button><button class="lang-btn" data-lang-btn="en">EN</button><button class="lang-btn" data-lang-btn="ja">JP</button><button class="lang-btn" data-lang-btn="zhHant">繁體</button></div>
-        <a class="nav-chip magazine" data-nav="magazine" data-t="nav.magazine">Magazine</a>
-        <a class="nav-chip trips" data-nav="trips" data-t="nav.trips">My Trips</a>
+        <a class="nav-chip magazine" data-nav="magazine" href="./magazine/" data-t="nav.magazine">Magazine</a>
+        <a class="nav-chip trips" data-nav="trips" href="./my-trips/" data-t="nav.trips">My Trips</a>
       </div>
     </div>
   </header>
@@ -48,10 +48,10 @@
           <div class="cover-kicker" data-t="planner.homeCoverKicker">Editorial cover · East Asia city magazine</div>
           <h1 data-t="planner.heroTitle">도시를 읽고,
 여행을 시작하세요</h1>
-          <p data-t="planner.heroDesc">일본과 한국 도시 가이드, 예시 일정, AI 플래너를 한곳에서.</p>
+          <p data-t="planner.heroDesc">동아시아 도시 가이드, 예시 일정, 플래너를 한곳에서.</p>
           <div class="cover-note-line"><strong data-lang-ko="커버 노트" data-lang-en="Cover note">커버 노트</strong><span data-lang-ko="도시 커버, 샘플 루트, 플래너가 한 톤으로 이어지게 첫 장면 구조를 다시 맞췄습니다." data-lang-en="The first scene now keeps city covers, sample routes, and Planner in one shared editorial tone.">도시 커버, 샘플 루트, 플래너가 한 톤으로 이어지게 첫 장면 구조를 다시 맞췄습니다.</span></div><div class="hero-actions cover-actions-row">
             <button class="primary-btn" onclick="document.querySelector('.planner-shell').scrollIntoView({behavior:'smooth'})" data-t="planner.start">여행 시작하기</button>
-            <a class="secondary-btn" data-nav="magazine" data-t="planner.browse">매거진 보기</a>
+            <a class="secondary-btn" data-nav="magazine" href="./magazine/" data-t="planner.browse">매거진 보기</a>
           </div>
           <div class="hero-stat-row">
             <div class="hero-stat-card">
@@ -111,19 +111,19 @@
         </article>
         <aside class="info-card brand-manifesto-note">
           <strong data-lang-ko="Brand line" data-lang-en="Brand line">Brand line</strong>
-          <p data-lang-ko="Read the city. Then build the trip.
-이 한 문장을 기준으로 홈, 매거진, 도시 가이드, 결과 화면 모두를 같은 결로 정리합니다." data-lang-en="Read the city. Then build the trip.
-This line now anchors the homepage, magazine, city guides, and trip result in one consistent editorial tone.">Read the city. Then build the trip.
-이 한 문장을 기준으로 홈, 매거진, 도시 가이드, 결과 화면 모두를 같은 결로 정리합니다.</p>
+          <p data-lang-ko="도시를 먼저 읽고, 그다음 여행을 만듭니다.
+이 한 문장을 기준으로 홈, 매거진, 도시 가이드, 결과 화면을 같은 결로 정리합니다." data-lang-en="Read the city. Then build the trip.
+This line now anchors the homepage, magazine, city guides, and trip result in one consistent editorial tone.">도시를 먼저 읽고, 그다음 여행을 만듭니다.
+이 한 문장을 기준으로 홈, 매거진, 도시 가이드, 결과 화면을 같은 결로 정리합니다.</p>
         </aside>
       </section>
 
       <section class="section home-cover-desk">
         <div class="section-head">
           <div>
-            <span class="eyebrow" data-lang-ko="이번 주 커버" data-lang-en="This week's cover">이번 주 커버</span>
-            <h2 class="section-title" data-lang-ko="도시를 먼저 읽게 만드는 홈 편집본" data-lang-en="A homepage edit that makes you read the city first">도시를 먼저 읽게 만드는 홈 편집본</h2>
-            <p class="section-desc" data-lang-ko="플래너를 바로 여는 대신, 이번 주에 잘 맞는 도시 흐름과 샘플 루트를 먼저 보여줍니다." data-lang-en="Instead of pushing the form first, the homepage now opens with city moods and route references worth reading first.">플래너를 바로 여는 대신, 이번 주에 잘 맞는 도시 흐름과 샘플 루트를 먼저 보여줍니다.</p>
+            <span class="eyebrow" data-lang-ko="이번 주 커버" data-lang-en="This week's cover" data-lang-ja="今週のカバー" data-lang-zhhant="本週封面">이번 주 커버</span>
+            <h2 class="section-title" data-lang-ko="도시를 먼저 읽게 만드는 홈 편집본" data-lang-en="A homepage edit that makes you read the city first" data-lang-ja="先に都市を読ませるホームエディット" data-lang-zhhant="先讓你讀城市的首頁編輯">도시를 먼저 읽게 만드는 홈 편집본</h2>
+            <p class="section-desc" data-lang-ko="플래너를 바로 여는 대신, 이번 주에 잘 맞는 도시 흐름과 샘플 루트를 먼저 보여줍니다." data-lang-en="Instead of pushing the form first, the homepage now opens with city moods and route references worth reading first." data-lang-ja="フォームを先に出す代わりに、今読むべき都市の流れとサンプルルートを先に見せます。" data-lang-zhhant="不是先把表單推到前面，而是先給你現在值得讀的城市流與 sample route。">플래너를 바로 여는 대신, 이번 주에 잘 맞는 도시 흐름과 샘플 루트를 먼저 보여줍니다.</p>
           </div>
         </div>
         <div class="cover-desk-grid">
@@ -132,11 +132,11 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
               <img src="assets/images/hero/main-hero-japan.jpg" alt="Tokyo, Osaka, Kyoto, Fukuoka">
             </div>
             <div class="cover-story-body">
-              <span class="collection-kicker" data-lang-ko="동아시아 커버" data-lang-en="East Asia cover">East Asia cover</span>
+              <span class="collection-kicker" data-lang-ko="동아시아 커버" data-lang-en="East Asia cover" data-lang-ja="東アジアカバー" data-lang-zhhant="東亞封面">East Asia cover</span>
               <h3 data-lang-ko="빠른 도시와 느린 도시를 한 화면에서 읽기" data-lang-en="Read fast cities and slow cities in one editorial sweep">빠른 도시와 느린 도시를 한 화면에서 읽기</h3>
               <p data-lang-ko="Tokyo부터 Macau까지, Japan · Korea · Greater China의 결을 하나의 city edit으로 보여줍니다." data-lang-en="From Tokyo to Macau, Japan · Korea · Greater China are framed as one city edit rather than a flat destination list.">Tokyo부터 Macau까지, Japan · Korea · Greater China의 결을 하나의 city edit으로 보여줍니다.</p>
               <div class="cta-row">
-                <a class="primary-btn" data-nav="magazine">Magazine edit</a>
+                <a class="primary-btn" data-nav="magazine" href="./magazine/" data-lang-ko="매거진 열기" data-lang-en="Open magazine" data-lang-ja="Magazine を開く" data-lang-zhhant="打開雜誌">매거진 열기</a>
                 <a class="secondary-btn" href="example/tokyo-3n4d-first-trip.html" data-lang-ko="샘플 일정 보기" data-lang-en="Open sample route">샘플 일정 보기</a>
               </div>
             </div>
@@ -153,7 +153,7 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
               </div>
             </article>
             <article class="dispatch-card info-card">
-              <span class="collection-kicker" data-lang-ko="Quick dispatch" data-lang-en="Quick dispatch">Quick dispatch</span>
+              <span class="collection-kicker" data-lang-ko="퀵 디스패치" data-lang-en="Quick dispatch" data-lang-ja="クイックディスパッチ" data-lang-zhhant="快速編輯線">Quick dispatch</span>
               <div class="dispatch-lines">
                 <div><strong data-lang-ko="도시 큐레이션" data-lang-en="City curation">도시 큐레이션</strong><span data-lang-ko="읽고 싶은 도시를 무드와 리듬으로 먼저 좁힙니다." data-lang-en="Narrow cities by mood and pace before planning.">읽고 싶은 도시를 무드와 리듬으로 먼저 좁힙니다.</span></div>
                 <div><strong data-lang-ko="샘플 루트" data-lang-en="Sample routes">샘플 루트</strong><span data-lang-ko="좋은 일정이 어떤 흐름으로 보이는지 바로 확인합니다." data-lang-en="See what a strong route looks like before generating your own.">좋은 일정이 어떤 흐름으로 보이는지 바로 확인합니다.</span></div>
@@ -675,7 +675,7 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
       <section class="section footer-cta">
         <h2 data-t="planner.footerTitle">검색보다 빠르게, 더 나은 여행 계획으로</h2>
         <p data-t="planner.footerDesc">읽고, 고르고, 바로 일정으로 바꿔보세요.</p>
-        <div class="cta-row"><button class="primary-btn" onclick="document.querySelector('.planner-shell').scrollIntoView({behavior:'smooth'})" data-t="planner.start">여행 시작하기</button><a class="secondary-btn" data-nav="magazine" data-t="planner.browse">매거진 보기</a><a class="secondary-btn" data-nav="trips" data-t="planner.myTripsBannerBtn">내 여정 보기</a></div>
+        <div class="cta-row"><button class="primary-btn" onclick="document.querySelector('.planner-shell').scrollIntoView({behavior:'smooth'})" data-t="planner.start">여행 시작하기</button><a class="secondary-btn" data-nav="magazine" href="./magazine/" data-t="planner.browse">매거진 보기</a><a class="secondary-btn" data-nav="trips" href="./my-trips/" data-t="planner.myTripsBannerBtn">내 여정 보기</a></div>
       </section>
 
       <div class="footer">Ryokoplan V2 starter · mobile-first travel planner + magazine</div>

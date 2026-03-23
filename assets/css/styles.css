@@ -2114,3 +2114,16 @@ body[data-page="planner"] .top-bar{z-index:62}
   }
   .hero-copy{padding:22px 18px 20px}
 }
+
+
+/* translation + hero readability fix */
+.hero.hero-magazine h1{white-space:pre-line;word-break:keep-all;overflow-wrap:normal;text-wrap:balance;max-width:9ch}
+.hero.hero-magazine p,.brand-manifesto-card .section-title,.brand-manifesto-card .section-desc,.brand-manifesto-note p,.cover-story-card h3,.cover-story-card p,.dispatch-lines span{word-break:keep-all;overflow-wrap:normal;text-wrap:balance}
+.brand-manifesto-note p{white-space:pre-line}
+@media (min-width: 721px){
+  body[data-page="planner"] .hero.hero-magazine h1{font-size:clamp(56px,4.9vw,76px);line-height:0.98;max-width:8.5ch}
+}
+@media (max-width: 720px){
+  body[data-page="planner"] .hero.hero-magazine h1{white-space:pre-line;line-height:0.96;max-width:6.2ch}
+  .brand-manifesto-note p,.brand-manifesto-card .section-title,.brand-manifesto-card .section-desc{white-space:normal}
+}
