@@ -114,6 +114,17 @@
         <div id="publicRouteDesk" class="public-route-grid"></div>
       </section>
 
+      <section class="section operating-edit-section">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow" data-lang-ko="운영형 에디트" data-lang-en="Operating edits">운영형 에디트</span>
+            <h2 class="section-title" data-lang-ko="시즌·주말·동행 기준으로 다음 베이스 고르기" data-lang-en="Choose the next base by season, weekend shape, or companion">시즌·주말·동행 기준으로 다음 베이스 고르기</h2>
+            <p class="section-desc" data-lang-ko="도시를 고른 뒤 다시 고민하지 않도록, 실제로 자주 쓰는 관점별 컬렉션을 미리 편집해 둡니다." data-lang-en="Instead of starting from zero again, keep reusable editorial collections ready for the most common travel modes.">도시를 고른 뒤 다시 고민하지 않도록, 실제로 자주 쓰는 관점별 컬렉션을 미리 편집해 둡니다.</p>
+          </div>
+        </div>
+        <div id="operatingEditDesk" class="operating-edit-grid"></div>
+      </section>
+
       <section class="section collection-lab-section">
         <div class="section-head">
           <div>
@@ -279,7 +290,11 @@
           publicDeskWeekend: '주말용 베이스',
           publicDeskSlow: '슬로우 무드',
           publicDeskFamily: '가족 동선',
-          publicDeskFood: '푸드 중심'
+          publicDeskFood: '푸드 중심',
+          editSave: '베이스 저장',
+          editOpen: '루트 보기',
+          editGuide: '가이드 보기',
+          editSaved: '에디토리얼 베이스를 My Trips에 저장했어요.'
         },
         en: {
           continueTitle: 'Continue your trip flow',
@@ -331,7 +346,11 @@
           publicDeskWeekend: 'Weekend base',
           publicDeskSlow: 'Slow mood',
           publicDeskFamily: 'Family pacing',
-          publicDeskFood: 'Food-led'
+          publicDeskFood: 'Food-led',
+          editSave: 'Save base',
+          editOpen: 'Open route',
+          editGuide: 'Read guide',
+          editSaved: 'Editorial base saved to My Trips.'
         }
       };
       let activeCollection = 'all';
@@ -357,6 +376,34 @@
           key:'fukuoka-food', city:'Fukuoka', titleKo:'Fukuoka food weekend', titleEn:'Fukuoka food weekend', badgeKey:'publicDeskFood', image:'../assets/images/examples/fukuoka-food.png', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
           summaryKo:'짧은 일정에서 식사 리듬을 가장 잘 살리는 공개 샘플입니다.', summaryEn:'A compact public sample built around the strongest food rhythm for a short stay.',
           duration:'2N3D', companionKo:'친구/혼자', companionEn:'Friends / Solo', vibeKo:'푸드 리듬', vibeEn:'Food rhythm', bestKo:'짧은 일본, 컴팩트 이동', bestEn:'Short Japan, compact moves'
+        }
+      ];
+
+      const operatingEdits = [
+        {
+          key:'spring-soft-seoul', city:'Seoul', titleKo:'봄 주말 서울 소프트 에디트', titleEn:'Soft Seoul spring weekend', labelKo:'시즌 에디트', labelEn:'Seasonal edit', image:'../assets/images/cities/seoul.png', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
+          summaryKo:'벚꽃 시즌처럼 사람이 많을 때도 리듬을 망치지 않게, 동네 조합과 시간대를 부드럽게 잡은 베이스입니다.', summaryEn:'A softer Seoul base that protects pacing during crowded spring windows by leaning on neighborhood rhythm and timing.',
+          chipsKo:['봄 창', '동네 조합', '저녁 무드'], chipsEn:['Spring window', 'Neighborhood pairings', 'Evening mood'], duration:'2N3D', companionKo:'커플/친구', companionEn:'Couple / Friends'
+        },
+        {
+          key:'tokyo-weekend-dense', city:'Tokyo', titleKo:'도쿄 주말 고밀도 베이스', titleEn:'Tokyo dense weekend base', labelKo:'주말 에디트', labelEn:'Weekend edit', image:'../assets/images/cities/tokyo.png', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
+          summaryKo:'시간이 짧아도 밀도를 살리고 싶을 때 쓰는 주말형 도쿄 베이스입니다. 축을 나눠 과열만 막습니다.', summaryEn:'A short-window Tokyo base for travelers who still want density, without turning the route into a blur.',
+          chipsKo:['주말', '밀도', '축 나누기'], chipsEn:['Weekend', 'Density', 'Axis split'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
+        },
+        {
+          key:'busan-parents-soft', city:'Busan', titleKo:'부모님과 가는 부산 소프트 루트', titleEn:'Soft Busan with parents', labelKo:'동행 에디트', labelEn:'Companion edit', image:'../assets/images/cities/busan.png', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
+          summaryKo:'전망과 식사는 살리고 피로 누적은 줄이는 부모님 동행용 베이스입니다.', summaryEn:'A parent-friendly Busan base that keeps the views and meals while protecting energy.',
+          chipsKo:['부모님', '전망', '피로 조절'], chipsEn:['Parents', 'Views', 'Fatigue control'], duration:'2N3D', companionKo:'가족/부모님', companionEn:'Family / Parents'
+        },
+        {
+          key:'kyoto-solo-quiet', city:'Kyoto', titleKo:'교토 솔로 콰이어트 윈도우', titleEn:'Quiet Kyoto for solo time', labelKo:'솔로 에디트', labelEn:'Solo edit', image:'../assets/images/cities/kyoto.png', guide:'../city/kyoto.html', example:'../example/kyoto-2n3d-slow-trip.html',
+          summaryKo:'혼자일 때 교토를 과하게 쓰지 않고, 오전과 저녁의 조용한 시간을 중심으로 읽는 베이스입니다.', summaryEn:'A solo Kyoto base built around quieter morning and evening windows instead of trying to do too much.',
+          chipsKo:['혼자', '조용한 시간', '슬로우'], chipsEn:['Solo', 'Quiet windows', 'Slow'], duration:'2N3D', companionKo:'혼자', companionEn:'Solo'
+        },
+        {
+          key:'fukuoka-friends-food', city:'Fukuoka', titleKo:'후쿠오카 친구 푸드 위켄드', titleEn:'Fukuoka food weekend with friends', labelKo:'프렌즈 에디트', labelEn:'Friends edit', image:'../assets/images/cities/fukuoka.png', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
+          summaryKo:'짧게 가도 식사 타이밍이 무너지지 않게, 친구와 쓰기 좋은 푸드 중심 베이스입니다.', summaryEn:'A friend-ready Fukuoka base built around food timing that still works on a short weekend.',
+          chipsKo:['친구', '푸드', '짧은 일본'], chipsEn:['Friends', 'Food', 'Short Japan'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
         }
       ];
 
@@ -524,6 +571,49 @@
                 <a class="soft-btn" href="${entry.example}">${copy.publicDeskOpen}</a>
                 <a class="ghost-btn" href="../?destination=${encodeURIComponent(entry.city)}">${copy.publicDeskPlan}</a>
                 <button class="primary-btn" data-save-public="${entry.key}">${copy.publicDeskSave}</button>
+              </div>
+            </div>
+          </article>`).join('');
+      }
+
+      function operatingEditPayload(entry){
+        const isKo = window.RyokoApp.lang === 'ko';
+        return {
+          id: `edit_${entry.key}_${Date.now()}`,
+          destination: entry.city,
+          title: isKo ? entry.titleKo : entry.titleEn,
+          duration: entry.duration,
+          companion: isKo ? entry.companionKo : entry.companionEn,
+          notes: isKo ? entry.summaryKo : entry.summaryEn,
+          createdAt: new Date().toISOString(),
+          planData: {
+            summary: isKo ? entry.summaryKo : entry.summaryEn,
+            vibe: (isKo ? entry.chipsKo : entry.chipsEn).slice(0,2).join(' · '),
+            bestFor: (isKo ? entry.chipsKo : entry.chipsEn).join(' · ')
+          }
+        };
+      }
+
+      function renderOperatingEdits(){
+        const target = $('operatingEditDesk');
+        if (!target) return;
+        const isKo = window.RyokoApp.lang === 'ko';
+        const copy = langCopy();
+        target.innerHTML = operatingEdits.map(entry => `
+          <article class="operating-edit-card info-card">
+            <div class="operating-edit-media"><img src="${entry.image}" alt="${entry.city}"></div>
+            <div class="operating-edit-body">
+              <div class="operating-edit-topline">
+                <span class="collection-kicker">${isKo ? entry.labelKo : entry.labelEn}</span>
+                <span class="trip-card-date">${entry.city} · ${entry.duration}</span>
+              </div>
+              <h3>${isKo ? entry.titleKo : entry.titleEn}</h3>
+              <p>${isKo ? entry.summaryKo : entry.summaryEn}</p>
+              <div class="trip-chip-row">${(isKo ? entry.chipsKo : entry.chipsEn).map(chip => `<span class="trip-mini-chip">${chip}</span>`).join('')}</div>
+              <div class="operating-edit-actions card-actions">
+                <a class="soft-btn" href="${entry.example}">${copy.editOpen}</a>
+                <a class="ghost-btn" href="${entry.guide}">${copy.editGuide}</a>
+                <button class="primary-btn" data-save-edit="${entry.key}">${copy.editSave}</button>
               </div>
             </div>
           </article>`).join('');
@@ -844,6 +934,15 @@
           window.RyokoStorage.saveTrip(publicRoutePayload(entry));
           const msg = $('sharedImportMessage');
           msg.textContent = langCopy().publicDeskSaved;
+          activeTab('saved');
+          render();
+        }));
+        document.querySelectorAll('[data-save-edit]').forEach(btn => btn.addEventListener('click', () => {
+          const entry = operatingEdits.find(x => x.key === btn.dataset.saveEdit);
+          if (!entry) return;
+          window.RyokoStorage.saveTrip(operatingEditPayload(entry));
+          const msg = $('sharedImportMessage');
+          msg.textContent = langCopy().editSaved;
           activeTab('saved');
           render();
         }));
