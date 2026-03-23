@@ -45,13 +45,13 @@
 
   <main class="page">
     <div class="container">
-      <section class="hero hero-magazine">
-        <div class="hero-card hero-copy hero-copy-magazine">
-          <span class="eyebrow" data-t="planner.heroLabel">Japan & Korea Travel Planner</span>
+      <section class="hero hero-magazine cover-system-shell cover-system-shell-home">
+        <div class="hero-card hero-copy hero-copy-magazine cover-copy-column">
+          <div class="cover-meta-row"><span class="cover-meta-pill">Home cover</span><span class="cover-meta-pill">Japan · Korea</span></div><span class="eyebrow" data-t="planner.heroLabel">Japan & Korea Travel Planner</span>
           <div class="cover-kicker" data-t="planner.homeCoverKicker">Editorial cover · Japan & Korea city magazine</div>
           <h1 data-t="planner.heroTitle">도시를 읽고, 바로 여행을 짜세요</h1>
           <p data-t="planner.heroDesc">일본과 한국 도시 가이드, 예시 일정, AI 플래너를 한곳에서.</p>
-          <div class="hero-actions">
+          <div class="cover-note-line"><strong data-lang-ko="커버 노트" data-lang-en="Cover note">커버 노트</strong><span data-lang-ko="도시 커버, 샘플 루트, 플래너가 한 톤으로 이어지게 첫 장면 구조를 다시 맞췄습니다." data-lang-en="The first scene now keeps city covers, sample routes, and Planner in one shared editorial tone.">도시 커버, 샘플 루트, 플래너가 한 톤으로 이어지게 첫 장면 구조를 다시 맞췄습니다.</span></div><div class="hero-actions cover-actions-row">
             <button class="primary-btn" onclick="document.querySelector('.planner-shell').scrollIntoView({behavior:'smooth'})" data-t="planner.start">여행 시작하기</button>
             <a class="secondary-btn" data-nav="magazine" data-t="planner.browse">매거진 보기</a>
           </div>
@@ -68,7 +68,7 @@
             </div>
           </div>
         </div>
-        <div class="hero-card hero-visual hero-visual-magazine">
+        <div class="hero-card hero-visual hero-visual-magazine cover-visual-column">
           <div class="hero-visual-grid">
             <figure class="hero-visual-main">
               <img src="assets/images/hero/main-hero-japan.png" alt="Ryokoplan hero Japan">
@@ -466,7 +466,7 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
         </div>
 
         <div class="result-wrap">
-          <div class="example-card result-hero-card" id="resultTop">
+          <div class="example-card result-hero-card cover-system-shell cover-system-shell-result" id="resultTop">
             <div class="section-head">
               <div>
                 <h2 class="section-title" data-t="planner.exampleTitle">이런 식으로 여행이 만들어져요</h2>
@@ -475,7 +475,7 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
             </div>
             <div class="result-hero-editorial">
               <div class="result-editorial-copy">
-                <span class="eyebrow" id="resultEyebrow">Editorial trip brief</span>
+                <div class="cover-meta-row"><span class="cover-meta-pill">Trip cover</span><span class="cover-meta-pill" id="resultCoverMeta">Planner result</span></div><span class="eyebrow" id="resultEyebrow">Editorial trip brief</span>
                 <div class="result-title-wrap">
                   <div class="summary-line summary-line-lg"><strong id="resultTitle">Tokyo · 3N4D · Couple · Local Mode</strong></div>
                   <p id="resultSummary" class="section-desc" style="margin:10px 0 0">대표 지역과 조용한 동네를 균형 있게 엮어, 너무 빡빡하지 않으면서도 도쿄다운 흐름을 느낄 수 있는 일정이에요.</p>
@@ -487,7 +487,7 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
                   <div class="result-fact-card"><span class="result-fact-label">Route shape</span><strong id="resultFactShape">One strong district + one softer pocket</strong></div>
                   <div class="result-fact-card"><span class="result-fact-label">Works best for</span><strong id="resultFactBest">First trips that still want local texture</strong></div>
                 </div>
-                <div class="result-editor-note" id="resultEditorNote">
+                <div class="cover-note-line result-cover-note"><strong>Cover note</strong><span id="resultCoverNoteText">This cover follows the same city-first framing used in Ryokoplan Magazine.</span></div><div class="result-editor-note" id="resultEditorNote">
                   <span class="editor-note-kicker">Editor’s take</span>
                   <p id="resultEditorNoteText">This route keeps the first day soft, builds the strongest city contrast in the middle, and leaves the final stretch light enough to protect your departure day.</p>
                 </div>

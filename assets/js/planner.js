@@ -311,12 +311,16 @@ window.RyokoPlanner = (() => {
     const shape = qs('resultFactShape');
     const best = qs('resultFactBest');
     const note = qs('resultEditorNoteText');
+    const coverMeta = qs('resultCoverMeta');
+    const coverNote = qs('resultCoverNoteText');
     const visual = qs('resultEditorialVisual');
     const visualTitle = qs('resultVisualTitle');
     const visualDesc = qs('resultVisualDesc');
     const visualKicker = qs('resultVisualKicker');
     const voice = window.RyokoApp?.getCityVoice?.(destination);
     if (eyebrow) eyebrow.textContent = uiCopy(`${destination} 루트 노트`, `${destination} route note`);
+    if (coverMeta) coverMeta.textContent = uiCopy(`${destination} 플래너 에디트`, `${destination} planner edit`);
+    if (coverNote) coverNote.textContent = uiCopy(`${destination} 결과도 홈과 매거진에서 쓰는 같은 커버 규칙으로 읽히게 정리했습니다.`, `${destination} results now follow the same cover framing used on the home and magazine pages.`);
     if (rhythm) rhythm.textContent = textValue(data.pace, 'Balanced city pacing');
     if (shape) shape.textContent = summarizeRouteShape(data);
     if (best) best.textContent = textValue(data.bestFor, 'Travelers who want a smoother route');
