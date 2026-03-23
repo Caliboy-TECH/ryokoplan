@@ -85,7 +85,7 @@ window.RyokoPlanner = (() => {
 
   function qs(id){ return document.getElementById(id); }
   function options(arr){ return arr.map(item => `<option value="${item}">${item}</option>`).join(''); }
-  function getDayLabel(day){ return `Day ${day}`; }
+  function getDayLabel(day){ return window.RyokoApp?.lang === 'ko' ? `${day}일차` : `Day ${day}`; }
   function textValue(v, fallback=''){
     if (v == null) return fallback;
     if (typeof v === 'string') return v;
@@ -102,8 +102,11 @@ window.RyokoPlanner = (() => {
       .replace(/'/g, '&#39;');
   }
   function budgetLabel(key){
-    const map = { flight:'Flight', hotel:'Hotel', food:'Food', transit:'Transit', admission:'Admission', activities:'Activities', transport:'Transport' };
     const raw = String(key || '').trim();
+    const lang = window.RyokoApp?.lang || 'ko';
+    const map = lang === 'ko'
+      ? { flight:'항공', hotel:'숙소', food:'식비', transit:'교통', admission:'입장료', activities:'체험', transport:'이동' }
+      : { flight:'Flight', hotel:'Hotel', food:'Food', transit:'Transit', admission:'Admission', activities:'Activities', transport:'Transport' };
     return map[raw.toLowerCase()] || raw.charAt(0).toUpperCase() + raw.slice(1);
   }
   function storageKey(destination='trip'){
@@ -174,6 +177,7 @@ window.RyokoPlanner = (() => {
       btn.classList.toggle('is-saved', isSaved);
       btn.setAttribute('aria-pressed', String(isSaved));
       btn.textContent = isSaved ? '♥' : '♡';
+      btn.setAttribute('aria-label', isSaved ? uiCopy('저장됨', 'Saved') : uiCopy('장소 저장', 'Save place'));
     }));
   }
   function updateShareMeta(data){
@@ -193,18 +197,26 @@ window.RyokoPlanner = (() => {
     });
   }
   function refreshOptions(){
+    const currentDuration = qs('duration')?.selectedIndex || 0;
+    const currentCompanion = qs('companion')?.selectedIndex || 0;
+    const currentStyle = qs('style')?.selectedIndex || 0;
+    const selectedNeeds = [...document.querySelectorAll('#needsGrid input:checked')].map(i => Number(i.dataset.needIndex));
     qs('duration').innerHTML = options(window.RyokoApp.t('options.durations'));
     qs('companion').innerHTML = options(window.RyokoApp.t('options.companions'));
     qs('style').innerHTML = options(window.RyokoApp.t('options.styles'));
+    qs('duration').selectedIndex = Math.min(currentDuration, qs('duration').options.length - 1);
+    qs('companion').selectedIndex = Math.min(currentCompanion, qs('companion').options.length - 1);
+    qs('style').selectedIndex = Math.min(currentStyle, qs('style').options.length - 1);
     const needs = window.RyokoApp.t('options.needs') || [];
     const box = qs('needsGrid');
-    box.innerHTML = needs.map((label, idx) => `<label class="option-chip"><input type="checkbox" value="${label}" data-need-index="${idx}"><span>${label}</span></label>`).join('');
+    box.innerHTML = needs.map((label, idx) => `<label class="option-chip${selectedNeeds.includes(idx) ? ' is-selected' : ''}"><input type="checkbox" value="${label}" data-need-index="${idx}" ${selectedNeeds.includes(idx) ? 'checked' : ''}><span>${label}</span></label>`).join('');
     box.querySelectorAll('.option-chip').forEach(chip => chip.addEventListener('click', e => {
       if (e.target.tagName === 'INPUT') return;
       const input = chip.querySelector('input');
       input.checked = !input.checked;
       chip.classList.toggle('is-selected', input.checked);
     }));
+    syncPlannerRecipe();
   }
   function bindSelectionChips(){
     document.querySelectorAll('[data-quick-city]').forEach(btn => btn.addEventListener('click', () => {
@@ -217,10 +229,11 @@ window.RyokoPlanner = (() => {
   }
   function prettyPillValue(group, value=''){
     const key = String(value || '').toLowerCase();
+    const isKo = (window.RyokoApp?.lang || 'ko') === 'ko';
     const maps = {
-      tripMood: { balanced:'Balanced mood', editorial:'Editorial mood', soft:'Soft mood', vivid:'Vivid mood' },
-      dayDensity: { light:'Light days', balanced:'Balanced days', full:'Full days' },
-      budgetMode: { smart:'Smart spend', balanced:'Balanced spend', treat:'Treat-worthy' }
+      tripMood: isKo ? { balanced:'균형형', editorial:'매거진형', soft:'소프트', vivid:'비비드' } : { balanced:'Balanced mood', editorial:'Editorial mood', soft:'Soft mood', vivid:'Vivid mood' },
+      dayDensity: isKo ? { light:'가볍게', balanced:'균형형', full:'꽉 차게' } : { light:'Light days', balanced:'Balanced days', full:'Full days' },
+      budgetMode: isKo ? { smart:'스마트', balanced:'밸런스', treat:'한 끼는 확실하게' } : { smart:'Smart spend', balanced:'Balanced spend', treat:'Treat-worthy' }
     };
     return maps[group]?.[key] || value;
   }
@@ -350,7 +363,7 @@ window.RyokoPlanner = (() => {
       textValue(data.tripMood, prettyPillValue('tripMood', form.tripMood || 'balanced')),
       textValue(data.dayDensity, prettyPillValue('dayDensity', form.dayDensity || 'balanced')),
       textValue(data.budgetMode, prettyPillValue('budgetMode', form.budgetMode || 'balanced')),
-      form.localMode ? 'Local mode on' : 'Classic routing'
+      form.localMode ? uiCopy('현지인 모드', 'Local mode on') : uiCopy('관광객 모드', 'Classic routing')
     ].filter(Boolean);
     const node = qs('resultSignature');
     if (!node) return;
@@ -378,7 +391,7 @@ window.RyokoPlanner = (() => {
         <button class="day-rail-chip${idx === 0 ? ' is-active' : ''}" data-day-jump="${target}">
           <span class="day-rail-kicker">${escapeHtml(getDayLabel(day.day || idx + 1))}</span>
           <strong>${escapeHtml(textValue(day.title, uiCopy('하루 일정', 'Day route')))}</strong>
-          <small>${escapeHtml(String(places.length || 0))} ${uiCopy('stops', 'stops')}</small>
+          <small>${escapeHtml(String(places.length || 0))} ${uiCopy('곳', 'stops')}</small>
         </button>`;
     }).join('');
     document.querySelectorAll('[data-day-jump]').forEach(btn => btn.addEventListener('click', () => smoothJump(btn.dataset.dayJump)));
@@ -408,17 +421,18 @@ window.RyokoPlanner = (() => {
             <div class="day-card-top">
               <div>
                 <span class="day-badge">${getDayLabel(day.day)}</span>
-                <h3 class="day-title">${escapeHtml(textValue(day.title, `Day ${day.day}`))}</h3>
+                <h3 class="day-title">${escapeHtml(textValue(day.title, getDayLabel(day.day || dayIndex + 1)))}</h3>
                 <p class="day-intro">${escapeHtml(textValue(day.intro || day.summary, ''))}</p>
               </div>
             </div>
-            <button class="day-toggle" aria-label="Toggle day">${dayIndex === 0 ? '−' : '+'}</button>
+            <button class="day-toggle" aria-label="${uiCopy('하루 열기/접기', 'Toggle day')}">${dayIndex === 0 ? '−' : '+'}</button>
           </div>
           <div class="day-card-summary">${compact}</div>
           <div class="day-card-body">
             <div class="place-list">
               ${places.map((place, idx) => {
                 const saved = savedPlaces.includes(place.name);
+                const saveLabel = saved ? uiCopy('저장됨', 'Saved') : uiCopy('장소 저장', 'Save place');
                 return `
                 <div class="place-item">
                   <div class="place-index">${idx + 1}</div>
@@ -426,7 +440,7 @@ window.RyokoPlanner = (() => {
                     <div class="place-name">${escapeHtml(place.name)}</div>
                     <div class="place-reason">${escapeHtml(place.reason)}</div>
                   </div>
-                  <button class="place-save${saved ? ' is-saved' : ''}" data-destination="${escapeHtml(destination)}" data-place="${escapeHtml(place.name)}" aria-pressed="${saved ? 'true' : 'false'}">${saved ? '♥' : '♡'}</button>
+                  <button class="place-save${saved ? ' is-saved' : ''}" data-destination="${escapeHtml(destination)}" data-place="${escapeHtml(place.name)}" aria-pressed="${saved ? 'true' : 'false'}" aria-label="${saveLabel}">${saved ? '♥' : '♡'}</button>
                 </div>`;
               }).join('')}
             </div>
@@ -442,7 +456,7 @@ window.RyokoPlanner = (() => {
     const budget = data.budgetBreakdown || {};
     const entries = Array.isArray(budget) ? budget.map(x => [x.category, x.amount]) : Object.entries(budget);
     qs('budgetSummary').textContent = textValue(data.budgetSummary, window.RyokoApp.t('planner.budgetSummaryFallback') || '');
-    qs('budgetList').innerHTML = (entries.length ? entries : Object.entries(samplePlans.tokyo.budgetBreakdown)).map(([k,v]) => `<div class="budget-card-line"><strong>${k}</strong><span>${v}</span></div>`).join('');
+    qs('budgetList').innerHTML = (entries.length ? entries : Object.entries(samplePlans.tokyo.budgetBreakdown)).map(([k,v]) => `<div class="budget-card-line"><strong>${budgetLabel(k)}</strong><span>${v}</span></div>`).join('');
   }
   function renderTips(data){
     const tips = Array.isArray(data.localTips) && data.localTips.length ? data.localTips : samplePlans.tokyo.localTips;
@@ -512,31 +526,31 @@ window.RyokoPlanner = (() => {
       <article class="loop-card info-card">
         <div class="loop-card-top"><span class="eyebrow">${escapeHtml(city.country)}</span><span class="loop-card-vibe">${escapeHtml(city.vibe)}</span></div>
         <h3>${escapeHtml(city.name)}</h3>
-        <p>Start from the city guide, then turn that mood into a calmer, cleaner route.</p>
+        <p>${uiCopy('도시 가이드로 먼저 읽고, 그 무드를 더 차분한 루트로 바꿔보세요.', 'Start from the city guide, then turn that mood into a calmer, cleaner route.')}</p>
         <div class="card-actions">
-          <a class="soft-btn" href="${window.RyokoApp.resolvePath(city.guide)}">City guide</a>
-          <a class="ghost-btn" href="${window.RyokoApp.resolvePath(city.example)}">Sample route</a>
+          <a class="soft-btn" href="${window.RyokoApp.resolvePath(city.guide)}">${uiCopy('도시 가이드','City guide')}</a>
+          <a class="ghost-btn" href="${window.RyokoApp.resolvePath(city.example)}">${uiCopy('샘플 루트','Sample route')}</a>
         </div>
       </article>`).join('');
     const continueCard = recent[0] ? `
       <article class="loop-feature info-card">
         <div class="loop-feature-copy">
-          <span class="eyebrow">Keep the loop going</span>
-          <h3>Jump back into ${escapeHtml(recent[0].destination || 'your recent trip')}</h3>
-          <p>${escapeHtml((recent[0].planData?.summary || recent[0].notes || 'You already have another trip flow ready to reopen.').slice(0, 180))}</p>
+          <span class="eyebrow">${uiCopy('다음 루프로','Keep the loop going')}</span>
+          <h3>${uiCopy(`${recent[0].destination || '최근 여행'}로 다시 돌아가기`, `Jump back into ${recent[0].destination || 'your recent trip'}`)}</h3>
+          <p>${escapeHtml((recent[0].planData?.summary || recent[0].notes || uiCopy('이미 다시 열어볼 수 있는 다른 여행 흐름이 준비되어 있어요.', 'You already have another trip flow ready to reopen.')).slice(0, 180))}</p>
           <div class="card-actions">
-            <a class="primary-btn" href="${location.pathname}?trip=${encodeURIComponent(window.RyokoStorage.encodeShare(recent[0]))}">Open recent trip</a>
+            <a class="primary-btn" href="${location.pathname}?trip=${encodeURIComponent(window.RyokoStorage.encodeShare(recent[0]))}">${uiCopy('최근 일정 열기','Open recent trip')}</a>
             <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">My Trips</a>
           </div>
         </div>
       </article>` : `
       <article class="loop-feature info-card">
         <div class="loop-feature-copy">
-          <span class="eyebrow">Keep the loop going</span>
-          <h3>Read ${escapeHtml(current.name)} deeper, then save the plan</h3>
-          <p>Use the city guide to sharpen the vibe, keep this plan in My Trips, and come back with stronger context next time.</p>
+          <span class="eyebrow">${uiCopy('다음 루프로','Keep the loop going')}</span>
+          <h3>${uiCopy(`${current.name}를 더 읽고 이 플랜을 저장하세요`, `Read ${current.name} deeper, then save the plan`)}</h3>
+          <p>${uiCopy('도시 가이드로 무드를 더 선명하게 만든 뒤, 이 플랜을 My Trips에 남겨두면 다음 탐색이 더 쉬워집니다.', 'Use the city guide to sharpen the vibe, keep this plan in My Trips, and come back with stronger context next time.')}</p>
           <div class="card-actions">
-            <a class="primary-btn" href="${window.RyokoApp.resolvePath(current.guide)}">Read city guide</a>
+            <a class="primary-btn" href="${window.RyokoApp.resolvePath(current.guide)}">${uiCopy('도시 가이드 읽기','Read city guide')}</a>
             <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">Open My Trips</a>
           </div>
         </div>
@@ -544,7 +558,7 @@ window.RyokoPlanner = (() => {
     node.innerHTML = `
       <div class="section-head">
         <div>
-          <span class="eyebrow">Next step loop</span>
+          <span class="eyebrow">${uiCopy('다음 액션 루프','Next step loop')}</span>
           <h2 class="section-title">Don’t stop at one result</h2>
           <p class="section-desc">Read a related city, reopen a saved trip, or use a sample route to keep the Ryokoplan loop moving.</p>
         </div>
@@ -558,6 +572,7 @@ window.RyokoPlanner = (() => {
     qs('checklistList').innerHTML = checklist.map(item => `<div class="check-item"><span class="check-icon">✓</span><div class="check-text">${item}</div></div>`).join('');
   }
   function renderPlan(data){
+    window.__RYOKO_LAST_RESULT__ = data;
     qs('resultTitle').textContent = data.title || `${data.destination} Trip Plan`;
     qs('resultSummary').textContent = normalizeSummary(data);
     renderMeta(data);
@@ -714,7 +729,7 @@ window.RyokoPlanner = (() => {
       return `
         <section class="day-block">
           <div class="day-top">
-            <span class="day-chip">Day ${escapeHtml(d.day)}</span>
+            <span class="day-chip">${escapeHtml(getDayLabel(d.day))}</span>
             <div>
               <h3>${escapeHtml(textValue(d.title, `Day ${d.day}`))}</h3>
               <p class="day-intro">${escapeHtml(textValue(d.intro || '', ''))}</p>
@@ -942,7 +957,11 @@ window.RyokoPlanner = (() => {
     refreshOptions();
     bindSelectionChips();
     applyPresetFromQuery();
-    window.addEventListener('ryoko:langchange', refreshOptions);
+    window.addEventListener('ryoko:langchange', () => {
+      refreshOptions();
+      const existing = window.__RYOKO_LAST_RESULT__;
+      if (existing) renderPlan(existing);
+    });
     qs('localToggle').addEventListener('click', () => qs('localToggle').classList.toggle('on'));
     qs('submitBtn').addEventListener('click', generate);
     qs('exampleBtn').addEventListener('click', () => useExample('tokyo'));
