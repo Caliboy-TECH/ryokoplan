@@ -765,7 +765,8 @@ window.RyokoPlanner = (() => {
       textValue(data.budgetMode,''),
       window.currentTripPayload.localMode ? copy.localModeOn : copy.classicRouting
     ].filter(Boolean).join(' · ');
-    const generatedAt = new Date().toLocaleDateString(lang === 'ko' ? 'ko-KR' : 'en-US', { year:'numeric', month:'long', day:'numeric' });
+    const localeMap = { ko:'ko-KR', en:'en-US', ja:'ja-JP', zhHant:'zh-Hant' };
+    const generatedAt = new Date().toLocaleDateString(localeMap[lang] || 'en-US', { year:'numeric', month:'long', day:'numeric' });
     const quickFacts = [
       { label: copy.quickRhythm, value: textValue(data.pace, '-') },
       { label: copy.quickShape, value: summarizeRouteShape(data) },
