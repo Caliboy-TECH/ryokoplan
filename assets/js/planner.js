@@ -151,8 +151,8 @@ window.RyokoPlanner = (() => {
     onScroll();
   }
   function updateStickyCopy(data){
-    if (qs('stickyTripTitle')) qs('stickyTripTitle').textContent = data.title || `${data.destination || 'Trip'} Plan`;
-    if (qs('stickyTripMeta')) qs('stickyTripMeta').textContent = [textValue(data.vibe,''), textValue(data.pace,'')].filter(Boolean).join(' · ') || 'Jump, save, share, or export';
+    if (qs('stickyTripTitle')) qs('stickyTripTitle').textContent = data.title || `${data.destination || 'City'} editorial route`;
+    if (qs('stickyTripMeta')) qs('stickyTripMeta').textContent = [textValue(data.vibe,''), textValue(data.pace,'')].filter(Boolean).join(' · ') || uiCopy('개요 · 저장 · 공유 · PDF','Overview · save · share · PDF');
   }
   function updateActiveJumpChip(){
     const sections = ['resultTop','resultDayRailSection','resultDaysSection','localTipsSection','budgetSection','checklistSection'];
@@ -623,19 +623,19 @@ window.RyokoPlanner = (() => {
           <h3>${uiCopy(`${recent[0].destination || '최근 여행'}로 다시 돌아가기`, `Jump back into ${recent[0].destination || 'your recent trip'}`)}</h3>
           <p>${escapeHtml((recent[0].planData?.summary || recent[0].notes || uiCopy('이미 다시 열어볼 수 있는 다른 여행 흐름이 준비되어 있어요.', 'You already have another trip flow ready to reopen.')).slice(0, 180))}</p>
           <div class="card-actions">
-            <a class="primary-btn" href="${location.pathname}?trip=${encodeURIComponent(window.RyokoStorage.encodeShare(recent[0]))}">${uiCopy('최근 일정 열기','Open recent trip')}</a>
-            <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">My Trips</a>
+            <a class="primary-btn" href="${location.pathname}?trip=${encodeURIComponent(window.RyokoStorage.encodeShare(recent[0]))}">${uiCopy('최근 루트 열기','Open recent route')}</a>
+            <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">${uiCopy('My Trips 열기','Open My Trips')}</a>
           </div>
         </div>
       </article>` : `
       <article class="loop-feature info-card">
         <div class="loop-feature-copy">
           <span class="eyebrow">${uiCopy('다음 루프로','Keep the loop going')}</span>
-          <h3>${uiCopy(`${current.name}를 더 읽고 이 플랜을 저장하세요`, `Read ${current.name} deeper, then save the plan`)}</h3>
+          <h3>${uiCopy(`${current.name}를 더 읽고 이 루트를 저장하세요`, `Read ${current.name} deeper, then save the route`)}</h3>
           <p>${uiCopy('도시 가이드로 무드를 더 선명하게 만든 뒤, 이 플랜을 My Trips에 남겨두면 다음 탐색이 더 쉬워집니다.', 'Use the city guide to sharpen the vibe, keep this plan in My Trips, and come back with stronger context next time.')}</p>
           <div class="card-actions">
-            <a class="primary-btn" href="${window.RyokoApp.resolvePath(current.guide)}">${uiCopy('도시 가이드 읽기','Read city guide')}</a>
-            <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">Open My Trips</a>
+            <a class="primary-btn" href="${window.RyokoApp.resolvePath(current.guide)}">${uiCopy('도시 가이드 읽기','Read guide')}</a>
+            <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">${uiCopy('My Trips 열기','Open My Trips')}</a>
           </div>
         </div>
       </article>`;
@@ -644,7 +644,7 @@ window.RyokoPlanner = (() => {
         <div>
           <span class="eyebrow">${uiCopy('다음 액션 루프','Next step loop')}</span>
           <h2 class="section-title">Don’t stop at one result</h2>
-          <p class="section-desc">Read a related city, reopen a saved trip, or use a sample route to keep the Ryokoplan loop moving.</p>
+          <p class="section-desc">${uiCopy('연결된 도시를 더 읽고, 저장한 루트를 다시 열고, 샘플 루트까지 이어서 볼 수 있게 구성했습니다.','Read a related city, reopen a saved route, or continue with a sample route to keep the Ryokoplan flow moving.')}</p>
         </div>
       </div>
       ${continueCard}
@@ -657,7 +657,7 @@ window.RyokoPlanner = (() => {
   }
   function renderPlan(data){
     window.__RYOKO_LAST_RESULT__ = data;
-    qs('resultTitle').textContent = data.title || `${data.destination} Trip Plan`;
+    qs('resultTitle').textContent = data.title || `${data.destination} editorial route`;
     qs('resultSummary').textContent = normalizeSummary(data);
     renderMeta(data);
     renderEditorialHero(data);
@@ -714,8 +714,8 @@ window.RyokoPlanner = (() => {
     const data = window.currentTripPayload.planData || {};
     const shareText = [textValue(data.summary, ''), textValue(data.bestFor, '')].filter(Boolean).join(' · ');
     const shareData = {
-      title: window.currentTripPayload.title || 'Ryokoplan Trip',
-      text: shareText || `${window.currentTripPayload.destination} trip from Ryokoplan`,
+      title: window.currentTripPayload.title || 'Ryokoplan route',
+      text: shareText || `${window.currentTripPayload.destination} route from Ryokoplan`,
       url
     };
     if (navigator.share) {
@@ -765,7 +765,7 @@ window.RyokoPlanner = (() => {
         };
     const rawDestination = window.currentTripPayload.destination || data.destination || 'Trip';
     const destination = escapeHtml(rawDestination);
-    const title = escapeHtml(data.title || `${rawDestination} Trip Plan`);
+    const title = escapeHtml(data.title || `${rawDestination} editorial route`);
     const summary = escapeHtml(normalizeSummary(data));
     const budgetSummary = escapeHtml(textValue(data.budgetSummary, ''));
     const signature = [
@@ -956,20 +956,20 @@ window.RyokoPlanner = (() => {
     return window.RyokoApp.lang === 'ko'
       ? {
           kicker:'공유받은 일정',
-          title:'누군가 만든 흐름에서 바로 시작했어요',
+          title:'공유된 루트에서 바로 시작했어요',
           desc:'공유 링크로 들어온 일정입니다. 그대로 저장하거나, 내 취향에 맞게 다시 다듬을 수 있어요.',
           openGuide:'도시 가이드 보기',
-          save:'내 여정에 저장',
-          duplicate:'이 흐름으로 다시 만들기',
+          save:'여정 저장',
+          duplicate:'이 루트로 시작',
           source:'Shared trip context'
         }
       : {
           kicker:'Shared trip',
-          title:'You started from someone else’s itinerary',
-          desc:'This plan came in through a shared link. Keep it as-is, save it to your vault, or reshape it into your own version.',
-          openGuide:'Read city guide',
-          save:'Save to My Trips',
-          duplicate:'Use as my base',
+          title:'You started from a shared route',
+          desc:'This route came in through a shared link. Keep it, save it, or reshape it into your own version.',
+          openGuide:'Read guide',
+          save:'Save Trip',
+          duplicate:'Use this route',
           source:'Shared trip context'
         };
   }
@@ -1018,7 +1018,7 @@ window.RyokoPlanner = (() => {
       };
       if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(formPayload);
       document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
-      showToast(uiCopy('이 일정의 흐름을 기반으로 다시 시작해요.','Starting from this shared route.'), 'info');
+      showToast(uiCopy('이 공유 루트를 바탕으로 다시 시작해요.','Starting from this shared route.'), 'info');
     });
   }
 

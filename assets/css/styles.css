@@ -2181,3 +2181,14 @@ body[data-page="planner"] .top-bar{z-index:62}
   .city-detail-copy h1{font-size:30px;}
   .section-title{letter-spacing:-.035em;}
 }
+
+
+@media (max-width: 560px){
+  .result-sticky-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:100%;}
+  .result-sticky-actions > *{width:100%;justify-content:center;min-width:0;}
+  .result-sticky-copy strong,.result-sticky-copy span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .jump-chip{padding:9px 12px;font-size:11.5px;}
+  .card-actions .soft-btn,.card-actions .ghost-btn,.card-actions .secondary-btn,.card-actions .primary-btn{flex:1 1 100%;justify-content:center;}
+  .cta-row.compact-actions,.cta-row,.hero-actions,.cover-actions-row{gap:9px;}
+  .trip-mini-chip{max-width:100%;}
+}
