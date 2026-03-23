@@ -430,8 +430,9 @@ window.RyokoApp = (() => {
     });
   }
   function navHref(target){
+    const page = document.body?.dataset?.page || 'planner';
     if (target === 'magazine') return resolvePath('magazine/index.html');
-    if (target === 'planner') return resolvePath('index.html');
+    if (target === 'planner') return page === 'planner' ? '#planner-start' : resolvePath('index.html#planner-start');
     if (target === 'trips') return resolvePath('my-trips/index.html');
     return '#';
   }
@@ -2129,24 +2130,21 @@ function getSeasonalEditorialCollections(){
     document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
     document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
     document.addEventListener('click', (e) => {
-      const navTarget = e.target.closest('[data-nav], a[href$="/magazine/index.html"], a[href$="magazine/index.html"], a[href$="/my-trips/index.html"], a[href$="my-trips/index.html"], a[href$="/index.html"], a[href="#planner-start"]');
+      const navTarget = e.target.closest('[data-nav], a[href$="/magazine/index.html"], a[href$="magazine/index.html"], a[href$="/my-trips/index.html"], a[href$="my-trips/index.html"], a[href="#planner-start"]');
       if (!navTarget) return;
       const target = navTarget.dataset.nav;
       const rawHref = navTarget.getAttribute('href') || '';
-      if (target === 'planner-start' || rawHref === '#planner-start') {
-        e.preventDefault();
-        const planner = document.querySelector('#planner-start') || document.querySelector('.planner-shell');
-        if (planner) planner.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
+      const plannerTarget = target === 'planner-start' || rawHref === '#planner-start' || target === 'planner' || rawHref.endsWith('#planner-start');
+      if (plannerTarget) {
+        if ((document.body?.dataset?.page || 'planner') === 'planner') {
+          e.preventDefault();
+          const planner = document.querySelector('#planner-start') || document.querySelector('.planner-shell');
+          if (planner) planner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
       }
       const href = target ? navHref(target) : rawHref;
       if (!href || href === '#') return;
-      if (navTarget.tagName === 'A') {
-        if ((target === 'magazine' || target === 'planner' || target === 'trips') && rawHref !== href) {
-          navTarget.setAttribute('href', href);
-        }
-        return;
-      }
       e.preventDefault();
       window.location.assign(href);
     }, true);
