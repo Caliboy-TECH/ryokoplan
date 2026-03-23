@@ -1,6 +1,7 @@
 window.RyokoApp = (() => {
   const defaultLang = 'ko';
   let lang = localStorage.getItem('ryoko_lang_v2') || defaultLang;
+  const supportedLangs = ['ko','en','ja','zhHant'];
 
   const pathRoot = (() => {
     const depth = location.pathname.split('/').filter(Boolean).length;
@@ -373,11 +374,12 @@ window.RyokoApp = (() => {
   }
 
   function t(path){
-    const dict = window.RYOKO_TRANSLATIONS?.[lang] || window.RYOKO_TRANSLATIONS?.ko || {};
+    const activeLang = supportedLangs.includes(lang) ? lang : 'en';
+    const dict = window.RYOKO_TRANSLATIONS?.[activeLang] || window.RYOKO_TRANSLATIONS?.en || window.RYOKO_TRANSLATIONS?.ko || {};
     return path.split('.').reduce((acc, key) => acc?.[key], dict) ?? '';
   }
   function setLanguage(next){
-    lang = next;
+    lang = supportedLangs.includes(next) ? next : 'en';
     localStorage.setItem('ryoko_lang_v2', lang);
     document.documentElement.lang = lang;
     applyTranslations();
@@ -394,12 +396,14 @@ window.RyokoApp = (() => {
       const value = t(el.dataset.tPlaceholder);
       if (value) el.setAttribute('placeholder', value);
     });
-    root.querySelectorAll('[data-lang-ko], [data-lang-en]').forEach(el => {
-      const value = el.dataset[lang === 'ko' ? 'langKo' : 'langEn'];
+    root.querySelectorAll('[data-lang-ko], [data-lang-en], [data-lang-ja], [data-lang-zhhant]').forEach(el => {
+      const keyMap = { ko: 'langKo', en: 'langEn', ja: 'langJa', zhHant: 'langZhhant' };
+      const value = el.dataset[keyMap[lang]] || el.dataset.langEn || el.dataset.langKo;
       if (value) el.innerHTML = value;
     });
-    root.querySelectorAll('[data-lang-ko-placeholder], [data-lang-en-placeholder]').forEach(el => {
-      const value = el.dataset[lang === 'ko' ? 'langKoPlaceholder' : 'langEnPlaceholder'];
+    root.querySelectorAll('[data-lang-ko-placeholder], [data-lang-en-placeholder], [data-lang-ja-placeholder], [data-lang-zhhant-placeholder]').forEach(el => {
+      const keyMap = { ko: 'langKoPlaceholder', en: 'langEnPlaceholder', ja: 'langJaPlaceholder', zhHant: 'langZhhantPlaceholder' };
+      const value = el.dataset[keyMap[lang]] || el.dataset.langEnPlaceholder || el.dataset.langKoPlaceholder;
       if (value) el.setAttribute('placeholder', value);
     });
   }
@@ -424,7 +428,7 @@ window.RyokoApp = (() => {
       document.body.appendChild(dock);
     }
     const page = document.body.dataset.page || 'planner';
-    const lang = document.documentElement.lang === 'ko' ? 'ko' : 'en';
+    const dockLang = supportedLangs.includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
     const dockCopy = {
       planner: { icon: 'P', helper: lang === 'ko' ? '계획' : 'Plan', label: t('nav.planner') || 'Planner' },
       magazine: { icon: 'M', helper: lang === 'ko' ? '탐색' : 'Read', label: t('nav.magazine') || 'Magazine' },
