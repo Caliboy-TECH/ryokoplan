@@ -2140,3 +2140,9 @@ body[data-page="planner"] .top-bar{z-index:62}
 @media (max-width: 640px){
   body[data-page="planner"] .hero.hero-magazine h1{font-size:clamp(31px,8.2vw,39px);line-height:1.02;letter-spacing:-.05em;}
 }
+
+
+.hero-title-split{display:flex;flex-direction:column;align-items:flex-start;gap:.06em;white-space:normal !important;max-width:none !important;text-wrap:initial !important;}
+.hero-title-split .hero-line{display:block;white-space:nowrap;word-break:keep-all;overflow-wrap:normal;}
+body[data-page="planner"] .hero.hero-magazine h1.hero-title-split{max-width:none !important;}
+@media (max-width:759px){body[data-page="planner"] .hero.hero-magazine h1.hero-title-split{font-size:clamp(32px,8.9vw,40px);line-height:.98;} }

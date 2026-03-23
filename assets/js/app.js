@@ -406,7 +406,7 @@ window.RyokoApp = (() => {
   function applyTranslations(root=document){
     root.querySelectorAll('[data-t]').forEach(el => {
       const value = t(el.dataset.t);
-      if (value) { if (el.hasAttribute('data-t-html')) el.innerHTML = String(value).replace(/\n/g,'<br>'); else el.textContent = value; }
+      if (value) { if (el.hasAttribute('data-t-split')) { const parts = String(value).split(/\n/); el.innerHTML = parts.map(part => `<span class=\"hero-line\">${part}</span>`).join(''); } else if (el.hasAttribute('data-t-html')) el.innerHTML = String(value).replace(/\n/g,'<br>'); else el.textContent = value; }
     });
     root.querySelectorAll('[data-t-placeholder]').forEach(el => {
       const value = t(el.dataset.tPlaceholder);
@@ -430,9 +430,9 @@ window.RyokoApp = (() => {
     });
   }
   function navHref(target){
-    if (target === 'magazine') return `${pathRoot}magazine/index.html`;
-    if (target === 'planner') return `${pathRoot}index.html`;
-    if (target === 'trips') return `${pathRoot}my-trips/index.html`;
+    if (target === 'magazine') return new URL('magazine/index.html', document.baseURI).toString();
+    if (target === 'planner') return new URL('index.html', document.baseURI).toString();
+    if (target === 'trips') return new URL('my-trips/index.html', document.baseURI).toString();
     return '#';
   }
   function renderMobileDock(){
@@ -2132,18 +2132,18 @@ function getSeasonalEditorialCollections(){
       const navTarget = e.target.closest('[data-nav], a[href$="/magazine/index.html"], a[href$="magazine/index.html"], a[href$="/my-trips/index.html"], a[href$="my-trips/index.html"], a[href$="/index.html"], a[href="#planner-start"]');
       if (!navTarget) return;
       const target = navTarget.dataset.nav;
-      const href = navTarget.getAttribute('href') || (target ? navHref(target) : '');
-      if (!href) return;
-      if (href === '#planner-start') {
+      const rawHref = navTarget.getAttribute('href') || '';
+      if (target === 'planner-start' || rawHref === '#planner-start') {
         e.preventDefault();
         const planner = document.querySelector('#planner-start') || document.querySelector('.planner-shell');
         if (planner) planner.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
-      if (navTarget.tagName === 'A' || target) {
-        e.preventDefault();
-        window.location.assign(href);
-      }
+      if (navTarget.tagName === 'A') return;
+      const href = target ? navHref(target) : rawHref;
+      if (!href) return;
+      e.preventDefault();
+      window.location.href = href;
     }, true);
     renderMobileDock();
     initHomePresets();
