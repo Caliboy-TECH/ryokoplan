@@ -542,6 +542,42 @@ window.RyokoPlanner = (() => {
       </article>`).join('');
   }
 
+
+  function renderSignalShelf(data){
+    const node = qs('resultSignalShelf');
+    if (!node) return;
+    const form = readForm();
+    const recs = window.RyokoApp.getSignalRecommendations({
+      city: textValue(data.destination, form.destination || ''),
+      destination: textValue(data.destination, form.destination || ''),
+      companion: form.companion,
+      style: form.style,
+      notes: form.notes,
+      mode: window.currentTripPayload?.localMode ? 'local' : 'classic'
+    });
+    if (!recs.length) { node.innerHTML = ''; return; }
+    const title = uiCopy('지금 선택에 더 잘 맞는 베이스', 'Bases that fit this route better');
+    const desc = uiCopy('우천일, 부모님 동행, 늦은 밤, 푸드 중심 같은 신호를 기준으로 다시 이어볼 수 있는 베이스입니다.', 'These are stronger next bases when rain, parents, late-night pacing, or food-led routing matters more.');
+    node.innerHTML = `
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">${uiCopy('Signal-aware picks','Signal-aware picks')}</span>
+          <h2 class="section-title">${title}</h2>
+          <p class="section-desc">${desc}</p>
+        </div>
+      </div>
+      <div class="loop-grid">${recs.map(item => `
+        <article class="loop-card info-card">
+          <div class="loop-card-top"><span class="eyebrow">${escapeHtml(item.preset?.destination || item.slug || 'Base')}</span><span class="loop-card-vibe">${escapeHtml((item.tags || []).slice(0,2).join(' · '))}</span></div>
+          <h3>${escapeHtml(textValue(item.title, item.slug || 'Base'))}</h3>
+          <p>${escapeHtml(textValue(item.desc, ''))}</p>
+          <div class="card-actions">
+            <a class="soft-btn" href="${item.guide || '#'}">${uiCopy('도시 가이드','City guide')}</a>
+            <a class="ghost-btn" href="${item.example || item.guide || '#'}">${uiCopy('샘플 루트','Sample route')}</a>
+          </div>
+        </article>`).join('')}</div>`;
+  }
+
   function renderLoopSection(data){
     const node = qs('resultLoopSection');
     if (!node) return;

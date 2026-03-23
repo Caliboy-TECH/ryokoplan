@@ -233,6 +233,56 @@ window.RyokoApp = (() => {
   function getRelatedCities(city=''){
     return (loopPairs[slugifyCity(city)] || []).map(key => cityLoopMap[key]).filter(Boolean);
   }
+
+  function normalizeSignalTag(tag=''){
+    const v = String(tag || '').toLowerCase().trim();
+    const map = {
+      'rain':'rainy','rainy-day':'rainy','indoor':'rainy','late':'late-night','night':'late-night','nightlife':'late-night',
+      'family':'parents','easy':'parents','easy pace':'parents','food':'food-led','food-first':'food-led','coast':'coast',
+      'scenic':'coast','weekend':'weekend','soft':'soft-reset','slow':'soft-reset'
+    };
+    return map[v] || v;
+  }
+  function detectSignalTags(context={}){
+    const parts = [context.city, context.destination, context.companion, context.style, context.notes, context.mode, context.query]
+      .filter(Boolean).join(' ').toLowerCase();
+    const tags = new Set();
+    if (/(rain|rainy|우천|비 )/.test(parts)) tags.add('rainy');
+    if (/(late|night|nightlife|야간|밤)/.test(parts)) tags.add('late-night');
+    if (/(parent|family|부모|가족|easy pace|slow meals)/.test(parts)) tags.add('parents');
+    if (/(food|meal|local food|맛집|먹)/.test(parts)) tags.add('food-led');
+    if (/(coast|sea|ocean|beach|바다|coastal|drive|scenic)/.test(parts)) tags.add('coast');
+    if (/(weekend|2n3d|주말)/.test(parts)) tags.add('weekend');
+    if (/(soft|slow|quiet|reset|조용|느린)/.test(parts)) tags.add('soft-reset');
+    return [...tags];
+  }
+  function getSignalRecommendations(context={}){
+    const signals = detectSignalTags(context);
+    const pools = [
+      ...buildDiscoveryItems(),
+      ...getSeasonalEditorialCollections().cover,
+      ...getSeasonalEditorialCollections().magazine,
+      ...getSeasonalEditorialCollections().archive,
+      ...getCommunityCollections().picks,
+      ...getCommunityCollections().trending,
+      ...getCommunityCollections().branches,
+    ];
+    const mapped = pools.map(item => ({
+      ...item,
+      score: signals.reduce((acc, sig) => acc + ((item.tags || []).map(normalizeSignalTag).includes(sig) ? 2 : 0), 0)
+        + ((String(item.preset?.destination || '').toLowerCase() === String(context.destination || context.city || '').toLowerCase()) ? 1 : 0)
+    }));
+    const seen = new Set();
+    return mapped
+      .filter(item => item.score > 0)
+      .sort((a,b) => b.score - a.score)
+      .filter(item => {
+        const key = `${item.title?.en || item.title?.ko || item.slug}-${item.preset?.destination || ''}`;
+        if (seen.has(key)) return false;
+        seen.add(key); return True;
+      })
+      .slice(0, 3);
+  }
   function getCityVoice(city=''){
     const slug = slugifyCity(city);
     const entry = cityVoiceMap[slug];
@@ -1576,6 +1626,6 @@ function getSeasonalEditorialCollections(){
         </div>
       </article>`;
   }
-  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, getCityVoice, slugifyCity, resolvePath, applyPlannerPreset, get lang(){return lang;}, pathRoot, navHref };
+  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, getCityVoice, slugifyCity, resolvePath, applyPlannerPreset, getSignalRecommendations, detectSignalTags, get lang(){return lang;}, pathRoot, navHref };
 })();
 window.addEventListener('DOMContentLoaded', () => { window.RyokoApp.initCommon(); window.RyokoApp.initMagazine(); });
