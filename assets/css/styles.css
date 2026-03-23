@@ -1775,3 +1775,16 @@ html,body{background:
 .community-route-card p{margin:0;color:var(--muted)}
 .community-desk-section-magazine{margin-top:8px}
 @media (max-width: 1100px){.community-shelf-grid{grid-template-columns:1fr}}
+
+.seasonal-system-section{margin-top:18px}
+.seasonal-system-grid{display:grid;grid-template-columns:1.18fr 1fr 1fr;gap:16px}
+.seasonal-system-grid-magazine,.seasonal-system-grid-trips{grid-template-columns:repeat(3,minmax(0,1fr))}
+.seasonal-card{display:grid;gap:12px;padding:18px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,253,248,.98),rgba(255,247,238,.92))}
+.seasonal-card-primary{background:linear-gradient(180deg,rgba(255,251,243,.98),rgba(255,243,229,.92));box-shadow:0 20px 40px rgba(21,39,58,.06)}
+.seasonal-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.seasonal-card-copy{margin:0;color:rgba(21,39,58,.74);line-height:1.65}
+.seasonal-card-actions{align-items:center;flex-wrap:wrap}
+.seasonal-system-section .section-head{margin-bottom:16px}
+.seasonal-system-section-trips{margin-top:18px}
+@media (max-width: 1100px){.seasonal-system-grid,.seasonal-system-grid-magazine,.seasonal-system-grid-trips{grid-template-columns:1fr}}
+@media (max-width: 720px){.seasonal-card{padding:16px;border-radius:20px}}

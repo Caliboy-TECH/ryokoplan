@@ -951,6 +951,141 @@ window.RyokoApp = (() => {
       </article>`;
   }
 
+
+  function getSeasonalEditorialCollections(){
+    const guideBase = pathRoot === '../' ? '../' : '';
+    return {
+      cover:[
+        { season:'spring', title:{ko:'Spring soft city reset', en:'Spring soft city reset'}, desc:{ko:'벚꽃을 쫓기보다, 걷기 좋은 구간과 늦은 오후 템포를 중심으로 고른 에디트.', en:'A spring edit built around easy walks and late-afternoon tempo instead of a blossom checklist.'}, tags:['spring','soft','city'], guide:`${guideBase}city/kyoto.html`, example:`${guideBase}example/kyoto-2n3d-slow-trip.html`, preset:{destination:'Kyoto',duration:'2n3d',companion:'couple',style:'slow + quiet + spring walks',notes:'Keep spring soft. One temple anchor, one walk, one tea stop.'}},
+        { season:'rainy', title:{ko:'Rainy city fallback', en:'Rainy city fallback'}, desc:{ko:'비가 와도 무너지지 않는 동네 조합과 실내 이동을 먼저 잡아둔 에디트.', en:'An edit that protects the trip on rainy days by using stronger indoor transitions and neighborhood pairings.'}, tags:['rainy','indoor','fallback'], guide:`${guideBase}city/seoul.html`, example:`${guideBase}example/seoul-2n3d-city-vibes.html`, preset:{destination:'Seoul',duration:'2n3d',companion:'solo',style:'city vibes + food + indoor pockets',notes:'Rainy-day Seoul with lighter outdoor exposure and stronger indoor flow.'}},
+        { season:'summer', title:{ko:'Summer coast breathing room', en:'Summer coast breathing room'}, desc:{ko:'한여름엔 더 많이 보기보다 바다, 저녁 바람, 쉬는 타이밍이 중요한 코스트 에디트.', en:'For peak summer, the stronger edit is less coverage and more coast, evening air, and rest timing.'}, tags:['summer','coast','breeze'], guide:`${guideBase}city/busan.html`, example:`${guideBase}example/busan-2n3d-with-parents.html`, preset:{destination:'Busan',duration:'2n3d',companion:'friends',style:'coast + night views + lighter daytime',notes:'Let summer Busan breathe. One coast anchor and one slower night view.'}}
+      ],
+      magazine:[
+        { season:'late', title:{ko:'Late-night city edit', en:'Late-night city edit'}, desc:{ko:'낮보다 밤이 더 중요한 도시를 위한 에디토리얼 셸프.', en:'An editorial shelf for cities where the night rhythm matters as much as the daytime route.'}, tags:['late-night','friends','city'], guide:`${guideBase}city/tokyo.html`, example:`${guideBase}example/tokyo-3n4d-first-trip.html`, preset:{destination:'Tokyo',duration:'3n4d',companion:'friends',style:'city highlights + late nights + hidden gems',notes:'Save room for a stronger late-night close and one slower recovery pocket the next day.'}},
+        { season:'parents', title:{ko:'Parents easy pace', en:'Parents easy pace'}, desc:{ko:'이동을 줄이고 장면은 충분히 남기는 부모님 동행용 느린 베이스.', en:'A slower base for parents that protects movement while keeping the trip scenic and memorable.'}, tags:['parents','easy pace','family'], guide:`${guideBase}city/jeju.html`, example:`${guideBase}city/jeju.html`, preset:{destination:'Jeju',duration:'3n4d',companion:'family',style:'scenic + easy pace + soft meals',notes:'Keep transfers simple and leave room for a slower lunch and hotel reset.'}},
+        { season:'food', title:{ko:'Food-led short break', en:'Food-led short break'}, desc:{ko:'짧은 주말에도 만족감이 잘 나는 먹는 리듬 중심의 컴팩트 에디트.', en:'A compact food-first edit that works well even on a short weekend.'}, tags:['food','weekend','compact'], guide:`${guideBase}city/fukuoka.html`, example:`${guideBase}example/fukuoka-2n3d-food-trip.html`, preset:{destination:'Fukuoka',duration:'2n3d',companion:'friends',style:'food + local neighborhoods + compact pace',notes:'Use meals as the route structure and keep the city core compact.'}}
+      ],
+      archive:[
+        { season:'rain', title:{ko:'Rainy-day shelf', en:'Rainy-day shelf'}, desc:{ko:'비 오는 날 다시 꺼내 쓰기 좋은 fallback 베이스를 한 셸프로 묶었습니다.', en:'A shelf for rainy-day bases you can reopen when the weather turns quickly.'}, tags:['rainy','fallback','archive'], guide:`${guideBase}city/seoul.html`, example:`${guideBase}example/seoul-2n3d-city-vibes.html`, preset:{destination:'Seoul',duration:'2n3d',companion:'solo',style:'city vibes + food + indoor pockets',notes:'Reopen this when the city needs more indoor transitions.'}},
+        { season:'weekend', title:{ko:'Weekend dense shelf', en:'Weekend dense shelf'}, desc:{ko:'짧은 일정에 바로 꺼내 쓰는 고밀도 but readable 베이스 모음.', en:'A reusable shelf for shorter high-density but still readable weekend bases.'}, tags:['weekend','dense','archive'], guide:`${guideBase}city/tokyo.html`, example:`${guideBase}example/tokyo-3n4d-first-trip.html`, preset:{destination:'Tokyo',duration:'2n3d',companion:'friends',style:'city highlights + hidden gems',notes:'Use this when you need a compact city weekend that still breathes.'}},
+        { season:'soft', title:{ko:'Soft reset shelf', en:'Soft reset shelf'}, desc:{ko:'에너지를 아끼면서 도시를 오래 남기고 싶을 때의 느린 베이스.', en:'A slower shelf for trips where energy protection matters as much as sightseeing.'}, tags:['soft','slow','archive'], guide:`${guideBase}city/kyoto.html`, example:`${guideBase}example/kyoto-2n3d-slow-trip.html`, preset:{destination:'Kyoto',duration:'2n3d',companion:'solo',style:'slow + quiet + tea breaks',notes:'Keep the day light and let the city stay longer than the checklist.'}}
+      ]
+    };
+  }
+
+  function seasonalCardMarkup(item, copy, isPrimary=false){
+    return `
+      <article class="seasonal-card info-card ${isPrimary ? 'seasonal-card-primary' : ''}">
+        <div class="seasonal-card-top">
+          <span class="collection-kicker">${item.title[lang] || item.title.en}</span>
+          <span class="meta-inline">${item.tags.slice(0,2).join(' · ')}</span>
+        </div>
+        <p class="seasonal-card-copy">${item.desc[lang] || item.desc.en}</p>
+        <div class="mini-vibe-row">${item.tags.map(tag => `<span class="mini-vibe-chip">${tag}</span>`).join('')}</div>
+        <div class="card-actions seasonal-card-actions">
+          <a class="soft-btn" href="${item.guide}">${copy.guide}</a>
+          <a class="ghost-btn" href="${item.example}">${copy.sample}</a>
+          <button class="primary-btn seasonal-plan-btn" data-seasonal-preset='${JSON.stringify(item.preset)}'>${copy.plan}</button>
+        </div>
+      </article>`;
+  }
+
+  function wireSeasonalButtons(scope, plannerMode='page'){
+    scope.querySelectorAll('.seasonal-plan-btn').forEach(btn => btn.addEventListener('click', () => {
+      let preset = {};
+      try { preset = JSON.parse(btn.dataset.seasonalPreset || '{}'); } catch (e) {}
+      if (plannerMode === 'planner') {
+        window.RyokoApp.applyPlannerPreset(preset);
+        document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
+      } else {
+        location.href = plannerUrlForCity(preset.destination || '');
+      }
+    }));
+  }
+
+  function renderHomeSeasonalDesk(){
+    if (document.body.dataset.page !== 'planner') return;
+    const anchor = document.getElementById('homeCommunityRoot');
+    if (!anchor) return;
+    let root = document.getElementById('homeSeasonalRoot');
+    if (!root) {
+      root = document.createElement('div');
+      root.id = 'homeSeasonalRoot';
+      anchor.insertAdjacentElement('afterend', root);
+    }
+    const copy = (lang === 'ko') ? {
+      eyebrow:'Seasonal desk', title:'계절과 상황을 먼저 읽는 에디토리얼 시스템', desc:'도시를 고르기 전에도 시작점은 있습니다. 봄, 우천일, 한여름, 늦은 밤처럼 여행의 결이 먼저 보이게 편집했습니다.', guide:'City guide', sample:'Sample route', plan:'Use this base'
+    } : {
+      eyebrow:'Seasonal desk', title:'An editorial system that starts with season and situation', desc:'You do not always need a city first. These edits start from spring, rain, summer coast, or a later city rhythm.', guide:'City guide', sample:'Sample route', plan:'Use this base'
+    };
+    const items = getSeasonalEditorialCollections().cover;
+    root.innerHTML = `
+      <section class="section seasonal-system-section">
+        <div class="section-head">
+          <div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div>
+        </div>
+        <div class="seasonal-system-grid">
+          ${items.map((item, idx) => seasonalCardMarkup(item, copy, idx === 0)).join('')}
+        </div>
+      </section>`;
+    wireSeasonalButtons(root, 'planner');
+  }
+
+  function renderMagazineSeasonalDesk(){
+    if (document.body.dataset.page !== 'magazine') return;
+    const anchor = document.getElementById('magazineCommunityRoot');
+    if (!anchor) return;
+    let root = document.getElementById('magazineSeasonalRoot');
+    if (!root) {
+      root = document.createElement('div');
+      root.id = 'magazineSeasonalRoot';
+      anchor.insertAdjacentElement('afterend', root);
+    }
+    const copy = (lang === 'ko') ? {
+      eyebrow:'Seasonal editorial system', title:'이번 시즌에 잘 맞는 도시 베이스를 먼저 읽기', desc:'트렌딩 셸프 다음에는 계절과 상황이 만듭니다. 여행의 온도와 시간대를 먼저 고르면 도시가 더 빨리 좁혀집니다.', guide:'City guide', sample:'Sample route', plan:'Continue in Planner'
+    } : {
+      eyebrow:'Seasonal editorial system', title:'Read the bases that fit this season first', desc:'After the trending shelf comes season and situation. Start from trip temperature and time-of-day, and the city narrows faster.', guide:'City guide', sample:'Sample route', plan:'Continue in Planner'
+    };
+    const items = getSeasonalEditorialCollections().magazine;
+    root.innerHTML = `
+      <section class="section seasonal-system-section seasonal-system-section-magazine">
+        <div class="section-head">
+          <div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div>
+        </div>
+        <div class="seasonal-system-grid seasonal-system-grid-magazine">
+          ${items.map((item, idx) => seasonalCardMarkup(item, copy, idx === 1)).join('')}
+        </div>
+      </section>`;
+    wireSeasonalButtons(root, 'page');
+  }
+
+  function renderTripsSeasonalDesk(){
+    if (document.body.dataset.page !== 'trips') return;
+    const anchor = document.querySelector('.route-club-section') || document.querySelector('.operating-edit-section');
+    if (!anchor) return;
+    let root = document.getElementById('tripsSeasonalRoot');
+    if (!root) {
+      root = document.createElement('section');
+      root.id = 'tripsSeasonalRoot';
+      root.className = 'section seasonal-system-section seasonal-system-section-trips';
+      anchor.insertAdjacentElement('afterend', root);
+    }
+    const copy = (lang === 'ko') ? {
+      eyebrow:'Seasonal archive', title:'나중에 다시 꺼내 쓰는 계절별 베이스 셸프', desc:'마이트립스 안에도 시즌성과 상황별 베이스를 따로 보관해두면, 다음 여행이 더 빨리 시작됩니다.', guide:'City guide', sample:'Sample route', plan:'Save as my base'
+    } : {
+      eyebrow:'Seasonal archive', title:'A seasonal shelf you can reopen later', desc:'Keeping seasonal and situation-led bases inside My Trips makes the next trip much easier to start.', guide:'City guide', sample:'Sample route', plan:'Save as my base'
+    };
+    const items = getSeasonalEditorialCollections().archive;
+    root.innerHTML = `
+      <div class="section-head">
+        <div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div>
+      </div>
+      <div class="seasonal-system-grid seasonal-system-grid-trips">
+        ${items.map((item, idx) => seasonalCardMarkup(item, copy, idx === 2)).join('')}
+      </div>`;
+    wireSeasonalButtons(root, 'page');
+  }
+
   function getCommunityCollections(){
     const guideBase = resolvePath('') === './' ? './' : '../';
     return {
@@ -1359,6 +1494,18 @@ window.RyokoApp = (() => {
     initPlannerOnboarding();
     renderHomeDiscovery();
     renderHomeCommunityDesk();
+    renderHomeSeasonalDesk();
+    renderMagazineSeasonalDesk();
+    renderTripsSeasonalDesk();
+    window.addEventListener('ryoko:langchange', () => {
+      renderMagazineLanding();
+      renderHomeDiscovery();
+      renderHomeCommunityDesk();
+      renderHomeSeasonalDesk();
+      renderMagazineCommunityDesk();
+      renderMagazineSeasonalDesk();
+      renderTripsSeasonalDesk();
+    });
     initEditorialChrome();
   }
   function cityCardTemplate(city){
