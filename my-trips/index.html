@@ -101,6 +101,19 @@
         </article>
       </section>
 
+
+
+      <section class="section public-route-desk">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow" data-lang-ko="퍼블릭 루트 데스크" data-lang-en="Public route desk">퍼블릭 루트 데스크</span>
+            <h2 class="section-title" data-lang-ko="에디터 픽과 공개 샘플을 내 루프로 끌어오기" data-lang-en="Pull editor picks and public samples into your own loop">에디터 픽과 공개 샘플을 내 루프로 끌어오기</h2>
+            <p class="section-desc" data-lang-ko="샘플 루트를 읽고 끝내지 말고, 바로 저장한 뒤 내 기준에 맞는 다음 버전으로 이어가세요." data-lang-en="Do not stop at reading a sample route. Save it, keep it, and use it as the next version of your own trip.">샘플 루트를 읽고 끝내지 말고, 바로 저장한 뒤 내 기준에 맞는 다음 버전으로 이어가세요.</p>
+          </div>
+        </div>
+        <div id="publicRouteDesk" class="public-route-grid"></div>
+      </section>
+
       <section class="section collection-lab-section">
         <div class="section-head">
           <div>
@@ -255,7 +268,18 @@
           collectionMixed: '저장/최근/공유가 함께 쌓인 아카이브',
           collectionSavedOnly: '저장한 여정 중심의 아카이브',
           collectionSharedHeavy: '공유받은 일정 비중이 높은 도시',
-          collectionRecentHeavy: '최근 열어본 루트가 많은 도시'
+          collectionRecentHeavy: '최근 열어본 루트가 많은 도시',
+          publicDeskLabel: '퍼블릭 루트 데스크',
+          publicDeskPick: '에디터 픽',
+          publicDeskSave: '내 루트로 저장',
+          publicDeskOpen: '샘플 열기',
+          publicDeskPlan: '플래너로 이어가기',
+          publicDeskSaved: '샘플 루트를 My Trips에 저장했어요.',
+          publicDeskIntro: '공개 샘플에서 바로 내 버전으로 이어지는 큐레이션 허브',
+          publicDeskWeekend: '주말용 베이스',
+          publicDeskSlow: '슬로우 무드',
+          publicDeskFamily: '가족 동선',
+          publicDeskFood: '푸드 중심'
         },
         en: {
           continueTitle: 'Continue your trip flow',
@@ -296,11 +320,45 @@
           collectionMixed: 'A mixed archive of saved, recent, and shared routes',
           collectionSavedOnly: 'Mostly built from your saved routes',
           collectionSharedHeavy: 'A city with a stronger shared-trip mix',
-          collectionRecentHeavy: 'A city you reopened often recently'
+          collectionRecentHeavy: 'A city you reopened often recently',
+          publicDeskLabel: 'Public route desk',
+          publicDeskPick: 'Editor pick',
+          publicDeskSave: 'Save to My Trips',
+          publicDeskOpen: 'Open sample',
+          publicDeskPlan: 'Continue in Planner',
+          publicDeskSaved: 'Sample route saved to My Trips.',
+          publicDeskIntro: 'A curated hub where public samples can become your next trip base.',
+          publicDeskWeekend: 'Weekend base',
+          publicDeskSlow: 'Slow mood',
+          publicDeskFamily: 'Family pacing',
+          publicDeskFood: 'Food-led'
         }
       };
       let activeCollection = 'all';
       let activeModeFilter = 'all';
+
+      const publicRouteDesk = [
+        {
+          key:'tokyo-first', city:'Tokyo', titleKo:'Tokyo first trip base', titleEn:'Tokyo first trip base', badgeKey:'publicDeskWeekend', image:'../assets/images/examples/tokyo-first-trip.png', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
+          summaryKo:'처음 가는 도쿄를 과열되지 않게 시작하기 좋은 공개 베이스입니다.', summaryEn:'A public base for first-time Tokyo that stays strong without overheating the pace.',
+          duration:'3N4D', companionKo:'커플/친구', companionEn:'Couple / Friends', vibeKo:'도시 밀도', vibeEn:'City density', bestKo:'첫 여행, 쇼핑, 밤 리듬', bestEn:'First trip, shopping, night rhythm'
+        },
+        {
+          key:'kyoto-slow', city:'Kyoto', titleKo:'Kyoto slow reset', titleEn:'Kyoto slow reset', badgeKey:'publicDeskSlow', image:'../assets/images/examples/kyoto-slow.png', guide:'../city/kyoto.html', example:'../example/kyoto-2n3d-slow-trip.html',
+          summaryKo:'많이 넣지 않고 교토의 여백을 살리는 공개 샘플입니다.', summaryEn:'A public sample that protects Kyoto by leaving real space in the route.',
+          duration:'2N3D', companionKo:'혼자/커플', companionEn:'Solo / Couple', vibeKo:'조용한 무드', vibeEn:'Quiet mood', bestKo:'슬로우 트립, 오전 사원', bestEn:'Slow trip, temple mornings'
+        },
+        {
+          key:'busan-parents', city:'Busan', titleKo:'Busan scenic family route', titleEn:'Busan scenic family route', badgeKey:'publicDeskFamily', image:'../assets/images/examples/busan-parents.png', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
+          summaryKo:'부모님과도 무리 없이 갈 수 있는 부산 scenic 루트 베이스입니다.', summaryEn:'A scenic Busan base that works gently for mixed-age or parent trips.',
+          duration:'2N3D', companionKo:'가족/부모님', companionEn:'Family / Parents', vibeKo:'시닉 리듬', vibeEn:'Scenic rhythm', bestKo:'전망, 식사, 완만한 템포', bestEn:'Views, meals, softer tempo'
+        },
+        {
+          key:'fukuoka-food', city:'Fukuoka', titleKo:'Fukuoka food weekend', titleEn:'Fukuoka food weekend', badgeKey:'publicDeskFood', image:'../assets/images/examples/fukuoka-food.png', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
+          summaryKo:'짧은 일정에서 식사 리듬을 가장 잘 살리는 공개 샘플입니다.', summaryEn:'A compact public sample built around the strongest food rhythm for a short stay.',
+          duration:'2N3D', companionKo:'친구/혼자', companionEn:'Friends / Solo', vibeKo:'푸드 리듬', vibeEn:'Food rhythm', bestKo:'짧은 일본, 컴팩트 이동', bestEn:'Short Japan, compact moves'
+        }
+      ];
 
       function langCopy(){ return copyByLang[window.RyokoApp.lang] || copyByLang.en; }
       function activeTab(name){
@@ -421,6 +479,56 @@
           render();
         }));
       }
+
+      function publicRoutePayload(entry){
+        const isKo = window.RyokoApp.lang === 'ko';
+        const now = new Date().toISOString();
+        return {
+          id: `public_${entry.key}_${Date.now()}`,
+          destination: entry.city,
+          title: isKo ? entry.titleKo : entry.titleEn,
+          duration: entry.duration,
+          companion: isKo ? entry.companionKo : entry.companionEn,
+          notes: isKo ? entry.summaryKo : entry.summaryEn,
+          createdAt: now,
+          planData: {
+            summary: isKo ? entry.summaryKo : entry.summaryEn,
+            vibe: isKo ? entry.vibeKo : entry.vibeEn,
+            bestFor: isKo ? entry.bestKo : entry.bestEn
+          }
+        };
+      }
+
+      function renderPublicRouteDesk(){
+        const target = $('publicRouteDesk');
+        if (!target) return;
+        const copy = langCopy();
+        const isKo = window.RyokoApp.lang === 'ko';
+        target.innerHTML = publicRouteDesk.map(entry => `
+          <article class="public-route-card info-card">
+            <div class="public-route-media"><img src="${entry.image}" alt="${entry.city}"></div>
+            <div class="public-route-body">
+              <div class="trip-card-topline">
+                <div class="meta">${copy.publicDeskPick}</div>
+                <div class="trip-card-date">${copy[entry.badgeKey] || ''}</div>
+              </div>
+              <h3 class="card-title">${isKo ? entry.titleKo : entry.titleEn}</h3>
+              <p class="card-copy">${isKo ? entry.summaryKo : entry.summaryEn}</p>
+              <div class="trip-chip-row">
+                <span class="trip-mini-chip">${entry.city}</span>
+                <span class="trip-mini-chip">${entry.duration}</span>
+                <span class="trip-mini-chip">${isKo ? entry.vibeKo : entry.vibeEn}</span>
+                <span class="trip-mini-chip">${isKo ? entry.bestKo : entry.bestEn}</span>
+              </div>
+              <div class="card-actions public-route-actions">
+                <a class="soft-btn" href="${entry.example}">${copy.publicDeskOpen}</a>
+                <a class="ghost-btn" href="../?destination=${encodeURIComponent(entry.city)}">${copy.publicDeskPlan}</a>
+                <button class="primary-btn" data-save-public="${entry.key}">${copy.publicDeskSave}</button>
+              </div>
+            </div>
+          </article>`).join('');
+      }
+
       function renderSavedPlacesArchive(){
         const target = $('savedPlacesCollections');
         if (!target) return;
@@ -729,6 +837,15 @@
           await copyText(shareUrl(item));
           const msg = $('sharedImportMessage');
           msg.textContent = langCopy().linkCopied;
+        }));
+        document.querySelectorAll('[data-save-public]').forEach(btn => btn.addEventListener('click', () => {
+          const entry = publicRouteDesk.find(x => x.key === btn.dataset.savePublic);
+          if (!entry) return;
+          window.RyokoStorage.saveTrip(publicRoutePayload(entry));
+          const msg = $('sharedImportMessage');
+          msg.textContent = langCopy().publicDeskSaved;
+          activeTab('saved');
+          render();
         }));
         document.querySelectorAll('[data-close-detail]').forEach(btn => btn.onclick = closeDetailModal);
         $('sharedImportBtn').onclick = () => {

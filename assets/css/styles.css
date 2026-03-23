@@ -1652,3 +1652,41 @@ html,body{background:
 .city-collection-actions{margin-top:auto;display:flex;flex-wrap:wrap;gap:10px}
 .city-collection-empty{padding:22px}
 @media (max-width: 900px){.city-collections-grid{grid-template-columns:1fr}}
+
+
+.public-route-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+.public-route-card{
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+}
+.public-route-media{
+  aspect-ratio:1.25/1;
+  overflow:hidden;
+  border-radius:20px;
+  margin-bottom:14px;
+}
+.public-route-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.public-route-body{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.public-route-actions{
+  margin-top:auto;
+}
+@media (max-width: 720px){
+  .public-route-grid{
+    grid-template-columns:1fr;
+  }
+}
