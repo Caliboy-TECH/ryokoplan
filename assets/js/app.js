@@ -406,7 +406,7 @@ window.RyokoApp = (() => {
   function applyTranslations(root=document){
     root.querySelectorAll('[data-t]').forEach(el => {
       const value = t(el.dataset.t);
-      if (value) { if (el.hasAttribute('data-t-split')) { const parts = String(value).split(/\n/); el.innerHTML = parts.map(part => `<span class=\"hero-line\">${part}</span>`).join(''); } else if (el.hasAttribute('data-t-html')) el.innerHTML = String(value).replace(/\n/g,'<br>'); else el.textContent = value; }
+      if (value) el.textContent = value;
     });
     root.querySelectorAll('[data-t-placeholder]').forEach(el => {
       const value = t(el.dataset.tPlaceholder);
@@ -430,10 +430,9 @@ window.RyokoApp = (() => {
     });
   }
   function navHref(target){
-    const page = document.body?.dataset?.page || 'planner';
-    if (target === 'magazine') return resolvePath('magazine/index.html');
-    if (target === 'planner') return page === 'planner' ? '#planner-start' : resolvePath('index.html#planner-start');
-    if (target === 'trips') return resolvePath('my-trips/index.html');
+    if (target === 'magazine') return `${pathRoot}magazine/`;
+    if (target === 'planner') return `${pathRoot}index.html`.replace('./index.html','./').replace('../index.html','../');
+    if (target === 'trips') return `${pathRoot}my-trips/`;
     return '#';
   }
   function renderMobileDock(){
@@ -949,6 +948,32 @@ window.RyokoApp = (() => {
 
 
   function plannerUrlForCity(city=''){ return `${navHref('planner')}?destination=${encodeURIComponent(city)}`; }
+
+  function uiText(key){
+    const labels = {
+      coverNote: { ko:'커버 노트', en:'Cover note', ja:'カバーノート', zhHant:'封面筆記' },
+      frontPageEdit: { ko:'프론트 페이지 에디트', en:'Front page edit', ja:'フロントページ編集', zhHant:'首頁編輯' },
+      cityGuide: { ko:'도시 가이드', en:'City guide', ja:'都市ガイド', zhHant:'城市指南' },
+      readFirst: { ko:'먼저 읽기', en:'Read first', ja:'先に読む', zhHant:'先讀這裡' },
+      bestSeason: { ko:'추천 시즌', en:'Best season', ja:'おすすめの季節', zhHant:'推薦季節' },
+      overview: { ko:'개요', en:'Overview', ja:'概要', zhHant:'總覽' },
+      districts: { ko:'구역', en:'Districts', ja:'エリア', zhHant:'區域' },
+      sample: { ko:'샘플', en:'Sample', ja:'サンプル', zhHant:'範例' },
+      localNotes: { ko:'현지 노트', en:'Local notes', ja:'ローカルノート', zhHant:'在地筆記' },
+      localTips: { ko:'현지 팁', en:'Local tips', ja:'現地のヒント', zhHant:'在地提示' },
+      beforeYouGo: { ko:'가기 전에', en:'Before you go', ja:'出発前に', zhHant:'出發之前' },
+      keepInMind: { ko:'기억해둘 점', en:'Keep in mind', ja:'覚えておきたいこと', zhHant:'先記住這些' },
+      nextMove: { ko:'다음 단계', en:'Next move', ja:'次の一手', zhHant:'下一步' },
+      planExample: { ko:'일정 예시', en:'Plan example', ja:'旅程サンプル', zhHant:'行程範例' },
+      exampleItinerary: { ko:'예시 일정', en:'Example itinerary', ja:'サンプル旅程', zhHant:'範例行程' },
+      cityMood: { ko:'도시 무드', en:'City mood', ja:'街のムード', zhHant:'城市氛圍' },
+      atAGlance: { ko:'한눈에 보기', en:'At a glance', ja:'ひと目で', zhHant:'一眼看懂' },
+      dayByDay: { ko:'하루별 흐름', en:'Day by day', ja:'日ごとの流れ', zhHant:'每日節奏' },
+      whyItWorks: { ko:'왜 이 구조가 맞는지', en:'Why this structure works', ja:'この構成がうまくいく理由', zhHant:'這個結構為什麼有效' },
+      adjustBeforeEditing: { ko:'커스텀 전에 조정하기', en:'Before you customize it', ja:'カスタマイズ前に整える', zhHant:'客製前先調整' }
+    };
+    return (labels[key] && labels[key][lang]) || (labels[key] && labels[key].en) || key;
+  }
 
   function renderMagazineLanding(){
     if (location.pathname.includes('/city/') || location.pathname.includes('/example/')) return;
@@ -1830,7 +1855,7 @@ function getSeasonalEditorialCollections(){
     const page = document.body.dataset.page || 'planner';
     const labels = {
       ko: {
-        planner: { kicker: 'Planner note', title: '도시 분위기를 먼저 읽고, 저장 가능한 여행 계획으로 이어갑니다.', chips: ['East Asia city edit', 'Magazine-led planning', 'Save / Share / PDF'] },
+        planner: { kicker: 'Planner note', title: '도시 무드를 먼저 잡고, 바로 저장 가능한 일정으로 연결합니다.', chips: ['East Asia city edit', 'Magazine-led planning', 'Save / Share / PDF'] },
         magazine: { kicker: 'Magazine note', title: '도시를 읽는 흐름이 좋아야 플랜도 더 자연스럽게 짜입니다.', chips: ['City guides', 'Sample routes', 'Local rhythm'] },
         trips: { kicker: 'My Trips note', title: '저장한 일정과 공유받은 일정을 한 흐름 안에서 다시 꺼내봅니다.', chips: ['Saved trips', 'Recent plans', 'Shared links'] }
       },
@@ -1884,8 +1909,8 @@ function getSeasonalEditorialCollections(){
     document.querySelectorAll('.top-actions .nav-chip,[data-nav],.mobile-dock-item').forEach(link => {
       const href = link.getAttribute('href') || '';
       const current = (page === 'planner' && (href === './' || href === '../' || /index\.html$/.test(href)))
-        || (page === 'magazine' && /magazine(?:\/index\.html)?\/?$/.test(href))
-        || (page === 'trips' && /my-trips(?:\/index\.html)?\/?$/.test(href));
+        || (page === 'magazine' && /magazine\/?$/.test(href))
+        || (page === 'trips' && /my-trips\/?$/.test(href));
       if (current) link.classList.add('is-current');
     });
 
@@ -2129,26 +2154,14 @@ function getSeasonalEditorialCollections(){
     document.querySelectorAll('[data-nav="magazine"]').forEach(a => a.setAttribute('href', navHref('magazine')));
     document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
     document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
-    document.querySelectorAll('[data-nav="planner-start"]').forEach(a => a.setAttribute('href', '#planner-start'));
-
     document.addEventListener('click', (e) => {
-      const navTarget = e.target.closest('[data-nav="planner"], [data-nav="planner-start"], a[href="#planner-start"], a[href$="index.html#planner-start"]');
+      const navTarget = e.target.closest('[data-nav]');
       if (!navTarget) return;
+      const href = navTarget.getAttribute('href');
+      if (href) return;
       const target = navTarget.dataset.nav;
-      const rawHref = navTarget.getAttribute('href') || '';
-      const plannerTarget = target === 'planner-start' || rawHref === '#planner-start' || target === 'planner' || rawHref.endsWith('#planner-start');
-      if (!plannerTarget) return;
-      if ((document.body?.dataset?.page || 'planner') === 'planner') {
-        e.preventDefault();
-        const planner = document.querySelector('#planner-start') || document.querySelector('.planner-shell');
-        if (planner) planner.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
-      const href = target ? navHref(target) : rawHref;
-      if (!href || href === '#') return;
-      e.preventDefault();
-      window.location.assign(href);
-    }, true);
+      if (target) window.location.href = navHref(target);
+    });
     renderMobileDock();
     initHomePresets();
     initPlannerOnboarding();
