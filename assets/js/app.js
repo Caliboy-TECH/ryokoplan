@@ -420,22 +420,22 @@ window.RyokoApp = (() => {
     if (!dock) {
       dock = document.createElement('nav');
       dock.className = 'mobile-dock';
+      dock.setAttribute('aria-label', 'Primary');
       document.body.appendChild(dock);
     }
     const page = document.body.dataset.page || 'planner';
-    dock.innerHTML = `
-      <a class="mobile-dock-item ${page === 'planner' ? 'active' : ''}" href="${navHref('planner')}">
-        <span class="mobile-dock-icon">●</span>
-        <span class="mobile-dock-label">${t('nav.planner') || 'Planner'}</span>
-      </a>
-      <a class="mobile-dock-item ${page === 'magazine' ? 'active' : ''}" href="${navHref('magazine')}">
-        <span class="mobile-dock-icon">◆</span>
-        <span class="mobile-dock-label">${t('nav.magazine') || 'Magazine'}</span>
-      </a>
-      <a class="mobile-dock-item ${page === 'trips' ? 'active' : ''}" href="${navHref('trips')}">
-        <span class="mobile-dock-icon">■</span>
-        <span class="mobile-dock-label">${t('nav.trips') || 'My Trips'}</span>
-      </a>`;
+    const lang = document.documentElement.lang === 'ko' ? 'ko' : 'en';
+    const dockCopy = {
+      planner: { icon: 'P', helper: lang === 'ko' ? '계획' : 'Plan', label: t('nav.planner') || 'Planner' },
+      magazine: { icon: 'M', helper: lang === 'ko' ? '탐색' : 'Read', label: t('nav.magazine') || 'Magazine' },
+      trips: { icon: 'T', helper: lang === 'ko' ? '보관' : 'Keep', label: t('nav.trips') || 'My Trips' }
+    };
+    dock.innerHTML = ['planner','magazine','trips'].map((key) => `
+      <a class="mobile-dock-item ${page === key ? 'active' : ''}" href="${navHref(key)}" aria-current="${page === key ? 'page' : 'false'}">
+        <span class="mobile-dock-icon">${dockCopy[key].icon}</span>
+        <span class="mobile-dock-label">${dockCopy[key].label}</span>
+        <span class="mobile-dock-helper">${dockCopy[key].helper}</span>
+      </a>`).join('');
   }
 
 
