@@ -954,7 +954,7 @@ window.RyokoApp = (() => {
     const root = document.getElementById('magazineAppRoot');
     if (!root) return;
     const data = editorialData.magazine[lang] || editorialData.magazine.en;
-    const order = ['tokyo','osaka','kyoto','fukuoka','sapporo','sendai','okinawa','seoul','busan','jeju','gyeongju','taipei','hongkong','macau'];
+    const order = ['tokyo','seoul','taipei','kyoto','busan','hongkong','fukuoka','jeju','macau','sapporo','gyeongju','sendai','okinawa','osaka'];
     const cityMarkup = order.map(key => {
       const loop = cityLoopMap[key];
       const meta = data.cityMeta[key];
@@ -997,15 +997,15 @@ window.RyokoApp = (() => {
       </section>
       <section class="section magazine-cover-strip">
         <div class="section-head">
-          <div><span class="eyebrow">${uiText('frontPageEdit')}</span><h2 class="section-title">${lang === 'ko' ? '이번 주 매거진 커버' : 'This week’s magazine cover'}</h2><p class="section-desc">${lang === 'ko' ? '도시를 읽고 싶게 만드는 첫 화면 리듬을 더 강하게 잡았습니다.' : 'The first screen now behaves more like an editorial desk than a simple destination grid.'}</p></div>
+          <div><span class="eyebrow">${uiText('frontPageEdit')}</span><h2 class="section-title">${lang === 'ko' ? '이번 주 동아시아 커버' : lang === 'ja' ? '今週の東アジアカバー' : lang === 'zhHant' ? '本週東亞封面' : 'This week’s East Asia cover'}</h2><p class="section-desc">${lang === 'ko' ? '일본, 한국, 대만·홍콩·마카오까지 한 호흡 안에서 읽히도록 첫 셸프를 다시 정리했습니다.' : lang === 'ja' ? '日本・韓国・台北／香港／マカオが一つの流れで読めるよう、最初の棚を整えました。' : lang === 'zhHant' ? '把日本、韓國，以及台北／香港／澳門放進同一個閱讀節奏裡，重新整理了第一層書架。' : 'The first shelf is rebalanced so Japan, Korea, and Taipei / Hong Kong / Macau read as one East Asia edit.'}</p></div>
         </div>
         <div class="cover-desk-grid cover-desk-grid-magazine">
           <article class="cover-story-card cover-story-card-large">
             <div class="cover-story-media"><img src="../assets/images/hero/main-hero-japan.jpg" alt="Japan editorial cover"></div>
             <div class="cover-story-body">
-              <span class="collection-kicker">Japan edit</span>
-              <h3>${lang === 'ko' ? '도시를 리듬과 온도로 읽는 방식' : 'Reading cities by rhythm, pace, and temperature'}</h3>
-              <p>${lang === 'ko' ? 'Tokyo, Osaka, Kyoto, Fukuoka를 빠른 도시와 느린 도시의 균형으로 편집했습니다.' : 'Tokyo, Osaka, Kyoto, and Fukuoka are framed through contrasting pace instead of a flat list.'}</p>
+              <span class="collection-kicker">${lang === 'ko' ? 'Japan edit' : lang === 'ja' ? 'Japan edit' : lang === 'zhHant' ? 'Japan edit' : 'Japan edit'}</span>
+              <h3>${lang === 'ko' ? '도시를 리듬과 온도로 읽는 방식' : lang === 'ja' ? '街をリズムと温度で読む方法' : lang === 'zhHant' ? '用節奏與溫度去讀城市' : 'Reading cities by rhythm, pace, and temperature'}</h3>
+              <p>${lang === 'ko' ? 'Tokyo부터 Okinawa까지, 밀도 높은 도시와 느슨한 도시를 한 흐름 안에서 읽게 정리했습니다.' : lang === 'ja' ? 'Tokyo から Okinawa まで、密度の高い街とゆるい街を一つの流れで読めるように整えました。' : lang === 'zhHant' ? '從 Tokyo 到 Okinawa，把高密度城市與鬆弛城市放進同一條閱讀流裡。' : 'From Tokyo to Okinawa, denser cities and softer cities now sit in one readable flow.'}</p>
               <div class="cta-row"><a class="primary-btn" href="../city/tokyo.html">${lang === 'ko' ? '도시 가이드 열기' : 'Open city guides'}</a><a class="secondary-btn" href="../example/tokyo-3n4d-first-trip.html">${lang === 'ko' ? '샘플 루트 보기' : 'See a sample route'}</a></div>
             </div>
           </article>
@@ -1013,13 +1013,13 @@ window.RyokoApp = (() => {
             <article class="cover-story-card cover-story-card-compact">
               <div class="cover-story-media compact"><img src="../assets/images/hero/main-hero-korea.jpg" alt="Korea editorial cover"></div>
               <div class="cover-story-body compact">
-                <span class="collection-kicker">Korea edit</span>
-                <h3>${lang === 'ko' ? 'Seoul부터 Jeju까지, 성격이 다른 도시들' : 'From Seoul to Jeju, cities with different tones'}</h3>
-                <p>${lang === 'ko' ? '친구, 커플, 가족, 슬로우 트립까지 다양한 출발점을 더 직관적으로 보여줍니다.' : 'Different starting points for friends, couples, families, and slow trips are clearer at a glance.'}</p>
+                <span class="collection-kicker">${lang === 'ko' ? 'Korea edit' : lang === 'ja' ? 'Korea edit' : lang === 'zhHant' ? 'Korea edit' : 'Korea edit'}</span>
+                <h3>${lang === 'ko' ? 'Seoul부터 Macau까지, 결이 다른 도시들' : lang === 'ja' ? 'Seoul から Macau まで、質感の違う都市たち' : lang === 'zhHant' ? '從 Seoul 到 Macau，不同質地的城市' : 'From Seoul to Macau, cities with different textures'}</h3>
+                <p>${lang === 'ko' ? '한국 도시와 번체권 도시가 한 화면 안에서 자연스럽게 이어지도록 카드 균형을 다시 잡았습니다.' : lang === 'ja' ? '韓国の都市と繁体字圏の都市が一つの画面で自然につながるよう、カードのバランスを整えました。' : lang === 'zhHant' ? '把韓國城市與繁體字圈城市放進同一個畫面節奏裡，重新整理了卡片平衡。' : 'Cards are rebalanced so Korea and the Traditional Chinese city set sit together more naturally.'}</p>
               </div>
             </article>
             <article class="dispatch-card info-card">
-              <span class="collection-kicker">${lang === 'ko' ? 'Desk notes' : 'Desk notes'}</span>
+              <span class="collection-kicker">${lang === 'ko' ? 'Desk notes' : lang === 'ja' ? 'Desk notes' : lang === 'zhHant' ? '編輯筆記' : 'Desk notes'}</span>
               <div class="dispatch-lines">
                 <div><strong>${lang === 'ko' ? '도시 무드' : 'City mood'}</strong><span>${lang === 'ko' ? 'Fast city, slow reset, food-led, coast mode로 먼저 좁힙니다.' : 'Filter first by fast city, slow reset, food-led, or coast mode.'}</span></div>
                 <div><strong>${lang === 'ko' ? '샘플 흐름' : 'Sample flow'}</strong><span>${lang === 'ko' ? '좋은 일정이 어떤 템포로 보이는지 먼저 읽게 합니다.' : 'Let readers see how a strong route actually flows before they generate.'}</span></div>
