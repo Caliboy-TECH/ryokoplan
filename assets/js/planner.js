@@ -85,7 +85,7 @@ window.RyokoPlanner = (() => {
 
   function qs(id){ return document.getElementById(id); }
   function options(arr){ return arr.map(item => `<option value="${item}">${item}</option>`).join(''); }
-  function getDayLabel(day){ return window.RyokoApp?.lang === 'ko' ? `${day}일차` : `Day ${day}`; }
+  function getDayLabel(day){ const lang = window.RyokoApp?.lang || 'ko'; if (lang === 'ko') return `${day}일차`; if (lang === 'ja') return `${day}日目`; if (lang === 'zhHant') return `第 ${day} 天`; return `Day ${day}`; }
   function textValue(v, fallback=''){
     if (v == null) return fallback;
     if (typeof v === 'string') return v;
@@ -104,10 +104,15 @@ window.RyokoPlanner = (() => {
   function budgetLabel(key){
     const raw = String(key || '').trim();
     const lang = window.RyokoApp?.lang || 'ko';
-    const map = lang === 'ko'
-      ? { flight:'항공', hotel:'숙소', food:'식비', transit:'교통', admission:'입장료', activities:'체험', transport:'이동' }
-      : { flight:'Flight', hotel:'Hotel', food:'Food', transit:'Transit', admission:'Admission', activities:'Activities', transport:'Transport' };
-    return map[raw.toLowerCase()] || raw.charAt(0).toUpperCase() + raw.slice(1);
+    const maps = {
+      ko: { flight:'항공', hotel:'숙소', food:'식비', transit:'교통', admission:'입장료', activities:'체험', transport:'이동' },
+      en: { flight:'Flight', hotel:'Hotel', food:'Food', transit:'Transit', admission:'Admission', activities:'Activities', transport:'Transport' },
+      ja: { flight:'航空', hotel:'宿泊', food:'食事', transit:'交通', admission:'入場', activities:'体験', transport:'移動' },
+      zhHant: { flight:'機票', hotel:'住宿', food:'餐飲', transit:'交通', admission:'門票', activities:'體驗', transport:'移動' }
+    };
+    const map = maps[lang] || maps.en;
+    const normalized = raw.toLowerCase();
+    return map[normalized] || raw.charAt(0).toUpperCase() + raw.slice(1);
   }
   function storageKey(destination='trip'){
     return `ryoko:savedPlaces:${String(destination).toLowerCase()}`;
@@ -300,8 +305,12 @@ window.RyokoPlanner = (() => {
     };
     return map[slug] || cityImageFor(destination);
   }
-  function uiCopy(ko, en){
-    return (window.RyokoApp?.lang || 'ko') === 'ko' ? ko : en;
+  function uiCopy(ko, en, ja = en, zhHant = en){
+    const lang = window.RyokoApp?.lang || 'ko';
+    if (lang === 'ko') return ko;
+    if (lang === 'ja') return ja;
+    if (lang === 'zhHant') return zhHant;
+    return en;
   }
   function summarizeRouteShape(data){
     const days = Array.isArray(data.days) ? data.days.length : 0;
@@ -502,7 +511,7 @@ window.RyokoPlanner = (() => {
         title: `${current.name}`,
         text: textValue(data.summary, uiCopy('이 여정의 전체 리듬을 먼저 잡아주는 대표 컷입니다.', 'This is the cover frame that sets the route tone first.')),
         image: window.RyokoApp.resolvePath(current.image || cityImageFor(baseCity)),
-        actionLabel: uiCopy('도시 가이드', 'City guide'),
+        actionLabel: uiCopy('도시 가이드', 'City guide', '都市ガイド', '城市指南'),
         actionHref: window.RyokoApp.resolvePath(current.guide)
       },
       {
@@ -734,7 +743,7 @@ window.RyokoPlanner = (() => {
           pdfTag: 'Ryokoplan · Editorial PDF',
           vibe: 'Vibe', pace: 'Pace', bestFor: 'Best for',
           quickRhythm: 'Rhythm', quickShape: 'Route shape', quickWorks: 'Works best for',
-          editorsTake: uiCopy('편집 메모','Editorial note'), dayByDay: uiCopy('하루별 일정','Day by day'), localTips: uiCopy('현지 팁','Local tips'), budget: uiCopy('예산','Budget'), checklist: uiCopy('체크리스트','Checklist'),
+          editorsTake: uiCopy('편집 메모','Editorial note','編集ノート','編輯筆記'), dayByDay: uiCopy('하루별 일정','Day by day','日ごとの流れ','每日行程'), localTips: uiCopy('현지 팁','Local tips','現地メモ','在地筆記'), budget: uiCopy('예산','Budget','予算','預算'), checklist: uiCopy('체크리스트','Checklist','チェックリスト','旅行清單'),
           cityCover: 'City cover', routeMood: 'Route mood', nextBranch: 'Next branch',
           localTip: 'Local tip', generatedOn: '생성일',
           classicRouting: 'Classic routing', localModeOn: 'Local mode on',
@@ -746,7 +755,7 @@ window.RyokoPlanner = (() => {
           pdfTag: 'Ryokoplan · Editorial PDF',
           vibe: 'Vibe', pace: 'Pace', bestFor: 'Best for',
           quickRhythm: 'Rhythm', quickShape: 'Route shape', quickWorks: 'Works best for',
-          editorsTake: uiCopy('편집 메모','Editorial note'), dayByDay: uiCopy('하루별 일정','Day by day'), localTips: uiCopy('현지 팁','Local tips'), budget: uiCopy('예산','Budget'), checklist: uiCopy('체크리스트','Checklist'),
+          editorsTake: uiCopy('편집 메모','Editorial note','編集ノート','編輯筆記'), dayByDay: uiCopy('하루별 일정','Day by day','日ごとの流れ','每日行程'), localTips: uiCopy('현지 팁','Local tips','現地メモ','在地筆記'), budget: uiCopy('예산','Budget','予算','預算'), checklist: uiCopy('체크리스트','Checklist','チェックリスト','旅行清單'),
           cityCover: 'City cover', routeMood: 'Route mood', nextBranch: 'Next branch',
           localTip: 'Local tip', generatedOn: 'Generated on',
           classicRouting: 'Classic routing', localModeOn: 'Local mode on',
