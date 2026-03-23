@@ -256,6 +256,88 @@ window.RyokoApp = (() => {
     if (/(soft|slow|quiet|reset|조용|느린)/.test(parts)) tags.add('soft-reset');
     return [...tags];
   }
+
+  const SIGNAL_PROFILE_KEY = 'ryoko_signal_profile_v1';
+  function readSignalProfile(){
+    try { return JSON.parse(localStorage.getItem(SIGNAL_PROFILE_KEY) || '{"counts":{},"recent":[],"updatedAt":null}'); }
+    catch { return { counts:{}, recent:[], updatedAt:null }; }
+  }
+  function writeSignalProfile(profile){
+    try { localStorage.setItem(SIGNAL_PROFILE_KEY, JSON.stringify(profile)); } catch {}
+  }
+  function recordSignalInteraction(payload={}){
+    const profile = readSignalProfile();
+    const tags = [...new Set((payload.tags || []).map(normalizeSignalTag).filter(Boolean))];
+    tags.forEach(tag => { profile.counts[tag] = (profile.counts[tag] || 0) + 1; });
+    const recentItem = {
+      tags,
+      city: payload.city || payload.destination || '',
+      title: payload.title || '',
+      source: payload.source || '',
+      at: new Date().toISOString()
+    };
+    profile.recent = [recentItem, ...(profile.recent || [])].slice(0, 18);
+    profile.updatedAt = recentItem.at;
+    writeSignalProfile(profile);
+    window.dispatchEvent(new CustomEvent('ryoko:signalprofile', { detail: profile }));
+    return profile;
+  }
+  function getTopSignalTags(limit=3){
+    const profile = readSignalProfile();
+    return Object.entries(profile.counts || {})
+      .sort((a,b) => b[1] - a[1])
+      .slice(0, limit)
+      .map(([tag]) => tag);
+  }
+  function boostBySignalProfile(items=[]){
+    const top = getTopSignalTags(4);
+    if (!top.length) return items;
+    return [...items].sort((a,b) => {
+      const aScore = top.reduce((acc, tag) => acc + (((a.tags || []).map(normalizeSignalTag).includes(tag)) ? 1 : 0), 0);
+      const bScore = top.reduce((acc, tag) => acc + (((b.tags || []).map(normalizeSignalTag).includes(tag)) ? 1 : 0), 0);
+      return bScore - aScore;
+    });
+  }
+  function getPersonalizedSignalItems(scope='home'){
+    const top = getTopSignalTags(3);
+    if (!top.length) return [];
+    const pools = [
+      ...buildDiscoveryItems(),
+      ...getSeasonalEditorialCollections().cover,
+      ...getSeasonalEditorialCollections().magazine,
+      ...getCommunityCollections().picks,
+      ...getCommunityCollections().trending,
+      ...getCommunityCollections().branches,
+    ];
+    const scored = pools.map(item => ({
+      ...item,
+      profileScore: top.reduce((acc, tag) => acc + (((item.tags || []).map(normalizeSignalTag).includes(tag)) ? 2 : 0), 0)
+    }))
+    .filter(item => item.profileScore > 0)
+    .sort((a,b) => b.profileScore - a.profileScore);
+    const seen = new Set();
+    return scored.filter(item => {
+      const key = `${item.preset?.destination || ''}-${item.title?.en || item.title?.ko || ''}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).slice(0, scope === 'magazine' ? 4 : 3);
+  }
+  function attachSignalTracking(scope=document){
+    scope.querySelectorAll('[data-signal-tags]').forEach(el => {
+      if (el.dataset.signalBound === '1') return;
+      el.dataset.signalBound = '1';
+      el.addEventListener('click', () => {
+        const tags = String(el.dataset.signalTags || '').split('|').filter(Boolean);
+        recordSignalInteraction({
+          tags,
+          city: el.dataset.signalCity || '',
+          title: el.dataset.signalTitle || '',
+          source: el.dataset.signalSource || ''
+        });
+      });
+    });
+  }
   function getSignalRecommendations(context={}){
     const signals = detectSignalTags(context);
     const pools = [
@@ -279,7 +361,7 @@ window.RyokoApp = (() => {
       .filter(item => {
         const key = `${item.title?.en || item.title?.ko || item.slug}-${item.preset?.destination || ''}`;
         if (seen.has(key)) return false;
-        seen.add(key); return True;
+        seen.add(key); return true;
       })
       .slice(0, 3);
   }
@@ -995,9 +1077,9 @@ window.RyokoApp = (() => {
         <p>${desc}</p>
         <div class="trip-chip-row">${tags.slice(0,4).map(tag => `<span class="trip-mini-chip">${tag}</span>`).join('')}</div>
         <div class="card-actions public-route-actions">
-          <a class="soft-btn" href="${guide}">${copy.guide}</a>
-          <a class="ghost-btn" href="${example}">${copy.sample}</a>
-          <button class="primary-btn community-plan-btn" data-community-preset='${JSON.stringify(item.preset || {})}'>${copy.save}</button>
+          <a class="soft-btn" href="${guide}" data-signal-tags="${tags.join('|')}" data-signal-city="${destination}" data-signal-title="${title}" data-signal-source="community-guide">${copy.guide}</a>
+          <a class="ghost-btn" href="${example}" data-signal-tags="${tags.join('|')}" data-signal-city="${destination}" data-signal-title="${title}" data-signal-source="community-sample">${copy.sample}</a>
+          <button class="primary-btn community-plan-btn" data-community-preset='${JSON.stringify(item.preset || {})}' data-signal-tags="${tags.join('|')}" data-signal-city="${destination}" data-signal-title="${title}" data-signal-source="community-plan">${copy.save}</button>
         </div>
       </article>`;
   }
@@ -1086,9 +1168,9 @@ function getSeasonalEditorialCollections(){
         <p class="seasonal-card-copy">${item.desc[lang] || item.desc.en}</p>
         <div class="mini-vibe-row">${item.tags.map(tag => `<span class="mini-vibe-chip">${tag}</span>`).join('')}</div>
         <div class="card-actions seasonal-card-actions">
-          <a class="soft-btn" href="${item.guide}">${copy.guide}</a>
-          <a class="ghost-btn" href="${item.example}">${copy.sample}</a>
-          <button class="primary-btn seasonal-plan-btn" data-seasonal-preset='${JSON.stringify(item.preset)}'>${copy.plan}</button>
+          <a class="soft-btn" href="${item.guide}" data-signal-tags="${item.tags.join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${item.title[lang] || item.title.en}" data-signal-source="seasonal-guide">${copy.guide}</a>
+          <a class="ghost-btn" href="${item.example}" data-signal-tags="${item.tags.join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${item.title[lang] || item.title.en}" data-signal-source="seasonal-sample">${copy.sample}</a>
+          <button class="primary-btn seasonal-plan-btn" data-seasonal-preset='${JSON.stringify(item.preset)}' data-signal-tags="${item.tags.join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${item.title[lang] || item.title.en}" data-signal-source="seasonal-plan">${copy.plan}</button>
         </div>
       </article>`;
   }
@@ -1132,6 +1214,7 @@ function getSeasonalEditorialCollections(){
         </div>
       </section>`;
     wireSeasonalButtons(root, 'planner');
+    attachSignalTracking(root);
   }
 
   function renderMagazineSeasonalDesk(){
@@ -1160,6 +1243,8 @@ function getSeasonalEditorialCollections(){
         </div>
       </section>`;
     wireSeasonalButtons(root, 'page');
+    attachSignalTracking(root);
+    attachSignalTracking(root);
   }
 
   function renderTripsSeasonalDesk(){
@@ -1241,6 +1326,7 @@ function getSeasonalEditorialCollections(){
         </div>
       </section>`;
     wireCommunityButtons(root);
+    attachSignalTracking(root);
   }
 
   function renderMagazineCommunityDesk(){
@@ -1263,6 +1349,7 @@ function getSeasonalEditorialCollections(){
         </div>
       </section>`;
     wireCommunityButtons(host);
+    attachSignalTracking(host);
   }
 
   function renderHomeDiscovery(){
@@ -1298,7 +1385,7 @@ function getSeasonalEditorialCollections(){
         <div class="discovery-grid" id="homeDiscoveryGrid"></div>
         <div class="finder-empty info-card" id="homeDiscoveryEmpty" hidden><p>${copy.empty}</p></div>
       </article>`;
-    const items = buildDiscoveryItems();
+    const items = boostBySignalProfile(buildDiscoveryItems());
     const grid = root.querySelector('#homeDiscoveryGrid');
     const count = root.querySelector('#homeDiscoveryCount');
     const empty = root.querySelector('#homeDiscoveryEmpty');
@@ -1316,7 +1403,7 @@ function getSeasonalEditorialCollections(){
           <h3>${item.title[lang] || item.title.en}</h3>
           <p>${item.desc[lang] || item.desc.en}</p>
           <div class="mini-vibe-row">${item.tags.slice(0,4).map(tag => `<span class="mini-vibe-chip">${tag}</span>`).join('')}</div>
-          <div class="card-actions discovery-actions"><a class="soft-btn" href="${item.guide}">${copy.guide}</a><a class="ghost-btn" href="${item.example}">${copy.sample}</a><button class="primary-btn discovery-plan-btn" data-discovery-preset='${JSON.stringify(item.preset)}'>${copy.plan}</button></div>
+          <div class="card-actions discovery-actions"><a class="soft-btn" href="${item.guide}" data-signal-tags="${item.tags.join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${item.title[lang] || item.title.en}" data-signal-source="seasonal-guide">${copy.guide}</a><a class="ghost-btn" href="${item.example}">${copy.sample}</a><button class="primary-btn discovery-plan-btn" data-discovery-preset='${JSON.stringify(item.preset)}'>${copy.plan}</button></div>
         </article>`).join('');
       count.textContent = lang === 'ko' ? `${filtered.length}${copy.matches}` : `${filtered.length} ${copy.matches}`;
       if (empty) empty.hidden = filtered.length !== 0;
@@ -1324,6 +1411,7 @@ function getSeasonalEditorialCollections(){
         try { window.RyokoApp.applyPlannerPreset(JSON.parse(btn.dataset.discoveryPreset || '{}')); } catch(e) {}
         document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
       }));
+      attachSignalTracking(grid);
     }
     root.querySelectorAll('[data-discovery-filter]').forEach(btn => btn.addEventListener('click', () => {
       filter = btn.dataset.discoveryFilter;
@@ -1334,6 +1422,60 @@ function getSeasonalEditorialCollections(){
     render();
   }
 
+
+  function personalizedSignalCardMarkup(item, copy){
+    const title = item.title?.[lang] || item.title?.en || item.city || '';
+    const desc = item.desc?.[lang] || item.desc?.en || '';
+    const destination = item.preset?.destination || item.city || '';
+    return `
+      <article class="personal-signal-card info-card">
+        <div class="personal-signal-top"><span class="collection-kicker">${destination || (lang === 'ko' ? '큐레이션' : 'Curated')}</span><span class="meta-inline">${(item.tags || []).slice(0,2).join(' · ')}</span></div>
+        <h3>${title}</h3>
+        <p>${desc}</p>
+        <div class="card-actions public-route-actions">
+          <a class="soft-btn" href="${item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${destination}" data-signal-title="${title}" data-signal-source="personal-guide">${copy.guide}</a>
+          <a class="ghost-btn" href="${item.example || item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${destination}" data-signal-title="${title}" data-signal-source="personal-sample">${copy.sample}</a>
+          <button class="primary-btn personal-plan-btn" data-personal-preset='${JSON.stringify(item.preset || {})}' data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${destination}" data-signal-title="${title}" data-signal-source="personal-plan">${copy.plan}</button>
+        </div>
+      </article>`;
+  }
+  function wirePersonalButtons(scope, plannerMode='page'){
+    scope.querySelectorAll('.personal-plan-btn').forEach(btn => btn.addEventListener('click', () => {
+      let preset = {};
+      try { preset = JSON.parse(btn.dataset.personalPreset || '{}'); } catch {}
+      if (plannerMode === 'planner') {
+        window.RyokoApp.applyPlannerPreset(preset);
+        document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
+      } else {
+        location.href = plannerUrlForCity(preset.destination || '');
+      }
+    }));
+    attachSignalTracking(scope);
+  }
+  function renderSignalPersonalDesk(page='home'){
+    const items = getPersonalizedSignalItems(page);
+    const targetId = page === 'home' ? 'homeCommunityRoot' : 'magazineCommunityRoot';
+    const anchor = document.getElementById(targetId);
+    if (!anchor) return;
+    let root = document.getElementById(page === 'home' ? 'homePersonalSignalRoot' : 'magazinePersonalSignalRoot');
+    if (!items.length) { if (root) root.innerHTML = ''; return; }
+    if (!root) {
+      root = document.createElement('div');
+      root.id = page === 'home' ? 'homePersonalSignalRoot' : 'magazinePersonalSignalRoot';
+      anchor.parentNode.insertBefore(root, anchor);
+    }
+    const top = getTopSignalTags(3);
+    const tagLabel = top.map(tag => tag.replace('-', ' ')).join(' · ');
+    const copy = lang === 'ko'
+      ? { eyebrow:'Your rhythm', title:'최근 반응한 신호를 바탕으로 다시 고른 셸프', desc:`최근 읽은 베이스에서 ${tagLabel} 결이 더 자주 보였습니다. 앞단 큐레이션도 그 신호를 먼저 보여줍니다.`, guide:'도시 가이드', sample:'샘플 루트', plan: page === 'home' ? '이 베이스로 시작' : '플래너로 이어가기' }
+      : { eyebrow:'Your rhythm', title:'A shelf reshaped by the signals you keep opening', desc:`Your recent reads leaned toward ${tagLabel}. This shelf pushes those tones forward first.`, guide:'City guide', sample:'Sample route', plan: page === 'home' ? 'Start from this base' : 'Continue in Planner' };
+    root.innerHTML = `
+      <section class="section personal-signal-section">
+        <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
+        <div class="personal-signal-grid">${items.map(item => personalizedSignalCardMarkup(item, copy)).join('')}</div>
+      </section>`;
+    wirePersonalButtons(root, page === 'home' ? 'planner' : 'page');
+  }
   function initMagazine(){
     if (document.body.dataset.page !== 'magazine') return;
     renderMagazineLoop();
@@ -1597,15 +1739,20 @@ function getSeasonalEditorialCollections(){
     initPlannerOnboarding();
     renderHomeDiscovery();
     renderHomeCommunityDesk();
+    renderSignalPersonalDesk('home');
     renderHomeSeasonalDesk();
+    renderMagazineCommunityDesk();
+    renderSignalPersonalDesk('magazine');
     renderMagazineSeasonalDesk();
     renderTripsSeasonalDesk();
     window.addEventListener('ryoko:langchange', () => {
       renderMagazineLanding();
       renderHomeDiscovery();
       renderHomeCommunityDesk();
+      renderSignalPersonalDesk('home');
       renderHomeSeasonalDesk();
       renderMagazineCommunityDesk();
+      renderSignalPersonalDesk('magazine');
       renderMagazineSeasonalDesk();
       renderTripsSeasonalDesk();
     });
@@ -1626,6 +1773,6 @@ function getSeasonalEditorialCollections(){
         </div>
       </article>`;
   }
-  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, getCityVoice, slugifyCity, resolvePath, applyPlannerPreset, getSignalRecommendations, detectSignalTags, get lang(){return lang;}, pathRoot, navHref };
+  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, getCityVoice, slugifyCity, resolvePath, applyPlannerPreset, getSignalRecommendations, detectSignalTags, recordSignalInteraction, getTopSignalTags, get lang(){return lang;}, pathRoot, navHref };
 })();
 window.addEventListener('DOMContentLoaded', () => { window.RyokoApp.initCommon(); window.RyokoApp.initMagazine(); });

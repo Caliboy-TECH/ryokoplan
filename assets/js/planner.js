@@ -572,10 +572,22 @@ window.RyokoPlanner = (() => {
           <h3>${escapeHtml(textValue(item.title, item.slug || 'Base'))}</h3>
           <p>${escapeHtml(textValue(item.desc, ''))}</p>
           <div class="card-actions">
-            <a class="soft-btn" href="${item.guide || '#'}">${uiCopy('도시 가이드','City guide')}</a>
-            <a class="ghost-btn" href="${item.example || item.guide || '#'}">${uiCopy('샘플 루트','Sample route')}</a>
+            <a class="soft-btn" href="${item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-guide">${uiCopy('도시 가이드','City guide')}</a>
+            <a class="ghost-btn" href="${item.example || item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-sample">${uiCopy('샘플 루트','Sample route')}</a>
           </div>
         </article>`).join('')}</div>`;
+    window.RyokoApp?.recordSignalInteraction && node.querySelectorAll('[data-signal-tags]').forEach(el => {
+      if (el.dataset.signalBound === '1') return;
+      el.dataset.signalBound = '1';
+      el.addEventListener('click', () => {
+        window.RyokoApp.recordSignalInteraction({
+          tags: String(el.dataset.signalTags || '').split('|').filter(Boolean),
+          city: el.dataset.signalCity || '',
+          title: el.dataset.signalTitle || '',
+          source: el.dataset.signalSource || 'result-signal'
+        });
+      });
+    });
   }
 
   function renderLoopSection(data){
