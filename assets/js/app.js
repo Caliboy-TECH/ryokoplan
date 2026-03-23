@@ -754,6 +754,35 @@ window.RyokoApp = (() => {
           </div>
         </div>
       </section>
+
+      <section class="section editorial-dispatch-section magazine-dispatch-section">
+        <div class="section-head">
+          <div><span class="eyebrow">${lang === 'ko' ? 'Editorial dispatches' : 'Editorial dispatches'}</span><h2 class="section-title">${lang === 'ko' ? '지금 바로 출발하기 좋은 운영형 베이스' : 'Operating bases that are worth using right now'}</h2><p class="section-desc">${lang === 'ko' ? '주말, 우천일, 부모님 동행처럼 실제로 자주 쓰는 상황을 기준으로 도시 베이스를 묶었습니다.' : 'These bases are grouped around the situations that actually come up: weekends, rain, parents, and soft pacing.'}</p></div>
+          <a class="soft-btn" data-nav="trips">${lang === 'ko' ? '컬렉션으로 보기' : 'Open collections'}</a>
+        </div>
+        <div class="dispatch-edit-grid">
+          <article class="dispatch-edit-card feature">
+            <span class="collection-kicker">Weekend desk</span>
+            <h3>${lang === 'ko' ? 'Tokyo dense weekend, 그런데 너무 빡빡하지 않게' : 'Tokyo dense weekend, without making it feel overpacked'}</h3>
+            <p>${lang === 'ko' ? '대표 지역은 챙기되, 하루 한 구간은 숨을 쉬게 두는 2박 3일 베이스입니다.' : 'A 2-night Tokyo base that still hits the big districts but leaves one softer pocket each day.'}</p>
+            <div class="trip-mini-chip-row"><span class="trip-mini-chip">Tokyo</span><span class="trip-mini-chip">2N3D</span><span class="trip-mini-chip">${lang === 'ko' ? '주말' : 'Weekend'}</span></div>
+            <div class="cta-row"><button class="primary-btn" data-start-city="Tokyo">${lang === 'ko' ? '플래너로 시작' : 'Start in Planner'}</button><a class="secondary-btn" href="../example/tokyo-3n4d-first-trip.html">${lang === 'ko' ? '샘플 보기' : 'Read sample'}</a></div>
+          </article>
+          <article class="dispatch-edit-card">
+            <span class="collection-kicker">Rainy-day note</span>
+            <h3>${lang === 'ko' ? 'Seoul rainy-day fallback' : 'Seoul rainy-day fallback'}</h3>
+            <p>${lang === 'ko' ? '실내 밀도와 동네 이동을 가볍게 유지하는 서울 우천일 베이스입니다.' : 'A Seoul fallback that keeps the day indoor-friendly while staying neighborhood-led.'}</p>
+            <div class="cta-row compact-actions"><button class="ghost-btn" data-start-city="Seoul">${lang === 'ko' ? '플래너로 시작' : 'Start in Planner'}</button><a class="soft-link" href="../city/seoul.html">${lang === 'ko' ? '도시 가이드' : 'City guide'}</a></div>
+          </article>
+          <article class="dispatch-edit-card">
+            <span class="collection-kicker">Family pace</span>
+            <h3>${lang === 'ko' ? 'Jeju easy pace with parents' : 'Jeju easy pace with parents'}</h3>
+            <p>${lang === 'ko' ? '이동은 단순하게, 풍경과 식사는 충분히 남기는 느린 제주 베이스입니다.' : 'A slower Jeju base with simple movement, enough scenery, and room for meals and rest.'}</p>
+            <div class="cta-row compact-actions"><button class="ghost-btn" data-start-city="Jeju">${lang === 'ko' ? '플래너로 시작' : 'Start in Planner'}</button><a class="soft-link" href="../city/jeju.html">${lang === 'ko' ? '도시 가이드' : 'City guide'}</a></div>
+          </article>
+        </div>
+      </section>
+
       <section class="section magazine-loop-section">
         <div class="section-head"><div><span class="eyebrow">${data.loopEyebrow}</span><h2 class="section-title">${data.loopTitle}</h2><p class="section-desc">${data.loopDesc}</p></div></div>
         <div class="magazine-loop-grid"><article class="loop-main-card info-card" id="magazineLoopMain"></article><aside class="loop-side-card info-card" id="magazineLoopSide"></aside></div>
