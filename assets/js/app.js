@@ -429,10 +429,15 @@ window.RyokoApp = (() => {
     }
     const page = document.body.dataset.page || 'planner';
     const dockLang = supportedLangs.includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
+    const helperCopy = {
+      planner: { ko:'계획', en:'Plan', ja:'計画', zhHant:'規劃' },
+      magazine: { ko:'탐색', en:'Read', ja:'探索', zhHant:'探索' },
+      trips: { ko:'보관', en:'Keep', ja:'保存', zhHant:'保存' }
+    };
     const dockCopy = {
-      planner: { icon: 'P', helper: lang === 'ko' ? '계획' : 'Plan', label: t('nav.planner') || 'Planner' },
-      magazine: { icon: 'M', helper: lang === 'ko' ? '탐색' : 'Read', label: t('nav.magazine') || 'Magazine' },
-      trips: { icon: 'T', helper: lang === 'ko' ? '보관' : 'Keep', label: t('nav.trips') || 'My Trips' }
+      planner: { icon: 'P', helper: helperCopy.planner[lang] || helperCopy.planner.en, label: t('nav.planner') || 'Planner' },
+      magazine: { icon: 'M', helper: helperCopy.magazine[lang] || helperCopy.magazine.en, label: t('nav.magazine') || 'Magazine' },
+      trips: { icon: 'T', helper: helperCopy.trips[lang] || helperCopy.trips.en, label: t('nav.trips') || 'My Trips' }
     };
     dock.innerHTML = ['planner','magazine','trips'].map((key) => `
       <a class="mobile-dock-item ${page === key ? 'active' : ''}" href="${navHref(key)}" aria-current="${page === key ? 'page' : 'false'}">
@@ -1728,12 +1733,98 @@ function getSeasonalEditorialCollections(){
     }
   }
 
+
+  function localizeLangButtonLabels(root=document){
+    root.querySelectorAll('[data-lang-btn="zhHant"]').forEach(btn => { btn.textContent = '번체'; });
+    root.querySelectorAll('[data-lang-btn="ja"]').forEach(btn => { btn.textContent = 'JP'; });
+  }
+
+  function localizeStaticIndexSections(){
+    if (document.body.dataset.page !== 'planner') return;
+    const homeMap = {
+      ko: {
+        cityMeta:['일본 · 빠른 도시','일본 · 여유로운 리듬','한국 · 동네 중심 도시','한국 · 바다와 휴식','일본 · 콤팩트 미식 도시'],
+        cityTitle:['Tokyo','Kyoto','Seoul','Busan','Fukuoka'],
+        cityCopy:['큰 장면과 조용한 골목이 함께 있는 도시. 동네 기준으로 짜면 훨씬 부드럽게 풀립니다.','적게 넣을수록 더 좋아지는 도시. 골목, 강변, 사원 지구가 여유를 만듭니다.','무엇을 보느냐보다 어떤 동네를 묶느냐가 무드를 결정합니다.','바다 풍경과 시장 리듬이 섞여 서울과는 다른 열린 템포가 납니다.','짧게 가도 좋고, 음식 중심으로 풀기 좋은 콤팩트 시티입니다.'],
+        sampleMeta:['3박 4일 · 커플','2박 3일 · 슬로우','2박 3일 · 친구','2박 3일 · 가족'],
+        sampleTitle:['도쿄 첫 여행 베이스','조용한 교토 주말','서울 시티 바이브','부모님과 부산'],
+        sampleCopy:['처음 가는 사람도 리듬을 잃지 않게 짠 도쿄 베이스입니다.','골목, 사원 지구, 강변 산책 중심의 느린 교토 루트입니다.','카페, 산책, 야경이 부드럽게 이어지는 서울 루트입니다.','바다 풍경과 휴식을 중심으로 잡은 더 부드러운 부산 루트입니다.']
+      },
+      en: {
+        cityMeta:['Japan · Fast city','Japan · Slow rhythm','Korea · Neighborhood-led city','Korea · Coast and rest','Japan · Compact food city'],
+        cityTitle:['Tokyo','Kyoto','Seoul','Busan','Fukuoka'],
+        cityCopy:['A city of layered highlights and quieter pockets. It works best when read neighborhood by neighborhood.','A city that improves when you do less. Alleys, river edges, and temple districts need more room.','In Seoul, the mood comes from how you group neighborhoods, not how many sights you stack.','Sea views and market rhythm create a more open pace than Seoul.','Compact, easy, and deeply rewarding when food leads the route.'],
+        sampleMeta:['3 Nights 4 Days · Couple','2 Nights 3 Days · Slow','2 Nights 3 Days · Friends','2 Nights 3 Days · Family'],
+        sampleTitle:['Tokyo for first-timers','Quiet Kyoto weekend','Seoul city vibes','Busan with parents'],
+        sampleCopy:['A Tokyo base that stays balanced even for first-time visitors.','A slower Kyoto route built around alleys, temple districts, and riverside pauses.','Cafés, walks, and night views tied into a smoother Seoul rhythm.','A gentler Busan route shaped by sea views and better rest windows.']
+      },
+      ja: {
+        cityMeta:['日本 · 速い都市','日本 · ゆるいリズム','韓国 · 街区中心の都市','韓国 · 海と休息','日本 · コンパクトな美食都市'],
+        cityTitle:['Tokyo','Kyoto','Seoul','Busan','Fukuoka'],
+        cityCopy:['大きな見どころと静かな路地が重なる都市。エリアごとに読むと流れがぐっと楽になります。','詰め込みすぎないほど良くなる都市。路地、川辺、寺エリアに余白が必要です。','何を見るかより、どの街区を一緒に束ねるかでムードが決まります。','海の景色と市場のリズムが合わさり、ソウルとは違う開いたテンポが出ます。','短くても満足度が高く、食を軸にしやすいコンパクトシティです。'],
+        sampleMeta:['3泊4日 · カップル','2泊3日 · スロー','2泊3日 · 友人','2泊3日 · 家族'],
+        sampleTitle:['はじめての東京ベース','静かな京都週末','ソウル city vibes','親と行く釜山'],
+        sampleCopy:['初めてでもリズムを崩しにくい東京ベースです。','路地、寺エリア、川辺の散歩を中心にしたゆるい京都ルートです。','カフェ、散歩、夜景がやわらかくつながるソウルルートです。','海の景色と休息を軸にした、よりやさしい釜山ルートです。']
+      },
+      zhHant: {
+        cityMeta:['日本 · 快節奏城市','日本 · 慢節奏城市','韓國 · 街區導向城市','韓國 · 海景與休息','日本 · 緊湊美食城市'],
+        cityTitle:['Tokyo','Kyoto','Seoul','Busan','Fukuoka'],
+        cityCopy:['大場景與安靜巷弄並存的城市。用街區去讀，整體會順很多。','放得更少反而更好的城市。巷子、河邊與寺區需要留白。','首爾的旅行感不在景點數，而在你怎麼把街區組在一起。','海景與市場節奏交疊，會走出和首爾很不一樣的開闊步調。','就算短去也很有收穫，很適合用美食來帶整段旅程。'],
+        sampleMeta:['3晚4天 · 情侶','2晚3天 · 慢遊','2晚3天 · 朋友','2晚3天 · 家人'],
+        sampleTitle:['東京初訪 base','安靜京都週末','首爾 city vibes','和父母去釜山'],
+        sampleCopy:['就算第一次去，也不容易亂掉節奏的東京 base。','以巷弄、寺區與河邊散步為主的慢節奏京都路線。','把咖啡館、散步與夜景連成更順的首爾節奏。','以海景與休息窗口為主的更溫和釜山路線。']
+      }
+    };
+    const copy = homeMap[lang] || homeMap.en;
+    document.querySelectorAll('.city-grid .city-card').forEach((card, i) => {
+      const meta = card.querySelector('.meta');
+      const title = card.querySelector('.card-title');
+      const body = card.querySelector('.card-copy');
+      if (meta && copy.cityMeta[i]) meta.textContent = copy.cityMeta[i];
+      if (title && copy.cityTitle[i]) title.textContent = copy.cityTitle[i];
+      if (body && copy.cityCopy[i]) body.textContent = copy.cityCopy[i];
+    });
+    document.querySelectorAll('.sample-grid .sample-card').forEach((card, i) => {
+      const meta = card.querySelector('.meta');
+      const title = card.querySelector('.card-title');
+      const body = card.querySelector('.card-copy');
+      if (meta && copy.sampleMeta[i]) meta.textContent = copy.sampleMeta[i];
+      if (title && copy.sampleTitle[i]) title.textContent = copy.sampleTitle[i];
+      if (body && copy.sampleCopy[i]) body.textContent = copy.sampleCopy[i];
+    });
+  }
+
+
+  editorialData.magazine.ja = {
+    ...editorialData.magazine.en,
+    title:'Ryokoplan — Magazine',
+    heroEyebrow:'Ryokoplan Magazine',
+    heroTitle:'都市を先に読み、そのあと旅を組み立てる',
+    heroDesc:'必要なのは情報の山ではなく、都市の質感と移動リズム、そのまま旅程に接続できる流れです。Magazine を planner の入口として整えました。',
+    heroChips:['Japan / Korea focus','editorial city guides','planner-ready routes'],
+    startPlanner:'Planner を開く', browseCities:'都市を見る',
+    featureMeta:'Better first route', featureTitle:'Tokyo → Kyoto → Osaka、リズムで読む最初の日本旅', featureDesc:'東京の密度、京都の余白、大阪の気楽さを順序よく置くと、初回でもずっと軽く感じられます。', featureLinks:['Tokyo のムード','Kyoto のペース','サンプル旅程'],
+    sideKicker:'What Magazine does', sideTitle:'読むだけで終わらず、そのまま計画へ進むハブ', sideLines:[['City mood first','ランドマークより先に、街区の感触、ペース、合う旅タイプを見せます。'],['Less random browsing','fast city / slow day / food-led のように、今の気分からすぐ入れます。'],['Straight into Planner','気に入った都市やサンプルはそのまま Planner の値へつながります。']], sideButtons:['都市ガイド','保存した旅'],
+    loopEyebrow:'Recommendation loop', loopTitle:'一度読んで終わらせないために', loopDesc:'最近見た旅や保存した旅があれば次の都市を提案し、なければ強い入口を先に見せます。',
+    finderEyebrow:'City finder', finderTitle:'ムードと国から都市を選ぶ', finderDesc:'ただのカード一覧ではなく、フィルターと検索でその場で絞り込めます。', finderSearchPH:'都市名・国・mood で検索', countryAll:'すべて', countryJapan:'Japan', countryKorea:'Korea', vibeAll:'すべての mood', vibeFast:'Fast city', vibeSlow:'Slow day', vibeFood:'Food-led', vibeCoast:'Coast',
+    cityMeta:{tokyo:'Japan · Fast city', osaka:'Japan · Food / easy fun', kyoto:'Japan · Slow trip', fukuoka:'Japan · Compact food trip', seoul:'Korea · Fast city', busan:'Korea · Coast / food', jeju:'Korea · Coast / nature', gyeongju:'Korea · Slow heritage trip'},
+    cityCopy:{tokyo:'大きな見どころと静かな街区が同時にある都市。街区ごとに読むとずっとやわらかくほどけます。', osaka:'食べて、歩いて、休むリズムが近くに集まり、短い旅でも満足度が高い都市です。', kyoto:'詰め込まないほど良くなる都市。路地、川辺、寺エリアが余白を作ります。', fukuoka:'短くても十分よく、食中心で組みやすいコンパクトシティです。', seoul:'どの街区を束ねるかが旅のムードを決める都市です。', busan:'海景と市場のリズムが混ざり、ソウルとは違う開いたテンポになります。', jeju:'風景、カフェ、移動の余裕を軸にしてこそ済州らしくなります。', gyeongju:'数をこなすより、歴史の質感と歩くテンポを守る方が強い都市です。'},
+    guideBtn:'都市ガイド', planBtn:'旅程を作る', emptyTitle:'条件に合う都市がありません', emptyDesc:'フィルターを少しゆるめると、近いムードの都市が見つかります。', curatedEyebrow:'Curated paths', curatedTitle:'まずここから読むと流れがつかみやすい', curatedDesc:'親との旅、静かな週末、都市のコントラストのような観点から sample と guide にすぐ入れます。', bentoFeatureKicker:'Start with a route', bentoFeatureTitle:'良い旅程のテンポを先に読む', bentoFeatureDesc:'Planner を開く前に、良い日程がどんな密度で流れるかをサンプルで先に見せます。', readSample:'サンプルを見る', usePlanner:'Planner で使う', parentsKicker:'With parents', parentsTitle:'親と行く釜山は海景と休息の置き方が先です', parentsDesc:'景色の窓と移動負担を軽くすると、より自然な釜山ルートになります。', openBusan:'Busan を開く', slowKicker:'Slow trip', slowTitle:'京都は見どころより間の時間が残る方がいい', slowDesc:'寺、川辺、カフェをゆるくつなぐと、京都らしさがもっと長く残ります。', openKyoto:'Kyoto を開く', howKicker:'How to use it', howSteps:[['Read the mood','都市を先に読んで'],['Open a sample','サンプルでテンポを見て'],['Start in Planner','自分の旅へつなげる']], bannerTitle:'ガイドで終わらない旅支度', bannerDesc:'都市を読んで、流れを理解して、そのまま自分の旅程へつなげます。', bannerPlanner:'Planner を開く', bannerTrips:'My Trips を開く'
+  };
+  editorialData.magazine.zhHant = {
+    ...editorialData.magazine.en,
+    title:'Ryokoplan — Magazine', heroEyebrow:'Ryokoplan Magazine', heroTitle:'先讀城市，再把旅程接起來', heroDesc:'現在需要的不是一大堆資訊，而是城市的質感、移動節奏，以及可以直接接到行程的流。', heroChips:['Japan / Korea focus','editorial city guides','planner-ready routes'], startPlanner:'打開 Planner', browseCities:'看城市', featureMeta:'Better first route', featureTitle:'Tokyo → Kyoto → Osaka，用節奏讀第一次日本旅程', featureDesc:'把東京的密度、京都的留白、大阪的輕鬆感排成順序，第一次去也會輕很多。', featureLinks:['Tokyo mood','Kyoto pace','sample 行程'], sideKicker:'What Magazine does', sideTitle:'不是只讓你讀，而是讓你直接往規劃走的入口', sideLines:[['City mood first','先讓你看街區感、步調與適合的旅行型，而不是只看地標。'],['Less random browsing','可以直接從 fast city / slow day / food-led 這種現在的感覺切進去。'],['Straight into Planner','喜歡的城市或 sample 會直接接到 Planner 值。']], sideButtons:['城市 guide','已存旅程'], loopEyebrow:'Recommendation loop', loopTitle:'不要只讀一次就結束', loopDesc:'如果有最近看過或存過的旅程，就先推下一座城市；沒有的話，就先給你最強入口。', finderEyebrow:'City finder', finderTitle:'用 mood 與國家選城市', finderDesc:'不只是城市卡片，而是可以直接用篩選與搜尋縮小。', finderSearchPH:'用城市、國家、mood 搜尋', countryAll:'全部', countryJapan:'Japan', countryKorea:'Korea', vibeAll:'全部 mood', vibeFast:'Fast city', vibeSlow:'Slow day', vibeFood:'Food-led', vibeCoast:'Coast', cityMeta:{tokyo:'Japan · Fast city', osaka:'Japan · Food / easy fun', kyoto:'Japan · Slow trip', fukuoka:'Japan · Compact food trip', seoul:'Korea · Fast city', busan:'Korea · Coast / food', jeju:'Korea · Coast / nature', gyeongju:'Korea · Slow heritage trip'}, cityCopy:{tokyo:'大場景與安靜街區並存的城市。用街區去讀，整體會更柔順。', osaka:'吃、走、休息的節奏靠得很近，短旅行也很有滿足感。', kyoto:'越不塞越好的城市。巷弄、河邊與寺區會把留白做出來。', fukuoka:'短去也很夠，用美食當主軸很好排的緊湊城市。', seoul:'不是景點數，而是怎麼把街區組在一起，決定整趟的 mood。', busan:'海景與市場節奏交疊，會走出和首爾不同的開放步調。', jeju:'要把風景、咖啡館與移動留白一起算進去，才會像真正的濟州。', gyeongju:'比起多看幾個點，守住歷史質感與步行節奏更重要。'}, guideBtn:'看城市 guide', planBtn:'排行程', emptyTitle:'沒有符合條件的城市', emptyDesc:'把篩選放寬一點，就能看到更接近的 mood。', curatedEyebrow:'Curated paths', curatedTitle:'先從這裡讀，會比較快抓到節奏', curatedDesc:'從和父母旅行、安靜週末、城市對比這些角度，直接進 sample 與 guide。', bentoFeatureKicker:'Start with a route', bentoFeatureTitle:'先讀懂好旅程的節奏', bentoFeatureDesc:'在打開 Planner 前，先用 sample 看看好的行程怎麼流動。', readSample:'看 sample', usePlanner:'在 Planner 使用', parentsKicker:'With parents', parentsTitle:'和父母去釜山，要先把海景與休息窗口放對', parentsDesc:'把看景時間與移動負擔壓順，會得到更自然的釜山路線。', openBusan:'打開 Busan', slowKicker:'Slow trip', slowTitle:'京都更適合把空白留給時間，而不是把景點塞滿', slowDesc:'把寺區、河邊與咖啡館鬆鬆接起來，京都感會留得更久。', openKyoto:'打開 Kyoto', howKicker:'How to use it', howSteps:[['Read the mood','先讀城市氣質'],['Open a sample','先看 sample 節奏'],['Start in Planner','再接到你的旅程']], bannerTitle:'不是看完就結束的旅行準備', bannerDesc:'讀城市、懂節奏，再把它接成自己的旅程。', bannerPlanner:'打開 Planner', bannerTrips:'打開 My Trips'
+  };
+
+
   function initCommon(){
     document.documentElement.lang = lang;
     renderMagazineLanding();
     renderCityPage();
     renderExamplePage();
     applyTranslations();
+    localizeLangButtonLabels();
+    localizeStaticIndexSections();
     bindLanguageButtons();
     document.querySelectorAll('[data-nav="magazine"]').forEach(a => a.setAttribute('href', navHref('magazine')));
     document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
@@ -1759,6 +1850,8 @@ function getSeasonalEditorialCollections(){
       renderSignalPersonalDesk('magazine');
       renderMagazineSeasonalDesk();
       renderTripsSeasonalDesk();
+      localizeLangButtonLabels();
+      localizeStaticIndexSections();
     });
     initEditorialChrome();
   }
