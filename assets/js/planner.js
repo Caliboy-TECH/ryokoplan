@@ -592,20 +592,22 @@ window.RyokoPlanner = (() => {
   }
   async function generate(){
     const payload = readForm();
-    if (!payload.destination) { alert('Destination is required.'); return; }
-    qs('submitBtn').disabled = true;
-    qs('submitBtn').textContent = window.RyokoApp.t('planner.generating');
+    if (!payload.destination) { showToast(uiCopy('도시를 먼저 선택해 주세요.','Choose a city first.'), 'warn'); return; }
+    setButtonBusy(qs('submitBtn'), window.RyokoApp.t('planner.generating'));
     try {
       const res = await fetch(`${window.RyokoApp.pathRoot}api/generate`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
       if (!res.ok) throw new Error('API failed');
       const data = await res.json();
       renderPlan(data);
+      revealResult();
+      showToast(uiCopy('여정을 준비했어요.','Your trip is ready.'), 'success');
     } catch (e) {
       const fallback = samplePlans[payload.destination.toLowerCase()] || samplePlans.tokyo;
       renderPlan({...fallback, destination: payload.destination || fallback.destination});
+      revealResult();
+      showToast(uiCopy('샘플 리듬으로 먼저 보여드릴게요.','Loaded a sample route as a fallback.'), 'info');
     } finally {
-      qs('submitBtn').disabled = false;
-      qs('submitBtn').textContent = window.RyokoApp.t('planner.submit');
+      resetButtonBusy(qs('submitBtn'));
     }
   }
   function useExample(key='tokyo'){
@@ -613,15 +615,16 @@ window.RyokoPlanner = (() => {
     qs('destination').value = plan.destination;
     qs('notes').value = normalizeSummary(plan);
     renderPlan(plan);
-    document.querySelector('.planner-shell').scrollIntoView({behavior:'smooth'});
+    revealResult();
+    showToast(uiCopy('샘플 루트를 불러왔어요.','Sample route loaded.'), 'info');
   }
   function saveCurrentTrip(){
-    if (!window.currentTripPayload) return alert('Generate a plan first.');
+    if (!window.currentTripPayload) return showToast(uiCopy('먼저 여정을 만들어 주세요.','Generate a trip first.'), 'warn');
     const saved = window.RyokoStorage.saveTrip(window.currentTripPayload);
-    alert(`Saved: ${saved.title || saved.destination}`);
+    showToast(uiCopy(`${saved.title || saved.destination} 저장 완료`,`Saved ${saved.title || saved.destination}`), 'success');
   }
   async function shareCurrentTrip(){
-    if (!window.currentTripPayload) return alert('Generate a plan first.');
+    if (!window.currentTripPayload) return showToast(uiCopy('먼저 여정을 만들어 주세요.','Generate a trip first.'), 'warn');
     const code = window.RyokoStorage.encodeShare(window.currentTripPayload);
     const url = `${location.origin}${location.pathname}?trip=${encodeURIComponent(code)}`;
     const data = window.currentTripPayload.planData || {};
@@ -634,6 +637,7 @@ window.RyokoPlanner = (() => {
     if (navigator.share) {
       try {
         await navigator.share(shareData);
+        showToast(uiCopy('공유 패널을 열었어요.','Opened share sheet.'), 'success');
         return;
       } catch {}
     }
@@ -646,7 +650,8 @@ window.RyokoPlanner = (() => {
   }
   function savePdf(){
     const printWindow = window.open('', '_blank');
-    if (!printWindow || !window.currentTripPayload) return alert('Generate a plan first.');
+    if (!window.currentTripPayload) return showToast(uiCopy('먼저 여정을 만들어 주세요.','Generate a trip first.'), 'warn');
+    if (!printWindow) return showToast(uiCopy('팝업이 차단되어 PDF 창을 열 수 없어요.','Popup blocked. Allow a new tab to export PDF.'), 'warn');
     const data = window.currentTripPayload.planData || {};
     const lang = window.RyokoApp?.lang || 'en';
     const copy = lang === 'ko'
@@ -928,6 +933,7 @@ window.RyokoPlanner = (() => {
       };
       if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(formPayload);
       document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
+      showToast(uiCopy('이 일정의 흐름을 기반으로 다시 시작해요.','Starting from this shared route.'), 'info');
     });
   }
 
