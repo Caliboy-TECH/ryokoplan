@@ -1758,3 +1758,8 @@ html,body{background:
 .finder-suggestions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 @media (max-width: 1024px){.discovery-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media (max-width: 720px){.discovery-desk{padding:18px}.discovery-grid{grid-template-columns:1fr}.discovery-suggest,.finder-helper-row{align-items:flex-start}.finder-helper-row{gap:12px}.finder-count{width:100%}}
+
+
+.route-club-card .meta{background:rgba(255,124,91,.12);color:#8f3f28}
+.route-club-card .trip-card-date{font-weight:700;color:rgba(21,39,58,.62)}
+.route-club-section .section-head{margin-bottom:16px}

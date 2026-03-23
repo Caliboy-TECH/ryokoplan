@@ -114,6 +114,17 @@
         <div id="publicRouteDesk" class="public-route-grid"></div>
       </section>
 
+      <section class="section route-club-section">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow" data-lang-ko="트렌딩 루트 클럽" data-lang-en="Trending route club">트렌딩 루트 클럽</span>
+            <h2 class="section-title" data-lang-ko="비슷한 취향의 공개 베이스를 한 번 더 고르기" data-lang-en="Pick another public base with a similar travel shape">비슷한 취향의 공개 베이스를 한 번 더 고르기</h2>
+            <p class="section-desc" data-lang-ko="지금 잘 맞는 공개 루트에서 비슷한 결의 도시와 샘플을 더 읽고, 바로 내 버전으로 저장하세요." data-lang-en="Move from one strong public route to similar cities, comparable sample shapes, and your own saved version.">지금 잘 맞는 공개 루트에서 비슷한 결의 도시와 샘플을 더 읽고, 바로 내 버전으로 저장하세요.</p>
+          </div>
+        </div>
+        <div id="routeClubGrid" class="public-route-grid"></div>
+      </section>
+
       <section class="section operating-edit-section">
         <div class="section-head">
           <div>
@@ -294,7 +305,13 @@
           editSave: '베이스 저장',
           editOpen: '루트 보기',
           editGuide: '가이드 보기',
-          editSaved: '에디토리얼 베이스를 My Trips에 저장했어요.'
+          editSaved: '에디토리얼 베이스를 My Trips에 저장했어요.',
+          routeClubTitle: '트렌딩 루트 클럽',
+          routeClubLabel: '지금 많이 저장되는 결',
+          routeClubSave: '내 버전으로 저장',
+          routeClubOpen: '관련 샘플 보기',
+          routeClubGuide: '관련 도시 읽기',
+          routeClubSaved: '트렌딩 루트를 내 버전으로 저장했어요.'
         },
         en: {
           continueTitle: 'Continue your trip flow',
@@ -350,7 +367,13 @@
           editSave: 'Save base',
           editOpen: 'Open route',
           editGuide: 'Read guide',
-          editSaved: 'Editorial base saved to My Trips.'
+          editSaved: 'Editorial base saved to My Trips.',
+          routeClubTitle: 'Trending route club',
+          routeClubLabel: 'A shape people keep saving now',
+          routeClubSave: 'Save my version',
+          routeClubOpen: 'Open related sample',
+          routeClubGuide: 'Read related city',
+          routeClubSaved: 'Trending route saved as your own version.'
         }
       };
       let activeCollection = 'all';
@@ -386,6 +409,33 @@
           key:'jeju-soft-drive', city:'Jeju', titleKo:'Jeju soft drive base', titleEn:'Jeju soft drive base', badgeKey:'publicDeskFamily', image:'../assets/images/cities/jeju.png', guide:'../city/jeju.html', example:'../example/busan-2n3d-with-parents.html',
           summaryKo:'제주의 이동 현실을 반영해서 과속하지 않는 드라이브형 공개 베이스입니다.', summaryEn:'A gentler Jeju base that respects drive time, open space, and lower route density.',
           duration:'2N3D', companionKo:'가족/커플', companionEn:'Family / Couple', vibeKo:'드라이브 리듬', vibeEn:'Drive rhythm', bestKo:'제주 초행, 느린 일정', bestEn:'First Jeju, slower pace'
+        }
+      ];
+
+      const routeClubDesk = [
+        {
+          key:'tokyo-to-seoul-night', source:'Tokyo', city:'Seoul', titleKo:'도쿄 다음엔 서울 나이트 리듬', titleEn:'Seoul after Tokyo night rhythm', image:'../assets/images/cities/seoul.png', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
+          summaryKo:'도쿄의 밀도와 밤 리듬이 맞았다면, 다음 분기로는 서울의 동네 대비와 늦은 저녁 템포가 잘 이어집니다.',
+          summaryEn:'If Tokyo worked for its density and night rhythm, Seoul is a strong next branch for neighborhood contrast and later evenings.',
+          chipsKo:['트렌딩', '야간 리듬', '동네 대비'], chipsEn:['Trending', 'Night rhythm', 'Neighborhood contrast'], duration:'2N3D'
+        },
+        {
+          key:'kyoto-to-gyeongju-quiet', source:'Kyoto', city:'Gyeongju', titleKo:'교토 다음엔 경주의 조용한 템포', titleEn:'Quiet Gyeongju after Kyoto', image:'../assets/images/cities/gyeongju.png', guide:'../city/gyeongju.html', example:'../city/gyeongju.html',
+          summaryKo:'교토의 여백과 낮은 에너지 밀도가 좋았다면, 경주는 더 느린 문화 리듬으로 자연스럽게 이어집니다.',
+          summaryEn:'If Kyoto worked because of space and lower energy density, Gyeongju keeps that line going with an even slower cultural tempo.',
+          chipsKo:['슬로우', '문화 리듬', '낮은 밀도'], chipsEn:['Slow', 'Cultural rhythm', 'Low density'], duration:'2N3D'
+        },
+        {
+          key:'busan-to-jeju-soft', source:'Busan', city:'Jeju', titleKo:'부산 다음엔 제주 소프트 드라이브', titleEn:'Soft Jeju drive after Busan', image:'../assets/images/cities/jeju.png', guide:'../city/jeju.html', example:'../city/jeju.html',
+          summaryKo:'부산에서 전망과 완만한 템포가 잘 맞았다면, 제주는 더 느슨한 드라이브형 분기로 잘 이어집니다.',
+          summaryEn:'If Busan worked for views and a softer tempo, Jeju is the next branch for a more open drive-based route.',
+          chipsKo:['코스트', '드라이브', '가벼운 분기'], chipsEn:['Coast', 'Drive', 'Softer branch'], duration:'2N3D'
+        },
+        {
+          key:'fukuoka-to-osaka-food', source:'Fukuoka', city:'Osaka', titleKo:'후쿠오카 다음엔 오사카 푸드 업시프트', titleEn:'Food upshift to Osaka after Fukuoka', image:'../assets/images/cities/osaka.png', guide:'../city/osaka.html', example:'../example/osaka-2n3d-family.html',
+          summaryKo:'짧은 후쿠오카 푸드 리듬이 좋았다면, 오사카는 더 진한 식사 동선과 에너지를 주는 다음 샘플입니다.',
+          summaryEn:'If Fukuoka worked as a compact food rhythm, Osaka is the next sample for heavier meal sequencing and more energy.',
+          chipsKo:['푸드', '업시프트', '주말'], chipsEn:['Food-led', 'Upshift', 'Weekend'], duration:'2N3D'
         }
       ];
 
@@ -601,6 +651,24 @@
           </article>`).join('');
       }
 
+      function routeClubPayload(entry){
+        const isKo = window.RyokoApp.lang === 'ko';
+        return {
+          id: `club_${entry.key}_${Date.now()}`,
+          destination: entry.city,
+          title: isKo ? `My version — ${entry.titleKo}` : `My version — ${entry.titleEn}`,
+          duration: entry.duration,
+          companion: isKo ? '혼자/친구' : 'Solo / Friends',
+          notes: isKo ? entry.summaryKo : entry.summaryEn,
+          createdAt: new Date().toISOString(),
+          planData: {
+            summary: isKo ? entry.summaryKo : entry.summaryEn,
+            vibe: (isKo ? entry.chipsKo : entry.chipsEn).slice(0,2).join(' · '),
+            bestFor: (isKo ? entry.chipsKo : entry.chipsEn).join(' · ')
+          }
+        };
+      }
+
       function operatingEditPayload(entry){
         const isKo = window.RyokoApp.lang === 'ko';
         return {
@@ -617,6 +685,28 @@
             bestFor: (isKo ? entry.chipsKo : entry.chipsEn).join(' · ')
           }
         };
+      }
+
+      function renderRouteClub(){
+        const target = $('routeClubGrid');
+        if (!target) return;
+        const isKo = window.RyokoApp.lang === 'ko';
+        const copy = langCopy();
+        target.innerHTML = routeClubDesk.map(entry => `
+          <article class="public-route-card info-card route-club-card">
+            <div class="public-route-media"><img src="${entry.image}" alt="${entry.city}"></div>
+            <div class="public-route-body">
+              <div class="trip-card-topline"><div class="meta">${copy.routeClubLabel}</div><div class="trip-card-date">${entry.source} → ${entry.city}</div></div>
+              <h3 class="card-title">${isKo ? entry.titleKo : entry.titleEn}</h3>
+              <p class="card-copy">${isKo ? entry.summaryKo : entry.summaryEn}</p>
+              <div class="trip-chip-row">${(isKo ? entry.chipsKo : entry.chipsEn).map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}<span class="trip-mini-chip">${entry.duration}</span></div>
+              <div class="card-actions public-route-actions">
+                <a class="soft-btn" href="${entry.example}">${copy.routeClubOpen}</a>
+                <a class="ghost-btn" href="${entry.guide}">${copy.routeClubGuide}</a>
+                <button class="primary-btn" data-save-club="${entry.key}">${copy.routeClubSave}</button>
+              </div>
+            </div>
+          </article>`).join('');
       }
 
       function renderOperatingEdits(){
@@ -971,6 +1061,15 @@
           activeTab('saved');
           render();
         }));
+        document.querySelectorAll('[data-save-club]').forEach(btn => btn.addEventListener('click', () => {
+          const entry = routeClubDesk.find(x => x.key === btn.dataset.saveClub);
+          if (!entry) return;
+          window.RyokoStorage.saveTrip(routeClubPayload(entry));
+          const msg = $('sharedImportMessage');
+          msg.textContent = langCopy().routeClubSaved;
+          activeTab('saved');
+          render();
+        }));
         document.querySelectorAll('[data-close-detail]').forEach(btn => btn.onclick = closeDetailModal);
         $('sharedImportBtn').onclick = () => {
           const payload = parseSharedInput($('sharedImportInput').value);
@@ -1058,6 +1157,11 @@
 
         renderContinueCard(saved, recent, shared);
         renderCollections(saved, recent, shared);
+        renderSavedPlacesArchive();
+        renderSavedRouteArchive(saved, recent, shared);
+        renderPublicRouteDesk();
+        renderRouteClub();
+        renderOperatingEdits();
         renderSharedSpotlight(shared);
         renderTripLoop(saved, recent, shared);
         renderCityCollections(saved, recent, shared);
