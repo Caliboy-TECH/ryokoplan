@@ -643,7 +643,7 @@ window.RyokoPlanner = (() => {
     }
     try {
       await navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${url}`);
-      alert('Link copied.');
+      showToast(uiCopy('링크를 복사했어요.','Link copied.'), 'success');
     } catch {
       window.prompt('Copy this link', url);
     }
@@ -659,7 +659,7 @@ window.RyokoPlanner = (() => {
           pdfTag: 'Ryokoplan · Editorial PDF',
           vibe: 'Vibe', pace: 'Pace', bestFor: 'Best for',
           quickRhythm: 'Rhythm', quickShape: 'Route shape', quickWorks: 'Works best for',
-          editorsTake: uiCopy('편집 메모','Editorial note'), dayByDay: 'Day by day', localTips: 'Local tips', budget: 'Budget', checklist: 'Checklist',
+          editorsTake: uiCopy('편집 메모','Editorial note'), dayByDay: uiCopy('하루별 일정','Day by day'), localTips: uiCopy('현지 팁','Local tips'), budget: uiCopy('예산','Budget'), checklist: uiCopy('체크리스트','Checklist'),
           cityCover: 'City cover', routeMood: 'Route mood', nextBranch: 'Next branch',
           localTip: 'Local tip', generatedOn: '생성일',
           classicRouting: 'Classic routing', localModeOn: 'Local mode on',
@@ -671,7 +671,7 @@ window.RyokoPlanner = (() => {
           pdfTag: 'Ryokoplan · Editorial PDF',
           vibe: 'Vibe', pace: 'Pace', bestFor: 'Best for',
           quickRhythm: 'Rhythm', quickShape: 'Route shape', quickWorks: 'Works best for',
-          editorsTake: uiCopy('편집 메모','Editorial note'), dayByDay: 'Day by day', localTips: 'Local tips', budget: 'Budget', checklist: 'Checklist',
+          editorsTake: uiCopy('편집 메모','Editorial note'), dayByDay: uiCopy('하루별 일정','Day by day'), localTips: uiCopy('현지 팁','Local tips'), budget: uiCopy('예산','Budget'), checklist: uiCopy('체크리스트','Checklist'),
           cityCover: 'City cover', routeMood: 'Route mood', nextBranch: 'Next branch',
           localTip: 'Local tip', generatedOn: 'Generated on',
           classicRouting: 'Classic routing', localModeOn: 'Local mode on',
