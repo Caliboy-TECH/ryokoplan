@@ -1735,7 +1735,7 @@ function getSeasonalEditorialCollections(){
 
 
   function localizeLangButtonLabels(root=document){
-    root.querySelectorAll('[data-lang-btn="zhHant"]').forEach(btn => { btn.textContent = '번체'; });
+    root.querySelectorAll('[data-lang-btn="zhHant"]').forEach(btn => { btn.textContent = '繁體'; });
     root.querySelectorAll('[data-lang-btn="ja"]').forEach(btn => { btn.textContent = 'JP'; });
   }
 

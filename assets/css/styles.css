@@ -33,9 +33,9 @@ button,input,select,textarea{font:inherit}
 .brand-title .plan{color:var(--primary)}
 .brand-sub{font-size:12px;color:var(--muted);font-weight:700;margin-top:4px}
 .top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-.lang-switch{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.lang-switch{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .lang-btn,.nav-chip,.soft-btn,.ghost-btn,.action-btn,.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 13px;color:var(--text);font-weight:700;cursor:pointer}
-.lang-btn{padding:8px 11px;font-size:13px;background:var(--surface)}
+.lang-btn{min-width:54px;height:44px;padding:0 14px;font-size:14px;line-height:1;background:var(--surface);display:inline-flex;align-items:center;justify-content:center;letter-spacing:.01em}
 .lang-btn.active{background:var(--secondary-soft);border-color:#c7d8e4;color:var(--secondary)}
 .nav-chip.magazine{background:linear-gradient(135deg,#f3e1d4,#df9b76);border-color:#d8a17f;color:#492b1f}
 .nav-chip.trips{background:#edf3f7;border-color:#d6e2ea;color:var(--secondary)}
@@ -2018,4 +2018,15 @@ body[data-page="planner"] .top-bar{z-index:62}
   body[data-page="planner"] .result-sticky-actions .ghost-btn,
   body[data-page="planner"] .result-sticky-actions .secondary-btn,
   body[data-page="planner"] .result-sticky-actions .primary-btn{white-space:nowrap}
+}
+
+
+@media (max-width: 768px){
+  .brandbar{align-items:flex-start;gap:14px;}
+  .brandcopy{min-width:0;}
+  .lang-switch{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;max-width:320px;margin-left:auto;}
+  .lang-btn{min-width:0;width:100%;height:48px;border-radius:999px;padding:0 10px;font-size:14px;font-weight:800;}
+  body[data-page="planner"] .lang-switch{gap:10px;grid-template-columns:repeat(4,minmax(0,1fr));}
+  body[data-page="planner"] .lang-btn{width:100%;height:48px;border-radius:999px;font-size:14px;}
+  body[data-page="magazine"] .lang-btn{width:100%;height:48px;}
 }
