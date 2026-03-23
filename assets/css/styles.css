@@ -2104,3 +2104,13 @@ body[data-page="planner"] .top-bar{z-index:62}
     backdrop-filter: blur(10px); background:rgba(255,250,244,.78);
   }
 }
+
+@media (max-width: 640px){
+  .hero h1{
+    white-space: pre-line;
+    line-height: 1.02;
+    max-width: 10ch;
+    letter-spacing: -.06em;
+  }
+  .hero-copy{padding:22px 18px 20px}
+}
