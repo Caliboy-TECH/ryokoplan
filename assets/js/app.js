@@ -307,6 +307,186 @@ window.RyokoApp = (() => {
   }
 
 
+  const cityOpsMap = {
+    tokyo: {
+      ko: {
+        eyebrow:'Route logic',
+        title:'도쿄는 한 축씩 끊어서 읽을 때 가장 덜 피곤합니다',
+        desc:'핵심은 명소 수가 아니라 같은 결의 구역을 하루 안에 묶는 것입니다.',
+        cards:[
+          {label:'Best with', title:'첫 방문 · 친구 · 디자인/쇼핑 취향', body:'도쿄는 첫 방문자에게도 좋지만, 특히 동네 차이를 읽는 재미를 좋아하는 사람에게 강합니다.'},
+          {label:'Avoid when', title:'하루에 세 개 이상의 큰 허브를 넣을 때', body:'시부야, 아사쿠사, 팀랩 같은 큰 허브를 한날에 겹치면 장면보다 환승 기억이 더 많이 남습니다.'},
+          {label:'Weather swap', title:'비 오면 실내 밀도 높은 구역으로 바꾸기', body:'긴자, 도쿄역, 백화점 지하, 미술관 포켓으로 방향만 틀어도 하루 리듬을 지킬 수 있습니다.'}
+        ]
+      },
+      en: {
+        eyebrow:'Route logic',
+        title:'Tokyo feels lighter when it is read one axis at a time',
+        desc:'The key is not stop count, but keeping districts of similar energy on the same day.',
+        cards:[
+          {label:'Best with', title:'First-timers · friends · design/shopping bias', body:'Tokyo is especially strong for travelers who enjoy neighborhood contrast, not just headline landmarks.'},
+          {label:'Avoid when', title:'You stack three major hubs in one day', body:'Put Shibuya, Asakusa, and teamLab on the same day and the memory often becomes transit, not the city.'},
+          {label:'Weather swap', title:'Shift into indoor-density districts on rain days', body:'Ginza, Tokyo Station, depachika floors, and museum pockets can protect the pace without killing the day.'}
+        ]
+      }
+    },
+    osaka: {
+      ko: {
+        eyebrow:'Route logic',
+        title:'오사카는 도시를 소비하기보다 즐기는 쪽이 더 잘 맞습니다',
+        desc:'재밌는 구역이 가까워서, 과한 욕심만 빼면 짧아도 만족도가 잘 나옵니다.',
+        cards:[
+          {label:'Best with', title:'친구 · 커플 · 짧은 주말', body:'음식과 쉬운 동선이 중심이라 여행 텐션을 크게 끌어올리기 좋습니다.'},
+          {label:'Avoid when', title:'교토/나라까지 동시에 깊게 넣을 때', body:'오사카의 장점은 컴팩트함인데, 외부 도시를 과하게 섞으면 그 장점이 약해집니다.'},
+          {label:'Weather swap', title:'비 오면 우메다·아케이드 축으로 옮기기', body:'실내 쇼핑, 카페, 식사 밀도가 높아서 날씨가 나빠도 리듬을 유지하기 쉽습니다.'}
+        ]
+      },
+      en: {
+        eyebrow:'Route logic',
+        title:'Osaka pays off more when you enjoy it than when you over-cover it',
+        desc:'The city is close-packed enough that a short trip can feel full without overreaching.',
+        cards:[
+          {label:'Best with', title:'Friends · couples · short weekends', body:'Food and low-friction movement make it easy to keep trip energy up.'},
+          {label:'Avoid when', title:'You go deep on Kyoto/Nara at the same time', body:'Osaka’s strength is compact ease. Heavy side-city expansion weakens that advantage.'},
+          {label:'Weather swap', title:'Move into Umeda and arcade-heavy zones on rain days', body:'Indoor shopping, cafés, and easy food density make bad weather easier to absorb.'}
+        ]
+      }
+    },
+    kyoto: {
+      ko: {
+        eyebrow:'Route logic',
+        title:'교토는 덜 넣는 용기가 있을수록 더 강해집니다',
+        desc:'사원 수를 늘리는 것보다 조용한 시간대를 지키는 편이 훨씬 중요합니다.',
+        cards:[
+          {label:'Best with', title:'혼자 · 부모님 · 느린 페이스', body:'산책과 여백을 좋아하는 여행자일수록 교토가 깊게 남습니다.'},
+          {label:'Avoid when', title:'교토를 하루 종일 체크리스트처럼 다닐 때', body:'비슷한 유적 피로가 누적되면 도시 특유의 결이 흐려집니다.'},
+          {label:'Weather swap', title:'비 오는 날은 정원·찻집·강변 중심으로', body:'실내 정원, 찻집, 한 구역 산책만으로도 교토다운 하루를 지킬 수 있습니다.'}
+        ]
+      },
+      en: {
+        eyebrow:'Route logic',
+        title:'Kyoto gets stronger when you leave enough room on purpose',
+        desc:'Protecting quiet hours matters more here than pushing temple count.',
+        cards:[
+          {label:'Best with', title:'Solo travelers · parents · slower pacing', body:'Kyoto stays with people who enjoy space, walking, and quieter transitions.'},
+          {label:'Avoid when', title:'You treat Kyoto like a full-day checklist', body:'Monument fatigue builds fast and the city starts to flatten into repetition.'},
+          {label:'Weather swap', title:'On rain days, lean into gardens, tea rooms, and river edges', body:'A softer indoor-outdoor mix can still feel very Kyoto without forcing too much movement.'}
+        ]
+      }
+    },
+    fukuoka: {
+      ko: {
+        eyebrow:'Route logic',
+        title:'후쿠오카는 짧게 다녀와도 충분히 남는 도시입니다',
+        desc:'핵심은 적당히 먹고 걷고 쉬는 리듬을 깨지 않는 것입니다.',
+        cards:[
+          {label:'Best with', title:'짧은 일정 · 음식 중심 · 재방문', body:'주말이나 짧은 휴가에도 결과가 잘 나오는 도시라 부담이 적습니다.'},
+          {label:'Avoid when', title:'너무 많은 근교를 억지로 넣을 때', body:'도시 자체의 장점이 희미해지고 이동 기억만 남기 쉽습니다.'},
+          {label:'Weather swap', title:'비 오면 하카타/텐진 축 실내 밀도로 보호', body:'쇼핑, 식사, 카페가 가깝게 묶여 있어 우천 대안이 비교적 쉬운 편입니다.'}
+        ]
+      },
+      en: {
+        eyebrow:'Route logic',
+        title:'Fukuoka is one of the few cities that still lands on short trips',
+        desc:'The real trick is protecting a compact food-walk-rest rhythm.',
+        cards:[
+          {label:'Best with', title:'Short stays · food bias · repeat visits', body:'It gives a good return even when the schedule is short or the trip is casual.'},
+          {label:'Avoid when', title:'You force too many side trips', body:'The city’s own strength gets washed out when movement starts to dominate the memory.'},
+          {label:'Weather swap', title:'Use Hakata and Tenjin indoor density to absorb rain', body:'Food, shopping, and cafés sit close enough together that weather pivots are relatively painless.'}
+        ]
+      }
+    },
+    seoul: {
+      ko: {
+        eyebrow:'Route logic',
+        title:'서울은 랜드마크보다 동네 조합 감각이 더 중요합니다',
+        desc:'서로 결이 맞는 구역을 묶을수록 이동 피로가 줄고 도시 리듬이 살아납니다.',
+        cards:[
+          {label:'Best with', title:'친구 · 커플 · 카페/동네 산책 취향', body:'서울은 동네 차이를 읽는 재미가 큰 도시라, 취향이 분명할수록 만족도가 높습니다.'},
+          {label:'Avoid when', title:'강남·성수·홍대를 한날에 다 넣을 때', body:'지도상으론 가까워 보여도, 실제 체감은 분절되고 피곤해질 수 있습니다.'},
+          {label:'Weather swap', title:'비 오면 성수/여의도/백화점 축으로 이동', body:'실내 비중이 높은 구역으로 바꾸면 서울 특유의 도시감은 유지하면서 피로를 줄일 수 있습니다.'}
+        ]
+      },
+      en: {
+        eyebrow:'Route logic',
+        title:'In Seoul, neighborhood chemistry matters more than landmark count',
+        desc:'The city feels cleaner when districts of compatible mood stay on the same route.',
+        cards:[
+          {label:'Best with', title:'Friends · couples · café and neighborhood walkers', body:'Seoul rewards travelers who care about district tone as much as major sights.'},
+          {label:'Avoid when', title:'You stack Gangnam, Seongsu, and Hongdae together', body:'They look manageable on a map, but can feel disjointed and tiring in practice.'},
+          {label:'Weather swap', title:'Move into Seongsu, Yeouido, or department-store axes on rain days', body:'You can keep Seoul’s city texture while reducing fatigue through more indoor-biased zones.'}
+        ]
+      }
+    },
+    busan: {
+      ko: {
+        eyebrow:'Route logic',
+        title:'부산은 장소보다 공기감과 휴식 타이밍이 더 중요합니다',
+        desc:'뷰 포인트를 너무 많이 쌓기보다 풍경이 잘 남는 시간대를 지키는 편이 좋습니다.',
+        cards:[
+          {label:'Best with', title:'부모님 · 커플 · 바다 풍경 우선', body:'부산은 걷는 양보다 어디에서 쉬고 어디서 보는지가 더 크게 작용합니다.'},
+          {label:'Avoid when', title:'전망대와 시장을 하루에 과적할 때', body:'장면이 많아도 비슷한 피로가 누적되면 도시의 인상이 흐려집니다.'},
+          {label:'Weather swap', title:'흐리면 시장·카페·실내 전망으로 균형 잡기', body:'완전 야외만 고집하지 말고, 실내 전망과 식사 중심으로 템포를 바꾸는 편이 낫습니다.'}
+        ]
+      },
+      en: {
+        eyebrow:'Route logic',
+        title:'In Busan, atmosphere and rest timing beat stop count',
+        desc:'Protecting the right scenic windows often matters more than adding more view points.',
+        cards:[
+          {label:'Best with', title:'Parents · couples · sea-first trips', body:'Busan is shaped more by where you pause and look than by how much you cover.'},
+          {label:'Avoid when', title:'You overload observatories and markets on one day', body:'Even strong scenes can blur together when the fatigue pattern repeats.'},
+          {label:'Weather swap', title:'On gray days, balance with markets, cafés, and indoor views', body:'Do not force only outdoor scenery. Mixed pacing often lands better.'}
+        ]
+      }
+    },
+    jeju: {
+      ko: {
+        eyebrow:'Route logic',
+        title:'제주는 관광지 리스트보다 동선 모양이 더 중요합니다',
+        desc:'드라이브 리듬이 살아야 풍경도 좋게 남고, 피로도 낮게 유지됩니다.',
+        cards:[
+          {label:'Best with', title:'커플 · 가족 · 렌터카 기반 일정', body:'제주는 이동이 곧 여행이 되는 곳이라, 여유를 즐길 수 있는 사람에게 특히 좋습니다.'},
+          {label:'Avoid when', title:'하루에 섬을 가로지르는 큰 이동을 반복할 때', body:'목적지를 많이 찍어도 드라이브 피로가 커지면 여행 감각이 빠르게 무너집니다.'},
+          {label:'Weather swap', title:'날씨 나쁘면 숙소 주변 반경을 과감히 좁히기', body:'제주는 날씨 편차가 크므로, 가까운 카페·전시·짧은 바다 산책으로 계획을 줄이는 편이 낫습니다.'}
+        ]
+      },
+      en: {
+        eyebrow:'Route logic',
+        title:'On Jeju, route shape matters more than attraction count',
+        desc:'When the drive rhythm holds, the scenery usually lands better too.',
+        cards:[
+          {label:'Best with', title:'Couples · families · rental-car trips', body:'Jeju is especially rewarding for travelers who can enjoy the movement itself, not just each stop.'},
+          {label:'Avoid when', title:'You keep crossing the island in one day', body:'You may tick more points off, but the fatigue can erase the feeling of the trip.'},
+          {label:'Weather swap', title:'Shrink the radius aggressively on weak-weather days', body:'Jeju often works better when a bad-weather plan becomes a smaller café-exhibit-sea loop.'}
+        ]
+      }
+    },
+    gyeongju: {
+      ko: {
+        eyebrow:'Route logic',
+        title:'경주는 해 질 무렵까지 남겨둘 때 완성됩니다',
+        desc:'낮의 유적만 보는 도시가 아니라, 저녁 산책과 여유가 함께 있어야 좋습니다.',
+        cards:[
+          {label:'Best with', title:'부모님 · 역사 관심 · 조용한 산책', body:'경주는 빠른 여행보다 느린 템포에서 훨씬 잘 읽히는 도시입니다.'},
+          {label:'Avoid when', title:'낮 시간에만 몰아보고 빨리 빠질 때', body:'오후와 저녁의 분위기를 놓치면 경주의 장점 절반을 놓치게 됩니다.'},
+          {label:'Weather swap', title:'비 오는 날은 박물관/한옥 카페/짧은 유적 축으로', body:'완전 야외 중심 계획을 줄이고 실내 질감을 섞는 편이 오히려 더 안정적입니다.'}
+        ]
+      },
+      en: {
+        eyebrow:'Route logic',
+        title:'Gyeongju usually completes itself when dusk is part of the plan',
+        desc:'It is not only a daylight heritage city. The evening atmosphere is part of what makes it work.',
+        cards:[
+          {label:'Best with', title:'Parents · heritage interest · quiet walkers', body:'Gyeongju reads much better at a slower tempo than on a rushed monument sweep.'},
+          {label:'Avoid when', title:'You only stack daytime heritage stops and leave', body:'Missing the softer late-day atmosphere means losing a big part of the city’s identity.'},
+          {label:'Weather swap', title:'Use museums, hanok cafés, and shorter heritage loops on rain days', body:'A mixed indoor texture can actually make the city feel steadier in weak weather.'}
+        ]
+      }
+    }
+  };
+
+
   const editorialData = {
     magazine: {
       ko: {
@@ -626,6 +806,14 @@ window.RyokoApp = (() => {
     return `<section class="section city-modules-band"><div class="section-head"><div><span class="eyebrow">${data.moduleEyebrow}</span><h2 class="section-title">${data.moduleTitle}</h2><p class="section-desc">${data.moduleDesc}</p></div></div><div class="city-module-grid">${blocks}</div></section>`;
   }
 
+  function renderCityOps(citySlug){
+    const entry = cityOpsMap[citySlug];
+    const data = entry?.[lang] || entry?.en;
+    if (!data) return '';
+    return `<section class="section city-ops-band"><div class="section-head"><div><span class="eyebrow">${data.eyebrow}</span><h2 class="section-title">${data.title}</h2><p class="section-desc">${data.desc}</p></div></div><div class="city-ops-grid">${(data.cards||[]).map(card => `<article class="info-card editorial-panel city-ops-card"><span class="city-ops-label">${card.label}</span><h3>${card.title}</h3><p>${card.body}</p></article>`).join('')}</div></section>`;
+  }
+
+
   function renderCityPage(){
     const slug = document.body.dataset.citySlug;
     if (!slug) return;
@@ -643,6 +831,7 @@ window.RyokoApp = (() => {
       <section class="section city-quicknav-wrap"><div class="city-quicknav"><a class="jump-chip" href="#city-overview">${lang === 'ko' ? 'Overview' : 'Overview'}</a><a class="jump-chip" href="#city-districts">${lang === 'ko' ? 'Districts' : 'Districts'}</a><a class="jump-chip" href="#city-sample">${lang === 'ko' ? 'Sample' : 'Sample'}</a><a class="jump-chip" href="#city-tips">${lang === 'ko' ? 'Tips' : 'Tips'}</a></div></section>
       <section class="section city-overview-composition" id="city-overview"><div class="city-overview-lead"><div class="editorial-kicker">${lang === 'ko' ? 'Overview' : 'Overview'}</div><h2 class="section-title">${lang === 'ko' ? entry.planner + ' at a glance' : entry.planner + ' at a glance'}</h2><p class="section-desc">${data.whyDesc}</p></div><div class="city-meta-strip"><article class="meta-card feature"><span class="meta-label">${lang === 'ko' ? 'Best for' : 'Best for'}</span><span class="meta-value">${data.bestFor}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? 'Suggested pace' : 'Suggested pace'}</span><span class="meta-value">${data.pace}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? 'Best season' : 'Best season'}</span><span class="meta-value">${data.season}</span></article></div></section>
       ${renderCityModules(slug, entry.planner)}
+      ${renderCityOps(slug)}
       <section class="section city-reading-grid city-reading-grid-rich" id="city-districts"><article class="info-card editorial-panel"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? 'Where to start' : 'Where to start'}</div><h2 class="section-title">${data.focusTitle}</h2><p class="section-desc">${data.focusDesc}</p></div></div><div class="district-grid district-grid-rich">${data.districts.map((d,i) => `<article class="district-card info-card district-card-rich"><span class="district-index">0${i+1}</span><span class="district-label">${lang === 'ko' ? 'District pick' : 'District pick'}</span><h3>${d[0]}</h3><p>${d[1]}</p></article>`).join('')}</div></article><article class="info-card editorial-panel editorial-panel-contrast"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? 'How it feels' : 'How it feels'}</div><h2 class="section-title">${data.foodTitle}</h2><p class="section-desc">${data.foodDesc}</p></div></div><ul class="editorial-bullets">${data.foodBullets.map(item => `<li>${item}</li>`).join('')}</ul><div class="editorial-budget-note"><strong>${lang === 'ko' ? 'Budget feel' : 'Budget feel'}</strong><p>${data.budgetFeel}</p></div></article></section>
       <section class="section city-section-band"><article class="cover-story-card story-band"><div class="editorial-kicker">${lang === 'ko' ? '편집 포인트' : 'Editorial framing'}</div><h3>${lang === 'ko' ? '좋은 여행은 장소보다 템포를 먼저 맞출 때 생깁니다' : 'Trips usually improve when the tempo lands before the checklist does'}</h3><p>${data.lead}</p></article></section>
       <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? 'Sample route' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? 'Sample itinerary' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : 'Customize in Planner'}</a></div></article></section>
@@ -668,6 +857,7 @@ window.RyokoApp = (() => {
       <section class="city-detail-hero hero-card city-hero-polish city-hero-magazine cover-system-shell cover-system-shell-example"><div class="city-detail-copy city-copy-magazine cover-copy-column"><div class="cover-meta-row"><span class="cover-meta-pill">${lang === 'ko' ? 'Plan example' : 'Plan example'}</span><span class="cover-meta-pill">${entry.city}</span></div><span class="eyebrow">${lang === 'ko' ? 'Plan Example' : 'Plan Example'}</span><h1>${title}</h1><p class="city-detail-lead">${lead}</p><div class="mini-vibe-row"><span class="mini-vibe-chip">${entry.city}</span><span class="mini-vibe-chip">${cityData.pace}</span><span class="mini-vibe-chip">${cityData.bestFor.split(',')[0]}</span></div><div class="cover-note-line"><strong>${lang === 'ko' ? 'Use this as a base' : 'Use this as a base'}</strong><span>${lang === 'ko' ? '리스트보다 구조를 가져가고, 도시는 그 도시다운 템포로 남겨두는 편이 좋습니다.' : 'Borrow the structure first, and keep the city in its own natural tempo.'}</span></div><div class="city-strapline compact">${(getCityVoice(entry.city)?.strap || '')}</div><div class="hero-actions hero-actions-strong cover-actions-row"><a class="primary-btn" href="${plannerUrlForCity(entry.city)}">${lang === 'ko' ? '플래너에서 커스텀' : 'Customize in Planner'}</a><a class="ghost-btn" href="../city/${entry.guide}">${lang === 'ko' ? '도시 가이드 읽기' : 'Read city guide'}</a></div></div><div class="city-detail-visual city-visual-stack cover-visual-column"><img src="../${entry.image}" alt="${title}"><div class="route-card dark strong"><strong>${lang === 'ko' ? 'Example itinerary' : 'Example itinerary'}</strong><span>${lang === 'ko' ? '하루별 구조, 예산 감각, 현지 팁까지 한 번에.' : 'Day-by-day structure, budget feel, and local tips in one view.'}</span></div><div class="visual-stack-card light city-stack-meta"><strong>${lang === 'ko' ? 'City mood' : 'City mood'}</strong><span>${cityData.bestFor.split(',')[0]}</span></div></div></section>
       <section class="section city-quicknav-wrap"><div class="city-quicknav"><a class="jump-chip" href="#example-flow">${lang === 'ko' ? 'Flow' : 'Flow'}</a><a class="jump-chip" href="#example-why">${lang === 'ko' ? 'Why it works' : 'Why it works'}</a><a class="jump-chip" href="#example-next">${lang === 'ko' ? 'Next move' : 'Next move'}</a></div></section>
       <section class="section city-overview-composition"><div class="city-overview-lead"><div class="editorial-kicker">${lang === 'ko' ? 'At a glance' : 'At a glance'}</div><h2 class="section-title">${lang === 'ko' ? '샘플 구조를 먼저 읽어보세요' : 'Read the structure first'}</h2><p class="section-desc">${lang === 'ko' ? '이 예시는 장소 리스트보다 하루 리듬을 가져가는 데 더 큰 가치가 있습니다.' : 'This example is more useful as a pacing reference than as a strict checklist.'}</p></div><div class="city-meta-strip"><article class="meta-card feature"><span class="meta-label">${lang === 'ko' ? 'Best for' : 'Best for'}</span><span class="meta-value">${cityData.bestFor}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? 'Suggested pace' : 'Suggested pace'}</span><span class="meta-value">${cityData.pace}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? 'Budget feel' : 'Budget feel'}</span><span class="meta-value">${cityData.budgetFeel}</span></article></div></section>
+      ${renderCityOps(slug.split('-')[0])}
       <section class="section" id="example-flow"><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? 'Day by day' : 'Day by day'}</div><h2 class="section-title">${lang === 'ko' ? '이렇게 흐릅니다' : 'How the trip flows'}</h2><div class="example-summary editorial-summary timeline-style">${sample.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div></article></section>
       <section class="section city-reading-grid city-reading-grid-rich" id="example-why"><article class="info-card editorial-panel editorial-panel-contrast"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? 'Why it lands' : 'Why it lands'}</div><h2 class="section-title">${lang === 'ko' ? 'Why this structure works' : 'Why this structure works'}</h2><p class="section-desc">${lang === 'ko' ? '포인트는 많이 보는 게 아니라 도시를 일관되게 느끼게 만드는 것입니다.' : 'The point is not to do everything, but to make the city feel coherent.'}</p></div></div><ul class="editorial-bullets">${cityData.tips.map(item => `<li>${item}</li>`).join('')}</ul></article><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? 'Adjust before editing' : 'Adjust before editing'}</div><h2 class="section-title">${lang === 'ko' ? 'Before you customize it' : 'Before you customize it'}</h2><p class="section-desc">${lang === 'ko' ? '커스텀 전에 기준으로 삼기 좋은 포인트입니다.' : 'Good baseline decisions before you customize it.'}</p></div></div><ul class="editorial-bullets">${cityData.keep.map(item => `<li>${item}</li>`).join('')}</ul></article></section>
       <section class="section footer-cta info-card city-final-cta" id="example-next"><div class="editorial-kicker">${lang === 'ko' ? 'Next move' : 'Next move'}</div><h2>${lang === 'ko' ? '리스트보다 구조를 가져가세요' : 'Use the structure, not just the list'}</h2><p>${lang === 'ko' ? '플래너에서 일수, 동행, 무드만 바꿔도 같은 결의 다른 여행으로 확장할 수 있습니다.' : 'In Planner, keep the tone but change days, pace, companion, and mood to make it yours.'}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.city)}">${lang === 'ko' ? '플래너 열기' : 'Open Planner'}</a><a class="secondary-btn" href="../magazine/">${lang === 'ko' ? '매거진으로 돌아가기' : 'Back to Magazine'}</a></div></section><div class="footer">Ryokoplan Magazine</div>`;

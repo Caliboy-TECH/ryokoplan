@@ -1542,3 +1542,13 @@ html,body{background:
   .hero-visual-sub .image-caption strong,
   .result-editorial-visual .result-visual-overlay strong{font-size:20px}
 }
+
+
+/* city editorial content strengthen */
+.city-ops-band{margin-top:6px}
+.city-ops-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.city-ops-card{background:linear-gradient(180deg,rgba(255,253,249,.98),rgba(245,239,232,.92));border:1px solid rgba(24,52,86,.08);min-height:100%}
+.city-ops-label{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;background:#fdf2e8;border:1px solid #f2d8c0;color:#b96233;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.city-ops-card h3{margin:0 0 8px;font-size:1.15rem;line-height:1.25;letter-spacing:-.03em;color:#15293f}
+.city-ops-card p{margin:0;color:#546273;line-height:1.72;font-size:.95rem}
+@media (max-width:900px){.city-ops-grid{grid-template-columns:1fr}}
