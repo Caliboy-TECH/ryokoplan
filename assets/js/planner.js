@@ -317,6 +317,24 @@ window.RyokoPlanner = (() => {
     const ending = textValue(data.days?.[data.days.length - 1]?.title, 'the final stretch stays light');
     return firstTip || `${opening} so the route settles in smoothly, and ${ending.toLowerCase()} instead of feeling overloaded.`;
   }
+
+  function getSeasonalResultFeature(destination=''){
+    const slug = String(destination||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+    const map = {
+      tokyo:{ ko:{title:'계절보다 시간대를 먼저 잡는 도쿄 베이스', desc:'맑은 오전 앵커, 비 오는 날의 실내 전환, 늦은 밤 회복 구간을 같이 두는 편이 도쿄를 더 읽기 쉽게 만듭니다.', chips:['Morning anchor','Rainy indoor swap','Late-night recovery']}, en:{title:'A Tokyo base shaped by time windows before the season', desc:'Tokyo usually gets easier when clear mornings, rainy indoor pivots, and late-night recovery are all considered together.', chips:['Morning anchor','Rainy indoor swap','Late-night recovery']}},
+      seoul:{ ko:{title:'서울은 계절보다 동네 조합과 우천 대응이 더 중요합니다', desc:'비 오는 날과 주말 혼잡을 고려한 실내 연결, 늦은 밤 사회적 리듬, 부모님용 easy pace가 모두 다른 route를 만듭니다.', chips:['Indoor chain','Weekend crowd swap','Late-night city edit']}, en:{title:'In Seoul, neighborhood mix and weather response matter more than the season tag', desc:'Rain plans, weekend crowd swaps, late-night social rhythm, and easier family pacing all produce different versions of Seoul.', chips:['Indoor chain','Weekend crowd swap','Late-night city edit']}},
+      busan:{ ko:{title:'부산은 바다를 읽는 시간대가 결과를 바꿉니다', desc:'여름엔 해 질 무렵 coast line이 강하고, 흐린 날은 실내 전망과 카페가 fallback이 됩니다.', chips:['Coast at dusk','Gray-day fallback','Easy family pacing']}, en:{title:'In Busan, the coast timing changes the whole result', desc:'Summer evenings open the coast up, while gray days usually work better with indoor views and café-led fallback.', chips:['Coast at dusk','Gray-day fallback','Easy family pacing']}},
+      kyoto:{ ko:{title:'교토는 quiet window를 먼저 지키는 쪽이 좋습니다', desc:'성수기보다 이른 오전과 비워둔 오후가 route 만족도를 더 크게 좌우합니다.', chips:['Early quiet window','Rainy tea-room day','Soft dusk walk']}, en:{title:'Kyoto works best when the quiet window is protected first', desc:'Early mornings and open afternoons usually matter more than the peak-season label itself.', chips:['Early quiet window','Rainy tea-room day','Soft dusk walk']}},
+      jeju:{ ko:{title:'제주는 날씨와 바람을 같이 보는 편이 좋습니다', desc:'맑은 날 scenic drive를 길게 쓰고, 비나 바람이 강하면 café-led fallback으로 무게를 옮기는 쪽이 안정적입니다.', chips:['Wind-aware drives','Rainy café pivot','Soft coast line']}, en:{title:'Jeju gets better when weather and wind are read together', desc:'Stretch scenic drives on clear days, then shift weight toward café-led fallback when rain or wind rises.', chips:['Wind-aware drives','Rainy café pivot','Soft coast line']}},
+      fukuoka:{ ko:{title:'후쿠오카는 계절이 달라도 compact route가 강합니다', desc:'도심 코어를 짧게 잡고 meal rhythm을 유지하면 우천일과 더위에도 만족도가 크게 무너지지 않습니다.', chips:['Compact core','Meal rhythm','Rain-proof center']}, en:{title:'Fukuoka stays strong when the route remains compact', desc:'A shorter city core with stable meal rhythm usually holds up well through rain or heat.', chips:['Compact core','Meal rhythm','Rain-proof center']}},
+      osaka:{ ko:{title:'오사카는 season보다 meal spacing이 먼저입니다', desc:'아케이드와 실내 구간을 잘 섞으면 비 오는 날에도 리듬이 무너지지 않고, 저녁 무드도 더 쉽게 살릴 수 있습니다.', chips:['Arcade shelter','Food spacing','Easy night close']}, en:{title:'In Osaka, meal spacing comes before the seasonal label', desc:'Arcades and indoor stretches protect the route on rainy days and keep the evening rhythm easier to hold.', chips:['Arcade shelter','Food spacing','Easy night close']}},
+      gyeongju:{ ko:{title:'경주는 dusk를 넣어야 계절감이 깊어집니다', desc:'한옥과 유적의 질감은 해 질 무렵에 더 선명해지고, 비 오는 날엔 hanok/café fallback이 route를 살려줍니다.', chips:['Dusk heritage mood','Hanok fallback','Slow evening close']}, en:{title:'Gyeongju deepens when dusk is part of the route', desc:'Heritage texture sharpens toward dusk, and rainy hanok/café fallback keeps the day intact.', chips:['Dusk heritage mood','Hanok fallback','Slow evening close']}}
+    };
+    const entry = map[slug] || map.seoul;
+    const langKey = (window.RyokoApp?.lang || 'ko') === 'ko' ? 'ko' : 'en';
+    return entry[langKey] || entry.en;
+  }
+
   function renderEditorialHero(data){
     const destination = textValue(data.destination, readForm().destination || 'Trip');
     const eyebrow = qs('resultEyebrow');
@@ -477,6 +495,7 @@ window.RyokoPlanner = (() => {
     if (eyebrow) eyebrow.textContent = uiCopy('비주얼 루트 노트', 'Visual route notes');
     if (title) title.textContent = uiCopy('결과를 기사형 패키지처럼 읽게 만듭니다', 'See the result like an editorial package');
     if (desc) desc.textContent = uiCopy('도시 커버, 이번 루트의 분위기, 그리고 다음으로 가지를 칠 수 있는 도시까지 한 번에 보여줍니다.', 'A city cover, one route mood frame, and one next branch keep the result from feeling like a plain checklist.');
+    const seasonal = getSeasonalResultFeature(baseCity);
     const cards = [
       {
         kicker: uiCopy('City cover', 'City cover'),
@@ -493,6 +512,14 @@ window.RyokoPlanner = (() => {
         image: window.RyokoApp.resolvePath(exampleImageFor(baseCity)),
         actionLabel: uiCopy('샘플 보기', 'Read sample'),
         actionHref: window.RyokoApp.resolvePath(current.example)
+      },
+      {
+        kicker: uiCopy('Seasonal note', 'Seasonal note'),
+        title: seasonal.title,
+        text: seasonal.desc,
+        image: window.RyokoApp.resolvePath(current.image || cityImageFor(baseCity)),
+        actionLabel: uiCopy('Planner base', 'Planner base'),
+        actionHref: '#plannerForm'
       },
       {
         kicker: uiCopy('Next branch', 'Next branch'),

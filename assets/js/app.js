@@ -887,6 +887,7 @@ window.RyokoApp = (() => {
       <section class="section city-section-band"><article class="cover-story-card story-band"><div class="editorial-kicker">${lang === 'ko' ? '편집 포인트' : 'Editorial framing'}</div><h3>${lang === 'ko' ? '좋은 여행은 장소보다 템포를 먼저 맞출 때 생깁니다' : 'Trips usually improve when the tempo lands before the checklist does'}</h3><p>${data.lead}</p></article></section>
       <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? 'Sample route' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? 'Sample itinerary' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : 'Customize in Planner'}</a></div></article></section>
       <section class="section city-reading-grid city-reading-grid-rich" id="city-tips"><article class="info-card editorial-panel"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? 'Local notes' : 'Local notes'}</div><h2 class="section-title">${lang === 'ko' ? 'Local tips' : 'Local tips'}</h2><p class="section-desc">${lang === 'ko' ? '실제로 여행 체감을 바꾸는 작은 포인트들입니다.' : 'Small adjustments that noticeably improve the trip.'}</p></div></div><ul class="editorial-bullets">${data.tips.map(item => `<li>${item}</li>`).join('')}</ul></article><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? 'Before you go' : 'Before you go'}</div><h2 class="section-title">${lang === 'ko' ? 'Keep in mind' : 'Keep in mind'}</h2><p class="section-desc">${lang === 'ko' ? '출발 전에 챙기면 바로 체감되는 것들입니다.' : 'Small prep choices that pay off immediately.'}</p></div></div><ul class="editorial-bullets">${data.keep.map(item => `<li>${item}</li>`).join('')}</ul></article></section>
+      ${(() => { const seasonal = getSeasonalCityFeature(entry.planner); return seasonal ? `<section class="section city-seasonal-bridge"><article class="info-card seasonal-bridge-card"><div class="section-head compact"><div><div class="editorial-kicker">${seasonal.label}</div><h2 class="section-title">${seasonal.title}</h2><p class="section-desc">${seasonal.desc}</p></div></div><div class="trip-chip-row seasonal-chip-row">${seasonal.chips.map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}</div></article></section>` : ''; })()}
       <section class="section footer-cta info-card city-final-cta"><div class="editorial-kicker">${lang === 'ko' ? 'Next move' : 'Next move'}</div><h2>${data.finalTitle}</h2><p>${data.finalDesc}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너 열기' : 'Open Planner'}</a><a class="secondary-btn" href="../magazine/">${lang === 'ko' ? '매거진으로 돌아가기' : 'Back to Magazine'}</a></div></section>
       <div class="footer">Ryokoplan ${guideLabel}</div>`;
     document.title = `${entry.planner} — Ryokoplan`;
@@ -952,7 +953,59 @@ window.RyokoApp = (() => {
   }
 
 
-  function getSeasonalEditorialCollections(){
+  
+  function getSeasonalCityFeature(city=''){
+    const slug = slugifyCity(city);
+    const map = {
+      tokyo: {
+        ko:{ label:'Seasonal edit', title:'도쿄는 계절보다 시간대를 먼저 고르면 더 편합니다', desc:'벚꽃철이든 연말이든, 도쿄는 오전 앵커와 늦은 저녁 회복 구간을 같이 설계할 때 훨씬 덜 지칩니다.', chips:['Spring clear mornings','Rainy museum pivots','Late-night city glow'] },
+        en:{ label:'Seasonal edit', title:'Tokyo improves when you choose the time window before the season', desc:'Whether it is blossom season or a colder city break, Tokyo gets easier when mornings, resets, and late-night energy are edited together.', chips:['Spring clear mornings','Rainy museum pivots','Late-night city glow'] }
+      },
+      osaka: {
+        ko:{ label:'Seasonal edit', title:'오사카는 날씨보다 식사 타이밍이 계절감을 바꿉니다', desc:'더운 계절엔 실내 이동과 식사 간격이 중요하고, 서늘할수록 밤 리듬이 더 살아납니다.', chips:['Summer arcade shelter','Rainy food fallback','Easy night close'] },
+        en:{ label:'Seasonal edit', title:'In Osaka, seasonal comfort is shaped by meal timing', desc:'In hotter months the arcades and indoor moves matter more; in cooler stretches the night rhythm lands better.', chips:['Summer arcade shelter','Rainy food fallback','Easy night close'] }
+      },
+      kyoto: {
+        ko:{ label:'Seasonal edit', title:'교토는 성수기보다 조용한 시간대를 잡는 것이 먼저입니다', desc:'봄과 가을이 예쁘더라도, 실제 만족도는 이른 오전과 비워 둔 오후에서 갈립니다.', chips:['Early temple window','Rainy tea-room day','Soft dusk walk'] },
+        en:{ label:'Seasonal edit', title:'Kyoto is decided less by peak season than by quiet windows', desc:'Spring and fall look beautiful, but the trip quality usually comes from early starts and open afternoons.', chips:['Early temple window','Rainy tea-room day','Soft dusk walk'] }
+      },
+      fukuoka: {
+        ko:{ label:'Seasonal edit', title:'후쿠오카는 계절이 바뀌어도 컴팩트 리듬이 잘 유지됩니다', desc:'비나 더위가 와도 하카타·텐진 축을 중심으로 route를 짧게 가져가면 만족감이 무너지지 않습니다.', chips:['Rain-proof core','Compact weekend base','Night food axis'] },
+        en:{ label:'Seasonal edit', title:'Fukuoka keeps its compact rhythm across seasons', desc:'Even with rain or summer heat, Hakata–Tenjin routes still hold up well when the city core stays compact.', chips:['Rain-proof core','Compact weekend base','Night food axis'] }
+      },
+      seoul: {
+        ko:{ label:'Seasonal edit', title:'서울은 계절보다 동네 조합과 시간대가 더 중요합니다', desc:'우천일, 늦은 밤, 주말 혼잡을 어떻게 피하느냐가 같은 서울 여행의 체감을 크게 바꿉니다.', chips:['Rainy indoor chain','Late-night social edit','Weekend crowd swap'] },
+        en:{ label:'Seasonal edit', title:'In Seoul, neighborhood pairing matters more than the season alone', desc:'Rain, late-night routes, and weekend crowd timing can change the same city far more than a seasonal label.', chips:['Rainy indoor chain','Late-night social edit','Weekend crowd swap'] }
+      },
+      busan: {
+        ko:{ label:'Seasonal edit', title:'부산은 계절마다 바다를 읽는 시간대가 달라집니다', desc:'여름엔 해 질 무렵이 중요하고, 흐린 날엔 실내 전망과 카페 리듬으로 바꾸는 편이 낫습니다.', chips:['Summer coast air','Gray-day view swap','Parents easy pace'] },
+        en:{ label:'Seasonal edit', title:'Busan changes most through when you read the coast', desc:'In summer the coast opens up near dusk, while gray days often work better with indoor views and cafés.', chips:['Summer coast air','Gray-day view swap','Parents easy pace'] }
+      },
+      jeju: {
+        ko:{ label:'Seasonal edit', title:'제주는 계절보다 날씨와 바람을 먼저 봐야 합니다', desc:'맑은 날 scenic 축을 길게 쓰고, 비나 바람이 세면 드라이브와 실내 포켓을 더 많이 두는 쪽이 좋습니다.', chips:['Wind-aware drives','Rainy café arcs','Soft family pacing'] },
+        en:{ label:'Seasonal edit', title:'On Jeju, weather and wind matter before the season label', desc:'Scenic lines can stretch on clear days, but stronger wind and rain call for more cafés and softer driving arcs.', chips:['Wind-aware drives','Rainy café arcs','Soft family pacing'] }
+      },
+      gyeongju: {
+        ko:{ label:'Seasonal edit', title:'경주는 해 질 무렵을 넣을 때 도시가 완성됩니다', desc:'낮 관광만 채우면 얕아지고, 계절이 달라도 저녁 산책과 한옥 무드를 남기면 훨씬 깊어집니다.', chips:['Dusk heritage mood','Rainy hanok fallback','Slow evening close'] },
+        en:{ label:'Seasonal edit', title:'Gyeongju becomes fuller when dusk is part of the route', desc:'It can feel thin if the plan ends in daylight only; dusk walks and hanok mood deepen the city across seasons.', chips:['Dusk heritage mood','Rainy hanok fallback','Slow evening close'] }
+      }
+    };
+    const entry = map[slug];
+    return entry ? (entry[lang] || entry.en) : null;
+  }
+
+  function getSeasonalExampleFeature(city=''){
+    const base = getSeasonalCityFeature(city);
+    if (!base) return null;
+    return {
+      label: base.label,
+      title: lang === 'ko' ? '이 샘플을 시즌 베이스로 보는 법' : 'How to use this as a seasonal base',
+      desc: lang === 'ko' ? '이 일정은 도시의 고정 정답이 아니라, 날씨·주말 밀도·동행에 맞게 쉽게 바꿀 수 있는 베이스로 보는 편이 좋습니다.' : 'This sample works best as a flexible base that can bend with weather, weekend density, and who the trip is for.',
+      chips: base.chips
+    };
+  }
+
+function getSeasonalEditorialCollections(){
     const guideBase = pathRoot === '../' ? '../' : '';
     return {
       cover:[
