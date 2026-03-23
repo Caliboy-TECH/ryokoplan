@@ -89,14 +89,14 @@
       <section class="section trip-archive-grid">
         <article class="collection-card info-card trip-archive-card">
           <span class="collection-kicker" data-lang-ko="저장한 장소" data-lang-en="Saved places">저장한 장소</span>
-          <h3>Places you marked along the way</h3>
-          <p>Hearts from your planner results now collect here, so My Trips feels more like a real travel archive.</p>
+          <h3 data-lang-ko="여정에서 저장한 장소를 다시 읽기" data-lang-en="Places you marked along the way">Places you marked along the way</h3>
+          <p data-lang-ko="플래너 결과에서 눌렀던 하트가 여기 모여, My Trips가 진짜 여행 아카이브처럼 보이게 됩니다." data-lang-en="Hearts from your planner results now collect here, so My Trips feels more like a real travel archive.">Hearts from your planner results now collect here, so My Trips feels more like a real travel archive.</p>
           <div id="savedPlacesCollections" class="trip-archive-collections"></div>
         </article>
         <article class="collection-card info-card trip-archive-card">
           <span class="collection-kicker" data-lang-ko="저장한 루트" data-lang-en="Saved routes">저장한 루트</span>
-          <h3>Route collections by city</h3>
-          <p>Group repeat plans by city, compare route shapes, and reopen the strongest base when you need it again.</p>
+          <h3 data-lang-ko="도시별로 쌓이는 루트 컬렉션" data-lang-en="Route collections by city">Route collections by city</h3>
+          <p data-lang-ko="도시별로 루트를 다시 묶고, 어떤 흐름이 잘 맞았는지 비교한 뒤 가장 좋은 베이스를 다시 열 수 있습니다." data-lang-en="Group repeat plans by city, compare route shapes, and reopen the strongest base when you need it again.">Group repeat plans by city, compare route shapes, and reopen the strongest base when you need it again.</p>
           <div id="savedRouteCollections" class="trip-archive-collections"></div>
         </article>
       </section>
@@ -186,8 +186,8 @@
         <div class="section-head">
           <div>
             <span class="eyebrow" data-lang-ko="공유 일정 스포트라이트" data-lang-en="Shared trip spotlight">공유 일정 스포트라이트</span>
-            <h2 class="section-title">A shared itinerary should feel worth keeping</h2>
-            <p class="section-desc">Open the details, save it to your vault, or turn it into your own version without losing the original context.</p>
+            <h2 class="section-title" data-lang-ko="공유 일정도 보관할 가치가 있어야 합니다" data-lang-en="A shared itinerary should feel worth keeping">A shared itinerary should feel worth keeping</h2>
+            <p class="section-desc" data-lang-ko="상세를 읽고, 보관하고, 원래 맥락을 잃지 않은 채 내 버전으로 이어갈 수 있어야 합니다." data-lang-en="Open the details, save it to your vault, or turn it into your own version without losing the original context.">Open the details, save it to your vault, or turn it into your own version without losing the original context.</p>
           </div>
         </div>
         <div id="sharedSpotlight" class="shared-spotlight-card info-card"></div>
@@ -196,9 +196,9 @@
       <section class="section trip-loop-panel" id="tripLoopPanel">
         <div class="section-head">
           <div>
-            <span class="eyebrow">Recommendation loop</span>
-            <h2 class="section-title">Turn saved trips into your next read</h2>
-            <p class="section-desc">My Trips should not be a dead end. Reopen the route, read the matching guide, or branch into a related city.</p>
+            <span class="eyebrow" data-lang-ko="추천 루프" data-lang-en="Recommendation loop">Recommendation loop</span>
+            <h2 class="section-title" data-lang-ko="저장한 여정을 다음 읽기로 이어가기" data-lang-en="Turn saved trips into your next read">Turn saved trips into your next read</h2>
+            <p class="section-desc" data-lang-ko="My Trips는 끝점이 아니라 다시 읽고, 다시 열고, 다음 도시로 가지를 치는 출발점이어야 합니다." data-lang-en="My Trips should not be a dead end. Reopen the route, read the matching guide, or branch into a related city.">My Trips should not be a dead end. Reopen the route, read the matching guide, or branch into a related city.</p>
           </div>
         </div>
         <div class="trip-loop-grid">
@@ -376,6 +376,16 @@
           key:'fukuoka-food', city:'Fukuoka', titleKo:'Fukuoka food weekend', titleEn:'Fukuoka food weekend', badgeKey:'publicDeskFood', image:'../assets/images/examples/fukuoka-food.png', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
           summaryKo:'짧은 일정에서 식사 리듬을 가장 잘 살리는 공개 샘플입니다.', summaryEn:'A compact public sample built around the strongest food rhythm for a short stay.',
           duration:'2N3D', companionKo:'친구/혼자', companionEn:'Friends / Solo', vibeKo:'푸드 리듬', vibeEn:'Food rhythm', bestKo:'짧은 일본, 컴팩트 이동', bestEn:'Short Japan, compact moves'
+        },
+        {
+          key:'seoul-rainy', city:'Seoul', titleKo:'Seoul rainy-day fallback', titleEn:'Seoul rainy-day fallback', badgeKey:'publicDeskSlow', image:'../assets/images/cities/seoul.png', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
+          summaryKo:'비가 오거나 컨디션이 애매할 때도 동네 리듬을 망치지 않는 서울용 공개 베이스입니다.', summaryEn:'A Seoul public base that still holds shape when the weather turns or energy drops.',
+          duration:'2N3D', companionKo:'혼자/친구', companionEn:'Solo / Friends', vibeKo:'레인 스왑', vibeEn:'Rain swap', bestKo:'비 오는 날, 동네 이동', bestEn:'Rainy day, neighborhood flow'
+        },
+        {
+          key:'jeju-soft-drive', city:'Jeju', titleKo:'Jeju soft drive base', titleEn:'Jeju soft drive base', badgeKey:'publicDeskFamily', image:'../assets/images/cities/jeju.png', guide:'../city/jeju.html', example:'../example/busan-2n3d-with-parents.html',
+          summaryKo:'제주의 이동 현실을 반영해서 과속하지 않는 드라이브형 공개 베이스입니다.', summaryEn:'A gentler Jeju base that respects drive time, open space, and lower route density.',
+          duration:'2N3D', companionKo:'가족/커플', companionEn:'Family / Couple', vibeKo:'드라이브 리듬', vibeEn:'Drive rhythm', bestKo:'제주 초행, 느린 일정', bestEn:'First Jeju, slower pace'
         }
       ];
 
@@ -404,6 +414,21 @@
           key:'fukuoka-friends-food', city:'Fukuoka', titleKo:'후쿠오카 친구 푸드 위켄드', titleEn:'Fukuoka food weekend with friends', labelKo:'프렌즈 에디트', labelEn:'Friends edit', image:'../assets/images/cities/fukuoka.png', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
           summaryKo:'짧게 가도 식사 타이밍이 무너지지 않게, 친구와 쓰기 좋은 푸드 중심 베이스입니다.', summaryEn:'A friend-ready Fukuoka base built around food timing that still works on a short weekend.',
           chipsKo:['친구', '푸드', '짧은 일본'], chipsEn:['Friends', 'Food', 'Short Japan'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
+        },
+        {
+          key:'busan-summer-coast', city:'Busan', titleKo:'부산 서머 코스트 에디트', titleEn:'Busan summer coast edit', labelKo:'시즌 에디트', labelEn:'Seasonal edit', image:'../assets/images/cities/busan.png', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
+          summaryKo:'여름 부산에서 바다를 많이 넣되 이동 과열은 막는 coast 중심 베이스입니다.', summaryEn:'A summer Busan base that lets the coast lead without overheating the route.',
+          chipsKo:['여름', '코스트', '오후 전망'], chipsEn:['Summer', 'Coast', 'Late-day views'], duration:'2N3D', companionKo:'친구/커플', companionEn:'Friends / Couple'
+        },
+        {
+          key:'seoul-late-night-friends', city:'Seoul', titleKo:'서울 프렌즈 레이트나이트 에디트', titleEn:'Seoul late-night friends edit', labelKo:'프렌즈 에디트', labelEn:'Friends edit', image:'../assets/images/cities/seoul.png', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
+          summaryKo:'밤 리듬을 살리되 다음날이 무너지지 않게 조절한 서울 친구 여행 베이스입니다.', summaryEn:'A Seoul friends base that keeps the late-night rhythm without ruining the next day.',
+          chipsKo:['친구', '밤 리듬', '다음날 보호'], chipsEn:['Friends', 'Night rhythm', 'Protect next day'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
+        },
+        {
+          key:'jeju-parents-easy', city:'Jeju', titleKo:'제주 부모님 이지 페이스', titleEn:'Jeju easy pace with parents', labelKo:'동행 에디트', labelEn:'Companion edit', image:'../assets/images/cities/jeju.png', guide:'../city/jeju.html', example:'../example/busan-2n3d-with-parents.html',
+          summaryKo:'운전과 풍경, 식사 리듬을 무리 없이 맞춘 부모님 동행용 제주 베이스입니다.', summaryEn:'A Jeju parent-friendly base built around easy drive logic, view windows, and meal rhythm.',
+          chipsKo:['부모님', '드라이브', '쉬운 페이스'], chipsEn:['Parents', 'Drive', 'Easy pace'], duration:'2N3D', companionKo:'가족/부모님', companionEn:'Family / Parents'
         }
       ];
 

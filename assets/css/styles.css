@@ -1703,3 +1703,23 @@ html,body{background:
 .operating-edit-body p{margin:0;color:var(--muted);line-height:1.65}
 .operating-edit-actions{margin-top:auto;display:flex;flex-wrap:wrap;gap:10px}
 @media (max-width: 900px){.operating-edit-grid{grid-template-columns:1fr}}
+
+.public-route-card,.operating-edit-card,.trip-archive-card{
+  box-shadow:0 10px 24px rgba(16,33,54,.05);
+}
+.public-route-card:hover,.operating-edit-card:hover,.trip-archive-line:hover{
+  transform:translateY(-2px);
+  transition:transform .22s ease, box-shadow .22s ease;
+  box-shadow:0 14px 30px rgba(16,33,54,.08);
+}
+.collection-kicker{
+  letter-spacing:.12em;
+}
+.trip-archive-line .card-actions,
+.trip-archive-line .cta-row{
+  margin-top:4px;
+}
+@media (max-width: 720px){
+  .public-route-body,.operating-edit-body{padding:16px}
+  .trip-archive-line{padding:13px}
+}
