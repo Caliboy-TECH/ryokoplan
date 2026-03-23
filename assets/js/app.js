@@ -651,7 +651,7 @@ window.RyokoApp = (() => {
         heroEyebrow: 'Ryokoplan Magazine',
         heroTitle: '도시를 먼저 읽고, 그다음 여행을 만드세요',
         heroDesc: '지금 필요한 건 정보 더미가 아니라 도시의 결, 이동 리듬, 그리고 바로 일정으로 이어지는 흐름입니다. 매거진을 플래너의 입구처럼 느끼게 다시 정리했습니다.',
-        heroChips: ['Japan / Korea focus', 'editorial city guides', 'planner-ready routes'],
+        heroChips: ['East Asia city edit', 'editorial city guides', 'planner-ready routes'],
         startPlanner: '플래너 열기',
         browseCities: '도시 둘러보기',
         featureKicker: 'Editor\'s note',
@@ -674,11 +674,11 @@ window.RyokoApp = (() => {
         finderTitle: '무드와 나라 기준으로 도시를 고르세요',
         finderDesc: '이제 도시 리스트도 그냥 카드 모음이 아니라, 필터와 검색으로 바로 좁혀볼 수 있게 정리했습니다.',
         finderSearchPH: '도시명, 나라, mood로 검색',
-        countryAll: '전체', countryJapan: 'Japan', countryKorea: 'Korea',
+        countryAll: '전체', countryJapan: 'Japan', countryKorea: 'Korea', countryGreaterChina: '중화권',
         vibeAll: '전체 mood', vibeFast: 'Fast city', vibeSlow: 'Slow day', vibeFood: 'Food-led', vibeCoast: 'Coast',
         cityMeta: {
-          tokyo:'Japan · Fast city', osaka:'Japan · Food / easy fun', kyoto:'Japan · Slow trip', fukuoka:'Japan · Compact food trip',
-          seoul:'Korea · Fast city', busan:'Korea · Coast / food', jeju:'Korea · Coast / nature', gyeongju:'Korea · Slow heritage trip'
+          tokyo:'Japan · Fast city', osaka:'Japan · Food / easy fun', kyoto:'Japan · Slow trip', fukuoka:'Japan · Compact food trip', sapporo:'Japan · Seasonal city', sendai:'Japan · Quiet city break', okinawa:'Japan · Island pace',
+          seoul:'Korea · Fast city', busan:'Korea · Coast / food', jeju:'Korea · Coast / nature', gyeongju:'Korea · Slow heritage trip', taipei:'Greater China · Night food', hongkong:'Greater China · Harbor intensity', macau:'Greater China · Compact heritage'
         },
         cityCopy: {
           tokyo:'큰 장면과 조용한 골목이 함께 있는 도시. 동네 기준으로 짜면 훨씬 부드럽게 풀립니다.',
@@ -710,7 +710,7 @@ window.RyokoApp = (() => {
         heroEyebrow: 'Ryokoplan Magazine',
         heroTitle: 'Read the city first. Then build the trip.',
         heroDesc: 'What most travelers need is not more tabs, but a clearer sense of mood, routing, and where to start. Magazine now works as the front door to Planner.',
-        heroChips: ['Japan / Korea focus', 'editorial city guides', 'planner-ready routes'],
+        heroChips: ['East Asia city edit', 'editorial city guides', 'planner-ready routes'],
         startPlanner: 'Open Planner',
         browseCities: 'Browse cities',
         featureKicker: 'Editor\'s note',
@@ -733,11 +733,11 @@ window.RyokoApp = (() => {
         finderTitle: 'Choose a city by mood and country',
         finderDesc: 'The city list now behaves more like a filterable editorial shelf than a simple grid of cards.',
         finderSearchPH: 'Search by city, country, or mood',
-        countryAll: 'All', countryJapan: 'Japan', countryKorea: 'Korea',
+        countryAll: 'All', countryJapan: 'Japan', countryKorea: 'Korea', countryGreaterChina: 'Greater China',
         vibeAll: 'All moods', vibeFast: 'Fast city', vibeSlow: 'Slow day', vibeFood: 'Food-led', vibeCoast: 'Coast',
         cityMeta: {
-          tokyo:'Japan · Fast city', osaka:'Japan · Food / easy fun', kyoto:'Japan · Slow trip', fukuoka:'Japan · Compact food trip',
-          seoul:'Korea · Fast city', busan:'Korea · Coast / food', jeju:'Korea · Coast / nature', gyeongju:'Korea · Slow heritage trip'
+          tokyo:'Japan · Fast city', osaka:'Japan · Food / easy fun', kyoto:'Japan · Slow trip', fukuoka:'Japan · Compact food trip', sapporo:'Japan · Seasonal city', sendai:'Japan · Quiet city break', okinawa:'Japan · Island pace',
+          seoul:'Korea · Fast city', busan:'Korea · Coast / food', jeju:'Korea · Coast / nature', gyeongju:'Korea · Slow heritage trip', taipei:'Greater China · Night food', hongkong:'Greater China · Harbor intensity', macau:'Greater China · Compact heritage'
         },
         cityCopy: {
           tokyo:'A city where major scenes and quiet backstreets coexist. It feels much smoother when planned by neighborhoods.',
