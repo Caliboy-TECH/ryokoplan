@@ -2129,3 +2129,29 @@ body[data-page="planner"] .top-bar{z-index:62}
 }
 
 .hero-title-split{display:flex;flex-direction:column;align-items:flex-start;gap:.06em;line-height:.94;word-break:keep-all;overflow-wrap:normal}.hero-title-split span{display:block;white-space:nowrap}@media (max-width: 767px){.hero-title-split{font-size:clamp(2.7rem,11vw,4.4rem);line-height:.92;letter-spacing:-0.04em}.hero-title-split span{white-space:normal;word-break:keep-all}}
+
+
+/* QA patch: mobile spacing, dock overlap, tighter translation-safe controls */
+@media (max-width: 759px){
+  .page{padding-bottom:148px}
+  .container{padding-left:16px;padding-right:16px}
+  .top-actions{align-items:stretch}
+  .top-actions .nav-chip,.top-actions .lang-btn,.primary-btn,.secondary-btn,.soft-btn,.ghost-btn{min-height:44px}
+  .top-actions .nav-chip{justify-content:center}
+  .lang-switch{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%}
+  .lang-btn{width:100%;justify-content:center}
+  .mobile-dock{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:9px 8px 10px}
+  .mobile-dock-item{padding:9px 6px 8px;border-radius:18px}
+  .mobile-dock-label{font-size:11px;white-space:normal;line-height:1.15}
+  .mobile-dock-helper{font-size:9px}
+  .cta-row{grid-template-columns:1fr;align-items:stretch}
+  .cta-row > *{width:100%;justify-content:center}
+  .hero-actions,.cover-actions-row{gap:10px}
+  .section-title{line-height:1.12}
+  .section-desc,.card-copy,.district-card p,.editorial-bullets,.city-final-cta p{word-break:keep-all;overflow-wrap:anywhere}
+  .cover-story-head{grid-template-columns:1fr}
+}
+@media (max-width: 390px){
+  .page{padding-bottom:156px}
+  .mobile-dock-label{font-size:10.5px}
+}
