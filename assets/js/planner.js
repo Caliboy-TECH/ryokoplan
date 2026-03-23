@@ -321,10 +321,43 @@ window.RyokoPlanner = (() => {
     return `${days} days layered with readable movement and lighter resets`;
   }
   function buildEditorNote(data){
+    const lang = window.RyokoApp?.lang || 'ko';
     const firstTip = Array.isArray(data.localTips) && data.localTips[0] ? textValue(data.localTips[0], '') : '';
-    const opening = textValue(data.days?.[0]?.title, 'The opening day stays intentionally gentle');
-    const ending = textValue(data.days?.[data.days.length - 1]?.title, 'the final stretch stays light');
-    return firstTip || `${opening} so the route settles in smoothly, and ${ending.toLowerCase()} instead of feeling overloaded.`;
+    const opening = textValue(data.days?.[0]?.title, uiCopy('첫날은 일부러 조금 더 부드럽게 열어 두었습니다.', 'The opening day stays intentionally gentle', '初日はあえて少しやわらかく始まるように整えています。', '第一天刻意留得更柔和一些，讓整體節奏自然展開。'));
+    const ending = textValue(data.days?.[data.days.length - 1]?.title, uiCopy('마지막 구간은 가볍게 닫히도록 남겨 두었습니다.', 'the final stretch stays light', '終盤は軽く締められるように残しています。', '最後一段則保留得更輕一些，讓行程自然收束。'));
+    if (firstTip) return firstTip;
+    if (lang === 'ko') return `${opening}에서 시작해 전체 리듬이 무리 없이 자리 잡고, ${ending.replace(/\.$/, '')} 쪽으로 마무리되도록 정리했습니다.`;
+    if (lang === 'ja') return `${opening}から入り、全体の流れが無理なく整い、${ending.replace(/\.$/, '')}ように編集しています。`;
+    if (lang === 'zhHant') return `從${opening.replace(/。$/, '')}開始，讓整體節奏自然站穩，最後再以${ending.replace(/。$/, '')}的方式收尾。`;
+    return `${opening} so the route settles in smoothly, and ${ending.toLowerCase()} instead of feeling overloaded.`;
+  }
+
+  function resultCopy(){
+    return {
+      signalTitle: uiCopy('지금 리듬에 더 잘 맞는 베이스', 'Better bases for this rhythm', 'この流れに合う次のベース', '更適合這個節奏的下一個起點'),
+      signalDesc: uiCopy('비, 부모님 동행, 늦은 밤, 푸드 중심 같은 신호를 기준으로 다음 베이스를 다시 고를 수 있게 묶었습니다.', 'Grouped around signals like rain, parents, late nights, or food-led pacing so the next base feels more intentional.', '雨・親との同行・深夜の流れ・食重視などの条件から、次のベースを選び直しやすくまとめました。', '以雨天、與父母同行、夜晚節奏、以美食為主等訊號重新整理，讓下一個 base 更好選。'),
+      signalEyebrow: uiCopy('Signal-aware picks','Signal-aware picks','Signal-aware picks','Signal-aware picks'),
+      cityGuide: uiCopy('도시 가이드','City guide','城市ガイド','城市指南'),
+      sampleRoute: uiCopy('샘플 루트','Sample route','範例路線','示範路線'),
+      nextLoopEyebrow: uiCopy('다음 액션 루프','Next step loop','次のアクションループ','下一步循環'),
+      nextLoopTitle: uiCopy('한 번의 결과에서 끝내지 마세요', 'Keep the route moving after this result', 'この結果で止めずに、次へつなげましょう', '別停在這一次的結果，讓路線繼續往下走'),
+      nextLoopDesc: uiCopy('연결된 도시를 더 읽고, 저장한 루트를 다시 열고, 샘플 루트까지 이어서 볼 수 있게 정리했습니다.', 'Read a related city, reopen a saved route, or move into a sample route to keep the Ryokoplan flow going.', 'つながる都市を読み、保存したルートを開き直し、サンプルルートへ続けられるように整えています。', '你可以繼續讀相關城市、重新打開已存路線，或接著看示範路線，讓 Ryokoplan 的流動不中斷。'),
+      keepLoop: uiCopy('다음 루프로','Keep the loop going','次のループへ','接著往下一個循環'),
+      openRecent: uiCopy('최근 루트 열기','Open recent route','最近のルートを開く','打開最近路線'),
+      openTrips: uiCopy('My Trips 열기','Open My Trips','My Trips を開く','打開 My Trips'),
+      readGuide: uiCopy('도시 가이드 읽기','Read guide','ガイドを読む','閱讀指南'),
+      routeNote: uiCopy('비주얼 루트 노트', 'Visual route notes', 'ビジュアルルートノート', '視覺路線筆記'),
+      routeNoteDesc: uiCopy('도시 커버, 이번 루트의 분위기, 그리고 다음으로 가지를 칠 수 있는 도시까지 한 번에 보여줍니다.', 'A city cover, one route mood frame, and one next branch keep the result from reading like a plain checklist.', '都市カバー、今回のルートの空気、次に枝分かれできる都市まで、一度に読めるように見せます。', '把城市封面、這次路線的氣氛，以及下一個可延伸的城市，一次整理給你看。'),
+      sampleRead: uiCopy('샘플 보기', 'Read sample', 'サンプルを見る', '查看範例'),
+      plannerBase: uiCopy('플래너 베이스', 'Planner base', 'プランナーのベース', '規劃 base'),
+      nextCity: uiCopy('다음 도시', 'Next city', '次の都市', '下一座城市'),
+      sharedKicker: uiCopy('공유받은 일정','Shared trip','共有ルート','分享行程'),
+      sharedTitle: uiCopy('공유된 루트에서 바로 시작했어요', 'You started from a shared route', '共有ルートからこの旅を始めました', '你是從分享路線開始這段旅程的'),
+      sharedDesc: uiCopy('공유 링크로 들어온 일정입니다. 그대로 저장하거나, 내 취향에 맞게 다시 다듬을 수 있어요.', 'This route came in through a shared link. Keep it, save it, or reshape it into your own version.', '共有リンクから開いたルートです。このまま保存しても、自分の旅に合わせて整え直しても大丈夫です。', '這條路線是從分享連結打開的。你可以直接保存，也可以依自己的節奏重新整理。'),
+      openGuide: uiCopy('도시 가이드 보기','Read guide','ガイドを見る','查看指南'),
+      saveTrip: uiCopy('여정 저장','Save Trip','旅程を保存','保存旅程'),
+      useThisRoute: uiCopy('이 루트로 시작','Use this route','このルートを使う','使用這條路線')
+    };
   }
 
   function getSeasonalResultFeature(destination=''){
@@ -493,6 +526,7 @@ window.RyokoPlanner = (() => {
   function renderVisualStory(data){
     const node = qs('resultVisualStoryGrid');
     if (!node) return;
+    const copy = resultCopy();
     const baseCity = textValue(data.destination, readForm().destination || 'Tokyo');
     const current = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, country:'', guide:'magazine/', example:'magazine/', image: cityImageFor(baseCity), vibe:'editorial route' };
     const related = window.RyokoApp.getRelatedCities(baseCity)[0] || current;
@@ -501,13 +535,13 @@ window.RyokoPlanner = (() => {
     const title = qs('visualStoryTitle');
     const desc = qs('visualStoryDesc');
     const eyebrow = qs('visualStoryEyebrow');
-    if (eyebrow) eyebrow.textContent = uiCopy('비주얼 루트 노트', 'Visual route notes');
-    if (title) title.textContent = uiCopy('결과를 기사형 패키지처럼 읽게 만듭니다', 'See the result like an editorial package');
-    if (desc) desc.textContent = uiCopy('도시 커버, 이번 루트의 분위기, 그리고 다음으로 가지를 칠 수 있는 도시까지 한 번에 보여줍니다.', 'A city cover, one route mood frame, and one next branch keep the result from feeling like a plain checklist.');
+    if (eyebrow) eyebrow.textContent = copy.routeNote;
+    if (title) title.textContent = uiCopy('결과를 기사형 패키지처럼 읽게 만듭니다', 'See the result like an editorial package', '結果を小さなエディトリアルパッケージのように読めるようにします', '讓這份結果像一個小型 editorial package 一樣被閱讀');
+    if (desc) desc.textContent = copy.routeNoteDesc;
     const seasonal = getSeasonalResultFeature(baseCity);
     const cards = [
       {
-        kicker: uiCopy('City cover', 'City cover'),
+        kicker: copy.cityCover,
         title: `${current.name}`,
         text: textValue(data.summary, uiCopy('이 여정의 전체 리듬을 먼저 잡아주는 대표 컷입니다.', 'This is the cover frame that sets the route tone first.')),
         image: window.RyokoApp.resolvePath(current.image || cityImageFor(baseCity)),
@@ -515,27 +549,27 @@ window.RyokoPlanner = (() => {
         actionHref: window.RyokoApp.resolvePath(current.guide)
       },
       {
-        kicker: uiCopy('Route mood', 'Route mood'),
+        kicker: copy.routeMood,
         title: textValue(dayOne.title, uiCopy('첫날의 리듬', 'Opening rhythm')),
         text: dayOnePlaces || uiCopy('첫날은 강한 앵커와 부드러운 포켓을 섞어 과밀하지 않게 시작합니다.', 'Day one mixes one anchor and softer pockets so the route opens cleanly.'),
         image: window.RyokoApp.resolvePath(exampleImageFor(baseCity)),
-        actionLabel: uiCopy('샘플 보기', 'Read sample'),
+        actionLabel: copy.sampleRead,
         actionHref: window.RyokoApp.resolvePath(current.example)
       },
       {
-        kicker: uiCopy('Seasonal note', 'Seasonal note'),
+        kicker: uiCopy('시즌 노트', 'Seasonal note', '季節ノート', '季節筆記'),
         title: seasonal.title,
         text: seasonal.desc,
         image: window.RyokoApp.resolvePath(current.image || cityImageFor(baseCity)),
-        actionLabel: uiCopy('Planner base', 'Planner base'),
+        actionLabel: copy.plannerBase,
         actionHref: '#plannerForm'
       },
       {
-        kicker: uiCopy('Next branch', 'Next branch'),
-        title: uiCopy(`${related.name}까지 이어서 읽기`, `Branch into ${related.name}`),
-        text: uiCopy(`${related.vibe} 톤의 도시를 이어서 읽으면 다음 저장 루프가 더 자연스럽게 이어집니다.`, `A ${related.vibe} city keeps the next save-and-read loop moving naturally.`),
+        kicker: copy.nextBranch,
+        title: uiCopy(`${related.name}까지 이어서 읽기`, `Branch into ${related.name}`, `${related.name}へ続けて読む`, `延伸閱讀到 ${related.name}`),
+        text: uiCopy(`${related.vibe} 톤의 도시를 이어서 읽으면 다음 저장 루프가 더 자연스럽게 이어집니다.`, `A ${related.vibe} city keeps the next save-and-read loop moving naturally.`, `${related.vibe}の空気を持つ都市へ続けると、次の保存と読み直しの流れが自然につながります。`, `接著讀一座帶有 ${related.vibe} 氛圍的城市，會讓下一輪保存與再閱讀更自然地延續下去。`),
         image: window.RyokoApp.resolvePath(related.image || cityImageFor(related.name)),
-        actionLabel: uiCopy('다음 도시', 'Next city'),
+        actionLabel: copy.nextCity,
         actionHref: window.RyokoApp.resolvePath(related.guide)
       }
     ];
@@ -565,12 +599,13 @@ window.RyokoPlanner = (() => {
       mode: window.currentTripPayload?.localMode ? 'local' : 'classic'
     });
     if (!recs.length) { node.innerHTML = ''; return; }
-    const title = uiCopy('지금 선택에 더 잘 맞는 베이스', 'Bases that fit this route better');
-    const desc = uiCopy('우천일, 부모님 동행, 늦은 밤, 푸드 중심 같은 신호를 기준으로 다시 이어볼 수 있는 베이스입니다.', 'These are stronger next bases when rain, parents, late-night pacing, or food-led routing matters more.');
+    const copy = resultCopy();
+    const title = copy.signalTitle;
+    const desc = copy.signalDesc;
     node.innerHTML = `
       <div class="section-head">
         <div>
-          <span class="eyebrow">${uiCopy('Signal-aware picks','Signal-aware picks')}</span>
+          <span class="eyebrow">${copy.signalEyebrow}</span>
           <h2 class="section-title">${title}</h2>
           <p class="section-desc">${desc}</p>
         </div>
@@ -581,8 +616,8 @@ window.RyokoPlanner = (() => {
           <h3>${escapeHtml(textValue(item.title, item.slug || 'Base'))}</h3>
           <p>${escapeHtml(textValue(item.desc, ''))}</p>
           <div class="card-actions">
-            <a class="soft-btn" href="${item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-guide">${uiCopy('도시 가이드','City guide')}</a>
-            <a class="ghost-btn" href="${item.example || item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-sample">${uiCopy('샘플 루트','Sample route')}</a>
+            <a class="soft-btn" href="${item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-guide">${copy.cityGuide}</a>
+            <a class="ghost-btn" href="${item.example || item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-sample">${copy.sampleRoute}</a>
           </div>
         </article>`).join('')}</div>`;
     window.RyokoApp?.recordSignalInteraction && node.querySelectorAll('[data-signal-tags]').forEach(el => {
@@ -610,41 +645,41 @@ window.RyokoPlanner = (() => {
       <article class="loop-card info-card">
         <div class="loop-card-top"><span class="eyebrow">${escapeHtml(city.country)}</span><span class="loop-card-vibe">${escapeHtml(city.vibe)}</span></div>
         <h3>${escapeHtml(city.name)}</h3>
-        <p>${uiCopy('도시 가이드로 먼저 읽고, 그 무드를 더 차분한 루트로 바꿔보세요.', 'Start from the city guide, then turn that mood into a calmer, cleaner route.')}</p>
+        <p>${uiCopy('도시 가이드로 먼저 읽고, 그 무드를 더 차분한 루트로 바꿔보세요.', 'Start from the city guide, then turn that mood into a calmer, cleaner route.', 'まず都市ガイドを読み、その空気をより落ち着いたルートへ整えてみてください。', '先從城市指南讀起，再把那個氣氛整理成更安穩的路線。')}</p>
         <div class="card-actions">
-          <a class="soft-btn" href="${window.RyokoApp.resolvePath(city.guide)}">${uiCopy('도시 가이드','City guide')}</a>
-          <a class="ghost-btn" href="${window.RyokoApp.resolvePath(city.example)}">${uiCopy('샘플 루트','Sample route')}</a>
+          <a class="soft-btn" href="${window.RyokoApp.resolvePath(city.guide)}">${copy.cityGuide}</a>
+          <a class="ghost-btn" href="${window.RyokoApp.resolvePath(city.example)}">${copy.sampleRoute}</a>
         </div>
       </article>`).join('');
     const continueCard = recent[0] ? `
       <article class="loop-feature info-card">
         <div class="loop-feature-copy">
-          <span class="eyebrow">${uiCopy('다음 루프로','Keep the loop going')}</span>
+          <span class="eyebrow">${copy.keepLoop}</span>
           <h3>${uiCopy(`${recent[0].destination || '최근 여행'}로 다시 돌아가기`, `Jump back into ${recent[0].destination || 'your recent trip'}`)}</h3>
           <p>${escapeHtml((recent[0].planData?.summary || recent[0].notes || uiCopy('이미 다시 열어볼 수 있는 다른 여행 흐름이 준비되어 있어요.', 'You already have another trip flow ready to reopen.')).slice(0, 180))}</p>
           <div class="card-actions">
-            <a class="primary-btn" href="${location.pathname}?trip=${encodeURIComponent(window.RyokoStorage.encodeShare(recent[0]))}">${uiCopy('최근 루트 열기','Open recent route')}</a>
-            <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">${uiCopy('My Trips 열기','Open My Trips')}</a>
+            <a class="primary-btn" href="${location.pathname}?trip=${encodeURIComponent(window.RyokoStorage.encodeShare(recent[0]))}">${copy.openRecent}</a>
+            <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">${copy.openTrips}</a>
           </div>
         </div>
       </article>` : `
       <article class="loop-feature info-card">
         <div class="loop-feature-copy">
-          <span class="eyebrow">${uiCopy('다음 루프로','Keep the loop going')}</span>
+          <span class="eyebrow">${copy.keepLoop}</span>
           <h3>${uiCopy(`${current.name}를 더 읽고 이 루트를 저장하세요`, `Read ${current.name} deeper, then save the route`)}</h3>
           <p>${uiCopy('도시 가이드로 무드를 더 선명하게 만든 뒤, 이 플랜을 My Trips에 남겨두면 다음 탐색이 더 쉬워집니다.', 'Use the city guide to sharpen the vibe, keep this plan in My Trips, and come back with stronger context next time.')}</p>
           <div class="card-actions">
-            <a class="primary-btn" href="${window.RyokoApp.resolvePath(current.guide)}">${uiCopy('도시 가이드 읽기','Read guide')}</a>
-            <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">${uiCopy('My Trips 열기','Open My Trips')}</a>
+            <a class="primary-btn" href="${window.RyokoApp.resolvePath(current.guide)}">${copy.readGuide}</a>
+            <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">${copy.openTrips}</a>
           </div>
         </div>
       </article>`;
     node.innerHTML = `
       <div class="section-head">
         <div>
-          <span class="eyebrow">${uiCopy('다음 액션 루프','Next step loop')}</span>
-          <h2 class="section-title">Don’t stop at one result</h2>
-          <p class="section-desc">${uiCopy('연결된 도시를 더 읽고, 저장한 루트를 다시 열고, 샘플 루트까지 이어서 볼 수 있게 구성했습니다.','Read a related city, reopen a saved route, or continue with a sample route to keep the Ryokoplan flow moving.')}</p>
+          <span class="eyebrow">${copy.nextLoopEyebrow}</span>
+          <h2 class="section-title">${copy.nextLoopTitle}</h2>
+          <p class="section-desc">${copy.nextLoopDesc}</p>
         </div>
       </div>
       ${continueCard}
@@ -738,31 +773,32 @@ window.RyokoPlanner = (() => {
     if (!printWindow) return showToast(uiCopy('팝업이 차단되어 PDF 창을 열 수 없어요.','Popup blocked. Allow a new tab to export PDF.'), 'warn');
     const data = window.currentTripPayload.planData || {};
     const lang = window.RyokoApp?.lang || 'en';
-    const copy = lang === 'ko'
-      ? {
-          pdfTag: 'Ryokoplan · Editorial PDF',
-          vibe: 'Vibe', pace: 'Pace', bestFor: 'Best for',
-          quickRhythm: 'Rhythm', quickShape: 'Route shape', quickWorks: 'Works best for',
-          editorsTake: uiCopy('편집 메모','Editorial note','編集ノート','編輯筆記'), dayByDay: uiCopy('하루별 일정','Day by day','日ごとの流れ','每日行程'), localTips: uiCopy('현지 팁','Local tips','現地メモ','在地筆記'), budget: uiCopy('예산','Budget','予算','預算'), checklist: uiCopy('체크리스트','Checklist','チェックリスト','旅行清單'),
-          cityCover: 'City cover', routeMood: 'Route mood', nextBranch: 'Next branch',
-          localTip: 'Local tip', generatedOn: '생성일',
-          classicRouting: 'Classic routing', localModeOn: 'Local mode on',
-          cityCoverText: '이 여정 전체의 톤을 먼저 잡아주는 커버 컷입니다.',
-          routeMoodText: '첫날의 리듬과 주요 앵커를 한 번에 읽을 수 있게 정리한 비주얼 노트입니다.',
-          nextBranchText: '다음 도시로 자연스럽게 이어질 수 있는 추천 가지입니다.'
-        }
-      : {
-          pdfTag: 'Ryokoplan · Editorial PDF',
-          vibe: 'Vibe', pace: 'Pace', bestFor: 'Best for',
-          quickRhythm: 'Rhythm', quickShape: 'Route shape', quickWorks: 'Works best for',
-          editorsTake: uiCopy('편집 메모','Editorial note','編集ノート','編輯筆記'), dayByDay: uiCopy('하루별 일정','Day by day','日ごとの流れ','每日行程'), localTips: uiCopy('현지 팁','Local tips','現地メモ','在地筆記'), budget: uiCopy('예산','Budget','予算','預算'), checklist: uiCopy('체크리스트','Checklist','チェックリスト','旅行清單'),
-          cityCover: 'City cover', routeMood: 'Route mood', nextBranch: 'Next branch',
-          localTip: 'Local tip', generatedOn: 'Generated on',
-          classicRouting: 'Classic routing', localModeOn: 'Local mode on',
-          cityCoverText: 'The cover frame that sets the tone of this itinerary first.',
-          routeMoodText: 'A visual note that lets you read day one rhythm and key anchors at a glance.',
-          nextBranchText: 'A natural next city branch to keep the reading-and-saving loop moving.'
-        };
+    const copy = {
+      pdfTag: 'Ryokoplan · Editorial PDF',
+      vibe: uiCopy('무드','Vibe','ムード','氛圍'),
+      pace: uiCopy('페이스','Pace','節奏','步調'),
+      bestFor: uiCopy('잘 맞는 여행자','Best for','向いている旅','最適合'),
+      quickRhythm: uiCopy('리듬','Rhythm','流れ','節奏'),
+      quickShape: uiCopy('루트 구조','Route shape','ルート構成','路線結構'),
+      quickWorks: uiCopy('잘 맞는 타입','Works best for','合う旅のタイプ','適合的旅人'),
+      editorsTake: uiCopy('편집 메모','Editorial note','編集ノート','編輯筆記'),
+      dayByDay: uiCopy('하루별 흐름','Day by day','日ごとの流れ','每日節奏'),
+      localTips: uiCopy('현지 팁','Local tips','現地メモ','在地筆記'),
+      budget: uiCopy('예산','Budget','予算','預算'),
+      checklist: uiCopy('체크리스트','Checklist','チェックリスト','旅行清單'),
+      cityCover: uiCopy('도시 커버','City cover','シティカバー','城市封面'),
+      routeMood: uiCopy('루트 무드','Route mood','ルートムード','路線氛圍'),
+      nextBranch: uiCopy('다음 가지','Next branch','次の分岐','下一個分支'),
+      localTip: uiCopy('현지 팁','Local tip','現地メモ','在地筆記'),
+      generatedOn: uiCopy('생성일','Generated on','作成日','生成日期'),
+      classicRouting: uiCopy('관광객 모드','Classic routing','定番ルート','經典路線'),
+      localModeOn: uiCopy('현지인 모드','Local mode on','ローカルモード','在地模式'),
+      cityCoverText: uiCopy('이 여정 전체의 톤을 먼저 잡아주는 커버 컷입니다.','The cover frame that sets the tone of this itinerary first.','この旅全体のトーンを最初に決めるカバーフレームです。','這是先替整段旅程定下基調的封面畫面。'),
+      routeMoodText: uiCopy('첫날의 리듬과 주요 앵커를 한 번에 읽을 수 있게 정리한 비주얼 노트입니다.','A visual note that lets you read day-one rhythm and key anchors at a glance.','初日の流れと主要アンカーをひと目で読めるように整えたビジュアルノートです。','整理成一眼就能看懂第一天節奏與關鍵 anchor 的視覺筆記。'),
+      nextBranchText: uiCopy('다음 도시로 자연스럽게 이어질 수 있는 추천 가지입니다.','A natural next-city branch to keep the read-and-save loop moving.','読みと保存の流れを保ったまま次の都市へつなげる分岐です。','這是一個能讓閱讀與保存循環自然延續到下一座城市的分支。'),
+      visualStory: uiCopy('비주얼 스토리','Visual story','ビジュアルストーリー','視覺故事'),
+      visualStoryDesc: uiCopy('도시 커버, 이번 루트의 분위기, 그리고 다음 도시까지 한 번에 읽을 수 있는 PDF용 스토리 패키지입니다.','A PDF-ready story package that keeps the city cover, current route mood, and next branch on one spread.','都市カバー、今回のルートの空気、次の都市までを一度に読める PDF 用ストーリーパッケージです。','把城市封面、這次路線的氣氛與下一個城市分支整合在同一頁的 PDF 故事包。')
+    };
     const rawDestination = window.currentTripPayload.destination || data.destination || 'Trip';
     const destination = escapeHtml(rawDestination);
     const title = escapeHtml(data.title || `${rawDestination} editorial route`);
@@ -914,15 +950,15 @@ window.RyokoPlanner = (() => {
         <div class="hero-visual" style="background-image:linear-gradient(180deg, rgba(16,23,38,0.06), rgba(16,23,38,0.58)), url('${coverImage}')">
           <div class="hero-note">
             <span class="meta-label">${escapeHtml(copy.editorsTake)}</span>
-            <strong>${escapeHtml(rawDestination)} editorial flow</strong>
+            <strong>${escapeHtml(uiCopy(`${rawDestination} 에디토리얼 플로우`, `${rawDestination} editorial flow`, `${rawDestination} エディトリアルフロー`, `${rawDestination} 編輯路線氛圍`))}</strong>
             <p class="summary" style="margin-top:6px">${editorNote}</p>
           </div>
         </div>
       </div>
     </section>
     <section class="section dark">
-      <h2>${lang === 'ko' ? 'Visual story' : 'Visual story'}</h2>
-      <p>${lang === 'ko' ? '도시 커버, 이번 루트의 분위기, 그리고 다음 도시까지 한 번에 읽을 수 있는 PDF용 스토리 패키지입니다.' : 'A PDF-ready story package that keeps the city cover, current route mood, and next branch on one spread.'}</p>
+      <h2>${escapeHtml(copy.visualStory)}</h2>
+      <p>${escapeHtml(copy.visualStoryDesc)}</p>
       <div class="story-grid">${visualCards}</div>
     </section>
     <section class="section">
@@ -953,25 +989,16 @@ window.RyokoPlanner = (() => {
   }
 
   function sharedBannerCopy(){
-    return window.RyokoApp.lang === 'ko'
-      ? {
-          kicker:'공유받은 일정',
-          title:'공유된 루트에서 바로 시작했어요',
-          desc:'공유 링크로 들어온 일정입니다. 그대로 저장하거나, 내 취향에 맞게 다시 다듬을 수 있어요.',
-          openGuide:'도시 가이드 보기',
-          save:'여정 저장',
-          duplicate:'이 루트로 시작',
-          source:'Shared trip context'
-        }
-      : {
-          kicker:'Shared trip',
-          title:'You started from a shared route',
-          desc:'This route came in through a shared link. Keep it, save it, or reshape it into your own version.',
-          openGuide:'Read guide',
-          save:'Save Trip',
-          duplicate:'Use this route',
-          source:'Shared trip context'
-        };
+    const copy = resultCopy();
+    return {
+      kicker: copy.sharedKicker,
+      title: copy.sharedTitle,
+      desc: copy.sharedDesc,
+      openGuide: copy.openGuide,
+      save: copy.saveTrip,
+      duplicate: copy.useThisRoute,
+      source: uiCopy('공유 루트 컨텍스트','Shared trip context','共有ルートの文脈','分享路線脈絡')
+    };
   }
   function renderSharedTripBanner(payload){
     const node = qs('sharedTripBanner');
