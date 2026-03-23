@@ -1963,3 +1963,45 @@ html,body{background:
   body[data-page="magazine"] .personal-signal-section,
   body[data-page="magazine"] .city-finder-section{margin-left:14px;margin-right:14px}
 }
+
+
+/* mobile hero compact pass */
+@media (max-width: 720px){
+  .top-bar{padding:10px 0 8px}
+  .top-bar-inner{align-items:center;gap:10px}
+  .brand-mark{width:54px;height:54px;border-radius:18px}
+  .brand-title{font-size:34px;letter-spacing:-.06em}
+  .brand-sub{display:none}
+  .top-actions{gap:8px}
+  .top-actions .nav-chip{display:none !important}
+  .lang-switch{padding:3px}
+  .lang-btn{min-width:46px;height:42px;font-size:13px}
+
+  body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home{gap:0;margin-top:10px;padding:0;border:none;background:transparent;box-shadow:none}
+  body[data-page="planner"] .hero.hero-magazine .cover-visual-column{order:0;padding:0}
+  body[data-page="planner"] .cover-system-shell-home .hero-visual-main{min-height:420px;border-radius:28px}
+  body[data-page="planner"] .hero.hero-magazine .cover-copy-column{
+    margin:-56px 12px 0;
+    padding:18px 18px 16px;
+    border-radius:26px;
+    background:rgba(255,252,247,.96);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(224,214,198,.92);
+    box-shadow:0 20px 44px rgba(20,33,48,.12);
+    position:relative;z-index:3;
+  }
+  body[data-page="planner"] .hero.hero-magazine .eyebrow{font-size:10px;letter-spacing:.18em;margin-bottom:4px}
+  body[data-page="planner"] .hero.hero-magazine h1{font-size:clamp(30px,8.6vw,40px);line-height:.97;letter-spacing:-.065em;margin:0}
+  body[data-page="planner"] .hero.hero-magazine p{font-size:13px;line-height:1.45;margin-top:8px;max-width:28ch}
+  body[data-page="planner"] .hero.hero-magazine .hero-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
+  body[data-page="planner"] .hero.hero-magazine .primary-btn{width:100%;padding:14px 16px;border-radius:18px}
+  body[data-page="planner"] .hero.hero-magazine .secondary-btn{width:100%;justify-content:center;padding:13px 16px;border-radius:18px;background:#fff;border-color:rgba(223,214,199,.96)}
+  body[data-page="planner"] .hero.hero-magazine .cover-note-line,
+  body[data-page="planner"] .hero.hero-magazine .hero-stat-row,
+  body[data-page="planner"] .route-card.editorial-badge,
+  body[data-page="planner"] .brand-manifesto{display:none !important}
+  body[data-page="planner"] .home-cover-desk,
+  body[data-page="planner"] .top-story-ribbon{margin-top:14px}
+
+  body[data-page="magazine"] .top-actions .nav-chip{display:none !important}
+}
