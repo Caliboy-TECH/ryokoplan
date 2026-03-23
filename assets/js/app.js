@@ -915,6 +915,88 @@ window.RyokoApp = (() => {
       <section class="section footer-cta info-card city-final-cta" id="example-next"><div class="editorial-kicker">${lang === 'ko' ? 'Next move' : 'Next move'}</div><h2>${lang === 'ko' ? '리스트보다 구조를 가져가세요' : 'Use the structure, not just the list'}</h2><p>${lang === 'ko' ? '플래너에서 일수, 동행, 무드만 바꿔도 같은 결의 다른 여행으로 확장할 수 있습니다.' : 'In Planner, keep the tone but change days, pace, companion, and mood to make it yours.'}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.city)}">${lang === 'ko' ? '플래너 열기' : 'Open Planner'}</a><a class="secondary-btn" href="../magazine/">${lang === 'ko' ? '매거진으로 돌아가기' : 'Back to Magazine'}</a></div></section><div class="footer">Ryokoplan Magazine</div>`;
     document.title = `${title} — Ryokoplan`;
   }
+  function buildDiscoveryItems(){
+    const guideBase = document.body.dataset.page === 'planner' ? '' : '../';
+    const items = [
+      { kind:'city', slug:'tokyo', title:{ko:'Tokyo dense weekend',en:'Tokyo dense weekend'}, desc:{ko:'짧지만 밀도 있게, 큰 구역 두 개와 한 번의 리셋으로 읽는 도쿄 베이스.',en:'A dense short Tokyo base with two strong zones and one clean reset.'}, tags:['tokyo','japan','weekend','fast','city','friends'], guide:`${guideBase}city/tokyo.html`, example:`${guideBase}example/tokyo-3n4d-first-trip.html`, preset:{destination:'Tokyo',duration:'2n3d',companion:'friends',style:'city highlights + nightlife',notes:'Keep one high-energy block and one slower reset.'}},
+      { kind:'city', slug:'kyoto', title:{ko:'Quiet Kyoto reset',en:'Quiet Kyoto reset'}, desc:{ko:'많이 넣지 않고, 오전 장면과 저녁 산책을 남기는 교토 베이스.',en:'A quieter Kyoto base built around early scenes and a softer evening walk.'}, tags:['kyoto','japan','slow','solo','quiet','reset'], guide:`${guideBase}city/kyoto.html`, example:`${guideBase}example/kyoto-2n3d-slow-trip.html`, preset:{destination:'Kyoto',duration:'2n3d',companion:'solo',style:'slow culture + cafes',notes:'Protect the quiet windows and avoid checklist pacing.'}},
+      { kind:'edit', slug:'seoul-rain', title:{ko:'Seoul rainy-day fallback',en:'Seoul rainy-day fallback'}, desc:{ko:'비 오는 날에도 무너지지 않는 실내 중심 서울 베이스.',en:'A Seoul fallback built for a rainy day without losing city rhythm.'}, tags:['seoul','korea','rainy','city','fallback','couple'], guide:`${guideBase}city/seoul.html`, example:`${guideBase}example/seoul-2n3d-city-vibes.html`, preset:{destination:'Seoul',duration:'2n3d',companion:'couple',style:'indoor spots + coffee + neighborhoods',notes:'Keep transfers short and let indoor anchors carry the day.'}},
+      { kind:'edit', slug:'busan-parents', title:{ko:'Busan with parents',en:'Busan with parents'}, desc:{ko:'뷰 타이밍과 이동 피로를 먼저 생각한 부산 베이스.',en:'A Busan base shaped around view timing and lower fatigue.'}, tags:['busan','korea','parents','easy','coast','family'], guide:`${guideBase}city/busan.html`, example:`${guideBase}example/busan-2n3d-with-parents.html`, preset:{destination:'Busan',duration:'2n3d',companion:'family',style:'sea views + easy pace + local food',notes:'Protect rest windows and avoid stacking hill-heavy stops.'}},
+      { kind:'edit', slug:'fukuoka-food', title:{ko:'Fukuoka food weekend',en:'Fukuoka food weekend'}, desc:{ko:'먹고 걷고 쉬는 리듬이 잘 맞는 컴팩트 후쿠오카 베이스.',en:'A compact Fukuoka weekend shaped by food spacing and easy walks.'}, tags:['fukuoka','japan','food','weekend','friends','compact'], guide:`${guideBase}city/fukuoka.html`, example:`${guideBase}example/fukuoka-2n3d-food-trip.html`, preset:{destination:'Fukuoka',duration:'2n3d',companion:'friends',style:'local food + cafes + neighborhoods',notes:'Keep it compact and let meals shape the route.'}},
+      { kind:'edit', slug:'jeju-soft', title:{ko:'Jeju soft drive base',en:'Jeju soft drive base'}, desc:{ko:'무리한 체크리스트 대신 도로와 풍경의 여백을 남기는 제주 베이스.',en:'A softer Jeju base that leaves room for roads, wind, and wider scenery.'}, tags:['jeju','korea','drive','scenic','parents','coast'], guide:`${guideBase}city/jeju.html`, example:`${guideBase}city/jeju.html`, preset:{destination:'Jeju',duration:'3n4d',companion:'family',style:'scenic drives + cafes + coast',notes:'Give the island more space and do not underweight drive time.'}}
+    ];
+    return items;
+  }
+
+  function renderHomeDiscovery(){
+    if (document.body.dataset.page !== 'planner') return;
+    const root = document.getElementById('homeDiscoveryRoot');
+    if (!root) return;
+    const copy = {
+      ko: {
+        eyebrow:'Quick find', title:'상황이나 무드로 바로 좁혀보세요', desc:'도시 이름이 먼저 떠오르지 않아도 됩니다. 주말, 우천일, 부모님 동행 같은 상황에서 바로 출발할 수 있게 정리했습니다.',
+        placeholder:'도시, mood, 상황으로 검색', all:'All', weekend:'Weekend', rainy:'Rainy day', parents:'With parents', food:'Food-led', coast:'Coast', empty:'맞는 베이스가 없으면 매거진에서 도시를 먼저 읽어보세요.',
+        guide:'City guide', sample:'Sample route', plan:'Use as base', matches:'개', helper:'추천 검색'
+      },
+      en: {
+        eyebrow:'Quick find', title:'Narrow the trip by mood or use case', desc:'You do not need a city name first. Start from a weekend, a rainy day, or a better pace for parents and move from there.',
+        placeholder:'Search by city, mood, or use case', all:'All', weekend:'Weekend', rainy:'Rainy day', parents:'With parents', food:'Food-led', coast:'Coast', empty:'If nothing fits yet, start with the city magazine first.',
+        guide:'City guide', sample:'Sample route', plan:'Use as base', matches:'matches', helper:'Suggested searches'
+      }
+    }[lang] || {};
+    root.innerHTML = `
+      <article class="info-card discovery-desk">
+        <div class="section-head compact"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div><div class="discovery-count" id="homeDiscoveryCount"></div></div>
+        <div class="discovery-toolbar">
+          <input id="homeDiscoverySearch" class="input finder-search" placeholder="${copy.placeholder}">
+          <div class="discovery-suggest"><span class="discovery-suggest-label">${copy.helper}</span>
+            <button class="tab-btn active" data-discovery-filter="all">${copy.all}</button>
+            <button class="tab-btn" data-discovery-filter="weekend">${copy.weekend}</button>
+            <button class="tab-btn" data-discovery-filter="rainy">${copy.rainy}</button>
+            <button class="tab-btn" data-discovery-filter="parents">${copy.parents}</button>
+            <button class="tab-btn" data-discovery-filter="food">${copy.food}</button>
+            <button class="tab-btn" data-discovery-filter="coast">${copy.coast}</button>
+          </div>
+        </div>
+        <div class="discovery-grid" id="homeDiscoveryGrid"></div>
+        <div class="finder-empty info-card" id="homeDiscoveryEmpty" hidden><p>${copy.empty}</p></div>
+      </article>`;
+    const items = buildDiscoveryItems();
+    const grid = root.querySelector('#homeDiscoveryGrid');
+    const count = root.querySelector('#homeDiscoveryCount');
+    const empty = root.querySelector('#homeDiscoveryEmpty');
+    let filter = 'all'; let query = '';
+    function render(){
+      const filtered = items.filter(item => {
+        const hay = `${item.slug} ${item.tags.join(' ')} ${item.title[lang]||item.title.en} ${item.desc[lang]||item.desc.en}`.toLowerCase();
+        const matchesQuery = !query || hay.includes(query);
+        const matchesFilter = filter === 'all' || item.tags.includes(filter);
+        return matchesQuery && matchesFilter;
+      });
+      grid.innerHTML = filtered.map(item => `
+        <article class="discovery-card info-card">
+          <div class="discovery-card-meta"><span class="collection-kicker">${item.kind === 'city' ? 'City base' : 'Editorial base'}</span><span class="meta-inline">${item.preset.destination}</span></div>
+          <h3>${item.title[lang] || item.title.en}</h3>
+          <p>${item.desc[lang] || item.desc.en}</p>
+          <div class="mini-vibe-row">${item.tags.slice(0,4).map(tag => `<span class="mini-vibe-chip">${tag}</span>`).join('')}</div>
+          <div class="card-actions discovery-actions"><a class="soft-btn" href="${item.guide}">${copy.guide}</a><a class="ghost-btn" href="${item.example}">${copy.sample}</a><button class="primary-btn discovery-plan-btn" data-discovery-preset='${JSON.stringify(item.preset)}'>${copy.plan}</button></div>
+        </article>`).join('');
+      count.textContent = lang === 'ko' ? `${filtered.length}${copy.matches}` : `${filtered.length} ${copy.matches}`;
+      if (empty) empty.hidden = filtered.length !== 0;
+      grid.querySelectorAll('[data-discovery-preset]').forEach(btn => btn.addEventListener('click', () => {
+        try { window.RyokoApp.applyPlannerPreset(JSON.parse(btn.dataset.discoveryPreset || '{}')); } catch(e) {}
+        document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
+      }));
+    }
+    root.querySelectorAll('[data-discovery-filter]').forEach(btn => btn.addEventListener('click', () => {
+      filter = btn.dataset.discoveryFilter;
+      root.querySelectorAll('[data-discovery-filter]').forEach(el => el.classList.toggle('active', el === btn));
+      render();
+    }));
+    root.querySelector('#homeDiscoverySearch')?.addEventListener('input', e => { query = String(e.target.value||'').trim().toLowerCase(); render(); });
+    render();
+  }
+
   function initMagazine(){
     if (document.body.dataset.page !== 'magazine') return;
     renderMagazineLoop();
@@ -924,6 +1006,15 @@ window.RyokoApp = (() => {
     const countryTabs = [...document.querySelectorAll('[data-country-filter]')];
     const vibeTabs = [...document.querySelectorAll('[data-vibe-filter]')];
     const empty = document.getElementById('finderEmptyState');
+    const helperCopy = lang === 'ko' ? { helper:'빠른 검색', count:'개 도시' } : { helper:'Quick search', count:'cities' };
+    const toolbar = document.querySelector('.finder-toolbar');
+    if (toolbar && !document.getElementById('finderHelperRow')) {
+      const row = document.createElement('div');
+      row.className = 'finder-helper-row';
+      row.id = 'finderHelperRow';
+      row.innerHTML = `<div class="finder-suggestions"><span class="discovery-suggest-label">${helperCopy.helper}</span><button class="tab-btn" data-finder-suggest="tokyo">Tokyo</button><button class="tab-btn" data-finder-suggest="rainy">Rainy day</button><button class="tab-btn" data-finder-suggest="parents">Parents</button><button class="tab-btn" data-finder-suggest="food">Food</button></div><div class="finder-count" id="finderCount"></div>`;
+      toolbar.insertAdjacentElement('afterend', row);
+    }
     let country = 'all';
     let vibe = 'all';
     let query = '';
@@ -941,6 +1032,8 @@ window.RyokoApp = (() => {
         if (show) visible += 1;
       });
       if (empty) empty.hidden = visible !== 0;
+      const count = document.getElementById('finderCount');
+      if (count) count.textContent = lang === 'ko' ? `${visible}${helperCopy.count}` : `${visible} ${helperCopy.count}`;
     }
 
     countryTabs.forEach(btn => btn.addEventListener('click', () => {
@@ -957,6 +1050,11 @@ window.RyokoApp = (() => {
       query = String(e.target.value || '').trim().toLowerCase();
       apply();
     });
+    document.querySelectorAll('[data-finder-suggest]').forEach(btn => btn.addEventListener('click', () => {
+      query = String(btn.dataset.finderSuggest || '').toLowerCase();
+      if (searchInput) searchInput.value = btn.dataset.finderSuggest || '';
+      apply();
+    }));
     apply();
   }
 
@@ -1159,6 +1257,7 @@ window.RyokoApp = (() => {
     renderMobileDock();
     initHomePresets();
     initPlannerOnboarding();
+    renderHomeDiscovery();
     initEditorialChrome();
   }
   function cityCardTemplate(city){
