@@ -989,7 +989,7 @@
             <h3>Good starting points</h3>
             <div class="trip-loop-list">
               <article><h4>Tokyo guide</h4><p>Fast city, strong first route, and lots of branching options.</p></article>
-              <article><h4>Busan sample</h4><p>Good for scenic pacing and mixed-age travel.</p></article>
+              <article><h4>${lang === 'ko' ? '부산 샘플' : lang === 'ja' ? '釜山サンプル' : lang === 'zhHant' ? '釜山範例' : 'Busan sample'}</h4><p>${lang === 'ko' ? '풍경 페이스와 세대 혼합 여행에 잘 맞습니다.' : lang === 'ja' ? '景色のテンポと幅広い年齢の旅に向いています。' : lang === 'zhHant' ? '很適合重視風景節奏與不同年齡同行的旅程。' : 'Good for scenic pacing and mixed-age travel.'}</p></article>
             </div>`;
           return;
         }
