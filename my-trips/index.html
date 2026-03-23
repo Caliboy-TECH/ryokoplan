@@ -243,9 +243,9 @@
       const $ = id => document.getElementById(id);
       const sections = { saved: $('savedSection'), recent: $('recentSection'), shared: $('sharedSection') };
       const imgMap = {
-        Tokyo:'../assets/images/cities/tokyo.png', Osaka:'../assets/images/cities/osaka.png', Kyoto:'../assets/images/cities/kyoto.png',
-        Fukuoka:'../assets/images/cities/fukuoka.png', Seoul:'../assets/images/cities/seoul.png', Busan:'../assets/images/cities/busan.png',
-        Jeju:'../assets/images/cities/jeju.png', Gyeongju:'../assets/images/cities/gyeongju.png'
+        Tokyo:'../assets/images/cities/tokyo.jpg', Osaka:'../assets/images/cities/osaka.jpg', Kyoto:'../assets/images/cities/kyoto.jpg',
+        Fukuoka:'../assets/images/cities/fukuoka.jpg', Seoul:'../assets/images/cities/seoul.jpg', Busan:'../assets/images/cities/busan.jpg',
+        Jeju:'../assets/images/cities/jeju.jpg', Gyeongju:'../assets/images/cities/gyeongju.jpg'
       };
       const copyByLang = {
         ko: {
@@ -378,32 +378,32 @@
 
       const publicRouteDesk = [
         {
-          key:'tokyo-first', city:'Tokyo', titleKo:'Tokyo first trip base', titleEn:'Tokyo first trip base', badgeKey:'publicDeskWeekend', image:'../assets/images/examples/tokyo-first-trip.png', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
+          key:'tokyo-first', city:'Tokyo', titleKo:'Tokyo first trip base', titleEn:'Tokyo first trip base', badgeKey:'publicDeskWeekend', image:'../assets/images/examples/tokyo-first-trip.jpg', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
           summaryKo:'처음 가는 도쿄를 과열되지 않게 시작하기 좋은 공개 베이스입니다.', summaryEn:'A public base for first-time Tokyo that stays strong without overheating the pace.',
           duration:'3N4D', companionKo:'커플/친구', companionEn:'Couple / Friends', vibeKo:'도시 밀도', vibeEn:'City density', bestKo:'첫 여행, 쇼핑, 밤 리듬', bestEn:'First trip, shopping, night rhythm'
         },
         {
-          key:'kyoto-slow', city:'Kyoto', titleKo:'Kyoto slow reset', titleEn:'Kyoto slow reset', badgeKey:'publicDeskSlow', image:'../assets/images/examples/kyoto-slow.png', guide:'../city/kyoto.html', example:'../example/kyoto-2n3d-slow-trip.html',
+          key:'kyoto-slow', city:'Kyoto', titleKo:'Kyoto slow reset', titleEn:'Kyoto slow reset', badgeKey:'publicDeskSlow', image:'../assets/images/examples/kyoto-slow.jpg', guide:'../city/kyoto.html', example:'../example/kyoto-2n3d-slow-trip.html',
           summaryKo:'많이 넣지 않고 교토의 여백을 살리는 공개 샘플입니다.', summaryEn:'A public sample that protects Kyoto by leaving real space in the route.',
           duration:'2N3D', companionKo:'혼자/커플', companionEn:'Solo / Couple', vibeKo:'조용한 무드', vibeEn:'Quiet mood', bestKo:'슬로우 트립, 오전 사원', bestEn:'Slow trip, temple mornings'
         },
         {
-          key:'busan-parents', city:'Busan', titleKo:'Busan scenic family route', titleEn:'Busan scenic family route', badgeKey:'publicDeskFamily', image:'../assets/images/examples/busan-parents.png', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
+          key:'busan-parents', city:'Busan', titleKo:'Busan scenic family route', titleEn:'Busan scenic family route', badgeKey:'publicDeskFamily', image:'../assets/images/examples/busan-parents.jpg', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
           summaryKo:'부모님과도 무리 없이 갈 수 있는 부산 scenic 루트 베이스입니다.', summaryEn:'A scenic Busan base that works gently for mixed-age or parent trips.',
           duration:'2N3D', companionKo:'가족/부모님', companionEn:'Family / Parents', vibeKo:'시닉 리듬', vibeEn:'Scenic rhythm', bestKo:'전망, 식사, 완만한 템포', bestEn:'Views, meals, softer tempo'
         },
         {
-          key:'fukuoka-food', city:'Fukuoka', titleKo:'Fukuoka food weekend', titleEn:'Fukuoka food weekend', badgeKey:'publicDeskFood', image:'../assets/images/examples/fukuoka-food.png', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
+          key:'fukuoka-food', city:'Fukuoka', titleKo:'Fukuoka food weekend', titleEn:'Fukuoka food weekend', badgeKey:'publicDeskFood', image:'../assets/images/examples/fukuoka-food.jpg', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
           summaryKo:'짧은 일정에서 식사 리듬을 가장 잘 살리는 공개 샘플입니다.', summaryEn:'A compact public sample built around the strongest food rhythm for a short stay.',
           duration:'2N3D', companionKo:'친구/혼자', companionEn:'Friends / Solo', vibeKo:'푸드 리듬', vibeEn:'Food rhythm', bestKo:'짧은 일본, 컴팩트 이동', bestEn:'Short Japan, compact moves'
         },
         {
-          key:'seoul-rainy', city:'Seoul', titleKo:'Seoul rainy-day fallback', titleEn:'Seoul rainy-day fallback', badgeKey:'publicDeskSlow', image:'../assets/images/cities/seoul.png', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
+          key:'seoul-rainy', city:'Seoul', titleKo:'Seoul rainy-day fallback', titleEn:'Seoul rainy-day fallback', badgeKey:'publicDeskSlow', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
           summaryKo:'비가 오거나 컨디션이 애매할 때도 동네 리듬을 망치지 않는 서울용 공개 베이스입니다.', summaryEn:'A Seoul public base that still holds shape when the weather turns or energy drops.',
           duration:'2N3D', companionKo:'혼자/친구', companionEn:'Solo / Friends', vibeKo:'레인 스왑', vibeEn:'Rain swap', bestKo:'비 오는 날, 동네 이동', bestEn:'Rainy day, neighborhood flow'
         },
         {
-          key:'jeju-soft-drive', city:'Jeju', titleKo:'Jeju soft drive base', titleEn:'Jeju soft drive base', badgeKey:'publicDeskFamily', image:'../assets/images/cities/jeju.png', guide:'../city/jeju.html', example:'../example/busan-2n3d-with-parents.html',
+          key:'jeju-soft-drive', city:'Jeju', titleKo:'Jeju soft drive base', titleEn:'Jeju soft drive base', badgeKey:'publicDeskFamily', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../example/busan-2n3d-with-parents.html',
           summaryKo:'제주의 이동 현실을 반영해서 과속하지 않는 드라이브형 공개 베이스입니다.', summaryEn:'A gentler Jeju base that respects drive time, open space, and lower route density.',
           duration:'2N3D', companionKo:'가족/커플', companionEn:'Family / Couple', vibeKo:'드라이브 리듬', vibeEn:'Drive rhythm', bestKo:'제주 초행, 느린 일정', bestEn:'First Jeju, slower pace'
         }
@@ -411,25 +411,25 @@
 
       const routeClubDesk = [
         {
-          key:'tokyo-to-seoul-night', source:'Tokyo', city:'Seoul', titleKo:'도쿄 다음엔 서울 나이트 리듬', titleEn:'Seoul after Tokyo night rhythm', image:'../assets/images/cities/seoul.png', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
+          key:'tokyo-to-seoul-night', source:'Tokyo', city:'Seoul', titleKo:'도쿄 다음엔 서울 나이트 리듬', titleEn:'Seoul after Tokyo night rhythm', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
           summaryKo:'도쿄의 밀도와 밤 리듬이 맞았다면, 다음 분기로는 서울의 동네 대비와 늦은 저녁 템포가 잘 이어집니다.',
           summaryEn:'If Tokyo worked for its density and night rhythm, Seoul is a strong next branch for neighborhood contrast and later evenings.',
           chipsKo:['트렌딩', '야간 리듬', '동네 대비'], chipsEn:['Trending', 'Night rhythm', 'Neighborhood contrast'], duration:'2N3D'
         },
         {
-          key:'kyoto-to-gyeongju-quiet', source:'Kyoto', city:'Gyeongju', titleKo:'교토 다음엔 경주의 조용한 템포', titleEn:'Quiet Gyeongju after Kyoto', image:'../assets/images/cities/gyeongju.png', guide:'../city/gyeongju.html', example:'../city/gyeongju.html',
+          key:'kyoto-to-gyeongju-quiet', source:'Kyoto', city:'Gyeongju', titleKo:'교토 다음엔 경주의 조용한 템포', titleEn:'Quiet Gyeongju after Kyoto', image:'../assets/images/cities/gyeongju.jpg', guide:'../city/gyeongju.html', example:'../city/gyeongju.html',
           summaryKo:'교토의 여백과 낮은 에너지 밀도가 좋았다면, 경주는 더 느린 문화 리듬으로 자연스럽게 이어집니다.',
           summaryEn:'If Kyoto worked because of space and lower energy density, Gyeongju keeps that line going with an even slower cultural tempo.',
           chipsKo:['슬로우', '문화 리듬', '낮은 밀도'], chipsEn:['Slow', 'Cultural rhythm', 'Low density'], duration:'2N3D'
         },
         {
-          key:'busan-to-jeju-soft', source:'Busan', city:'Jeju', titleKo:'부산 다음엔 제주 소프트 드라이브', titleEn:'Soft Jeju drive after Busan', image:'../assets/images/cities/jeju.png', guide:'../city/jeju.html', example:'../city/jeju.html',
+          key:'busan-to-jeju-soft', source:'Busan', city:'Jeju', titleKo:'부산 다음엔 제주 소프트 드라이브', titleEn:'Soft Jeju drive after Busan', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../city/jeju.html',
           summaryKo:'부산에서 전망과 완만한 템포가 잘 맞았다면, 제주는 더 느슨한 드라이브형 분기로 잘 이어집니다.',
           summaryEn:'If Busan worked for views and a softer tempo, Jeju is the next branch for a more open drive-based route.',
           chipsKo:['코스트', '드라이브', '가벼운 분기'], chipsEn:['Coast', 'Drive', 'Softer branch'], duration:'2N3D'
         },
         {
-          key:'fukuoka-to-osaka-food', source:'Fukuoka', city:'Osaka', titleKo:'후쿠오카 다음엔 오사카 푸드 업시프트', titleEn:'Food upshift to Osaka after Fukuoka', image:'../assets/images/cities/osaka.png', guide:'../city/osaka.html', example:'../example/osaka-2n3d-family.html',
+          key:'fukuoka-to-osaka-food', source:'Fukuoka', city:'Osaka', titleKo:'후쿠오카 다음엔 오사카 푸드 업시프트', titleEn:'Food upshift to Osaka after Fukuoka', image:'../assets/images/cities/osaka.jpg', guide:'../city/osaka.html', example:'../example/osaka-2n3d-family.html',
           summaryKo:'짧은 후쿠오카 푸드 리듬이 좋았다면, 오사카는 더 진한 식사 동선과 에너지를 주는 다음 샘플입니다.',
           summaryEn:'If Fukuoka worked as a compact food rhythm, Osaka is the next sample for heavier meal sequencing and more energy.',
           chipsKo:['푸드', '업시프트', '주말'], chipsEn:['Food-led', 'Upshift', 'Weekend'], duration:'2N3D'
@@ -438,42 +438,42 @@
 
       const operatingEdits = [
         {
-          key:'spring-soft-seoul', city:'Seoul', titleKo:'봄 주말 서울 소프트 에디트', titleEn:'Soft Seoul spring weekend', labelKo:'시즌 에디트', labelEn:'Seasonal edit', image:'../assets/images/cities/seoul.png', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
+          key:'spring-soft-seoul', city:'Seoul', titleKo:'봄 주말 서울 소프트 에디트', titleEn:'Soft Seoul spring weekend', labelKo:'시즌 에디트', labelEn:'Seasonal edit', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
           summaryKo:'벚꽃 시즌처럼 사람이 많을 때도 리듬을 망치지 않게, 동네 조합과 시간대를 부드럽게 잡은 베이스입니다.', summaryEn:'A softer Seoul base that protects pacing during crowded spring windows by leaning on neighborhood rhythm and timing.',
           chipsKo:['봄 창', '동네 조합', '저녁 무드'], chipsEn:['Spring window', 'Neighborhood pairings', 'Evening mood'], duration:'2N3D', companionKo:'커플/친구', companionEn:'Couple / Friends'
         },
         {
-          key:'tokyo-weekend-dense', city:'Tokyo', titleKo:'도쿄 주말 고밀도 베이스', titleEn:'Tokyo dense weekend base', labelKo:'주말 에디트', labelEn:'Weekend edit', image:'../assets/images/cities/tokyo.png', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
+          key:'tokyo-weekend-dense', city:'Tokyo', titleKo:'도쿄 주말 고밀도 베이스', titleEn:'Tokyo dense weekend base', labelKo:'주말 에디트', labelEn:'Weekend edit', image:'../assets/images/cities/tokyo.jpg', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
           summaryKo:'시간이 짧아도 밀도를 살리고 싶을 때 쓰는 주말형 도쿄 베이스입니다. 축을 나눠 과열만 막습니다.', summaryEn:'A short-window Tokyo base for travelers who still want density, without turning the route into a blur.',
           chipsKo:['주말', '밀도', '축 나누기'], chipsEn:['Weekend', 'Density', 'Axis split'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
         },
         {
-          key:'busan-parents-soft', city:'Busan', titleKo:'부모님과 가는 부산 소프트 루트', titleEn:'Soft Busan with parents', labelKo:'동행 에디트', labelEn:'Companion edit', image:'../assets/images/cities/busan.png', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
+          key:'busan-parents-soft', city:'Busan', titleKo:'부모님과 가는 부산 소프트 루트', titleEn:'Soft Busan with parents', labelKo:'동행 에디트', labelEn:'Companion edit', image:'../assets/images/cities/busan.jpg', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
           summaryKo:'전망과 식사는 살리고 피로 누적은 줄이는 부모님 동행용 베이스입니다.', summaryEn:'A parent-friendly Busan base that keeps the views and meals while protecting energy.',
           chipsKo:['부모님', '전망', '피로 조절'], chipsEn:['Parents', 'Views', 'Fatigue control'], duration:'2N3D', companionKo:'가족/부모님', companionEn:'Family / Parents'
         },
         {
-          key:'kyoto-solo-quiet', city:'Kyoto', titleKo:'교토 솔로 콰이어트 윈도우', titleEn:'Quiet Kyoto for solo time', labelKo:'솔로 에디트', labelEn:'Solo edit', image:'../assets/images/cities/kyoto.png', guide:'../city/kyoto.html', example:'../example/kyoto-2n3d-slow-trip.html',
+          key:'kyoto-solo-quiet', city:'Kyoto', titleKo:'교토 솔로 콰이어트 윈도우', titleEn:'Quiet Kyoto for solo time', labelKo:'솔로 에디트', labelEn:'Solo edit', image:'../assets/images/cities/kyoto.jpg', guide:'../city/kyoto.html', example:'../example/kyoto-2n3d-slow-trip.html',
           summaryKo:'혼자일 때 교토를 과하게 쓰지 않고, 오전과 저녁의 조용한 시간을 중심으로 읽는 베이스입니다.', summaryEn:'A solo Kyoto base built around quieter morning and evening windows instead of trying to do too much.',
           chipsKo:['혼자', '조용한 시간', '슬로우'], chipsEn:['Solo', 'Quiet windows', 'Slow'], duration:'2N3D', companionKo:'혼자', companionEn:'Solo'
         },
         {
-          key:'fukuoka-friends-food', city:'Fukuoka', titleKo:'후쿠오카 친구 푸드 위켄드', titleEn:'Fukuoka food weekend with friends', labelKo:'프렌즈 에디트', labelEn:'Friends edit', image:'../assets/images/cities/fukuoka.png', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
+          key:'fukuoka-friends-food', city:'Fukuoka', titleKo:'후쿠오카 친구 푸드 위켄드', titleEn:'Fukuoka food weekend with friends', labelKo:'프렌즈 에디트', labelEn:'Friends edit', image:'../assets/images/cities/fukuoka.jpg', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
           summaryKo:'짧게 가도 식사 타이밍이 무너지지 않게, 친구와 쓰기 좋은 푸드 중심 베이스입니다.', summaryEn:'A friend-ready Fukuoka base built around food timing that still works on a short weekend.',
           chipsKo:['친구', '푸드', '짧은 일본'], chipsEn:['Friends', 'Food', 'Short Japan'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
         },
         {
-          key:'busan-summer-coast', city:'Busan', titleKo:'부산 서머 코스트 에디트', titleEn:'Busan summer coast edit', labelKo:'시즌 에디트', labelEn:'Seasonal edit', image:'../assets/images/cities/busan.png', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
+          key:'busan-summer-coast', city:'Busan', titleKo:'부산 서머 코스트 에디트', titleEn:'Busan summer coast edit', labelKo:'시즌 에디트', labelEn:'Seasonal edit', image:'../assets/images/cities/busan.jpg', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
           summaryKo:'여름 부산에서 바다를 많이 넣되 이동 과열은 막는 coast 중심 베이스입니다.', summaryEn:'A summer Busan base that lets the coast lead without overheating the route.',
           chipsKo:['여름', '코스트', '오후 전망'], chipsEn:['Summer', 'Coast', 'Late-day views'], duration:'2N3D', companionKo:'친구/커플', companionEn:'Friends / Couple'
         },
         {
-          key:'seoul-late-night-friends', city:'Seoul', titleKo:'서울 프렌즈 레이트나이트 에디트', titleEn:'Seoul late-night friends edit', labelKo:'프렌즈 에디트', labelEn:'Friends edit', image:'../assets/images/cities/seoul.png', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
+          key:'seoul-late-night-friends', city:'Seoul', titleKo:'서울 프렌즈 레이트나이트 에디트', titleEn:'Seoul late-night friends edit', labelKo:'프렌즈 에디트', labelEn:'Friends edit', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
           summaryKo:'밤 리듬을 살리되 다음날이 무너지지 않게 조절한 서울 친구 여행 베이스입니다.', summaryEn:'A Seoul friends base that keeps the late-night rhythm without ruining the next day.',
           chipsKo:['친구', '밤 리듬', '다음날 보호'], chipsEn:['Friends', 'Night rhythm', 'Protect next day'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
         },
         {
-          key:'jeju-parents-easy', city:'Jeju', titleKo:'제주 부모님 이지 페이스', titleEn:'Jeju easy pace with parents', labelKo:'동행 에디트', labelEn:'Companion edit', image:'../assets/images/cities/jeju.png', guide:'../city/jeju.html', example:'../example/busan-2n3d-with-parents.html',
+          key:'jeju-parents-easy', city:'Jeju', titleKo:'제주 부모님 이지 페이스', titleEn:'Jeju easy pace with parents', labelKo:'동행 에디트', labelEn:'Companion edit', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../example/busan-2n3d-with-parents.html',
           summaryKo:'운전과 풍경, 식사 리듬을 무리 없이 맞춘 부모님 동행용 제주 베이스입니다.', summaryEn:'A Jeju parent-friendly base built around easy drive logic, view windows, and meal rhythm.',
           chipsKo:['부모님', '드라이브', '쉬운 페이스'], chipsEn:['Parents', 'Drive', 'Easy pace'], duration:'2N3D', companionKo:'가족/부모님', companionEn:'Family / Parents'
         }
@@ -532,7 +532,7 @@
           .map(value => `<span class="trip-mini-chip">${value}</span>`).join('');
         return `
           <article class="trip-card rich info-card">
-            <div class="card-image"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.png'}" alt="${item.destination || 'Trip'}"></div>
+            <div class="card-image"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.jpg'}" alt="${item.destination || 'Trip'}"></div>
             <div class="card-body">
               <div class="trip-card-topline">
                 <div class="meta">${tripModeLabel(mode)}</div>
@@ -567,7 +567,7 @@
         }
         const meta = latest.planData || {};
         $('continueCard').innerHTML = `
-          <div class="trip-continue-media"><img src="${imgMap[latest.destination] || '../assets/images/hero/planner-preview.png'}" alt="${latest.destination || 'Trip'}"></div>
+          <div class="trip-continue-media"><img src="${imgMap[latest.destination] || '../assets/images/hero/planner-preview.jpg'}" alt="${latest.destination || 'Trip'}"></div>
           <div class="trip-continue-copy">
             <div class="eyebrow">${copy.continueMeta}</div>
             <h2 class="section-title trip-tight-title">${latest.title || latest.destination || 'Trip'}</h2>
@@ -815,7 +815,7 @@
           const chips = [latest?.duration, latest?.companion, latest?.planData?.vibe, latest?.planData?.bestFor].filter(Boolean).slice(0,3);
           return `
             <article class="city-collection-card info-card">
-              <div class="city-collection-cover"><img src="${imgMap[city] || '../assets/images/hero/planner-preview.png'}" alt="${city}"></div>
+              <div class="city-collection-cover"><img src="${imgMap[city] || '../assets/images/hero/planner-preview.jpg'}" alt="${city}"></div>
               <div class="city-collection-body">
                 <div class="trip-card-topline"><div class="meta">${city}</div><div class="trip-card-date">${items.length} ${langCopy().collectionRoutes}</div></div>
                 <h3 class="card-title">${latest?.title || city}</h3>
@@ -904,7 +904,7 @@
         const city = window.RyokoApp.getCityLoopData(item.destination) || { name:item.destination || 'Trip', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
         const meta = detailMeta(item);
         node.innerHTML = `
-          <div class="shared-spotlight-media"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.png'}" alt="${item.destination || 'Trip'}"></div>
+          <div class="shared-spotlight-media"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.jpg'}" alt="${item.destination || 'Trip'}"></div>
           <div class="shared-spotlight-copy">
             <div class="trip-card-topline">
               <div class="meta">${langCopy().tripShared}</div>
@@ -943,7 +943,7 @@
         const summary = getMetaSummary(item) || 'A trip you can reopen, save, or turn into a new plan.';
         content.innerHTML = `
           <div class="trip-detail-hero">
-            <div class="trip-detail-media"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.png'}" alt="${item.destination || 'Trip'}"></div>
+            <div class="trip-detail-media"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.jpg'}" alt="${item.destination || 'Trip'}"></div>
             <div class="trip-detail-copy">
               <div class="meta">${tripModeLabel(mode)}</div>
               <h2>${item.title || item.destination || 'Trip'}</h2>

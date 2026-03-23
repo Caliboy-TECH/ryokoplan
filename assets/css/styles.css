@@ -2041,3 +2041,20 @@ body[data-page="planner"] .top-bar{z-index:62}
   .lang-btn{min-width:54px;height:42px;padding:0 12px;font-size:13px}
   .lang-btn[data-lang-btn="zhHant"]{min-width:70px;padding:0 14px}
 }
+
+
+/* mobile language toggle polish */
+@media (max-width: 720px){
+  .top-bar-inner{grid-template-columns:minmax(0,1fr);gap:12px}
+  .top-actions{display:grid;grid-template-columns:1fr;align-items:start;gap:10px}
+  .top-actions .lang-switch{justify-content:flex-start;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .top-actions .lang-btn{min-width:0;width:100%;height:46px;padding:0 10px;border-radius:18px;font-size:15px;letter-spacing:-.01em}
+  .top-actions .lang-btn[data-lang-btn="zhHant"]{padding:0 10px}
+  .brand{align-items:center;gap:12px}
+  .brand-copy{min-width:0}
+  .brand-title{line-height:.92}
+}
+@media (max-width: 390px){
+  .top-actions .lang-switch{gap:6px}
+  .top-actions .lang-btn{height:44px;font-size:14px;padding:0 8px}
+}

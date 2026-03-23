@@ -285,18 +285,18 @@ window.RyokoPlanner = (() => {
   function cityImageFor(destination=''){
     const slug = String(destination || '').trim().toLowerCase();
     const map = {
-      tokyo:'assets/images/cities/tokyo.png', osaka:'assets/images/cities/osaka.png', kyoto:'assets/images/cities/kyoto.png',
-      fukuoka:'assets/images/cities/fukuoka.png', seoul:'assets/images/cities/seoul.png', busan:'assets/images/cities/busan.png',
-      jeju:'assets/images/cities/jeju.png', gyeongju:'assets/images/cities/gyeongju.png'
+      tokyo:'assets/images/cities/tokyo.jpg', osaka:'assets/images/cities/osaka.jpg', kyoto:'assets/images/cities/kyoto.jpg',
+      fukuoka:'assets/images/cities/fukuoka.jpg', seoul:'assets/images/cities/seoul.jpg', busan:'assets/images/cities/busan.jpg',
+      jeju:'assets/images/cities/jeju.jpg', gyeongju:'assets/images/cities/gyeongju.jpg'
     };
-    return map[slug] || 'assets/images/hero/planner-preview.png';
+    return map[slug] || 'assets/images/hero/planner-preview.jpg';
   }
   function exampleImageFor(destination=''){
     const slug = String(destination || '').trim().toLowerCase();
     const map = {
-      tokyo:'assets/images/examples/tokyo-first-trip.png', osaka:'assets/images/examples/osaka-family.png', kyoto:'assets/images/examples/kyoto-slow.png',
-      fukuoka:'assets/images/examples/fukuoka-food.png', seoul:'assets/images/examples/seoul-city-vibes.png', busan:'assets/images/examples/busan-parents.png',
-      jeju:'assets/images/cities/jeju.png', gyeongju:'assets/images/cities/gyeongju.png'
+      tokyo:'assets/images/examples/tokyo-first-trip.jpg', osaka:'assets/images/examples/osaka-family.jpg', kyoto:'assets/images/examples/kyoto-slow.jpg',
+      fukuoka:'assets/images/examples/fukuoka-food.jpg', seoul:'assets/images/examples/seoul-city-vibes.jpg', busan:'assets/images/examples/busan-parents.jpg',
+      jeju:'assets/images/cities/jeju.jpg', gyeongju:'assets/images/cities/gyeongju.jpg'
     };
     return map[slug] || cityImageFor(destination);
   }
