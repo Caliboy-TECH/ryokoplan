@@ -234,11 +234,11 @@ window.RyokoPlanner = (() => {
   }
   function prettyPillValue(group, value=''){
     const key = String(value || '').toLowerCase();
-    const isKo = (window.RyokoApp?.lang || 'ko') === 'ko';
+    const lang = window.RyokoApp?.lang || 'ko';
     const maps = {
-      tripMood: isKo ? { balanced:'균형형', editorial:'매거진형', soft:'소프트', vivid:'비비드' } : { balanced:'Balanced mood', editorial:'Editorial mood', soft:'Soft mood', vivid:'Vivid mood' },
-      dayDensity: isKo ? { light:'가볍게', balanced:'균형형', full:'꽉 차게' } : { light:'Light days', balanced:'Balanced days', full:'Full days' },
-      budgetMode: isKo ? { smart:'스마트', balanced:'밸런스', treat:'한 끼는 확실하게' } : { smart:'Smart spend', balanced:'Balanced spend', treat:'Treat-worthy' }
+      tripMood: lang === 'ko' ? { balanced:'균형형', editorial:'매거진형', soft:'소프트', vivid:'비비드' } : lang === 'ja' ? { balanced:'バランス', editorial:'エディトリアル', soft:'ソフト', vivid:'ビビッド' } : lang === 'zhHant' ? { balanced:'平衡', editorial:'編輯感', soft:'柔和', vivid:'鮮明' } : { balanced:'Balanced mood', editorial:'Editorial mood', soft:'Soft mood', vivid:'Vivid mood' },
+      dayDensity: lang === 'ko' ? { light:'가볍게', balanced:'균형형', full:'꽉 차게' } : lang === 'ja' ? { light:'軽め', balanced:'バランス', full:'しっかり' } : lang === 'zhHant' ? { light:'輕量', balanced:'平衡', full:'飽滿' } : { light:'Light days', balanced:'Balanced days', full:'Full days' },
+      budgetMode: lang === 'ko' ? { smart:'스마트', balanced:'밸런스', treat:'한 끼는 확실하게' } : lang === 'ja' ? { smart:'スマート', balanced:'バランス', treat:'少し贅沢' } : lang === 'zhHant' ? { smart:'聰明花', balanced:'平衡', treat:'值得犒賞' } : { smart:'Smart spend', balanced:'Balanced spend', treat:'Treat-worthy' }
     };
     return maps[group]?.[key] || value;
   }
@@ -832,8 +832,8 @@ window.RyokoPlanner = (() => {
     const dayOnePlaces = normalizePlaces(dayOne).slice(0,3).map(place => place.name).join(' · ');
     const visualCards = [
       { kicker: copy.cityCover, title: rawDestination, text: textValue(data.summary, copy.cityCoverText), image: coverImage },
-      { kicker: copy.routeMood, title: textValue(dayOne.title, lang === 'ko' ? '첫날의 리듬' : 'Opening rhythm'), text: dayOnePlaces || copy.routeMoodText, image: routeMoodImage },
-      { kicker: copy.nextBranch, title: lang === 'ko' ? `${relatedName}까지 이어보기` : `Branch into ${relatedName}`, text: lang === 'ko' ? `${textValue(related.vibe, 'editorial route')} 톤의 도시로 다음 탐색을 이어갈 수 있습니다.` : `This ${textValue(related.vibe, 'editorial route')} city is the cleanest next branch from here.`, image: relatedImage }
+      { kicker: copy.routeMood, title: textValue(dayOne.title, uiCopy('첫날의 리듬', 'Opening rhythm', '一日目のリズム', '第一天的節奏')), text: dayOnePlaces || copy.routeMoodText, image: routeMoodImage },
+      { kicker: copy.nextBranch, title: uiCopy(`${relatedName}까지 이어보기`, `Branch into ${relatedName}`, `${relatedName}へ続ける`, `延伸到 ${relatedName}`), text: uiCopy(`${textValue(related.vibe, 'editorial route')} 톤의 도시로 다음 탐색을 이어갈 수 있습니다.`, `This ${textValue(related.vibe, 'editorial route')} city is the cleanest next branch from here.`, `${textValue(related.vibe, 'editorial route')}の空気を持つ都市へ、そのまま次の探索をつなげられます。`, `這座帶有 ${textValue(related.vibe, 'editorial route')} 氛圍的城市，最適合作為下一段延伸。`), image: relatedImage }
     ].map(card => `
       <article class="story-card">
         <div class="story-image" style="background-image:linear-gradient(180deg, rgba(17,27,45,0.08), rgba(17,27,45,0.58)), url('${card.image}')"></div>
@@ -867,8 +867,8 @@ window.RyokoPlanner = (() => {
     }).join('');
     const budgetRows = (Array.isArray(data.budgetBreakdown) ? data.budgetBreakdown.map(x => [x.category, x.amount]) : Object.entries(data.budgetBreakdown || {}))
       .map(([k,v])=>`<div class="budget-row"><span>${escapeHtml(budgetLabel(k))}</span><strong>${escapeHtml(v)}</strong></div>`).join('');
-    const tipsSource = (data.localTips || []).length ? data.localTips : [lang === 'ko' ? '이동 사이에 15분 정도의 여백을 남겨두면 전체 리듬이 훨씬 좋아집니다.' : 'Leave a 15-minute pocket between anchors to keep the route feeling light.'];
-    const checklistSource = (data.checklist || []).length ? data.checklist : [lang === 'ko' ? '교통/영업시간을 마지막으로 한 번 더 확인하세요.' : 'Do one last check on transport timing and opening hours.'];
+    const tipsSource = (data.localTips || []).length ? data.localTips : [uiCopy('이동 사이에 15분 정도의 여백을 남겨두면 전체 리듬이 훨씬 좋아집니다.', 'Leave a 15-minute pocket between anchors to keep the route feeling light.', '移動のあいだに15分ほどの余白を残すと、全体のテンポがぐっと整います。', '在各個停點之間留出約 15 分鐘的空白，整體節奏會更輕盈。')];
+    const checklistSource = (data.checklist || []).length ? data.checklist : [uiCopy('교통/영업시간을 마지막으로 한 번 더 확인하세요.', 'Do one last check on transport timing and opening hours.', '交通と営業時間を最後にもう一度確認してください。', '最後再確認一次交通時間與營業資訊。')];
     const tipsHtml = tipsSource.map(i => `<div class="list-row"><span class="dot">•</span><span>${escapeHtml(i)}</span></div>`).join('');
     const checklistHtml = checklistSource.map(i => `<div class="list-row"><span class="dot">✓</span><span>${escapeHtml(i)}</span></div>`).join('');
     printWindow.document.write(`<!doctype html>

@@ -2192,3 +2192,15 @@ body[data-page="planner"] .top-bar{z-index:62}
   .cta-row.compact-actions,.cta-row,.hero-actions,.cover-actions-row{gap:9px;}
   .trip-mini-chip{max-width:100%;}
 }
+
+/* final QA polish: tighter small-screen wrapping and safer action stacks */
+@media (max-width: 560px){
+  .trip-card-actions,.public-route-actions,.operating-edit-actions,.city-collection-actions{display:grid;grid-template-columns:1fr;}
+  .trip-card-actions > *,.public-route-actions > *,.operating-edit-actions > *,.city-collection-actions > *{width:100%;justify-content:center;min-width:0;}
+  .trip-card-date,.trip-card-topline,.collection-kicker{overflow-wrap:anywhere;word-break:keep-all;}
+  .trip-chip-row,.city-collection-places{row-gap:8px;}
+}
+@media (max-width: 380px){
+  .result-sticky-actions{grid-template-columns:1fr;}
+  .lang-switch{gap:6px;}
+}

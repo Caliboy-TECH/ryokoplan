@@ -368,6 +368,17 @@
       ];
 
       function langCopy(){ return copyByLang[window.RyokoApp.lang] || copyByLang.en; }
+
+      function langVariant(ko, en, ja, zhHant){
+        const lang = window.RyokoApp.lang;
+        if (lang === 'ko') return ko ?? en ?? '';
+        if (lang === 'ja') return ja ?? en ?? ko ?? '';
+        if (lang === 'zhHant') return zhHant ?? en ?? ko ?? '';
+        return en ?? ko ?? '';
+      }
+      function entryText(entry, base){
+        return langVariant(entry[`${base}Ko`], entry[`${base}En`], entry[`${base}Ja`], entry[`${base}ZhHant`]);
+      }
       function activeTab(name){
         document.querySelectorAll('[data-tab]').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === name));
         Object.entries(sections).forEach(([key, section]) => section.classList.toggle('hidden', key !== name));
@@ -490,20 +501,19 @@
       }
 
       function publicRoutePayload(entry){
-        const isKo = window.RyokoApp.lang === 'ko';
         const now = new Date().toISOString();
         return {
           id: `public_${entry.key}_${Date.now()}`,
           destination: entry.city,
-          title: isKo ? entry.titleKo : entry.titleEn,
+          title: entryText(entry, 'title'),
           duration: entry.duration,
-          companion: isKo ? entry.companionKo : entry.companionEn,
-          notes: isKo ? entry.summaryKo : entry.summaryEn,
+          companion: entryText(entry, 'companion'),
+          notes: entryText(entry, 'summary'),
           createdAt: now,
           planData: {
-            summary: isKo ? entry.summaryKo : entry.summaryEn,
-            vibe: isKo ? entry.vibeKo : entry.vibeEn,
-            bestFor: isKo ? entry.bestKo : entry.bestEn
+            summary: entryText(entry, 'summary'),
+            vibe: entryText(entry, 'vibe'),
+            bestFor: entryText(entry, 'best')
           }
         };
       }
@@ -512,7 +522,6 @@
         const target = $('publicRouteDesk');
         if (!target) return;
         const copy = langCopy();
-        const isKo = window.RyokoApp.lang === 'ko';
         target.innerHTML = publicRouteDesk.map(entry => `
           <article class="public-route-card info-card">
             <div class="public-route-media"><img src="${entry.image}" alt="${entry.city}"></div>
@@ -521,13 +530,13 @@
                 <div class="meta">${copy.publicDeskPick}</div>
                 <div class="trip-card-date">${copy[entry.badgeKey] || ''}</div>
               </div>
-              <h3 class="card-title">${isKo ? entry.titleKo : entry.titleEn}</h3>
-              <p class="card-copy">${isKo ? entry.summaryKo : entry.summaryEn}</p>
+              <h3 class="card-title">${entryText(entry, 'title')}</h3>
+              <p class="card-copy">${entryText(entry, 'summary')}</p>
               <div class="trip-chip-row">
                 <span class="trip-mini-chip">${entry.city}</span>
                 <span class="trip-mini-chip">${entry.duration}</span>
-                <span class="trip-mini-chip">${isKo ? entry.vibeKo : entry.vibeEn}</span>
-                <span class="trip-mini-chip">${isKo ? entry.bestKo : entry.bestEn}</span>
+                <span class="trip-mini-chip">${entryText(entry, 'vibe')}</span>
+                <span class="trip-mini-chip">${entryText(entry, 'best')}</span>
               </div>
               <div class="card-actions public-route-actions">
                 <a class="soft-btn" href="${entry.example}">${copy.publicDeskOpen}</a>
@@ -539,37 +548,35 @@
       }
 
       function routeClubPayload(entry){
-        const isKo = window.RyokoApp.lang === 'ko';
         return {
           id: `club_${entry.key}_${Date.now()}`,
           destination: entry.city,
-          title: isKo ? `My version — ${entry.titleKo}` : `My version — ${entry.titleEn}`,
+          title: `${langVariant('내 버전', 'My version', '自分版', '我的版本')} — ${entryText(entry, 'title')}`,
           duration: entry.duration,
-          companion: isKo ? '혼자/친구' : 'Solo / Friends',
-          notes: isKo ? entry.summaryKo : entry.summaryEn,
+          companion: langVariant('혼자/친구', 'Solo / Friends', 'ひとり / 友人', '自己 / 朋友'),
+          notes: entryText(entry, 'summary'),
           createdAt: new Date().toISOString(),
           planData: {
-            summary: isKo ? entry.summaryKo : entry.summaryEn,
-            vibe: (isKo ? entry.chipsKo : entry.chipsEn).slice(0,2).join(' · '),
-            bestFor: (isKo ? entry.chipsKo : entry.chipsEn).join(' · ')
+            summary: entryText(entry, 'summary'),
+            vibe: langVariant((entry.chipsKo || []).slice(0,2).join(' · '), (entry.chipsEn || []).slice(0,2).join(' · '), (entry.chipsJa || entry.chipsEn || []).slice(0,2).join(' · '), (entry.chipsZhHant || entry.chipsEn || []).slice(0,2).join(' · ')),
+            bestFor: langVariant((entry.chipsKo || []).join(' · '), (entry.chipsEn || []).join(' · '), (entry.chipsJa || entry.chipsEn || []).join(' · '), (entry.chipsZhHant || entry.chipsEn || []).join(' · '))
           }
         };
       }
 
       function operatingEditPayload(entry){
-        const isKo = window.RyokoApp.lang === 'ko';
         return {
           id: `edit_${entry.key}_${Date.now()}`,
           destination: entry.city,
-          title: isKo ? entry.titleKo : entry.titleEn,
+          title: entryText(entry, 'title'),
           duration: entry.duration,
-          companion: isKo ? entry.companionKo : entry.companionEn,
-          notes: isKo ? entry.summaryKo : entry.summaryEn,
+          companion: entryText(entry, 'companion'),
+          notes: entryText(entry, 'summary'),
           createdAt: new Date().toISOString(),
           planData: {
-            summary: isKo ? entry.summaryKo : entry.summaryEn,
-            vibe: (isKo ? entry.chipsKo : entry.chipsEn).slice(0,2).join(' · '),
-            bestFor: (isKo ? entry.chipsKo : entry.chipsEn).join(' · ')
+            summary: entryText(entry, 'summary'),
+            vibe: langVariant((entry.chipsKo || []).slice(0,2).join(' · '), (entry.chipsEn || []).slice(0,2).join(' · '), (entry.chipsJa || entry.chipsEn || []).slice(0,2).join(' · '), (entry.chipsZhHant || entry.chipsEn || []).slice(0,2).join(' · ')),
+            bestFor: langVariant((entry.chipsKo || []).join(' · '), (entry.chipsEn || []).join(' · '), (entry.chipsJa || entry.chipsEn || []).join(' · '), (entry.chipsZhHant || entry.chipsEn || []).join(' · '))
           }
         };
       }
@@ -577,16 +584,15 @@
       function renderRouteClub(){
         const target = $('routeClubGrid');
         if (!target) return;
-        const isKo = window.RyokoApp.lang === 'ko';
         const copy = langCopy();
         target.innerHTML = routeClubDesk.map(entry => `
           <article class="public-route-card info-card route-club-card">
             <div class="public-route-media"><img src="${entry.image}" alt="${entry.city}"></div>
             <div class="public-route-body">
               <div class="trip-card-topline"><div class="meta">${copy.routeClubLabel}</div><div class="trip-card-date">${entry.source} → ${entry.city}</div></div>
-              <h3 class="card-title">${isKo ? entry.titleKo : entry.titleEn}</h3>
-              <p class="card-copy">${isKo ? entry.summaryKo : entry.summaryEn}</p>
-              <div class="trip-chip-row">${(isKo ? entry.chipsKo : entry.chipsEn).map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}<span class="trip-mini-chip">${entry.duration}</span></div>
+              <h3 class="card-title">${entryText(entry, 'title')}</h3>
+              <p class="card-copy">${entryText(entry, 'summary')}</p>
+              <div class="trip-chip-row">${langVariant(entry.chipsKo, entry.chipsEn, entry.chipsJa || entry.chipsEn, entry.chipsZhHant || entry.chipsEn).map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}<span class="trip-mini-chip">${entry.duration}</span></div>
               <div class="card-actions public-route-actions">
                 <a class="soft-btn" href="${entry.example}">${copy.routeClubOpen}</a>
                 <a class="ghost-btn" href="${entry.guide}">${copy.routeClubGuide}</a>
@@ -599,19 +605,18 @@
       function renderOperatingEdits(){
         const target = $('operatingEditDesk');
         if (!target) return;
-        const isKo = window.RyokoApp.lang === 'ko';
         const copy = langCopy();
         target.innerHTML = operatingEdits.map(entry => `
           <article class="operating-edit-card info-card">
             <div class="operating-edit-media"><img src="${entry.image}" alt="${entry.city}"></div>
             <div class="operating-edit-body">
               <div class="operating-edit-topline">
-                <span class="collection-kicker">${isKo ? entry.labelKo : entry.labelEn}</span>
+                <span class="collection-kicker">${entryText(entry, 'label')}</span>
                 <span class="trip-card-date">${entry.city} · ${entry.duration}</span>
               </div>
-              <h3>${isKo ? entry.titleKo : entry.titleEn}</h3>
-              <p>${isKo ? entry.summaryKo : entry.summaryEn}</p>
-              <div class="trip-chip-row">${(isKo ? entry.chipsKo : entry.chipsEn).map(chip => `<span class="trip-mini-chip">${chip}</span>`).join('')}</div>
+              <h3>${entryText(entry, 'title')}</h3>
+              <p>${entryText(entry, 'summary')}</p>
+              <div class="trip-chip-row">${langVariant(entry.chipsKo, entry.chipsEn, entry.chipsJa || entry.chipsEn, entry.chipsZhHant || entry.chipsEn).map(chip => `<span class="trip-mini-chip">${chip}</span>`).join('')}</div>
               <div class="operating-edit-actions card-actions">
                 <a class="soft-btn" href="${entry.example}">${copy.editOpen}</a>
                 <a class="ghost-btn" href="${entry.guide}">${copy.editGuide}</a>
@@ -626,17 +631,17 @@
         if (!target) return;
         const collections = (window.RyokoStorage.getSavedPlaceCollections?.() || []).sort((a, b) => b.places.length - a.places.length || String(a.city || '').localeCompare(String(b.city || '')));
         if (!collections.length) {
-          target.innerHTML = `<div class="trip-archive-empty"><strong>No saved places yet</strong><span>Tap hearts inside planner results and your place archive will start to build itself.</span></div>`;
+          target.innerHTML = `<div class="trip-archive-empty"><strong>${langVariant('아직 저장한 장소가 없어요','No saved places yet','まだ保存した場所がありません','還沒有已保存地點')}</strong><span>${langVariant('플래너 결과에서 하트를 누르면 장소 아카이브가 쌓이기 시작합니다.','Tap hearts inside planner results and your place archive will start to build itself.','プランナー結果でハートを押すと、場所アーカイブが少しずつ育っていきます。','在 Planner 結果裡點愛心後，你的地點收藏檔案就會開始累積。')}</span></div>`;
           return;
         }
         target.innerHTML = collections.slice(0, 6).map(entry => `
           <article class="trip-archive-line">
             <div class="trip-archive-topline">
               <strong>${entry.city}</strong>
-              <span>${entry.places.length} saved</span>
+              <span>${entry.places.length} ${langVariant('저장됨','saved','件保存','已保存')}</span>
             </div>
             <div class="trip-chip-row">${entry.places.slice(0,5).map(place => `<span class="trip-mini-chip">${place}</span>`).join('')}</div>
-            <a class="soft-btn" href="../?destination=${encodeURIComponent(entry.city)}">Plan from ${entry.city}</a>
+            <a class="soft-btn" href="../?destination=${encodeURIComponent(entry.city)}">${langVariant(`${entry.city}부터 짜기`,`Plan from ${entry.city}`,`${entry.city}から組む`,`從 ${entry.city} 開始規劃`)}</a>
           </article>`).join('');
       }
       function renderSavedRouteArchive(saved, recent, shared){
@@ -649,21 +654,21 @@
         }, {});
         const rows = Object.entries(groups).sort((a,b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
         if (!rows.length) {
-          target.innerHTML = `<div class="trip-archive-empty"><strong>No route archive yet</strong><span>Save or reopen a trip and city collections will appear here automatically.</span></div>`;
+          target.innerHTML = `<div class="trip-archive-empty"><strong>${langVariant('아직 루트 아카이브가 없어요','No route archive yet','まだルートアーカイブがありません','還沒有路線檔案')}</strong><span>${langVariant('여정을 저장하거나 다시 열면 도시 컬렉션이 여기에 자동으로 쌓입니다.','Save or reopen a trip and city collections will appear here automatically.','旅程を保存したり開き直したりすると、都市コレクションがここに自動で集まります。','保存或重新打開旅程後，城市收藏會自動出現在這裡。')}</span></div>`;
           return;
         }
         target.innerHTML = rows.slice(0, 6).map(([city, items]) => {
           const latest = sortItems(items)[0];
-          const label = latest?.planData?.vibe || latest?.duration || 'Route base';
+          const label = latest?.planData?.vibe || latest?.duration || langVariant('루트 베이스','Route base','ルートベース','路線基底');
           return `
             <article class="trip-archive-line">
               <div class="trip-archive-topline">
                 <strong>${city}</strong>
-                <span>${items.length} route${items.length > 1 ? 's' : ''}</span>
+                <span>${items.length} ${langVariant('개 루트', items.length > 1 ? 'routes' : 'route', '件のルート', '條路線')}</span>
               </div>
-              <p class="trip-archive-copy">${getMetaSummary(latest) || 'A reusable route base for this city.'}</p>
+              <p class="trip-archive-copy">${getMetaSummary(latest) || langVariant('이 도시에 다시 쓸 수 있는 루트 베이스입니다.','A reusable route base for this city.','この都市で何度も使えるルートベースです。','這是一條可重複使用於這座城市的路線基底。')}</p>
               <div class="trip-chip-row">${items.slice(0,4).map(item => `<span class="trip-mini-chip">${item.title || label}</span>`).join('')}</div>
-              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">Open latest</a><a class="ghost-btn" href="../city/${city.toLowerCase()}.html">Read city</a></div>
+              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">${langVariant('최근 루트 열기','Open latest','最新ルートを開く','打開最新路線')}</a><a class="ghost-btn" href="../city/${city.toLowerCase()}.html">${langVariant('도시 읽기','Read city','都市を読む','閱讀城市')}</a></div>
             </article>`;
         }).join('');
       }
