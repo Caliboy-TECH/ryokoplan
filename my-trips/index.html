@@ -703,6 +703,7 @@
               <h3 class="card-title">${item.title || item.destination || 'Trip'}</h3>
               <div class="trip-chip-row">${chips}</div>
               ${rhythmMarkup(item.destination)}
+              ${visitEntryMarkup(item.destination)}
               <p class="card-copy clamp-3">${getMetaSummary(item)}</p>
               <div class="trip-card-footer-note">${meta.bestFor || item.notes || ''}</div>
               <div class="card-actions trip-card-actions">
@@ -737,6 +738,7 @@
             <p class="section-desc">${meta.summary || latest.notes || copy.continueDesc}</p>
             <div class="trip-chip-row">${[latest.destination, latest.duration, latest.companion, meta.vibe].filter(Boolean).map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}</div>
             ${rhythmMarkup(latest.destination, 'trip-rhythm-inline-soft')}
+            ${visitEntryMarkup(latest.destination, 'trip-entry-inline-soft')}
             <div class="hero-actions">
               <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
               <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'Read city layer'}</a>
@@ -990,6 +992,7 @@
                   ${places.length ? `<span class="trip-mini-chip">${places.length} ${langCopy().collectionPlaces}</span>` : ''}
                 </div>
                 ${rhythmMarkup(city, 'trip-rhythm-inline-soft')}
+                ${visitEntryMarkup(city, 'trip-entry-inline-soft')}
                 <div class="city-collection-stack">
                   <div class="city-collection-snippet"><strong>${latest?.title || city}</strong><span>${getMetaSummary(latest) || ''}</span></div>
                   ${places.length ? `<div class="city-collection-places">${places.slice(0,4).map(place => `<span class="trip-mini-chip">${place}</span>`).join('')}</div>` : ''}
@@ -1178,6 +1181,7 @@
               <span class="trip-mini-chip">${meta.tips} tips</span>
             </div>
             ${rhythmMarkup(item.destination, 'trip-rhythm-inline-soft')}
+            ${visitEntryMarkup(item.destination, 'trip-entry-inline-soft')}
             <div class="shared-spotlight-note">
               <strong>City-first note</strong>
               <span>${cityLoopBranchNote(item.destination) || (item.importedFromLink ? 'It came in through a shared link, so saving it here keeps the city loop easy to reopen later.' : 'Shared trips get stronger when you can save them, compare them, and branch into your own city-first version.')}</span>
@@ -1355,7 +1359,7 @@
           main.innerHTML = `
             <span class="eyebrow">${langCopy().loopEmptyEyebrow || "No saved loop yet"}</span>
             <h3>${langCopy().loopEmptyTitle || "Build one trip, then the loop gets smarter"}</h3>
-            <p>${langCopy().loopEmptyDesc || "Once you save or reopen a trip, My Trips can recommend which guide or sample route to open next."}</p>
+            <p>${langCopy().loopEmptyDesc || "Save or reopen one trip, and My Trips can suggest the next guide, sample, and entry route."}</p>
             <div class="card-actions"><a class="primary-btn" href="../">${langCopy().loopOpenPlanner || "Open Planner"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
           side.innerHTML = `
             <h3>${langCopy().loopGoodStart || "Good starting points"}</h3>
@@ -1376,6 +1380,7 @@
             <span class="trip-loop-chip">${current.name}</span>
             ${related.map(city => `<span class="trip-loop-chip">${city.name}</span>`).join('')}
           </div>
+          ${visitEntryMarkup(anchor.destination, 'trip-entry-inline-soft')}
           <div class="trip-loop-list">
             <article>
               <h4>${ui.sameGuide}</h4>
@@ -1400,6 +1405,7 @@
         side.innerHTML = `
           <span class="eyebrow">${ui.related}</span>
           <h3>${current.name}</h3>
+          ${visitEntryMarkup(anchor.destination)}
           <div class="trip-loop-list">
             ${related.map(city => `
               <article>

@@ -426,6 +426,62 @@
       function rhythmLabel(){
         return langVariant('Day rhythm','Day rhythm','一日のリズム','一日節奏');
       }
+      function priorityVisitEntryPack(city=''){
+        const map = {
+          tokyo: {
+            ko:{visit:'방문 분기', first:['첫 방문','Asakusa → Ueno → Kiyosumi'], second:['두 번째','Kiyosumi → Jinbocho → Kagurazaka'], entry:['Classic first read','Design-soft read']},
+            en:{visit:'Visit split', first:['First-time','Asakusa → Ueno → Kiyosumi'], second:['Second-time','Kiyosumi → Jinbocho → Kagurazaka'], entry:['Classic first read','Design-soft read']},
+            ja:{visit:'訪問分岐', first:['初回向け','Asakusa → Ueno → Kiyosumi'], second:['二回目向け','Kiyosumi → Jinbocho → Kagurazaka'], entry:['最初の入口','デザイン寄り入口']},
+            zhHant:{visit:'造訪分流', first:['第一次','Asakusa → Ueno → Kiyosumi'], second:['第二次','Kiyosumi → Jinbocho → Kagurazaka'], entry:['第一入口','設計感入口']}
+          },
+          seoul: {
+            ko:{visit:'방문 분기', first:['첫 방문','Seongsu → Euljiro → Seochon'], second:['두 번째','Mangwon → Seochon → Euljiro late'], entry:['Contrast opener','Soft local opener']},
+            en:{visit:'Visit split', first:['First-time','Seongsu → Euljiro → Seochon'], second:['Second-time','Mangwon → Seochon → Euljiro late'], entry:['Contrast opener','Soft local opener']},
+            ja:{visit:'訪問分岐', first:['初回向け','Seongsu → Euljiro → Seochon'], second:['二回目向け','Mangwon → Seochon → Euljiro late'], entry:['対比の入口','ローカル寄り入口']},
+            zhHant:{visit:'造訪分流', first:['第一次','Seongsu → Euljiro → Seochon'], second:['第二次','Mangwon → Seochon → Euljiro late'], entry:['對比入口','在地入口']}
+          },
+          kyoto: {
+            ko:{visit:'방문 분기', first:['첫 방문','Higashiyama early → Gion edge → Kamo dusk'], second:['두 번째','Okazaki → Nishijin → Kamo dusk'], entry:['Quiet icon opener','River-soft opener']},
+            en:{visit:'Visit split', first:['First-time','Higashiyama early → Gion edge → Kamo dusk'], second:['Second-time','Okazaki → Nishijin → Kamo dusk'], entry:['Quiet icon opener','River-soft opener']},
+            ja:{visit:'訪問分岐', first:['初回向け','Higashiyama early → Gion edge → Kamo dusk'], second:['二回目向け','Okazaki → Nishijin → Kamo dusk'], entry:['静かな入口','川沿いの入口']},
+            zhHant:{visit:'造訪分流', first:['第一次','Higashiyama early → Gion edge → Kamo dusk'], second:['第二次','Okazaki → Nishijin → Kamo dusk'], entry:['安靜入口','河邊入口']}
+          },
+          taipei: {
+            ko:{visit:'방문 분기', first:['첫 방문','Yongkang → Dihua → one night market'], second:['두 번째','Chifeng → Treasure Hill → tea room close'], entry:['Food-first opener','Texture opener']},
+            en:{visit:'Visit split', first:['First-time','Yongkang → Dihua → one night market'], second:['Second-time','Chifeng → Treasure Hill → tea room close'], entry:['Food-first opener','Texture opener']},
+            ja:{visit:'訪問分岐', first:['初回向け','Yongkang → Dihua → one night market'], second:['二回目向け','Chifeng → Treasure Hill → tea room close'], entry:['食から入る','質感から入る']},
+            zhHant:{visit:'造訪分流', first:['第一次','Yongkang → Dihua → one night market'], second:['第二次','Chifeng → Treasure Hill → tea room close'], entry:['先吃再讀','先讀質感']}
+          },
+          hongkong: {
+            ko:{visit:'방문 분기', first:['첫 방문','Central → Sheung Wan → Tsim Sha Tsui night'], second:['두 번째','Sheung Wan → PMQ/Soho → West Kowloon close'], entry:['Vertical opener','Harbor opener']},
+            en:{visit:'Visit split', first:['First-time','Central → Sheung Wan → Tsim Sha Tsui night'], second:['Second-time','Sheung Wan → PMQ/Soho → West Kowloon close'], entry:['Vertical opener','Harbor opener']},
+            ja:{visit:'訪問分岐', first:['初回向け','Central → Sheung Wan → Tsim Sha Tsui night'], second:['二回目向け','Sheung Wan → PMQ/Soho → West Kowloon close'], entry:['縦の入口','ハーバー入口']},
+            zhHant:{visit:'造訪分流', first:['第一次','Central → Sheung Wan → Tsim Sha Tsui night'], second:['第二次','Sheung Wan → PMQ/Soho → West Kowloon close'], entry:['垂直入口','海港入口']}
+          },
+          busan: {
+            ko:{visit:'방문 분기', first:['첫 방문','Haeundae → Gwangalli → one night shore'], second:['두 번째','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['Sea-first opener','Harbor-texture opener']},
+            en:{visit:'Visit split', first:['First-time','Haeundae → Gwangalli → one night shore'], second:['Second-time','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['Sea-first opener','Harbor-texture opener']},
+            ja:{visit:'訪問分岐', first:['初回向け','Haeundae → Gwangalli → one night shore'], second:['二回目向け','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['海から入る','港の質感から入る']},
+            zhHant:{visit:'造訪分流', first:['第一次','Haeundae → Gwangalli → one night shore'], second:['第二次','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['從海開始','從港口質感開始']}
+          },
+          fukuoka: {
+            ko:{visit:'방문 분기', first:['첫 방문','Hakata → Tenjin → yatai close'], second:['두 번째','Yakuin → Ohori edge → compact dinner close'], entry:['Food-first opener','Soft local opener']},
+            en:{visit:'Visit split', first:['First-time','Hakata → Tenjin → yatai close'], second:['Second-time','Yakuin → Ohori edge → compact dinner close'], entry:['Food-first opener','Soft local opener']},
+            ja:{visit:'訪問分岐', first:['初回向け','Hakata → Tenjin → yatai close'], second:['二回目向け','Yakuin → Ohori edge → compact dinner close'], entry:['食から入る','ローカル寄り入口']},
+            zhHant:{visit:'造訪分流', first:['第一次','Hakata → Tenjin → yatai close'], second:['第二次','Yakuin → Ohori edge → compact dinner close'], entry:['先吃再讀','在地入口']}
+          }
+        };
+        const slug = String(city || '').trim().toLowerCase();
+        const pack = map[slug];
+        if (!pack) return null;
+        const lang = window.RyokoApp.lang === 'zhHant' ? 'zhHant' : (window.RyokoApp.lang || 'en');
+        return pack[lang] || pack.en || null;
+      }
+      function visitEntryMarkup(city='', extraClass=''){
+        const pack = priorityVisitEntryPack(city);
+        if (!pack) return '';
+        return `<div class="trip-entry-inline ${extraClass}"><strong>${pack.visit}</strong><div class="trip-entry-row"><span class="trip-entry-chip">${pack.first[0]} · ${pack.first[1]}</span><span class="trip-entry-chip">${pack.second[0]} · ${pack.second[1]}</span></div><div class="trip-entry-row">${(pack.entry || []).slice(0,2).map(v => `<span class="trip-entry-chip trip-entry-chip-soft">${v}</span>`).join('')}</div></div>`;
+      }
       function rhythmMarkup(city='', extraClass=''){
         const signals = rhythmSignalsForCity(city);
         if (!signals.length) return '';
@@ -497,6 +553,7 @@
               <h3 class="card-title">${item.title || item.destination || 'Trip'}</h3>
               <div class="trip-chip-row">${chips}</div>
               ${rhythmMarkup(item.destination)}
+              ${visitEntryMarkup(item.destination)}
               <p class="card-copy clamp-3">${getMetaSummary(item)}</p>
               <div class="trip-card-footer-note">${meta.bestFor || item.notes || ''}</div>
               <div class="card-actions trip-card-actions">
@@ -531,6 +588,7 @@
             <p class="section-desc">${meta.summary || latest.notes || copy.continueDesc}</p>
             <div class="trip-chip-row">${[latest.destination, latest.duration, latest.companion, meta.vibe].filter(Boolean).map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}</div>
             ${rhythmMarkup(latest.destination, 'trip-rhythm-inline-soft')}
+            ${visitEntryMarkup(latest.destination, 'trip-entry-inline-soft')}
             <div class="hero-actions">
               <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
               <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'Read city layer'}</a>
@@ -778,6 +836,7 @@
                   ${places.length ? `<span class="trip-mini-chip">${places.length} ${langCopy().collectionPlaces}</span>` : ''}
                 </div>
                 ${rhythmMarkup(city, 'trip-rhythm-inline-soft')}
+                ${visitEntryMarkup(city, 'trip-entry-inline-soft')}
                 <div class="city-collection-stack">
                   <div class="city-collection-snippet"><strong>${latest?.title || city}</strong><span>${getMetaSummary(latest) || ''}</span></div>
                   ${places.length ? `<div class="city-collection-places">${places.slice(0,4).map(place => `<span class="trip-mini-chip">${place}</span>`).join('')}</div>` : ''}
@@ -874,6 +933,7 @@
               <span class="trip-mini-chip">${meta.tips} tips</span>
             </div>
             ${rhythmMarkup(item.destination, 'trip-rhythm-inline-soft')}
+            ${visitEntryMarkup(item.destination, 'trip-entry-inline-soft')}
             <div class="shared-spotlight-note">
               <strong>${langVariant('왜 남기나요?','Why keep it?','なぜ残す？','為什麼留住？')}</strong>
               <span>${item.importedFromLink ? langVariant('공유 링크에서 가져온 루트라 다시 열어보고 비교하기 좋습니다.','Imported from a shared link, so it is easier to revisit and compare later.','共有リンクから取り込んだので、あとで見返して比べやすくなります。','從分享連結匯入，之後更容易回看與比較。') : langVariant('저장해 두면 비교하고 갈라 읽기 쉬운 루트가 됩니다.','Saved here, it becomes easier to compare and branch into your own version.','ここに残しておくと、比べたり自分の分岐にしやすくなります。','先存進這裡，就更容易比較並延伸成自己的版本。')}</span>
@@ -1077,6 +1137,7 @@
           </div>`;
         side.innerHTML = `
           <h3>${langVariant('관련 가지','Related branches','関連する分岐','相關分支')}</h3>
+          ${visitEntryMarkup(anchor.destination)}
           <div class="trip-loop-list">
             ${related.map(city => `
               <article>

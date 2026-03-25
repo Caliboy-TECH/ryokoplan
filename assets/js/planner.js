@@ -480,6 +480,24 @@ function getPriorityEntryPack(city=''){
     const lang = window.RyokoApp?.lang || 'ko';
     return entry[lang] || entry.en || entry.ko;
   }
+
+  function renderEntryRouteMiniBlock(city='', mode='default'){
+    const pack = getPriorityEntryPack(city);
+    if (!pack) return '';
+    const compact = mode === 'compact';
+    return `<div class="entry-mini-block ${compact ? 'entry-mini-block-compact' : ''}">
+      <div class="entry-mini-head"><strong>${pack.visitTitle || uiCopy('Visit split','Visit split','訪問分岐','造訪分流')}</strong></div>
+      <div class="entry-mini-row">
+        <span class="entry-mini-label">${pack.first?.[0] || uiCopy('First-time','First-time','初回向け','第一次')}</span>
+        <span class="entry-mini-value">${pack.first?.[1] || ''}</span>
+      </div>
+      <div class="entry-mini-row">
+        <span class="entry-mini-label">${pack.second?.[0] || uiCopy('Second-time','Second-time','二回目向け','第二次')}</span>
+        <span class="entry-mini-value">${pack.second?.[1] || ''}</span>
+      </div>
+      <div class="entry-mini-route-list">${(pack.entries || []).slice(0, compact ? 2 : 3).map(item => `<span class="entry-mini-chip">${item[0]} · ${item[1]}</span>`).join('')}</div>
+    </div>`;
+  }
 function getPriorityRefinePack(city=''){
     const slug = String(city || '').trim().toLowerCase();
     const entry = priorityCityRefineMap[slug];
@@ -867,6 +885,7 @@ function getPriorityRefinePack(city=''){
           <span class="eyebrow">${uiCopy('이어 읽기','Continue reading','続けて読む','接續閱讀')}</span>
           <h4>${uiCopy('다음 클릭을 더 자연스럽게', 'Where to reopen the loop next', '次のクリックを自然にする', '讓下一次點擊更自然')}</h4>
           <p>${continueDesc}</p>
+          ${renderEntryRouteMiniBlock(baseCity, 'compact')}
           <div class="card-actions">
             <a class="primary-btn" href="${latestHref}">${latest ? uiCopy('최근 루트 열기','Open recent route','最近のルートを開く','打開最近路線') : uiCopy('이 루트 저장','Save this route','このルートを保存','保存這條路線')}</a>
             <a class="secondary-btn" href="${exampleHref}">${uiCopy('샘플 비교','Compare sample','サンプル比較','對照範例')}</a>
