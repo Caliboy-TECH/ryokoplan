@@ -2480,3 +2480,21 @@ body[data-page="planner"] .top-bar{z-index:62}
 #expansionCityStories .collection-kicker{font-size:.72rem}
 #expansionCityStories .ghost-btn,
 #expansionCityStories .soft-btn{min-height:40px}
+
+
+/* v44 safe layout stabilization */
+.priority-story-row,.priority-article-grid,.secondary-story-grid{align-items:start}
+.priority-story-mini,.priority-article-card,.secondary-story-card{min-width:0}
+.priority-story-mini p,.priority-article-card p,.secondary-story-card p{overflow-wrap:anywhere}
+.shared-spotlight-card,.trip-detail-hero,.city-collection-card,.trip-continue-card{align-items:start}
+.shared-spotlight-media,.trip-detail-media,.city-collection-cover,.trip-continue-media{align-self:start;overflow:hidden}
+.shared-spotlight-media img,.trip-detail-media img,.city-collection-cover img,.trip-continue-media img{display:block;width:100%;height:100%;object-fit:cover;object-position:center center}
+.shared-spotlight-media img{aspect-ratio:16/10}
+.trip-detail-media img{aspect-ratio:16/10}
+.trip-continue-media{min-height:220px}
+.trip-continue-media img{min-height:220px}
+.city-collection-cover{aspect-ratio:16/10}
+@media (max-width: 760px){
+  .priority-story-row,.priority-article-grid,.secondary-story-grid{grid-template-columns:1fr}
+  .shared-spotlight-card,.trip-detail-hero{grid-template-columns:1fr}
+}

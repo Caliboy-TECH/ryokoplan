@@ -478,15 +478,70 @@
         return pack[lang] || pack.en || null;
       }
       
+      
+      function secondaryVisitEntryPack(city=''){
+        const map = {
+          osaka:{
+            ko:{visit:'방문 분기', first:['첫 방문','Namba → Dotonbori'], second:['다시 방문','Nakanoshima → Utsubo'], entry:['Food-first','Softer west']},
+            en:{visit:'Visit lens', first:['First trip','Namba → Dotonbori'], second:['Return trip','Nakanoshima → Utsubo'], entry:['Food-first','Softer west']},
+            ja:{visit:'訪問レンズ', first:['初回','Namba → Dotonbori'], second:['再訪','Nakanoshima → Utsubo'], entry:['食から入る','西側をやわらかく']},
+            zhHant:{visit:'造訪視角', first:['初訪','Namba → Dotonbori'], second:['再訪','Nakanoshima → Utsubo'], entry:['先吃再讀','柔和西側']}
+          },
+          sapporo:{
+            ko:{visit:'방문 분기', first:['첫 방문','Odori → Susukino'], second:['다시 방문','Maruyama → café pocket'], entry:['Central','Soft local']},
+            en:{visit:'Visit lens', first:['First trip','Odori → Susukino'], second:['Return trip','Maruyama → café pocket'], entry:['Central','Soft local']},
+            ja:{visit:'訪問レンズ', first:['初回','Odori → Susukino'], second:['再訪','Maruyama → café pocket'], entry:['中心から','やわらかい近所']},
+            zhHant:{visit:'造訪視角', first:['初訪','Odori → Susukino'], second:['再訪','Maruyama → café pocket'], entry:['中心入口','柔和近所']}
+          },
+          sendai:{
+            ko:{visit:'방문 분기', first:['첫 방문','Station → arcade'], second:['다시 방문','Jozenji-dori → river edge'], entry:['Centre','Calm north']},
+            en:{visit:'Visit lens', first:['First trip','Station → arcade'], second:['Return trip','Jozenji-dori → river edge'], entry:['Centre','Calm north']},
+            ja:{visit:'訪問レンズ', first:['初回','Station → arcade'], second:['再訪','Jozenji-dori → river edge'], entry:['中心から','静かな北側']},
+            zhHant:{visit:'造訪視角', first:['初訪','Station → arcade'], second:['再訪','Jozenji-dori → river edge'], entry:['中心入口','安靜北側']}
+          },
+          okinawa:{
+            ko:{visit:'방문 분기', first:['첫 방문','Coast drive → beach stop'], second:['다시 방문','Yomitan → slower dusk'], entry:['Coast','Slow pocket']},
+            en:{visit:'Visit lens', first:['First trip','Coast drive → beach stop'], second:['Return trip','Yomitan → slower dusk'], entry:['Coast','Slow pocket']},
+            ja:{visit:'訪問レンズ', first:['初回','Coast drive → beach stop'], second:['再訪','Yomitan → slower dusk'], entry:['海から','遅い pocket']},
+            zhHant:{visit:'造訪視角', first:['初訪','Coast drive → beach stop'], second:['再訪','Yomitan → slower dusk'], entry:['海岸入口','慢 pocket']}
+          },
+          jeju:{
+            ko:{visit:'방문 분기', first:['첫 방문','Aewol → coast café'], second:['다시 방문','village pocket → slower west'], entry:['Coast','Reset']},
+            en:{visit:'Visit lens', first:['First trip','Aewol → coast café'], second:['Return trip','village pocket → slower west'], entry:['Coast','Reset']},
+            ja:{visit:'訪問レンズ', first:['初回','Aewol → coast café'], second:['再訪','village pocket → slower west'], entry:['海岸から','リセット入口']},
+            zhHant:{visit:'造訪視角', first:['初訪','Aewol → coast café'], second:['再訪','village pocket → slower west'], entry:['海岸入口','重置入口']}
+          },
+          gyeongju:{
+            ko:{visit:'방문 분기', first:['첫 방문','Daereungwon → museum edge'], second:['다시 방문','Hwangnidan-gil → quiet lane'], entry:['Heritage','Quiet lane']},
+            en:{visit:'Visit lens', first:['First trip','Daereungwon → museum edge'], second:['Return trip','Hwangnidan-gil → quiet lane'], entry:['Heritage','Quiet lane']},
+            ja:{visit:'訪問レンズ', first:['初回','Daereungwon → museum edge'], second:['再訪','Hwangnidan-gil → quiet lane'], entry:['遺産から','静かな lane']},
+            zhHant:{visit:'造訪視角', first:['初訪','Daereungwon → museum edge'], second:['再訪','Hwangnidan-gil → quiet lane'], entry:['遺產入口','安靜巷線']}
+          },
+          macau:{
+            ko:{visit:'방문 분기', first:['첫 방문','Ruins edge → Senado'], second:['다시 방문','Taipa → softer lane'], entry:['Old lane','Taipa']},
+            en:{visit:'Visit lens', first:['First trip','Ruins edge → Senado'], second:['Return trip','Taipa → softer lane'], entry:['Old lane','Taipa']},
+            ja:{visit:'訪問レンズ', first:['初回','Ruins edge → Senado'], second:['再訪','Taipa → softer lane'], entry:['古い lane','Taipa']},
+            zhHant:{visit:'造訪視角', first:['初訪','Ruins edge → Senado'], second:['再訪','Taipa → softer lane'], entry:['老街入口','Taipa']}
+          }
+        };
+        const slug = String(city || '').trim().toLowerCase();
+        const pack = map[slug];
+        if (!pack) return null;
+        const lang = window.RyokoApp.lang === 'zhHant' ? 'zhHant' : (window.RyokoApp.lang || 'en');
+        return pack[lang] || pack.en || null;
+      }
+
       function articleHrefForCity(city=''){
-        return '../magazine/index.html#magazinePriorityArticleRoot';
+        const slug = String(city || '').trim().toLowerCase();
+        const secondary = ['osaka','sapporo','sendai','okinawa','jeju','gyeongju','macau'];
+        return secondary.includes(slug) ? '../magazine/index.html#expansionCityStories' : '../magazine/index.html#releaseCityStories';
       }
       function articleLabel(){
         const lang = window.RyokoApp.lang === 'zhHant' ? 'zhHant' : (window.RyokoApp.lang || 'en');
         return ({ko:'아티클 깊이', en:'Article depth', ja:'article depth', zhHant:'article depth'})[lang] || 'Article depth';
       }
 function visitEntryMarkup(city='', extraClass=''){
-        const pack = priorityVisitEntryPack(city);
+        const pack = priorityVisitEntryPack(city) || secondaryVisitEntryPack(city);
         if (!pack) return '';
         return `<div class="trip-entry-inline ${extraClass}"><strong>${pack.visit}</strong><div class="trip-entry-row"><span class="trip-entry-chip">${pack.first[0]} · ${pack.first[1]}</span><span class="trip-entry-chip">${pack.second[0]} · ${pack.second[1]}</span></div><div class="trip-entry-row">${(pack.entry || []).slice(0,2).map(v => `<span class="trip-entry-chip trip-entry-chip-soft">${v}</span>`).join('')}</div></div>`;
       }
