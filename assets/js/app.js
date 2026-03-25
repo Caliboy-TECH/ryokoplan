@@ -1188,10 +1188,10 @@ window.RyokoApp = (() => {
       <section class="section city-section-band"><article class="cover-story-card story-band"><div class="editorial-kicker">${lang === 'ko' ? '편집 메모' : lang === 'ja' ? '編集メモ' : lang === 'zhHant' ? '編輯筆記' : 'Editorial note'}</div><h3>${lang === 'ko' ? '좋은 여행은 장소보다 도시의 템포를 먼저 맞출 때 선명해집니다' : lang === 'ja' ? '良い旅は、場所の数より先に街のテンポが合うと輪郭がはっきりします' : lang === 'zhHant' ? '好的旅程，通常是在清單之前先把城市節奏對上' : 'Trips get clearer when the city tempo lands before the checklist does'}</h3><p>${data.lead}</p></article></section>
       ${(() => {
         const atlasLocale = atlasLocaleMap[lang]?.[slug] || null;
-        const picks = atlasLocale?.picks || data.districts.map(item => item[0]).slice(0,3);
-        const picksLead = atlasLocale?.sampleLead || data.lead;
-        const picksIntro = lang === 'ko' ? 'City atlas에서 보던 동네 픽을 상세 가이드 안에서도 바로 이어 읽을 수 있게 붙였습니다.' : lang === 'ja' ? 'City atlas で見た近所のピックを、この詳細ガイドの中でもそのまま読み継げるようにつなげました。' : lang === 'zhHant' ? '把 City atlas 裡先看到的鄰里精選，直接接進這個詳細指南裡繼續讀。' : 'The neighborhood picks from City atlas continue here so the city still reads in the same order.';
-        return `<section class="section city-neighborhood-bridge" id="city-neighborhoods"><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '동네 픽' : lang === 'ja' ? '近所のピック' : lang === 'zhHant' ? '鄰里精選' : 'Neighborhood picks'}</div><h2 class="section-title">${lang === 'ko' ? entry.planner + '를 여는 첫 동네들' : lang === 'ja' ? entry.planner + ' を開く最初の近所' : lang === 'zhHant' ? '打開 ' + entry.planner + ' 的第一批近所' : 'The neighborhoods that open ' + entry.planner}</h2><p class="section-desc">${picksIntro}</p></div></div><div class="city-neighborhood-grid">${picks.map((item, i) => `<article class="city-neighborhood-card"><span class="district-index">0${i+1}</span><strong>${item}</strong><p>${picksLead}</p></article>`).join('')}</div></article></section>`;
+        const picks = neighborhoodDepthForCity(slug, data, atlasLocale);
+        const picksIntro = lang === 'ko' ? 'City atlas에서 보던 동네 픽을 상세 가이드 안에서도 district와 함께 이어 읽을 수 있게 확장했습니다.' : lang === 'ja' ? 'City atlas で見た近所のピックを、この詳細ガイドの中でも district と一緒に読み継げるよう広げました。' : lang === 'zhHant' ? '把 City atlas 先看到的鄰里精選，直接延伸到這份詳細指南裡，並和 district 一起讀。' : 'The neighborhood picks from City atlas continue here with district depth, so the city still reads in one order.';
+        const picksDesc = lang === 'ko' ? '먼저 읽기 좋은 동네와 연결 district, 들어가기 좋은 시간대를 같이 묶었습니다.' : lang === 'ja' ? '入りやすい近所、つながる district、相性のいい時間帯を一つの束で読めるようにしました。' : lang === 'zhHant' ? '把最適合先讀的近所、連動 district、以及最適時段放在同一個閱讀節奏裡。' : 'Each card ties the first neighborhood read to a district anchor and an easy entry window.';
+        return `<section class="section city-neighborhood-bridge" id="city-neighborhoods"><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '동네 픽' : lang === 'ja' ? '近所のピック' : lang === 'zhHant' ? '鄰里精選' : 'Neighborhood picks'}</div><h2 class="section-title">${lang === 'ko' ? entry.planner + '를 여는 첫 동네들' : lang === 'ja' ? entry.planner + ' を開く最初の近所' : lang === 'zhHant' ? '打開 ' + entry.planner + ' 的第一批近所' : 'The neighborhoods that open ' + entry.planner}</h2><p class="section-desc">${picksIntro}</p></div></div><p class="city-neighborhood-intro">${picksDesc}</p><div class="city-neighborhood-grid city-neighborhood-grid-deep">${picks.map((item, i) => `<article class="city-neighborhood-card city-neighborhood-card-deep"><span class="district-index">0${i+1}</span><strong>${item.name}</strong><p>${item.note}</p><div class="city-neighborhood-meta"><span><strong>${item.linkedLabel}</strong>${item.district}</span><span><strong>${item.bestLabel}</strong>${item.window}</span></div><div class="city-neighborhood-deeper"><span class="mini-label">${item.routeLabel}</span><small>${item.deeper}</small></div></article>`).join('')}</div></article></section>`;
       })()}
       <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? '샘플 루트' : lang === 'ja' ? 'サンプルルート' : lang === 'zhHant' ? '範例路線' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? '샘플 일정' : lang === 'ja' ? 'サンプル旅程' : lang === 'zhHant' ? '範例行程' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : lang === 'ja' ? 'サンプル全体を開く' : lang === 'zhHant' ? '打開完整範例' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : lang === 'ja' ? 'Planner で調整する' : lang === 'zhHant' ? '在 Planner 裡調整' : 'Customize in Planner'}</a></div></article></section>
       <section class="section city-reading-grid city-reading-grid-rich" id="city-tips"><article class="info-card editorial-panel"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('localNotes')}</div><h2 class="section-title">${uiText('localTips')}</h2><p class="section-desc">${lang === 'ko' ? '작은 조정만으로도 여행 체감이 확실히 좋아집니다.' : lang === 'ja' ? '小さな工夫だけで旅の快適さがかなり変わります。' : lang === 'zhHant' ? '只要做一些小調整，整體旅行體感就會明顯更好。' : 'Small adjustments that noticeably improve the trip.'}</p></div></div><ul class="editorial-bullets">${data.tips.map(item => `<li>${item}</li>`).join('')}</ul></article><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('beforeYouGo')}</div><h2 class="section-title">${uiText('keepInMind')}</h2><p class="section-desc">${lang === 'ko' ? '출발 전에 챙겨두면 바로 체감되는 것들입니다.' : lang === 'ja' ? '出発前に整えておくと、すぐ効いてくるポイントです。' : lang === 'zhHant' ? '出發前先準備好，旅途中會立刻感受到差別。' : 'Small prep choices that pay off immediately.'}</p></div></div><ul class="editorial-bullets">${data.keep.map(item => `<li>${item}</li>`).join('')}</ul></article></section>
@@ -1417,11 +1417,49 @@ function getSeasonalEditorialCollections(){
     }
   };
 
+  const cityAtlasVisualPriorityMap = {
+    tokyo:{ position:'center 42%', label:{ ko:'lead cover', en:'lead cover', ja:'リードカバー', zhHant:'主封面' } },
+    osaka:{ position:'center 48%', label:{ ko:'food rhythm', en:'food rhythm', ja:'食のリズム', zhHant:'飲食節奏' } },
+    kyoto:{ position:'center 38%', label:{ ko:'slow frame', en:'slow frame', ja:'静かな余白', zhHant:'慢節奏畫面' } },
+    fukuoka:{ position:'center 46%', label:{ ko:'compact edit', en:'compact edit', ja:'コンパクト編集', zhHant:'緊湊編排' } },
+    sapporo:{ position:'center 40%', label:{ ko:'seasonal air', en:'seasonal air', ja:'季節の空気', zhHant:'季節空氣' } },
+    seoul:{ position:'center 44%', label:{ ko:'city contrast', en:'city contrast', ja:'街のコントラスト', zhHant:'城市反差' } },
+    busan:{ position:'center 46%', label:{ ko:'coast tone', en:'coast tone', ja:'海辺のトーン', zhHant:'海岸調性' } },
+    jeju:{ position:'center 52%', label:{ ko:'island pace', en:'island pace', ja:'島のテンポ', zhHant:'島嶼節奏' } },
+    gyeongju:{ position:'center 42%', label:{ ko:'heritage calm', en:'heritage calm', ja:'静かな遺産', zhHant:'古都靜度' } },
+    taipei:{ position:'center 44%', label:{ ko:'night food', en:'night food', ja:'夜と食', zhHant:'夜與食' } },
+    hongkong:{ position:'center 39%', label:{ ko:'harbor light', en:'harbor light', ja:'港の光', zhHant:'海港燈光' } },
+    macau:{ position:'center 43%', label:{ ko:'night heritage', en:'night heritage', ja:'夜の遺産', zhHant:'夜色遺產' } }
+  };
+
+  function neighborhoodDepthForCity(slug, data, atlasLocale){
+    const picks = (atlasLocale?.picks || data.districts.map(item => item[0]).slice(0,3)).slice(0,3);
+    const districts = (atlasLocale?.districts || data.districts || []).slice();
+    const sampleLead = atlasLocale?.sampleLead || data.lead || '';
+    const linkedLabel = lang === 'ko' ? '연결 district' : lang === 'ja' ? 'つながる district' : lang === 'zhHant' ? '連動 district' : 'Linked district';
+    const routeLabel = lang === 'ko' ? '읽는 포인트' : lang === 'ja' ? '読むポイント' : lang === 'zhHant' ? '閱讀重點' : 'Route note';
+    const bestLabel = lang === 'ko' ? '잘 여는 시간' : lang === 'ja' ? '入りやすい時間帯' : lang === 'zhHant' ? '最適時段' : 'Best window';
+    const windowText = lang === 'ko' ? ['첫날 오후','둘째 날 오전','해 질 무렵'] : lang === 'ja' ? ['到着日の午後','2日目の午前','夕方'] : lang === 'zhHant' ? ['抵達日午後','第二天上午','傍晚'] : ['arrival afternoon','second morning','late afternoon'];
+    return picks.map((pick, index) => {
+      const district = districts[index % Math.max(1, districts.length)] || [pick, sampleLead];
+      return {
+        name: pick,
+        district: district[0] || pick,
+        note: district[1] || sampleLead,
+        deeper: sampleLead || data.focusDesc || data.lead || '',
+        linkedLabel,
+        routeLabel,
+        bestLabel,
+        window: windowText[index % windowText.length]
+      };
+    });
+  }
+
   function exampleKeyFromPath(example=''){
     return String(example || '').replace(/\.html$/,'').trim();
   }
 
-  function cityAtlasCardMarkup(slug, regionLabel, copy, page='home'){
+  function cityAtlasCardMarkup(slug, regionLabel, copy, page='home', index=0){
     const city = editorialData.city[slug];
     if (!city) return '';
     const cityCopy = city[lang] || city.en || city.ko;
@@ -1434,15 +1472,19 @@ function getSeasonalEditorialCollections(){
     const sampleLead = atlasLocale?.sampleLead || exampleCopy?.whyBullets?.[0] || (cityCopy.sampleDays?.[0]?.[1]) || '';
     const picks = atlasLocale?.picks || districts.map(item => item[0]).slice(0,3);
     const voice = getCityVoice(city.planner) || {};
+    const visual = cityAtlasVisualPriorityMap[slug] || {};
+    const visualLabel = visual?.label?.[lang] || visual?.label?.en || city.country;
+    const featured = index === 0;
     const coverNoteLabel = lang === 'ko' ? 'Cover note' : lang === 'ja' ? 'カバーノート' : lang === 'zhHant' ? '封面註記' : 'Cover note';
     const picksLead = lang === 'ko' ? '이 도시를 읽기 시작하기 좋은 첫 동네들입니다.' : lang === 'ja' ? 'この街を読み始める入口として相性がいい近所です。' : lang === 'zhHant' ? '這些近所最適合當成讀這座城市的第一個入口。' : 'These are the neighborhoods that open the city most naturally.';
     return `
-      <article class="city-atlas-card info-card city-atlas-card--${slug}">
+      <article class="city-atlas-card info-card city-atlas-card--${slug} ${featured ? 'city-atlas-card-featured' : ''}">
         <div class="city-atlas-media">
-          <img src="${resolvePath(city.image)}" alt="${city.planner}">
+          <img src="${resolvePath(city.image)}" alt="${city.planner}" style="object-position:${visual.position || 'center center'}">
           <div class="city-atlas-overlay">
             <div class="city-atlas-overlay-top"><span class="collection-kicker">${regionLabel}</span><span class="city-atlas-country">${city.country}</span></div>
             <div class="city-atlas-overlay-copy"><strong>${city.planner}</strong><span>${voice.strap || lead}</span></div>
+            <div class="city-atlas-overlay-foot"><span class="city-atlas-priority">${visualLabel}</span></div>
           </div>
         </div>
         <div class="city-atlas-body">
@@ -1488,7 +1530,7 @@ function getSeasonalEditorialCollections(){
     const groupMarkup = groups.map(group => `
       <section class="city-atlas-group">
         <div class="city-atlas-group-head"><span class="eyebrow">${group.label}</span></div>
-        <div class="city-atlas-grid">${group.cities.map(slug => cityAtlasCardMarkup(slug, group.label, copy, page)).join('')}</div>
+        <div class="city-atlas-grid">${group.cities.map((slug, index) => cityAtlasCardMarkup(slug, group.label, copy, page, index)).join('')}</div>
       </section>`).join('');
     root.innerHTML = `
       <section class="section city-atlas-section city-atlas-section-${page}">
