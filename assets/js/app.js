@@ -1360,6 +1360,88 @@ function getSeasonalEditorialCollections(){
     }));
   }
 
+
+  function getAtlasText(page='home'){
+    const copyMap = {
+      home: {
+        ko:{eyebrow:'City atlas', title:'주요 도시를 cover부터 sample route까지 한 번에 읽기', desc:'각 도시의 첫 인상, 읽는 포인트, 바로 참고할 sample rhythm을 같은 화면에 붙였습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
+        en:{eyebrow:'City atlas', title:'Read key cities from cover to sample route in one sweep', desc:'Each city now shows its cover, editorial entry point, district highlights, and a sample route in one continuous block.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
+        ja:{eyebrow:'シティアトラス', title:'主要都市を cover から sample route まで一気に読む', desc:'各都市の最初の印象、読むべきポイント、参考にしやすい sample rhythm を同じ画面にまとめました。', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'ガイドを見る', plan:'Planner を開く'},
+        zhHant:{eyebrow:'城市 atlas', title:'把主要城市從 cover 一路讀到 sample route', desc:'每座城市都把 cover、編輯切口、街區重點和 sample route 放在同一個閱讀段落裡。', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'讀城市指南', plan:'打開 Planner'}
+      },
+      magazine: {
+        ko:{eyebrow:'City atlas', title:'도시별 cover, district, sample route를 한 셸프에서', desc:'Magazine 안에서 바로 도시별 editorial intro와 district highlights, sample rhythm까지 붙여 읽을 수 있게 확장했습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
+        en:{eyebrow:'City atlas', title:'City cover, district focus, and sample route in one shelf', desc:'Magazine now expands each major city into a tighter editorial block with intro, district highlights, and route rhythm together.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
+        ja:{eyebrow:'シティアトラス', title:'都市ごとの cover、district、sample route を一つの棚で', desc:'Magazine の中で、各主要都市の editorial intro、district highlights、sample rhythm まで続けて読めるように広げました。', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'ガイドを見る', plan:'Planner を開く'},
+        zhHant:{eyebrow:'城市 atlas', title:'把城市 cover、district、sample route 放進同一個書架', desc:'Magazine 現在把主要城市的 editorial intro、街區重點和 sample rhythm 接成同一個閱讀區塊。', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'讀城市指南', plan:'打開 Planner'}
+      }
+    };
+    return (copyMap[page] && (copyMap[page][lang] || copyMap[page].en)) || copyMap.home.en;
+  }
+
+  function exampleKeyFromPath(example=''){
+    return String(example || '').replace(/\.html$/,'').trim();
+  }
+
+  function cityAtlasCardMarkup(slug, regionLabel, copy, page='home'){
+    const city = editorialData.city[slug];
+    if (!city) return '';
+    const cityCopy = city[lang] || city.en || city.ko;
+    const example = editorialData.example[exampleKeyFromPath(city.example)] || null;
+    const exampleCopy = example ? (example[lang] || example.en || example.ko) : null;
+    const lead = cityCopy.lead || '';
+    const districts = (cityCopy.districts || []).slice(0,2);
+    const sampleShape = exampleCopy?.routeShape || cityCopy.sampleDesc || '';
+    const sampleLead = exampleCopy?.whyBullets?.[0] || (cityCopy.sampleDays?.[0]?.[1]) || '';
+    return `
+      <article class="city-atlas-card info-card">
+        <div class="city-atlas-media"><img src="${resolvePath(city.image)}" alt="${city.planner}"></div>
+        <div class="city-atlas-body">
+          <div class="city-atlas-topline"><span class="collection-kicker">${regionLabel}</span><span class="meta-inline">${city.country}</span></div>
+          <h3>${city.planner}</h3>
+          <p class="city-atlas-lead">${lead}</p>
+          <div class="city-atlas-block">
+            <strong>${copy.districts}</strong>
+            <div class="city-atlas-districts">
+              ${districts.map(item => `<div class="city-atlas-district"><span>${item[0]}</span><small>${item[1]}</small></div>`).join('')}
+            </div>
+          </div>
+          <div class="city-atlas-block city-atlas-sample">
+            <strong>${copy.sample}</strong>
+            <p>${sampleShape}</p>
+            <small>${sampleLead}</small>
+          </div>
+          <div class="card-actions city-atlas-actions">
+            <a class="soft-btn" href="${resolvePath(city.guide || ('city/' + slug + '.html'))}">${copy.guide}</a>
+            <a class="ghost-btn" href="${resolvePath('example/' + city.example)}">${copy.sample}</a>
+            <button class="primary-btn" data-start-city="${city.planner}">${copy.plan}</button>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function renderCityAtlas(page='home'){
+    const root = document.getElementById(page === 'magazine' ? 'magazineCityAtlasRoot' : 'homeCityAtlasRoot');
+    if (!root) return;
+    const copy = getAtlasText(page);
+    const groups = [
+      { key:'japan', label:copy.region.japan, cities:['tokyo','kyoto','osaka','fukuoka','sapporo'] },
+      { key:'korea', label:copy.region.korea, cities:['seoul','busan','jeju','gyeongju'] },
+      { key:'greater', label:copy.region.greater, cities:['taipei','hongkong','macau'] }
+    ];
+    const groupMarkup = groups.map(group => `
+      <section class="city-atlas-group">
+        <div class="city-atlas-group-head"><span class="eyebrow">${group.label}</span></div>
+        <div class="city-atlas-grid">${group.cities.map(slug => cityAtlasCardMarkup(slug, group.label, copy, page)).join('')}</div>
+      </section>`).join('');
+    root.innerHTML = `
+      <section class="section city-atlas-section city-atlas-section-${page}">
+        <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
+        ${groupMarkup}
+      </section>`;
+    root.querySelectorAll('[data-start-city]').forEach(btn => btn.addEventListener('click', () => { location.href = plannerUrlForCity(btn.dataset.startCity || ''); }));
+  }
+
   function renderHomeSeasonalDesk(){
     if (document.body.dataset.page !== 'planner') return;
     const anchor = document.getElementById('homeCommunityRoot');
@@ -2144,6 +2226,7 @@ function getSeasonalEditorialCollections(){
   function initCommon(){
     document.documentElement.lang = lang;
     renderMagazineLanding();
+    renderCityAtlas('magazine');
     renderCityPage();
     renderExamplePage();
     applyTranslations();
@@ -2166,6 +2249,7 @@ function getSeasonalEditorialCollections(){
     initHomePresets();
     initPlannerOnboarding();
     renderHomeDiscovery();
+    renderCityAtlas('home');
     renderHomeCommunityDesk();
     renderSignalPersonalDesk('home');
     renderHomeSeasonalDesk();
@@ -2176,6 +2260,8 @@ function getSeasonalEditorialCollections(){
     window.addEventListener('ryoko:langchange', () => {
       renderMagazineLanding();
       renderHomeDiscovery();
+      renderCityAtlas('home');
+      renderCityAtlas('magazine');
       renderHomeCommunityDesk();
       renderSignalPersonalDesk('home');
       renderHomeSeasonalDesk();
