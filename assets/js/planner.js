@@ -473,9 +473,20 @@ window.RyokoPlanner = (() => {
     };
   }
 
+
+  const secondaryCityThinEntryMap = {
+    osaka:{ko:{visitTitle:'Visit lens', first:['First trip','Namba → Dotonbori','식사 라인과 밤 장면 하나만 선명하게.'], second:['Return trip','Nakanoshima → Utsubo','재방문이면 quieter west pocket이 좋습니다.'], entries:[['Food-first','Namba → Dotonbori'],['Softer','Nakanoshima → Utsubo']]}, en:{visitTitle:'Visit lens', first:['First trip','Namba → Dotonbori','Keep one meal line and one late scene vivid.'], second:['Return trip','Nakanoshima → Utsubo','A quieter west-side pocket often lands better.'], entries:[['Food-first','Namba → Dotonbori'],['Softer','Nakanoshima → Utsubo']]}}
+    ,sapporo:{ko:{visitTitle:'Visit lens', first:['First trip','Odori → Susukino','중심 축을 짧고 분명하게.'], second:['Return trip','Maruyama → café pocket','조금 더 느린 pocket이 좋습니다.'], entries:[['Central','Odori → Susukino'],['Soft','Maruyama → café pocket']]}, en:{visitTitle:'Visit lens', first:['First trip','Odori → Susukino','Keep the central line short and readable.'], second:['Return trip','Maruyama → café pocket','A softer neighborhood layer often lands better.'], entries:[['Central','Odori → Susukino'],['Soft','Maruyama → café pocket']]}}
+    ,sendai:{ko:{visitTitle:'Visit lens', first:['First trip','Station → arcade','중심 축부터 가볍게.'], second:['Return trip','Jozenji-dori → river edge','조용한 북측 pace가 더 잘 남습니다.'], entries:[['Centre','Station → arcade'],['Calm','Jozenji-dori → river edge']]}, en:{visitTitle:'Visit lens', first:['First trip','Station → arcade','Open through the clearest central line first.'], second:['Return trip','Jozenji-dori → river edge','A slower north-side rhythm often lands better.'], entries:[['Centre','Station → arcade'],['Calm','Jozenji-dori → river edge']]}}
+    ,okinawa:{ko:{visitTitle:'Visit lens', first:['First trip','Coast drive → beach stop','바다 축을 먼저.'], second:['Return trip','Yomitan → slower dusk','느린 pocket이 더 좋습니다.'], entries:[['Coast','Coast drive → beach'],['Slow','Yomitan → dusk']]}, en:{visitTitle:'Visit lens', first:['First trip','Coast drive → beach stop','Open through the sea line first.'], second:['Return trip','Yomitan → slower dusk','A slower local pocket often lands better.'], entries:[['Coast','Coast drive → beach'],['Slow','Yomitan → dusk']]}}
+    ,jeju:{ko:{visitTitle:'Visit lens', first:['First trip','Aewol → coast café','해안 결을 하나만 선명하게.'], second:['Return trip','village pocket → slower west','느린 리셋이 더 중요합니다.'], entries:[['Coast','Aewol → coast café'],['Reset','village pocket → west']]}, en:{visitTitle:'Visit lens', first:['First trip','Aewol → coast café','Keep one coast line vivid.'], second:['Return trip','village pocket → slower west','A slower reset often matters more.'], entries:[['Coast','Aewol → coast café'],['Reset','village pocket → west']]}}
+    ,gyeongju:{ko:{visitTitle:'Visit lens', first:['First trip','Daereungwon → museum edge','유산 축부터 가볍게.'], second:['Return trip','Hwangnidan-gil → quiet lane','조용한 lane rhythm이 더 좋습니다.'], entries:[['Heritage','Daereungwon → museum edge'],['Quiet','Hwangnidan-gil → lane walk']]}, en:{visitTitle:'Visit lens', first:['First trip','Daereungwon → museum edge','Open through the clearest heritage line.'], second:['Return trip','Hwangnidan-gil → quiet lane','Quieter lanes usually carry more memory.'], entries:[['Heritage','Daereungwon → museum edge'],['Quiet','Hwangnidan-gil → lane walk']]}}
+    ,macau:{ko:{visitTitle:'Visit lens', first:['First trip','Ruins edge → Senado','old lane과 밤 장면 하나만.'], second:['Return trip','Taipa → softer lane','조금 더 compact한 축이 좋습니다.'], entries:[['Old-lane','Ruins edge → Senado'],['Taipa','Taipa → softer lane']]}, en:{visitTitle:'Visit lens', first:['First trip','Ruins edge → Senado','Keep one old-lane line vivid.'], second:['Return trip','Taipa → softer lane','A looser Taipa route often lands better.'], entries:[['Old-lane','Ruins edge → Senado'],['Taipa','Taipa → softer lane']]}}
+  };
+
 function getPriorityEntryPack(city=''){
     const slug = String(city || '').trim().toLowerCase();
-    const entry = priorityCityEntryMap[slug];
+    const entry = priorityCityEntryMap[slug] || secondaryCityThinEntryMap[slug];
     if (!entry) return null;
     const lang = window.RyokoApp?.lang || 'ko';
     return entry[lang] || entry.en || entry.ko;

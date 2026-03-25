@@ -2449,3 +2449,7 @@ body[data-page="planner"] .top-bar{z-index:62}
 @media (max-width: 820px){
   .secondary-story-grid{grid-template-columns:1fr}
 }
+
+
+.city-priority-depth .district-grid-rich:has(.district-card-rich:only-child){grid-template-columns:1fr}
+.secondary-story-grid .collection-kicker{letter-spacing:.08em}
