@@ -186,18 +186,32 @@ window.RyokoPlanner = (() => {
     }));
   }
   function updateShareMeta(data){
-    const title = data?.title || 'Ryokoplan';
-    const desc = normalizeSummary(data) || 'Read the city. Shape a better trip.';
-    document.title = `${title} — Ryokoplan`;
+    const destination = textValue(data?.destination, '').trim();
+    const routeTitle = data?.title || destination || 'Ryokoplan';
+    const title = destination ? `${destination} route — Ryokoplan` : `${routeTitle} — Ryokoplan`;
+    const desc = destination
+      ? `${destination} in a city-first flow. Read the neighborhoods, compare the route, and shape the trip.`
+      : (normalizeSummary(data) || 'Read the city. Then build the trip.');
+    document.title = title;
     const entries = {
       'meta[name="description"]': desc,
       'meta[property="og:title"]': title,
       'meta[property="og:description"]': desc,
       'meta[name="twitter:title"]': title,
-      'meta[name="twitter:description"]': desc
+      'meta[name="twitter:description"]': desc,
+      'meta[property="og:image:alt"]': destination ? `${destination} city-first route preview` : 'Ryokoplan city-first route preview',
+      'meta[name="twitter:image:alt"]': destination ? `${destination} city-first route preview` : 'Ryokoplan city-first route preview'
     };
     Object.entries(entries).forEach(([selector, value]) => {
-      const node = document.querySelector(selector);
+      let node = document.querySelector(selector);
+      if (!node && value) {
+        const match = selector.match(/^meta\[(name|property)="(.+)"\]$/);
+        if (match) {
+          node = document.createElement('meta');
+          node.setAttribute(match[1], match[2]);
+          document.head.appendChild(node);
+        }
+      }
       if (node && value) node.setAttribute('content', value);
     });
   }
@@ -577,36 +591,65 @@ window.RyokoPlanner = (() => {
     const moodKey = /(editorial|magazine|매거진|編輯|エディトリアル)/.test(parts) ? 'editorial' : (/(vivid|social|late|night|비비드|鮮明|ビビッド)/.test(parts) ? 'vivid' : (/(soft|slow|quiet|소프트|柔和|ソフト)/.test(parts) ? 'soft' : 'balanced'));
     return { tags:[...tags], paceKey, moodKey, localMode: !!payload?.localMode };
   }
+  const citySignalProfiles = {
+    tokyo: { tags:['late-night','editorial'], mood:['vivid','editorial'], pace:['full','balanced'] },
+    osaka: { tags:['food-led'], mood:['vivid','balanced'], pace:['balanced','full'] },
+    kyoto: { tags:['soft-reset','parents'], mood:['editorial','soft'], pace:['light','balanced'] },
+    fukuoka: { tags:['food-led','local-mode'], mood:['balanced','editorial'], pace:['balanced','light'] },
+    seoul: { tags:['late-night','local-mode'], mood:['vivid','editorial'], pace:['full','balanced'] },
+    busan: { tags:['coast','parents'], mood:['soft','balanced'], pace:['light','balanced'] },
+    jeju: { tags:['coast','soft-reset'], mood:['soft','editorial'], pace:['light'] },
+    gyeongju: { tags:['soft-reset','parents'], mood:['editorial','soft'], pace:['light','balanced'] },
+    sapporo: { tags:['soft-reset'], mood:['soft','editorial'], pace:['light','balanced'] },
+    sendai: { tags:['soft-reset','editorial'], mood:['soft','editorial'], pace:['light','balanced'] },
+    okinawa: { tags:['coast','soft-reset'], mood:['soft','balanced'], pace:['light'] },
+    taipei: { tags:['late-night','food-led','local-mode'], mood:['vivid','balanced'], pace:['full','balanced'] },
+    hongkong: { tags:['late-night','coast'], mood:['vivid','editorial'], pace:['full','balanced'] },
+    macau: { tags:['late-night','parents'], mood:['editorial','balanced'], pace:['balanced','light'] }
+  };
   function scoreCityForSignals(city, signals){
     if (!city) return 0;
     const vibe = String(city.vibe || '').toLowerCase();
+    const slug = window.RyokoApp.slugifyCity(city.name || '');
+    const profile = citySignalProfiles[slug] || { tags:[], mood:[], pace:[] };
     let score = 0;
-    if (signals.tags.includes('late-night') && /(night|harbor|social|food|fast)/.test(vibe)) score += 3;
-    if (signals.tags.includes('food-led') && /(food|compact|local|night)/.test(vibe)) score += 3;
-    if (signals.tags.includes('soft-reset') && /(slow|history|scenic|ease)/.test(vibe)) score += 3;
-    if (signals.tags.includes('coast') && /(coast|scenic|harbor)/.test(vibe)) score += 3;
-    if (signals.tags.includes('parents') && /(scenic|history|ease|coast)/.test(vibe)) score += 3;
-    if (signals.tags.includes('local-mode') && /(local|social|food)/.test(vibe)) score += 2;
-    if (signals.moodKey === 'editorial' && /(slow|history|scenic|local)/.test(vibe)) score += 1;
-    if (signals.moodKey === 'vivid' && /(fast|night|social|harbor)/.test(vibe)) score += 1;
-    if (signals.paceKey === 'light' && /(slow|ease|scenic|history)/.test(vibe)) score += 1;
-    if (signals.paceKey === 'full' && /(fast|social|food|harbor)/.test(vibe)) score += 1;
+    if (signals.tags.includes('late-night') && /(night|harbor|social|food|fast|vertical)/.test(vibe)) score += 3;
+    if (signals.tags.includes('food-led') && /(food|compact|local|night|tasty)/.test(vibe)) score += 3;
+    if (signals.tags.includes('soft-reset') && /(slow|history|scenic|ease|quiet|calm|island)/.test(vibe)) score += 3;
+    if (signals.tags.includes('coast') && /(coast|scenic|harbor|island|open)/.test(vibe)) score += 3;
+    if (signals.tags.includes('parents') && /(scenic|history|ease|coast|heritage)/.test(vibe)) score += 3;
+    if (signals.tags.includes('local-mode') && /(local|social|food|compact|layered)/.test(vibe)) score += 2;
+    signals.tags.forEach(tag => { if (profile.tags.includes(tag)) score += 4; });
+    if (profile.mood.includes(signals.moodKey)) score += 3;
+    if (profile.pace.includes(signals.paceKey)) score += 2;
+    if (signals.moodKey === 'editorial' && /(slow|history|scenic|local|heritage)/.test(vibe)) score += 1;
+    if (signals.moodKey === 'vivid' && /(fast|night|social|harbor|vertical)/.test(vibe)) score += 1;
+    if (signals.paceKey === 'light' && /(slow|ease|scenic|history|quiet|island)/.test(vibe)) score += 1;
+    if (signals.paceKey === 'full' && /(fast|social|food|harbor|night)/.test(vibe)) score += 1;
     return score;
   }
   function rerankRecommendations(recs, signals, baseCity=''){
     return [...(recs || [])].sort((a,b) => {
-      const av = String(a.preset?.destination || '').toLowerCase() === String(baseCity || '').toLowerCase() ? 2 : 0;
-      const bv = String(b.preset?.destination || '').toLowerCase() === String(baseCity || '').toLowerCase() ? 2 : 0;
+      const acity = a.preset?.destination || '';
+      const bcity = b.preset?.destination || '';
+      const av = String(acity).toLowerCase() === String(baseCity || '').toLowerCase() ? 3 : 0;
+      const bv = String(bcity).toLowerCase() === String(baseCity || '').toLowerCase() ? 3 : 0;
       const atags = (a.tags || []).map(t => String(t).toLowerCase());
       const btags = (b.tags || []).map(t => String(t).toLowerCase());
-      const ascore = av + signals.tags.reduce((acc, tag) => acc + (atags.some(t => t.includes(tag) || tag.includes(t)) ? 2 : 0), 0)
-        + (signals.localMode && atags.some(t => /local|hidden|neighborhood/.test(t)) ? 1 : 0)
+      const ascore = av + scoreCityForSignals(window.RyokoApp.getCityLoopData(acity) || {name:acity,vibe:''}, signals)
+        + signals.tags.reduce((acc, tag) => acc + (atags.some(t => t.includes(tag) || tag.includes(t)) ? 2 : 0), 0)
+        + (signals.localMode && atags.some(t => /local|hidden|neighborhood/.test(t)) ? 2 : 0)
         + (signals.paceKey === 'light' && atags.some(t => /soft|slow|easy/.test(t)) ? 1 : 0)
-        + (signals.paceKey === 'full' && atags.some(t => /dense|late|food|weekend/.test(t)) ? 1 : 0);
-      const bscore = bv + signals.tags.reduce((acc, tag) => acc + (btags.some(t => t.includes(tag) || tag.includes(t)) ? 2 : 0), 0)
-        + (signals.localMode && btags.some(t => /local|hidden|neighborhood/.test(t)) ? 1 : 0)
+        + (signals.paceKey === 'full' && atags.some(t => /dense|late|food|weekend/.test(t)) ? 1 : 0)
+        + (signals.moodKey === 'editorial' && atags.some(t => /editorial|guide|archive|quiet|heritage/.test(t)) ? 1 : 0)
+        + (signals.moodKey === 'vivid' && atags.some(t => /night|city|harbor|late/.test(t)) ? 1 : 0);
+      const bscore = bv + scoreCityForSignals(window.RyokoApp.getCityLoopData(bcity) || {name:bcity,vibe:''}, signals)
+        + signals.tags.reduce((acc, tag) => acc + (btags.some(t => t.includes(tag) || tag.includes(t)) ? 2 : 0), 0)
+        + (signals.localMode && btags.some(t => /local|hidden|neighborhood/.test(t)) ? 2 : 0)
         + (signals.paceKey === 'light' && btags.some(t => /soft|slow|easy/.test(t)) ? 1 : 0)
-        + (signals.paceKey === 'full' && btags.some(t => /dense|late|food|weekend/.test(t)) ? 1 : 0);
+        + (signals.paceKey === 'full' && btags.some(t => /dense|late|food|weekend/.test(t)) ? 1 : 0)
+        + (signals.moodKey === 'editorial' && btags.some(t => /editorial|guide|archive|quiet|heritage/.test(t)) ? 1 : 0)
+        + (signals.moodKey === 'vivid' && btags.some(t => /night|city|harbor|late/.test(t)) ? 1 : 0);
       return bscore - ascore;
     });
   }
