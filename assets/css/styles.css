@@ -2283,3 +2283,20 @@ body[data-page="planner"] .top-bar{z-index:62}
 .example-flow-card-quiet{background:linear-gradient(180deg,#fff 0%,#f8f3ec 100%)}
 .example-recommend-head{margin-top:1rem}
 @media (max-width: 980px){.example-flow-grid-secondary{grid-template-columns:1fr}}
+
+
+.loop-stage-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:0 0 16px}
+.loop-stage-card{display:flex;flex-direction:column;gap:8px;padding:16px;border-radius:22px;background:#fff;border:1px solid var(--line);text-decoration:none;color:inherit;position:relative;min-height:170px}
+.loop-stage-card strong{font-size:18px;line-height:1.24}
+.loop-stage-card p{margin:0;color:var(--muted);font-size:13px}
+.loop-stage-step{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#b07148}
+.loop-stage-current{margin-top:auto;display:inline-flex;align-self:flex-start;padding:6px 10px;border-radius:999px;background:#f4ede3;color:#7f5a3d;font-size:12px;font-weight:700}
+.loop-stage-card.is-current{background:linear-gradient(180deg,#fff8f0 0%,#fff2e6 100%)}
+.loop-stage-atlas{background:linear-gradient(180deg,#fffdf9 0%,#fff7ee 100%)}
+.loop-stage-city{background:linear-gradient(180deg,#fffcf7 0%,#f8f1e8 100%)}
+.loop-stage-example{background:linear-gradient(180deg,#fffdfb 0%,#f7efe7 100%)}
+.loop-stage-planner{background:linear-gradient(180deg,#fffdfa 0%,#f5ece4 100%)}
+.loop-stage-result{background:linear-gradient(180deg,#fff8f0 0%,#f3e6d7 100%)}
+@media (max-width: 1100px){.loop-stage-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width: 720px){.loop-stage-grid{grid-template-columns:1fr 1fr;}.loop-stage-card{min-height:150px}}
+@media (max-width: 520px){.loop-stage-grid{grid-template-columns:1fr;}}

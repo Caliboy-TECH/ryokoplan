@@ -356,7 +356,25 @@ window.RyokoPlanner = (() => {
       sharedDesc: uiCopy('공유 링크로 들어온 일정입니다. 그대로 저장하거나, 내 취향에 맞게 다시 다듬을 수 있어요.', 'This route came in through a shared link. Keep it, save it, or reshape it into your own version.', '共有リンクから開いたルートです。このまま保存しても、自分の旅に合わせて整え直しても大丈夫です。', '這條路線是從分享連結打開的。你可以直接保存，也可以依自己的節奏重新整理。'),
       openGuide: uiCopy('도시 가이드 보기','Read guide','ガイドを見る','查看指南'),
       saveTrip: uiCopy('여정 저장','Save Trip','旅程を保存','保存旅程'),
-      useThisRoute: uiCopy('이 루트로 시작','Use this route','このルートを使う','使用這條路線')
+      useThisRoute: uiCopy('이 루트로 시작','Use this route','このルートを使う','使用這條路線'),
+      routeLoopEyebrow: uiCopy('루트 루프','Route loop','ルートループ','路線循環'),
+      routeLoopTitle: uiCopy('atlas에서 결과까지, 이 흐름을 다시 이어가세요', 'Keep the full flow moving from atlas to result', 'atlas から結果まで、この流れをもう一度つなげましょう', '從 atlas 到結果，讓這個流程繼續接回去'),
+      routeLoopDesc: uiCopy('지금 결과를 끝으로 두지 않고, city atlas·도시 가이드·sample route·planner를 다시 오가며 더 좋은 다음 루트를 만들 수 있게 묶었습니다.', 'Do not stop at this result. Move back through the city atlas, the city guide, the sample route, and Planner to shape the next version with better context.', 'この結果で止まらず、city atlas・都市ガイド・sample route・Planner を行き来しながら、次のルートをもっと良い文脈で整えられるようにつなげています。', '別停在這個結果。你可以回到 city atlas、城市指南、sample route 與 Planner 之間來回閱讀，整理出下一版更有脈絡的路線。'),
+      atlas: uiCopy('atlas', 'Atlas', 'atlas', 'atlas'),
+      neighborhoods: uiCopy('동네 픽', 'Neighborhood picks', '近所のピック', '鄰里精選'),
+      routeResult: uiCopy('현재 결과', 'Current result', '今の結果', '目前結果'),
+      backToAtlas: uiCopy('atlas로 돌아가기', 'Back to atlas', 'atlas に戻る', '回到 atlas'),
+      readCityLayer: uiCopy('도시 결 더 읽기', 'Read city layer', '都市の層を読む', '繼續讀城市層次'),
+      compareExample: uiCopy('샘플과 비교하기', 'Compare example', 'サンプルと比べる', '對照範例'),
+      tunePlanner: uiCopy('플래너에서 미세조정', 'Tune in Planner', 'Planner で整える', '在 Planner 微調'),
+      continueResult: uiCopy('결과로 돌아오기', 'Return to result', '結果へ戻る', '回到結果'),
+      matchingTitle: uiCopy('이 결과와 잘 붙는 다음 읽기', 'What fits this result next', 'この結果に続けて読みたいもの', '最適合接著讀的下一步'),
+      matchingDesc: uiCopy('같은 도시의 guide와 example, 그리고 비슷한 결의 도시를 함께 보여줘 다음 클릭이 자연스럽게 이어지게 했습니다.', 'A matching city guide, example, and a related city sit together here so the next click feels obvious.', '同じ都市の guide と example、そして近いトーンの都市を並べて、次のクリックが自然につながるようにしました。', '把同城市的 guide 與 example，加上調性相近的城市放在一起，讓下一次點擊更自然。'),
+      matchingEyebrow: uiCopy('추천 흐름', 'Suggested next reads', 'おすすめの流れ', '推薦流程'),
+      sameCityGuideDesc: uiCopy('결과에 쓰인 동네 결을 도시 가이드에서 더 깊게 읽습니다.', 'Read the same neighborhood logic in the city guide with more depth.', 'この結果で使った近所のロジックを、都市ガイドでもっと深く読めます。', '把這次結果用到的鄰里邏輯，在城市指南裡讀得更深。'),
+      sameCityExampleDesc: uiCopy('같은 도시의 샘플과 나란히 놓고 속도나 톤 차이를 비교합니다.', 'Put this beside a sample of the same city and compare the pace or tone.', '同じ都市のサンプルと並べて、速度感やトーンの違いを比べられます。', '把它和同城市範例並排比較，看看節奏和調性的差異。'),
+      neighborhoodDesc: uiCopy('가이드 안의 동네 픽에서 어디를 더 깊게 읽을지 바로 이어집니다.', 'Jump straight into the neighborhood picks inside the city guide.', '都市ガイド内の近所のピックへ、そのまま続けて読めます。', '可直接接到城市指南裡的鄰里精選，決定下一步往哪裡讀。'),
+      relatedCityDesc: uiCopy('비슷한 결을 가진 다른 도시로 가지를 치며 다음 루트를 넓혀 봅니다.', 'Branch into a related city when you want the next route to keep a similar tone.', '近いトーンの別都市へ枝分かれして、次のルートを広げられます。', '當你想讓下一條路線保留相近調性時，可以延伸到相關城市。')
     };
   }
 
@@ -586,6 +604,68 @@ window.RyokoPlanner = (() => {
   }
 
 
+  function renderJourneyLoop(data){
+    const node = qs('resultLoopSection');
+    if (!node) return;
+    const copy = resultCopy();
+    const baseCity = textValue(data.destination, readForm().destination || 'Tokyo');
+    const current = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, country:'', guide:'magazine/index.html', example:'magazine/index.html', image: cityImageFor(baseCity), vibe:'' };
+    const related = window.RyokoApp.getRelatedCities(baseCity).slice(0, 2);
+    const atlasHref = window.RyokoApp.resolvePath('magazine/index.html#cityAtlas');
+    const cityGuideHref = window.RyokoApp.resolvePath((current.guide || 'magazine/index.html')) + '#city-neighborhoods';
+    const exampleHref = window.RyokoApp.resolvePath(current.example || current.guide || 'magazine/index.html');
+    const plannerHref = `${location.pathname}?destination=${encodeURIComponent(baseCity)}#plannerForm`;
+    const resultHref = '#resultTop';
+    const stages = [
+      { step:'01', label:copy.atlas, title: uiCopy(`${current.name}를 atlas에서 다시 읽기`, `Re-read ${current.name} in the atlas`, `${current.name} を atlas で読み直す`, `回到 atlas 重讀 ${current.name}`), desc: copy.backToAtlas, href: atlasHref, cls:'atlas' },
+      { step:'02', label:copy.cityGuide, title: uiCopy(`${current.name} city guide`, `${current.name} city guide`, `${current.name} 都市ガイド`, `${current.name} 城市指南`), desc: copy.sameCityGuideDesc, href: cityGuideHref, cls:'city' },
+      { step:'03', label:copy.sampleRoute, title: uiCopy(`${current.name} sample route`, `${current.name} sample route`, `${current.name} サンプルルート`, `${current.name} 範例路線`), desc: copy.sameCityExampleDesc, href: exampleHref, cls:'example' },
+      { step:'04', label:copy.plannerBase, title: uiCopy(`${current.name} planner`, `${current.name} planner`, `${current.name} Planner`, `${current.name} Planner`), desc: copy.tunePlanner, href: plannerHref, cls:'planner' },
+      { step:'05', label:copy.routeResult, title: uiCopy('지금 보고 있는 결과', 'The result you are reading now', '今読んでいる結果', '你現在正在看的結果'), desc: copy.continueResult, href: resultHref, cls:'result' }
+    ];
+    const stageCards = stages.map((item, idx) => {
+      const body = `<span class="loop-stage-step">${item.step}</span><span class="mini-label">${escapeHtml(item.label)}</span><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.desc)}</p>`;
+      return idx === stages.length - 1
+        ? `<article class="loop-stage-card is-current loop-stage-${item.cls}">${body}<span class="loop-stage-current">${escapeHtml(copy.routeResult)}</span></article>`
+        : `<a class="loop-stage-card loop-stage-${item.cls}" href="${item.href}">${body}</a>`;
+    }).join('');
+    const matching = [
+      { eyebrow:copy.cityGuide, title: uiCopy(`${current.name} guide`, `${current.name} guide`, `${current.name} ガイド`, `${current.name} 指南`), desc: copy.sameCityGuideDesc, href: cityGuideHref, soft:copy.readCityLayer },
+      { eyebrow:copy.sampleRoute, title: uiCopy(`${current.name} example`, `${current.name} example`, `${current.name} サンプル`, `${current.name} 範例`), desc: copy.sameCityExampleDesc, href: exampleHref, soft:copy.compareExample },
+      { eyebrow:copy.neighborhoods, title: uiCopy(`${current.name} neighborhood picks`, `${current.name} neighborhood picks`, `${current.name} 近所のピック`, `${current.name} 鄰里精選`), desc: copy.neighborhoodDesc, href: cityGuideHref, soft:copy.neighborhoods },
+    ].concat(related.map(city => ({ eyebrow:copy.nextCity, title:city.name, desc:copy.relatedCityDesc, href:window.RyokoApp.resolvePath(city.guide), soft:copy.readGuide, vibe:city.vibe || '' })));
+    node.innerHTML = `
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">${copy.routeLoopEyebrow}</span>
+          <h2 class="section-title">${copy.routeLoopTitle}</h2>
+          <p class="section-desc">${copy.routeLoopDesc}</p>
+        </div>
+      </div>
+      <div class="loop-stage-grid">${stageCards}</div>
+      <article class="loop-feature info-card">
+        <div class="loop-feature-copy">
+          <span class="eyebrow">${copy.matchingEyebrow}</span>
+          <h3>${copy.matchingTitle}</h3>
+          <p>${copy.matchingDesc}</p>
+          <div class="card-actions">
+            <a class="primary-btn" href="${cityGuideHref}">${copy.readCityLayer}</a>
+            <a class="secondary-btn" href="${exampleHref}">${copy.compareExample}</a>
+            <a class="ghost-btn" href="${atlasHref}">${copy.backToAtlas}</a>
+          </div>
+        </div>
+      </article>
+      <div class="loop-grid">${matching.map(item => `
+        <article class="loop-card info-card">
+          <div class="loop-card-top"><span class="eyebrow">${escapeHtml(item.eyebrow)}</span><span class="loop-card-vibe">${escapeHtml(item.vibe || current.vibe || '')}</span></div>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${escapeHtml(item.desc)}</p>
+          <div class="card-actions">
+            <a class="soft-btn" href="${item.href}">${escapeHtml(item.soft)}</a>
+          </div>
+        </article>`).join('')}</div>`;
+  }
+
   function renderSignalShelf(data){
     const node = qs('resultSignalShelf');
     if (!node) return;
@@ -618,6 +698,7 @@ window.RyokoPlanner = (() => {
           <div class="card-actions">
             <a class="soft-btn" href="${item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-guide">${copy.cityGuide}</a>
             <a class="ghost-btn" href="${item.example || item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-sample">${copy.sampleRoute}</a>
+            <a class="secondary-btn" href="${location.pathname}?destination=${encodeURIComponent(item.preset?.destination || '')}#plannerForm" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-planner">${copy.plannerBase}</a>
           </div>
         </article>`).join('')}</div>`;
     window.RyokoApp?.recordSignalInteraction && node.querySelectorAll('[data-signal-tags]').forEach(el => {
@@ -703,7 +784,8 @@ window.RyokoPlanner = (() => {
     renderBudget(data);
     renderChecklist(data);
     renderSharedTripBanner(window.sharedTripSource || null);
-    renderLoopSection(data);
+    renderJourneyLoop(data);
+    renderSignalShelf(data);
     updateStickyCopy(data);
     updateShareMeta(data);
     window.currentTripPayload = { ...readForm(), planData:data, title:data.title || data.destination };
