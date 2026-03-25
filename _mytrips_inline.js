@@ -860,7 +860,7 @@
         const days = Array.isArray(data.days) ? data.days : [];
         const dayPreview = days.slice(0,3).map(day => `<article class="trip-detail-day"><strong>${day.title || ('Day ' + day.day)}</strong><p>${(day.intro || '').slice(0,120)}</p></article>`).join('');
         const tips = (Array.isArray(data.localTips) ? data.localTips : []).slice(0,3).map(t => `<li>${t}</li>`).join('');
-        const summary = getMetaSummary(item) || 'A trip you can reopen, save, or turn into a new plan.';
+        const summary = getMetaSummary(item) || 'A saved city route you can reopen, compare, or branch into a new edit.';
         content.innerHTML = `
           <div class="trip-detail-hero">
             <div class="trip-detail-media"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.jpg'}" alt="${item.destination || 'Trip'}"></div>
@@ -887,7 +887,7 @@
                 <div><span>Checklist</span><strong>${(data.checklist || []).length || '—'}</strong></div>
                 <div><span>Updated</span><strong>${formatDate(getTimestamp(item)) || '—'}</strong></div>
               </div>
-              <p class="card-copy">${item.importedFromLink ? 'This one was imported from a shared Ryokoplan link and can now live inside your own trip vault.' : 'This trip is already inside your vault, so it is easy to reopen or branch from here.'}</p>
+              <p class="card-copy">${item.importedFromLink ? 'This one was imported from a shared Ryokoplan link and can now live inside your own trip vault.' : 'This route already lives inside your vault, so it is easy to reopen, compare, or branch from here.'}</p>
             </article>
             <article class="info-card trip-detail-panel">
               <h3>Day rhythm preview</h3>
@@ -902,7 +902,7 @@
               <div class="trip-detail-branch-list">
                 <a class="trip-detail-branch" href="../${city.example}">
                   <strong>${city.name} sample route</strong>
-                  <span>Use a sample to compare against this shared trip.</span>
+                  <span>Use the sample route to compare this saved edit against a stronger city baseline.</span>
                 </a>
                 ${related.map(rel => `<a class="trip-detail-branch" href="../${rel.guide}"><strong>${rel.name}</strong><span>${rel.vibe} is a strong next read after ${city.name}.</span></a>`).join('')}
               </div>
