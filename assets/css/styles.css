@@ -2466,3 +2466,17 @@ body[data-page="planner"] .top-bar{z-index:62}
 #magazinePriorityArticleRoot .priority-article-card h3{font-size:1.08rem}
 #homeStoryLayerRoot .priority-article-grid,
 #magazinePriorityArticleRoot .priority-article-grid{gap:18px}
+
+
+/* v38 release vs expansion grouping */
+#releaseCityStories .section-head .eyebrow,
+#homeStoryLayerRoot .section-head .eyebrow{color:#9b6d46}
+#releaseCityStories .priority-article-grid,
+#homeStoryLayerRoot .priority-article-grid{gap:18px}
+#expansionCityStories{margin-top:10px}
+#expansionCityStories .section-head{opacity:.9}
+#expansionCityStories .section-title{font-size:1.35rem}
+#expansionCityStories .secondary-story-card{background:linear-gradient(180deg,rgba(249,246,241,.92),rgba(255,255,255,.96))}
+#expansionCityStories .collection-kicker{font-size:.72rem}
+#expansionCityStories .ghost-btn,
+#expansionCityStories .soft-btn{min-height:40px}

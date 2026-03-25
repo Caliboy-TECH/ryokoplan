@@ -2049,7 +2049,7 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'在象徵性場景後補上一點留白，京都會留得更久也更乾淨。',
         deeper:[['岡崎博物館一側','寺院線之後薄薄加上一層展覽與咖啡，京都會輕很多。'],['西陣一側','如果是第二次京都，安靜西側的生活質地可能比再走一次東山更有力。']],
         visitTitle:'第一次京都與再次閱讀的京都',
-        visitDesc:'第一次可以靠東側經典，第二次通常更適合安靜西側或河邊線。'],
+        visitDesc:'第一次可以靠東側經典，第二次通常更適合安靜西側或河邊線。',
         first:['東山清晨 → 祇園邊緣 → 鴨川黃昏','第一次時，象徵性場景放在早段，最後用黃昏收尾最穩。'],
         second:['岡崎 → 西陣 → 鴨川黃昏','再訪時，比起人多的畫面，安靜口袋與河邊通常更耐看。'],
         entryTitle:'建議起手路線',
@@ -2060,7 +2060,7 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'不要只靠吃來撐起台北，只要再補一個有質感的口袋，城市就會清楚很多。',
         deeper:[['赤峰一側','適量購物、咖啡與老質地疊在一起，很適合做出台北的中段手感。'],['寶藏巖一側','第二次台北時，補上一點河邊與慢節奏口袋，會留得更久。']],
         visitTitle:'第一次台北與再讀一次的台北',
-        visitDesc:'第一次可以 food-first，第二次通常是書店、河邊與茶室口袋更有力。'],
+        visitDesc:'第一次可以 food-first，第二次通常是書店、河邊與茶室口袋更有力。',
         first:['永康 → 迪化 → 一個夜市','第一次台北，食物、巷子與一個夜市就已經很夠。'],
         second:['赤峰 → 寶藏巖 → 茶室收尾','再訪時，比起再衝一次食物清單，質感與 pause 會更重要。'],
         entryTitle:'建議起手路線',
@@ -2071,7 +2071,7 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'香港若只有垂直 headline 會太緊，後面多放一層能喘口氣的節奏，整體會更俐落。',
         deeper:[['PMQ / Soho 一側','讀完中環的坡與建築後，這層能避免太快跳進另一個高壓街區。'],['西九龍一側','第二次香港時，很適合用更安靜的角度重新讀港口。']],
         visitTitle:'第一次香港與再次閱讀的香港',
-        visitDesc:'第一次靠垂直對比，第二次則更適合細讀渡輪、港口與坡道街景。'],
+        visitDesc:'第一次靠垂直對比，第二次則更適合細讀渡輪、港口與坡道街景。',
         first:['中環 → 上環 → 尖沙咀夜晚','第一次香港，用垂直感和港口場景都很鮮明的線最容易打開。'],
         second:['上環 → PMQ/Soho → 西九龍收尾','再訪時，坡道街與港邊質地往往比單純夜景更有後勁。'],
         entryTitle:'建議起手路線',
@@ -2082,7 +2082,7 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'海景 headline 後面只要再補上一層生活感，釜山就不會只剩明信片。',
         deeper:[['影島一側','很適合用不同高度與質地重新讀一次海。'],['寶水 / 南浦一側','如果不想只停在廣安里和海雲台，舊街區的生活顆粒會讓釜山更清楚。']],
         visitTitle:'第一次釜山與再讀一次的釜山',
-        visitDesc:'第一次重點是海岸 anchor，第二次則更適合港邊生活感。'],
+        visitDesc:'第一次重點是海岸 anchor，第二次則更適合港邊生活感。',
         first:['海雲台 → 廣安里 → 一個夜晚海岸','第一次釜山，用易進入的海岸線打開，再留一個清楚的夜景就夠了。'],
         second:['影島 → 南浦/寶水 → 廣安里收尾','再訪時，港邊質地通常比海岸 postcard 更耐記。'],
         entryTitle:'建議起手路線',
@@ -2093,7 +2093,7 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'因為福岡很緊湊，只要在吃的線後面多補一層安靜口袋，完成度就會明顯變高。',
         deeper:[['博多站一側','能整理移動與用餐節奏，是第一次福岡很實用的一層。'],['藥院一側','第二次時，比起天神，稍微安靜一點的 pocket 會留得更久。']],
         visitTitle:'第一次福岡與再讀一次的福岡',
-        visitDesc:'第一次可以 compact 且 food-first，第二次則更重視安靜口袋與生活感。'],
+        visitDesc:'第一次可以 compact 且 food-first，第二次則更重視安靜口袋與生活感。',
         first:['博多 → 天神 → 屋台收尾','第一次福岡，讓移動短一點、第一餐節奏清楚一點就很好。'],
         second:['藥院 → 大濠邊緣 → 緊湊晚餐收尾','再訪時，比起屋台熱鬧，鬆一點的 neighborhood rhythm 會更耐留。'],
         entryTitle:'建議起手路線',
@@ -2115,34 +2115,35 @@ function getSeasonalEditorialCollections(){
   }
 
 
+  
   const secondaryCityThinDepthMap = {
     osaka:{
-      ko:{deeperTitle:'조금 더 선명하게 읽는 Osaka', deeperDesc:'첫 식사와 늦은 마감만 선명하게 두면 오사카는 훨씬 빨리 정리됩니다.', deeper:[['Nakanoshima side','도톤보리만으로 끝내지 않게 해 주는 quieter layer입니다.']], visitTitle:'가벼운 방문 분기', visitDesc:'첫 오사카는 food-first, 다시 가면 river/café layer가 더 좋습니다.', first:['Namba → Dotonbori → Umeda late','식사와 밤 장면 하나만 선명하게 두세요.'], second:['Nakanoshima → Utsubo → Umeda close','재방문이면 quieter west pocket이 더 오래 갑니다.'], entryTitle:'Entry routes', entryRoutes:[['Food-first opener','Namba → Dotonbori'],['Softer opener','Nakanoshima → Utsubo Park']]}},
-      en:{deeperTitle:'A sharper Osaka read', deeperDesc:'Osaka reads best when the first meal line and the late close stay crisp.', deeper:[['Nakanoshima side','A quieter layer that stops the city from ending as only Dotonbori.']], visitTitle:'Visit lens', visitDesc:'A first Osaka can stay food-first; a return trip often lands better with a river-and-café layer.', first:['Namba → Dotonbori → Umeda late','Keep one meal line and one late scene vivid.'], second:['Nakanoshima → Utsubo → Umeda close','A quieter west-side pocket often lands better on a repeat trip.'], entryTitle:'Entry routes', entryRoutes:[['Food-first opener','Namba → Dotonbori'],['Softer opener','Nakanoshima → Utsubo Park']]}}
+      ko:{deeperTitle:'조금 더 선명하게 읽는 Osaka', deeperDesc:'첫 식사와 늦은 마감만 선명하게 두면 오사카는 도시 결이 빨리 보입니다.', deeper:[['Nakanoshima side','도톤보리만으로 끝내지 않게 해 주는 quieter layer입니다.']], visitTitle:'Visit lens', visitDesc:'첫 오사카는 food-first, 다시 가면 river/café layer가 더 좋습니다.', first:['Namba → Dotonbori → Umeda late','식사와 밤 장면 하나만 선명하게 두세요.'], second:['Nakanoshima → Utsubo → Umeda close','재방문이면 quieter west pocket이 더 오래 갑니다.'], entryTitle:'Entry routes', entryRoutes:[['Food-first opener','Namba → Dotonbori'],['Softer opener','Nakanoshima → Utsubo Park']]},
+      en:{deeperTitle:'A sharper Osaka read', deeperDesc:'Osaka reads best when the first meal line and the late close stay crisp.', deeper:[['Nakanoshima side','A quieter layer that stops the city from ending as only Dotonbori.']], visitTitle:'Visit lens', visitDesc:'A first Osaka can stay food-first; a return trip often lands better with a river-and-café layer.', first:['Namba → Dotonbori → Umeda late','Keep one meal line and one late scene vivid.'], second:['Nakanoshima → Utsubo → Umeda close','A quieter west-side pocket often lands better on a repeat trip.'], entryTitle:'Entry routes', entryRoutes:[['Food-first opener','Namba → Dotonbori'],['Softer opener','Nakanoshima → Utsubo Park']]}
     },
     sapporo:{
-      ko:{deeperTitle:'조금 더 부드럽게 읽는 Sapporo', deeperDesc:'삿포로는 날씨와 넓은 거리 폭을 같이 읽을수록 더 편안하게 남습니다.', deeper:[['Maruyama side','중심지보다 한 단계 부드럽게 쉬어가기 좋은 pocket입니다.']], visitTitle:'가벼운 방문 분기', visitDesc:'첫 삿포로는 central axis, 다시 가면 calmer neighborhood가 더 좋습니다.', first:['Odori → Susukino → late soup curry','중심 축을 짧고 분명하게 읽으세요.'], second:['Maruyama → café pocket → Susukino close','재방문이면 quieter neighborhood가 더 잘 남습니다.'], entryTitle:'Entry routes', entryRoutes:[['Central opener','Odori → Susukino'],['Soft opener','Maruyama → café pocket']]}},
-      en:{deeperTitle:'A softer Sapporo read', deeperDesc:'Sapporo lands better when weather, street width, and slower pacing are read together.', deeper:[['Maruyama side','A softer pause layer beyond the obvious central axis.']], visitTitle:'Visit lens', visitDesc:'The first read can stay central; the second usually lands better through a calmer neighborhood.', first:['Odori → Susukino → late soup curry','Keep the central line short and readable.'], second:['Maruyama → café pocket → Susukino close','A softer neighborhood layer often lands better on a repeat visit.'], entryTitle:'Entry routes', entryRoutes:[['Central opener','Odori → Susukino'],['Soft opener','Maruyama → café pocket']]}}
+      ko:{deeperTitle:'조금 더 부드럽게 읽는 Sapporo', deeperDesc:'삿포로는 날씨와 넓은 거리 폭을 같이 읽을수록 훨씬 더 편안하게 남습니다.', deeper:[['Maruyama side','중심지보다 한 단계 부드럽게 쉬어가기 좋은 pocket입니다.']], visitTitle:'Visit lens', visitDesc:'첫 삿포로는 central axis, 다시 가면 calmer neighborhood가 더 좋습니다.', first:['Odori → Susukino → late soup curry','중심 축을 짧고 분명하게 읽으세요.'], second:['Maruyama → café pocket → Susukino close','재방문이면 quieter neighborhood가 더 잘 남습니다.'], entryTitle:'Entry routes', entryRoutes:[['Central opener','Odori → Susukino'],['Soft opener','Maruyama → café pocket']]},
+      en:{deeperTitle:'A softer Sapporo read', deeperDesc:'Sapporo lands better when weather, street width, and slower pacing are read together.', deeper:[['Maruyama side','A softer pause layer beyond the obvious central axis.']], visitTitle:'Visit lens', visitDesc:'The first read can stay central; the second usually lands better through a calmer neighborhood.', first:['Odori → Susukino → late soup curry','Keep the central line short and readable.'], second:['Maruyama → café pocket → Susukino close','A softer neighborhood layer often lands better on a repeat visit.'], entryTitle:'Entry routes', entryRoutes:[['Central opener','Odori → Susukino'],['Soft opener','Maruyama → café pocket']]}
     },
     sendai:{
-      ko:{deeperTitle:'조금 더 차분하게 읽는 Sendai', deeperDesc:'센다이는 큰 headline보다 잔잔한 거리 리듬으로 읽을 때 더 오래 남습니다.', deeper:[['Jozenji-dori side','센다이의 pace를 가장 쉽게 보여주는 축입니다.']], visitTitle:'가벼운 방문 분기', visitDesc:'첫 센다이는 station-centre 축, 다시 가면 tree-lined pocket이 더 좋습니다.', first:['Station → arcade → Jozenji-dori','이해 쉬운 축부터 열면 좋습니다.'], second:['Jozenji-dori → quiet coffee → river edge','재방문이면 더 느린 북측 pace가 잘 맞습니다.'], entryTitle:'Entry routes', entryRoutes:[['Centre opener','Station → arcade'],['Calm opener','Jozenji-dori → coffee pocket']]}},
-      en:{deeperTitle:'A calmer Sendai read', deeperDesc:'Sendai holds longer through calm street rhythm than through headline stops.', deeper:[['Jozenji-dori side','One of the clearest ways to feel Sendai’s softer pace.']], visitTitle:'Visit lens', visitDesc:'The first read can stay centre-led; the second often works better through a calmer tree-lined pocket.', first:['Station → arcade → Jozenji-dori','Open through the clearest central line first.'], second:['Jozenji-dori → quiet coffee → river edge','A slower north-side rhythm often lands better on a return.'], entryTitle:'Entry routes', entryRoutes:[['Centre opener','Station → arcade'],['Calm opener','Jozenji-dori → coffee pocket']]}}
+      ko:{deeperTitle:'조금 더 차분하게 읽는 Sendai', deeperDesc:'센다이는 headline보다 잔잔한 거리 리듬으로 읽을 때 더 오래 남습니다.', deeper:[['Jozenji-dori side','센다이의 pace를 가장 쉽게 보여주는 축입니다.']], visitTitle:'Visit lens', visitDesc:'첫 센다이는 station-centre 축, 다시 가면 tree-lined pocket이 더 좋습니다.', first:['Station → arcade → Jozenji-dori','이해 쉬운 축부터 열면 좋습니다.'], second:['Jozenji-dori → quiet coffee → river edge','재방문이면 더 느린 북측 pace가 잘 맞습니다.'], entryTitle:'Entry routes', entryRoutes:[['Centre opener','Station → arcade'],['Calm opener','Jozenji-dori → coffee pocket']]},
+      en:{deeperTitle:'A calmer Sendai read', deeperDesc:'Sendai holds longer through calm street rhythm than through headline stops.', deeper:[['Jozenji-dori side','One of the clearest ways to feel Sendai’s softer pace.']], visitTitle:'Visit lens', visitDesc:'The first read can stay centre-led; the second often works better through a calmer tree-lined pocket.', first:['Station → arcade → Jozenji-dori','Open through the clearest central line first.'], second:['Jozenji-dori → quiet coffee → river edge','A slower north-side rhythm often lands better on a return.'], entryTitle:'Entry routes', entryRoutes:[['Centre opener','Station → arcade'],['Calm opener','Jozenji-dori → coffee pocket']]}
     },
     okinawa:{
-      ko:{deeperTitle:'조금 더 느리게 읽는 Okinawa', deeperDesc:'오키나와는 해안 뒤에 느린 pocket 하나를 붙일수록 결이 선명해집니다.', deeper:[['Yomitan side','리조트 축 뒤에 slower layer를 붙이기 좋은 쪽입니다.']], visitTitle:'가벼운 방문 분기', visitDesc:'첫 오키나와는 coast-first, 다시 가면 slower local pocket이 더 좋습니다.', first:['Coast drive → beach stop → sunset close','바다 축을 분명히 여세요.'], second:['Yomitan → café pocket → slower dusk','재방문이면 quieter west pocket이 더 오래 갑니다.'], entryTitle:'Entry routes', entryRoutes:[['Coast opener','Coast drive → beach stop'],['Slow opener','Yomitan → café pocket']]}},
-      en:{deeperTitle:'A slower Okinawa read', deeperDesc:'Okinawa becomes clearer once one slower pocket sits behind the coast line.', deeper:[['Yomitan side','A strong softer layer after the obvious resort line.']], visitTitle:'Visit lens', visitDesc:'The first read can stay coast-first; a return often lands better through a slower local pocket.', first:['Coast drive → beach stop → sunset close','Open the route clearly through the sea line.'], second:['Yomitan → café pocket → slower dusk','A quieter west-side layer often holds better on a repeat visit.'], entryTitle:'Entry routes', entryRoutes:[['Coast opener','Coast drive → beach stop'],['Slow opener','Yomitan → café pocket']]}}
+      ko:{deeperTitle:'조금 더 느리게 읽는 Okinawa', deeperDesc:'오키나와는 해안 뒤에 느린 pocket 하나를 붙일수록 결이 선명해집니다.', deeper:[['Yomitan side','리조트 축 뒤에 slower layer를 붙이기 좋은 쪽입니다.']], visitTitle:'Visit lens', visitDesc:'첫 오키나와는 coast-first, 다시 가면 slower local pocket이 더 좋습니다.', first:['Coast drive → beach stop → sunset close','바다 축을 분명히 여세요.'], second:['Yomitan → café pocket → slower dusk','재방문이면 quieter west pocket이 더 오래 갑니다.'], entryTitle:'Entry routes', entryRoutes:[['Coast opener','Coast drive → beach stop'],['Slow opener','Yomitan → café pocket']]},
+      en:{deeperTitle:'A slower Okinawa read', deeperDesc:'Okinawa becomes clearer once one slower pocket sits behind the coast line.', deeper:[['Yomitan side','A strong softer layer after the obvious resort line.']], visitTitle:'Visit lens', visitDesc:'The first read can stay coast-first; a return often lands better through a slower local pocket.', first:['Coast drive → beach stop → sunset close','Open the route clearly through the sea line.'], second:['Yomitan → café pocket → slower dusk','A quieter west-side layer often holds better on a repeat visit.'], entryTitle:'Entry routes', entryRoutes:[['Coast opener','Coast drive → beach stop'],['Slow opener','Yomitan → café pocket']]}
     },
     jeju:{
-      ko:{deeperTitle:'조금 더 부드럽게 읽는 Jeju', deeperDesc:'제주는 scenic list보다 wind·coast·slower reset 결로 읽을수록 더 좋아집니다.', deeper:[['Aewol side','바람과 카페 리듬이 같이 남는 쉬운 pocket입니다.']], visitTitle:'가벼운 방문 분기', visitDesc:'첫 제주는 coast line, 다시 가면 slower west pocket이 더 좋습니다.', first:['Aewol → coast café → sunset','너무 많이 돌기보다 해안 결 하나만 남기세요.'], second:['Aewol → village pocket → slower close','재방문이면 느린 리셋 감이 더 중요합니다.'], entryTitle:'Entry routes', entryRoutes:[['Coast opener','Aewol → coast café'],['Reset opener','village pocket → slower west']]}},
-      en:{deeperTitle:'A softer Jeju read', deeperDesc:'Jeju lands better as wind, coast, and a slower reset than as a simple scenic list.', deeper:[['Aewol side','An easy pocket where breeze, cafés, and west-coast rhythm sit together.']], visitTitle:'Visit lens', visitDesc:'A first Jeju can stay coast-led; a return often lands better through a slower west-side reset.', first:['Aewol → coast café → sunset','Keep one coast line vivid instead of over-rotating.'], second:['Aewol → village pocket → slower close','A slower reset usually matters more on a repeat visit.'], entryTitle:'Entry routes', entryRoutes:[['Coast opener','Aewol → coast café'],['Reset opener','village pocket → slower west']]}}
+      ko:{deeperTitle:'조금 더 부드럽게 읽는 Jeju', deeperDesc:'제주는 scenic list보다 wind·coast·slower reset 결로 읽을수록 도시의 성격이 더 잘 남습니다.', deeper:[['Aewol side','바람과 카페 리듬이 같이 남는 쉬운 pocket입니다.']], visitTitle:'Visit lens', visitDesc:'첫 제주는 coast line, 다시 가면 slower west pocket이 더 좋습니다.', first:['Aewol → coast café → sunset','너무 많이 돌기보다 해안 결 하나만 남기세요.'], second:['Aewol → village pocket → slower close','재방문이면 느린 리셋 감이 더 중요합니다.'], entryTitle:'Entry routes', entryRoutes:[['Coast opener','Aewol → coast café'],['Reset opener','village pocket → slower west']]},
+      en:{deeperTitle:'A softer Jeju read', deeperDesc:'Jeju lands better as wind, coast, and a slower reset than as a simple scenic list.', deeper:[['Aewol side','An easy pocket where breeze, cafés, and west-coast rhythm sit together.']], visitTitle:'Visit lens', visitDesc:'A first Jeju can stay coast-led; a return often lands better through a slower west-side reset.', first:['Aewol → coast café → sunset','Keep one coast line vivid instead of over-rotating.'], second:['Aewol → village pocket → slower close','A slower reset usually matters more on a repeat visit.'], entryTitle:'Entry routes', entryRoutes:[['Coast opener','Aewol → coast café'],['Reset opener','village pocket → slower west']]}
     },
     gyeongju:{
-      ko:{deeperTitle:'조금 더 조용하게 읽는 Gyeongju', deeperDesc:'경주는 큰 유산 스폿보다 quiet heritage pace로 읽을수록 차별점이 살아납니다.', deeper:[['Hwangnidan-gil side','headline보다 생활감 있는 유산 결을 얇게 붙이기 좋습니다.']], visitTitle:'가벼운 방문 분기', visitDesc:'첫 경주는 주요 유산 축, 다시 가면 quieter lane이 더 좋습니다.', first:['Daereungwon → museum edge → dusk walk','가장 이해 쉬운 유산 축부터 여세요.'], second:['Hwangnidan-gil → quiet lane → dusk close','재방문이면 조용한 거리 결이 더 잘 남습니다.'], entryTitle:'Entry routes', entryRoutes:[['Heritage opener','Daereungwon → museum edge'],['Quiet opener','Hwangnidan-gil → lane walk']]}},
-      en:{deeperTitle:'A quieter Gyeongju read', deeperDesc:'Gyeongju gets stronger when it is read as a quiet heritage city with pace.', deeper:[['Hwangnidan-gil side','A good pocket for adding everyday heritage texture beyond the obvious frame.']], visitTitle:'Visit lens', visitDesc:'The first read can stay heritage-led; a return often lands better through quieter lanes.', first:['Daereungwon → museum edge → dusk walk','Open through the clearest heritage line first.'], second:['Hwangnidan-gil → quiet lane → dusk close','A quieter lane rhythm often carries more memory on a repeat visit.'], entryTitle:'Entry routes', entryRoutes:[['Heritage opener','Daereungwon → museum edge'],['Quiet opener','Hwangnidan-gil → lane walk']]}}
+      ko:{deeperTitle:'조금 더 조용하게 읽는 Gyeongju', deeperDesc:'경주는 조용한 유산 도시로 읽을수록 차별점이 더 또렷해집니다.', deeper:[['Hwangnidan-gil side','headline보다 생활감 있는 유산 결을 얇게 붙이기 좋습니다.']], visitTitle:'Visit lens', visitDesc:'첫 경주는 주요 유산 축, 다시 가면 quieter lane이 더 좋습니다.', first:['Daereungwon → museum edge → dusk walk','가장 이해 쉬운 유산 축부터 여세요.'], second:['Hwangnidan-gil → quiet lane → dusk close','재방문이면 조용한 거리 결이 더 잘 남습니다.'], entryTitle:'Entry routes', entryRoutes:[['Heritage opener','Daereungwon → museum edge'],['Quiet opener','Hwangnidan-gil → lane walk']]},
+      en:{deeperTitle:'A quieter Gyeongju read', deeperDesc:'Gyeongju gets stronger when it is read as a quiet heritage city with pace.', deeper:[['Hwangnidan-gil side','A good pocket for adding everyday heritage texture beyond the obvious frame.']], visitTitle:'Visit lens', visitDesc:'The first read can stay heritage-led; a return often lands better through quieter lanes.', first:['Daereungwon → museum edge → dusk walk','Open through the clearest heritage line first.'], second:['Hwangnidan-gil → quiet lane → dusk close','A quieter lane rhythm often carries more memory on a repeat visit.'], entryTitle:'Entry routes', entryRoutes:[['Heritage opener','Daereungwon → museum edge'],['Quiet opener','Hwangnidan-gil → lane walk']]}
     },
     macau:{
-      ko:{deeperTitle:'조금 더 또렷하게 읽는 Macau', deeperDesc:'마카오는 old lane과 night glow를 짧게 나눌수록 훨씬 더 또렷해집니다.', deeper:[['Taipa side','올드센터 뒤에 붙이면 너무 빽빽하지 않게 완충해 줍니다.']], visitTitle:'가벼운 방문 분기', visitDesc:'첫 마카오는 old street 중심, 다시 가면 Taipa 쪽이 더 좋습니다.', first:['Ruins edge → Senado → night glow','old lane과 밤 장면 하나만 분명히 두세요.'], second:['Taipa → old lane → softer close','재방문이면 더 compact하고 느슨한 축이 좋습니다.'], entryTitle:'Entry routes', entryRoutes:[['Old-lane opener','Ruins edge → Senado'],['Taipa opener','Taipa → softer lane']]}},
-      en:{deeperTitle:'A cleaner Macau read', deeperDesc:'Macau gets clearer once old lanes and night glow are split into two clean layers.', deeper:[['Taipa side','A softer buffer after the older core so the route does not stay too dense.']], visitTitle:'Visit lens', visitDesc:'The first read can stay old-street led; a return often lands better through Taipa.'], first:['Ruins edge → Senado → night glow','Keep one old-lane line and one late scene vivid.'], second:['Taipa → old lane → softer close','A more compact, looser route often works better on a repeat visit.'], entryTitle:'Entry routes', entryRoutes:[['Old-lane opener','Ruins edge → Senado'],['Taipa opener','Taipa → softer lane']]}}
+      ko:{deeperTitle:'조금 더 또렷하게 읽는 Macau', deeperDesc:'마카오는 old lane과 night glow를 짧게 나눌수록 도시가 더 또렷하게 정리됩니다.', deeper:[['Taipa side','올드센터 뒤에 붙이면 너무 빽빽하지 않게 완충해 줍니다.']], visitTitle:'Visit lens', visitDesc:'첫 마카오는 old street 중심, 다시 가면 Taipa 쪽이 더 좋습니다.', first:['Ruins edge → Senado → night glow','old lane과 밤 장면 하나만 분명히 두세요.'], second:['Taipa → old lane → softer close','재방문이면 더 compact하고 느슨한 축이 좋습니다.'], entryTitle:'Entry routes', entryRoutes:[['Old-lane opener','Ruins edge → Senado'],['Taipa opener','Taipa → softer lane']]},
+      en:{deeperTitle:'A cleaner Macau read', deeperDesc:'Macau gets clearer once old lanes and night glow are split into two clean layers.', deeper:[['Taipa side','A softer buffer after the older core so the route does not stay too dense.']], visitTitle:'Visit lens', visitDesc:'The first read can stay old-street led; a return often lands better through Taipa.', first:['Ruins edge → Senado → night glow','Keep one old-lane line and one late scene vivid.'], second:['Taipa → old lane → softer close','A more compact, looser route often works better on a repeat visit.'], entryTitle:'Entry routes', entryRoutes:[['Old-lane opener','Ruins edge → Senado'],['Taipa opener','Taipa → softer lane']]}
     }
   };
 
@@ -2734,8 +2735,8 @@ function getPriorityDeepening(slug=''){
     const base = pathRoot === '../' ? '../' : '';
     return {
       ko:{
-        eyebrow:'More city reads',
-        title:'다음으로 가볍게 읽어볼 도시',
+        eyebrow:'Expansion cities',
+        title:'Expansion cities — lighter reads',
         desc:'release 우선 도시 다음으로, 같은 구조를 가볍게 따라오는 도시들입니다.',
         city:'Read city', sample:'Read sample',
         items:[{city:'Osaka', title:'Food-first Osaka with a late close', desc:'오사카는 첫 식사 라인과 늦은 마감만 선명하게 잡아도 도시 결이 빨리 보입니다.', cityHref:`${base}city/osaka.html`, sampleHref:`${base}example/osaka-2n3d-food-trip.html`},
@@ -2746,8 +2747,8 @@ function getPriorityDeepening(slug=''){
           {city:'Gyeongju', title:'Quiet heritage with room to breathe', desc:'경주는 조용한 유산 도시로 읽을수록 차별점이 더 또렷해집니다.', cityHref:`${base}city/gyeongju.html`, sampleHref:`${base}example/gyeongju-2n3d-heritage-walk.html`}]
       },
       en:{
-        eyebrow:'More city reads',
-        title:'Next cities to read lightly',
+        eyebrow:'Expansion cities',
+        title:'Expansion cities — lighter reads',
         desc:'A lighter expansion layer for cities that come after the seven priority release cities.',
         city:'Read city', sample:'Read sample',
         items:[
@@ -2761,8 +2762,8 @@ function getPriorityDeepening(slug=''){
         ]
       },
       ja:{
-        eyebrow:'More city reads',
-        title:'次に軽く読める都市たち',
+        eyebrow:'Expansion cities',
+        title:'Expansion cities — lighter reads',
         desc:'優先7都市のあとに、同じ読み方を軽く追いかける都市たちです。',
         city:'都市を読む', sample:'サンプルを見る',
         items:[
@@ -2776,8 +2777,8 @@ function getPriorityDeepening(slug=''){
         ]
       },
       zhHant:{
-        eyebrow:'More city reads',
-        title:'下一批可以輕量閱讀的城市',
+        eyebrow:'Expansion cities',
+        title:'Expansion cities — lighter reads',
         desc:'在七個優先城市之後，先用較輕的方式把同一閱讀結構帶到這些城市。',
         city:'讀城市', sample:'看 sample',
         items:[
@@ -2804,7 +2805,7 @@ function getPriorityDeepening(slug=''){
       target.parentNode.insertBefore(root, target.nextSibling);
     }
     const copy = getSecondaryCityStories()[lang] || getSecondaryCityStories().en;
-    root.innerHTML = `<section class="section secondary-story-section">
+    root.innerHTML = `<section class="section secondary-story-section" id="expansionCityStories">
       <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
       <div class="priority-article-grid secondary-story-grid">${copy.items.map(item => `<article class="priority-article-card info-card secondary-story-card"><div class="priority-article-top"><span class="collection-kicker">${item.city}</span></div><h3>${item.title}</h3><p>${item.desc}</p><div class="card-actions"><a class="soft-btn" href="${item.cityHref}">${copy.city}</a><a class="ghost-btn" href="${item.sampleHref}">${copy.sample}</a></div></article>`).join('')}</div>
     </section>`;
@@ -2815,7 +2816,7 @@ function getPriorityMagazineArticles(){
     return {
       ko:{
         eyebrow:'City reading stories',
-        title:'release 우선 도시를 더 깊게 읽는 article depth',
+        title:'Release cities — deeper reads',
         desc:'리스트보다 먼저, 왜 이 도시를 이렇게 읽어야 하는지부터 잡아주는 짧은 article layer입니다.',
         guide:'Read city', sample:'Read sample',
         items:[
@@ -2830,7 +2831,7 @@ function getPriorityMagazineArticles(){
       },
       en:{
         eyebrow:'City reading stories',
-        title:'Article depth for the seven priority release cities',
+        title:'Release cities — deeper reads',
         desc:'A lighter article layer that explains how each city should be read before it becomes only a list of stops.',
         guide:'Read city', sample:'Read sample',
         items:[
@@ -2845,7 +2846,7 @@ function getPriorityMagazineArticles(){
       },
       ja:{
         eyebrow:'City reading stories',
-        title:'リリース優先7都市をもう一段深く読む article layer',
+        title:'Release cities — deeper reads',
         desc:'ただの一覧になる前に、この都市をどう読むとよいかを先に整える短い article セクションです。',
         guide:'都市を読む', sample:'サンプルを見る',
         items:[
@@ -2860,7 +2861,7 @@ function getPriorityMagazineArticles(){
       },
       zhHant:{
         eyebrow:'City reading stories',
-        title:'給七個 release 優先城市再加一層 article depth',
+        title:'Release cities — deeper reads',
         desc:'在它變成停靠點清單之前，先交代這座城市應該怎麼讀的短篇 article 區塊。',
         guide:'讀城市', sample:'看 sample',
         items:[
@@ -2888,7 +2889,7 @@ function getPriorityMagazineArticles(){
     }
     const copy = getPriorityMagazineArticles()[lang] || getPriorityMagazineArticles().en;
     root.innerHTML = `
-      <section class="section priority-article-section">
+      <section class="section priority-article-section" id="releaseCityStories">
         <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
         <div class="priority-article-grid">${copy.items.map(item => `
           <article class="priority-article-card info-card">
