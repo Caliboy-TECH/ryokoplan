@@ -430,45 +430,45 @@
         const map = {
           tokyo: {
             ko:{visit:'방문 분기', first:['첫 방문','Asakusa → Ueno → Kiyosumi'], second:['두 번째','Kiyosumi → Jinbocho → Kagurazaka'], entry:['Classic first read','Design-soft read']},
-            en:{visit:'Visit split', first:['First-time','Asakusa → Ueno → Kiyosumi'], second:['Second-time','Kiyosumi → Jinbocho → Kagurazaka'], entry:['Classic first read','Design-soft read']},
-            ja:{visit:'訪問分岐', first:['初回向け','Asakusa → Ueno → Kiyosumi'], second:['二回目向け','Kiyosumi → Jinbocho → Kagurazaka'], entry:['最初の入口','デザイン寄り入口']},
-            zhHant:{visit:'造訪分流', first:['第一次','Asakusa → Ueno → Kiyosumi'], second:['第二次','Kiyosumi → Jinbocho → Kagurazaka'], entry:['第一入口','設計感入口']}
+            en:{visit:'Visit lens', first:['First trip','Asakusa → Ueno → Kiyosumi'], second:['Return trip','Kiyosumi → Jinbocho → Kagurazaka'], entry:['Classic opener','Design-soft']},
+            ja:{visit:'訪問レンズ', first:['初回','Asakusa → Ueno → Kiyosumi'], second:['再訪','Kiyosumi → Jinbocho → Kagurazaka'], entry:['最初の入口','デザイン寄り入口']},
+            zhHant:{visit:'造訪視角', first:['初訪','Asakusa → Ueno → Kiyosumi'], second:['再訪','Kiyosumi → Jinbocho → Kagurazaka'], entry:['第一入口','設計感入口']}
           },
           seoul: {
             ko:{visit:'방문 분기', first:['첫 방문','Seongsu → Euljiro → Seochon'], second:['두 번째','Mangwon → Seochon → Euljiro late'], entry:['Contrast opener','Soft local opener']},
-            en:{visit:'Visit split', first:['First-time','Seongsu → Euljiro → Seochon'], second:['Second-time','Mangwon → Seochon → Euljiro late'], entry:['Contrast opener','Soft local opener']},
-            ja:{visit:'訪問分岐', first:['初回向け','Seongsu → Euljiro → Seochon'], second:['二回目向け','Mangwon → Seochon → Euljiro late'], entry:['対比の入口','ローカル寄り入口']},
-            zhHant:{visit:'造訪分流', first:['第一次','Seongsu → Euljiro → Seochon'], second:['第二次','Mangwon → Seochon → Euljiro late'], entry:['對比入口','在地入口']}
+            en:{visit:'Visit lens', first:['First trip','Seongsu → Euljiro → Seochon'], second:['Return trip','Mangwon → Seochon → Euljiro late'], entry:['Contrast opener','Soft local']},
+            ja:{visit:'訪問レンズ', first:['初回','Seongsu → Euljiro → Seochon'], second:['再訪','Mangwon → Seochon → Euljiro late'], entry:['対比の入口','ローカル寄り入口']},
+            zhHant:{visit:'造訪視角', first:['初訪','Seongsu → Euljiro → Seochon'], second:['再訪','Mangwon → Seochon → Euljiro late'], entry:['對比入口','在地入口']}
           },
           kyoto: {
             ko:{visit:'방문 분기', first:['첫 방문','Higashiyama early → Gion edge → Kamo dusk'], second:['두 번째','Okazaki → Nishijin → Kamo dusk'], entry:['Quiet icon opener','River-soft opener']},
-            en:{visit:'Visit split', first:['First-time','Higashiyama early → Gion edge → Kamo dusk'], second:['Second-time','Okazaki → Nishijin → Kamo dusk'], entry:['Quiet icon opener','River-soft opener']},
-            ja:{visit:'訪問分岐', first:['初回向け','Higashiyama early → Gion edge → Kamo dusk'], second:['二回目向け','Okazaki → Nishijin → Kamo dusk'], entry:['静かな入口','川沿いの入口']},
-            zhHant:{visit:'造訪分流', first:['第一次','Higashiyama early → Gion edge → Kamo dusk'], second:['第二次','Okazaki → Nishijin → Kamo dusk'], entry:['安靜入口','河邊入口']}
+            en:{visit:'Visit lens', first:['First trip','Higashiyama early → Gion edge → Kamo dusk'], second:['Return trip','Okazaki → Nishijin → Kamo dusk'], entry:['Quiet icon','River-soft']},
+            ja:{visit:'訪問レンズ', first:['初回','Higashiyama early → Gion edge → Kamo dusk'], second:['再訪','Okazaki → Nishijin → Kamo dusk'], entry:['静かな入口','川沿いの入口']},
+            zhHant:{visit:'造訪視角', first:['初訪','Higashiyama early → Gion edge → Kamo dusk'], second:['再訪','Okazaki → Nishijin → Kamo dusk'], entry:['安靜入口','河邊入口']}
           },
           taipei: {
             ko:{visit:'방문 분기', first:['첫 방문','Yongkang → Dihua → one night market'], second:['두 번째','Chifeng → Treasure Hill → tea room close'], entry:['Food-first opener','Texture opener']},
-            en:{visit:'Visit split', first:['First-time','Yongkang → Dihua → one night market'], second:['Second-time','Chifeng → Treasure Hill → tea room close'], entry:['Food-first opener','Texture opener']},
-            ja:{visit:'訪問分岐', first:['初回向け','Yongkang → Dihua → one night market'], second:['二回目向け','Chifeng → Treasure Hill → tea room close'], entry:['食から入る','質感から入る']},
-            zhHant:{visit:'造訪分流', first:['第一次','Yongkang → Dihua → one night market'], second:['第二次','Chifeng → Treasure Hill → tea room close'], entry:['先吃再讀','先讀質感']}
+            en:{visit:'Visit lens', first:['First trip','Yongkang → Dihua → one night market'], second:['Return trip','Chifeng → Treasure Hill → tea room close'], entry:['Food-first','Texture opener']},
+            ja:{visit:'訪問レンズ', first:['初回','Yongkang → Dihua → one night market'], second:['再訪','Chifeng → Treasure Hill → tea room close'], entry:['食から入る','質感から入る']},
+            zhHant:{visit:'造訪視角', first:['初訪','Yongkang → Dihua → one night market'], second:['再訪','Chifeng → Treasure Hill → tea room close'], entry:['先吃再讀','先讀質感']}
           },
           hongkong: {
             ko:{visit:'방문 분기', first:['첫 방문','Central → Sheung Wan → Tsim Sha Tsui night'], second:['두 번째','Sheung Wan → PMQ/Soho → West Kowloon close'], entry:['Vertical opener','Harbor opener']},
-            en:{visit:'Visit split', first:['First-time','Central → Sheung Wan → Tsim Sha Tsui night'], second:['Second-time','Sheung Wan → PMQ/Soho → West Kowloon close'], entry:['Vertical opener','Harbor opener']},
-            ja:{visit:'訪問分岐', first:['初回向け','Central → Sheung Wan → Tsim Sha Tsui night'], second:['二回目向け','Sheung Wan → PMQ/Soho → West Kowloon close'], entry:['縦の入口','ハーバー入口']},
-            zhHant:{visit:'造訪分流', first:['第一次','Central → Sheung Wan → Tsim Sha Tsui night'], second:['第二次','Sheung Wan → PMQ/Soho → West Kowloon close'], entry:['垂直入口','海港入口']}
+            en:{visit:'Visit lens', first:['First trip','Central → Sheung Wan → Tsim Sha Tsui night'], second:['Return trip','Sheung Wan → PMQ/Soho → West Kowloon close'], entry:['Vertical opener','Harbor opener']},
+            ja:{visit:'訪問レンズ', first:['初回','Central → Sheung Wan → Tsim Sha Tsui night'], second:['再訪','Sheung Wan → PMQ/Soho → West Kowloon close'], entry:['縦の入口','ハーバー入口']},
+            zhHant:{visit:'造訪視角', first:['初訪','Central → Sheung Wan → Tsim Sha Tsui night'], second:['再訪','Sheung Wan → PMQ/Soho → West Kowloon close'], entry:['垂直入口','海港入口']}
           },
           busan: {
             ko:{visit:'방문 분기', first:['첫 방문','Haeundae → Gwangalli → one night shore'], second:['두 번째','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['Sea-first opener','Harbor-texture opener']},
-            en:{visit:'Visit split', first:['First-time','Haeundae → Gwangalli → one night shore'], second:['Second-time','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['Sea-first opener','Harbor-texture opener']},
-            ja:{visit:'訪問分岐', first:['初回向け','Haeundae → Gwangalli → one night shore'], second:['二回目向け','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['海から入る','港の質感から入る']},
-            zhHant:{visit:'造訪分流', first:['第一次','Haeundae → Gwangalli → one night shore'], second:['第二次','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['從海開始','從港口質感開始']}
+            en:{visit:'Visit lens', first:['First trip','Haeundae → Gwangalli → one night shore'], second:['Return trip','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['Sea-first','Harbor texture']},
+            ja:{visit:'訪問レンズ', first:['初回','Haeundae → Gwangalli → one night shore'], second:['再訪','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['海から入る','港の質感から入る']},
+            zhHant:{visit:'造訪視角', first:['初訪','Haeundae → Gwangalli → one night shore'], second:['再訪','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['從海開始','從港口質感開始']}
           },
           fukuoka: {
             ko:{visit:'방문 분기', first:['첫 방문','Hakata → Tenjin → yatai close'], second:['두 번째','Yakuin → Ohori edge → compact dinner close'], entry:['Food-first opener','Soft local opener']},
-            en:{visit:'Visit split', first:['First-time','Hakata → Tenjin → yatai close'], second:['Second-time','Yakuin → Ohori edge → compact dinner close'], entry:['Food-first opener','Soft local opener']},
-            ja:{visit:'訪問分岐', first:['初回向け','Hakata → Tenjin → yatai close'], second:['二回目向け','Yakuin → Ohori edge → compact dinner close'], entry:['食から入る','ローカル寄り入口']},
-            zhHant:{visit:'造訪分流', first:['第一次','Hakata → Tenjin → yatai close'], second:['第二次','Yakuin → Ohori edge → compact dinner close'], entry:['先吃再讀','在地入口']}
+            en:{visit:'Visit lens', first:['First trip','Hakata → Tenjin → yatai close'], second:['Return trip','Yakuin → Ohori edge → compact dinner close'], entry:['Food-first','Soft local']},
+            ja:{visit:'訪問レンズ', first:['初回','Hakata → Tenjin → yatai close'], second:['再訪','Yakuin → Ohori edge → compact dinner close'], entry:['食から入る','ローカル寄り入口']},
+            zhHant:{visit:'造訪視角', first:['初訪','Hakata → Tenjin → yatai close'], second:['再訪','Yakuin → Ohori edge → compact dinner close'], entry:['先吃再讀','在地入口']}
           }
         };
         const slug = String(city || '').trim().toLowerCase();

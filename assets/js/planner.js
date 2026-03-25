@@ -486,13 +486,13 @@ function getPriorityEntryPack(city=''){
     if (!pack) return '';
     const compact = mode === 'compact';
     return `<div class="entry-mini-block ${compact ? 'entry-mini-block-compact' : ''}">
-      <div class="entry-mini-head"><strong>${pack.visitTitle || uiCopy('Visit split','Visit split','訪問分岐','造訪分流')}</strong></div>
+      <div class="entry-mini-head"><strong>${pack.visitTitle || uiCopy('Visit lens','Visit lens','訪問レンズ','造訪視角')}</strong></div>
       <div class="entry-mini-row">
-        <span class="entry-mini-label">${pack.first?.[0] || uiCopy('First-time','First-time','初回向け','第一次')}</span>
+        <span class="entry-mini-label">${pack.first?.[0] || uiCopy('First trip','First trip','初回','初訪')}</span>
         <span class="entry-mini-value">${pack.first?.[1] || ''}</span>
       </div>
       <div class="entry-mini-row">
-        <span class="entry-mini-label">${pack.second?.[0] || uiCopy('Second-time','Second-time','二回目向け','第二次')}</span>
+        <span class="entry-mini-label">${pack.second?.[0] || uiCopy('Return trip','Return trip','再訪','再訪')}</span>
         <span class="entry-mini-value">${pack.second?.[1] || ''}</span>
       </div>
       <div class="entry-mini-route-list">${(pack.entries || []).slice(0, compact ? 2 : 3).map(item => `<span class="entry-mini-chip">${item[0]} · ${item[1]}</span>`).join('')}</div>
@@ -1112,7 +1112,7 @@ function getPriorityRefinePack(city=''){
       rhythm: uiCopy('Day rhythm','Day rhythm','一日のリズム','一日節奏'),
       variants: uiCopy('Quick variants','Quick variants','すぐ切り替え','快速變奏'),
       visit: uiCopy('Visit split','Visit split','訪問の分岐','造訪分流'),
-      entry: uiCopy('Best entry routes','Best entry routes','おすすめの入り方','建議起手路線')
+      entry: uiCopy('Entry routes','Entry routes','入口ルート','入口路線')
     };
     const entryPack = getPriorityEntryPack(textValue(data.destination, readForm().destination || ''));
     node.innerHTML = `

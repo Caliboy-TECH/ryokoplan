@@ -2597,7 +2597,101 @@ function getPriorityDeepening(slug=''){
     attachSignalTracking(root);
   }
 
-  function renderTripsSeasonalDesk(){
+  
+  function getPriorityMagazineArticles(){
+    const base = pathRoot === '../' ? '../' : '';
+    return {
+      ko:{
+        eyebrow:'City reading stories',
+        title:'release 우선 도시를 더 깊게 읽는 article depth',
+        desc:'리스트보다 먼저, 왜 이 도시를 이렇게 읽어야 하는지부터 잡아주는 짧은 article layer입니다.',
+        guide:'Read city', sample:'Read sample',
+        items:[
+          {city:'Tokyo', title:'First Tokyo, then the quieter second Tokyo', desc:'첫 도쿄는 상징적인 축으로 열고, 두 번째 도쿄는 책방·저녁·조용한 pocket으로 다시 읽는 방식.', guide:`${base}city/tokyo.html#city-priority-depth`, sample:`${base}example/tokyo-3n4d-first-trip.html`},
+          {city:'Seoul', title:'How to keep Seoul from becoming only contrast', desc:'서울은 대비가 큰 도시라 quieter district 하나를 중간에 넣어야 도시가 더 오래 남습니다.', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
+          {city:'Kyoto', title:'A softer Kyoto after the obvious frame', desc:'상징적인 장면 뒤에 강변이나 museum pocket을 붙여야 교토가 더 가볍고 길게 남습니다.', guide:`${base}city/kyoto.html#city-priority-depth`, sample:`${base}example/kyoto-2n3d-slow-trip.html`},
+          {city:'Taipei', title:'Food-first is not enough for Taipei', desc:'타이베이는 식사 축 옆에 texture pocket을 붙일 때 도시가 훨씬 선명해집니다.', guide:`${base}city/taipei.html#city-priority-depth`, sample:`${base}example/taipei-3n4d-night-food.html`},
+          {city:'Hong Kong', title:'The breathing layer behind Hong Kong verticality', desc:'홍콩은 skyline 뒤에 slope street나 harbor edge를 붙일수록 세련되게 남습니다.', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
+          {city:'Busan', title:'Beyond the postcard coast', desc:'부산은 coast line 뒤에 harbor-side everyday texture를 붙일 때 훨씬 입체적으로 읽힙니다.', guide:`${base}city/busan.html#city-priority-depth`, sample:`${base}example/busan-2n3d-with-parents.html`},
+          {city:'Fukuoka', title:'Compact routes, softer local pockets', desc:'후쿠오카는 food-first 축 뒤에 quiet local pocket 하나만 붙여도 완성도가 크게 올라갑니다.', guide:`${base}city/fukuoka.html#city-priority-depth`, sample:`${base}example/fukuoka-2n3d-food-trip.html`}
+        ]
+      },
+      en:{
+        eyebrow:'City reading stories',
+        title:'Article depth for the seven priority release cities',
+        desc:'A lighter article layer that explains how each city should be read before it becomes only a list of stops.',
+        guide:'Read city', sample:'Read sample',
+        items:[
+          {city:'Tokyo', title:'First Tokyo, then the quieter second Tokyo', desc:'Open Tokyo through its clearest icons first, then return through books, dinner, and quieter pockets.', guide:`${base}city/tokyo.html#city-priority-depth`, sample:`${base}example/tokyo-3n4d-first-trip.html`},
+          {city:'Seoul', title:'How to keep Seoul from becoming only contrast', desc:'Seoul lands better when one quieter district sits between the louder old/new contrast line.', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
+          {city:'Kyoto', title:'A softer Kyoto after the obvious frame', desc:'After the iconic first frame, a river edge or museum pocket keeps Kyoto lighter and longer-lasting.', guide:`${base}city/kyoto.html#city-priority-depth`, sample:`${base}example/kyoto-2n3d-slow-trip.html`},
+          {city:'Taipei', title:'Food-first is not enough for Taipei', desc:'Taipei sharpens when one textural pocket sits next to the meal line.', guide:`${base}city/taipei.html#city-priority-depth`, sample:`${base}example/taipei-3n4d-night-food.html`},
+          {city:'Hong Kong', title:'The breathing layer behind Hong Kong verticality', desc:'Hong Kong feels more elegant when slope streets or harbor edge temper the skyline pressure.', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
+          {city:'Busan', title:'Beyond the postcard coast', desc:'Busan becomes more dimensional once a harbor-side everyday layer sits behind the obvious coast line.', guide:`${base}city/busan.html#city-priority-depth`, sample:`${base}example/busan-2n3d-with-parents.html`},
+          {city:'Fukuoka', title:'Compact routes, softer local pockets', desc:'In Fukuoka, one quieter local pocket after the food line changes the whole memory of the trip.', guide:`${base}city/fukuoka.html#city-priority-depth`, sample:`${base}example/fukuoka-2n3d-food-trip.html`}
+        ]
+      },
+      ja:{
+        eyebrow:'City reading stories',
+        title:'リリース優先7都市をもう一段深く読む article layer',
+        desc:'ただの一覧になる前に、この都市をどう読むとよいかを先に整える短い article セクションです。',
+        guide:'都市を読む', sample:'サンプルを見る',
+        items:[
+          {city:'Tokyo', title:'最初の東京と、静かな二回目の東京', desc:'最初は象徴的な軸で入り、二回目は本、夕食、静かな pocket で東京を読み直します。', guide:`${base}city/tokyo.html#city-priority-depth`, sample:`${base}example/tokyo-3n4d-first-trip.html`},
+          {city:'Seoul', title:'Seoul を“対比だけ”で終わらせないために', desc:'大きな対比のあいだに静かな district を一つ入れると、Seoul はもっと長く残ります。', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
+          {city:'Kyoto', title:'わかりやすい景色のあとに置く、やわらかい Kyoto', desc:'象徴的な場面のあとに川辺や museum pocket を置くと、Kyoto はもっと軽く残ります。', guide:`${base}city/kyoto.html#city-priority-depth`, sample:`${base}example/kyoto-2n3d-slow-trip.html`},
+          {city:'Taipei', title:'Taipei は food-first だけでは足りない', desc:'食の軸の横に texture pocket を置くと、Taipei はぐっと鮮明になります。', guide:`${base}city/taipei.html#city-priority-depth`, sample:`${base}example/taipei-3n4d-night-food.html`},
+          {city:'Hong Kong', title:'縦の強さの後ろに置く、Hong Kong の呼吸', desc:'slope street や harbor edge を一枚入れると、Hong Kong はぐっと洗練されます。', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
+          {city:'Busan', title:'ポストカードの海の、その先へ', desc:'海の線の後ろに harbor-side の日常を入れると、Busan はもっと立体的になります。', guide:`${base}city/busan.html#city-priority-depth`, sample:`${base}example/busan-2n3d-with-parents.html`},
+          {city:'Fukuoka', title:'コンパクトな route に置く、やわらかな local pocket', desc:'food-first の軸の後ろに静かな pocket を一つ置くだけで、Fukuoka の完成度は上がります。', guide:`${base}city/fukuoka.html#city-priority-depth`, sample:`${base}example/fukuoka-2n3d-food-trip.html`}
+        ]
+      },
+      zhHant:{
+        eyebrow:'City reading stories',
+        title:'給七個 release 優先城市再加一層 article depth',
+        desc:'在它變成停靠點清單之前，先交代這座城市應該怎麼讀的短篇 article 區塊。',
+        guide:'讀城市', sample:'看 sample',
+        items:[
+          {city:'Tokyo', title:'第一個 Tokyo，與更安靜的第二個 Tokyo', desc:'第一次先用最清楚的象徵軸打開，第二次再用書店、晚餐與安靜 pocket 重讀 Tokyo。', guide:`${base}city/tokyo.html#city-priority-depth`, sample:`${base}example/tokyo-3n4d-first-trip.html`},
+          {city:'Seoul', title:'不要讓 Seoul 只剩下反差', desc:'在強烈的新舊對比中放進一個安靜 district，Seoul 才會留得更久。', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
+          {city:'Kyoto', title:'在明顯畫面之後，補上一層更柔軟的 Kyoto', desc:'在標誌性景色之後接上河邊或 museum pocket，Kyoto 會更輕、更耐記。', guide:`${base}city/kyoto.html#city-priority-depth`, sample:`${base}example/kyoto-2n3d-slow-trip.html`},
+          {city:'Taipei', title:'Taipei 不能只靠 food-first', desc:'在吃的軸線旁邊放一個 texture pocket，Taipei 會清楚很多。', guide:`${base}city/taipei.html#city-priority-depth`, sample:`${base}example/taipei-3n4d-night-food.html`},
+          {city:'Hong Kong', title:'在 Hong Kong 的垂直感後面，加一層呼吸', desc:'加上一層 slope street 或 harbor edge，Hong Kong 會更精緻。', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
+          {city:'Busan', title:'不只 postcard 海岸線的 Busan', desc:'把 harbor-side 的日常質地放到海岸線後面，Busan 會立體很多。', guide:`${base}city/busan.html#city-priority-depth`, sample:`${base}example/busan-2n3d-with-parents.html`},
+          {city:'Fukuoka', title:'緊湊 route 裡也要留一個柔軟 local pocket', desc:'在 food-first 軸線後面留一個安靜 pocket，Fukuoka 的完成度會明顯提高。', guide:`${base}city/fukuoka.html#city-priority-depth`, sample:`${base}example/fukuoka-2n3d-food-trip.html`}
+        ]
+      }
+    };
+  }
+
+  function renderMagazinePriorityArticles(){
+    if (document.body.dataset.page !== 'magazine') return;
+    const anchor = document.getElementById('magazinePersonalSignalRoot') || document.getElementById('magazineCommunityRoot');
+    if (!anchor) return;
+    let root = document.getElementById('magazinePriorityArticleRoot');
+    if (!root) {
+      root = document.createElement('div');
+      root.id = 'magazinePriorityArticleRoot';
+      anchor.parentNode.insertBefore(root, anchor.nextSibling);
+    }
+    const copy = getPriorityMagazineArticles()[lang] || getPriorityMagazineArticles().en;
+    root.innerHTML = `
+      <section class="section priority-article-section">
+        <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
+        <div class="priority-article-grid">${copy.items.map(item => `
+          <article class="priority-article-card info-card">
+            <div class="priority-article-top"><span class="collection-kicker">${item.city}</span></div>
+            <h3>${item.title}</h3>
+            <p>${item.desc}</p>
+            <div class="card-actions">
+              <a class="soft-btn" href="${item.guide}">${copy.guide}</a>
+              <a class="ghost-btn" href="${item.sample}">${copy.sample}</a>
+            </div>
+          </article>`).join('')}</div>
+      </section>`;
+  }
+
+function renderTripsSeasonalDesk(){
     if (document.body.dataset.page !== 'trips') return;
     const anchor = document.querySelector('.route-club-section') || document.querySelector('.operating-edit-section');
     if (!anchor) return;
@@ -2856,6 +2950,7 @@ function getPriorityDeepening(slug=''){
     if (document.body.dataset.page !== 'magazine') return;
     renderMagazineLoop();
     renderMagazineCommunityDesk();
+    renderMagazinePriorityArticles();
     const cards = [...document.querySelectorAll('.finder-card')];
     if (!cards.length) return;
     const searchInput = document.getElementById('magazineCitySearch');
@@ -3350,6 +3445,7 @@ function getPriorityDeepening(slug=''){
     renderSignalPersonalDesk('home');
     renderHomeSeasonalDesk();
     renderMagazineCommunityDesk();
+    renderMagazinePriorityArticles();
     renderSignalPersonalDesk('magazine');
     renderMagazineSeasonalDesk();
     renderTripsSeasonalDesk();
@@ -3362,6 +3458,7 @@ function getPriorityDeepening(slug=''){
       renderSignalPersonalDesk('home');
       renderHomeSeasonalDesk();
       renderMagazineCommunityDesk();
+    renderMagazinePriorityArticles();
       renderSignalPersonalDesk('magazine');
       renderMagazineSeasonalDesk();
       renderTripsSeasonalDesk();
