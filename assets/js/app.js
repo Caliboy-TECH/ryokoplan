@@ -1193,7 +1193,7 @@ window.RyokoApp = (() => {
         const picksDesc = lang === 'ko' ? '먼저 읽기 좋은 동네와 연결 district, 들어가기 좋은 시간대를 같이 묶었습니다.' : lang === 'ja' ? '入りやすい近所、つながる district、相性のいい時間帯を一つの束で読めるようにしました。' : lang === 'zhHant' ? '把最適合先讀的近所、連動 district、以及最適時段放在同一個閱讀節奏裡。' : 'Each card ties the first neighborhood read to a district anchor and an easy entry window.';
         return `<section class="section city-neighborhood-bridge" id="city-neighborhoods"><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '동네 픽' : lang === 'ja' ? '近所のピック' : lang === 'zhHant' ? '鄰里精選' : 'Neighborhood picks'}</div><h2 class="section-title">${lang === 'ko' ? entry.planner + '를 여는 첫 동네들' : lang === 'ja' ? entry.planner + ' を開く最初の近所' : lang === 'zhHant' ? '打開 ' + entry.planner + ' 的第一批近所' : 'The neighborhoods that open ' + entry.planner}</h2><p class="section-desc">${picksIntro}</p></div></div><p class="city-neighborhood-intro">${picksDesc}</p><div class="city-neighborhood-grid city-neighborhood-grid-deep">${picks.map((item, i) => `<article class="city-neighborhood-card city-neighborhood-card-deep"><span class="district-index">0${i+1}</span><strong>${item.name}</strong><p>${item.note}</p><div class="city-neighborhood-meta"><span><strong>${item.linkedLabel}</strong>${item.district}</span><span><strong>${item.bestLabel}</strong>${item.window}</span></div><div class="city-neighborhood-deeper"><span class="mini-label">${item.routeLabel}</span><small>${item.deeper}</small></div></article>`).join('')}</div></article></section>${renderPriorityCityDepthSection(slug, entry)}`;
       })()}
-      <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? '샘플 루트' : lang === 'ja' ? 'サンプルルート' : lang === 'zhHant' ? '範例路線' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? '샘플 일정' : lang === 'ja' ? 'サンプル旅程' : lang === 'zhHant' ? '範例行程' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="city-route-variations"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '루트 변주' : lang === 'ja' ? 'ルートの変奏' : lang === 'zhHant' ? '路線變奏' : 'Route variations'}</div><h3 class="section-title">${lang === 'ko' ? entry.planner + '를 바꾸는 세 가지 방식' : lang === 'ja' ? entry.planner + ' を変える3つの方法' : lang === 'zhHant' ? '改寫 ' + entry.planner + ' 的三種方式' : 'Three ways to reshape ' + entry.planner}</h3><p class="section-desc">${lang === 'ko' ? '날씨, 속도, 밤 리듬에 따라 sample route를 바로 바꿔 읽을 수 있게 묶었습니다.' : lang === 'ja' ? '天気、速度感、夜のリズムに合わせてサンプルをすぐ曲げられるようにまとめました。' : lang === 'zhHant' ? '依照天氣、節奏與夜晚比重，這條 sample route 可以這樣直接改寫。' : 'Use these as quick switches when weather, speed, or the night rhythm changes.'}</p></div></div><div class="city-route-variation-grid">${getCityRouteVariations(slug).map(item => `<article class="city-route-variation-card"><span class="mini-label">${item.title}</span><strong class="city-route-variation-focus">${item.focus || ''}</strong><p>${item.desc}</p><div class="card-actions city-route-variation-actions"><a class="soft-link" href="${item.href || ('../city/' + cityGuideSlugFromExample(slug) + '.html')}">${lang === 'ko' ? '도시 가이드에서 이어 보기' : lang === 'ja' ? '都市ガイドで続きを読む' : lang === 'zhHant' ? '到城市指南繼續看' : 'Continue in city guide'}</a></div></article>`).join('')}</div></div>${renderPriorityExampleDepthSection(slug, entry)}<div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : lang === 'ja' ? 'サンプル全体を開く' : lang === 'zhHant' ? '打開完整範例' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : lang === 'ja' ? 'Planner で調整する' : lang === 'zhHant' ? '在 Planner 裡調整' : 'Customize in Planner'}</a><a class="ghost-btn" href="../city/${cityGuideSlugFromExample(slug)}.html">${lang === 'ko' ? '도시 가이드로 돌아가기' : lang === 'ja' ? '都市ガイドへ戻る' : lang === 'zhHant' ? '回到城市指南' : 'Back to city guide'}</a></div></article></section>
+      <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? '샘플 루트' : lang === 'ja' ? 'サンプルルート' : lang === 'zhHant' ? '範例路線' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? '샘플 일정' : lang === 'ja' ? 'サンプル旅程' : lang === 'zhHant' ? '範例行程' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="city-route-variations"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '루트 변주' : lang === 'ja' ? 'ルートの変奏' : lang === 'zhHant' ? '路線變奏' : 'Route variations'}</div><h3 class="section-title">${lang === 'ko' ? entry.planner + '를 바꾸는 세 가지 방식' : lang === 'ja' ? entry.planner + ' を変える3つの方法' : lang === 'zhHant' ? '改寫 ' + entry.planner + ' 的三種方式' : 'Three ways to reshape ' + entry.planner}</h3><p class="section-desc">${lang === 'ko' ? '날씨, 속도, 밤 리듬에 따라 sample route를 바로 바꿔 읽을 수 있게 묶었습니다.' : lang === 'ja' ? '天気、速度感、夜のリズムに合わせてサンプルをすぐ曲げられるようにまとめました。' : lang === 'zhHant' ? '依照天氣、節奏與夜晚比重，這條 sample route 可以這樣直接改寫。' : 'Use these as quick switches when weather, speed, or the night rhythm changes.'}</p></div></div><div class="city-route-variation-grid">${getCityRouteVariations(slug).map(item => `<article class="city-route-variation-card"><span class="mini-label">${item.title}</span><strong class="city-route-variation-focus">${item.focus || ''}</strong><p>${item.desc}</p><div class="card-actions city-route-variation-actions"><a class="soft-link" href="${item.href || ('../city/' + cityGuideSlugFromExample(slug) + '.html')}">${lang === 'ko' ? '도시 가이드에서 이어 보기' : lang === 'ja' ? '都市ガイドで続きを読む' : lang === 'zhHant' ? '到城市指南繼續看' : 'Continue in city guide'}</a></div></article>`).join('')}</div></div>${renderPriorityExampleDepthSection(slug, entry)}${renderPriorityCrosslinks(cityGuideSlugFromExample(slug), 'example')}${renderPriorityCrosslinks(slug, 'city')}<div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : lang === 'ja' ? 'サンプル全体を開く' : lang === 'zhHant' ? '打開完整範例' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : lang === 'ja' ? 'Planner で調整する' : lang === 'zhHant' ? '在 Planner 裡調整' : 'Customize in Planner'}</a><a class="ghost-btn" href="../city/${cityGuideSlugFromExample(slug)}.html">${lang === 'ko' ? '도시 가이드로 돌아가기' : lang === 'ja' ? '都市ガイドへ戻る' : lang === 'zhHant' ? '回到城市指南' : 'Back to city guide'}</a></div></article></section>
       <section class="section city-reading-grid city-reading-grid-rich" id="city-tips"><article class="info-card editorial-panel"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('localNotes')}</div><h2 class="section-title">${uiText('localTips')}</h2><p class="section-desc">${lang === 'ko' ? '작은 조정만으로도 여행 체감이 확실히 좋아집니다.' : lang === 'ja' ? '小さな工夫だけで旅の快適さがかなり変わります。' : lang === 'zhHant' ? '只要做一些小調整，整體旅行體感就會明顯更好。' : 'Small adjustments that noticeably improve the trip.'}</p></div></div><ul class="editorial-bullets">${data.tips.map(item => `<li>${item}</li>`).join('')}</ul></article><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('beforeYouGo')}</div><h2 class="section-title">${uiText('keepInMind')}</h2><p class="section-desc">${lang === 'ko' ? '출발 전에 챙겨두면 바로 체감되는 것들입니다.' : lang === 'ja' ? '出発前に整えておくと、すぐ効いてくるポイントです。' : lang === 'zhHant' ? '出發前先準備好，旅途中會立刻感受到差別。' : 'Small prep choices that pay off immediately.'}</p></div></div><ul class="editorial-bullets">${data.keep.map(item => `<li>${item}</li>`).join('')}</ul></article></section>
       ${(() => { const seasonal = getSeasonalCityFeature(entry.planner); return seasonal ? `<section class="section city-seasonal-bridge"><article class="info-card seasonal-bridge-card"><div class="section-head compact"><div><div class="editorial-kicker">${seasonal.label}</div><h2 class="section-title">${seasonal.title}</h2><p class="section-desc">${seasonal.desc}</p></div></div><div class="trip-chip-row seasonal-chip-row">${seasonal.chips.map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}</div></article></section>` : ''; })()}
       <section class="section footer-cta info-card city-final-cta"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${data.finalTitle}</h2><p>${data.finalDesc}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner'}</a><a class="secondary-btn" href="../example/${entry.example}">${lang === 'ko' ? '샘플 읽기' : lang === 'ja' ? 'サンプルを読む' : lang === 'zhHant' ? '讀範例路線' : 'Read sample'}</a><a class="ghost-btn" href="${exampleAtlasHref()}">${lang === 'ko' ? 'atlas 보기' : lang === 'ja' ? 'atlas を見る' : lang === 'zhHant' ? '看 atlas' : 'See atlas'}</a></div></section>
@@ -2598,7 +2598,105 @@ function getPriorityDeepening(slug=''){
   }
 
   
-  function getPriorityMagazineArticles(){
+  
+  function getPriorityCrosslinks(){
+    const base = pathRoot === '../' ? '../' : '';
+    return {
+      tokyo:{
+        ko:{article:['Magazine depth','첫 도쿄 다음에 읽어야 하는 quieter second Tokyo'], city:['City deeper note','책방·저녁·quiet pocket으로 도쿄를 다시 여는 방법'], example:['Sample route','아이콘 축 뒤에 quieter layer를 끼우는 샘플'], result:['Result refinement','first trip / return trip 기준으로 route를 다시 자르는 방법']},
+        en:{article:['Magazine depth','What to read after the obvious first Tokyo frame'], city:['City deeper note','How books, dinner, and quieter pockets reopen Tokyo'], example:['Sample route','A sample that slips one softer layer behind the icon line'], result:['Result refinement','How to re-cut the route for a first trip or a return trip']},
+        ja:{article:['Magazine depth','最初の東京のあとに読む、静かな二回目の東京'], city:['City deeper note','本・夕食・quiet pocket で東京を開き直す方法'], example:['Sample route','アイコンの軸の後ろに柔らかい層を入れる sample'], result:['Result refinement','初回 / 再訪で route を切り直す方法']},
+        zhHant:{article:['Magazine depth','在第一個 Tokyo 之後，怎麼讀更安靜的第二個 Tokyo'], city:['City deeper note','用書店、晚餐與 quiet pocket 重新打開 Tokyo'], example:['Sample route','在 icon 軸線後面放進柔軟層次的 sample'], result:['Result refinement','依初訪 / 再訪重新切 route 的方法']}
+      },
+      seoul:{
+        ko:{article:['Magazine depth','서울이 대비만으로 끝나지 않게 읽는 방법'], city:['City deeper note','Seochon과 Mangwon으로 서울의 숨을 붙이는 방법'], example:['Sample route','contrast 뒤에 quieter layer를 넣는 샘플'], result:['Result refinement','첫 서울 / 다시 읽는 서울로 나눠 route를 정리하는 법']},
+        en:{article:['Magazine depth','How to keep Seoul from ending as only contrast'], city:['City deeper note','Using Seochon and Mangwon to give Seoul room to breathe'], example:['Sample route','A sample that inserts one quieter layer behind the contrast line'], result:['Result refinement','How to split the route between first Seoul and return Seoul']},
+        ja:{article:['Magazine depth','Seoul を“対比だけ”で終わらせない読み方'], city:['City deeper note','Seochon と Mangwon で Seoul に呼吸を足す方法'], example:['Sample route','contrast の後ろに quieter layer を入れる sample'], result:['Result refinement','初めての Seoul / 再訪の Seoul で route を分ける方法']},
+        zhHant:{article:['Magazine depth','不要讓 Seoul 只剩下反差的讀法'], city:['City deeper note','用 Seochon 與 Mangwon 讓 Seoul 多一口呼吸'], example:['Sample route','在 contrast 後面放入 quieter layer 的 sample'], result:['Result refinement','把第一次 Seoul 與再訪 Seoul 分開整理 route 的方法']}
+      },
+      kyoto:{
+        ko:{article:['Magazine depth','분명한 교토 뒤에 더 오래 남는 여백 붙이기'], city:['City deeper note','Okazaki와 Nishijin으로 교토를 가볍게 다시 읽기'], example:['Sample route','icon 뒤에 river-soft layer를 붙이는 샘플'], result:['Result refinement','초행 교토와 재방문 교토를 다르게 정리하는 법']},
+        en:{article:['Magazine depth','Adding the softer layer that lasts after obvious Kyoto'], city:['City deeper note','Re-reading Kyoto through Okazaki and Nishijin'], example:['Sample route','A sample that adds a river-soft layer after the icon frame'], result:['Result refinement','How to separate a first Kyoto from a return Kyoto']},
+        ja:{article:['Magazine depth','わかりやすい Kyoto のあとに残る、やわらかな余白'], city:['City deeper note','Okazaki と Nishijin で Kyoto を軽く読み直す'], example:['Sample route','icon の後ろに river-soft layer を置く sample'], result:['Result refinement','初回の Kyoto と再訪の Kyoto を分けて整える方法']},
+        zhHant:{article:['Magazine depth','在明顯 Kyoto 之後補上一層更耐記的留白'], city:['City deeper note','用 Okazaki 與 Nishijin 重新讀輕一點的 Kyoto'], example:['Sample route','在 icon 後面接上 river-soft layer 的 sample'], result:['Result refinement','把初訪 Kyoto 與再訪 Kyoto 分開整理的方法']}
+      },
+      taipei:{
+        ko:{article:['Magazine depth','타이베이를 food-first 너머로 읽는 방법'], city:['City deeper note','Chifeng와 Treasure Hill로 texture를 붙이는 방법'], example:['Sample route','food line 옆에 quieter pocket을 두는 샘플'], result:['Result refinement','첫 타이베이 / 다시 보는 타이베이 route를 가르는 기준']},
+        en:{article:['Magazine depth','Reading Taipei beyond only food-first'], city:['City deeper note','Adding texture through Chifeng and Treasure Hill'], example:['Sample route','A sample that keeps one quieter pocket beside the meal line'], result:['Result refinement','How to separate first Taipei from return Taipei']},
+        ja:{article:['Magazine depth','Taipei を food-first の先へ読む方法'], city:['City deeper note','Chifeng と Treasure Hill で texture を足す方法'], example:['Sample route','食の軸の横に quieter pocket を置く sample'], result:['Result refinement','初めての Taipei / 再訪の Taipei を分ける基準']},
+        zhHant:{article:['Magazine depth','把 Taipei 讀到 food-first 之外的方法'], city:['City deeper note','用 Chifeng 與 Treasure Hill 補上 texture'], example:['Sample route','在吃的軸線旁邊放一個 quieter pocket 的 sample'], result:['Result refinement','區分初訪 Taipei 與再訪 Taipei 的 기준']}
+      },
+      hongkong:{
+        ko:{article:['Magazine depth','홍콩의 수직감 뒤에 숨 고를 층 놓기'], city:['City deeper note','PMQ·Soho·West Kowloon으로 홍콩을 다시 여는 법'], example:['Sample route','vertical line 뒤에 harbor pocket을 넣는 샘플'], result:['Result refinement','첫 홍콩 / 재방문 홍콩 route를 다르게 여는 기준']},
+        en:{article:['Magazine depth','Placing one breathing layer behind Hong Kong verticality'], city:['City deeper note','Reopening Hong Kong through PMQ, Soho, and West Kowloon'], example:['Sample route','A sample that places one harbor pocket behind the vertical line'], result:['Result refinement','How to open first Hong Kong and return Hong Kong differently']},
+        ja:{article:['Magazine depth','Hong Kong の縦の強さの後ろに、呼吸の層を置く'], city:['City deeper note','PMQ・Soho・West Kowloon で Hong Kong を開き直す'], example:['Sample route','vertical line の後ろに harbor pocket を置く sample'], result:['Result refinement','初回の Hong Kong と再訪の Hong Kong を分けて開く基準']},
+        zhHant:{article:['Magazine depth','在 Hong Kong 的垂直感後面放一層呼吸'], city:['City deeper note','用 PMQ、Soho、West Kowloon 重新打開 Hong Kong'], example:['Sample route','在 vertical line 後面放一個 harbor pocket 的 sample'], result:['Result refinement','分開打開初訪 Hong Kong 與再訪 Hong Kong 的方法']}
+      },
+      busan:{
+        ko:{article:['Magazine depth','postcard coast 뒤에 부산의 생활감을 붙이는 법'], city:['City deeper note','Yeongdo와 Bosu/Nampo로 부산을 더 입체적으로 읽기'], example:['Sample route','sea line 뒤에 harbor texture를 붙이는 샘플'], result:['Result refinement','첫 부산 / 다시 읽는 부산을 나누는 기준']},
+        en:{article:['Magazine depth','Adding Busan’s everyday harbor layer behind the postcard coast'], city:['City deeper note','Reading Busan more dimensionally through Yeongdo and Bosu/Nampo'], example:['Sample route','A sample that puts harbor texture behind the sea line'], result:['Result refinement','How to separate first Busan from return Busan']},
+        ja:{article:['Magazine depth','ポストカードの海の後ろに、Busan の日常を足す'], city:['City deeper note','Yeongdo と Bosu/Nampo で Busan を立体的に読む'], example:['Sample route','sea line の後ろに harbor texture を置く sample'], result:['Result refinement','初回の Busan と再訪の Busan を分ける基準']},
+        zhHant:{article:['Magazine depth','在 postcard 海岸線後面補上 Busan 的日常港口層'], city:['City deeper note','用 Yeongdo 與 Bosu/Nampo 更立體地讀 Busan'], example:['Sample route','在 sea line 後面放進 harbor texture 的 sample'], result:['Result refinement','區分初訪 Busan 與再訪 Busan 的方式']}
+      },
+      fukuoka:{
+        ko:{article:['Magazine depth','compact route 뒤에 더 부드러운 후쿠오카 붙이기'], city:['City deeper note','Hakata와 Yakuin으로 후쿠오카의 quiet pocket 여는 법'], example:['Sample route','food-first 뒤에 soft local pocket을 두는 샘플'], result:['Result refinement','첫 후쿠오카 / 재방문 후쿠오카 route를 나누는 기준']},
+        en:{article:['Magazine depth','Adding a softer Fukuoka behind the compact route'], city:['City deeper note','Opening quieter pockets through Hakata and Yakuin'], example:['Sample route','A sample that keeps one soft local pocket after the food-first line'], result:['Result refinement','How to separate first Fukuoka from return Fukuoka']},
+        ja:{article:['Magazine depth','コンパクトな route の後ろに、やわらかな Fukuoka を足す'], city:['City deeper note','Hakata と Yakuin で quiet pocket を開く方法'], example:['Sample route','food-first の後ろに soft local pocket を置く sample'], result:['Result refinement','初回の Fukuoka と再訪の Fukuoka を分ける基準']},
+        zhHant:{article:['Magazine depth','在緊湊 route 後面補上一層更柔軟的 Fukuoka'], city:['City deeper note','用 Hakata 與 Yakuin 打開 quiet pocket'], example:['Sample route','在 food-first 後面放進 soft local pocket 的 sample'], result:['Result refinement','區分初訪 Fukuoka 與再訪 Fukuoka 的方法']}
+      }
+    };
+  }
+
+  function getPriorityCrosslinkPack(slug=''){
+    const entry = getPriorityCrosslinks()[String(slug || '').toLowerCase()];
+    if (!entry) return null;
+    return entry[lang] || entry.en || entry.ko || null;
+  }
+
+  function renderHomePriorityStories(){
+    if (document.body.dataset.page !== 'home') return;
+    const anchor = document.getElementById('cityAtlasRoot') || document.getElementById('homeMagazineShelfRoot');
+    if (!anchor) return;
+    let root = document.getElementById('homePriorityStoriesRoot');
+    if (!root) {
+      root = document.createElement('div');
+      root.id = 'homePriorityStoriesRoot';
+      anchor.parentNode.insertBefore(root, anchor.nextSibling);
+    }
+    const pack = getPriorityMagazineArticles()[lang] || getPriorityMagazineArticles().en;
+    const items = pack.items.slice(0,4);
+    root.innerHTML = `<section class="section priority-story-strip"><div class="section-head compact"><div><span class="eyebrow">${pack.eyebrow}</span><h2 class="section-title">${lang === 'ko' ? '도시를 읽는 짧은 story layer' : lang === 'ja' ? '都市を読む短い story layer' : lang === 'zhHant' ? '讀城市的短篇 story layer' : 'A lighter story layer for reading cities'}</h2><p class="section-desc">${lang === 'ko' ? '홈에서도 release 우선 도시의 읽는 법을 바로 잡을 수 있게 얇게 연결했습니다.' : lang === 'ja' ? 'ホームでも release 優先都市の読み方をすぐ拾えるよう、薄くつないでいます。' : lang === 'zhHant' ? '在首頁也先薄薄接上 release 優先城市的閱讀方式。' : 'A thinner home strip that surfaces how to read the priority cities before planning.'}</p></div><a class="soft-link" href="${pathRoot === '../' ? '../' : ''}magazine/index.html#magazinePriorityArticleRoot">${lang === 'ko' ? '매거진에서 더 읽기' : lang === 'ja' ? 'Magazine でもっと読む' : lang === 'zhHant' ? '去 Magazine 繼續讀' : 'Read more in Magazine'}</a></div><div class="priority-story-row">${items.map(item => `<article class="priority-story-mini info-card"><span class="collection-kicker">${item.city}</span><strong>${item.title}</strong><p>${item.desc}</p><div class="card-actions"><a class="soft-btn" href="${item.guide}">${pack.guide}</a><a class="ghost-btn" href="${item.sample}">${pack.sample}</a></div></article>`).join('')}</div></section>`;
+  }
+
+  function renderPriorityCrosslinks(slug, type='city'){
+    const pack = getPriorityCrosslinkPack(slug);
+    if (!pack) return '';
+    const base = pathRoot === '../' ? '../' : '';
+    const cityHref = `${base}city/${slug}.html#city-priority-depth`;
+    const articleHref = `${base}magazine/index.html#magazinePriorityArticleRoot`;
+    const exampleHref = (() => {
+      const examples = {
+        tokyo:'tokyo-3n4d-first-trip', seoul:'seoul-2n3d-city-vibes', kyoto:'kyoto-2n3d-slow-trip',
+        taipei:'taipei-3n4d-night-food', hongkong:'hongkong-3n4d-harbor-rhythm',
+        busan:'busan-2n3d-with-parents', fukuoka:'fukuoka-2n3d-food-trip'
+      };
+      return `${base}example/${examples[slug]}.html`;
+    })();
+    const resultHref = `${base}index.html#planner`;
+    const copyTitle = type === 'result'
+      ? (lang === 'ko' ? '다음에 읽을 것' : lang === 'ja' ? '次に読むもの' : lang === 'zhHant' ? '接下來讀什麼' : 'Read next')
+      : type === 'example'
+      ? (lang === 'ko' ? '이 샘플 다음 연결' : lang === 'ja' ? 'この sample の次の接続' : lang === 'zhHant' ? '這個 sample 之後怎麼接' : 'Where this sample connects next')
+      : (lang === 'ko' ? '이 도시를 더 읽는 링크' : lang === 'ja' ? 'この都市をさらに読むリンク' : lang === 'zhHant' ? '把這座城市讀深一點的連結' : 'Links that deepen this city');
+    return `<section class="section priority-crosslink-section"><div class="section-head compact"><div><span class="eyebrow">Cross-link</span><h3 class="section-title">${copyTitle}</h3></div></div><div class="priority-crosslink-grid">
+      <a class="priority-crosslink-card info-card" href="${articleHref}"><span class="collection-kicker">${pack.article[0]}</span><strong>${pack.article[1]}</strong></a>
+      <a class="priority-crosslink-card info-card" href="${cityHref}"><span class="collection-kicker">${pack.city[0]}</span><strong>${pack.city[1]}</strong></a>
+      <a class="priority-crosslink-card info-card" href="${exampleHref}"><span class="collection-kicker">${pack.example[0]}</span><strong>${pack.example[1]}</strong></a>
+      <a class="priority-crosslink-card info-card" href="${resultHref}"><span class="collection-kicker">${pack.result[0]}</span><strong>${pack.result[1]}</strong></a>
+    </div></section>`;
+  }
+
+function getPriorityMagazineArticles(){
     const base = pathRoot === '../' ? '../' : '';
     return {
       ko:{
@@ -3441,6 +3539,7 @@ function renderTripsSeasonalDesk(){
     initPlannerOnboarding();
     renderHomeDiscovery();
     renderCityAtlas('home');
+    renderHomePriorityStories();
     renderHomeCommunityDesk();
     renderSignalPersonalDesk('home');
     renderHomeSeasonalDesk();
@@ -3453,6 +3552,7 @@ function renderTripsSeasonalDesk(){
       renderMagazineLanding();
       renderHomeDiscovery();
       renderCityAtlas('home');
+      renderHomePriorityStories();
       renderCityAtlas('magazine');
       renderHomeCommunityDesk();
       renderSignalPersonalDesk('home');
