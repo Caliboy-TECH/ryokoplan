@@ -2735,16 +2735,19 @@ function getPriorityDeepening(slug=''){
     const base = pathRoot === '../' ? '../' : '';
     return {
       ko:{
-        eyebrow:'Expansion cities',
-        title:'Expansion cities — lighter reads',
+        eyebrow:'확장 도시',
+        title:'Expansion 도시 가볍게 읽기',
         desc:'release 우선 도시 다음으로, 같은 구조를 가볍게 따라오는 도시들입니다.',
-        city:'Read city', sample:'Read sample',
-        items:[{city:'Osaka', title:'Food-first Osaka with a late close', desc:'오사카는 첫 식사 라인과 늦은 마감만 선명하게 잡아도 도시 결이 빨리 보입니다.', cityHref:`${base}city/osaka.html`, sampleHref:`${base}example/osaka-2n3d-food-trip.html`},
-          {city:'Jeju', title:'Wind, coast, and a slower reset', desc:'제주는 단순 scenic보다 느린 리듬으로 붙일 때 도시의 성격이 더 잘 남습니다.', cityHref:`${base}city/jeju.html`, sampleHref:`${base}example/jeju-2n3d-slow-reset.html`},
-          {city:'Sapporo', title:'A clearer slow-weather city', desc:'삿포로는 날씨와 넓은 거리 폭을 같이 읽을수록 훨씬 더 편안하게 남습니다.', cityHref:`${base}city/sapporo.html`, sampleHref:`${base}example/sapporo-2n3d-winter-city.html`},
-          {city:'Okinawa', title:'Coast first, then slower pockets', desc:'오키나와는 바다 이후의 느린 pocket이 여행의 결을 더 분명하게 만듭니다.', cityHref:`${base}city/okinawa.html`, sampleHref:`${base}example/okinawa-3n4d-sea-reset.html`},
-          {city:'Sendai', title:'A softer north-side pace', desc:'센다이는 headline보다 잔잔한 거리 리듬으로 읽을 때 더 오래 남습니다.', cityHref:`${base}city/sendai.html`, sampleHref:`${base}example/sendai-2n3d-calm-city.html`},
-          {city:'Gyeongju', title:'Quiet heritage with room to breathe', desc:'경주는 조용한 유산 도시로 읽을수록 차별점이 더 또렷해집니다.', cityHref:`${base}city/gyeongju.html`, sampleHref:`${base}example/gyeongju-2n3d-heritage-walk.html`}]
+        city:'도시 보기', sample:'샘플 보기',
+        items:[
+          {city:'Osaka', title:'첫 식사와 늦은 마감으로 읽는 Osaka', desc:'오사카는 첫 식사 라인과 늦은 마감만 선명하게 잡아도 도시 결이 빨리 보입니다.', cityHref:`${base}city/osaka.html`, sampleHref:`${base}example/osaka-2n3d-food-trip.html`},
+          {city:'Jeju', title:'바람, 해안, 그리고 느린 리셋', desc:'제주는 단순 scenic보다 느린 리듬으로 붙일 때 도시의 성격이 더 잘 남습니다.', cityHref:`${base}city/jeju.html`, sampleHref:`${base}example/jeju-2n3d-slow-reset.html`},
+          {city:'Sapporo', title:'날씨를 천천히 읽는 Sapporo', desc:'삿포로는 날씨와 넓은 거리 폭을 같이 읽을수록 훨씬 더 편안하게 남습니다.', cityHref:`${base}city/sapporo.html`, sampleHref:`${base}example/sapporo-2n3d-winter-city.html`},
+          {city:'Okinawa', title:'해안 다음에 붙는 더 느린 pocket', desc:'오키나와는 바다 이후의 느린 pocket이 여행의 결을 더 분명하게 만듭니다.', cityHref:`${base}city/okinawa.html`, sampleHref:`${base}example/okinawa-3n4d-sea-reset.html`},
+          {city:'Sendai', title:'북쪽의 더 차분한 pace', desc:'센다이는 headline보다 잔잔한 거리 리듬으로 읽을 때 더 오래 남습니다.', cityHref:`${base}city/sendai.html`, sampleHref:`${base}example/sendai-2n3d-calm-city.html`},
+          {city:'Gyeongju', title:'숨 쉴 여백이 있는 heritage city', desc:'경주는 조용한 유산 도시로 읽을수록 차별점이 더 또렷해집니다.', cityHref:`${base}city/gyeongju.html`, sampleHref:`${base}example/gyeongju-2n3d-heritage-walk.html`},
+          {city:'Macau', title:'오래된 골목과 밤 장면을 나눠 읽는 Macau', desc:'마카오는 오래된 거리와 밤 장면을 짧게 나눌수록 도시가 더 또렷하게 정리됩니다.', cityHref:`${base}city/macau.html`, sampleHref:`${base}example/macau-2n3d-night-lanes.html`}
+        ]
       },
       en:{
         eyebrow:'Expansion cities',
@@ -2752,41 +2755,41 @@ function getPriorityDeepening(slug=''){
         desc:'A lighter expansion layer for cities that come after the seven priority release cities.',
         city:'Read city', sample:'Read sample',
         items:[
-          {city:'Osaka', title:'Food-first Osaka with a late close', desc:'Osaka reads clearly once the first meal line and the late close are held together.', cityHref:`${base}city/osaka.html`, sampleHref:`${base}example/osaka-2n3d-food-trip.html`},
+          {city:'Osaka', title:'Food-first Osaka with a late close', desc:'Osaka reads best when the first meal line and the late close stay crisp.', cityHref:`${base}city/osaka.html`, sampleHref:`${base}example/osaka-2n3d-food-trip.html`},
+          {city:'Jeju', title:'Wind, coast, and a slower reset', desc:'Jeju lands better as wind, coast, and a slower reset than as a simple scenic list.', cityHref:`${base}city/jeju.html`, sampleHref:`${base}example/jeju-2n3d-slow-reset.html`},
           {city:'Sapporo', title:'A clearer slow-weather city', desc:'Sapporo lands better when weather, street width, and slower pacing are read together.', cityHref:`${base}city/sapporo.html`, sampleHref:`${base}example/sapporo-2n3d-winter-city.html`},
-          {city:'Sendai', title:'A softer north-side pace', desc:'Sendai lingers better through quiet street rhythm than headline stops.', cityHref:`${base}city/sendai.html`, sampleHref:`${base}example/sendai-2n3d-calm-city.html`},
-          {city:'Okinawa', title:'Coast first, then slower pockets', desc:'Okinawa becomes more distinct when the coast opens the route and slower pockets hold it.', cityHref:`${base}city/okinawa.html`, sampleHref:`${base}example/okinawa-3n4d-sea-reset.html`},
-          {city:'Jeju', title:'Wind, coast, and a slower reset', desc:'Jeju lands better as a slower reset than as only a scenic checklist.', cityHref:`${base}city/jeju.html`, sampleHref:`${base}example/jeju-2n3d-slow-reset.html`},
+          {city:'Okinawa', title:'Coast first, then slower pockets', desc:'Okinawa becomes clearer once one slower pocket sits behind the coast line.', cityHref:`${base}city/okinawa.html`, sampleHref:`${base}example/okinawa-3n4d-sea-reset.html`},
+          {city:'Sendai', title:'A softer north-side pace', desc:'Sendai holds longer through calm street rhythm than through headline stops.', cityHref:`${base}city/sendai.html`, sampleHref:`${base}example/sendai-2n3d-calm-city.html`},
           {city:'Gyeongju', title:'Quiet heritage with room to breathe', desc:'Gyeongju gets stronger when it is read as a quiet heritage city with pace.', cityHref:`${base}city/gyeongju.html`, sampleHref:`${base}example/gyeongju-2n3d-heritage-walk.html`},
-          {city:'Macau', title:'A compact split between old streets and night glow', desc:'Macau becomes easier to hold once old lanes and the late glow are split cleanly.', cityHref:`${base}city/macau.html`, sampleHref:`${base}example/macau-2n3d-night-lanes.html`}
+          {city:'Macau', title:'A compact split between old streets and night glow', desc:'Macau gets clearer once old lanes and night glow are split into two clean layers.', cityHref:`${base}city/macau.html`, sampleHref:`${base}example/macau-2n3d-night-lanes.html`}
         ]
       },
       ja:{
-        eyebrow:'Expansion cities',
-        title:'Expansion cities — lighter reads',
+        eyebrow:'拡張都市',
+        title:'Expansion 都市を軽く読む',
         desc:'優先7都市のあとに、同じ読み方を軽く追いかける都市たちです。',
-        city:'都市を読む', sample:'サンプルを見る',
+        city:'都市を見る', sample:'サンプルを見る',
         items:[
           {city:'Osaka', title:'最初の食と遅い締めで読む Osaka', desc:'最初の一食と夜の締めを揃えると、Osaka の性格はかなり早く見えてきます。', cityHref:`${base}city/osaka.html`, sampleHref:`${base}example/osaka-2n3d-food-trip.html`},
+          {city:'Jeju', title:'風、海岸、そのあとに来る slower reset', desc:'Jeju は scenic list より、ゆっくりした回復の都市として読む方が強いです。', cityHref:`${base}city/jeju.html`, sampleHref:`${base}example/jeju-2n3d-slow-reset.html`},
           {city:'Sapporo', title:'天気ごと読む、やわらかな Sapporo', desc:'天気とゆるい速度を一緒に読むほど、Sapporo は心地よく残ります。', cityHref:`${base}city/sapporo.html`, sampleHref:`${base}example/sapporo-2n3d-winter-city.html`},
-          {city:'Sendai', title:'北側のやわらかな pace を持つ Sendai', desc:'headline よりも静かな街路の rhythm で読む方が、Sendai は長く残ります。', cityHref:`${base}city/sendai.html`, sampleHref:`${base}example/sendai-2n3d-calm-city.html`},
           {city:'Okinawa', title:'海から開いて、ゆっくり閉じる Okinawa', desc:'海辺で開き、遅い pocket で閉じると Okinawa の輪郭がはっきりします。', cityHref:`${base}city/okinawa.html`, sampleHref:`${base}example/okinawa-3n4d-sea-reset.html`},
-          {city:'Jeju', title:'風と海岸、そのあとに来る slower reset', desc:'Jeju は scenic list より、ゆっくりした回復の都市として読む方が強いです。', cityHref:`${base}city/jeju.html`, sampleHref:`${base}example/jeju-2n3d-slow-reset.html`},
+          {city:'Sendai', title:'北側のやわらかな pace を持つ Sendai', desc:'headline よりも静かな街路の rhythm で読む方が、Sendai は長く残ります。', cityHref:`${base}city/sendai.html`, sampleHref:`${base}example/sendai-2n3d-calm-city.html`},
           {city:'Gyeongju', title:'余白のある heritage city としての Gyeongju', desc:'静かな遺産都市として読むほど、Gyeongju の違いがはっきりします。', cityHref:`${base}city/gyeongju.html`, sampleHref:`${base}example/gyeongju-2n3d-heritage-walk.html`},
           {city:'Macau', title:'古い路地と夜の光を分けて読む Macau', desc:'古い路地と夜の光を短く分けると、Macau はずっと整理されます。', cityHref:`${base}city/macau.html`, sampleHref:`${base}example/macau-2n3d-night-lanes.html`}
         ]
       },
       zhHant:{
-        eyebrow:'Expansion cities',
-        title:'Expansion cities — lighter reads',
+        eyebrow:'擴張城市',
+        title:'輕量閱讀 Expansion 城市',
         desc:'在七個優先城市之後，先用較輕的方式把同一閱讀結構帶到這些城市。',
         city:'讀城市', sample:'看 sample',
         items:[
           {city:'Osaka', title:'用第一餐與晚收尾讀 Osaka', desc:'只要先把第一餐與夜晚收尾抓穩，Osaka 的性格就會很快出來。', cityHref:`${base}city/osaka.html`, sampleHref:`${base}example/osaka-2n3d-food-trip.html`},
-          {city:'Sapporo', title:'一座更適合慢慢讀天氣的 Sapporo', desc:'把天氣、街道寬度與慢節奏一起讀，Sapporo 會舒服很多。', cityHref:`${base}city/sapporo.html`, sampleHref:`${base}example/sapporo-2n3d-winter-city.html`},
-          {city:'Sendai', title:'帶著北方柔和節奏的 Sendai', desc:'比起 headline 景點，用安靜街道 rhythm 讀 Sendai 會更耐記。', cityHref:`${base}city/sendai.html`, sampleHref:`${base}example/sendai-2n3d-calm-city.html`},
-          {city:'Okinawa', title:'先海邊、再慢慢收的 Okinawa', desc:'用海岸線打開，再讓慢 pocket 接住，Okinawa 會更有輪廓。', cityHref:`${base}city/okinawa.html`, sampleHref:`${base}example/okinawa-3n4d-sea-reset.html`},
           {city:'Jeju', title:'風、海岸，與之後更慢的 reset', desc:'Jeju 作為慢節奏 reset 城市，比 scenic 清單更有記憶點。', cityHref:`${base}city/jeju.html`, sampleHref:`${base}example/jeju-2n3d-slow-reset.html`},
+          {city:'Sapporo', title:'一座更適合慢慢讀天氣的 Sapporo', desc:'把天氣、街道寬度與慢節奏一起讀，Sapporo 會舒服很多。', cityHref:`${base}city/sapporo.html`, sampleHref:`${base}example/sapporo-2n3d-winter-city.html`},
+          {city:'Okinawa', title:'先海邊、再慢慢收的 Okinawa', desc:'用海岸線打開，再讓慢 pocket 接住，Okinawa 會更有輪廓。', cityHref:`${base}city/okinawa.html`, sampleHref:`${base}example/okinawa-3n4d-sea-reset.html`},
+          {city:'Sendai', title:'帶著北方柔和節奏的 Sendai', desc:'比起 headline 景點，用安靜街道 rhythm 讀 Sendai 會更耐記。', cityHref:`${base}city/sendai.html`, sampleHref:`${base}example/sendai-2n3d-calm-city.html`},
           {city:'Gyeongju', title:'留白更足的 heritage city：Gyeongju', desc:'把 Gyeongju 當成安靜的遺產城市來讀，差異會更清楚。', cityHref:`${base}city/gyeongju.html`, sampleHref:`${base}example/gyeongju-2n3d-heritage-walk.html`},
           {city:'Macau', title:'把老街與夜色分開讀的 Macau', desc:'把老街與夜晚光感短短分開，Macau 會清楚很多。', cityHref:`${base}city/macau.html`, sampleHref:`${base}example/macau-2n3d-night-lanes.html`}
         ]
@@ -2805,7 +2808,7 @@ function getPriorityDeepening(slug=''){
       target.parentNode.insertBefore(root, target.nextSibling);
     }
     const copy = getSecondaryCityStories()[lang] || getSecondaryCityStories().en;
-    root.innerHTML = `<section class="section secondary-story-section" id="expansionCityStories">
+    root.innerHTML = `<section class="section secondary-story-section" id="expansionCityStories" data-section="expansion-stories">
       <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
       <div class="priority-article-grid secondary-story-grid">${copy.items.map(item => `<article class="priority-article-card info-card secondary-story-card"><div class="priority-article-top"><span class="collection-kicker">${item.city}</span></div><h3>${item.title}</h3><p>${item.desc}</p><div class="card-actions"><a class="soft-btn" href="${item.cityHref}">${copy.city}</a><a class="ghost-btn" href="${item.sampleHref}">${copy.sample}</a></div></article>`).join('')}</div>
     </section>`;
@@ -2815,18 +2818,18 @@ function getPriorityMagazineArticles(){
     const base = pathRoot === '../' ? '../' : '';
     return {
       ko:{
-        eyebrow:'City reading stories',
-        title:'Release cities — deeper reads',
+        eyebrow:'도시 읽기',
+        title:'Release 도시 깊게 읽기',
         desc:'리스트보다 먼저, 왜 이 도시를 이렇게 읽어야 하는지부터 잡아주는 짧은 article layer입니다.',
-        guide:'Read city', sample:'Read sample',
+        guide:'도시 읽기', sample:'샘플 보기',
         items:[
-          {city:'Tokyo', title:'First Tokyo, then the quieter second Tokyo', desc:'첫 도쿄는 상징적인 축으로 열고, 두 번째 도쿄는 책방·저녁·조용한 pocket으로 다시 읽는 방식.', guide:`${base}city/tokyo.html#city-priority-depth`, sample:`${base}example/tokyo-3n4d-first-trip.html`},
-          {city:'Seoul', title:'How to keep Seoul from becoming only contrast', desc:'서울은 대비가 큰 도시라 quieter district 하나를 중간에 넣어야 도시가 더 오래 남습니다.', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
-          {city:'Kyoto', title:'A softer Kyoto after the obvious frame', desc:'상징적인 장면 뒤에 강변이나 museum pocket을 붙여야 교토가 더 가볍고 길게 남습니다.', guide:`${base}city/kyoto.html#city-priority-depth`, sample:`${base}example/kyoto-2n3d-slow-trip.html`},
-          {city:'Taipei', title:'Food-first is not enough for Taipei', desc:'타이베이는 식사 축 옆에 texture pocket을 붙일 때 도시가 훨씬 선명해집니다.', guide:`${base}city/taipei.html#city-priority-depth`, sample:`${base}example/taipei-3n4d-night-food.html`},
-          {city:'Hong Kong', title:'The breathing layer behind Hong Kong verticality', desc:'홍콩은 skyline 뒤에 slope street나 harbor edge를 붙일수록 세련되게 남습니다.', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
-          {city:'Busan', title:'Beyond the postcard coast', desc:'부산은 coast line 뒤에 harbor-side everyday texture를 붙일 때 훨씬 입체적으로 읽힙니다.', guide:`${base}city/busan.html#city-priority-depth`, sample:`${base}example/busan-2n3d-with-parents.html`},
-          {city:'Fukuoka', title:'Compact routes, softer local pockets', desc:'후쿠오카는 food-first 축 뒤에 quiet local pocket 하나만 붙여도 완성도가 크게 올라갑니다.', guide:`${base}city/fukuoka.html#city-priority-depth`, sample:`${base}example/fukuoka-2n3d-food-trip.html`}
+          {city:'Tokyo', title:'첫 도쿄와 더 조용한 두 번째 도쿄', desc:'첫 도쿄는 상징적인 축으로 열고, 두 번째 도쿄는 책방·저녁·조용한 pocket으로 다시 읽는 방식.', guide:`${base}city/tokyo.html#city-priority-depth`, sample:`${base}example/tokyo-3n4d-first-trip.html`},
+          {city:'Seoul', title:'서울을 대비만으로 끝내지 않는 법', desc:'서울은 대비가 큰 도시라 quieter district 하나를 중간에 넣어야 도시가 더 오래 남습니다.', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
+          {city:'Kyoto', title:'뻔한 장면 뒤에 두는 더 부드러운 교토', desc:'상징적인 장면 뒤에 강변이나 museum pocket을 붙여야 교토가 더 가볍고 길게 남습니다.', guide:`${base}city/kyoto.html#city-priority-depth`, sample:`${base}example/kyoto-2n3d-slow-trip.html`},
+          {city:'Taipei', title:'타이베이는 food-first만으론 부족하다', desc:'타이베이는 식사 축 옆에 texture pocket을 붙일 때 도시가 훨씬 선명해집니다.', guide:`${base}city/taipei.html#city-priority-depth`, sample:`${base}example/taipei-3n4d-night-food.html`},
+          {city:'Hong Kong', title:'홍콩의 수직감 뒤에 필요한 숨 고르기', desc:'홍콩은 skyline 뒤에 slope street나 harbor edge를 붙일수록 세련되게 남습니다.', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
+          {city:'Busan', title:'엽서 같은 바다 그 너머의 부산', desc:'부산은 coast line 뒤에 harbor-side everyday texture를 붙일 때 훨씬 입체적으로 읽힙니다.', guide:`${base}city/busan.html#city-priority-depth`, sample:`${base}example/busan-2n3d-with-parents.html`},
+          {city:'Fukuoka', title:'컴팩트한 루트와 더 부드러운 로컬 pocket', desc:'후쿠오카는 food-first 축 뒤에 quiet local pocket 하나만 붙여도 완성도가 크게 올라갑니다.', guide:`${base}city/fukuoka.html#city-priority-depth`, sample:`${base}example/fukuoka-2n3d-food-trip.html`}
         ]
       },
       en:{
@@ -2845,13 +2848,13 @@ function getPriorityMagazineArticles(){
         ]
       },
       ja:{
-        eyebrow:'City reading stories',
-        title:'Release cities — deeper reads',
+        eyebrow:'都市を読む',
+        title:'Release 都市を深く読む',
         desc:'ただの一覧になる前に、この都市をどう読むとよいかを先に整える短い article セクションです。',
         guide:'都市を読む', sample:'サンプルを見る',
         items:[
           {city:'Tokyo', title:'最初の東京と、静かな二回目の東京', desc:'最初は象徴的な軸で入り、二回目は本、夕食、静かな pocket で東京を読み直します。', guide:`${base}city/tokyo.html#city-priority-depth`, sample:`${base}example/tokyo-3n4d-first-trip.html`},
-          {city:'Seoul', title:'Seoul を“対比だけ”で終わらせないために', desc:'大きな対比のあいだに静かな district を一つ入れると、Seoul はもっと長く残ります。', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
+          {city:'Seoul', title:'Seoul を「対比だけ」で終わらせないために', desc:'大きな対比のあいだに静かな district を一つ入れると、Seoul はもっと長く残ります。', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
           {city:'Kyoto', title:'わかりやすい景色のあとに置く、やわらかい Kyoto', desc:'象徴的な場面のあとに川辺や museum pocket を置くと、Kyoto はもっと軽く残ります。', guide:`${base}city/kyoto.html#city-priority-depth`, sample:`${base}example/kyoto-2n3d-slow-trip.html`},
           {city:'Taipei', title:'Taipei は food-first だけでは足りない', desc:'食の軸の横に texture pocket を置くと、Taipei はぐっと鮮明になります。', guide:`${base}city/taipei.html#city-priority-depth`, sample:`${base}example/taipei-3n4d-night-food.html`},
           {city:'Hong Kong', title:'縦の強さの後ろに置く、Hong Kong の呼吸', desc:'slope street や harbor edge を一枚入れると、Hong Kong はぐっと洗練されます。', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
@@ -2860,8 +2863,8 @@ function getPriorityMagazineArticles(){
         ]
       },
       zhHant:{
-        eyebrow:'City reading stories',
-        title:'Release cities — deeper reads',
+        eyebrow:'讀城市',
+        title:'深入閱讀 Release 城市',
         desc:'在它變成停靠點清單之前，先交代這座城市應該怎麼讀的短篇 article 區塊。',
         guide:'讀城市', sample:'看 sample',
         items:[
@@ -2889,7 +2892,7 @@ function getPriorityMagazineArticles(){
     }
     const copy = getPriorityMagazineArticles()[lang] || getPriorityMagazineArticles().en;
     root.innerHTML = `
-      <section class="section priority-article-section" id="releaseCityStories">
+      <section class="section priority-article-section" id="releaseCityStories" data-section="release-stories">
         <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
         <div class="priority-article-grid">${copy.items.map(item => `
           <article class="priority-article-card info-card">
