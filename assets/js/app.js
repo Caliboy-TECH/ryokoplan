@@ -2734,8 +2734,8 @@ function getPriorityDeepening(slug=''){
     const base = pathRoot === '../' ? '../' : '';
     return {
       ko:{
-        eyebrow:'Expansion cities',
-        title:'Expansion cities — lighter reads',
+        eyebrow:'More city reads',
+        title:'다음으로 가볍게 읽어볼 도시',
         desc:'release 우선 도시 다음으로, 같은 구조를 가볍게 따라오는 도시들입니다.',
         city:'Read city', sample:'Read sample',
         items:[{city:'Osaka', title:'Food-first Osaka with a late close', desc:'오사카는 첫 식사 라인과 늦은 마감만 선명하게 잡아도 도시 결이 빨리 보입니다.', cityHref:`${base}city/osaka.html`, sampleHref:`${base}example/osaka-2n3d-food-trip.html`},
@@ -2746,8 +2746,8 @@ function getPriorityDeepening(slug=''){
           {city:'Gyeongju', title:'Quiet heritage with room to breathe', desc:'경주는 조용한 유산 도시로 읽을수록 차별점이 더 또렷해집니다.', cityHref:`${base}city/gyeongju.html`, sampleHref:`${base}example/gyeongju-2n3d-heritage-walk.html`}]
       },
       en:{
-        eyebrow:'Expansion cities',
-        title:'Expansion cities — lighter reads',
+        eyebrow:'More city reads',
+        title:'Next cities to read lightly',
         desc:'A lighter expansion layer for cities that come after the seven priority release cities.',
         city:'Read city', sample:'Read sample',
         items:[
@@ -2761,8 +2761,8 @@ function getPriorityDeepening(slug=''){
         ]
       },
       ja:{
-        eyebrow:'Expansion cities',
-        title:'Expansion cities — lighter reads',
+        eyebrow:'More city reads',
+        title:'次に軽く読める都市たち',
         desc:'優先7都市のあとに、同じ読み方を軽く追いかける都市たちです。',
         city:'都市を読む', sample:'サンプルを見る',
         items:[
@@ -2776,8 +2776,8 @@ function getPriorityDeepening(slug=''){
         ]
       },
       zhHant:{
-        eyebrow:'Expansion cities',
-        title:'Expansion cities — lighter reads',
+        eyebrow:'More city reads',
+        title:'下一批可以輕量閱讀的城市',
         desc:'在七個優先城市之後，先用較輕的方式把同一閱讀結構帶到這些城市。',
         city:'讀城市', sample:'看 sample',
         items:[
@@ -2804,7 +2804,7 @@ function getPriorityDeepening(slug=''){
       target.parentNode.insertBefore(root, target.nextSibling);
     }
     const copy = getSecondaryCityStories()[lang] || getSecondaryCityStories().en;
-    root.innerHTML = `<section class="section secondary-story-section" id="expansionCityStories">
+    root.innerHTML = `<section class="section secondary-story-section">
       <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
       <div class="priority-article-grid secondary-story-grid">${copy.items.map(item => `<article class="priority-article-card info-card secondary-story-card"><div class="priority-article-top"><span class="collection-kicker">${item.city}</span></div><h3>${item.title}</h3><p>${item.desc}</p><div class="card-actions"><a class="soft-btn" href="${item.cityHref}">${copy.city}</a><a class="ghost-btn" href="${item.sampleHref}">${copy.sample}</a></div></article>`).join('')}</div>
     </section>`;
@@ -2815,7 +2815,7 @@ function getPriorityMagazineArticles(){
     return {
       ko:{
         eyebrow:'City reading stories',
-        title:'Release cities — deeper reads',
+        title:'release 우선 도시를 더 깊게 읽는 article depth',
         desc:'리스트보다 먼저, 왜 이 도시를 이렇게 읽어야 하는지부터 잡아주는 짧은 article layer입니다.',
         guide:'Read city', sample:'Read sample',
         items:[
@@ -2830,7 +2830,7 @@ function getPriorityMagazineArticles(){
       },
       en:{
         eyebrow:'City reading stories',
-        title:'Release cities — deeper reads',
+        title:'Article depth for the seven priority release cities',
         desc:'A lighter article layer that explains how each city should be read before it becomes only a list of stops.',
         guide:'Read city', sample:'Read sample',
         items:[
@@ -2845,7 +2845,7 @@ function getPriorityMagazineArticles(){
       },
       ja:{
         eyebrow:'City reading stories',
-        title:'Release cities — deeper reads',
+        title:'リリース優先7都市をもう一段深く読む article layer',
         desc:'ただの一覧になる前に、この都市をどう読むとよいかを先に整える短い article セクションです。',
         guide:'都市を読む', sample:'サンプルを見る',
         items:[
@@ -2860,7 +2860,7 @@ function getPriorityMagazineArticles(){
       },
       zhHant:{
         eyebrow:'City reading stories',
-        title:'Release cities — deeper reads',
+        title:'給七個 release 優先城市再加一層 article depth',
         desc:'在它變成停靠點清單之前，先交代這座城市應該怎麼讀的短篇 article 區塊。',
         guide:'讀城市', sample:'看 sample',
         items:[
@@ -2888,7 +2888,7 @@ function getPriorityMagazineArticles(){
     }
     const copy = getPriorityMagazineArticles()[lang] || getPriorityMagazineArticles().en;
     root.innerHTML = `
-      <section class="section priority-article-section" id="releaseCityStories">
+      <section class="section priority-article-section">
         <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
         <div class="priority-article-grid">${copy.items.map(item => `
           <article class="priority-article-card info-card">
