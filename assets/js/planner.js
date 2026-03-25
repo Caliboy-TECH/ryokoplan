@@ -541,6 +541,114 @@ window.RyokoPlanner = (() => {
     qs('localTipsList').innerHTML = tips.map(item => `<div class="tip-card-line"><span class="tip-icon">i</span><div class="tip-text">${item}</div></div>`).join('');
   }
 
+
+  function normalizeSignalText(value=''){ return String(value || '').toLowerCase(); }
+  function getResultSignals(data, payload = window.currentTripPayload || readForm()){
+    const parts = [
+      textValue(data.destination, ''),
+      textValue(data.vibe, ''),
+      textValue(data.pace, ''),
+      textValue(data.bestFor, ''),
+      textValue(data.tripMood, ''),
+      textValue(data.dayDensity, ''),
+      textValue(data.budgetMode, ''),
+      payload?.companion || '',
+      payload?.style || '',
+      payload?.notes || '',
+      payload?.localMode ? 'local mode' : 'classic mode'
+    ].join(' ').toLowerCase();
+    const tags = new Set(window.RyokoApp?.detectSignalTags?.({
+      city: textValue(data.destination, ''),
+      destination: textValue(data.destination, ''),
+      companion: payload?.companion || '',
+      style: payload?.style || '',
+      notes: [payload?.notes || '', textValue(data.vibe, ''), textValue(data.pace, ''), textValue(data.bestFor, '')].join(' '),
+      mode: payload?.localMode ? 'local' : 'classic',
+      query: parts
+    }) || []);
+    if (/(editorial|magazine|에디토리얼|매거진|編輯|エディトリアル)/.test(parts)) tags.add('editorial');
+    if (/(vivid|sharp|social|night|late|city vibes|鮮明|夜|late-night)/.test(parts)) tags.add('late-night');
+    if (/(soft|slow|quiet|calm|lighter|rest|느린|조용|柔和)/.test(parts)) tags.add('soft-reset');
+    if (/(food|meal|dinner|cafe|coffee|맛집|食)/.test(parts)) tags.add('food-led');
+    if (/(coast|sea|ocean|harbor|beach|바다|海)/.test(parts)) tags.add('coast');
+    if (/(parent|family|부모|가족)/.test(parts)) tags.add('parents');
+    if (payload?.localMode) tags.add('local-mode');
+    const paceKey = /(light|soft|easy|slow|가볍|느린|軽め)/.test(parts) ? 'light' : (/(full|dense|packed|꽉|しっかり|飽滿)/.test(parts) ? 'full' : 'balanced');
+    const moodKey = /(editorial|magazine|매거진|編輯|エディトリアル)/.test(parts) ? 'editorial' : (/(vivid|social|late|night|비비드|鮮明|ビビッド)/.test(parts) ? 'vivid' : (/(soft|slow|quiet|소프트|柔和|ソフト)/.test(parts) ? 'soft' : 'balanced'));
+    return { tags:[...tags], paceKey, moodKey, localMode: !!payload?.localMode };
+  }
+  function scoreCityForSignals(city, signals){
+    if (!city) return 0;
+    const vibe = String(city.vibe || '').toLowerCase();
+    let score = 0;
+    if (signals.tags.includes('late-night') && /(night|harbor|social|food|fast)/.test(vibe)) score += 3;
+    if (signals.tags.includes('food-led') && /(food|compact|local|night)/.test(vibe)) score += 3;
+    if (signals.tags.includes('soft-reset') && /(slow|history|scenic|ease)/.test(vibe)) score += 3;
+    if (signals.tags.includes('coast') && /(coast|scenic|harbor)/.test(vibe)) score += 3;
+    if (signals.tags.includes('parents') && /(scenic|history|ease|coast)/.test(vibe)) score += 3;
+    if (signals.tags.includes('local-mode') && /(local|social|food)/.test(vibe)) score += 2;
+    if (signals.moodKey === 'editorial' && /(slow|history|scenic|local)/.test(vibe)) score += 1;
+    if (signals.moodKey === 'vivid' && /(fast|night|social|harbor)/.test(vibe)) score += 1;
+    if (signals.paceKey === 'light' && /(slow|ease|scenic|history)/.test(vibe)) score += 1;
+    if (signals.paceKey === 'full' && /(fast|social|food|harbor)/.test(vibe)) score += 1;
+    return score;
+  }
+  function rerankRecommendations(recs, signals, baseCity=''){
+    return [...(recs || [])].sort((a,b) => {
+      const av = String(a.preset?.destination || '').toLowerCase() === String(baseCity || '').toLowerCase() ? 2 : 0;
+      const bv = String(b.preset?.destination || '').toLowerCase() === String(baseCity || '').toLowerCase() ? 2 : 0;
+      const atags = (a.tags || []).map(t => String(t).toLowerCase());
+      const btags = (b.tags || []).map(t => String(t).toLowerCase());
+      const ascore = av + signals.tags.reduce((acc, tag) => acc + (atags.some(t => t.includes(tag) || tag.includes(t)) ? 2 : 0), 0)
+        + (signals.localMode && atags.some(t => /local|hidden|neighborhood/.test(t)) ? 1 : 0)
+        + (signals.paceKey === 'light' && atags.some(t => /soft|slow|easy/.test(t)) ? 1 : 0)
+        + (signals.paceKey === 'full' && atags.some(t => /dense|late|food|weekend/.test(t)) ? 1 : 0);
+      const bscore = bv + signals.tags.reduce((acc, tag) => acc + (btags.some(t => t.includes(tag) || tag.includes(t)) ? 2 : 0), 0)
+        + (signals.localMode && btags.some(t => /local|hidden|neighborhood/.test(t)) ? 1 : 0)
+        + (signals.paceKey === 'light' && btags.some(t => /soft|slow|easy/.test(t)) ? 1 : 0)
+        + (signals.paceKey === 'full' && btags.some(t => /dense|late|food|weekend/.test(t)) ? 1 : 0);
+      return bscore - ascore;
+    });
+  }
+  function sortRelatedCities(baseCity, signals){
+    return window.RyokoApp.getRelatedCities(baseCity).slice().sort((a,b) => scoreCityForSignals(b, signals) - scoreCityForSignals(a, signals));
+  }
+  function adaptiveNudgeCopy(baseCity, signals){
+    const city = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity };
+    if (signals.tags.includes('coast')) return uiCopy('해안선과 전망 포켓이 있는 흐름을 먼저 다시 읽어 보세요.', 'Re-open the route through coast lines and view pockets first.', '海沿いと眺めのポケットがある流れから読み直すのがおすすめです。', '先回到有海岸線與視野口袋的節奏去讀會更順。');
+    if (signals.tags.includes('food-led')) return uiCopy('식사 타이밍이 루트를 만드는 도시일수록, example와 guide를 같이 보면 밀도가 더 정확해집니다.', 'When meal timing shapes the city, reading the guide beside the example makes the density easier to tune.', '食のタイミングが街を作る都市ほど、guide と example を並べると密度を整えやすくなります。', '當用餐節奏會決定整座城市時，把 guide 和 example 並著看會更容易調整密度。');
+    if (signals.tags.includes('late-night')) return uiCopy('밤 장면이 중요한 결과라면, 늦은 시간대가 강한 도시 가지를 먼저 열어 보세요.', 'If the night close matters here, open the stronger late-night branch first.', '夜の締めが大事な結果なら、深夜の強い枝から先に開くと流れが整います。', '如果這次重點是夜晚收尾，先打開夜間氣氛更強的分支會更順。');
+    if (signals.tags.includes('soft-reset') || signals.paceKey === 'light') return uiCopy('지금 결과는 많이 넣기보다 여백을 살리는 쪽이 잘 맞습니다.', 'This result works better when the next read protects space instead of adding more stops.', 'この結果は、詰め足すより余白を守る読み方のほうが合います。', '這次結果更適合保留留白，而不是再往裡塞更多停點。');
+    if (signals.localMode) return uiCopy(`${city.name}의 로컬 결을 더 읽어야 다음 루프가 더 자연스럽습니다.`, `Reading ${city.name} through more local pockets will make the next loop feel cleaner.`, `${city.name} のローカルな層をもう少し読むと、次のループが自然になります。`, `把 ${city.name} 的在地層次再多讀一點，下一輪會更自然。`);
+    return uiCopy('같은 도시의 guide와 example를 한 번 더 비교한 뒤, 다음 도시로 가지를 치는 편이 좋습니다.', 'Compare the same-city guide and example once more before branching into the next city.', '同じ都市の guide と example をもう一度見比べてから、次の都市へ枝分かれするのがおすすめです。', '先再比對一次同城市的 guide 與 example，再延伸到下一座城市會更順。');
+  }
+  function sharedLoopMarkup(baseCity, signals){
+    const city = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, guide:'magazine/index.html', example:'magazine/index.html', image: cityImageFor(baseCity), vibe:'' };
+    const related = sortRelatedCities(baseCity, signals)[0] || city;
+    const atlasHref = window.RyokoApp.resolvePath('magazine/index.html#cityAtlas');
+    const guideHref = window.RyokoApp.resolvePath(city.guide || 'magazine/index.html') + '#city-neighborhoods';
+    const exampleHref = window.RyokoApp.resolvePath(city.example || city.guide || 'magazine/index.html');
+    const plannerHref = `${location.pathname}?destination=${encodeURIComponent(baseCity)}#plannerForm`;
+    return `
+      <div class="shared-loop-shell">
+        <div class="shared-loop-head">
+          <span class="eyebrow">${uiCopy('city-first loop','City-first loop','city-first loop','city-first loop')}</span>
+          <strong>${uiCopy('공유 링크도 같은 도시 루프로 다시 읽습니다','A shared link should reopen the same city loop','共有リンクも同じ都市ループで読み直します','分享連結也要回到同一個城市循環')}</strong>
+        </div>
+        <p class="card-copy">${adaptiveNudgeCopy(baseCity, signals)}</p>
+        <div class="shared-loop-grid">
+          <a class="shared-loop-card" href="${atlasHref}"><span class="mini-label">Atlas</span><strong>${city.name}</strong><p>${uiCopy('도시 커버와 우선 동네를 다시 읽기','Reopen the cover and first districts','都市カバーと最初の地区を読み直す','重新讀城市封面與優先區域')}</p></a>
+          <a class="shared-loop-card" href="${guideHref}"><span class="mini-label">City</span><strong>${uiCopy('Neighborhood picks','Neighborhood picks','近所のピック','鄰里精選')}</strong><p>${uiCopy('이 공유 루트가 기대는 동네 결을 더 읽기','Read the neighborhood logic supporting this shared route','この共有ルートが寄りかかる近所のロジックを読む','把這條分享路線依靠的鄰里邏輯再讀深一點')}</p></a>
+          <a class="shared-loop-card" href="${exampleHref}"><span class="mini-label">Example</span><strong>${city.name}</strong><p>${uiCopy('비슷한 도시 예시와 속도 차이 비교','Compare pace against the city example','同じ都市のサンプルと速度感を比べる','和同城市範例比對節奏差異')}</p></a>
+          <a class="shared-loop-card" href="${window.RyokoApp.resolvePath(related.guide || city.guide)}"><span class="mini-label">Next</span><strong>${related.name}</strong><p>${uiCopy('비슷한 결의 다음 도시 가지 열기','Open the next related city branch','近いトーンの次都市ブランチを開く','打開調性相近的下一座城市分支')}</p></a>
+        </div>
+        <div class="card-actions shared-loop-actions">
+          <a class="soft-btn" href="${plannerHref}">${uiCopy('플래너에서 다듬기','Tune in Planner','Planner で整える','到 Planner 微調')}</a>
+          <a class="ghost-btn" href="${guideHref}">${uiCopy('도시 가이드 읽기','Read guide','ガイドを読む','閱讀指南')}</a>
+        </div>
+      </div>`;
+  }
+
   function renderVisualStory(data){
     const node = qs('resultVisualStoryGrid');
     if (!node) return;
@@ -610,7 +718,8 @@ window.RyokoPlanner = (() => {
     const copy = resultCopy();
     const baseCity = textValue(data.destination, readForm().destination || 'Tokyo');
     const current = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, country:'', guide:'magazine/index.html', example:'magazine/index.html', image: cityImageFor(baseCity), vibe:'' };
-    const related = window.RyokoApp.getRelatedCities(baseCity).slice(0, 2);
+    const signals = getResultSignals(data);
+    const related = sortRelatedCities(baseCity, signals).slice(0, 2);
     const atlasHref = window.RyokoApp.resolvePath('magazine/index.html#cityAtlas');
     const cityGuideHref = window.RyokoApp.resolvePath((current.guide || 'magazine/index.html')) + '#city-neighborhoods';
     const exampleHref = window.RyokoApp.resolvePath(current.example || current.guide || 'magazine/index.html');
@@ -647,7 +756,7 @@ window.RyokoPlanner = (() => {
         <div class="loop-feature-copy">
           <span class="eyebrow">${copy.matchingEyebrow}</span>
           <h3>${copy.matchingTitle}</h3>
-          <p>${copy.matchingDesc}</p>
+          <p>${copy.matchingDesc}</p><p class="section-desc">${adaptiveNudgeCopy(baseCity, signals)}</p>
           <div class="card-actions">
             <a class="primary-btn" href="${cityGuideHref}">${copy.readCityLayer}</a>
             <a class="secondary-btn" href="${exampleHref}">${copy.compareExample}</a>
@@ -670,14 +779,16 @@ window.RyokoPlanner = (() => {
     const node = qs('resultSignalShelf');
     if (!node) return;
     const form = readForm();
-    const recs = window.RyokoApp.getSignalRecommendations({
+    const signals = getResultSignals(data, window.currentTripPayload || form);
+    const recs = rerankRecommendations(window.RyokoApp.getSignalRecommendations({
       city: textValue(data.destination, form.destination || ''),
       destination: textValue(data.destination, form.destination || ''),
       companion: form.companion,
       style: form.style,
-      notes: form.notes,
-      mode: window.currentTripPayload?.localMode ? 'local' : 'classic'
-    });
+      notes: [form.notes, textValue(data.vibe,''), textValue(data.pace,''), textValue(data.bestFor,''), textValue(data.tripMood,'')].filter(Boolean).join(' · '),
+      mode: window.currentTripPayload?.localMode ? 'local' : 'classic',
+      query: [textValue(data.vibe,''), textValue(data.pace,''), textValue(data.bestFor,''), signals.moodKey, signals.paceKey].join(' ')
+    }), signals, textValue(data.destination, form.destination || ''));
     if (!recs.length) { node.innerHTML = ''; return; }
     const copy = resultCopy();
     const title = copy.signalTitle;
@@ -687,7 +798,7 @@ window.RyokoPlanner = (() => {
         <div>
           <span class="eyebrow">${copy.signalEyebrow}</span>
           <h2 class="section-title">${title}</h2>
-          <p class="section-desc">${desc}</p>
+          <p class="section-desc">${desc}</p><p class="section-desc">${adaptiveNudgeCopy(textValue(data.destination, form.destination || ''), signals)}</p>
         </div>
       </div>
       <div class="loop-grid">${recs.map(item => `
@@ -1092,10 +1203,13 @@ window.RyokoPlanner = (() => {
     }
     const copy = sharedBannerCopy();
     const data = payload.planData || payload;
-    const city = window.RyokoApp.getCityLoopData(payload.destination || data.destination || '') || null;
-    const guideHref = city ? window.RyokoApp.resolvePath(city.guide) : window.RyokoApp.navHref('magazine');
+    const baseCity = payload.destination || data.destination || '';
+    const city = window.RyokoApp.getCityLoopData(baseCity) || null;
+    const guideHref = city ? window.RyokoApp.resolvePath(city.guide) + '#city-neighborhoods' : window.RyokoApp.navHref('magazine');
     const chips = [payload.destination || data.destination, payload.duration || data.duration, payload.companion || data.companion, data.vibe, data.pace].filter(Boolean).slice(0,5)
       .map(value => `<span class="trip-mini-chip">${escapeHtml(value)}</span>`).join('');
+    const sharedPayload = { ...payload, localMode: payload.localMode ?? window.currentTripPayload?.localMode ?? false };
+    const signals = getResultSignals(data, sharedPayload);
     node.classList.remove('hidden');
     node.innerHTML = `
       <div class="shared-trip-banner-head">
@@ -1108,6 +1222,7 @@ window.RyokoPlanner = (() => {
         <span>${copy.source}</span>
         <strong>${escapeHtml(data.bestFor || payload.notes || '')}</strong>
       </div>
+      ${sharedLoopMarkup(baseCity || textValue(data.destination,''), signals)}
       <div class="card-actions">
         <button class="secondary-btn" id="sharedBannerSaveBtn">${copy.save}</button>
         <button class="ghost-btn" id="sharedBannerDuplicateBtn">${copy.duplicate}</button>
