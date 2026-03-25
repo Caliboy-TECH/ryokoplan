@@ -140,9 +140,9 @@
           loopReadMagazine: 'Read Magazine',
           loopGoodStart: 'Good starting points',
           loopTokyoGuide: 'Tokyo guide',
-          loopTokyoGuideDesc: 'A strong first-entry city when you want density, nightlife, and several clean branches afterward.',
+          loopTokyoGuideDesc: 'A strong first-entry city when you want density, nightlife, and clean next branches.',
           loopBusanSample: 'Busan sample',
-          loopBusanSampleDesc: 'A softer scenic sample that works well for mixed-age travel, easier coast timing, and gentler night closes.',
+          loopBusanSampleDesc: 'A softer scenic sample for mixed-age travel, easier coast timing, and gentler night closes.',
           loopVaultEyebrow: 'From your vault',
           loopVaultTitle: 'can lead the next step too'
         },
@@ -291,17 +291,17 @@
       const publicRouteDesk = [
         {
           key:'tokyo-first', city:'Tokyo', titleKo:'Tokyo first trip base', titleEn:'Tokyo first trip base', badgeKey:'publicDeskWeekend', image:'../assets/images/examples/tokyo-first-trip.jpg', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
-          summaryKo:'처음 가는 도쿄를 과열되지 않게 시작하기 좋은 공개 베이스입니다.', summaryEn:'A public base for first-time Tokyo that stays strong without overheating the pace.',
+          summaryKo:'처음 가는 도쿄를 과열되지 않게 시작하기 좋은 공개 베이스입니다.', summaryEn:'A first-time Tokyo base that keeps its charge without overheating the pace.',
           duration:'3N4D', companionKo:'커플/친구', companionEn:'Couple / Friends', vibeKo:'도시 밀도', vibeEn:'City density', bestKo:'첫 여행, 쇼핑, 밤 리듬', bestEn:'First trip, shopping, night rhythm'
         },
         {
           key:'kyoto-slow', city:'Kyoto', titleKo:'Kyoto slow reset', titleEn:'Kyoto slow reset', badgeKey:'publicDeskSlow', image:'../assets/images/examples/kyoto-slow.jpg', guide:'../city/kyoto.html', example:'../example/kyoto-2n3d-slow-trip.html',
-          summaryKo:'많이 넣지 않고 교토의 여백을 살리는 공개 샘플입니다.', summaryEn:'A public sample that protects Kyoto by leaving real space in the route.',
+          summaryKo:'많이 넣지 않고 교토의 여백을 살리는 공개 샘플입니다.', summaryEn:'A Kyoto sample that protects the city by leaving real space in the route.',
           duration:'2N3D', companionKo:'혼자/커플', companionEn:'Solo / Couple', vibeKo:'조용한 무드', vibeEn:'Quiet mood', bestKo:'슬로우 트립, 오전 사원', bestEn:'Slow trip, temple mornings'
         },
         {
           key:'busan-parents', city:'Busan', titleKo:'Busan scenic family route', titleEn:'Busan scenic family route', badgeKey:'publicDeskFamily', image:'../assets/images/examples/busan-parents.jpg', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
-          summaryKo:'부모님과도 무리 없이 갈 수 있는 부산 scenic 루트 베이스입니다.', summaryEn:'A scenic Busan base that works gently for mixed-age or parent trips.',
+          summaryKo:'부모님과도 무리 없이 갈 수 있는 부산 scenic 루트 베이스입니다.', summaryEn:'A scenic Busan base that stays gentle for mixed-age or parent trips.',
           duration:'2N3D', companionKo:'가족/부모님', companionEn:'Family / Parents', vibeKo:'시닉 리듬', vibeEn:'Scenic rhythm', bestKo:'전망, 식사, 완만한 템포', bestEn:'Views, meals, softer tempo'
         },
         {
@@ -311,7 +311,7 @@
         },
         {
           key:'seoul-rainy', city:'Seoul', titleKo:'Seoul rainy-day fallback', titleEn:'Seoul rainy-day fallback', badgeKey:'publicDeskSlow', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
-          summaryKo:'비가 오거나 컨디션이 애매할 때도 동네 리듬을 망치지 않는 서울용 공개 베이스입니다.', summaryEn:'A Seoul public base that still holds shape when the weather turns or energy drops.',
+          summaryKo:'비가 오거나 컨디션이 애매할 때도 동네 리듬을 망치지 않는 서울용 공개 베이스입니다.', summaryEn:'A Seoul fallback base that still holds shape when weather turns or energy drops.',
           duration:'2N3D', companionKo:'혼자/친구', companionEn:'Solo / Friends', vibeKo:'레인 스왑', vibeEn:'Rain swap', bestKo:'비 오는 날, 동네 이동', bestEn:'Rainy day, neighborhood flow'
         },
         {
@@ -325,7 +325,7 @@
         {
           key:'tokyo-to-seoul-night', source:'Tokyo', city:'Seoul', titleKo:'도쿄 다음엔 서울 나이트 리듬', titleEn:'Seoul after Tokyo night rhythm', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
           summaryKo:'도쿄의 밀도와 밤 리듬이 맞았다면, 다음 분기로는 서울의 동네 대비와 늦은 저녁 템포가 잘 이어집니다.',
-          summaryEn:'If Tokyo worked for its density and night rhythm, Seoul is a strong next branch for neighborhood contrast and later evenings.',
+          summaryEn:'If Tokyo worked for density and night rhythm, Seoul is a strong next branch for neighborhood contrast and later evenings.',
           chipsKo:['트렌딩', '야간 리듬', '동네 대비'], chipsEn:['Trending', 'Night rhythm', 'Neighborhood contrast'], duration:'2N3D'
         },
         {
@@ -351,12 +351,12 @@
       const operatingEdits = [
         {
           key:'spring-soft-seoul', city:'Seoul', titleKo:'봄 주말 서울 소프트 에디트', titleEn:'Soft Seoul spring weekend', labelKo:'시즌 에디트', labelEn:'Seasonal edit', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
-          summaryKo:'벚꽃 시즌처럼 사람이 많을 때도 리듬을 망치지 않게, 동네 조합과 시간대를 부드럽게 잡은 베이스입니다.', summaryEn:'A softer Seoul base that protects pacing during crowded spring windows by leaning on neighborhood rhythm and timing.',
+          summaryKo:'벚꽃 시즌처럼 사람이 많을 때도 리듬을 망치지 않게, 동네 조합과 시간대를 부드럽게 잡은 베이스입니다.', summaryEn:'A softer Seoul base for crowded spring windows, built on neighborhood rhythm and timing.',
           chipsKo:['봄 창', '동네 조합', '저녁 무드'], chipsEn:['Spring window', 'Neighborhood pairings', 'Evening mood'], duration:'2N3D', companionKo:'커플/친구', companionEn:'Couple / Friends'
         },
         {
           key:'tokyo-weekend-dense', city:'Tokyo', titleKo:'도쿄 주말 고밀도 베이스', titleEn:'Tokyo dense weekend base', labelKo:'주말 에디트', labelEn:'Weekend edit', image:'../assets/images/cities/tokyo.jpg', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
-          summaryKo:'시간이 짧아도 밀도를 살리고 싶을 때 쓰는 주말형 도쿄 베이스입니다. 축을 나눠 과열만 막습니다.', summaryEn:'A short-window Tokyo base for travelers who still want density, without turning the route into a blur.',
+          summaryKo:'시간이 짧아도 밀도를 살리고 싶을 때 쓰는 주말형 도쿄 베이스입니다. 축을 나눠 과열만 막습니다.', summaryEn:'A short-window Tokyo base for travelers who still want density without turning the route into a blur.',
           chipsKo:['주말', '밀도', '축 나누기'], chipsEn:['Weekend', 'Density', 'Axis split'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
         },
         {
@@ -1018,8 +1018,8 @@
           side.innerHTML = `
             <h3>${langCopy().loopGoodStart || "Good starting points"}</h3>
             <div class="trip-loop-list">
-              <article><h4>${langCopy().loopTokyoGuide || "Tokyo guide"}</h4><p>${langCopy().loopTokyoGuideDesc || "A strong first-entry city when you want density, nightlife, and several clean branches afterward."}</p></article>
-              <article><h4>${lang === 'ko' ? '부산 샘플' : lang === 'ja' ? '釜山サンプル' : lang === 'zhHant' ? '釜山範例' : 'Busan sample'}</h4><p>${lang === 'ko' ? '풍경 페이스와 세대 혼합 여행에 잘 맞습니다.' : lang === 'ja' ? '景色のテンポと幅広い年齢の旅に向いています。' : lang === 'zhHant' ? '很適合重視風景節奏與不同年齡同行的旅程。' : 'A softer scenic sample that works well for mixed-age travel, easier coast timing, and gentler night closes.'}</p></article>
+              <article><h4>${langCopy().loopTokyoGuide || "Tokyo guide"}</h4><p>${langCopy().loopTokyoGuideDesc || "A strong first-entry city when you want density, nightlife, and clean next branches."}</p></article>
+              <article><h4>${lang === 'ko' ? '부산 샘플' : lang === 'ja' ? '釜山サンプル' : lang === 'zhHant' ? '釜山範例' : 'Busan sample'}</h4><p>${lang === 'ko' ? '풍경 페이스와 세대 혼합 여행에 잘 맞습니다.' : lang === 'ja' ? '景色のテンポと幅広い年齢の旅に向いています。' : lang === 'zhHant' ? '很適合重視風景節奏與不同年齡同行的旅程。' : 'A softer scenic sample for mixed-age travel, easier coast timing, and gentler night closes.'}</p></article>
             </div>`;
           return;
         }
