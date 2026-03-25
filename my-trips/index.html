@@ -289,6 +289,8 @@
           collectionSavedOnly: '저장한 여정 중심의 아카이브',
           collectionSharedHeavy: '공유받은 일정 비중이 높은 도시',
           collectionRecentHeavy: '최근 열어본 루트가 많은 도시',
+          continueReading: '이어 읽기',
+          collectionLayer: '도시 레이어 읽기',
           publicDeskLabel: '퍼블릭 루트 데스크',
           publicDeskPick: '에디터 픽',
           publicDeskSave: '내 루트로 저장',
@@ -352,6 +354,8 @@
           collectionSavedOnly: 'Mostly built from your saved routes',
           collectionSharedHeavy: 'A city with a stronger shared-trip mix',
           collectionRecentHeavy: 'A city you reopened often recently',
+          continueReading: 'Continue reading',
+          collectionLayer: 'Read city layer',
           publicDeskLabel: 'Public route desk',
           publicDeskPick: 'Editor pick',
           publicDeskSave: 'Save to My Trips',
@@ -427,6 +431,8 @@
           collectionSavedOnly: '保存した旅程中心のアーカイブ',
           collectionSharedHeavy: '共有旅程の比率が高い都市',
           collectionRecentHeavy: '最近よく開き直した都市',
+          continueReading: '続けて読む',
+          collectionLayer: '都市の層を読む',
           publicDeskLabel: '公開ルートデスク',
           publicDeskPick: 'エディターピック',
           publicDeskSave: 'My Trips に保存',
@@ -502,6 +508,8 @@
           collectionSavedOnly: '以你保存的旅程為主的檔案庫',
           collectionSharedHeavy: '分享旅程比例較高的城市',
           collectionRecentHeavy: '最近常重新打開的城市',
+          continueReading: '接續閱讀',
+          collectionLayer: '繼續讀城市層次',
           publicDeskLabel: '公開路線桌',
           publicDeskPick: '編輯精選',
           publicDeskSave: '存到 My Trips',
@@ -731,6 +739,7 @@
             ${rhythmMarkup(latest.destination, 'trip-rhythm-inline-soft')}
             <div class="hero-actions">
               <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
+              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'Read city layer'}</a>
               <button class="secondary-btn" data-copy="${latest.id}">${window.RyokoApp.t('trips.tripShare')}</button>
             </div>
           </div>`;
@@ -980,10 +989,12 @@
                   ${chips.map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}
                   ${places.length ? `<span class="trip-mini-chip">${places.length} ${langCopy().collectionPlaces}</span>` : ''}
                 </div>
+                ${rhythmMarkup(city, 'trip-rhythm-inline-soft')}
                 <div class="city-collection-stack">
                   <div class="city-collection-snippet"><strong>${latest?.title || city}</strong><span>${getMetaSummary(latest) || ''}</span></div>
                   ${places.length ? `<div class="city-collection-places">${places.slice(0,4).map(place => `<span class="trip-mini-chip">${place}</span>`).join('')}</div>` : ''}
                 </div>
+                <div class="city-collection-continue"><strong>${langCopy().continueReading || 'Continue reading'}</strong><span>${cityLoopBranchNote(city) || collectionNote(items)}</span></div>
                 <div class="card-actions city-collection-actions">
                   <a class="primary-btn" href="${shareUrl(latest)}">${langCopy().collectionOpen}</a>
                   <a class="soft-btn" href="../${loop.guide || `city/${cityKey}.html`}">${langCopy().collectionGuide}</a>

@@ -2346,3 +2346,27 @@ body[data-page="planner"] .top-bar{z-index:62}
   .shared-spotlight-media img{min-height:200px}
   .loop-card h3,.shared-loop-card h3{font-size:18px}
 }
+
+
+.shared-product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
+.shared-product-card{display:grid;gap:10px;padding:16px;border-radius:20px;background:rgba(255,249,243,.9);border:1px solid rgba(236,150,103,.16)}
+.shared-product-card h4{margin:0;font-size:17px;line-height:1.28}
+.shared-product-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.city-collection-continue{display:grid;gap:6px;padding:10px 12px;border-radius:16px;background:#fbf7f2;border:1px solid rgba(21,39,58,.08);margin-top:8px}
+.city-collection-continue strong{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#9b6d46}
+.city-collection-continue span{font-size:13px;line-height:1.5;color:#5b6777}
+@media (max-width: 760px){.shared-product-grid{grid-template-columns:1fr}}
+@media (max-width: 640px){
+  .trip-card.rich .card-copy{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .trip-card-footer-note{min-height:32px;font-size:12px}
+  .shared-spotlight-note{font-size:13px;line-height:1.5}
+  .shared-product-card{padding:14px;border-radius:18px}
+  .trip-rhythm-chip{min-height:24px;padding:4px 9px;font-size:11px}
+}
+@media (max-width: 420px){
+  .trip-card.rich .card-body{gap:10px}
+  .trip-card.rich .card-title{font-size:18px;line-height:1.24}
+  .trip-card-actions .ghost-btn,.trip-card-actions .soft-btn,.trip-card-actions .primary-btn,.trip-card-actions .secondary-btn{min-height:42px}
+  .city-collection-card .card-copy{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .city-collection-snippet span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+}

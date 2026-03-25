@@ -759,6 +759,52 @@ window.RyokoPlanner = (() => {
     if (signals.localMode) return uiCopy(`${city.name}의 로컬 결을 더 읽어야 다음 루프가 더 자연스럽습니다.`, `Reading ${city.name} through more local pockets will make the next loop feel cleaner.`, `${city.name} のローカルな層をもう少し読むと、次のループが自然になります。`, `把 ${city.name} 的在地層次再多讀一點，下一輪會更自然。`);
     return uiCopy('같은 도시의 guide와 example를 한 번 더 비교한 뒤, 다음 도시로 가지를 치는 편이 좋습니다.', 'Compare the same-city guide and example once more before branching into the next city.', '同じ都市の guide と example をもう一度見比べてから、次の都市へ枝分かれするのがおすすめです。', '先再比對一次同城市的 guide 與 example，再延伸到下一座城市會更順。');
   }
+
+  function sharedProductContextMarkup(baseCity, payload){
+    const cityName = String(baseCity || payload?.destination || '').trim();
+    const saved = (window.RyokoStorage.getSavedTrips?.() || []).filter(item => String(item.destination || '').toLowerCase() === cityName.toLowerCase());
+    const recent = (window.RyokoStorage.getRecentTrips?.() || []).filter(item => String(item.destination || '').toLowerCase() === cityName.toLowerCase());
+    const shared = (window.RyokoStorage.getSharedTrips?.() || []).filter(item => String(item.destination || '').toLowerCase() === cityName.toLowerCase());
+    const latest = [saved[0], recent[0], shared[0]].filter(Boolean).sort((a,b) => new Date(b.updatedAt || b.savedAt || b.viewedAt || b.sharedViewedAt || b.createdAt || 0) - new Date(a.updatedAt || a.savedAt || a.viewedAt || a.sharedViewedAt || a.createdAt || 0))[0] || null;
+    const city = window.RyokoApp.getCityLoopData(cityName) || null;
+    const latestHref = latest ? `${location.pathname}?trip=${encodeURIComponent(window.RyokoStorage.encodeShare(latest))}` : window.RyokoApp.navHref('trips');
+    const guideHref = city ? window.RyokoApp.resolvePath(city.guide || 'magazine/index.html') : window.RyokoApp.navHref('magazine');
+    const exampleHref = city ? window.RyokoApp.resolvePath(city.example || city.guide || 'magazine/index.html') : window.RyokoApp.navHref('magazine');
+    const total = saved.length + recent.length + shared.length;
+    const collectionDesc = total
+      ? uiCopy(`${cityName} 관련 저장/최근/공유 흐름 ${total}개가 쌓여 있습니다.`, `${total} saved, recent, or shared routes already sit around ${cityName}.`, `${cityName} まわりには保存・最近・共有の流れが ${total} 件あります。`, `${cityName} 周邊已累積 ${total} 筆已存、最近或分享的路線。`)
+      : uiCopy(`${cityName}는 이 공유 루트를 첫 저장 컬렉션으로 삼기 좋습니다.`, `This shared route can become the first saved collection for ${cityName}.`, `${cityName} では、この共有ルートが最初の保存コレクションになります。`, `這條分享路線很適合成為 ${cityName} 的第一個保存收藏。`);
+    const continueDesc = latest
+      ? uiCopy(`${latest.title || cityName}와 나란히 두고 비교하면 다음 수정이 훨씬 빨라집니다.`, `Keeping this beside ${latest.title || cityName} makes the next edit easier to judge.`, `${latest.title || cityName} と並べると、次の調整がぐっとしやすくなります。`, `把它和 ${latest.title || cityName} 並排看，下一次微調會更容易。`)
+      : uiCopy(`도시 가이드와 샘플을 먼저 읽고, 그다음 이 공유 루트를 저장 컬렉션으로 남겨 보세요.`, `Read the city guide and sample first, then keep this shared route as a saved collection.`, `先に都市ガイドとサンプルを読み、この共有ルートを保存コレクションとして残してみてください。`, `先讀城市指南和範例，再把這條分享路線留下成為你的收藏。`);
+    return `
+      <div class="shared-product-grid">
+        <article class="shared-product-card info-card">
+          <span class="eyebrow">${uiCopy('저장 컬렉션','Saved collection','保存コレクション','已存收藏')}</span>
+          <h4>${uiCopy('이 도시를 보관하는 기준점', 'A cleaner base for keeping this city', 'この都市を保管する基準点', '保留這座城市的基準點')}</h4>
+          <p>${collectionDesc}</p>
+          <div class="trip-chip-row">
+            <span class="trip-mini-chip">${saved.length} ${uiCopy('저장','saved','保存','已存')}</span>
+            <span class="trip-mini-chip">${recent.length} ${uiCopy('최근','recent','最近','最近')}</span>
+            <span class="trip-mini-chip">${shared.length} ${uiCopy('공유','shared','共有','分享')}</span>
+          </div>
+          <div class="card-actions">
+            <a class="soft-btn" href="${window.RyokoApp.navHref('trips')}">${uiCopy('My Trips 보기','Open My Trips','My Trips を開く','打開 My Trips')}</a>
+            <a class="ghost-btn" href="${guideHref}">${uiCopy('도시 가이드','City guide','都市ガイド','城市指南')}</a>
+          </div>
+        </article>
+        <article class="shared-product-card info-card">
+          <span class="eyebrow">${uiCopy('이어 읽기','Continue reading','続けて読む','接續閱讀')}</span>
+          <h4>${uiCopy('다음 클릭을 더 자연스럽게', 'Where to reopen the loop next', '次のクリックを自然にする', '讓下一次點擊更自然')}</h4>
+          <p>${continueDesc}</p>
+          <div class="card-actions">
+            <a class="primary-btn" href="${latestHref}">${latest ? uiCopy('최근 루트 열기','Open recent route','最近のルートを開く','打開最近路線') : uiCopy('이 루트 저장','Save this route','このルートを保存','保存這條路線')}</a>
+            <a class="secondary-btn" href="${exampleHref}">${uiCopy('샘플 비교','Compare sample','サンプル比較','對照範例')}</a>
+          </div>
+        </article>
+      </div>`;
+  }
+
   function sharedLoopMarkup(baseCity, signals){
     const city = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, guide:'magazine/index.html', example:'magazine/index.html', image: cityImageFor(baseCity), vibe:'' };
     const related = sortRelatedCities(baseCity, signals)[0] || city;
@@ -971,7 +1017,7 @@ window.RyokoPlanner = (() => {
     node.classList.remove('hidden');
     const copy = {
       eyebrow: uiCopy('루트 정교화', 'Route refinement', 'ルートの精緻化', '路線微調整'),
-      title: uiCopy('지금 결과를 더 좋게 읽는 세 가지 축', 'Three ways to tune this result more precisely', 'この結果をもっと良く読む三つの軸', '把這次結果讀得更準的三個方向'),
+      title: uiCopy('지금 결과를 더 좋게 읽는 세 가지 축', 'Three cleaner ways to tune this result', 'この結果をもっと良く読む三つの軸', '把這次結果讀得更準的三個方向'),
       desc: uiCopy('district deeper note, day rhythm, 그리고 rainy / slower / night 변주를 한 번에 붙였습니다.', 'District depth, day rhythm, and rainy / slower / night switches now sit together here so the route reads more like an edited city package.', 'エリアの読みどころ、一日のリズム、rainy / slower / night の切り替えをここにまとめました。', '把區域延伸筆記、一日節奏與 rainy / slower / night 變奏一起收進這裡。'),
       district: uiCopy('District deeper note','District deeper note','エリアの読みどころ','區域延伸筆記'),
       rhythm: uiCopy('Day rhythm','Day rhythm','一日のリズム','一日節奏'),
@@ -1390,6 +1436,7 @@ window.RyokoPlanner = (() => {
         <strong>${escapeHtml(data.bestFor || payload.notes || '')}</strong>
       </div>
       ${sharedLoopMarkup(baseCity || textValue(data.destination,''), signals)}
+      ${sharedProductContextMarkup(baseCity || textValue(data.destination,''), payload)}
       <div class="card-actions">
         <button class="secondary-btn" id="sharedBannerSaveBtn">${copy.save}</button>
         <button class="ghost-btn" id="sharedBannerDuplicateBtn">${copy.duplicate}</button>
