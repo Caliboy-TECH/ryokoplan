@@ -1373,7 +1373,7 @@ function getSeasonalEditorialCollections(){
     const copyMap = {
       home: {
         ko:{eyebrow:'City atlas', title:'주요 도시를 cover부터 sample route까지 한 번에 읽기', desc:'각 도시의 첫 인상, 읽는 포인트, 바로 참고할 sample rhythm을 같은 화면에 붙였습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
-        en:{eyebrow:'City atlas', title:'Read key cities from cover to sample route in one sweep', desc:'Each city now shows its cover, editorial entry point, district highlights, neighborhood picks, and a sample route in one continuous block.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
+        en:{eyebrow:'City atlas', title:'Read key cities from cover to sample route in one sweep', desc:'Each city now shows its cover, district focus, neighborhood picks, and route rhythm in one continuous block.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
         ja:{eyebrow:'シティアトラス', title:'主要都市をカバーからサンプルルートまで一気に読む', desc:'各都市の第一印象、読みどころ、街区の焦点、近所のピック、参考ルートまでを一つの流れで読めるようにまとめました。', region:{japan:'日本 edit', korea:'韓国 edit', greater:'華語圏 edit'}, districts:'注目エリア', picks:'近所のピック', sample:'サンプルルート', guide:'ガイドを見る', plan:'Planner を開く'},
         zhHant:{eyebrow:'城市 atlas', title:'把主要城市從封面一路讀到範例路線', desc:'每座城市都把第一印象、閱讀切口、街區重點、鄰里精選和範例路線接在同一段閱讀流程裡。', region:{japan:'日本 edit', korea:'韓國 edit', greater:'華語城市 edit'}, districts:'街區重點', picks:'鄰里精選', sample:'範例路線', guide:'讀城市指南', plan:'打開 Planner'}
       },
@@ -1438,12 +1438,14 @@ function getSeasonalEditorialCollections(){
       ko:[
         {name:'시부야',district:'Shibuya & Harajuku',window:'첫날 오후',note:'도쿄의 속도와 선택지를 가장 빨리 체감하게 해주는 첫 장면입니다.',deeper:'체크인은 가볍게 두고, 첫 저녁은 시부야에서 끝내면 도시 템포를 한 번에 잡기 좋습니다.'},
         {name:'아사쿠사',district:'Asakusa & Ueno',window:'둘째 날 오전',note:'초행자도 읽기 쉬운 도쿄의 고전적인 축입니다.',deeper:'아침 공기가 남아 있을 때 들어가면 밀도는 높아도 피로가 덜하고, 이후 우에노나 박물관 축으로 이어지기 좋습니다.'},
-        {name:'기요스미',district:'Kiyosumi & Ginza',window:'해 질 무렵',note:'큰 장면 사이에 템포를 낮추기 좋은 조용한 레이어입니다.',deeper:'커피, 갤러리, 강변 산책 같은 느린 루프를 넣으면 도쿄가 체크리스트보다 결로 남습니다.'}
+        {name:'기요스미',district:'Kiyosumi & Ginza',window:'해 질 무렵',note:'큰 장면 사이에 템포를 낮추기 좋은 조용한 레이어입니다.',deeper:'커피, 갤러리, 강변 산책 같은 느린 루프를 넣으면 도쿄가 체크리스트보다 결로 남습니다.'},
+        {name:'신주쿠 side',district:'Shibuya & Harajuku',window:'밤 직전',note:'큰 조명과 작은 골목이 같이 접히는 마지막 야간 레이어입니다.',deeper:'전망 하나 다음에 신주쿠 골목을 짧게 붙이면, 도쿄의 밤이 과하게 무겁지 않게 남습니다.'}
       ],
       en:[
         {name:'Shibuya',district:'Shibuya & Harajuku',window:'arrival afternoon',note:'The fastest first scene for Tokyo energy, food choices, and orientation.',deeper:'Keep arrival light and let the first dinner land here so the city rhythm locks in without forcing too much.'},
         {name:'Asakusa',district:'Asakusa & Ueno',window:'second morning',note:'A classic Tokyo axis that first-timers can read without much friction.',deeper:'It works best while the morning still feels open, then flows naturally into Ueno, a museum pocket, or a slower lunch.'},
-        {name:'Kiyosumi',district:'Kiyosumi & Ginza',window:'late afternoon',note:'A quieter layer that lets the city breathe between bigger headline stops.',deeper:'Add coffee, galleries, and a slower river walk here, and Tokyo starts to feel edited rather than crowded.'}
+        {name:'Kiyosumi',district:'Kiyosumi & Ginza',window:'late afternoon',note:'A quieter layer that lets the city breathe between bigger headline stops.',deeper:'Add coffee, galleries, and a slower river walk here, and Tokyo starts to feel edited rather than crowded.'},
+        {name:'Shinjuku side',district:'Shibuya & Harajuku',window:'pre-night',note:'A final neon-and-lane layer that closes Tokyo without stretching the route too far.',deeper:'After one skyline moment, a short Shinjuku lane read often leaves a better final memory than forcing another major stop.'}
       ]
     },
     osaka:{
@@ -1462,24 +1464,28 @@ function getSeasonalEditorialCollections(){
       ko:[
         {name:'기온',district:'Higashiyama',window:'이른 오전',note:'교토다운 장면을 가장 진하게 남기기 좋은 첫 축입니다.',deeper:'사람이 많아지기 전의 기온과 동산 축을 잡으면, 교토는 훨씬 조용하고 깊게 읽힙니다.'},
         {name:'오카자키',district:'Kawaramachi & Demachiyanagi',window:'늦은 오전',note:'전시, 카페, 강변으로 교토를 조금 더 부드럽게 읽게 해주는 구간입니다.',deeper:'사원 하나 뒤에 오카자키 같은 포켓을 넣으면 하루가 종교시설 체크리스트로 무거워지지 않습니다.'},
-        {name:'가모가와',district:'Kawaramachi & Demachiyanagi',window:'해 질 무렵',note:'교토의 여백을 남겨주는 가장 좋은 마감 라인입니다.',deeper:'강변 산책 하나만 제대로 남겨도 교토는 훨씬 오래 기억됩니다.'}
+        {name:'가모가와',district:'Kawaramachi & Demachiyanagi',window:'해 질 무렵',note:'교토의 여백을 남겨주는 가장 좋은 마감 라인입니다.',deeper:'강변 산책 하나만 제대로 남겨도 교토는 훨씬 오래 기억됩니다.'},
+        {name:'니넨자카 side',district:'Higashiyama',window:'오전 끝',note:'상징적인 장면을 너무 오래 끌지 않게 정리해 주는 transition 축입니다.',deeper:'기온과 동산 축 사이에 짧게 넣으면 교토가 관광지 나열이 아니라 결 있는 편집처럼 남습니다.'}
       ],
       en:[
         {name:'Gion',district:'Higashiyama',window:'early morning',note:'The clearest entry to Kyoto’s iconic texture before the city crowds up.',deeper:'Catch Gion and the east-side temple line early, and Kyoto reads deeper instead of busier.'},
         {name:'Okazaki',district:'Kawaramachi & Demachiyanagi',window:'late morning',note:'A softer pocket for museums, cafés, and a calmer midday transition.',deeper:'One quiet pocket after a temple anchor keeps the day from turning into a heavy heritage checklist.'},
-        {name:'Kamogawa',district:'Kawaramachi & Demachiyanagi',window:'dusk',note:'The river line is where Kyoto’s empty space starts to matter.',deeper:'A single river walk at dusk often leaves a stronger memory than one more landmark stop.'}
+        {name:'Kamogawa',district:'Kawaramachi & Demachiyanagi',window:'dusk',note:'The river line is where Kyoto’s empty space starts to matter.',deeper:'A single river walk at dusk often leaves a stronger memory than one more landmark stop.'},
+        {name:'Ninenzaka side',district:'Higashiyama',window:'late morning',note:'A transition pocket that keeps Kyoto iconic without making it feel overperformed.',deeper:'Used lightly between Gion and the east-side temple line, it helps Kyoto read like an edit rather than a pile of landmarks.'}
       ]
     },
     fukuoka:{
       ko:[
         {name:'텐진',district:'Tenjin & Daimyo',window:'첫날 오후',note:'짧은 여행에서도 바로 리듬을 잡아주는 도심 코어입니다.',deeper:'텐진은 카페, 쇼핑, 식사를 한 블록씩 쌓기 쉬워서 후쿠오카 초행의 첫 장면으로 안정적입니다.'},
         {name:'나카스',district:'Hakata & Nakasu',window:'저녁',note:'먹는 리듬과 밤 공기를 같이 잡기 좋은 축입니다.',deeper:'야타이든 강변이든 저녁 흐름이 붙는 순간, 후쿠오카는 짧은 일정이어도 충분히 기억에 남습니다.'},
-        {name:'오호리 공원',district:'Tenjin & Daimyo',window:'둘째 날 오전',note:'컴팩트한 도시 안에 한 번의 여유를 넣어주는 포켓입니다.',deeper:'오호리 같은 공원 축을 하루 한 번 넣으면 먹거리 중심 일정도 숨이 생깁니다.'}
+        {name:'오호리 공원',district:'Tenjin & Daimyo',window:'둘째 날 오전',note:'컴팩트한 도시 안에 한 번의 여유를 넣어주는 포켓입니다.',deeper:'오호리 같은 공원 축을 하루 한 번 넣으면 먹거리 중심 일정도 숨이 생깁니다.'},
+        {name:'하카타역 side',district:'Hakata & Nakasu',window:'이동 전후',note:'짧은 일정의 처음과 끝을 가장 매끈하게 이어주는 practical pocket입니다.',deeper:'기차나 공항 이동 전후에 이 축을 가볍게 붙이면 후쿠오카가 서두르지 않고도 또렷하게 닫힙니다.'}
       ],
       en:[
         {name:'Tenjin',district:'Tenjin & Daimyo',window:'arrival afternoon',note:'The easiest downtown core for settling into Fukuoka fast.',deeper:'It combines cafés, shopping, and meals in a compact radius, which makes it ideal for a short first-day edit.'},
         {name:'Nakasu',district:'Hakata & Nakasu',window:'evening',note:'A strong night-food axis that gives the city its clearest after-dark tone.',deeper:'Once dinner and river air connect here, Fukuoka feels memorable even on a short trip.'},
-        {name:'Ohori Park',district:'Tenjin & Daimyo',window:'second morning',note:'A breathing pocket that softens an otherwise food-led route.',deeper:'One park loop like this gives the city shape, not just appetite.'}
+        {name:'Ohori Park',district:'Tenjin & Daimyo',window:'second morning',note:'A breathing pocket that softens an otherwise food-led route.',deeper:'One park loop like this gives the city shape, not just appetite.'},
+        {name:'Hakata Station side',district:'Hakata & Nakasu',window:'before moving on',note:'A practical pocket that smooths the start or close of a short Fukuoka stay.',deeper:'Used lightly before a train or airport move, it lets Fukuoka end cleanly without rushing the city tone.'}
       ]
     },
     sapporo:{

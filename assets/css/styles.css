@@ -2327,3 +2327,22 @@ body[data-page="planner"] .top-bar{z-index:62}
 .trip-rhythm-row{display:flex;flex-wrap:wrap;gap:6px}
 .trip-rhythm-chip{display:inline-flex;align-items:center;min-height:26px;padding:5px 10px;border-radius:999px;border:1px solid rgba(21,39,58,.08);background:#faf6f0;font-size:12px;color:#42526a}
 .trip-rhythm-inline-soft{padding:10px 12px;border-radius:16px;background:rgba(255,248,240,.8);border:1px solid rgba(240,124,76,.14)}
+
+
+@media (max-width: 640px){
+  .loop-card p,.shared-loop-card p{display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;-webkit-line-clamp:3}
+  .trip-loop-list p,.trip-card .card-copy.clamp-3{-webkit-line-clamp:2}
+  .trip-rhythm-inline{gap:5px}
+  .trip-rhythm-inline strong{font-size:10px}
+  .trip-rhythm-chip{min-height:24px;padding:4px 8px;font-size:11px}
+  .shared-spotlight-copy{gap:10px}
+  .shared-spotlight-note{font-size:12px;padding:10px 12px}
+  .loop-card .summary-line{gap:6px}
+  .loop-card .summary-line strong{font-size:12px}
+}
+@media (max-width: 420px){
+  .loop-card,.shared-loop-card,.trip-card{padding:14px}
+  .trip-rhythm-inline-soft{padding:8px 10px}
+  .shared-spotlight-media img{min-height:200px}
+  .loop-card h3,.shared-loop-card h3{font-size:18px}
+}
