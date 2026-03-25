@@ -1191,9 +1191,9 @@ window.RyokoApp = (() => {
         const picks = getCityNeighborhoodProfiles(slug, data, atlasLocale);
         const picksIntro = lang === 'ko' ? 'City atlas에서 보던 동네 픽을 상세 가이드 안에서도 district와 함께 이어 읽을 수 있게 확장했습니다.' : lang === 'ja' ? 'City atlas で見た近所のピックを、この詳細ガイドの中でも district と一緒に読み継げるよう広げました。' : lang === 'zhHant' ? '把 City atlas 先看到的鄰里精選，直接延伸到這份詳細指南裡，並和 district 一起讀。' : 'The neighborhood picks from City atlas continue here with district depth, so the city still reads in one order.';
         const picksDesc = lang === 'ko' ? '먼저 읽기 좋은 동네와 연결 district, 들어가기 좋은 시간대를 같이 묶었습니다.' : lang === 'ja' ? '入りやすい近所、つながる district、相性のいい時間帯を一つの束で読めるようにしました。' : lang === 'zhHant' ? '把最適合先讀的近所、連動 district、以及最適時段放在同一個閱讀節奏裡。' : 'Each card ties the first neighborhood read to a district anchor and an easy entry window.';
-        return `<section class="section city-neighborhood-bridge" id="city-neighborhoods"><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '동네 픽' : lang === 'ja' ? '近所のピック' : lang === 'zhHant' ? '鄰里精選' : 'Neighborhood picks'}</div><h2 class="section-title">${lang === 'ko' ? entry.planner + '를 여는 첫 동네들' : lang === 'ja' ? entry.planner + ' を開く最初の近所' : lang === 'zhHant' ? '打開 ' + entry.planner + ' 的第一批近所' : 'The neighborhoods that open ' + entry.planner}</h2><p class="section-desc">${picksIntro}</p></div></div><p class="city-neighborhood-intro">${picksDesc}</p><div class="city-neighborhood-grid city-neighborhood-grid-deep">${picks.map((item, i) => `<article class="city-neighborhood-card city-neighborhood-card-deep"><span class="district-index">0${i+1}</span><strong>${item.name}</strong><p>${item.note}</p><div class="city-neighborhood-meta"><span><strong>${item.linkedLabel}</strong>${item.district}</span><span><strong>${item.bestLabel}</strong>${item.window}</span></div><div class="city-neighborhood-deeper"><span class="mini-label">${item.routeLabel}</span><small>${item.deeper}</small></div></article>`).join('')}</div></article></section>`;
+        return `<section class="section city-neighborhood-bridge" id="city-neighborhoods"><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '동네 픽' : lang === 'ja' ? '近所のピック' : lang === 'zhHant' ? '鄰里精選' : 'Neighborhood picks'}</div><h2 class="section-title">${lang === 'ko' ? entry.planner + '를 여는 첫 동네들' : lang === 'ja' ? entry.planner + ' を開く最初の近所' : lang === 'zhHant' ? '打開 ' + entry.planner + ' 的第一批近所' : 'The neighborhoods that open ' + entry.planner}</h2><p class="section-desc">${picksIntro}</p></div></div><p class="city-neighborhood-intro">${picksDesc}</p><div class="city-neighborhood-grid city-neighborhood-grid-deep">${picks.map((item, i) => `<article class="city-neighborhood-card city-neighborhood-card-deep"><span class="district-index">0${i+1}</span><strong>${item.name}</strong><p>${item.note}</p><div class="city-neighborhood-meta"><span><strong>${item.linkedLabel}</strong>${item.district}</span><span><strong>${item.bestLabel}</strong>${item.window}</span></div><div class="city-neighborhood-deeper"><span class="mini-label">${item.routeLabel}</span><small>${item.deeper}</small></div></article>`).join('')}</div></article></section>${renderPriorityCityDepthSection(slug, entry)}`;
       })()}
-      <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? '샘플 루트' : lang === 'ja' ? 'サンプルルート' : lang === 'zhHant' ? '範例路線' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? '샘플 일정' : lang === 'ja' ? 'サンプル旅程' : lang === 'zhHant' ? '範例行程' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="city-route-variations"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '루트 변주' : lang === 'ja' ? 'ルートの変奏' : lang === 'zhHant' ? '路線變奏' : 'Route variations'}</div><h3 class="section-title">${lang === 'ko' ? entry.planner + '를 바꾸는 세 가지 방식' : lang === 'ja' ? entry.planner + ' を変える3つの方法' : lang === 'zhHant' ? '改寫 ' + entry.planner + ' 的三種方式' : 'Three ways to reshape ' + entry.planner}</h3><p class="section-desc">${lang === 'ko' ? '날씨, 속도, 밤 리듬에 따라 sample route를 바로 바꿔 읽을 수 있게 묶었습니다.' : lang === 'ja' ? '天気、速度感、夜のリズムに合わせてサンプルをすぐ曲げられるようにまとめました。' : lang === 'zhHant' ? '依照天氣、節奏與夜晚比重，這條 sample route 可以這樣直接改寫。' : 'Use these as quick switches when weather, speed, or the night rhythm changes.'}</p></div></div><div class="city-route-variation-grid">${getCityRouteVariations(slug).map(item => `<article class="city-route-variation-card"><span class="mini-label">${item.title}</span><strong class="city-route-variation-focus">${item.focus || ''}</strong><p>${item.desc}</p><div class="card-actions city-route-variation-actions"><a class="soft-link" href="${item.href || ('../city/' + cityGuideSlugFromExample(slug) + '.html')}">${lang === 'ko' ? '도시 가이드에서 이어 보기' : lang === 'ja' ? '都市ガイドで続きを読む' : lang === 'zhHant' ? '到城市指南繼續看' : 'Continue in city guide'}</a></div></article>`).join('')}</div></div><div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : lang === 'ja' ? 'サンプル全体を開く' : lang === 'zhHant' ? '打開完整範例' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : lang === 'ja' ? 'Planner で調整する' : lang === 'zhHant' ? '在 Planner 裡調整' : 'Customize in Planner'}</a><a class="ghost-btn" href="../city/${cityGuideSlugFromExample(slug)}.html">${lang === 'ko' ? '도시 가이드로 돌아가기' : lang === 'ja' ? '都市ガイドへ戻る' : lang === 'zhHant' ? '回到城市指南' : 'Back to city guide'}</a></div></article></section>
+      <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? '샘플 루트' : lang === 'ja' ? 'サンプルルート' : lang === 'zhHant' ? '範例路線' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? '샘플 일정' : lang === 'ja' ? 'サンプル旅程' : lang === 'zhHant' ? '範例行程' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="city-route-variations"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '루트 변주' : lang === 'ja' ? 'ルートの変奏' : lang === 'zhHant' ? '路線變奏' : 'Route variations'}</div><h3 class="section-title">${lang === 'ko' ? entry.planner + '를 바꾸는 세 가지 방식' : lang === 'ja' ? entry.planner + ' を変える3つの方法' : lang === 'zhHant' ? '改寫 ' + entry.planner + ' 的三種方式' : 'Three ways to reshape ' + entry.planner}</h3><p class="section-desc">${lang === 'ko' ? '날씨, 속도, 밤 리듬에 따라 sample route를 바로 바꿔 읽을 수 있게 묶었습니다.' : lang === 'ja' ? '天気、速度感、夜のリズムに合わせてサンプルをすぐ曲げられるようにまとめました。' : lang === 'zhHant' ? '依照天氣、節奏與夜晚比重，這條 sample route 可以這樣直接改寫。' : 'Use these as quick switches when weather, speed, or the night rhythm changes.'}</p></div></div><div class="city-route-variation-grid">${getCityRouteVariations(slug).map(item => `<article class="city-route-variation-card"><span class="mini-label">${item.title}</span><strong class="city-route-variation-focus">${item.focus || ''}</strong><p>${item.desc}</p><div class="card-actions city-route-variation-actions"><a class="soft-link" href="${item.href || ('../city/' + cityGuideSlugFromExample(slug) + '.html')}">${lang === 'ko' ? '도시 가이드에서 이어 보기' : lang === 'ja' ? '都市ガイドで続きを読む' : lang === 'zhHant' ? '到城市指南繼續看' : 'Continue in city guide'}</a></div></article>`).join('')}</div></div>${renderPriorityExampleDepthSection(slug, entry)}<div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : lang === 'ja' ? 'サンプル全体を開く' : lang === 'zhHant' ? '打開完整範例' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : lang === 'ja' ? 'Planner で調整する' : lang === 'zhHant' ? '在 Planner 裡調整' : 'Customize in Planner'}</a><a class="ghost-btn" href="../city/${cityGuideSlugFromExample(slug)}.html">${lang === 'ko' ? '도시 가이드로 돌아가기' : lang === 'ja' ? '都市ガイドへ戻る' : lang === 'zhHant' ? '回到城市指南' : 'Back to city guide'}</a></div></article></section>
       <section class="section city-reading-grid city-reading-grid-rich" id="city-tips"><article class="info-card editorial-panel"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('localNotes')}</div><h2 class="section-title">${uiText('localTips')}</h2><p class="section-desc">${lang === 'ko' ? '작은 조정만으로도 여행 체감이 확실히 좋아집니다.' : lang === 'ja' ? '小さな工夫だけで旅の快適さがかなり変わります。' : lang === 'zhHant' ? '只要做一些小調整，整體旅行體感就會明顯更好。' : 'Small adjustments that noticeably improve the trip.'}</p></div></div><ul class="editorial-bullets">${data.tips.map(item => `<li>${item}</li>`).join('')}</ul></article><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('beforeYouGo')}</div><h2 class="section-title">${uiText('keepInMind')}</h2><p class="section-desc">${lang === 'ko' ? '출발 전에 챙겨두면 바로 체감되는 것들입니다.' : lang === 'ja' ? '出発前に整えておくと、すぐ効いてくるポイントです。' : lang === 'zhHant' ? '出發前先準備好，旅途中會立刻感受到差別。' : 'Small prep choices that pay off immediately.'}</p></div></div><ul class="editorial-bullets">${data.keep.map(item => `<li>${item}</li>`).join('')}</ul></article></section>
       ${(() => { const seasonal = getSeasonalCityFeature(entry.planner); return seasonal ? `<section class="section city-seasonal-bridge"><article class="info-card seasonal-bridge-card"><div class="section-head compact"><div><div class="editorial-kicker">${seasonal.label}</div><h2 class="section-title">${seasonal.title}</h2><p class="section-desc">${seasonal.desc}</p></div></div><div class="trip-chip-row seasonal-chip-row">${seasonal.chips.map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}</div></article></section>` : ''; })()}
       <section class="section footer-cta info-card city-final-cta"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${data.finalTitle}</h2><p>${data.finalDesc}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner'}</a><a class="secondary-btn" href="../example/${entry.example}">${lang === 'ko' ? '샘플 읽기' : lang === 'ja' ? 'サンプルを読む' : lang === 'zhHant' ? '讀範例路線' : 'Read sample'}</a><a class="ghost-btn" href="${exampleAtlasHref()}">${lang === 'ko' ? 'atlas 보기' : lang === 'ja' ? 'atlas を見る' : lang === 'zhHant' ? '看 atlas' : 'See atlas'}</a></div></section>
@@ -1670,6 +1670,314 @@ function getSeasonalEditorialCollections(){
   function exampleAtlasHref(){
     return '../magazine/index.html#cityAtlas';
   }
+
+  const priorityCityDeepeningMap = {
+    tokyo:{
+      ko:{
+        deeperTitle:'한 레이어 더 읽으면 좋은 district',
+        deeperDesc:'첫 인상 뒤에 한 레이어를 더 붙이면 도쿄는 훨씬 덜 랜덤하게 남습니다.',
+        deeper:[
+          ['Jinbocho side','아사쿠사·우에노 다음에 책방과 찻집이 있는 레이어를 얇게 붙이면 도쿄가 관광지 모음보다 도시 결로 남습니다.'],
+          ['Kagurazaka side','밤을 크게 키우지 않고도 골목, 저녁, 경사감을 한 번에 정리하기 좋은 마감 축입니다.']
+        ],
+        visitTitle:'누구의 도쿄로 읽을지 먼저 고르기',
+        visitDesc:'첫 방문과 두 번째 방문은 entry route가 달라야 합니다.',
+        first:['Asakusa → Ueno → Kiyosumi','이해가 쉬운 장면에서 시작해 quieter pocket으로 끝내는 쪽이 초행엔 가장 안정적입니다.'],
+        second:['Kiyosumi → Jinbocho → Kagurazaka','두 번째라면 headline보다 재질이 남는 축으로 도쿄를 다시 읽는 편이 더 좋습니다.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Classic first read','Asakusa → Ueno → Kiyosumi','처음 도쿄를 읽을 때 가장 실패 확률이 낮은 축입니다.'],
+          ['Design-soft read','Daikanyama → Nakameguro → Shibuya late','쇼핑보다 도시 무드와 저녁 템포를 남기고 싶을 때 좋습니다.'],
+          ['Night-led read','Shinjuku side → Omoide lane → late café','도쿄의 밤을 크게 키우지 않고도 진하게 남기는 방식입니다.']
+        ]
+      },
+      en:{
+        deeperTitle:'District layers worth reading one step deeper',
+        deeperDesc:'Tokyo stops feeling random once one softer layer sits behind the obvious first frame.',
+        deeper:[
+          ['Jinbocho side','After Asakusa or Ueno, a bookshop-and-tea layer keeps Tokyo from collapsing into only headline stops.'],
+          ['Kagurazaka side','A quieter slope-and-dinner close that lands better than forcing one more neon-heavy jump.']
+        ],
+        visitTitle:'Choose whose Tokyo this is first',
+        visitDesc:'A first visit and a second visit should not open through the same route logic.',
+        first:['Asakusa → Ueno → Kiyosumi','The cleanest first-read line: readable icons first, then one quieter pocket to close the day.'],
+        second:['Kiyosumi → Jinbocho → Kagurazaka','On a second trip, let texture, books, and a softer dinner district hold the memory.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Classic first read','Asakusa → Ueno → Kiyosumi','The easiest first entry when you want Tokyo to feel clear, not over-programmed.'],
+          ['Design-soft read','Daikanyama → Nakameguro → Shibuya late','Better when you want mood and pacing more than checklist energy.'],
+          ['Night-led read','Shinjuku side → Omoide lane → late café','A tighter after-dark line that leaves Tokyo vivid without stretching it too far.']
+        ]
+      }
+    },
+    seoul:{
+      ko:{
+        deeperTitle:'한 단계 더 들어가면 좋아지는 district',
+        deeperDesc:'서울은 contrast가 강한 도시라, headline district 뒤에 한 겹의 quieter layer가 필요합니다.',
+        deeper:[
+          ['Seochon side','서촌은 성수나 을지로보다 작게 읽히지만, 서울의 호흡을 보여주는 가장 좋은 중간 레이어입니다.'],
+          ['Mangwon side','한강보다 생활감이 먼저 남는 동네라 두 번째 서울을 열 때 좋습니다.']
+        ],
+        visitTitle:'첫 서울과 두 번째 서울은 다르게 여세요',
+        visitDesc:'첫 방문은 대비가 선명한 축, 두 번째는 생활감이 남는 축이 더 잘 맞습니다.',
+        first:['Seongsu → Euljiro → Seochon','첫 서울이라면 대비가 분명한 축으로 열고, 중간에 quieter layer를 한 번 끼우는 편이 좋습니다.'],
+        second:['Mangwon → Seochon → Euljiro late','두 번째 서울이라면 생활감과 오래된 결이 같이 남는 축이 더 오래 갑니다.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Contrast opener','Seongsu → Seoul Forest → Euljiro','서울의 새 결과 오래된 결을 가장 읽기 쉽게 묶는 축입니다.'],
+          ['Soft local opener','Seochon → Bukchon edge → Jongno dinner','체크리스트보다 서울의 일상 결을 먼저 남기고 싶을 때 좋습니다.'],
+          ['Night-weight opener','Hannam → Itaewon → Euljiro late','밤 템포가 중요한 여행이라면 이쪽이 훨씬 잘 남습니다.']
+        ]
+      },
+      en:{
+        deeperTitle:'District layers that improve the Seoul read',
+        deeperDesc:'Seoul needs one quieter layer behind the obvious contrast districts or the route starts to feel too loud.',
+        deeper:[
+          ['Seochon side','Smaller than Seongsu or Euljiro on paper, but one of the best layers for letting Seoul breathe.'],
+          ['Mangwon side','A better second-trip district when you want everyday texture before skyline or shopping energy.']
+        ],
+        visitTitle:'Open a first Seoul and a second Seoul differently',
+        visitDesc:'The first read should lean on strong contrast; the second can lean on lived-in texture.',
+        first:['Seongsu → Euljiro → Seochon','A clear first-Seoul line: contrast first, then one quieter district so the city can settle.'],
+        second:['Mangwon → Seochon → Euljiro late','A better repeat-visit route when you want local rhythm to stay with you longer.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Contrast opener','Seongsu → Seoul Forest → Euljiro','The clearest way to read old and new Seoul in one frame.'],
+          ['Soft local opener','Seochon → Bukchon edge → Jongno dinner','Better when you want daily texture before headline stops.'],
+          ['Night-weight opener','Hannam → Itaewon → Euljiro late','The stronger entry when after-dark pacing matters most.']
+        ]
+      }
+    },
+    kyoto:{
+      ko:{
+        deeperTitle:'교토를 더 깊게 만드는 추가 layer',
+        deeperDesc:'교토는 상징적인 장면 뒤에 작은 여백을 붙일수록 훨씬 오래 남습니다.',
+        deeper:[
+          ['Okazaki museum side','사원 축 뒤에 전시와 카페를 얇게 붙이면 교토가 훨씬 가벼워집니다.'],
+          ['Nishijin side','두 번째 교토라면 히가시야마보다 생활감 있는 조용한 서쪽 결이 더 인상적일 수 있습니다.']
+        ],
+        visitTitle:'첫 교토와 다시 읽는 교토',
+        visitDesc:'첫 방문은 eastern icon, 두 번째는 quieter west나 river edge가 더 좋습니다.',
+        first:['Higashiyama early → Gion edge → Kamo dusk','초행이라면 상징적 장면을 이른 시간에 읽고 dusk로 닫는 축이 가장 안정적입니다.'],
+        second:['Okazaki → Nishijin → Kamo dusk','다시 간다면 사람 많은 장면보다 조용한 pocket과 강변이 더 오래 남습니다.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Quiet icon opener','Higashiyama early → Gion → tea pocket','첫 교토를 가장 맑게 여는 고전적 축입니다.'],
+          ['River-soft opener','Okazaki → Kamo River → Kawaramachi dinner','교토를 더 부드럽고 현대적으로 읽고 싶을 때 좋습니다.'],
+          ['Second-trip opener','Nishijin → quiet temple pocket → dusk walk','재방문일수록 headline보다 여백이 더 강하게 남습니다.']
+        ]
+      },
+      en:{
+        deeperTitle:'Extra layers that deepen Kyoto',
+        deeperDesc:'Kyoto lasts longer when one small pocket of quiet follows the iconic frame.',
+        deeper:[
+          ['Okazaki museum side','After a temple-heavy start, this museum-and-café layer keeps Kyoto lighter and more readable.'],
+          ['Nishijin side','A better second-trip layer when you want lived-in quiet instead of another crowded east-side repeat.']
+        ],
+        visitTitle:'A first Kyoto and a return Kyoto',
+        visitDesc:'The first visit can lean on east-side icons; the second usually lands better through a quieter west or river edge line.',
+        first:['Higashiyama early → Gion edge → Kamo dusk','The cleanest first-Kyoto line: iconic early, then a soft dusk close.'],
+        second:['Okazaki → Nishijin → Kamo dusk','On a return visit, quieter pockets and the river often hold memory better than repeating the obvious frame.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Quiet icon opener','Higashiyama early → Gion → tea pocket','The classic clean entry when you want the iconic Kyoto read without overload.'],
+          ['River-soft opener','Okazaki → Kamo River → Kawaramachi dinner','A softer, more contemporary Kyoto line.'],
+          ['Second-trip opener','Nishijin → quiet temple pocket → dusk walk','Best when you have already seen the east-side highlights once.']
+        ]
+      }
+    },
+    taipei:{
+      ko:{
+        deeperTitle:'타이베이를 더 맛있게 만드는 district layer',
+        deeperDesc:'타이베이는 음식 축만 남기기보다 재질 있는 pocket을 붙일수록 훨씬 선명해집니다.',
+        deeper:[
+          ['Chifeng side','적당한 쇼핑과 카페, 오래된 결이 함께 있어 타이베이의 middle texture를 만들기 좋습니다.'],
+          ['Treasure Hill side','두 번째 타이베이라면 강변과 느린 pocket을 붙이는 쪽이 훨씬 길게 남습니다.']
+        ],
+        visitTitle:'첫 타이베이와 다시 보는 타이베이',
+        visitDesc:'첫 방문은 food-first, 두 번째는 bookshop·river·tea pocket이 더 잘 남습니다.',
+        first:['Yongkang → Dihua → one night market','첫 타이베이는 식사와 골목, 시장 하나만 선명하게 두는 편이 좋습니다.'],
+        second:['Chifeng → Treasure Hill → tea room close','다시 가면 appetite보다 texture와 pause가 더 중요해집니다.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Food-first opener','Yongkang → Dongmen → late dessert','가장 쉽게 만족도가 올라가는 첫 타이베이 축입니다.'],
+          ['Texture opener','Dihua → Chifeng → bookshop pocket','맛집 리스트보다 도시 재질이 먼저 남게 하는 축입니다.'],
+          ['Second-trip opener','Treasure Hill → river walk → tea room','두 번째 타이베이라면 이쪽이 훨씬 오래 기억됩니다.']
+        ]
+      },
+      en:{
+        deeperTitle:'District layers that make Taipei richer',
+        deeperDesc:'Taipei sharpens when one textural pocket sits beside the food line instead of letting appetite do all the work.',
+        deeper:[
+          ['Chifeng side','A strong middle-texture layer where shopping, cafés, and older material all overlap.'],
+          ['Treasure Hill side','A better repeat-visit layer when you want a slower river-and-pause rhythm.']
+        ],
+        visitTitle:'First Taipei versus return Taipei',
+        visitDesc:'The first visit can stay food-first; the second often lands better through bookshop, river, and tea-room pockets.',
+        first:['Yongkang → Dihua → one night market','The clearest first-Taipei line: food, lanes, and one vivid night close.'],
+        second:['Chifeng → Treasure Hill → tea-room close','On a second visit, texture and pause usually carry more memory than another pure food sprint.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Food-first opener','Yongkang → Dongmen → late dessert','The easiest high-satisfaction first-Taipei line.'],
+          ['Texture opener','Dihua → Chifeng → bookshop pocket','Better when you want the city’s material feel to lead.'],
+          ['Second-trip opener','Treasure Hill → river walk → tea room','A slower repeat-visit route that lingers longer.']
+        ]
+      }
+    },
+    hongkong:{
+      ko:{
+        deeperTitle:'홍콩을 정리해 주는 한 겹의 추가 layer',
+        deeperDesc:'홍콩은 수직적 headline 뒤에 잠깐 숨 고를 수 있는 layer가 있어야 훨씬 세련되게 남습니다.',
+        deeper:[
+          ['PMQ / Soho side','센트럴의 경사와 건물을 읽은 뒤, 너무 빨리 다른 섬으로 넘기지 않게 잡아주는 중간 레이어입니다.'],
+          ['West Kowloon side','두 번째 홍콩이라면 항구를 다른 각도로 다시 읽게 해주는 좋은 축입니다.']
+        ],
+        visitTitle:'첫 홍콩과 다시 읽는 홍콩',
+        visitDesc:'첫 방문은 vertical contrast, 두 번째는 ferry·harbor·slope의 결을 더 섬세하게 읽는 편이 좋습니다.',
+        first:['Central → Sheung Wan → Tsim Sha Tsui night','첫 홍콩은 수직감과 항구 장면이 분명한 축으로 여는 편이 가장 쉽습니다.'],
+        second:['Sheung Wan → PMQ/Soho → West Kowloon close','두 번째라면 몰·야경보다 slope street와 harbor edge가 더 세게 남을 수 있습니다.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Vertical opener','Central → Mid-Levels edge → Sheung Wan','홍콩의 수직감과 압축된 에너지를 가장 빨리 읽는 축입니다.'],
+          ['Harbor opener','Star Ferry → Tsim Sha Tsui → dessert pocket','항구 장면을 중심으로 홍콩을 쉽게 여는 방법입니다.'],
+          ['Second-trip opener','Sheung Wan → PMQ/Soho → West Kowloon','재방문일수록 생활감 있는 slope와 harbor edge가 더 인상적입니다.']
+        ]
+      },
+      en:{
+        deeperTitle:'An extra layer that cleans up Hong Kong',
+        deeperDesc:'Hong Kong lands better when one breathing layer sits behind the vertical headline stops.',
+        deeper:[
+          ['PMQ / Soho side','A middle layer that stops Central from flipping too quickly into another high-pressure district.'],
+          ['West Kowloon side','A better return-trip axis when you want to read the harbor from a quieter angle.']
+        ],
+        visitTitle:'First Hong Kong and return Hong Kong',
+        visitDesc:'The first visit can lean on sharp vertical contrast; the second can read ferry, harbor, and slope streets more delicately.',
+        first:['Central → Sheung Wan → Tsim Sha Tsui night','The easiest first-Hong Kong line: compressed vertical energy first, then one harbor close.'],
+        second:['Sheung Wan → PMQ/Soho → West Kowloon close','A better return line when you want slopes and harbor edge to carry the mood instead of only skyline drama.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Vertical opener','Central → Mid-Levels edge → Sheung Wan','The fastest way to understand Hong Kong’s compressed vertical energy.'],
+          ['Harbor opener','Star Ferry → Tsim Sha Tsui → dessert pocket','A cleaner first line when you want the harbor to anchor the read.'],
+          ['Second-trip opener','Sheung Wan → PMQ/Soho → West Kowloon','Better when you have already done the obvious skyline loop once.']
+        ]
+      }
+    },
+    busan:{
+      ko:{
+        deeperTitle:'부산을 더 입체적으로 만드는 district',
+        deeperDesc:'부산은 바다 축 뒤에 작은 생활감 layer를 붙일수록 훨씬 덜 postcard처럼 남습니다.',
+        deeper:[
+          ['Yeongdo side','영도는 바다를 다른 높이와 결로 다시 읽게 해주는 좋은 추가 축입니다.'],
+          ['Bosu / Nampo side','광안리와 해운대만으로 끝내기 아쉬울 때, 오래된 생활감이 부산을 더 선명하게 만듭니다.']
+        ],
+        visitTitle:'첫 부산과 다시 읽는 부산',
+        visitDesc:'첫 방문은 coast anchor가 중요하고, 두 번째는 harbor-side 생활감이 더 좋습니다.',
+        first:['Haeundae → Gwangalli → one night shore','첫 부산은 접근 쉬운 바다 축으로 열고 밤 장면 하나만 선명하게 남기는 편이 좋습니다.'],
+        second:['Yeongdo → Nampo/Bosu → Gwangalli close','다시 가면 harbor-side와 오래된 생활감이 훨씬 더 세게 남습니다.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Sea-first opener','Haeundae → café pocket → Gwangalli night','가장 쉬운 첫 부산 축입니다.'],
+          ['Harbor-texture opener','Nampo → Bosu → Yeongdo edge','바다보다 도시 결을 먼저 남기고 싶을 때 좋습니다.'],
+          ['Second-trip opener','Yeongdo → quiet coast walk → dinner close','재방문이라면 이 축이 훨씬 덜 전형적입니다.']
+        ]
+      },
+      en:{
+        deeperTitle:'District layers that make Busan more dimensional',
+        deeperDesc:'Busan improves once one lived-in harbor layer sits behind the obvious sea-line postcard frame.',
+        deeper:[
+          ['Yeongdo side','A strong extra axis when you want to read the sea again through a different height and texture.'],
+          ['Bosu / Nampo side','Older everyday texture that keeps Busan from ending as only Haeundae and Gwangalli.']
+        ],
+        visitTitle:'First Busan and return Busan',
+        visitDesc:'The first visit should stay coast-anchored; the second can lean harder on harbor-side everyday texture.',
+        first:['Haeundae → Gwangalli → one night shore','The clearest first-Busan line: easy coast access, then one crisp night close.'],
+        second:['Yeongdo → Nampo/Bosu → Gwangalli close','A better repeat line when you want harbor texture to hold the memory.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Sea-first opener','Haeundae → café pocket → Gwangalli night','The easiest first-Busan line.'],
+          ['Harbor-texture opener','Nampo → Bosu → Yeongdo edge','Better when you want city grain before postcard coast views.'],
+          ['Second-trip opener','Yeongdo → quiet coast walk → dinner close','Less typical, and stronger on a repeat visit.']
+        ]
+      }
+    },
+    fukuoka:{
+      ko:{
+        deeperTitle:'후쿠오카를 더 깊게 읽는 추가 district',
+        deeperDesc:'후쿠오카는 compact city라서, 식사 축 뒤에 조용한 layer 하나만 있어도 훨씬 완성도가 올라갑니다.',
+        deeper:[
+          ['Hakata Station side','이동과 식사의 리듬을 정리해 주는 practical layer로, 첫 후쿠오카를 안정적으로 엽니다.'],
+          ['Yakuin side','두 번째 방문이라면 텐진보다 덜 바쁜 pocket이 훨씬 길게 남을 수 있습니다.']
+        ],
+        visitTitle:'첫 후쿠오카와 다시 읽는 후쿠오카',
+        visitDesc:'첫 방문은 food-first compact route, 두 번째는 quieter pocket과 생활감이 더 중요합니다.',
+        first:['Hakata → Tenjin → yatai close','첫 후쿠오카는 짧은 이동과 첫 식사 리듬을 선명하게 남기는 편이 좋습니다.'],
+        second:['Yakuin → Ohori edge → compact dinner close','두 번째라면 yatai보다 느슨한 동네 rhythm이 더 오래 갑니다.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Food-first opener','Hakata → Tenjin → yatai','가장 쉽게 만족도가 올라가는 첫 후쿠오카 축입니다.'],
+          ['Soft local opener','Yakuin → café pocket → Ohori edge','조금 더 조용한 후쿠오카를 읽고 싶을 때 좋습니다.'],
+          ['Second-trip opener','Ohori edge → Yakuin → compact bar close','재방문일수록 compact night가 더 잘 남습니다.']
+        ]
+      },
+      en:{
+        deeperTitle:'Extra districts that deepen Fukuoka',
+        deeperDesc:'Because Fukuoka is so compact, one softer layer after the food line makes a surprising difference.',
+        deeper:[
+          ['Hakata Station side','A practical layer that stabilizes movement and meals for a first Fukuoka read.'],
+          ['Yakuin side','A better repeat-visit pocket when you want something less busy than a Tenjin-heavy route.']
+        ],
+        visitTitle:'First Fukuoka and return Fukuoka',
+        visitDesc:'The first visit can stay compact and food-first; the second often lands better through quieter everyday pockets.',
+        first:['Hakata → Tenjin → yatai close','The clearest first-Fukuoka line: short movement, strong meal rhythm, one compact night close.'],
+        second:['Yakuin → Ohori edge → compact dinner close','A better return route when you want a looser neighborhood rhythm instead of only yatai energy.'],
+        entryTitle:'Best entry routes',
+        entryRoutes:[
+          ['Food-first opener','Hakata → Tenjin → yatai','The easiest high-satisfaction first line.'],
+          ['Soft local opener','Yakuin → café pocket → Ohori edge','Better when you want a quieter Fukuoka read.'],
+          ['Second-trip opener','Ohori edge → Yakuin → compact bar close','Compact, slower, and stronger on a repeat visit.']
+        ]
+      }
+    }
+  };
+
+  function getPriorityDeepening(slug=''){
+    const entry = priorityCityDeepeningMap[String(slug || '').toLowerCase()];
+    if (!entry) return null;
+    return entry[lang] || entry.en || entry.ko || null;
+  }
+
+  function renderPriorityCityDepthSection(slug, entry){
+    const pack = getPriorityDeepening(slug);
+    if (!pack) return '';
+    return `<section class="section city-priority-depth" id="city-priority-depth"><div class="city-reading-grid city-reading-grid-rich">
+      <article class="info-card editorial-panel editorial-panel-soft">
+        <div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '더 깊게 읽기' : lang === 'ja' ? 'さらに読む' : lang === 'zhHant' ? '再往深一層讀' : 'Read deeper'}</div><h2 class="section-title">${pack.deeperTitle}</h2><p class="section-desc">${pack.deeperDesc}</p></div></div>
+        <div class="district-grid district-grid-rich">${pack.deeper.map((item, i) => `<article class="district-card info-card district-card-rich"><span class="district-index">0${i+1}</span><span class="district-label">${lang === 'ko' ? '추가 레이어' : lang === 'ja' ? '追加レイヤー' : lang === 'zhHant' ? '額外層次' : 'Extra layer'}</span><h3>${item[0]}</h3><p>${item[1]}</p></article>`).join('')}</div>
+      </article>
+      <article class="info-card editorial-panel">
+        <div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '방문 렌즈' : lang === 'ja' ? '訪問レンズ' : lang === 'zhHant' ? '造訪視角' : 'Visit lens'}</div><h2 class="section-title">${pack.visitTitle}</h2><p class="section-desc">${pack.visitDesc}</p></div></div>
+        <div class="visit-lens-grid">
+          <article class="visit-lens-card"><span class="mini-label">${lang === 'ko' ? 'First-time' : lang === 'ja' ? '初回向け' : lang === 'zhHant' ? '第一次' : 'First-time'}</span><strong>${pack.first[0]}</strong><p>${pack.first[1]}</p></article>
+          <article class="visit-lens-card"><span class="mini-label">${lang === 'ko' ? 'Second-time' : lang === 'ja' ? '二回目向け' : lang === 'zhHant' ? '第二次' : 'Second-time'}</span><strong>${pack.second[0]}</strong><p>${pack.second[1]}</p></article>
+        </div>
+      </article>
+    </div></section>`;
+  }
+
+  function renderPriorityExampleDepthSection(slug, entry){
+    const citySlug = cityGuideSlugFromExample(slug);
+    const pack = getPriorityDeepening(citySlug);
+    if (!pack) return '';
+    return `<div class="city-route-variations city-route-variations-priority">
+      <div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? 'entry lens' : lang === 'ja' ? 'entry lens' : lang === 'zhHant' ? 'entry lens' : 'entry lens'}</div><h3 class="section-title">${pack.entryTitle}</h3><p class="section-desc">${lang === 'ko' ? '이 샘플을 어떤 입구로 읽을지 먼저 고르면, 커스텀할 때 결과가 훨씬 선명해집니다.' : lang === 'ja' ? 'このサンプルをどの入口から読むかを先に決めると、あとで整える時に結果がかなりクリアになります。' : lang === 'zhHant' ? '先決定要從哪個入口讀這條 sample，之後自訂時結果會清楚很多。' : 'Choose the entry route first. It makes the later custom version much cleaner.'}</p></div></div>
+      <div class="city-route-variation-grid">${pack.entryRoutes.map(item => `<article class="city-route-variation-card"><span class="mini-label">${item[0]}</span><strong class="city-route-variation-focus">${item[1]}</strong><p>${item[2]}</p><div class="card-actions city-route-variation-actions"><a class="soft-link" href="../city/${citySlug}.html#city-priority-depth">${lang === 'ko' ? '도시 가이드 deeper note 보기' : lang === 'ja' ? '都市ガイドの deeper note を見る' : lang === 'zhHant' ? '去看城市指南的 deeper note' : 'Open deeper note in city guide'}</a></div></article>`).join('')}</div>
+      <div class="visit-lens-grid visit-lens-grid-example">
+        <article class="visit-lens-card"><span class="mini-label">${lang === 'ko' ? 'First-time' : lang === 'ja' ? '初回向け' : lang === 'zhHant' ? '第一次' : 'First-time'}</span><strong>${pack.first[0]}</strong><p>${pack.first[1]}</p></article>
+        <article class="visit-lens-card"><span class="mini-label">${lang === 'ko' ? 'Second-time' : lang === 'ja' ? '二回目向け' : lang === 'zhHant' ? '第二次' : 'Second-time'}</span><strong>${pack.second[0]}</strong><p>${pack.second[1]}</p></article>
+      </div>
+    </div>`;
+  }
+
 
 
   const exampleVariationPolishMap = {

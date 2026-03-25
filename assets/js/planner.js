@@ -410,7 +410,45 @@ window.RyokoPlanner = (() => {
       en:{district:'Fukuoka feels exact once you decide whether Hakata, Tenjin, or the Ohori side should own the compact city axis for that route.', rhythm:[['Food-first start','Open through Hakata or Tenjin so the first meal arrives easily.'],['Afternoon soften','Lower the afternoon through Ohori Park or one café pocket.'],['Compact night','One yatai scene and a short river walk are usually enough.']], variants:[['Rainy','Connect the Hakata and Tenjin indoor meal pockets more tightly in rain.'],['Slower','Read one city axis deeply, then lower the rest through market and café pockets.'],['Night','Fukuoka usually closes better through one compact yatai scene than a longer night chain.']]}}
   };
 
-  function getPriorityRefinePack(city=''){
+  
+  const priorityCityEntryMap = {
+    tokyo:{
+      ko:{visitTitle:'Visit split', first:['First-time','Asakusa → Ueno → Kiyosumi','읽기 쉬운 축부터 quiet pocket으로 마감하세요.'], second:['Second-time','Kiyosumi → Jinbocho → Kagurazaka','두 번째라면 재질과 저녁 결이 더 오래 남습니다.'], entries:[['Classic first read','Asakusa → Ueno → Kiyosumi'],['Design-soft read','Daikanyama → Nakameguro → Shibuya late'],['Night-led read','Shinjuku side → Omoide lane → late café']]},
+      en:{visitTitle:'Visit split', first:['First-time','Asakusa → Ueno → Kiyosumi','Readable icons first, then one quieter pocket to close.'], second:['Second-time','Kiyosumi → Jinbocho → Kagurazaka','On a return trip, let texture and dinner rhythm carry the memory.'], entries:[['Classic first read','Asakusa → Ueno → Kiyosumi'],['Design-soft read','Daikanyama → Nakameguro → Shibuya late'],['Night-led read','Shinjuku side → Omoide lane → late café']]}
+    },
+    seoul:{
+      ko:{visitTitle:'Visit split', first:['First-time','Seongsu → Euljiro → Seochon','대비가 큰 축 뒤에 quieter layer를 꼭 넣으세요.'], second:['Second-time','Mangwon → Seochon → Euljiro late','생활감 있는 동네를 먼저 두면 서울이 덜 전형적으로 남습니다.'], entries:[['Contrast opener','Seongsu → Seoul Forest → Euljiro'],['Soft local opener','Seochon → Bukchon edge → Jongno dinner'],['Night-weight opener','Hannam → Itaewon → Euljiro late']]},
+      en:{visitTitle:'Visit split', first:['First-time','Seongsu → Euljiro → Seochon','Use a strong contrast line first, then one quieter district.'], second:['Second-time','Mangwon → Seochon → Euljiro late','A better repeat line when you want daily texture to lead.'], entries:[['Contrast opener','Seongsu → Seoul Forest → Euljiro'],['Soft local opener','Seochon → Bukchon edge → Jongno dinner'],['Night-weight opener','Hannam → Itaewon → Euljiro late']]}
+    },
+    kyoto:{
+      ko:{visitTitle:'Visit split', first:['First-time','Higashiyama early → Gion edge → Kamo dusk','상징적 장면은 이르게, 마감은 dusk로 두세요.'], second:['Second-time','Okazaki → Nishijin → Kamo dusk','다시 간다면 quieter west와 강변이 더 강합니다.'], entries:[['Quiet icon opener','Higashiyama early → Gion → tea pocket'],['River-soft opener','Okazaki → Kamo River → Kawaramachi dinner'],['Second-trip opener','Nishijin → quiet temple pocket → dusk walk']]},
+      en:{visitTitle:'Visit split', first:['First-time','Higashiyama early → Gion edge → Kamo dusk','Read the iconic frame early, then close through dusk.'], second:['Second-time','Okazaki → Nishijin → Kamo dusk','Quieter west-side pockets usually land better on a return visit.'], entries:[['Quiet icon opener','Higashiyama early → Gion → tea pocket'],['River-soft opener','Okazaki → Kamo River → Kawaramachi dinner'],['Second-trip opener','Nishijin → quiet temple pocket → dusk walk']]}
+    },
+    taipei:{
+      ko:{visitTitle:'Visit split', first:['First-time','Yongkang → Dihua → one night market','식사와 골목, 시장 하나만 선명하게 두세요.'], second:['Second-time','Chifeng → Treasure Hill → tea room close','두 번째라면 texture와 pause가 더 중요합니다.'], entries:[['Food-first opener','Yongkang → Dongmen → late dessert'],['Texture opener','Dihua → Chifeng → bookshop pocket'],['Second-trip opener','Treasure Hill → river walk → tea room']]},
+      en:{visitTitle:'Visit split', first:['First-time','Yongkang → Dihua → one night market','Keep one meal line, one lane read, and one market vivid.'], second:['Second-time','Chifeng → Treasure Hill → tea-room close','On a return visit, texture and pause often matter more than another sprint.'], entries:[['Food-first opener','Yongkang → Dongmen → late dessert'],['Texture opener','Dihua → Chifeng → bookshop pocket'],['Second-trip opener','Treasure Hill → river walk → tea room']]}
+    },
+    hongkong:{
+      ko:{visitTitle:'Visit split', first:['First-time','Central → Sheung Wan → Tsim Sha Tsui night','수직감과 항구 장면이 분명한 축으로 여세요.'], second:['Second-time','Sheung Wan → PMQ/Soho → West Kowloon close','재방문이면 slope와 harbor edge가 더 세게 남습니다.'], entries:[['Vertical opener','Central → Mid-Levels edge → Sheung Wan'],['Harbor opener','Star Ferry → Tsim Sha Tsui → dessert pocket'],['Second-trip opener','Sheung Wan → PMQ/Soho → West Kowloon']]},
+      en:{visitTitle:'Visit split', first:['First-time','Central → Sheung Wan → Tsim Sha Tsui night','Open through a clear vertical line and one harbor close.'], second:['Second-time','Sheung Wan → PMQ/Soho → West Kowloon close','Slope streets and harbor edge often land better on a return visit.'], entries:[['Vertical opener','Central → Mid-Levels edge → Sheung Wan'],['Harbor opener','Star Ferry → Tsim Sha Tsui → dessert pocket'],['Second-trip opener','Sheung Wan → PMQ/Soho → West Kowloon']]}
+    },
+    busan:{
+      ko:{visitTitle:'Visit split', first:['First-time','Haeundae → Gwangalli → one night shore','접근 쉬운 바다 축과 밤 장면 하나만 남기세요.'], second:['Second-time','Yeongdo → Nampo/Bosu → Gwangalli close','두 번째라면 harbor-side texture가 더 오래 갑니다.'], entries:[['Sea-first opener','Haeundae → café pocket → Gwangalli night'],['Harbor-texture opener','Nampo → Bosu → Yeongdo edge'],['Second-trip opener','Yeongdo → quiet coast walk → dinner close']]},
+      en:{visitTitle:'Visit split', first:['First-time','Haeundae → Gwangalli → one night shore','Keep the first read coast-anchored with one clear night close.'], second:['Second-time','Yeongdo → Nampo/Bosu → Gwangalli close','Harbor texture usually lands better on a repeat visit.'], entries:[['Sea-first opener','Haeundae → café pocket → Gwangalli night'],['Harbor-texture opener','Nampo → Bosu → Yeongdo edge'],['Second-trip opener','Yeongdo → quiet coast walk → dinner close']]}
+    },
+    fukuoka:{
+      ko:{visitTitle:'Visit split', first:['First-time','Hakata → Tenjin → yatai close','짧은 이동과 첫 식사 리듬을 선명하게 두세요.'], second:['Second-time','Yakuin → Ohori edge → compact dinner close','재방문이면 quieter pocket이 더 오래 남습니다.'], entries:[['Food-first opener','Hakata → Tenjin → yatai'],['Soft local opener','Yakuin → café pocket → Ohori edge'],['Second-trip opener','Ohori edge → Yakuin → compact bar close']]},
+      en:{visitTitle:'Visit split', first:['First-time','Hakata → Tenjin → yatai close','Keep movement short and the first meal line clear.'], second:['Second-time','Yakuin → Ohori edge → compact dinner close','Quieter everyday pockets usually carry a repeat trip better.'], entries:[['Food-first opener','Hakata → Tenjin → yatai'],['Soft local opener','Yakuin → café pocket → Ohori edge'],['Second-trip opener','Ohori edge → Yakuin → compact bar close']]}
+    }
+  };
+  function getPriorityEntryPack(city=''){
+    const slug = String(city || '').trim().toLowerCase();
+    const entry = priorityCityEntryMap[slug];
+    if (!entry) return null;
+    const lang = window.RyokoApp?.lang || 'ko';
+    return entry[lang] || entry.en || entry.ko;
+  }
+function getPriorityRefinePack(city=''){
     const slug = String(city || '').trim().toLowerCase();
     const entry = priorityCityRefineMap[slug];
     if (!entry) return null;
@@ -1021,8 +1059,11 @@ window.RyokoPlanner = (() => {
       desc: uiCopy('district deeper note, day rhythm, 그리고 rainy / slower / night 변주를 한 번에 붙였습니다.', 'District depth, day rhythm, and rainy / slower / night switches now sit together here so the route reads more like an edited city package.', 'エリアの読みどころ、一日のリズム、rainy / slower / night の切り替えをここにまとめました。', '把區域延伸筆記、一日節奏與 rainy / slower / night 變奏一起收進這裡。'),
       district: uiCopy('District deeper note','District deeper note','エリアの読みどころ','區域延伸筆記'),
       rhythm: uiCopy('Day rhythm','Day rhythm','一日のリズム','一日節奏'),
-      variants: uiCopy('Quick variants','Quick variants','すぐ切り替え','快速變奏')
+      variants: uiCopy('Quick variants','Quick variants','すぐ切り替え','快速變奏'),
+      visit: uiCopy('Visit split','Visit split','訪問分岐','造訪分流'),
+      entry: uiCopy('Best entry routes','Best entry routes','ベスト entry routes','最佳 entry routes')
     };
+    const entryPack = getPriorityEntryPack(textValue(data.destination, readForm().destination || ''));
     node.innerHTML = `
       <div class="section-head result-section-head">
         <div>
@@ -1035,6 +1076,8 @@ window.RyokoPlanner = (() => {
         <article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.district}</span></div><p>${pack.district}</p></article>
         <article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.rhythm}</span></div>${pack.rhythm.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>
         <article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.variants}</span></div>${pack.variants.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>
+        ${entryPack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.visit}</span></div><div class="summary-line editorial-line"><strong>${entryPack.first[0]}</strong><span>${entryPack.first[1]} — ${entryPack.first[2]}</span></div><div class="summary-line editorial-line"><strong>${entryPack.second[0]}</strong><span>${entryPack.second[1]} — ${entryPack.second[2]}</span></div></article>` : ''}
+        ${entryPack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.entry}</span></div>${entryPack.entries.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>` : ''}
       </div>`;
   }
 
