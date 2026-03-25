@@ -1674,7 +1674,7 @@ function getSeasonalEditorialCollections(){
   const priorityCityDeepeningMap = {
     tokyo:{
       ko:{
-        deeperTitle:'한 레이어 더 읽으면 좋은 district',
+        deeperTitle:'한 단계 더 읽으면 좋아지는 district',
         deeperDesc:'첫 인상 뒤에 한 레이어를 더 붙이면 도쿄는 훨씬 덜 랜덤하게 남습니다.',
         deeper:[
           ['Jinbocho side','아사쿠사·우에노 다음에 책방과 찻집이 있는 레이어를 얇게 붙이면 도쿄가 관광지 모음보다 도시 결로 남습니다.'],
@@ -1788,7 +1788,7 @@ function getSeasonalEditorialCollections(){
     },
     taipei:{
       ko:{
-        deeperTitle:'타이베이를 더 맛있게 만드는 district layer',
+        deeperTitle:'타이베이를 더 풍부하게 만드는 district layer',
         deeperDesc:'타이베이는 음식 축만 남기기보다 재질 있는 pocket을 붙일수록 훨씬 선명해집니다.',
         deeper:[
           ['Chifeng side','적당한 쇼핑과 카페, 오래된 결이 함께 있어 타이베이의 middle texture를 만들기 좋습니다.'],
@@ -1826,7 +1826,7 @@ function getSeasonalEditorialCollections(){
     },
     hongkong:{
       ko:{
-        deeperTitle:'홍콩을 정리해 주는 한 겹의 추가 layer',
+        deeperTitle:'홍콩을 정리해 주는 추가 layer',
         deeperDesc:'홍콩은 수직적 headline 뒤에 잠깐 숨 고를 수 있는 layer가 있어야 훨씬 세련되게 남습니다.',
         deeper:[
           ['PMQ / Soho side','센트럴의 경사와 건물을 읽은 뒤, 너무 빨리 다른 섬으로 넘기지 않게 잡아주는 중간 레이어입니다.'],
@@ -1940,7 +1940,181 @@ function getSeasonalEditorialCollections(){
     }
   };
 
-  function getPriorityDeepening(slug=''){
+  
+  const priorityCityDeepeningIntlOverrides = {
+    ja:{
+      tokyo:{
+        deeperTitle:'もう一段深く読むと効く街区',
+        deeperDesc:'最初の印象のあとにもう一層だけ入れると、東京は観光地の寄せ集めではなく都市のリズムとして残ります。',
+        deeper:[['神保町サイド','浅草や上野のあとに本屋と喫茶の層を一枚足すと、東京がずっと立体的に残ります。'],['神楽坂サイド','夜を大きくしすぎず、路地と夕食、坂の気配で締めたい時に合う層です。']],
+        visitTitle:'どの東京として読むかを先に決める',
+        visitDesc:'初めての東京と二度目の東京は、入口のルートを分けた方がきれいです。',
+        first:['浅草 → 上野 → 清澄','最初はわかりやすい景色から入り、最後に静かなポケットを一つ置くのが安定します。'],
+        second:['清澄 → 神保町 → 神楽坂','二度目なら、質感と本、夕食のリズムで東京を残す方が強いです。'],
+        entryTitle:'おすすめの入り方',
+        entryRoutes:[['王道の最初の一線','浅草 → 上野 → 清澄','初めての東京をいちばん整理して開ける流れです。'],['デザイン寄りの入り方','代官山 → 中目黒 → 渋谷レイト','チェックリストよりムードとテンポを残したい時に合います。'],['夜から入る線','新宿サイド → 思い出横丁 → レイトカフェ','東京の夜を伸ばしすぎず、濃く残せる入り方です。']]
+      },
+      seoul:{
+        deeperTitle:'もう一段入ると効く街区',
+        deeperDesc:'ソウルはコントラストが強い都市なので、目立つ街区の後ろに静かな層を一枚置くとぐっと整います。',
+        deeper:[['西村サイド','聖水や乙支路より小さく見えても、ソウルの呼吸を見せる中間層として非常に優秀です。'],['望遠サイド','漢江の景色より、生活の粒感が先に残る二度目のソウル向きの層です。']],
+        visitTitle:'最初のソウルと二度目のソウルを分ける',
+        visitDesc:'最初は強い対比の線、二度目は暮らしの手触りが残る線の方が合います。',
+        first:['聖水 → 乙支路 → 西村','最初のソウルなら、コントラストの強い線で開き、途中で静かな層を一度挟む方がきれいです。'],
+        second:['望遠 → 西村 → 乙支路レイト','二度目なら、生活感と古い質感が一緒に残る線の方が長く効きます。'],
+        entryTitle:'おすすめの入り方',
+        entryRoutes:[['コントラストの入口','聖水 → ソウルの森 → 乙支路','新しいソウルと古いソウルを一番読みやすく束ねる線です。'],['ローカル寄りの入口','西村 → 北村の端 → 鍾路ディナー','名所より先に日常の質感を残したい時に向きます。'],['夜を重く置く入口','漢南 → 梨泰院 → 乙支路レイト','夜のテンポが大事な旅ならこの線が強いです。']]
+      },
+      kyoto:{
+        deeperTitle:'京都を深くする追加レイヤー',
+        deeperDesc:'象徴的な景色のあとに小さな余白を足すほど、京都は長くきれいに残ります。',
+        deeper:[['岡崎ミュージアムサイド','寺の線のあとに展示とカフェを薄く足すと、京都がずっと軽やかになります。'],['西陣サイド','二度目の京都なら、東山の反復より静かな西側の手触りが強く残ることがあります。']],
+        visitTitle:'最初の京都と、読み直す京都',
+        visitDesc:'初回は東側のアイコン、二度目は静かな西側や川辺の線が合います。',
+        first:['東山の朝 → 祇園の端 → 鴨川の夕暮れ','最初は象徴的な景色を早い時間に読み、夕暮れで閉じる線がいちばん安定します。'],
+        second:['岡崎 → 西陣 → 鴨川の夕暮れ','再訪なら、人の多い景色より静かなポケットと川辺が長く残ります。'],
+        entryTitle:'おすすめの入り方',
+        entryRoutes:[['静かなアイコンの入口','東山の朝 → 祇園 → 茶のポケット','最初の京都を過負荷なく開く王道です。'],['川沿いから入る線','岡崎 → 鴨川 → 河原町ディナー','京都をもう少し柔らかく現代的に読みたい時に合います。'],['再訪向けの入口','西陣 → 静かな寺のポケット → 夕暮れ歩き','二度目ほど、見出しより余白が強く効きます。']]
+      },
+      taipei:{
+        deeperTitle:'台北を濃くする街区レイヤー',
+        deeperDesc:'食の線だけに任せず、質感のあるポケットを一つ足すと台北はぐっと鮮明になります。',
+        deeper:[['赤峰サイド','ほどよい買い物とカフェ、古い質感が重なり、台北の中間の手触りを作るのに向いています。'],['宝蔵巖サイド','二度目の台北なら、川辺とゆるいポケットを足す方がずっと長く残ります。']],
+        visitTitle:'最初の台北と、もう一度読む台北',
+        visitDesc:'初回は food-first、二度目は本屋・川・茶室のポケットが効きます。',
+        first:['永康 → 迪化 → ナイトマーケット一つ','最初は食事と路地、市場を一つだけくっきり置く方がきれいです。'],
+        second:['赤峰 → 宝蔵巖 → 茶室で締める','再訪なら食欲だけでなく、質感と pause が旅を支えます。'],
+        entryTitle:'おすすめの入り方',
+        entryRoutes:[['food-first の入口','永康 → 東門 → 遅いデザート','最初の台北で満足度が最も上がりやすい線です。'],['質感から入る線','迪化 → 赤峰 → 本屋ポケット','リストより街の素材感を先に残したい時に向きます。'],['再訪向けの入口','宝蔵巖 → 川辺散歩 → 茶室','二度目の台北ならこちらの方が長く残ります。']]
+      },
+      hongkong:{
+        deeperTitle:'香港を整えるもう一層',
+        deeperDesc:'縦の見出しだけで走るより、少し息をつける層が後ろにある方が香港はずっと洗練されて残ります。',
+        deeper:[['PMQ / Soho サイド','セントラルの傾斜と建物を読んだあと、別の高圧な街区へ急がせない中間層です。'],['西九龍サイド','二度目の香港で、ハーバーを少し違う角度から読み直すのに向く線です。']],
+        visitTitle:'最初の香港と、読み直す香港',
+        visitDesc:'初回は縦のコントラスト、二度目は ferry・harbor・坂道の質感をもっと繊細に読む方が合います。',
+        first:['Central → Sheung Wan → 尖沙咀の夜','最初は縦の圧縮感とハーバーの景色がはっきりした線で開くのが一番わかりやすいです。'],
+        second:['Sheung Wan → PMQ/Soho → West Kowloon close','再訪なら、モールや夜景だけでなく坂道と港の縁が強く残ります。'],
+        entryTitle:'おすすめの入り方',
+        entryRoutes:[['縦に入る入口','Central → Mid-Levels edge → Sheung Wan','香港の圧縮された縦のエネルギーを最速で読む線です。'],['ハーバーから入る線','Star Ferry → 尖沙咀 → デザートポケット','港の景色を軸に香港を開きたい時にきれいです。'],['再訪向けの入口','Sheung Wan → PMQ/Soho → West Kowloon','見慣れた skyline loop のあとに効く線です。']]
+      },
+      busan:{
+        deeperTitle:'釜山を立体化する街区',
+        deeperDesc:'海の見出しの後ろに暮らしの層を一枚足すと、釜山はポストカードだけで終わりません。',
+        deeper:[['影島サイド','海を別の高さと質感で読み直せる、強い追加の軸です。'],['宝水 / 南浦サイド','広安里と海雲台だけで終えたくない時、古い生活の粒感が釜山をはっきりさせます。']],
+        visitTitle:'最初の釜山と、もう一度読む釜山',
+        visitDesc:'初回は coast anchor、二度目は harbor-side の生活感がより強く効きます。',
+        first:['海雲台 → 広安里 → 夜の海辺一つ','最初はアクセスしやすい海の線で開き、夜景は一つだけはっきり残す方が良いです。'],
+        second:['影島 → 南浦/宝水 → 広安里 close','再訪なら harbor-side の質感がずっと強く残ります。'],
+        entryTitle:'おすすめの入り方',
+        entryRoutes:[['海から入る入口','海雲台 → カフェポケット → 広安里の夜','最初の釜山でいちばん入りやすい線です。'],['港の質感から入る線','南浦 → 宝水 → 影島の端','海景色より先に都市の粒感を残したい時に向きます。'],['再訪向けの入口','影島 → 静かな海辺散歩 → 夕食で締める','二度目の釜山ではこちらの方がずっと非定型です。']]
+      },
+      fukuoka:{
+        deeperTitle:'福岡を深くする追加の街区',
+        deeperDesc:'コンパクトな都市だからこそ、食の線のあとに静かな層を一枚足すだけで完成度が上がります。',
+        deeper:[['博多駅サイド','移動と食事のリズムを整える practical な層で、最初の福岡を安定して開けます。'],['薬院サイド','二度目なら、天神より少し静かな pocket の方が長く残ります。']],
+        visitTitle:'最初の福岡と、読み直す福岡',
+        visitDesc:'初回は food-first の compact route、二度目は静かな pocket と生活感がより大事です。',
+        first:['博多 → 天神 → 屋台で締める','最初は移動を短くし、最初の食事のリズムをはっきり残すのが合います。'],
+        second:['薬院 → 大濠の端 → コンパクトな夕食 close','再訪なら屋台より、ゆるい neighborhood rhythm が長く残ります。'],
+        entryTitle:'おすすめの入り方',
+        entryRoutes:[['food-first の入口','博多 → 天神 → 屋台','最初の福岡で満足度が上がりやすい、最も素直な線です。'],['soft local の入口','薬院 → カフェポケット → 大濠の端','少し静かな福岡を読みたい時に合います。'],['再訪向けの入口','大濠の端 → 薬院 → コンパクトなバー close','再訪ほど compact night が効きます。']]
+      }
+    },
+    zhHant:{
+      tokyo:{
+        deeperTitle:'再往深一層最值得讀的街區',
+        deeperDesc:'在第一眼印象後再加一層，東京就不會只剩景點清單，而會留下真正的城市節奏。',
+        deeper:[['神保町一側','淺草或上野之後，補上一層書店與喫茶店，東京會比純景點串聯更有質地。'],['神樂坂一側','不把夜晚拉得太滿，也能用巷子、晚餐與坡道感把東京收得很漂亮。']],
+        visitTitle:'先決定要讀哪一種東京',
+        visitDesc:'第一次東京與第二次東京，入口路線本來就該不同。',
+        first:['淺草 → 上野 → 清澄','第一次去時，先用好懂的場景打開，再留一個安靜口袋收尾最穩。'],
+        second:['清澄 → 神保町 → 神樂坂','如果是第二次，讓質感、書店與晚餐節奏接手，東京會留得更久。'],
+        entryTitle:'建議起手路線',
+        entryRoutes:[['經典第一次讀法','淺草 → 上野 → 清澄','第一次打開東京時最不容易失手的一條線。'],['設計感柔和讀法','代官山 → 中目黑 → 晚一點的澀谷','想留下城市情緒與節奏，而不是勾清單時很適合。'],['夜晚起手線','新宿一側 → 思い出横丁 → 深夜咖啡','不把東京夜晚拖太長，也能留得很濃。']]
+      },
+      seoul:{
+        deeperTitle:'再多走一層就更好的街區',
+        deeperDesc:'首爾對比很強，所以顯眼街區後面最好再放一層安靜的節奏，整體才會更順。',
+        deeper:[['西村一側','紙面上比聖水或乙支路小，但卻是最能讓首爾呼吸起來的中段層次。'],['望遠一側','比起漢江景觀，這裡更先留下生活感，很適合第二次首爾。']],
+        visitTitle:'第一次首爾與第二次首爾，要分開打開',
+        visitDesc:'第一次用強烈對比的線，第二次則讓日常質地領路會更好。',
+        first:['聖水 → 乙支路 → 西村','第一次首爾，用對比鮮明的線打開，中間再插入一個安靜街區會最穩。'],
+        second:['望遠 → 西村 → 晚一點的乙支路','第二次時，生活感與舊質地會比熱門景更有後勁。'],
+        entryTitle:'建議起手路線',
+        entryRoutes:[['對比感起手','聖水 → 首爾林 → 乙支路','最容易把新首爾與老首爾一起讀清楚的線。'],['柔和在地起手','西村 → 北村邊緣 → 鍾路晚餐','比起名所，更想先留下日常質感時很好用。'],['夜晚加重起手','漢南 → 梨泰院 → 晚一點的乙支路','如果夜晚節奏很重要，這條線會更強。']]
+      },
+      kyoto:{
+        deeperTitle:'讓京都更深的額外層次',
+        deeperDesc:'在象徵性場景後補上一點留白，京都會留得更久也更乾淨。',
+        deeper:[['岡崎博物館一側','寺院線之後薄薄加上一層展覽與咖啡，京都會輕很多。'],['西陣一側','如果是第二次京都，安靜西側的生活質地可能比再走一次東山更有力。']],
+        visitTitle:'第一次京都與再次閱讀的京都',
+        visitDesc:'第一次可以靠東側經典，第二次通常更適合安靜西側或河邊線。'],
+        first:['東山清晨 → 祇園邊緣 → 鴨川黃昏','第一次時，象徵性場景放在早段，最後用黃昏收尾最穩。'],
+        second:['岡崎 → 西陣 → 鴨川黃昏','再訪時，比起人多的畫面，安靜口袋與河邊通常更耐看。'],
+        entryTitle:'建議起手路線',
+        entryRoutes:[['安靜經典起手','東山清晨 → 祇園 → 茶室口袋','第一次京都最不容易過載的經典開法。'],['河邊柔和起手','岡崎 → 鴨川 → 河原町晚餐','想把京都讀得更柔軟、也更現代時很適合。'],['再訪起手線','西陣 → 安靜寺院口袋 → 黃昏散步','越是第二次，留白越比 headline 更有力。']]
+      },
+      taipei:{
+        deeperTitle:'讓台北更飽滿的街區層次',
+        deeperDesc:'不要只靠吃來撐起台北，只要再補一個有質感的口袋，城市就會清楚很多。',
+        deeper:[['赤峰一側','適量購物、咖啡與老質地疊在一起，很適合做出台北的中段手感。'],['寶藏巖一側','第二次台北時，補上一點河邊與慢節奏口袋，會留得更久。']],
+        visitTitle:'第一次台北與再讀一次的台北',
+        visitDesc:'第一次可以 food-first，第二次通常是書店、河邊與茶室口袋更有力。'],
+        first:['永康 → 迪化 → 一個夜市','第一次台北，食物、巷子與一個夜市就已經很夠。'],
+        second:['赤峰 → 寶藏巖 → 茶室收尾','再訪時，比起再衝一次食物清單，質感與 pause 會更重要。'],
+        entryTitle:'建議起手路線',
+        entryRoutes:[['food-first 起手','永康 → 東門 → 晚一點的甜點','第一次台北最容易有滿足感的一條線。'],['質感起手線','迪化 → 赤峰 → 書店口袋','比起清單，更想先留下城市材料感時很好用。'],['再訪起手線','寶藏巖 → 河邊散步 → 茶室','第二次台北通常這條會更耐記。']]
+      },
+      hongkong:{
+        deeperTitle:'讓香港更乾淨的額外一層',
+        deeperDesc:'香港若只有垂直 headline 會太緊，後面多放一層能喘口氣的節奏，整體會更俐落。',
+        deeper:[['PMQ / Soho 一側','讀完中環的坡與建築後，這層能避免太快跳進另一個高壓街區。'],['西九龍一側','第二次香港時，很適合用更安靜的角度重新讀港口。']],
+        visitTitle:'第一次香港與再次閱讀的香港',
+        visitDesc:'第一次靠垂直對比，第二次則更適合細讀渡輪、港口與坡道街景。'],
+        first:['中環 → 上環 → 尖沙咀夜晚','第一次香港，用垂直感和港口場景都很鮮明的線最容易打開。'],
+        second:['上環 → PMQ/Soho → 西九龍收尾','再訪時，坡道街與港邊質地往往比單純夜景更有後勁。'],
+        entryTitle:'建議起手路線',
+        entryRoutes:[['垂直感起手','中環 → 半山邊緣 → 上環','最快理解香港壓縮垂直能量的一條線。'],['港口起手線','天星小輪 → 尖沙咀 → 甜點口袋','想用港口畫面作為主軸來打開香港時最順。'],['再訪起手線','上環 → PMQ/Soho → 西九龍','如果 skyline loop 已經走過一次，這條會更有意思。']]
+      },
+      busan:{
+        deeperTitle:'讓釜山更立體的街區',
+        deeperDesc:'海景 headline 後面只要再補上一層生活感，釜山就不會只剩明信片。',
+        deeper:[['影島一側','很適合用不同高度與質地重新讀一次海。'],['寶水 / 南浦一側','如果不想只停在廣安里和海雲台，舊街區的生活顆粒會讓釜山更清楚。']],
+        visitTitle:'第一次釜山與再讀一次的釜山',
+        visitDesc:'第一次重點是海岸 anchor，第二次則更適合港邊生活感。'],
+        first:['海雲台 → 廣安里 → 一個夜晚海岸','第一次釜山，用易進入的海岸線打開，再留一個清楚的夜景就夠了。'],
+        second:['影島 → 南浦/寶水 → 廣安里收尾','再訪時，港邊質地通常比海岸 postcard 更耐記。'],
+        entryTitle:'建議起手路線',
+        entryRoutes:[['海岸起手','海雲台 → 咖啡口袋 → 廣安里夜晚','第一次釜山最容易上手的一條線。'],['港口質感起手','南浦 → 寶水 → 影島邊緣','想比海景更早留下城市顆粒時很適合。'],['再訪起手線','影島 → 安靜海邊散步 → 晚餐收尾','第二次釜山，這條會更不典型。']]
+      },
+      fukuoka:{
+        deeperTitle:'讓福岡更深的額外街區',
+        deeperDesc:'因為福岡很緊湊，只要在吃的線後面多補一層安靜口袋，完成度就會明顯變高。',
+        deeper:[['博多站一側','能整理移動與用餐節奏，是第一次福岡很實用的一層。'],['藥院一側','第二次時，比起天神，稍微安靜一點的 pocket 會留得更久。']],
+        visitTitle:'第一次福岡與再讀一次的福岡',
+        visitDesc:'第一次可以 compact 且 food-first，第二次則更重視安靜口袋與生活感。'],
+        first:['博多 → 天神 → 屋台收尾','第一次福岡，讓移動短一點、第一餐節奏清楚一點就很好。'],
+        second:['藥院 → 大濠邊緣 → 緊湊晚餐收尾','再訪時，比起屋台熱鬧，鬆一點的 neighborhood rhythm 會更耐留。'],
+        entryTitle:'建議起手路線',
+        entryRoutes:[['food-first 起手','博多 → 天神 → 屋台','第一次福岡最直接也最容易滿足的一條線。'],['soft local 起手','藥院 → 咖啡口袋 → 大濠邊緣','想讀比較安靜的福岡時很好用。'],['再訪起手線','大濠邊緣 → 藥院 → 緊湊酒吧收尾','越是再訪，compact night 越有味道。']]
+      }
+    }
+  };
+
+  function deepMergeContent(base = {}, override = {}){
+    const out = Array.isArray(base) ? [...base] : { ...base };
+    Object.keys(override || {}).forEach((key) => {
+      const baseVal = out[key];
+      const overrideVal = override[key];
+      if (Array.isArray(baseVal) || Array.isArray(overrideVal)) out[key] = overrideVal;
+      else if (baseVal && typeof baseVal === 'object' && overrideVal && typeof overrideVal === 'object') out[key] = deepMergeContent(baseVal, overrideVal);
+      else out[key] = overrideVal;
+    });
+    return out;
+  }
+
+function getPriorityDeepening(slug=''){
     const entry = priorityCityDeepeningMap[String(slug || '').toLowerCase()];
     if (!entry) return null;
     return entry[lang] || entry.en || entry.ko || null;
@@ -1969,8 +2143,8 @@ function getSeasonalEditorialCollections(){
     const pack = getPriorityDeepening(citySlug);
     if (!pack) return '';
     return `<div class="city-route-variations city-route-variations-priority">
-      <div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? 'entry lens' : lang === 'ja' ? 'entry lens' : lang === 'zhHant' ? 'entry lens' : 'entry lens'}</div><h3 class="section-title">${pack.entryTitle}</h3><p class="section-desc">${lang === 'ko' ? '이 샘플을 어떤 입구로 읽을지 먼저 고르면, 커스텀할 때 결과가 훨씬 선명해집니다.' : lang === 'ja' ? 'このサンプルをどの入口から読むかを先に決めると、あとで整える時に結果がかなりクリアになります。' : lang === 'zhHant' ? '先決定要從哪個入口讀這條 sample，之後自訂時結果會清楚很多。' : 'Choose the entry route first. It makes the later custom version much cleaner.'}</p></div></div>
-      <div class="city-route-variation-grid">${pack.entryRoutes.map(item => `<article class="city-route-variation-card"><span class="mini-label">${item[0]}</span><strong class="city-route-variation-focus">${item[1]}</strong><p>${item[2]}</p><div class="card-actions city-route-variation-actions"><a class="soft-link" href="../city/${citySlug}.html#city-priority-depth">${lang === 'ko' ? '도시 가이드 deeper note 보기' : lang === 'ja' ? '都市ガイドの deeper note を見る' : lang === 'zhHant' ? '去看城市指南的 deeper note' : 'Open deeper note in city guide'}</a></div></article>`).join('')}</div>
+      <div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? 'entry lens' : lang === 'ja' ? '入口の読み方' : lang === 'zhHant' ? '入口讀法' : 'Entry lens'}</div><h3 class="section-title">${pack.entryTitle}</h3><p class="section-desc">${lang === 'ko' ? '이 샘플을 어떤 입구로 읽을지 먼저 고르면, 커스텀할 때 결과가 훨씬 선명해집니다.' : lang === 'ja' ? 'このサンプルをどの入口から読むかを先に決めると、あとで整える時に結果がかなりクリアになります。' : lang === 'zhHant' ? '先決定要從哪個入口讀這條 sample，之後自訂時結果會清楚很多。' : 'Choose the entry route first. It makes the later custom version much cleaner.'}</p></div></div>
+      <div class="city-route-variation-grid">${pack.entryRoutes.map(item => `<article class="city-route-variation-card"><span class="mini-label">${item[0]}</span><strong class="city-route-variation-focus">${item[1]}</strong><p>${item[2]}</p><div class="card-actions city-route-variation-actions"><a class="soft-link" href="../city/${citySlug}.html#city-priority-depth">${lang === 'ko' ? '도시 가이드 deeper note 보기' : lang === 'ja' ? '都市ガイドの深いメモを見る' : lang === 'zhHant' ? '查看城市指南的延伸筆記' : 'Open deeper note in city guide'}</a></div></article>`).join('')}</div>
       <div class="visit-lens-grid visit-lens-grid-example">
         <article class="visit-lens-card"><span class="mini-label">${lang === 'ko' ? 'First-time' : lang === 'ja' ? '初回向け' : lang === 'zhHant' ? '第一次' : 'First-time'}</span><strong>${pack.first[0]}</strong><p>${pack.first[1]}</p></article>
         <article class="visit-lens-card"><span class="mini-label">${lang === 'ko' ? 'Second-time' : lang === 'ja' ? '二回目向け' : lang === 'zhHant' ? '第二次' : 'Second-time'}</span><strong>${pack.second[0]}</strong><p>${pack.second[1]}</p></article>

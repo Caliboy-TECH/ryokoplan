@@ -441,7 +441,39 @@ window.RyokoPlanner = (() => {
       en:{visitTitle:'Visit split', first:['First-time','Hakata → Tenjin → yatai close','Keep movement short and the first meal line clear.'], second:['Second-time','Yakuin → Ohori edge → compact dinner close','Quieter everyday pockets usually carry a repeat trip better.'], entries:[['Food-first opener','Hakata → Tenjin → yatai'],['Soft local opener','Yakuin → café pocket → Ohori edge'],['Second-trip opener','Ohori edge → Yakuin → compact bar close']]}
     }
   };
-  function getPriorityEntryPack(city=''){
+  
+  const priorityCityEntryIntlOverrides = {
+    ja:{
+      tokyo:{visitTitle:'訪問分岐', first:['初回向け','浅草 → 上野 → 清澄','わかりやすい景色から入り、最後に静かなポケットを一つ置くと安定します。'], second:['二回目向け','清澄 → 神保町 → 神楽坂','二度目なら質感と本、夕食のリズムが長く残ります。'], entries:[['王道の最初の一線','浅草 → 上野 → 清澄'],['デザイン寄りの入り方','代官山 → 中目黒 → 渋谷レイト'],['夜から入る線','新宿サイド → 思い出横丁 → レイトカフェ']]},
+      seoul:{visitTitle:'訪問分岐', first:['初回向け','聖水 → 乙支路 → 西村','強いコントラストの線のあとに静かな街区を一つ置いてください。'], second:['二回目向け','望遠 → 西村 → 乙支路レイト','暮らしの手触りが前に出る線の方が再訪には合います。'], entries:[['コントラストの入口','聖水 → ソウルの森 → 乙支路'],['ローカル寄りの入口','西村 → 北村の端 → 鍾路ディナー'],['夜を重く置く入口','漢南 → 梨泰院 → 乙支路レイト']]},
+      kyoto:{visitTitle:'訪問分岐', first:['初回向け','東山の朝 → 祇園の端 → 鴨川の夕暮れ','象徴的な景色は朝に、締めは夕暮れに置くときれいです。'], second:['二回目向け','岡崎 → 西陣 → 鴨川の夕暮れ','再訪なら静かな西側と川辺の方が強く残ります。'], entries:[['静かなアイコンの入口','東山の朝 → 祇園 → 茶のポケット'],['川沿いから入る線','岡崎 → 鴨川 → 河原町ディナー'],['再訪向けの入口','西陣 → 静かな寺のポケット → 夕暮れ歩き']]},
+      taipei:{visitTitle:'訪問分岐', first:['初回向け','永康 → 迪化 → ナイトマーケット一つ','食事と路地、市場を一つだけはっきり置くのが合います。'], second:['二回目向け','赤峰 → 宝蔵巖 → 茶室で締める','再訪なら質感と pause の方が効きます。'], entries:[['food-first の入口','永康 → 東門 → 遅いデザート'],['質感から入る線','迪化 → 赤峰 → 本屋ポケット'],['再訪向けの入口','宝蔵巖 → 川辺散歩 → 茶室']]},
+      hongkong:{visitTitle:'訪問分岐', first:['初回向け','Central → Sheung Wan → 尖沙咀の夜','縦の圧縮感と港の景色がはっきりした線で開くのがいちばん簡単です。'], second:['二回目向け','Sheung Wan → PMQ/Soho → West Kowloon close','再訪なら坂道と港の縁が skyline より強く残ります。'], entries:[['縦に入る入口','Central → Mid-Levels edge → Sheung Wan'],['ハーバーから入る線','Star Ferry → 尖沙咀 → デザートポケット'],['再訪向けの入口','Sheung Wan → PMQ/Soho → West Kowloon']]},
+      busan:{visitTitle:'訪問分岐', first:['初回向け','海雲台 → 広安里 → 夜の海辺一つ','最初は海の線を軸にして、夜景は一つだけ強く残してください。'], second:['二回目向け','影島 → 南浦/宝水 → 広安里 close','再訪なら harbor-side の質感の方が長く残ります。'], entries:[['海から入る入口','海雲台 → カフェポケット → 広安里の夜'],['港の質感から入る線','南浦 → 宝水 → 影島の端'],['再訪向けの入口','影島 → 静かな海辺散歩 → 夕食で締める']]},
+      fukuoka:{visitTitle:'訪問分岐', first:['初回向け','博多 → 天神 → 屋台で締める','移動を短くし、最初の食事のリズムをくっきり置くと良いです。'], second:['二回目向け','薬院 → 大濠の端 → コンパクトな夕食 close','再訪なら静かな pocket の方が長く残ります。'], entries:[['food-first の入口','博多 → 天神 → 屋台'],['soft local の入口','薬院 → カフェポケット → 大濠の端'],['再訪向けの入口','大濠の端 → 薬院 → コンパクトなバー close']]}
+    },
+    zhHant:{
+      tokyo:{visitTitle:'造訪分流', first:['第一次','淺草 → 上野 → 清澄','先從好理解的景色進去，最後留一個安靜口袋會最穩。'], second:['第二次','清澄 → 神保町 → 神樂坂','第二次時，質感、書店與晚餐節奏會留得更久。'], entries:[['經典第一次讀法','淺草 → 上野 → 清澄'],['設計感柔和讀法','代官山 → 中目黑 → 晚一點的澀谷'],['夜晚起手線','新宿一側 → 思い出横丁 → 深夜咖啡']]},
+      seoul:{visitTitle:'造訪分流', first:['第一次','聖水 → 乙支路 → 西村','先用對比強的線打開，再插入一個安靜街區。'], second:['第二次','望遠 → 西村 → 晚一點的乙支路','再訪時，由生活感帶路會更耐看。'], entries:[['對比感起手','聖水 → 首爾林 → 乙支路'],['柔和在地起手','西村 → 北村邊緣 → 鍾路晚餐'],['夜晚加重起手','漢南 → 梨泰院 → 晚一點的乙支路']]},
+      kyoto:{visitTitle:'造訪分流', first:['第一次','東山清晨 → 祇園邊緣 → 鴨川黃昏','象徵場景放在早段，黃昏收尾會更乾淨。'], second:['第二次','岡崎 → 西陣 → 鴨川黃昏','再訪時，安靜西側與河邊通常更有後勁。'], entries:[['安靜經典起手','東山清晨 → 祇園 → 茶室口袋'],['河邊柔和起手','岡崎 → 鴨川 → 河原町晚餐'],['再訪起手線','西陣 → 安靜寺院口袋 → 黃昏散步']]},
+      taipei:{visitTitle:'造訪分流', first:['第一次','永康 → 迪化 → 一個夜市','只把食物、巷子與一個夜市講清楚就很夠。'], second:['第二次','赤峰 → 寶藏巖 → 茶室收尾','再訪時，質感與 pause 比再衝一次清單更重要。'], entries:[['food-first 起手','永康 → 東門 → 晚一點的甜點'],['質感起手線','迪化 → 赤峰 → 書店口袋'],['再訪起手線','寶藏巖 → 河邊散步 → 茶室']]},
+      hongkong:{visitTitle:'造訪分流', first:['第一次','中環 → 上環 → 尖沙咀夜晚','用垂直感與港口畫面都很鮮明的線打開最容易。'], second:['第二次','上環 → PMQ/Soho → 西九龍收尾','再訪時，坡道與港邊比 skyline 更有後勁。'], entries:[['垂直感起手','中環 → 半山邊緣 → 上環'],['港口起手線','天星小輪 → 尖沙咀 → 甜點口袋'],['再訪起手線','上環 → PMQ/Soho → 西九龍']]},
+      busan:{visitTitle:'造訪分流', first:['第一次','海雲台 → 廣安里 → 一個夜晚海岸','第一次先用海岸線打開，再留一個清楚夜景就夠了。'], second:['第二次','影島 → 南浦/寶水 → 廣安里收尾','再訪時，港邊質地通常更耐記。'], entries:[['海岸起手','海雲台 → 咖啡口袋 → 廣安里夜晚'],['港口質感起手','南浦 → 寶水 → 影島邊緣'],['再訪起手線','影島 → 安靜海邊散步 → 晚餐收尾']]},
+      fukuoka:{visitTitle:'造訪分流', first:['第一次','博多 → 天神 → 屋台收尾','讓移動短一點、第一餐節奏清楚一點最合適。'], second:['第二次','藥院 → 大濠邊緣 → 緊湊晚餐收尾','再訪時，安靜 pocket 比屋台熱鬧更耐留。'], entries:[['food-first 起手','博多 → 天神 → 屋台'],['soft local 起手','藥院 → 咖啡口袋 → 大濠邊緣'],['再訪起手線','大濠邊緣 → 藥院 → 緊湊酒吧收尾']]}
+    }
+  };
+
+  function mergeEntryPack(base = {}, override = {}){
+    return {
+      ...base,
+      ...override,
+      first: override.first || base.first,
+      second: override.second || base.second,
+      entries: override.entries || base.entries
+    };
+  }
+
+function getPriorityEntryPack(city=''){
     const slug = String(city || '').trim().toLowerCase();
     const entry = priorityCityEntryMap[slug];
     if (!entry) return null;
@@ -1056,12 +1088,12 @@ function getPriorityRefinePack(city=''){
     const copy = {
       eyebrow: uiCopy('루트 정교화', 'Route refinement', 'ルートの精緻化', '路線微調整'),
       title: uiCopy('지금 결과를 더 좋게 읽는 세 가지 축', 'Three cleaner ways to tune this result', 'この結果をもっと良く読む三つの軸', '把這次結果讀得更準的三個方向'),
-      desc: uiCopy('district deeper note, day rhythm, 그리고 rainy / slower / night 변주를 한 번에 붙였습니다.', 'District depth, day rhythm, and rainy / slower / night switches now sit together here so the route reads more like an edited city package.', 'エリアの読みどころ、一日のリズム、rainy / slower / night の切り替えをここにまとめました。', '把區域延伸筆記、一日節奏與 rainy / slower / night 變奏一起收進這裡。'),
+      desc: uiCopy('district deeper note, day rhythm, 그리고 rainy / slower / night 변주를 한 번에 붙였습니다.', 'District depth, day rhythm, and rainy / slower / night switches now sit together here so the route reads less like output and more like an edited city package.', 'エリアの読みどころ、一日のリズム、rainy / slower / night の切り替えをここにまとめました。', '把區域延伸筆記、一日節奏與 rainy / slower / night 變奏一起收進這裡。'),
       district: uiCopy('District deeper note','District deeper note','エリアの読みどころ','區域延伸筆記'),
       rhythm: uiCopy('Day rhythm','Day rhythm','一日のリズム','一日節奏'),
       variants: uiCopy('Quick variants','Quick variants','すぐ切り替え','快速變奏'),
-      visit: uiCopy('Visit split','Visit split','訪問分岐','造訪分流'),
-      entry: uiCopy('Best entry routes','Best entry routes','ベスト entry routes','最佳 entry routes')
+      visit: uiCopy('Visit split','Visit split','訪問の分岐','造訪分流'),
+      entry: uiCopy('Best entry routes','Best entry routes','おすすめの入り方','建議起手路線')
     };
     const entryPack = getPriorityEntryPack(textValue(data.destination, readForm().destination || ''));
     node.innerHTML = `
