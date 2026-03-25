@@ -2370,3 +2370,18 @@ body[data-page="planner"] .top-bar{z-index:62}
   .city-collection-card .card-copy{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .city-collection-snippet span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 }
+
+
+.shared-product-card p,.city-collection-continue span,.shared-spotlight-note span{display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+.shared-product-card p{-webkit-line-clamp:3}
+.city-collection-continue span,.shared-spotlight-note span{-webkit-line-clamp:2}
+@media (max-width: 640px){
+  .shared-product-card p{-webkit-line-clamp:2}
+  .city-collection-continue span,.shared-spotlight-note span{-webkit-line-clamp:2}
+  .city-collection-body{padding:16px;gap:10px}
+}
+@media (max-width: 420px){
+  .city-collection-body{padding:14px;gap:9px}
+  .city-collection-continue{padding:9px 10px}
+  .shared-product-card h4{font-size:16px}
+}

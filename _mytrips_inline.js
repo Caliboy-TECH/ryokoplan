@@ -138,8 +138,8 @@
           routeClubGuide: 'Read related city',
           routeClubSaved: 'Trending route saved as your own version.',
           loopEmptyEyebrow: 'No saved loop yet',
-          loopEmptyTitle: 'Build one trip, then the city-first loop gets smarter',
-          loopEmptyDesc: 'Once you save or reopen a trip, My Trips can point you to the next guide, sample route, or related city branch that fits the tone you already liked.',
+          loopEmptyTitle: 'Save one trip, then the city-first loop gets smarter',
+          loopEmptyDesc: 'Once a trip is saved or reopened, My Trips can point you to the next guide, sample route, or related city branch that fits the tone you already liked.',
           loopOpenPlanner: 'Open Planner',
           loopReadMagazine: 'Read Magazine',
           loopGoodStart: 'Good starting points',
@@ -148,7 +148,7 @@
           loopBusanSample: 'Busan sample',
           loopBusanSampleDesc: 'A softer scenic sample for mixed-age travel, easier coast timing, and gentler night closes.',
           loopVaultEyebrow: 'From your vault',
-          loopVaultTitle: 'can lead the next step too'
+          loopVaultTitle: 'can open the next step too'
         },
         ja: {
           continueTitle: '旅の流れを続ける',
@@ -875,8 +875,8 @@
             </div>
             ${rhythmMarkup(item.destination, 'trip-rhythm-inline-soft')}
             <div class="shared-spotlight-note">
-              <strong>Why keep it?</strong>
-              <span>${item.importedFromLink ? 'It was imported from a shared link, so keeping it here makes it easier to revisit later.' : 'Shared trips become better when you can save them, compare them, and branch into your own version.'}</span>
+              <strong>${langVariant('왜 남기나요?','Why keep it?','なぜ残す？','為什麼留住？')}</strong>
+              <span>${item.importedFromLink ? langVariant('공유 링크에서 가져온 루트라 다시 열어보고 비교하기 좋습니다.','Imported from a shared link, so it is easier to revisit and compare later.','共有リンクから取り込んだので、あとで見返して比べやすくなります。','從分享連結匯入，之後更容易回看與比較。') : langVariant('저장해 두면 비교하고 갈라 읽기 쉬운 루트가 됩니다.','Saved here, it becomes easier to compare and branch into your own version.','ここに残しておくと、比べたり自分の分岐にしやすくなります。','先存進這裡，就更容易比較並延伸成自己的版本。')}</span>
             </div>
             <div class="card-actions">
               <a class="primary-btn" href="${shareUrl(item)}">Open shared trip</a>
@@ -917,7 +917,7 @@
           </div>
           <div class="trip-detail-grid">
             <article class="info-card trip-detail-panel">
-              <h3>Trip snapshot</h3>
+              <h3>${langVariant('Trip snapshot','Trip snapshot','旅のスナップショット','旅程快照')}</h3>
               <div class="trip-detail-stats">
                 <div><span>Days</span><strong>${days.length || '—'}</strong></div>
                 <div><span>Tips</span><strong>${(data.localTips || []).length || '—'}</strong></div>
@@ -931,7 +931,7 @@
               <div class="trip-detail-day-list">${dayPreview || '<p class="card-copy">No day preview available yet.</p>'}</div>
             </article>
             <article class="info-card trip-detail-panel">
-              <h3>Local tips preview</h3>
+              <h3>${langVariant('Local tips preview','Local tips preview','ローカルヒント','在地提示')}</h3>
               ${tips ? `<ul class="trip-detail-list">${tips}</ul>` : '<p class="card-copy">No extra local tips stored on this trip yet.</p>'}
             </article>
             <article class="info-card trip-detail-panel">
@@ -939,7 +939,7 @@
               <div class="trip-detail-branch-list">
                 <a class="trip-detail-branch" href="../${city.example}">
                   <strong>${city.name} sample route</strong>
-                  <span>Use the sample route to compare this saved edit against a stronger city baseline.</span>
+                  <span>${langVariant('이 저장본을 더 선명한 도시 베이스와 나란히 놓고 비교해 보세요.','Use the sample route to compare this saved edit against a clearer city baseline.','この保存ルートを、もっと輪郭のはっきりした都市ベースと並べて比べてみてください。','把這份儲存路線和更清楚的城市基準放在一起比較看看。')}</span>
                 </a>
                 ${related.map(rel => `<a class="trip-detail-branch" href="../${rel.guide}"><strong>${rel.name}</strong><span>${rel.vibe} is a strong next read after ${city.name}.</span></a>`).join('')}
               </div>
@@ -1049,8 +1049,8 @@
         if (!anchor) {
           main.innerHTML = `
             <span class="eyebrow">${langCopy().loopEmptyEyebrow || "No saved loop yet"}</span>
-            <h3>${langCopy().loopEmptyTitle || "Build one trip, then the city-first loop gets smarter"}</h3>
-            <p>${langCopy().loopEmptyDesc || "Once you save or reopen a trip, My Trips can point you to the next guide, sample route, or related city branch that fits the tone you already liked."}</p>
+            <h3>${langCopy().loopEmptyTitle || "Save one trip, then the city-first loop gets smarter"}</h3>
+            <p>${langCopy().loopEmptyDesc || "Once a trip is saved or reopened, My Trips can point you to the next guide, sample route, or related city branch that fits the tone you already liked."}</p>
             <div class="card-actions"><a class="primary-btn" href="../">${langCopy().loopOpenPlanner || "Open Planner"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
           side.innerHTML = `
             <h3>${langCopy().loopGoodStart || "Good starting points"}</h3>
@@ -1064,7 +1064,7 @@
         const related = window.RyokoApp.getRelatedCities(anchor.destination).slice(0,3);
         main.innerHTML = `
           <span class="eyebrow">${langCopy().loopVaultEyebrow || "From your vault"}</span>
-          <h3>${current.name} ${langCopy().loopVaultTitle || "can lead the next step too"}</h3>
+          <h3>${current.name} ${langCopy().loopVaultTitle || "can open the next step too"}</h3>
           <p>${(anchor.planData?.summary || anchor.notes || 'Use your saved trip as a base, deepen the strongest city axis inside it first, then branch only once the next city feels editorially related.').slice(0, 180)}</p>
           <div class="trip-loop-destinations">
             <span class="trip-loop-chip">${current.name}</span>
@@ -1076,12 +1076,12 @@
             <a class="soft-btn" href="../?destination=${encodeURIComponent(current.name)}">Plan again</a>
           </div>`;
         side.innerHTML = `
-          <h3>Related branches</h3>
+          <h3>${langVariant('관련 가지','Related branches','関連する分岐','相關分支')}</h3>
           <div class="trip-loop-list">
             ${related.map(city => `
               <article>
                 <h4>${city.name}</h4>
-                <p>${city.vibe} is a strong next read after ${current.name} when you want the next branch to feel connected in tone, not random.</p>
+                <p>${langVariant(`${current.name} 다음 가지를 고를 때 톤이 끊기지 않게 이어 주는 도시입니다.`, `${city.vibe} is a clean next read after ${current.name} when you want the next branch to feel connected, not random.`, `${current.name} の次で、トーンを切らさずにつなぎやすい都市です。`, `${current.name} 之後若想讓節奏延續而不跳脫，這會是更乾淨的下一個分支。`)}</p>
                 <div class="card-actions" style="margin-top:10px">
                   <a class="soft-btn" href="../${city.guide}">Guide</a>
                   <a class="ghost-btn" href="../${city.example}">Sample</a>
