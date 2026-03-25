@@ -14,10 +14,10 @@
 <text x="610" y="196" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="900">A route should read like a city cover.</text>
 <text x="610" y="238" fill="#DCE3EA" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">Open the neighborhood first, then shape the plan.</text>
 <text x="606" y="364" fill="#B96732" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800">FOCUS</text>
-<text x="606" y="408" fill="#15273A" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900">Tokyo · Seoul · Taipei</text>
-<text x="606" y="448" fill="#6B7280" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Cities with strong editorial rhythm</text>
+<text x="606" y="408" fill="#15273A" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900">Tokyo · Seoul · Kyoto · Taipei</text>
+<text x="606" y="448" fill="#6B7280" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Release cities with stronger editorial depth</text>
 <text x="896" y="364" fill="#9A734B" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800">LOOP</text>
-<text x="896" y="408" fill="#15273A" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900">Atlas → City → Example</text>
+<text x="896" y="408" fill="#15273A" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900">Atlas → City guide → Example</text>
 <text x="896" y="450" fill="#15273A" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900">Planner → Result → My Trips</text>
 <defs>
 <linearGradient id="panel" x1="88" y1="42" x2="1084" y2="590" gradientUnits="userSpaceOnUse">

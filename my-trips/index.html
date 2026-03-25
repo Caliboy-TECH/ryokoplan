@@ -1045,18 +1045,69 @@
           checklist: Array.isArray(data.checklist) ? data.checklist.length : 0
         };
       }
+      function cityLoopBranchNote(destination=''){
+        const city = String(destination || '').trim();
+        const lang = window.RyokoApp.lang;
+        const map = {
+          Tokyo: {
+            ko:'도쿄는 같은 축을 더 깊게 읽을수록 저장한 루트의 품질이 올라갑니다. 다른 큰 장면을 더하기보다, 한 축을 더 매끈하게 읽어 보세요.',
+            en:'Tokyo usually improves when one axis is read more deeply instead of adding another big scene.',
+            ja:'東京は別の大きな場面を足すより、ひとつの軸を深く読むほうが保存したルートの質が上がります。',
+            zhHant:'東京比起再加一個大場景，更適合把其中一條軸線讀深，保存下來的路線也會更乾淨。'
+          },
+          Kyoto: {
+            ko:'교토는 더 보려 하기보다 여백을 지키는 쪽이 저장 루프와 잘 맞습니다.',
+            en:'Kyoto usually fits the save-and-reopen loop better when space is protected instead of filled.',
+            ja:'京都は足すより余白を守るほうが、保存して読み直すループに合います。',
+            zhHant:'京都更適合守住留白，而不是再往裡塞更多，這樣也更符合保存再閱讀的循環。'
+          },
+          Seoul: {
+            ko:'서울은 동네 대비를 더 읽을수록 저장한 루트가 선명해집니다. 강한 구역과 느슨한 포켓을 같이 보세요.',
+            en:'Seoul gets clearer when the saved route keeps one stronger district beside one looser pocket.',
+            ja:'ソウルは強い地区とゆるいポケットを一緒に見るほど、保存したルートがはっきりします。',
+            zhHant:'首爾在一個強區域旁邊留一個鬆一點的 pocket 時，保存下來的路線會更清楚。'
+          },
+          Busan: {
+            ko:'부산은 바다 장면 하나와 쉬는 창 하나를 같이 남겨 두는 편이 다음 읽기로 이어지기 좋습니다.',
+            en:'Busan usually branches better when one coast view and one real rest window stay together.',
+            ja:'釜山は海の場面ひとつと休む窓ひとつを一緒に残すほうが、次の読みに自然につながります。',
+            zhHant:'釜山更適合同時留下看海的一段和真正休息的一段，這樣才更容易接到下一步。'
+          },
+          Fukuoka: {
+            ko:'후쿠오카는 식사 리듬을 지키는 쪽이 다음 추천으로 이어지기 좋습니다.',
+            en:'Fukuoka usually carries forward better when the meal rhythm stays intact.',
+            ja:'福岡は食のリズムを守るほうが、次のおすすめへ自然につながります。',
+            zhHant:'福岡比較適合守住吃的節奏，這樣才更容易接到下一輪推薦。'
+          },
+          Taipei: {
+            ko:'타이베이는 밤 공기와 식사 리듬을 같이 읽을수록 저장한 루트가 더 살아납니다.',
+            en:'Taipei becomes more alive when the saved route keeps the night air and food rhythm together.',
+            ja:'台北は夜の空気と食のリズムを一緒に読むほど、保存したルートが生きてきます。',
+            zhHant:'台北在把夜晚空氣和吃的節奏一起讀進去時，保存下來的路線會更有生命。'
+          },
+          'Hong Kong': {
+            ko:'홍콩은 압축된 장면 사이에 숨 쉴 구간을 남겨야 다음 가지로 이어지기 좋습니다.',
+            en:'Hong Kong branches more cleanly when one breathing pocket sits between the compressed scenes.',
+            ja:'香港は圧縮された場面のあいだに呼吸できる区間を残すと、次の枝へつながりやすくなります。',
+            zhHant:'香港要在壓縮感很強的場景之間留一段能喘口氣的區間，才更容易延伸到下一個分支。'
+          }
+        };
+        const entry = map[city];
+        if (!entry) return '';
+        return entry[lang] || entry.en;
+      }
       function tripLoopUi(){
         return window.RyokoApp.lang === 'ko' ? {
-          eyebrow:'city-first loop', title:'지금 저장한 흐름에서 다음 읽기를 고릅니다', related:'결이 맞는 다음 가지', sameGuide:'같은 도시 guide', sameExample:'같은 도시 example', neighborhood:'동네 픽 읽기', planAgain:'다시 다듬기', branchNote:'지금 저장한 여행의 결을 기준으로, 같은 도시 안쪽과 다음 도시 가지를 같이 엽니다.',
+          eyebrow:'city-first loop', title:'저장한 루트에서 다음 도시 읽기를 고릅니다', related:'결이 맞는 다음 가지', sameGuide:'같은 도시 guide', sameExample:'같은 도시 example', neighborhood:'동네 픽 읽기', planAgain:'다시 다듬기', branchNote:'저장한 루트의 결을 기준으로, 같은 도시를 더 깊게 읽고 다음 도시 가지를 함께 엽니다.',
           whySame:'같은 도시의 동네 결을 더 깊게 읽습니다.', whyExample:'예시 루트와 밀도 차이를 비교합니다.', whyNeighborhood:'어떤 동네가 이 루트를 지탱하는지 다시 봅니다.', whyBranch:'비슷한 톤의 다음 도시로 자연스럽게 넘어갑니다.'
         } : window.RyokoApp.lang === 'ja' ? {
-          eyebrow:'city-first loop', title:'保存した流れから次の読み先を選びます', related:'次につながる枝', sameGuide:'同じ都市の guide', sameExample:'同じ都市の example', neighborhood:'近所のピックを読む', planAgain:'もう一度整える', branchNote:'保存した旅のトーンを基準に、同じ都市の内側と次の都市ブランチを一緒に開きます。',
+          eyebrow:'city-first loop', title:'保存したルートから次の都市の読み先を選びます', related:'次につながる枝', sameGuide:'同じ都市の guide', sameExample:'同じ都市の example', neighborhood:'近所のピックを読む', planAgain:'もう一度整える', branchNote:'保存したルートのトーンを基準に、同じ都市を深く読み、次の都市ブランチも一緒に開きます。',
           whySame:'同じ都市の近所の層をもう少し深く読みます。', whyExample:'サンプルルートと密度の差を比べます。', whyNeighborhood:'このルートを支える近所のロジックを見直します。', whyBranch:'近いトーンの次都市へ自然につなげます。'
         } : window.RyokoApp.lang === 'zhHant' ? {
-          eyebrow:'city-first loop', title:'從已保存的節奏，挑下一步要讀哪裡', related:'適合延伸的下一個分支', sameGuide:'同城市 guide', sameExample:'同城市 example', neighborhood:'讀鄰里精選', planAgain:'再微調一次', branchNote:'以這次保存的旅程調性為基準，同時打開同城市內層與下一座城市分支。',
+          eyebrow:'city-first loop', title:'從已保存的路線，挑下一步要讀哪座城市', related:'適合延伸的下一個分支', sameGuide:'同城市 guide', sameExample:'同城市 example', neighborhood:'讀鄰里精選', planAgain:'再微調一次', branchNote:'以這次保存路線的調性為準，先把同城市讀得更深，再一起打開下一座城市分支。',
           whySame:'把同城市的鄰里層次再讀深一點。', whyExample:'比較範例路線與現在節奏的密度差。', whyNeighborhood:'重新看一次支撐這條路線的鄰里邏輯。', whyBranch:'自然延伸到調性相近的下一座城市。'
         } : {
-          eyebrow:'city-first loop', title:'Use your saved trip to choose the next read', related:'Next branches that fit this tone', sameGuide:'Same-city guide', sameExample:'Same-city example', neighborhood:'Read neighborhood picks', planAgain:'Tune it again', branchNote:'Using the tone of this saved trip, open the same city from the inside and a related city branch side by side.',
+          eyebrow:'city-first loop', title:'Use your saved route to choose the next city read', related:'Next branches that fit this tone', sameGuide:'Same-city guide', sameExample:'Same-city example', neighborhood:'Read neighborhood picks', planAgain:'Tune it again', branchNote:'Use the tone of this saved route to reopen the same city more deeply, then branch into the next fitting city.',
           whySame:'Read the same city through a deeper neighborhood layer.', whyExample:'Compare your current density against the example route.', whyNeighborhood:'Re-open the neighborhood logic supporting this route.', whyBranch:'Branch naturally into a city with a matching tone.'
         };
       }
@@ -1115,7 +1166,7 @@
             </div>
             <div class="shared-spotlight-note">
               <strong>City-first note</strong>
-              <span>${item.importedFromLink ? 'It came in through a shared link, so saving it here keeps the city loop easy to reopen later.' : 'Shared trips get stronger when you can save them, compare them, and branch into your own city-first version.'}</span>
+              <span>${cityLoopBranchNote(item.destination) || (item.importedFromLink ? 'It came in through a shared link, so saving it here keeps the city loop easy to reopen later.' : 'Shared trips get stronger when you can save them, compare them, and branch into your own city-first version.')}</span>
             </div>
             <div class="card-actions">
               <a class="primary-btn" href="${shareUrl(item)}">Open shared trip</a>
@@ -1136,7 +1187,7 @@
         const days = Array.isArray(data.days) ? data.days : [];
         const dayPreview = days.slice(0,3).map(day => `<article class="trip-detail-day"><strong>${day.title || ('Day ' + day.day)}</strong><p>${(day.intro || '').slice(0,120)}</p></article>`).join('');
         const tips = (Array.isArray(data.localTips) ? data.localTips : []).slice(0,3).map(t => `<li>${t}</li>`).join('');
-        const summary = getMetaSummary(item) || 'A trip you can reopen, save, or turn into a new plan.';
+        const summary = getMetaSummary(item) || cityLoopBranchNote(item.destination) || 'A trip you can reopen, save, or turn into a new plan.';
         content.innerHTML = `
           <div class="trip-detail-hero">
             <div class="trip-detail-media"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.jpg'}" alt="${item.destination || 'Trip'}"></div>
@@ -1163,7 +1214,7 @@
                 <div><span>Checklist</span><strong>${(data.checklist || []).length || '—'}</strong></div>
                 <div><span>Updated</span><strong>${formatDate(getTimestamp(item)) || '—'}</strong></div>
               </div>
-              <p class="card-copy">${item.importedFromLink ? 'This one was imported from a shared Ryokoplan link and can now live inside your own trip vault.' : 'This trip is already inside your vault, so it is easy to reopen or branch from here.'}</p>
+              <p class="card-copy">${cityLoopBranchNote(item.destination) || (item.importedFromLink ? 'This one was imported from a shared Ryokoplan link and can now live inside your own trip vault.' : 'This trip is already inside your vault, so it is easy to reopen or branch from here.')}</p>
             </article>
             <article class="info-card trip-detail-panel">
               <h3>Day rhythm preview</h3>
@@ -1302,7 +1353,7 @@
         }
         const current = window.RyokoApp.getCityLoopData(anchor.destination) || { name: anchor.destination || 'Trip', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
         const related = getLoopBranches(anchor, current);
-        const summary = (anchor.planData?.summary || anchor.notes || ui.branchNote).slice(0, 180);
+        const summary = (anchor.planData?.summary || anchor.notes || cityLoopBranchNote(anchor.destination) || ui.branchNote).slice(0, 180);
         main.innerHTML = `
           <span class="eyebrow">${ui.eyebrow}</span>
           <h3>${current.name} · ${ui.title}</h3>

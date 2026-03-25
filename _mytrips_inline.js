@@ -810,7 +810,7 @@
           checklist: Array.isArray(data.checklist) ? data.checklist.length : 0
         };
       }
-      function renderSharedSpotlight(shared){
+
         const node = $('sharedSpotlight');
         const section = $('sharedSpotlightSection');
         if (!node || !section) return;
@@ -1027,7 +1027,7 @@
         main.innerHTML = `
           <span class="eyebrow">${langCopy().loopVaultEyebrow || "From your vault"}</span>
           <h3>${current.name} ${langCopy().loopVaultTitle || "can lead the next step too"}</h3>
-          <p>${(anchor.planData?.summary || anchor.notes || 'Use your saved trip as a base, then deepen it with a city guide or branch to a related city.').slice(0, 180)}</p>
+          <p>${(anchor.planData?.summary || anchor.notes || 'Use your saved trip as a base, then deepen one city axis before branching into the next related city.').slice(0, 180)}</p>
           <div class="trip-loop-destinations">
             <span class="trip-loop-chip">${current.name}</span>
             ${related.map(city => `<span class="trip-loop-chip">${city.name}</span>`).join('')}
