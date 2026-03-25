@@ -2453,3 +2453,16 @@ body[data-page="planner"] .top-bar{z-index:62}
 
 .city-priority-depth .district-grid-rich:has(.district-card-rich:only-child){grid-template-columns:1fr}
 .secondary-story-grid .collection-kicker{letter-spacing:.08em}
+
+
+/* v37 hierarchy polish */
+.secondary-story-section .section-head{opacity:.92}
+.secondary-story-grid{gap:14px}
+.secondary-story-card{background:linear-gradient(180deg,rgba(252,249,245,.96),rgba(255,255,255,.98));border:1px solid rgba(21,39,58,.07)}
+.secondary-story-card .collection-kicker{color:#8e6846}
+.secondary-story-card h3{font-size:1.02rem}
+.secondary-story-card .ghost-btn{opacity:.92}
+#homeStoryLayerRoot .priority-article-card h3,
+#magazinePriorityArticleRoot .priority-article-card h3{font-size:1.08rem}
+#homeStoryLayerRoot .priority-article-grid,
+#magazinePriorityArticleRoot .priority-article-grid{gap:18px}
