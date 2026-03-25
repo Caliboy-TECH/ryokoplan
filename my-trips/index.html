@@ -742,6 +742,7 @@
             <div class="hero-actions">
               <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
               <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'Read city layer'}</a>
+              <a class="ghost-btn" href="${articleHrefForCity(latest.destination)}">${articleLabel()}</a>
               <button class="secondary-btn" data-copy="${latest.id}">${window.RyokoApp.t('trips.tripShare')}</button>
             </div>
           </div>`;

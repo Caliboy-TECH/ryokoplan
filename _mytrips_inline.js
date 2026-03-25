@@ -430,13 +430,13 @@
         const map = {
           tokyo: {
             ko:{visit:'방문 분기', first:['첫 방문','Asakusa → Ueno → Kiyosumi'], second:['두 번째','Kiyosumi → Jinbocho → Kagurazaka'], entry:['Classic first read','Design-soft read']},
-            en:{visit:'Visit lens', first:['First trip','Asakusa → Ueno → Kiyosumi'], second:['Return trip','Kiyosumi → Jinbocho → Kagurazaka'], entry:['Classic opener','Design-soft']},
+            en:{visit:'Visit lens', first:['First trip','Asakusa → Ueno → Kiyosumi'], second:['Return trip','Kiyosumi → Jinbocho → Kagurazaka'], entry:['Classic','Design-soft']},
             ja:{visit:'訪問レンズ', first:['初回','Asakusa → Ueno → Kiyosumi'], second:['再訪','Kiyosumi → Jinbocho → Kagurazaka'], entry:['最初の入口','デザイン寄り入口']},
             zhHant:{visit:'造訪視角', first:['初訪','Asakusa → Ueno → Kiyosumi'], second:['再訪','Kiyosumi → Jinbocho → Kagurazaka'], entry:['第一入口','設計感入口']}
           },
           seoul: {
             ko:{visit:'방문 분기', first:['첫 방문','Seongsu → Euljiro → Seochon'], second:['두 번째','Mangwon → Seochon → Euljiro late'], entry:['Contrast opener','Soft local opener']},
-            en:{visit:'Visit lens', first:['First trip','Seongsu → Euljiro → Seochon'], second:['Return trip','Mangwon → Seochon → Euljiro late'], entry:['Contrast opener','Soft local']},
+            en:{visit:'Visit lens', first:['First trip','Seongsu → Euljiro → Seochon'], second:['Return trip','Mangwon → Seochon → Euljiro late'], entry:['Contrast','Soft local']},
             ja:{visit:'訪問レンズ', first:['初回','Seongsu → Euljiro → Seochon'], second:['再訪','Mangwon → Seochon → Euljiro late'], entry:['対比の入口','ローカル寄り入口']},
             zhHant:{visit:'造訪視角', first:['初訪','Seongsu → Euljiro → Seochon'], second:['再訪','Mangwon → Seochon → Euljiro late'], entry:['對比入口','在地入口']}
           },
@@ -448,7 +448,7 @@
           },
           taipei: {
             ko:{visit:'방문 분기', first:['첫 방문','Yongkang → Dihua → one night market'], second:['두 번째','Chifeng → Treasure Hill → tea room close'], entry:['Food-first opener','Texture opener']},
-            en:{visit:'Visit lens', first:['First trip','Yongkang → Dihua → one night market'], second:['Return trip','Chifeng → Treasure Hill → tea room close'], entry:['Food-first','Texture opener']},
+            en:{visit:'Visit lens', first:['First trip','Yongkang → Dihua → one night market'], second:['Return trip','Chifeng → Treasure Hill → tea room close'], entry:['Food-first','Texture']},
             ja:{visit:'訪問レンズ', first:['初回','Yongkang → Dihua → one night market'], second:['再訪','Chifeng → Treasure Hill → tea room close'], entry:['食から入る','質感から入る']},
             zhHant:{visit:'造訪視角', first:['初訪','Yongkang → Dihua → one night market'], second:['再訪','Chifeng → Treasure Hill → tea room close'], entry:['先吃再讀','先讀質感']}
           },
@@ -460,7 +460,7 @@
           },
           busan: {
             ko:{visit:'방문 분기', first:['첫 방문','Haeundae → Gwangalli → one night shore'], second:['두 번째','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['Sea-first opener','Harbor-texture opener']},
-            en:{visit:'Visit lens', first:['First trip','Haeundae → Gwangalli → one night shore'], second:['Return trip','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['Sea-first','Harbor texture']},
+            en:{visit:'Visit lens', first:['First trip','Haeundae → Gwangalli → one night shore'], second:['Return trip','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['Sea-first','Harbor']},
             ja:{visit:'訪問レンズ', first:['初回','Haeundae → Gwangalli → one night shore'], second:['再訪','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['海から入る','港の質感から入る']},
             zhHant:{visit:'造訪視角', first:['初訪','Haeundae → Gwangalli → one night shore'], second:['再訪','Yeongdo → Nampo/Bosu → Gwangalli close'], entry:['從海開始','從港口質感開始']}
           },
@@ -477,7 +477,15 @@
         const lang = window.RyokoApp.lang === 'zhHant' ? 'zhHant' : (window.RyokoApp.lang || 'en');
         return pack[lang] || pack.en || null;
       }
-      function visitEntryMarkup(city='', extraClass=''){
+      
+      function articleHrefForCity(city=''){
+        return '../magazine/index.html#magazinePriorityArticleRoot';
+      }
+      function articleLabel(){
+        const lang = window.RyokoApp.lang === 'zhHant' ? 'zhHant' : (window.RyokoApp.lang || 'en');
+        return ({ko:'아티클 깊이', en:'Article depth', ja:'article depth', zhHant:'article depth'})[lang] || 'Article depth';
+      }
+function visitEntryMarkup(city='', extraClass=''){
         const pack = priorityVisitEntryPack(city);
         if (!pack) return '';
         return `<div class="trip-entry-inline ${extraClass}"><strong>${pack.visit}</strong><div class="trip-entry-row"><span class="trip-entry-chip">${pack.first[0]} · ${pack.first[1]}</span><span class="trip-entry-chip">${pack.second[0]} · ${pack.second[1]}</span></div><div class="trip-entry-row">${(pack.entry || []).slice(0,2).map(v => `<span class="trip-entry-chip trip-entry-chip-soft">${v}</span>`).join('')}</div></div>`;
@@ -592,6 +600,7 @@
             <div class="hero-actions">
               <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
               <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'Read city layer'}</a>
+              <a class="ghost-btn" href="${articleHrefForCity(latest.destination)}">${articleLabel()}</a>
               <button class="secondary-btn" data-copy="${latest.id}">${window.RyokoApp.t('trips.tripShare')}</button>
             </div>
           </div>`;

@@ -869,7 +869,7 @@ function getPriorityRefinePack(city=''){
       <div class="shared-product-grid">
         <article class="shared-product-card info-card">
           <span class="eyebrow">${uiCopy('저장 컬렉션','Saved collection','保存コレクション','已存收藏')}</span>
-          <h4>${uiCopy('이 도시를 보관하는 기준점', 'A cleaner base for keeping this city', 'この都市を保管する基準点', '保留這座城市的基準點')}</h4>
+          <h4>${uiCopy('이 도시를 보관하는 기준점', 'A cleaner city base', 'この都市を保管する基準点', '保留這座城市的基準點')}</h4>
           <p>${collectionDesc}</p>
           <div class="trip-chip-row">
             <span class="trip-mini-chip">${saved.length} ${uiCopy('저장','saved','保存','已存')}</span>
@@ -879,16 +879,18 @@ function getPriorityRefinePack(city=''){
           <div class="card-actions">
             <a class="soft-btn" href="${window.RyokoApp.navHref('trips')}">${uiCopy('My Trips 보기','Open My Trips','My Trips を開く','打開 My Trips')}</a>
             <a class="ghost-btn" href="${guideHref}">${uiCopy('도시 가이드','City guide','都市ガイド','城市指南')}</a>
+            <a class="ghost-btn" href="${articleHref}">${uiCopy('아티클 깊이','Article depth','article depth','article depth')}</a>
           </div>
         </article>
         <article class="shared-product-card info-card">
           <span class="eyebrow">${uiCopy('이어 읽기','Continue reading','続けて読む','接續閱讀')}</span>
-          <h4>${uiCopy('다음 클릭을 더 자연스럽게', 'Where to reopen the loop next', '次のクリックを自然にする', '讓下一次點擊更自然')}</h4>
+          <h4>${uiCopy('다음 클릭을 더 자연스럽게', 'Where to reopen next', '次のクリックを自然にする', '讓下一次點擊更自然')}</h4>
           <p>${continueDesc}</p>
           ${renderEntryRouteMiniBlock(baseCity, 'compact')}
           <div class="card-actions">
             <a class="primary-btn" href="${latestHref}">${latest ? uiCopy('최근 루트 열기','Open recent route','最近のルートを開く','打開最近路線') : uiCopy('이 루트 저장','Save this route','このルートを保存','保存這條路線')}</a>
             <a class="secondary-btn" href="${exampleHref}">${uiCopy('샘플 비교','Compare sample','サンプル比較','對照範例')}</a>
+            <a class="ghost-btn" href="${articleHref}">${uiCopy('아티클 깊이','Article depth','article depth','article depth')}</a>
           </div>
         </article>
       </div>`;
