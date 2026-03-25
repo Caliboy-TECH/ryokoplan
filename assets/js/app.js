@@ -1193,10 +1193,10 @@ window.RyokoApp = (() => {
         const picksDesc = lang === 'ko' ? '먼저 읽기 좋은 동네와 연결 district, 들어가기 좋은 시간대를 같이 묶었습니다.' : lang === 'ja' ? '入りやすい近所、つながる district、相性のいい時間帯を一つの束で読めるようにしました。' : lang === 'zhHant' ? '把最適合先讀的近所、連動 district、以及最適時段放在同一個閱讀節奏裡。' : 'Each card ties the first neighborhood read to a district anchor and an easy entry window.';
         return `<section class="section city-neighborhood-bridge" id="city-neighborhoods"><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '동네 픽' : lang === 'ja' ? '近所のピック' : lang === 'zhHant' ? '鄰里精選' : 'Neighborhood picks'}</div><h2 class="section-title">${lang === 'ko' ? entry.planner + '를 여는 첫 동네들' : lang === 'ja' ? entry.planner + ' を開く最初の近所' : lang === 'zhHant' ? '打開 ' + entry.planner + ' 的第一批近所' : 'The neighborhoods that open ' + entry.planner}</h2><p class="section-desc">${picksIntro}</p></div></div><p class="city-neighborhood-intro">${picksDesc}</p><div class="city-neighborhood-grid city-neighborhood-grid-deep">${picks.map((item, i) => `<article class="city-neighborhood-card city-neighborhood-card-deep"><span class="district-index">0${i+1}</span><strong>${item.name}</strong><p>${item.note}</p><div class="city-neighborhood-meta"><span><strong>${item.linkedLabel}</strong>${item.district}</span><span><strong>${item.bestLabel}</strong>${item.window}</span></div><div class="city-neighborhood-deeper"><span class="mini-label">${item.routeLabel}</span><small>${item.deeper}</small></div></article>`).join('')}</div></article></section>`;
       })()}
-      <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? '샘플 루트' : lang === 'ja' ? 'サンプルルート' : lang === 'zhHant' ? '範例路線' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? '샘플 일정' : lang === 'ja' ? 'サンプル旅程' : lang === 'zhHant' ? '範例行程' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="city-route-variations"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '루트 변주' : lang === 'ja' ? 'ルートの変奏' : lang === 'zhHant' ? '路線變奏' : 'Route variations'}</div><h3 class="section-title">${lang === 'ko' ? entry.planner + '를 바꾸는 세 가지 방식' : lang === 'ja' ? entry.planner + ' を変える3つの方法' : lang === 'zhHant' ? '改寫 ' + entry.planner + ' 的三種方式' : 'Three ways to reshape ' + entry.planner}</h3><p class="section-desc">${lang === 'ko' ? '날씨, 속도, 밤 리듬에 따라 sample route를 바로 바꿔 읽을 수 있게 묶었습니다.' : lang === 'ja' ? '天気、速度感、夜のリズムに合わせてサンプルをすぐ曲げられるようにまとめました。' : lang === 'zhHant' ? '依照天氣、節奏與夜晚比重，這條 sample route 可以這樣直接改寫。' : 'Use these as quick switches when weather, speed, or the night rhythm changes.'}</p></div></div><div class="city-route-variation-grid">${getCityRouteVariations(slug).map(item => `<article class="city-route-variation-card"><span class="mini-label">${item.title}</span><p>${item.desc}</p></article>`).join('')}</div></div><div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : lang === 'ja' ? 'サンプル全体を開く' : lang === 'zhHant' ? '打開完整範例' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : lang === 'ja' ? 'Planner で調整する' : lang === 'zhHant' ? '在 Planner 裡調整' : 'Customize in Planner'}</a></div></article></section>
+      <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? '샘플 루트' : lang === 'ja' ? 'サンプルルート' : lang === 'zhHant' ? '範例路線' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? '샘플 일정' : lang === 'ja' ? 'サンプル旅程' : lang === 'zhHant' ? '範例行程' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="city-route-variations"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '루트 변주' : lang === 'ja' ? 'ルートの変奏' : lang === 'zhHant' ? '路線變奏' : 'Route variations'}</div><h3 class="section-title">${lang === 'ko' ? entry.planner + '를 바꾸는 세 가지 방식' : lang === 'ja' ? entry.planner + ' を変える3つの方法' : lang === 'zhHant' ? '改寫 ' + entry.planner + ' 的三種方式' : 'Three ways to reshape ' + entry.planner}</h3><p class="section-desc">${lang === 'ko' ? '날씨, 속도, 밤 리듬에 따라 sample route를 바로 바꿔 읽을 수 있게 묶었습니다.' : lang === 'ja' ? '天気、速度感、夜のリズムに合わせてサンプルをすぐ曲げられるようにまとめました。' : lang === 'zhHant' ? '依照天氣、節奏與夜晚比重，這條 sample route 可以這樣直接改寫。' : 'Use these as quick switches when weather, speed, or the night rhythm changes.'}</p></div></div><div class="city-route-variation-grid">${getCityRouteVariations(slug).map(item => `<article class="city-route-variation-card"><span class="mini-label">${item.title}</span><strong class="city-route-variation-focus">${item.focus || ''}</strong><p>${item.desc}</p><div class="card-actions city-route-variation-actions"><a class="soft-link" href="${item.href || ('../city/' + cityGuideSlugFromExample(slug) + '.html')}">${lang === 'ko' ? '도시 가이드에서 이어 보기' : lang === 'ja' ? '都市ガイドで続きを読む' : lang === 'zhHant' ? '到城市指南繼續看' : 'Continue in city guide'}</a></div></article>`).join('')}</div></div><div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : lang === 'ja' ? 'サンプル全体を開く' : lang === 'zhHant' ? '打開完整範例' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : lang === 'ja' ? 'Planner で調整する' : lang === 'zhHant' ? '在 Planner 裡調整' : 'Customize in Planner'}</a><a class="ghost-btn" href="../city/${cityGuideSlugFromExample(slug)}.html">${lang === 'ko' ? '도시 가이드로 돌아가기' : lang === 'ja' ? '都市ガイドへ戻る' : lang === 'zhHant' ? '回到城市指南' : 'Back to city guide'}</a></div></article></section>
       <section class="section city-reading-grid city-reading-grid-rich" id="city-tips"><article class="info-card editorial-panel"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('localNotes')}</div><h2 class="section-title">${uiText('localTips')}</h2><p class="section-desc">${lang === 'ko' ? '작은 조정만으로도 여행 체감이 확실히 좋아집니다.' : lang === 'ja' ? '小さな工夫だけで旅の快適さがかなり変わります。' : lang === 'zhHant' ? '只要做一些小調整，整體旅行體感就會明顯更好。' : 'Small adjustments that noticeably improve the trip.'}</p></div></div><ul class="editorial-bullets">${data.tips.map(item => `<li>${item}</li>`).join('')}</ul></article><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('beforeYouGo')}</div><h2 class="section-title">${uiText('keepInMind')}</h2><p class="section-desc">${lang === 'ko' ? '출발 전에 챙겨두면 바로 체감되는 것들입니다.' : lang === 'ja' ? '出発前に整えておくと、すぐ効いてくるポイントです。' : lang === 'zhHant' ? '出發前先準備好，旅途中會立刻感受到差別。' : 'Small prep choices that pay off immediately.'}</p></div></div><ul class="editorial-bullets">${data.keep.map(item => `<li>${item}</li>`).join('')}</ul></article></section>
       ${(() => { const seasonal = getSeasonalCityFeature(entry.planner); return seasonal ? `<section class="section city-seasonal-bridge"><article class="info-card seasonal-bridge-card"><div class="section-head compact"><div><div class="editorial-kicker">${seasonal.label}</div><h2 class="section-title">${seasonal.title}</h2><p class="section-desc">${seasonal.desc}</p></div></div><div class="trip-chip-row seasonal-chip-row">${seasonal.chips.map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}</div></article></section>` : ''; })()}
-      <section class="section footer-cta info-card city-final-cta"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${data.finalTitle}</h2><p>${data.finalDesc}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner'}</a><a class="secondary-btn" href="../magazine/index.html">${lang === 'ko' ? '매거진으로 돌아가기' : lang === 'ja' ? 'マガジンへ戻る' : lang === 'zhHant' ? '回到城市誌' : 'Back to Magazine'}</a></div></section>
+      <section class="section footer-cta info-card city-final-cta"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${data.finalTitle}</h2><p>${data.finalDesc}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner'}</a><a class="secondary-btn" href="../example/${entry.example}">${lang === 'ko' ? '샘플 읽기' : lang === 'ja' ? 'サンプルを読む' : lang === 'zhHant' ? '讀範例路線' : 'Read sample'}</a><a class="ghost-btn" href="${exampleAtlasHref()}">${lang === 'ko' ? 'atlas 보기' : lang === 'ja' ? 'atlas を見る' : lang === 'zhHant' ? '看 atlas' : 'See atlas'}</a></div></section>
       <div class="footer">Ryokoplan ${guideLabel}</div>`;
     document.title = `${entry.planner} — Ryokoplan`;
   }
@@ -1219,9 +1219,10 @@ window.RyokoApp = (() => {
       <section class="section city-overview-composition"><div class="city-overview-lead"><div class="editorial-kicker">${uiText('atAGlance')}</div><h2 class="section-title">${lang === 'ko' ? '먼저 이 샘플의 결을 읽어보세요' : lang === 'ja' ? 'まずこのサンプルのトーンを読んでみてください' : lang === 'zhHant' ? '先讀懂這個範例的節奏與語氣' : 'Read the tone of the sample first'}</h2><p class="section-desc">${lang === 'ko' ? '이 예시는 장소 리스트보다 하루 리듬을 가져가는 데 더 큰 가치가 있습니다.' : lang === 'ja' ? 'このサンプルは、場所の一覧というより一日のテンポを見るための土台として使うのが向いています。' : lang === 'zhHant' ? '這個範例比起固定清單，更適合拿來理解一天的節奏。' : 'This example is more useful as a pacing reference than as a strict checklist.'}</p></div><div class="city-meta-strip"><article class="meta-card feature"><span class="meta-label">${lang === 'ko' ? '잘 맞는 여행' : lang === 'ja' ? '向いている旅' : lang === 'zhHant' ? '適合的旅程' : 'Best for'}</span><span class="meta-value">${cityData.bestFor}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? '추천 페이스' : lang === 'ja' ? 'おすすめのペース' : lang === 'zhHant' ? '建議節奏' : 'Suggested pace'}</span><span class="meta-value">${cityData.pace}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? '예산 감각' : lang === 'ja' ? '予算感' : lang === 'zhHant' ? '預算感受' : 'Budget feel'}</span><span class="meta-value">${cityData.budgetFeel}</span></article></div></section>
       ${renderCityOps(slug.split('-')[0])}
       ${renderExampleOps(slug)}
+      ${renderExampleFlowBridge(slug)}
       <section class="section" id="example-flow"><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${uiText('dayByDay')}</div><h2 class="section-title">${lang === 'ko' ? '루트는 이렇게 전개됩니다' : lang === 'ja' ? 'ルートはこのテンポで展開します' : lang === 'zhHant' ? '路線會以這個節奏展開' : 'How the route unfolds'}</h2><div class="example-summary editorial-summary timeline-style">${sample.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div></article></section>
       <section class="section city-reading-grid city-reading-grid-rich" id="example-why"><article class="info-card editorial-panel editorial-panel-contrast"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '왜 잘 맞는지' : lang === 'ja' ? 'なぜうまくはまるのか' : lang === 'zhHant' ? '為什麼這樣更成立' : 'Why it lands'}</div><h2 class="section-title">${uiText('whyItWorks')}</h2><p class="section-desc">${lang === 'ko' ? '포인트는 많이 보는 게 아니라 도시를 일관되게 느끼게 만드는 것입니다.' : lang === 'ja' ? '大事なのは全部行くことではなく、街を一つの流れとして感じられることです。' : lang === 'zhHant' ? '重點不是把所有地方都塞進去，而是讓整座城市感覺是連成一個節奏。' : 'The point is not to do everything, but to make the city feel coherent.'}</p></div></div><ul class="editorial-bullets">${(editorialData.example[slug]?.[lang] || editorialData.example[slug]?.en || {}).whyBullets.map(item => `<li>${item}</li>`).join('')}</ul></article><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '편집 전에 조정할 점' : lang === 'ja' ? '編集前に整える点' : lang === 'zhHant' ? '正式編排前先調整' : 'Adjust before editing'}</div><h2 class="section-title">${uiText('adjustBeforeEditing')}</h2><p class="section-desc">${lang === 'ko' ? '커스텀 전에 기준으로 삼기 좋은 포인트입니다.' : lang === 'ja' ? '自分用に変える前に、先に押さえておくと良い基準です。' : lang === 'zhHant' ? '在客製之前，先拿來當基準的幾個重點。' : 'Good baseline decisions before you customize it.'}</p></div></div><ul class="editorial-bullets"><li>${(editorialData.example[slug]?.[lang] || editorialData.example[slug]?.en || {}).swapNote}</li><li>${(editorialData.example[slug]?.[lang] || editorialData.example[slug]?.en || {}).energyControl}</li><li>${cityData.keep[0]}</li></ul></article></section>
-      <section class="section footer-cta info-card city-final-cta" id="example-next"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${lang === 'ko' ? '리스트보다 이 루트의 결을 가져가세요' : lang === 'ja' ? 'リストより、このルートのトーンを持ち帰ってください' : lang === 'zhHant' ? '帶走這條路線的節奏，而不只是清單' : 'Take the route logic, not just the list'}</h2><p>${lang === 'ko' ? '플래너에서 일수, 동행, 무드만 바꿔도 같은 결의 다른 여행으로 확장할 수 있습니다.' : lang === 'ja' ? 'Planner では日数、同行者、ムードを変えるだけで、同じトーンの別の旅に広げられます。' : lang === 'zhHant' ? '在 Planner 裡，只要改天數、同行者和氛圍，就能延伸成同樣調性的另一趟旅程。' : 'In Planner, keep the tone but change days, pace, companion, and mood to make it yours.'}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.city)}">${lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner'}</a><a class="secondary-btn" href="../magazine/index.html">${lang === 'ko' ? '매거진으로 돌아가기' : lang === 'ja' ? 'マガジンへ戻る' : lang === 'zhHant' ? '回到城市誌' : 'Back to Magazine'}</a></div></section><div class="footer">Ryokoplan Magazine</div>`;
+      <section class="section footer-cta info-card city-final-cta" id="example-next"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${lang === 'ko' ? '리스트보다 이 루트의 결을 가져가세요' : lang === 'ja' ? 'リストより、このルートのトーンを持ち帰ってください' : lang === 'zhHant' ? '帶走這條路線的節奏，而不只是清單' : 'Take the route logic, not just the list'}</h2><p>${lang === 'ko' ? '플래너에서 일수, 동행, 무드만 바꿔도 같은 결의 다른 여행으로 확장할 수 있습니다.' : lang === 'ja' ? 'Planner では日数、同行者、ムードを変えるだけで、同じトーンの別の旅に広げられます。' : lang === 'zhHant' ? '在 Planner 裡，只要改天數、同行者和氛圍，就能延伸成同樣調性的另一趟旅程。' : 'In Planner, keep the tone but change days, pace, companion, and mood to make it yours.'}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.city)}">${lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner'}</a><a class="secondary-btn" href="../city/${cityGuideSlugFromExample(slug)}.html">${lang === 'ko' ? '도시 가이드로 돌아가기' : lang === 'ja' ? '都市ガイドへ戻る' : lang === 'zhHant' ? '回到城市指南' : 'Back to city guide'}</a><a class="ghost-btn" href="${exampleAtlasHref()}">${lang === 'ko' ? 'atlas 보기' : lang === 'ja' ? 'atlas を見る' : lang === 'zhHant' ? '看 atlas' : 'See atlas'}</a></div></section><div class="footer">Ryokoplan Magazine</div>`;
     document.title = `${title} — Ryokoplan`;
   }
   function buildDiscoveryItems(){
@@ -1598,14 +1599,91 @@ function getSeasonalEditorialCollections(){
     return neighborhoodDepthForCity(slug, data, atlasLocale);
   }
 
+  function cityGuideSlugFromExample(slug=''){
+    const entry = editorialData.example[slug] || null;
+    if (entry?.guide) return String(entry.guide).replace(/\.html$/,'');
+    const cityName = entry?.city || '';
+    return cityName ? cityName.toLowerCase().replace(/\s+/g,'') : '';
+  }
+
+  function exampleAtlasHref(){
+    return '../magazine/index.html#cityAtlas';
+  }
+
   function getCityRouteVariations(slug){
     const base = cityRouteVariationMap[slug]?.[lang] || cityRouteVariationMap[slug]?.en || [];
-    if (base.length) return base.map(([title, desc]) => ({title, desc}));
-    return [
-      {title: lang === 'ko' ? '비 오는 날' : lang === 'ja' ? '雨の日' : lang === 'zhHant' ? '雨天版' : 'Rainy version', desc: lang === 'ko' ? '실내 포켓을 하나 더 두고 이동 수를 줄이세요.' : lang === 'ja' ? '屋内ポケットを一つ増やし、移動回数を減らしてください。' : lang === 'zhHant' ? '多放一個室內口袋，並減少移動次數。' : 'Add one more indoor pocket and reduce the number of moves.'},
-      {title: lang === 'ko' ? '느린 버전' : lang === 'ja' ? 'ゆっくり版' : lang === 'zhHant' ? '慢節奏版' : 'Slower version', desc: lang === 'ko' ? '하루에 강한 구역 수를 줄이고 쉬는 시간을 더 두세요.' : lang === 'ja' ? '一日に入れる強いエリアを減らし、休む時間を増やしてください。' : lang === 'zhHant' ? '把一天內的強勢區域減少，並多留休息時間。' : 'Use fewer strong zones in one day and leave more time to pause.'},
-      {title: lang === 'ko' ? '밤 버전' : lang === 'ja' ? '夜版' : lang === 'zhHant' ? '夜間版' : 'Night version', desc: lang === 'ko' ? '야간 anchor를 하나만 남기고 나머지는 가볍게 닫는 편이 좋습니다.' : lang === 'ja' ? '夜のアンカーは一つだけ残し、あとは軽く閉じるほうが向いています。' : lang === 'zhHant' ? '只保留一個夜間錨點，其餘用更輕的方式收尾。' : 'Keep one night anchor only, then close the rest more lightly.'}
-    ];
+    const citySlug = cityGuideSlugFromExample(slug);
+    const cityEntry = citySlug ? editorialData.city[citySlug] : null;
+    const cityData = cityEntry ? (cityEntry[lang] || cityEntry.en || cityEntry.ko) : null;
+    const profiles = citySlug && cityData ? getCityNeighborhoodProfiles(citySlug, cityData, atlasLocaleMap[lang]?.[citySlug] || null) : [];
+    const names = profiles.slice(0,3).map(item => item.name || item.district || item.note).filter(Boolean);
+    const routeHints = {
+      rainy: {
+        title: lang === 'ko' ? '비 오는 날' : lang === 'ja' ? '雨の日' : lang === 'zhHant' ? '雨天版' : 'Rainy version',
+        desc: lang === 'ko'
+          ? `${names[0] || '실내 포켓'}처럼 실내 fallback이 쉬운 축을 앞에 두고, 이동 수를 한 단계 줄입니다.`
+          : lang === 'ja'
+            ? `${names[0] || '屋内ポケット'} のように室内 fallback を置きやすい軸を前に出し、移動回数を一段落とします。`
+            : lang === 'zhHant'
+              ? `把 ${names[0] || '室內 pocket'} 這種比較好接 indoor fallback 的軸線往前放，並把移動次數再減一點。`
+              : `Lead with an easier indoor fallback like ${names[0] || 'one indoor pocket'}, then cut one move out of the day.`,
+        focus: names[0] || (lang === 'ko' ? '실내 pocket' : lang === 'ja' ? '室内ポケット' : lang === 'zhHant' ? '室內 pocket' : 'Indoor pocket'),
+        href: citySlug ? `../city/${citySlug}.html#city-neighborhoods` : '#'
+      },
+      slower: {
+        title: lang === 'ko' ? '느린 버전' : lang === 'ja' ? 'ゆっくり版' : lang === 'zhHant' ? '慢節奏版' : 'Slower version',
+        desc: lang === 'ko'
+          ? `${names[1] || names[0] || '한 구역'}만 깊게 두고 나머지는 산책과 pause로 남기면 이 샘플의 결이 훨씬 잘 남습니다.`
+          : lang === 'ja'
+            ? `${names[1] || names[0] || '一つのエリア'} だけを深く置き、残りを散歩と pause に回すと、このサンプルのトーンがきれいに残ります。`
+            : lang === 'zhHant'
+              ? `只把 ${names[1] || names[0] || '一個區域'} 讀深，其他時間留給散步和 pause，這條 sample 的節奏會更漂亮。`
+              : `Go deep on ${names[1] || names[0] || 'one district'} only, then leave the rest for walks and pause windows.`,
+        focus: names[1] || names[0] || (lang === 'ko' ? '느린 동네' : lang === 'ja' ? '静かな近所' : lang === 'zhHant' ? '慢節奏鄰里' : 'Slower district'),
+        href: citySlug ? `../city/${citySlug}.html#city-districts` : '#'
+      },
+      night: {
+        title: lang === 'ko' ? '밤 버전' : lang === 'ja' ? '夜版' : lang === 'zhHant' ? '夜間版' : 'Night version',
+        desc: lang === 'ko'
+          ? `${names[2] || names[0] || '밤 anchor'} 하나만 선명하게 남기고, 앞부분은 더 짧게 정리하면 도시의 야간 결이 더 살아납니다.`
+          : lang === 'ja'
+            ? `${names[2] || names[0] || '夜のアンカー'} を一つだけくっきり残し、前半を短く整えると夜の質感が強く残ります。`
+            : lang === 'zhHant'
+              ? `把 ${names[2] || names[0] || '夜晚 anchor'} 留成唯一重點，前半段再收短一點，城市的夜節奏會更明確。`
+              : `Keep ${names[2] || names[0] || 'one night anchor'} as the only strong close and shorten the earlier half of the day.`,
+        focus: names[2] || names[0] || (lang === 'ko' ? '밤 anchor' : lang === 'ja' ? '夜のアンカー' : lang === 'zhHant' ? '夜間 anchor' : 'Night anchor'),
+        href: citySlug ? `../city/${citySlug}.html#city-sample` : '#'
+      }
+    };
+    const fallback = [routeHints.rainy, routeHints.slower, routeHints.night];
+    const enriched = (base.length ? base.map((item, idx) => ({ title:item[0], desc:item[1], focus:fallback[idx]?.focus, href:fallback[idx]?.href })) : fallback);
+    return enriched;
+  }
+
+  function renderExampleFlowBridge(slug){
+    const entry = editorialData.example[slug];
+    if (!entry) return '';
+    const citySlug = cityGuideSlugFromExample(slug);
+    const cityName = entry.city || '';
+    const labels = {
+      eyebrow: lang === 'ko' ? 'Route bridge' : lang === 'ja' ? 'ルートの橋渡し' : lang === 'zhHant' ? '路線橋接' : 'Route bridge',
+      title: lang === 'ko' ? 'atlas에서 읽고, city에서 깊게 보고, example에서 결을 잡습니다' : lang === 'ja' ? 'atlas で読み、city で深め、example で結をつかみます' : lang === 'zhHant' ? '先在 atlas 讀，再到 city 深看，最後在 example 抓住節奏' : 'Read it in atlas, deepen it in city, then lock the route in the example',
+      desc: lang === 'ko' ? '이 샘플은 단독 페이지가 아니라 city atlas와 도시 가이드의 연장선입니다.' : lang === 'ja' ? 'このサンプルは単独ページではなく、city atlas と都市ガイドの延長線です。' : lang === 'zhHant' ? '這個 example 不是獨立頁，而是 city atlas 與城市指南的延長。' : 'This example works best as a continuation of the atlas card and the city guide.',
+      atlas: lang === 'ko' ? 'atlas로 돌아가기' : lang === 'ja' ? 'atlas に戻る' : lang === 'zhHant' ? '回到 atlas' : 'Back to atlas',
+      city: lang === 'ko' ? '도시 가이드 더 읽기' : lang === 'ja' ? '都市ガイドを深く読む' : lang === 'zhHant' ? '繼續讀城市指南' : 'Read the city guide',
+      planner: lang === 'ko' ? '이 흐름으로 플래너 열기' : lang === 'ja' ? 'この流れで Planner を開く' : lang === 'zhHant' ? '用這個節奏打開 Planner' : 'Open Planner with this logic'
+    };
+    return `
+      <section class="section example-flow-bridge">
+        <article class="info-card editorial-panel editorial-panel-soft">
+          <div class="section-head compact"><div><div class="editorial-kicker">${labels.eyebrow}</div><h2 class="section-title">${labels.title}</h2><p class="section-desc">${labels.desc}</p></div></div>
+          <div class="example-flow-grid">
+            <a class="example-flow-card" href="${exampleAtlasHref()}"><span class="mini-label">Atlas</span><strong>${cityName}</strong><p>${labels.atlas}</p></a>
+            <a class="example-flow-card" href="../city/${citySlug}.html#city-neighborhoods"><span class="mini-label">City</span><strong>${cityName} guide</strong><p>${labels.city}</p></a>
+            <a class="example-flow-card" href="${plannerUrlForCity(cityName)}"><span class="mini-label">Planner</span><strong>${cityName}</strong><p>${labels.planner}</p></a>
+          </div>
+        </article>
+      </section>`;
   }
 
 
@@ -1710,7 +1788,7 @@ function getSeasonalEditorialCollections(){
         <div class="city-atlas-grid">${group.cities.map((slug, index) => cityAtlasCardMarkup(slug, group.label, copy, page, index)).join('')}</div>
       </section>`).join('');
     root.innerHTML = `
-      <section class="section city-atlas-section city-atlas-section-${page}">
+      <section class="section city-atlas-section city-atlas-section-${page}" id="cityAtlas">
         <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
         ${groupMarkup}
       </section>`;
