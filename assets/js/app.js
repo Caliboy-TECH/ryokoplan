@@ -1619,9 +1619,39 @@ function getSeasonalEditorialCollections(){
     return days.map((day, idx) => ({ title: day[0], desc: day[1] }));
   }
 
+
+  function localizeRhythmSignal(label=''){
+    const key = String(label || '').toLowerCase().trim();
+    if (lang === 'ja') {
+      const map = {
+        'morning anchor':'朝のアンカー','afternoon reset':'午後のリセット','night close':'夜の締め',
+        'quiet morning':'静かな朝','soft middle':'午後の余白','dusk close':'夕暮れの締め',
+        'first district':'最初の街区','midday contrast':'昼のコントラスト','night district':'夜の街区',
+        'sea opener':'海辺の始まり','rest window':'休む時間','night shore':'夜の海辺',
+        'food-first start':'最初の一食','afternoon soften':'午後のやわらぎ','compact night':'コンパクトな夜',
+        'soft opening':'やわらかな始まり','textured middle':'質感のある午後','night handoff':'夜への受け渡し',
+        'vertical start':'縦の始まり','breathing pocket':'息継ぎの余白','harbor close':'港の締め'
+      };
+      return map[key] || label;
+    }
+    if (lang === 'zhHant') {
+      const map = {
+        'morning anchor':'早晨起點','afternoon reset':'午後重整','night close':'夜間收尾',
+        'quiet morning':'安靜早晨','soft middle':'午後留白','dusk close':'黃昏收尾',
+        'first district':'第一街區','midday contrast':'中段對比','night district':'夜間街區',
+        'sea opener':'海邊開場','rest window':'休息時段','night shore':'夜晚海岸',
+        'food-first start':'先吃一口','afternoon soften':'午後放慢','compact night':'緊湊夜晚',
+        'soft opening':'柔和開場','textured middle':'有質感的中段','night handoff':'夜晚轉場',
+        'vertical start':'垂直開場','breathing pocket':'喘息空間','harbor close':'海港收尾'
+      };
+      return map[key] || label;
+    }
+    return label;
+  }
+
   function getCityDayRhythmSignals(slug, data){
     const rhythm = getCityDayRhythm(slug, data) || [];
-    return rhythm.slice(0,3).map(item => Array.isArray(item) ? item[0] : item?.title).filter(Boolean);
+    return rhythm.slice(0,3).map(item => localizeRhythmSignal(Array.isArray(item) ? item[0] : item?.title)).filter(Boolean);
   }
 
   function cityGuideSlugFromExample(slug=''){
@@ -1988,7 +2018,7 @@ function getSeasonalEditorialCollections(){
             <p>${sampleShape}</p>
             <small>${sampleLead}</small>
           </div>
-          ${rhythmSignals.length ? `<div class="city-atlas-block city-atlas-rhythm-thin"><strong>${lang === 'ko' ? 'Day rhythm' : lang === 'ja' ? 'Day rhythm' : lang === 'zhHant' ? 'Day rhythm' : 'Day rhythm'}</strong><div class="city-atlas-rhythm-row">${rhythmSignals.map(item => `<span class="city-atlas-rhythm-chip">${item}</span>`).join('')}</div></div>` : ''}
+          ${rhythmSignals.length ? `<div class="city-atlas-block city-atlas-rhythm-thin"><strong>${lang === 'ko' ? 'Day rhythm' : lang === 'ja' ? '一日のリズム' : lang === 'zhHant' ? '一日節奏' : 'Day rhythm'}</strong><div class="city-atlas-rhythm-row">${rhythmSignals.map(item => `<span class="city-atlas-rhythm-chip">${item}</span>`).join('')}</div></div>` : ''}
           <div class="card-actions city-atlas-actions">
             <a class="soft-btn" href="${resolvePath(city.guide || ('city/' + slug + '.html'))}">${copy.guide}</a>
             <a class="ghost-btn" href="${resolvePath('example/' + city.example)}">${copy.sample}</a>

@@ -2321,3 +2321,9 @@ body[data-page="planner"] .top-bar{z-index:62}
 @media (max-width: 560px){.loop-card h3{font-size:18px}.loop-card p,.shared-loop-card p{font-size:12.5px;line-height:1.55}}
 @media (max-width: 980px){.shared-loop-grid{grid-template-columns:1fr 1fr}}
 @media (max-width: 560px){.shared-loop-grid{grid-template-columns:1fr}.shared-loop-head{display:grid;justify-content:stretch}}
+
+.trip-rhythm-inline{display:grid;gap:6px;margin-top:2px;margin-bottom:2px}
+.trip-rhythm-inline strong{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#9b6d46}
+.trip-rhythm-row{display:flex;flex-wrap:wrap;gap:6px}
+.trip-rhythm-chip{display:inline-flex;align-items:center;min-height:26px;padding:5px 10px;border-radius:999px;border:1px solid rgba(21,39,58,.08);background:#faf6f0;font-size:12px;color:#42526a}
+.trip-rhythm-inline-soft{padding:10px 12px;border-radius:16px;background:rgba(255,248,240,.8);border:1px solid rgba(240,124,76,.14)}

@@ -972,10 +972,10 @@ window.RyokoPlanner = (() => {
     const copy = {
       eyebrow: uiCopy('루트 정교화', 'Route refinement', 'ルートの精緻化', '路線微調整'),
       title: uiCopy('지금 결과를 더 좋게 읽는 세 가지 축', 'Three ways to tune this result more precisely', 'この結果をもっと良く読む三つの軸', '把這次結果讀得更準的三個方向'),
-      desc: uiCopy('district deeper note, day rhythm, 그리고 rainy / slower / night 변주를 한 번에 붙였습니다.', 'District depth, day rhythm, and rainy / slower / night switches now sit together here so the route reads more like an edited city package.', 'district depth、day rhythm、rainy / slower / night の切り替えをここにまとめました。', '把 district depth、day rhythm 與 rainy / slower / night 變奏一起放在這裡。'),
-      district: uiCopy('District deeper note','District deeper note','District deeper note','District deeper note'),
-      rhythm: uiCopy('Day rhythm','Day rhythm','Day rhythm','Day rhythm'),
-      variants: uiCopy('Quick variants','Quick variants','Quick variants','Quick variants')
+      desc: uiCopy('district deeper note, day rhythm, 그리고 rainy / slower / night 변주를 한 번에 붙였습니다.', 'District depth, day rhythm, and rainy / slower / night switches now sit together here so the route reads more like an edited city package.', 'エリアの読みどころ、一日のリズム、rainy / slower / night の切り替えをここにまとめました。', '把區域延伸筆記、一日節奏與 rainy / slower / night 變奏一起收進這裡。'),
+      district: uiCopy('District deeper note','District deeper note','エリアの読みどころ','區域延伸筆記'),
+      rhythm: uiCopy('Day rhythm','Day rhythm','一日のリズム','一日節奏'),
+      variants: uiCopy('Quick variants','Quick variants','すぐ切り替え','快速變奏')
     };
     node.innerHTML = `
       <div class="section-head result-section-head">

@@ -694,6 +694,7 @@
               </div>
               <h3 class="card-title">${item.title || item.destination || 'Trip'}</h3>
               <div class="trip-chip-row">${chips}</div>
+              ${rhythmMarkup(item.destination)}
               <p class="card-copy clamp-3">${getMetaSummary(item)}</p>
               <div class="trip-card-footer-note">${meta.bestFor || item.notes || ''}</div>
               <div class="card-actions trip-card-actions">
@@ -727,6 +728,7 @@
             <h2 class="section-title trip-tight-title">${latest.title || latest.destination || 'Trip'}</h2>
             <p class="section-desc">${meta.summary || latest.notes || copy.continueDesc}</p>
             <div class="trip-chip-row">${[latest.destination, latest.duration, latest.companion, meta.vibe].filter(Boolean).map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}</div>
+            ${rhythmMarkup(latest.destination, 'trip-rhythm-inline-soft')}
             <div class="hero-actions">
               <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
               <button class="secondary-btn" data-copy="${latest.id}">${window.RyokoApp.t('trips.tripShare')}</button>
@@ -1164,6 +1166,7 @@
               <span class="trip-mini-chip">${meta.days} days</span>
               <span class="trip-mini-chip">${meta.tips} tips</span>
             </div>
+            ${rhythmMarkup(item.destination, 'trip-rhythm-inline-soft')}
             <div class="shared-spotlight-note">
               <strong>City-first note</strong>
               <span>${cityLoopBranchNote(item.destination) || (item.importedFromLink ? 'It came in through a shared link, so saving it here keeps the city loop easy to reopen later.' : 'Shared trips get stronger when you can save them, compare them, and branch into your own city-first version.')}</span>
@@ -1217,7 +1220,7 @@
               <p class="card-copy">${cityLoopBranchNote(item.destination) || (item.importedFromLink ? 'This one was imported from a shared Ryokoplan link and can now live inside your own trip vault.' : 'This trip is already inside your vault, so it is easy to reopen or branch from here.')}</p>
             </article>
             <article class="info-card trip-detail-panel">
-              <h3>Day rhythm preview</h3>
+              <h3>${rhythmLabel()} preview</h3>
               <div class="trip-detail-day-list">${dayPreview || '<p class="card-copy">No day preview available yet.</p>'}</div>
             </article>
             <article class="info-card trip-detail-panel">
@@ -1225,7 +1228,7 @@
               ${tips ? `<ul class="trip-detail-list">${tips}</ul>` : '<p class="card-copy">No extra local tips stored on this trip yet.</p>'}
             </article>
             <article class="info-card trip-detail-panel">
-              <h3>City-first branches</h3>
+              <h3>${langVariant('City-first 가지','City-first branches','City-first の分岐','City-first 分支')}</h3>
               <div class="trip-detail-branch-list">
                 <a class="trip-detail-branch" href="../${city.example}">
                   <strong>${city.name} sample route</strong>

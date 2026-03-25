@@ -400,6 +400,29 @@
         if (lang === 'zhHant') return zhHant ?? en ?? ko ?? '';
         return en ?? ko ?? '';
       }
+      function rhythmSignalsForCity(city=''){
+        const key = String(city || '').toLowerCase().trim();
+        const map = {
+          tokyo: { ko:['아침 앵커','오후 리셋','밤 클로즈'], en:['Morning anchor','Afternoon reset','Night close'], ja:['朝のアンカー','午後のリセット','夜の締め'], zhHant:['早晨起點','午後重整','夜間收尾'] },
+          seoul: { ko:['첫 동네','낮 대비','밤 축'], en:['First district','Midday contrast','Night district'], ja:['最初の街区','昼のコントラスト','夜の街区'], zhHant:['第一街區','中段對比','夜間街區'] },
+          kyoto: { ko:['조용한 아침','오후 여백','해질녘 마감'], en:['Quiet morning','Soft middle','Dusk close'], ja:['静かな朝','午後の余白','夕暮れの締め'], zhHant:['安靜早晨','午後留白','黃昏收尾'] },
+          taipei: { ko:['부드러운 시작','질감 있는 오후','밤 넘기기'], en:['Soft opening','Textured middle','Night handoff'], ja:['やわらかな始まり','質感のある午後','夜への受け渡し'], zhHant:['柔和開場','有質感的中段','夜晚轉場'] },
+          'hong kong': { ko:['수직 시작','숨 고르기','하버 마감'], en:['Vertical start','Breathing pocket','Harbor close'], ja:['縦の始まり','息継ぎの余白','港の締め'], zhHant:['垂直開場','喘息空間','海港收尾'] },
+          busan: { ko:['바다 오프너','쉼 구간','밤 해안'], en:['Sea opener','Rest window','Night shore'], ja:['海辺の始まり','休む時間','夜の海辺'], zhHant:['海邊開場','休息時段','夜晚海岸'] },
+          fukuoka: { ko:['첫 식사','오후 완화','컴팩트한 밤'], en:['Food-first start','Afternoon soften','Compact night'], ja:['最初の一食','午後のやわらぎ','コンパクトな夜'], zhHant:['先吃一口','午後放慢','緊湊夜晚'] }
+        };
+        const normalized = key === 'hongkong' ? 'hong kong' : key;
+        const lang = window.RyokoApp.lang === 'zhHant' ? 'zhHant' : (window.RyokoApp.lang || 'en');
+        return map[normalized]?.[lang] || map[normalized]?.en || [];
+      }
+      function rhythmLabel(){
+        return langVariant('Day rhythm','Day rhythm','一日のリズム','一日節奏');
+      }
+      function rhythmMarkup(city='', extraClass=''){
+        const signals = rhythmSignalsForCity(city);
+        if (!signals.length) return '';
+        return `<div class="trip-rhythm-inline ${extraClass}"><strong>${rhythmLabel()}</strong><div class="trip-rhythm-row">${signals.map(v => `<span class="trip-rhythm-chip">${v}</span>`).join('')}</div></div>`;
+      }
       function entryText(entry, base){
         return langVariant(entry[`${base}Ko`], entry[`${base}En`], entry[`${base}Ja`], entry[`${base}ZhHant`]);
       }
@@ -465,6 +488,7 @@
               </div>
               <h3 class="card-title">${item.title || item.destination || 'Trip'}</h3>
               <div class="trip-chip-row">${chips}</div>
+              ${rhythmMarkup(item.destination)}
               <p class="card-copy clamp-3">${getMetaSummary(item)}</p>
               <div class="trip-card-footer-note">${meta.bestFor || item.notes || ''}</div>
               <div class="card-actions trip-card-actions">
@@ -498,6 +522,7 @@
             <h2 class="section-title trip-tight-title">${latest.title || latest.destination || 'Trip'}</h2>
             <p class="section-desc">${meta.summary || latest.notes || copy.continueDesc}</p>
             <div class="trip-chip-row">${[latest.destination, latest.duration, latest.companion, meta.vibe].filter(Boolean).map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}</div>
+            ${rhythmMarkup(latest.destination, 'trip-rhythm-inline-soft')}
             <div class="hero-actions">
               <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
               <button class="secondary-btn" data-copy="${latest.id}">${window.RyokoApp.t('trips.tripShare')}</button>
@@ -837,6 +862,7 @@
               <span class="trip-mini-chip">${meta.days} days</span>
               <span class="trip-mini-chip">${meta.tips} tips</span>
             </div>
+            ${rhythmMarkup(item.destination, 'trip-rhythm-inline-soft')}
             <div class="shared-spotlight-note">
               <strong>Why keep it?</strong>
               <span>${item.importedFromLink ? 'It was imported from a shared link, so keeping it here makes it easier to revisit later.' : 'Shared trips become better when you can save them, compare them, and branch into your own version.'}</span>
@@ -890,7 +916,7 @@
               <p class="card-copy">${item.importedFromLink ? 'This one was imported from a shared Ryokoplan link and can now live inside your own trip vault.' : 'This route already lives inside your vault, so it is easy to reopen, compare, or branch from here.'}</p>
             </article>
             <article class="info-card trip-detail-panel">
-              <h3>Day rhythm preview</h3>
+              <h3>${rhythmLabel()} preview</h3>
               <div class="trip-detail-day-list">${dayPreview || '<p class="card-copy">No day preview available yet.</p>'}</div>
             </article>
             <article class="info-card trip-detail-panel">
@@ -898,7 +924,7 @@
               ${tips ? `<ul class="trip-detail-list">${tips}</ul>` : '<p class="card-copy">No extra local tips stored on this trip yet.</p>'}
             </article>
             <article class="info-card trip-detail-panel">
-              <h3>Branch next</h3>
+              <h3>${langVariant('다음 가지','Branch next','次の分岐','下一個分支')}</h3>
               <div class="trip-detail-branch-list">
                 <a class="trip-detail-branch" href="../${city.example}">
                   <strong>${city.name} sample route</strong>
