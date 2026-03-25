@@ -380,6 +380,44 @@ window.RyokoPlanner = (() => {
     if (signals?.tags?.includes('local-mode') && context !== 'share') return entry.guide || entry.result;
     return entry[context] || entry.result || '';
   }
+  const priorityCityRefineMap = {
+    tokyo:{
+      ko:{district:'시부야-하라주쿠, 아사쿠사-우에노, 기요스미-긴자 중 한 축만 더 깊게 읽으면 결과가 훨씬 정돈됩니다.', rhythm:[['Morning anchor','첫 장면은 아사쿠사나 우에노처럼 이해가 쉬운 축으로 시작하세요.'],['Afternoon reset','오후에는 기요스미·다이칸야마 같은 quieter pocket이 필요합니다.'],['Night close','전망 하나와 늦은 식사 하나면 도쿄의 밤은 충분합니다.']], variants:[['Rainy','실내 전시와 café pocket을 앞에 두고 역 점프를 줄이세요.'],['Slower','한 동네만 깊게 읽고 오후를 비워 두는 편이 더 세련됩니다.'],['Night','큰 조명보다 마지막 이자카야 골목 한 구간이 더 오래 남습니다.']]},
+      en:{district:'Tokyo sharpens when one line—Shibuya-Harajuku, Asakusa-Ueno, or Kiyosumi-Ginza—owns the next read.', rhythm:[['Morning anchor','Begin with an easy first-scene district like Asakusa or Ueno.'],['Afternoon reset','Tokyo needs one quieter pocket like Kiyosumi or Daikanyama in the middle.'],['Night close','One skyline moment and one later meal are enough for the close.']], variants:[['Rainy','Lead with an indoor museum or café pocket and remove one station jump.'],['Slower','Go deep on one district only and give the afternoon more air.'],['Night','A final izakaya lane often lands better than one more big-light scene.']]}
+    },
+    seoul:{
+      ko:{district:'성수-서울숲, 을지로-종로, 한남-이태원 중 어느 대비를 남길지 정하면 결과가 더 또렷해집니다.', rhythm:[['First district','성수나 서촌처럼 첫 결이 분명한 동네로 시작하세요.'],['Midday contrast','낮엔 lighter pocket 하나를 넣어 과밀을 풀어야 합니다.'],['Night district','밤은 을지로나 종로처럼 오래된 결 하나만 남기는 편이 좋습니다.']], variants:[['Rainy','실내 카페·전시·백화점 underground를 한 축으로 붙이세요.'],['Slower','성수와 연남을 다 쓰지 말고 한 축만 깊게 읽으세요.'],['Night','루프톱 하나보다 을지로의 오래된 밤 리듬이 더 오래 갑니다.']]},
+      en:{district:'Seoul gets clearer once one contrast line—Seongsu-Seoul Forest, Euljiro-Jongno, or Hannam-Itaewon—owns the day.', rhythm:[['First district','Open with one clear district such as Seongsu or Seochon.'],['Midday contrast','Add one lighter pocket at midday so the route can breathe.'],['Night district','Let one older Seoul axis own the evening instead of splitting the night in two.']], variants:[['Rainy','Indoor cafés, exhibitions, and basement food lines keep Seoul coherent in rain.'],['Slower','Choose one daytime district and go deeper instead of widening the route.'],['Night','Euljiro after dark often carries memory better than a second rooftop.']]}
+    },
+    kyoto:{
+      ko:{district:'히가시야마, 가모가와, 서쪽 quiet lane 중 어느 여백을 남길지 먼저 정하는 편이 좋습니다.', rhythm:[['Quiet morning','사람이 몰리기 전 동쪽 축을 먼저 읽으세요.'],['Soft middle','정원·찻집·강변처럼 앉아 있는 pocket이 꼭 필요합니다.'],['Dusk close','교토는 밤보다 dusk가 핵심입니다.']], variants:[['Rainy','사원 수를 줄이고 정원·찻집·전시 한 곳만 남기세요.'],['Slower','오전 장면 하나와 dusk 산책 하나면 충분합니다.'],['Night','강변이나 작은 골목 하나가 가장 교토답게 마무리됩니다.']]},
+      en:{district:'Kyoto usually improves when you decide whether Higashiyama, the river edge, or a quieter west-side close should carry the mood.', rhythm:[['Quiet morning','Read the east-side anchor early before the city crowds up.'],['Soft middle','Kyoto needs one sitting pocket—garden, tea room, or river edge—in the middle.'],['Dusk close','Dusk matters more than late night here.']], variants:[['Rainy','Cut temple count and rebuild around one garden, tea room, or exhibition pocket.'],['Slower','One morning scene and one dusk walk are usually enough.'],['Night','A river edge or one smaller lane often closes Kyoto more gracefully than a later night.']]}
+    },
+    taipei:{
+      ko:{district:'융캉제·동먼, 디화제, 시먼 중 어느 밤 결을 남길지 정하면 타이베이가 더 맛있게 읽힙니다.', rhythm:[['Soft opening','첫 식사와 골목이 같이 붙는 축으로 시작하세요.'],['Textured middle','디화제나 서점 pocket으로 도시 재질을 넣으세요.'],['Night handoff','야시장은 하나만 선명하게 남기고 두 번째 밤 장면으로 넘기세요.']], variants:[['Rainy','카페·서점·실내 식사를 더 길게 붙이면 비 오는 날에도 좋습니다.'],['Slower','융캉제나 디화제 중 한 축만 깊게 읽는 편이 더 선명합니다.'],['Night','늦은 디저트나 tea room이 밤의 여운을 더 오래 만듭니다.']]},
+      en:{district:'Taipei gets sharper once you choose whether Yongkang, Dihua, or Ximending should carry the after-dark handoff.', rhythm:[['Soft opening','Start through lanes and a first meal that open the city gently.'],['Textured middle','Use Dihua or a bookshop pocket to add material beyond appetite.'],['Night handoff','Keep one night market vivid, then pass the close to a second scene.']], variants:[['Rainy','Longer café, bookshop, and indoor-meal pockets make Taipei richer in rain.'],['Slower','Read either Yongkang or Dihua more deeply instead of widening the route.'],['Night','A later dessert or tea room often extends Taipei better than another market.']]}
+    },
+    hongkong:{
+      ko:{district:'센트럴-셩완, 침사추이, 완차이 중 어느 수직 리듬을 남길지 고르면 훨씬 정리됩니다.', rhythm:[['Vertical start','경사와 수직감이 보이는 첫 축으로 홍콩을 여세요.'],['Breathing pocket','오후엔 ferry나 covered mall 같은 쉬는 창이 꼭 필요합니다.'],['Harbor close','항구 장면 하나만 선명하게 남기면 충분합니다.']], variants:[['Rainy','covered mall, ferry, 실내 식사 pocket을 더 안정적으로 쓰세요.'],['Slower','센트럴과 침사추이를 같은 날 다 깊게 읽지 마세요.'],['Night','야경 하나 뒤엔 slope street나 dessert pocket으로 톤을 낮추세요.']]},
+      en:{district:'Hong Kong becomes cleaner once you choose whether Central-Sheung Wan, Tsim Sha Tsui, or Wan Chai should own the vertical rhythm.', rhythm:[['Vertical start','Open through a steeper, more compressed axis like Central or Sheung Wan.'],['Breathing pocket','One ferry or covered-mall pause keeps the route alive into the evening.'],['Harbor close','One harbor scene is enough when it is placed well.']], variants:[['Rainy','Lean on covered malls, ferry logic, and indoor meals more confidently.'],['Slower','Do not read both Central and Tsim Sha Tsui deeply on the same day.'],['Night','After one skyline moment, lower the tone through a slope street or dessert pocket.']]}
+    },
+    busan:{
+      ko:{district:'해운대, 광안리, 남포-영도 중 어디를 coast anchor로 둘지 먼저 정하면 결과가 안정됩니다.', rhythm:[['Sea opener','첫 바다는 접근 쉬운 축으로 열고 다른 풍경은 뒤로 남기세요.'],['Rest window','오후엔 카페나 짧은 산책으로 꼭 숨 쉴 창을 두세요.'],['Night shore','광안리 같은 한 shore로 밤을 정리하는 편이 좋습니다.']], variants:[['Rainy','실내 전망과 복합 공간을 더 길게 쓰면 바다 결은 그대로 남습니다.'],['Slower','하루 한 coast 축만 남기고 중간 휴식을 넉넉히 두세요.'],['Night','야경은 한 곳만 선명하게 두고 이동은 짧게 닫으세요.']]},
+      en:{district:'Busan stabilizes once you choose whether Haeundae, Gwangalli, or the Nampo-Yeongdo side should own the coast anchor.', rhythm:[['Sea opener','Open through an easier first coast and save the other big scenery for later.'],['Rest window','Busan needs one true pause in the afternoon.'],['Night shore','One shore like Gwangalli is usually enough for the night close.']], variants:[['Rainy','Longer indoor viewpoints and rest-friendly mixed spaces still keep the sea-city tone alive.'],['Slower','Let one coast axis carry the day and give the reset point real space.'],['Night','One night view plus a short transfer chain usually makes the cleanest Busan close.']]}
+    },
+    fukuoka:{
+      ko:{district:'하카타, 텐진, 오호리 중 어떤 compact 축을 먼저 잡을지 정하면 후쿠오카가 훨씬 또렷합니다.', rhythm:[['Food-first start','첫 식사가 쉬운 하카타나 텐진에서 시작하세요.'],['Afternoon soften','오호리 공원이나 café pocket으로 오후를 낮추세요.'],['Compact night','포장마차 하나와 짧은 강변 산책이면 충분합니다.']], variants:[['Rainy','하카타·텐진의 실내 식사 pocket을 더 촘촘히 잇는 편이 좋습니다.'],['Slower','하루 한 축만 깊게 읽고 오후를 시장·카페 pocket으로 낮추세요.'],['Night','night를 길게 끌기보다 yatai 하나로 짧게 닫는 편이 후쿠오카답습니다.']]},
+      en:{district:'Fukuoka feels exact once you decide whether Hakata, Tenjin, or the Ohori side should own the compact city axis.', rhythm:[['Food-first start','Open through Hakata or Tenjin so the first meal arrives easily.'],['Afternoon soften','Lower the afternoon through Ohori Park or one café pocket.'],['Compact night','One yatai scene and a short river walk are usually enough.']], variants:[['Rainy','Connect the Hakata and Tenjin indoor meal pockets more tightly in rain.'],['Slower','Read one city axis deeply, then lower the rest through market and café pockets.'],['Night','Fukuoka usually closes better through one compact yatai scene than a longer night chain.']]}}
+  };
+
+  function getPriorityRefinePack(city=''){
+    const slug = String(city || '').trim().toLowerCase();
+    const entry = priorityCityRefineMap[slug];
+    if (!entry) return null;
+    const lang = window.RyokoApp?.lang || 'ko';
+    return entry[lang] || entry.en || entry.ko;
+  }
+
   function summarizeRouteShape(data){
     const days = Array.isArray(data.days) ? data.days.length : 0;
     const placeCount = (data.days || []).reduce((acc, day) => acc + normalizePlaces(day).length, 0);
@@ -925,6 +963,35 @@ window.RyokoPlanner = (() => {
     });
   }
 
+  function renderRefineSection(data){
+    const node = qs('resultRefineSection');
+    if (!node) return;
+    const pack = getPriorityRefinePack(textValue(data.destination, readForm().destination || ''));
+    if (!pack) { node.innerHTML=''; node.classList.add('hidden'); return; }
+    node.classList.remove('hidden');
+    const copy = {
+      eyebrow: uiCopy('루트 정교화', 'Route refinement', 'ルートの精緻化', '路線微調整'),
+      title: uiCopy('지금 결과를 더 좋게 읽는 세 가지 축', 'Three ways to read this result more precisely', 'この結果をもっと良く読む三つの軸', '把這次結果讀得更準的三個方向'),
+      desc: uiCopy('district deeper note, day rhythm, 그리고 rainy / slower / night 변주를 한 번에 붙였습니다.', 'District depth, day rhythm, and rainy / slower / night switches sit together here.', 'district depth、day rhythm、rainy / slower / night の切り替えをここにまとめました。', '把 district depth、day rhythm 與 rainy / slower / night 變奏一起放在這裡。'),
+      district: uiCopy('District deeper note','District deeper note','District deeper note','District deeper note'),
+      rhythm: uiCopy('Day rhythm','Day rhythm','Day rhythm','Day rhythm'),
+      variants: uiCopy('Quick variants','Quick variants','Quick variants','Quick variants')
+    };
+    node.innerHTML = `
+      <div class="section-head result-section-head">
+        <div>
+          <span class="eyebrow">${copy.eyebrow}</span>
+          <h3 class="section-title">${copy.title}</h3>
+          <p class="section-desc">${copy.desc}</p>
+        </div>
+      </div>
+      <div class="loop-grid">
+        <article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.district}</span></div><p>${pack.district}</p></article>
+        <article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.rhythm}</span></div>${pack.rhythm.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>
+        <article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.variants}</span></div>${pack.variants.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>
+      </div>`;
+  }
+
   function renderLoopSection(data){
     const node = qs('resultLoopSection');
     if (!node) return;
@@ -990,6 +1057,7 @@ window.RyokoPlanner = (() => {
     renderDayRail(data);
     renderDays(data);
     renderVisualStory(data);
+    renderRefineSection(data);
     renderTips(data);
     renderBudget(data);
     renderChecklist(data);

@@ -1580,12 +1580,25 @@ function getSeasonalEditorialCollections(){
     }
   };
 
+  const cityDayRhythmMap = {
+    tokyo:{ko:[['Morning anchor','시부야 대신 아사쿠사·우에노처럼 첫 장면이 또렷한 축으로 시작하면 하루가 더 읽기 쉬워집니다.'],['Afternoon reset','기요스미나 다이칸야마처럼 quieter pocket을 넣어 밀도를 한번 낮추세요.'],['Night close','전망 하나와 늦은 식사 하나만 남기면 도쿄의 밤은 충분히 선명합니다.']],en:[['Morning anchor','Open with a clearer first scene like Asakusa-Ueno rather than stacking every headline district at once.'],['Afternoon reset','Drop in a quieter pocket like Kiyosumi or Daikanyama to lower the pressure once.'],['Night close','One skyline moment and one later meal are usually enough for Tokyo after dark.']]},
+    kyoto:{ko:[['Quiet morning','기온이나 히가시야마를 이른 시간에 읽고 사람이 많아지기 전에 빠져나오세요.'],['Soft middle','정원·찻집·강변처럼 앉아 있는 시간을 넣어야 교토의 여백이 살아납니다.'],['Dusk close','밤보다 dusk가 중요합니다. 강변이나 조용한 골목 하나로 마무리하세요.']],en:[['Quiet morning','Read Gion or Higashiyama early, then step away before the city crowds up.'],['Soft middle','Kyoto needs a sitting pocket—garden, tea room, or river edge—to let the empty space matter.'],['Dusk close','Dusk matters more than late night. One river edge or smaller lane is enough for the close.']]},
+    seoul:{ko:[['First district','성수나 서촌처럼 첫 결이 분명한 동네 하나로 시작하면 서울의 속도가 더 자연스럽게 잡힙니다.'],['Midday contrast','낮엔 lighter pocket 하나를 넣어 과밀을 풀고, 밤 구역과 대비를 만드세요.'],['Night district','을지로·종로처럼 오래된 결이 남는 축 하나만 밤 anchor로 두는 편이 좋습니다.']],en:[['First district','Open with one clear Seoul district such as Seongsu or Seochon so the city speed settles naturally.'],['Midday contrast','Use one lighter pocket at midday to create contrast before the night district takes over.'],['Night district','Let one older Seoul axis like Euljiro-Jongno own the evening instead of splitting the night in two.']]},
+    busan:{ko:[['Sea opener','첫 바다는 해운대나 송도처럼 접근이 쉬운 축으로 열고, 다른 풍경은 뒤로 남기세요.'],['Rest window','오후엔 카페나 짧은 산책으로 숨 쉴 창을 반드시 두어야 합니다.'],['Night shore','광안리처럼 야경과 식사가 같이 되는 한 곳으로 밤을 정리하는 편이 좋습니다.']],en:[['Sea opener','Use an easy first coast like Haeundae or Songdo, then save the other big scenery for later.'],['Rest window','Busan needs one true pause in the afternoon, usually through a café or a shorter walk.'],['Night shore','A single shore like Gwangalli works best when dinner and night view close the route together.']]},
+    fukuoka:{ko:[['Food-first start','하카타나 텐진처럼 첫 식사가 쉬운 축으로 시작하면 짧은 도시의 리듬이 빨리 잡힙니다.'],['Afternoon soften','오호리 공원이나 카페 pocket으로 오후를 낮추면 먹거리 일정도 덜 과밀해집니다.'],['Compact night','밤은 포장마차 하나와 짧은 강변 산책 정도가 가장 후쿠오카답습니다.']],en:[['Food-first start','Open through Hakata or Tenjin so the first meal arrives easily and the compact city settles fast.'],['Afternoon soften','Lower the afternoon through Ohori Park or one café pocket so the food route does not feel overpacked.'],['Compact night','Fukuoka usually closes best with one yatai scene and a short river walk.']]},
+    taipei:{ko:[['Soft opening','융캉제나 동먼처럼 골목과 첫 식사가 같이 붙는 축으로 시작하면 밤까지 체력이 남습니다.'],['Textured middle','디화제나 서점 pocket으로 도시의 재질을 넣으면 먹거리만 남지 않습니다.'],['Night handoff','야시장은 하나만 선명하게 두고, 늦은 디저트나 tea room으로 두 번째 밤 장면을 만드세요.']],en:[['Soft opening','Start through Yongkang or Dongmen so lanes and the first meal open the city gently.'],['Textured middle','Use Dihua or a bookshop pocket to add material and texture beyond food.'],['Night handoff','Keep one night market vivid, then hand the close to dessert or a later tea room.']]},
+    hongkong:{ko:[['Vertical start','센트럴이나 셩완처럼 경사와 수직감이 보이는 첫 축으로 홍콩의 압축감을 먼저 읽으세요.'],['Breathing pocket','오후엔 ferry나 covered mall 같은 쉬는 창을 두어야 밤까지 무너지지 않습니다.'],['Harbor close','밤은 항구 장면 하나만 선명하게 남기고 slope street로 톤을 낮추는 편이 좋습니다.']],en:[['Vertical start','Read Hong Kong’s compression first through a vertical axis like Central or Sheung Wan.'],['Breathing pocket','One ferry or covered-mall pocket in the afternoon keeps the route from collapsing before night.'],['Harbor close','Keep one harbor scene sharp, then lower the tone through a slope street or dessert pocket.']]}
+  };
+
   const cityRouteVariationMap = {
     tokyo:{ko:[['비 오는 날','아사쿠사 대신 실내 전시와 카페 pocket을 길게 두세요. teamLab 같은 강한 한 장면은 남기되, 역 사이 이동 수를 줄이는 편이 좋습니다.'],['느린 버전','시부야·하라주쿠 한 축만 깊게 읽고, 둘째 날을 기요스미나 다이칸야마로 비워 두면 도시가 훨씬 덜 피곤합니다.'],['밤 버전','전망 포인트는 하나만 남기고, 늦은 식사와 골목 이자카야를 주인공으로 두면 도쿄의 밤 결이 살아납니다.']],en:[['Rainy version','Swap one outdoor icon for a stronger indoor museum or café pocket, and reduce the number of station-to-station jumps.'],['Slower version','Let Shibuya–Harajuku carry one day on its own, then give a calmer district like Kiyosumi or Daikanyama more air.'],['Night version','Keep only one skyline moment and let a later dinner plus a smaller izakaya block carry the close.']]},
     osaka:{ko:[['비 오는 날','난바·우메다의 실내 이동과 arcade를 활용하고, 줄 긴 맛집 하나보다 실패 적은 여러 끼로 풀면 좋습니다.'],['느린 버전','난바와 우메다를 같은 날 깊게 넣지 말고, 하루 한 축만 읽으면 훨씬 오사카답습니다.'],['밤 버전','도톤보리로 시작하되, 마지막은 광장보다 작은 골목 술집이나 디저트로 가볍게 닫는 편이 좋습니다.']],en:[['Rainy version','Lean on arcades and indoor transitions between Namba and Umeda, and favor several easy meals over one long-line stop.'],['Slower version','Do not read Namba and Umeda deeply on the same day; Osaka feels better when one zone carries the day.'],['Night version','Open through Dotonbori, but let the close happen in a smaller bar lane or dessert stop instead of staying only on the main strip.']]},
     kyoto:{ko:[['비 오는 날','사원 수를 줄이고 전시, 찻집, 정원 한 곳으로 템포를 다시 짜면 교토가 더 잘 남습니다.'],['느린 버전','하루에 사원 하나와 산책 하나만 남기고, 이동보다 앉는 시간을 더 많이 두세요.'],['밤 버전','교토는 늦은 밤보다 해 질 무렵이 핵심입니다. 강변이나 골목의 dusk를 주인공으로 두면 충분합니다.']],en:[['Rainy version','Cut the number of temple stops and rebuild the day around one museum, tea room, or garden pocket.'],['Slower version','Keep one temple and one walk only, then leave more room for sitting than moving.'],['Night version','Kyoto peaks closer to dusk than to late night; let one river or lane scene hold the close.']]},
     seoul:{ko:[['비 오는 날','성수·을지로 대신 실내 카페, 전시, 백화점 underground를 끼워 넣어도 도시 결은 충분히 유지됩니다.'],['느린 버전','성수와 연남 중 한 축만 택하고, 저녁은 을지로 하나로 정리하면 서울의 밀도가 더 자연스럽습니다.'],['밤 버전','한강이나 루프톱은 하나만 남기고, 저녁은 을지로·종로의 오래된 결에 더 비중을 두세요.']],en:[['Rainy version','Seoul still holds together if you swap one outdoor district for indoor cafés, exhibitions, or a department-store basement chain.'],['Slower version','Choose either Seongsu or Yeonnam, not both deeply, and let Euljiro carry the evening.'],['Night version','Keep only one river or rooftop scene and give more weight to Euljiro or Jongno after dark.']]},
-    taipei:{ko:[['비 오는 날','야시장 비중을 조금 줄이고 카페, 서점, 실내 식사 중심으로 바꾸면 타이베이는 흐트러지지 않습니다.'],['느린 버전','융캉제와 디화제 중 한 축만 깊게 보고, 밤은 한 군데에서 길게 머무는 편이 좋습니다.'],['밤 버전','대만은 밤 시장만이 전부는 아닙니다. 늦은 디저트나 bar 한 곳을 넣으면 도시가 더 오래 남습니다.']],en:[['Rainy version','Taipei still works if you reduce the night-market share and lean more on cafés, bookshops, and indoor meals.'],['Slower version','Read either Yongkang or Dihua more deeply, then stay longer in one evening zone.'],['Night version','Night markets are not the only close; one late dessert or bar stop can give Taipei a longer aftertaste.']]}
+    busan:{ko:[['비 오는 날','해변 수를 줄이고 실내 전망, 카페, 복합 공간을 더 길게 쓰면 부산의 바다 결은 그대로 남습니다.'],['느린 버전','해운대·광안리·송도를 다 넣기보다 하루 한 coast 축만 남기고 중간 휴식 시간을 넉넉히 두세요.'],['밤 버전','야경은 한 곳만 선명하게 남기고, 이동은 짧게 닫는 편이 부산답습니다.']],en:[['Rainy version','Busan keeps its coast feeling even in gray weather if you reduce the number of beach stops and lengthen indoor viewpoints or café pockets.'],['Slower version','Do not chase every major shoreline in one trip. Let one coast axis hold the day and give the reset point real space.'],['Night version','Keep one night view only and let the evening transfer chain stay short. That is when Busan feels cleanest.']]},
+    fukuoka:{ko:[['비 오는 날','오호리 쪽 산책 비중을 줄이고 하카타·텐진의 실내 식사 pocket을 더 촘촘히 잇는 편이 좋습니다.'],['느린 버전','하카타와 텐진 중 한 축만 깊게 읽고 오후를 카페나 시장 pocket으로 낮추세요.'],['밤 버전','포장마차 하나와 강변 산책 정도로 짧게 닫을수록 후쿠오카의 compact night가 살아납니다.']],en:[['Rainy version','Reduce the walk share around Ohori and connect Hakata and Tenjin through stronger indoor meal pockets.'],['Slower version','Read either Hakata or Tenjin more deeply, then lower the afternoon through cafés or market pockets.'],['Night version','Fukuoka’s compact night lands best when yatai plus one short river walk are enough.']]},
+    taipei:{ko:[['비 오는 날','야시장 비중을 조금 줄이고 카페, 서점, 실내 식사 중심으로 바꾸면 타이베이는 흐트러지지 않습니다.'],['느린 버전','융캉제와 디화제 중 한 축만 깊게 보고, 밤은 한 군데에서 길게 머무는 편이 좋습니다.'],['밤 버전','대만은 밤 시장만이 전부는 아닙니다. 늦은 디저트나 bar 한 곳을 넣으면 도시가 더 오래 남습니다.']],en:[['Rainy version','Taipei still works if you reduce the night-market share and lean more on cafés, bookshops, and indoor meals.'],['Slower version','Read either Yongkang or Dihua more deeply, then stay longer in one evening zone.'],['Night version','Night markets are not the only close; one late dessert or bar stop can give Taipei a longer aftertaste.']]},
+    hongkong:{ko:[['비 오는 날','전망 포인트를 줄이고 covered mall, ferry, 실내 식사 pocket을 더 안정적으로 쓰세요. 홍콩은 흐린 날에도 수직 도시감이 충분히 남습니다.'],['느린 버전','센트럴과 침사추이를 같은 날 다 깊게 읽지 말고 하루 한 축만 선명하게 남기세요.'],['밤 버전','야경은 한 번만 강하게 보고, 그 뒤는 slope street나 dessert pocket으로 톤을 낮추세요.']],en:[['Rainy version','Reduce the number of viewpoints and lean on covered malls, ferry logic, and indoor meal pockets. Hong Kong still feels tall and compressed on gray days.'],['Slower version','Do not read both Central and Tsim Sha Tsui deeply on the same day. Hong Kong’s harbor contrast lands better when one axis holds the route.'],['Night version','Use one strong skyline scene only, then lower the tone through a slope street or dessert pocket.']]}
   };
 
   function getCityNeighborhoodProfiles(slug, data, atlasLocale){
@@ -1597,6 +1610,13 @@ function getSeasonalEditorialCollections(){
       return localized.map(item => ({...item, linkedLabel, routeLabel, bestLabel}));
     }
     return neighborhoodDepthForCity(slug, data, atlasLocale);
+  }
+
+  function getCityDayRhythm(slug, data){
+    const base = cityDayRhythmMap[slug]?.[lang] || cityDayRhythmMap[slug]?.en || [];
+    if (base.length) return base;
+    const days = (data?.sampleDays || []).slice(0,3);
+    return days.map((day, idx) => ({ title: day[0], desc: day[1] }));
   }
 
   function cityGuideSlugFromExample(slug=''){
@@ -2671,7 +2691,7 @@ function getSeasonalEditorialCollections(){
           '.cover-story-card-large p':'Tokyo, Osaka, Kyoto, Fukuoka を単なる一覧ではなく、リズムとムードの差として見せます。',
           '.cover-story-card-large .secondary-btn':'サンプルルートを開く',
           '.cover-story-card-compact h3':'Seoul から Jeju まで、温度の違う都市たち',
-          '.cover-story-card-compact p':'都市ごとの空気感と同行者に合う入口を先に提案します。',
+          '.cover-story-card-compact p':'都市ごとの空気感と移動密度を先に読み、韓国の中でも結がどう分かれるかを見せます。',
           '.dispatch-card .collection-kicker':'クイックディスパッチ',
           '.dispatch-lines div:nth-of-type(1) strong':'都市キュレーション',
           '.dispatch-lines div:nth-of-type(1) span':'読みたい都市を mood と pace から先に絞ります。',
@@ -2704,8 +2724,8 @@ function getSeasonalEditorialCollections(){
           '.cover-story-card-large h3':'在同一個畫面讀快城市與慢城市',
           '.cover-story-card-large p':'把 Tokyo、Osaka、Kyoto、Fukuoka 當成節奏與 mood 的差異，而不是平面目的地清單。',
           '.cover-story-card-large .secondary-btn':'打開範例路線',
-          '.cover-story-card-compact h3':'從 Seoul 到 Jeju，不同溫度的城市們',
-          '.cover-story-card-compact p':'先給你更適合城市氣質與同行對象的起點。',
+          '.cover-story-card-compact h3':'從 Seoul 到 Jeju，溫度不同的城市們',
+          '.cover-story-card-compact p':'先讀城市的空氣感與移動密度，再看同一個韓國裡怎麼分出不同節奏。',
           '.dispatch-card .collection-kicker':'クイックディスパッチ',
           '.dispatch-lines div:nth-of-type(1) strong':'城市策展',
           '.dispatch-lines div:nth-of-type(1) span':'先用 mood 與 pace 縮小你想讀的城市。',

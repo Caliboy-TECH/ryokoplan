@@ -1517,8 +1517,11 @@ html,body{background:
 .cover-story-body p{margin:0;color:var(--cover-muted);line-height:1.65}
 .cover-story-media{background:#ddd}
 .cover-story-media img{width:100%;height:100%;object-fit:cover;display:block}
-.cover-story-card-large .cover-story-media{min-height:420px}
-.cover-story-card-compact .cover-story-media{min-height:220px}
+.cover-story-card-large .cover-story-media{min-height:420px;aspect-ratio:1.48/1}
+.cover-story-card-compact .cover-story-media{min-height:220px;aspect-ratio:1.1/1}
+.home-cover-desk .cover-story-card-compact .cover-story-media img,
+.magazine-cover-strip .cover-story-card-compact .cover-story-media img{object-position:center center}
+.city-day-rhythm-grid .city-route-variation-card{min-height:unset}
 
 @media (max-width: 900px){
   .cover-system-shell::after{inset:12px}
