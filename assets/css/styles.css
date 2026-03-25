@@ -2230,6 +2230,9 @@ body[data-page="planner"] .top-bar{z-index:62}
 .city-atlas-district{padding:.7rem .8rem;border:1px solid rgba(21,39,58,.08);border-radius:16px;background:rgba(255,255,255,.55);display:grid;gap:.18rem}
 .city-atlas-district span{font-weight:700}
 .city-atlas-district small,.city-atlas-sample small{color:var(--muted,#617086);line-height:1.45}
+.city-atlas-picks{gap:.5rem}
+.city-atlas-pick-row{display:flex;flex-wrap:wrap;gap:.45rem}
+.city-atlas-pick{display:inline-flex;align-items:center;min-height:30px;padding:.28rem .7rem;border-radius:999px;border:1px solid rgba(21,39,58,.1);background:rgba(255,255,255,.72);font-size:.84rem;color:var(--ink,#15273a)}
 .city-atlas-sample{padding:.85rem .9rem;border-radius:18px;background:rgba(21,39,58,.04)}
 .city-atlas-sample p{margin:0 0 .35rem 0;font-weight:600}
 .city-atlas-actions{padding-top:.1rem}

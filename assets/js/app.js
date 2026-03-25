@@ -1364,20 +1364,51 @@ function getSeasonalEditorialCollections(){
   function getAtlasText(page='home'){
     const copyMap = {
       home: {
-        ko:{eyebrow:'City atlas', title:'주요 도시를 cover부터 sample route까지 한 번에 읽기', desc:'각 도시의 첫 인상, 읽는 포인트, 바로 참고할 sample rhythm을 같은 화면에 붙였습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
-        en:{eyebrow:'City atlas', title:'Read key cities from cover to sample route in one sweep', desc:'Each city now shows its cover, editorial entry point, district highlights, and a sample route in one continuous block.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
-        ja:{eyebrow:'シティアトラス', title:'主要都市を cover から sample route まで一気に読む', desc:'各都市の最初の印象、読むべきポイント、参考にしやすい sample rhythm を同じ画面にまとめました。', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'ガイドを見る', plan:'Planner を開く'},
-        zhHant:{eyebrow:'城市 atlas', title:'把主要城市從 cover 一路讀到 sample route', desc:'每座城市都把 cover、編輯切口、街區重點和 sample route 放在同一個閱讀段落裡。', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'讀城市指南', plan:'打開 Planner'}
+        ko:{eyebrow:'City atlas', title:'주요 도시를 cover부터 sample route까지 한 번에 읽기', desc:'각 도시의 첫 인상, 읽는 포인트, 바로 참고할 sample rhythm을 같은 화면에 붙였습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
+        en:{eyebrow:'City atlas', title:'Read key cities from cover to sample route in one sweep', desc:'Each city now shows its cover, editorial entry point, district highlights, neighborhood picks, and a sample route in one continuous block.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
+        ja:{eyebrow:'シティアトラス', title:'主要都市をカバーからサンプルルートまで一気に読む', desc:'各都市の第一印象、読みどころ、街区の焦点、近所のピック、参考ルートまでを一つの流れで読めるようにまとめました。', region:{japan:'日本 edit', korea:'韓国 edit', greater:'華語圏 edit'}, districts:'注目エリア', picks:'近所のピック', sample:'サンプルルート', guide:'ガイドを見る', plan:'Planner を開く'},
+        zhHant:{eyebrow:'城市 atlas', title:'把主要城市從封面一路讀到範例路線', desc:'每座城市都把第一印象、閱讀切口、街區重點、鄰里精選和範例路線接在同一段閱讀流程裡。', region:{japan:'日本 edit', korea:'韓國 edit', greater:'華語城市 edit'}, districts:'街區重點', picks:'鄰里精選', sample:'範例路線', guide:'讀城市指南', plan:'打開 Planner'}
       },
       magazine: {
-        ko:{eyebrow:'City atlas', title:'도시별 cover, district, sample route를 한 셸프에서', desc:'Magazine 안에서 바로 도시별 editorial intro와 district highlights, sample rhythm까지 붙여 읽을 수 있게 확장했습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
-        en:{eyebrow:'City atlas', title:'City cover, district focus, and sample route in one shelf', desc:'Magazine now expands each major city into a tighter editorial block with intro, district highlights, and route rhythm together.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
-        ja:{eyebrow:'シティアトラス', title:'都市ごとの cover、district、sample route を一つの棚で', desc:'Magazine の中で、各主要都市の editorial intro、district highlights、sample rhythm まで続けて読めるように広げました。', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'ガイドを見る', plan:'Planner を開く'},
-        zhHant:{eyebrow:'城市 atlas', title:'把城市 cover、district、sample route 放進同一個書架', desc:'Magazine 現在把主要城市的 editorial intro、街區重點和 sample rhythm 接成同一個閱讀區塊。', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', sample:'Sample route', guide:'讀城市指南', plan:'打開 Planner'}
+        ko:{eyebrow:'City atlas', title:'도시별 cover, district, sample route를 한 셸프에서', desc:'Magazine 안에서 바로 도시별 editorial intro와 district highlights, neighborhood picks, sample rhythm까지 이어서 읽을 수 있게 확장했습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
+        en:{eyebrow:'City atlas', title:'City cover, district focus, and sample route in one shelf', desc:'Magazine now expands each major city into a tighter editorial block with intro, district highlights, neighborhood picks, and route rhythm together.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample route', guide:'Read guide', plan:'Open Planner'},
+        ja:{eyebrow:'シティアトラス', title:'都市ごとのカバー、注目エリア、サンプルルートを一つの棚で', desc:'Magazine の中で、主要都市ごとの導入、街区の焦点、近所のピック、参考ルートまでを続けて読めるように整えました。', region:{japan:'日本 edit', korea:'韓国 edit', greater:'華語圏 edit'}, districts:'注目エリア', picks:'近所のピック', sample:'サンプルルート', guide:'ガイドを見る', plan:'Planner を開く'},
+        zhHant:{eyebrow:'城市 atlas', title:'把城市封面、街區焦點與範例路線收進同一個書架', desc:'Magazine 現在把主要城市的導語、街區重點、鄰里精選和路線節奏接成同一個閱讀段落。', region:{japan:'日本 edit', korea:'韓國 edit', greater:'華語城市 edit'}, districts:'街區重點', picks:'鄰里精選', sample:'範例路線', guide:'讀城市指南', plan:'打開 Planner'}
       }
     };
     return (copyMap[page] && (copyMap[page][lang] || copyMap[page].en)) || copyMap.home.en;
   }
+
+  const atlasLocaleMap = {
+    ja: {
+      tokyo:{lead:'東京はチェックリストより、層で読むほうがずっと滑らかにほどけます。',districts:[['渋谷・原宿','最初の高揚感、食の選択肢、東京らしさを早くつかみやすいエリア。'],['浅草・上野','定番の景色と文化の軸が読みやすく、初訪問でも組みやすい流れ。']],sampleShape:'渋谷で着地 → 浅草・上野の定番軸 → 静かな街区で一度ゆるめる流れ',sampleLead:'大きな場面の間に、テンポを落とす近所を一つ差し込むと東京らしさが残りやすい。',picks:['渋谷','浅草','清澄白河']},
+      osaka:{lead:'大阪は数をこなすより、食べて休んでまた動く間合いがうまくつながる都市です。',districts:[['なんば・道頓堀','大阪の熱量と食の密度を最も早く体感しやすい中心。'],['梅田・中崎町','買い物、カフェ、屋内比率を上げたい日に収まりやすい組み合わせ。']],sampleShape:'なんばで夜の入口 → 食と買い物の核 → 最後に一食だけ残して離脱',sampleLead:'一日に強いエリアを二つまでに抑えると、大阪の軽さがきれいに残ります。',picks:['なんば','中崎町','新世界']},
+      kyoto:{lead:'京都は見る数より、静かな時間と歩く余白を残したほうが深く届きます。',districts:[['祇園・清水寺周辺','初回でも京都らしい場面をまとめて読める王道の軸。'],['鴨川・北山側','カフェや散歩で呼吸を整えたい日に相性がいいエリア。']],sampleShape:'東側の定番景色 → 昼は川辺や庭で呼吸を整える → 夜は一か所だけ深く',sampleLead:'京都は一日に空白を残したとき、街の質感が一段ときれいに見えてきます。',picks:['祇園','岡崎','鴨川沿い']},
+      fukuoka:{lead:'福岡は短くても満足しやすく、食の間合いがそのまま旅の骨格になります。',districts:[['天神・大名','歩きやすさ、買い物、軽いカフェ導線がまとまりやすい中心。'],['博多・中洲','駅アクセスと食の密度を一緒に取りやすい夜寄りの軸。']],sampleShape:'天神で整える → 博多・中洲の食軸へ寄せる → 最後に好みの一食を置く形',sampleLead:'まず食事の間隔を決めてから街歩きを差し込むと、福岡はかなりきれいにまとまります。',picks:['天神','中洲','大濠公園']},
+      sapporo:{lead:'札幌は季節の空気と広めの軸を一緒に読むと、街のやわらかさが出てきます。',districts:[['大通・すすきの','最初の景色、食事、夜の動線がつなぎやすい中心部。'],['円山・北海道神宮まわり','少し静かな空気で街をゆるめたい日に向く流れ。']],sampleShape:'大通で入る → 夕方は一つ景色を置く → 夜は温かい食事で閉じるリズム',sampleLead:'寒い季節ほど、移動量を減らして一つの夜景と一つの食事を濃くするとまとまりやすい。',picks:['大通','すすきの','円山']},
+      seoul:{lead:'ソウルは名所の数より、どの近所をどう束ねるかで旅のトーンが決まります。',districts:[['聖水・ソウルの森','今のソウルの空気、カフェ、歩く楽しさをまとめて感じやすい軸。'],['乙支路・鍾路','古い質感と夜のテンポを一緒に持ち込みやすい街区。']],sampleShape:'聖水で今の空気を読む → 夕方は鍾路・乙支路へ寄せる → 最後は川沿いや夜景で抜く流れ',sampleLead:'ソウルは近所の相性が合うだけで、一日の密度がかなりきれいに見えます。',picks:['聖水','乙支路','延南洞']},
+      busan:{lead:'釜山は速く回るより、海の場面と休む間合いを残したほうが満足度が伸びます。',districts:[['海雲台・広安里','海辺の象徴感と夜景を持ちやすい王道の軸。'],['甘川・南浦洞','市場と坂の質感を混ぜて釜山の古い表情を読みやすい流れ。']],sampleShape:'昼は海辺を一本 → 夕方は市場か坂道の景色 → 夜は広安里でゆるく閉じる形',sampleLead:'上り下りを欲張らず、海辺の景色を一日に一度強く置くと釜山はきれいに残ります。',picks:['海雲台','広安里','南浦洞']},
+      jeju:{lead:'済州は目的地の数より、風景の間にどれだけ余白を残せるかが大事です。',districts:[['涯月・協才','海の色、カフェ、車移動の軽さを取りやすい西側の定番。'],['西帰浦・中文','滝や海岸の景色を少し大きめに取りたい日に向く軸。']],sampleShape:'午前は一つの海の場面 → 午後はカフェで熱を抜く → 夕方にもう一つだけ景色を置く流れ',sampleLead:'済州は移動を減らした日ほど、島らしい呼吸がはっきり残ります。',picks:['涯月','協才','西帰浦']},
+      gyeongju:{lead:'慶州は量よりテンポが大切で、夕方に向かうほど街の質感がよく出ます。',districts:[['大陵苑・皇理団キル','歴史の景色と今っぽい店の流れを一緒に読みやすい中心。'],['東宮と月池周辺','夕方から夜にかけて場面が強くなる代表的な散歩軸。']],sampleShape:'昼は古都の核を読む → 夕方に池や灯りへ寄せる → 夜は静かな食事で閉じる流れ',sampleLead:'慶州は日没の一場面を残しておくと、旅全体の印象がぐっと締まります。',picks:['皇理団キル','大陵苑','月池']},
+      taipei:{lead:'台北は食のリズムと夜の空気を一緒に読むと、街の層が一気に立ち上がります。',districts:[['永康街・東門','歩きやすさ、食、小さな店の密度を持ちやすい定番軸。'],['西門・迪化街','若い熱量と古い通りの質感を切り替えながら読める流れ。']],sampleShape:'午後はカフェと路地 → 夜市か一食の軸を深く → 遅い時間はやわらかく締める形',sampleLead:'台北は一日の中で“食べる時間”を先に置くと、他の動きが自然に収まります。',picks:['永康街','西門','迪化街']},
+      hongkong:{lead:'香港は縦の密度が強いぶん、一日の軸を短く切ったほうが景色が冴えます。',districts:[['中環・上環','坂、カフェ、港の光が重なりやすい代表的な核。'],['尖沙咀・油麻地','夜景と食事、歩きやすい密度を取りやすい定番の南北軸。']],sampleShape:'朝は港の景色 → 夕方は一度屋内で整える → 夜は一つの夜景か食軸に寄せる流れ',sampleLead:'香港は一日に“強い場面”を二つまでに抑えると、疲れより景色が残りやすいです。',picks:['中環','上環','尖沙咀']},
+      macau:{lead:'マカオは短い軸で遺産の空気と夜のきらめきをつなぐと、街がきれいにまとまります。',districts:[['セナド広場周辺','歩いて読める歴史の核と軽い食事を取りやすい中心部。'],['タイパ・コタイ側','夜のシーンやホテル寄りのムードを足したい日に向く流れ。']],sampleShape:'昼は旧市街の核 → 夕方は少し休む → 夜は一つのきらめきを取りにいく形',sampleLead:'マカオは詰め込まず、昼と夜の対比を一回だけ強く置くと印象が残りやすいです。',picks:['セナド広場','タイパ','コタイ']}
+    },
+    zhHant: {
+      tokyo:{lead:'東京比起清單式打卡，更適合按層次與街區去讀，整體會順很多。',districts:[['Shibuya・Harajuku','第一天最容易抓到東京速度、吃喝選擇與城市表情的主軸。'],['Asakusa・Ueno','經典景色與文化密度高，第一次去也很好排。']],sampleShape:'先用 Shibuya 落地 → 接 Asakusa / Ueno 的經典軸線 → 再放進一段較安靜的街區節奏',sampleLead:'在大場景之間插入一個放慢速度的近所，東京會更像一段被編好的城市節奏。',picks:['Shibuya','Asakusa','Kiyosumi']},
+      osaka:{lead:'大阪不是靠塞滿景點取勝，而是靠吃、走、休息之間的節奏自然接起來。',districts:[['Namba・Dotonbori','最快感受到大阪熱度、街頭感與食物密度的中心地帶。'],['Umeda・Nakazakicho','想把購物、咖啡與室內移動放得更順時很好用的組合。']],sampleShape:'先用 Namba 打開夜節奏 → 以吃與逛作為白天主軸 → 最後只留一餐收尾',sampleLead:'一天把強勢區域控制在兩個以內，大阪那種輕鬆好玩就會更完整。',picks:['Namba','Nakazakicho','Shinsekai']},
+      kyoto:{lead:'京都比起多看幾個點，更適合保留安靜時段與散步的留白。',districts:[['Gion・Kiyomizu axis','第一次來也能很快讀到京都代表畫面的經典主線。'],['Kamogawa・Okazaki side','適合放進咖啡、河邊步調與較安靜的午後。']],sampleShape:'白天先讀東側經典 → 午後在河邊或庭園放慢 → 晚上只留一個深一點的段落',sampleLead:'京都在一天裡留出空白之後，城市的質感反而更容易留下來。',picks:['Gion','Okazaki','Kamogawa']},
+      fukuoka:{lead:'福岡就算天數短也很容易滿足，餐與餐之間的節奏幾乎就是旅程骨架。',districts:[['Tenjin・Daimyo','步行、購物、咖啡與城市感最容易收在一起的核心。'],['Hakata・Nakasu','車站動線與晚上的吃喝密度很容易一起拿到。']],sampleShape:'先在 Tenjin 定調 → 再把重心移到 Hakata / Nakasu 的吃喝軸 → 最後留一餐自己最想吃的',sampleLead:'先把用餐間距排好，再把散步與小逛插進去，福岡會非常乾淨好讀。',picks:['Tenjin','Nakasu','Ohori Park']},
+      sapporo:{lead:'札幌要把季節空氣和較寬的城市軸一起讀，城市的柔軟感才會出來。',districts:[['Odori・Susukino','第一個畫面、吃飯與夜裡移動最容易接起來的中心帶。'],['Maruyama side','想把節奏放慢、讀一點更安靜空氣時很適合。']],sampleShape:'先從 Odori 進城 → 黃昏留一個景點 → 夜裡用一頓暖的收尾',sampleLead:'越冷的季節越適合減少移動量，把一個夜景和一頓熱食留得更深。',picks:['Odori','Susukino','Maruyama']},
+      seoul:{lead:'首爾的旅程感不在景點數量，而在你怎麼把不同近所編在同一天。',districts:[['Seongsu・Seoul Forest','很容易一次讀到現在首爾的空氣、咖啡與步行感。'],['Euljiro・Jongno','老質地與夜節奏最容易一起長出來的一條線。']],sampleShape:'先用 Seongsu 打開現在感 → 傍晚往 Jongno / Euljiro 靠 → 最後用河邊或夜景把節奏放鬆',sampleLead:'首爾只要近所組合對了，一天的密度就會顯得很自然。',picks:['Seongsu','Euljiro','Yeonnam']},
+      busan:{lead:'釜山比起快快跑完，更適合把海景與休息節奏都留下來。',districts:[['Haeundae・Gwanganli','最容易拿到海邊代表感、夜景與放鬆感的經典雙軸。'],['Nampo・Gamcheon side','市場、老坡道與較舊的港都質感比較容易一起讀到。']],sampleShape:'白天先留一段海邊 → 傍晚讀市場或坡道景色 → 晚上在 Gwanganli 輕輕收尾',sampleLead:'不要太貪心地塞滿上下坡，把一天只留一次強海景，釜山會更好看。',picks:['Haeundae','Gwanganli','Nampo']},
+      jeju:{lead:'濟州重點不在目的地數量，而在風景和風景之間保留多少呼吸感。',districts:[['Aewol・Hyeopjae','海色、咖啡與車程舒適度最好一起拿到的西線。'],['Seogwipo・Jungmun','想把瀑布、海岸或較大的風景面讀深時很好用。']],sampleShape:'早上留一個海邊主景 → 下午用咖啡把熱度降下來 → 傍晚再放一個景色就夠',sampleLead:'濟州往往是在減少移動之後，島的呼吸感才真正出來。',picks:['Aewol','Hyeopjae','Seogwipo']},
+      gyeongju:{lead:'慶州比起數量更吃節奏，越接近傍晚，城市的質地越明顯。',districts:[['Daereungwon・Hwangridan-gil','古都景色與現在感店鋪最容易一起讀到的中心。'],['Donggung・Wolji side','從黃昏到夜裡特別有力量的散步主線。']],sampleShape:'白天先讀古都核心 → 傍晚往池與燈光靠 → 晚上用安靜的一餐收尾',sampleLead:'只要替日落留下一個場景，慶州整趟旅程的印象就會更完整。',picks:['Hwangridan-gil','Daereungwon','Wolji']},
+      taipei:{lead:'台北最迷人的地方，是把吃的節奏和晚上的空氣一起讀進行程裡。',districts:[['Yongkang Street・Dongmen','步行、吃喝與小店密度都很順的經典入口。'],['Ximen・Dihua Street','年輕能量與老街質地能輪流切換的一條線。']],sampleShape:'下午先用咖啡和巷子暖身 → 晚上深讀一個夜市或晚餐軸 → 再用較柔的尾聲收起來',sampleLead:'台北把“吃飯時間”先排好之後，其他移動反而都會自然落位。',picks:['Yongkang','Ximen','Dihua']},
+      hongkong:{lead:'香港的垂直密度很強，所以把一天的動線切短，景色反而更俐落。',districts:[['Central・Sheung Wan','坡道、咖啡與港邊光線最容易一起出現的代表核心。'],['Tsim Sha Tsui・Yau Ma Tei','夜景、餐食與步行密度最好掌握的南北主線。']],sampleShape:'早上先拿港景 → 傍晚進室內稍微整理節奏 → 晚上只深讀一個夜景或餐食軸',sampleLead:'香港一天把“強場景”控制在兩個以內，留下來的通常是景色而不是疲勞。',picks:['Central','Sheung Wan','Tsim Sha Tsui']},
+      macau:{lead:'澳門更適合用短軸把歷史感與夜裡的閃亮收進同一天。',districts:[['Senado area','最容易步行讀到舊城核心與輕鬆吃喝的中心段落。'],['Taipa・Cotai side','想補進夜景、飯店感或較亮的場景時很好接。']],sampleShape:'白天先讀舊城核心 → 傍晚稍微放慢 → 晚上只拿一個亮點收尾',sampleLead:'澳門不需要塞太多，只要把白天與夜晚的對比留清楚就很有記憶點。',picks:['Senado','Taipa','Cotai']}
+    }
+  };
 
   function exampleKeyFromPath(example=''){
     return String(example || '').replace(/\.html$/,'').trim();
@@ -1387,12 +1418,14 @@ function getSeasonalEditorialCollections(){
     const city = editorialData.city[slug];
     if (!city) return '';
     const cityCopy = city[lang] || city.en || city.ko;
+    const atlasLocale = atlasLocaleMap[lang]?.[slug] || null;
     const example = editorialData.example[exampleKeyFromPath(city.example)] || null;
     const exampleCopy = example ? (example[lang] || example.en || example.ko) : null;
-    const lead = cityCopy.lead || '';
-    const districts = (cityCopy.districts || []).slice(0,2);
-    const sampleShape = exampleCopy?.routeShape || cityCopy.sampleDesc || '';
-    const sampleLead = exampleCopy?.whyBullets?.[0] || (cityCopy.sampleDays?.[0]?.[1]) || '';
+    const lead = atlasLocale?.lead || cityCopy.lead || '';
+    const districts = (atlasLocale?.districts || cityCopy.districts || []).slice(0,2);
+    const sampleShape = atlasLocale?.sampleShape || exampleCopy?.routeShape || cityCopy.sampleDesc || '';
+    const sampleLead = atlasLocale?.sampleLead || exampleCopy?.whyBullets?.[0] || (cityCopy.sampleDays?.[0]?.[1]) || '';
+    const picks = atlasLocale?.picks || districts.map(item => item[0]).slice(0,3);
     return `
       <article class="city-atlas-card info-card">
         <div class="city-atlas-media"><img src="${resolvePath(city.image)}" alt="${city.planner}"></div>
@@ -1404,6 +1437,12 @@ function getSeasonalEditorialCollections(){
             <strong>${copy.districts}</strong>
             <div class="city-atlas-districts">
               ${districts.map(item => `<div class="city-atlas-district"><span>${item[0]}</span><small>${item[1]}</small></div>`).join('')}
+            </div>
+          </div>
+          <div class="city-atlas-block city-atlas-picks">
+            <strong>${copy.picks}</strong>
+            <div class="city-atlas-pick-row">
+              ${picks.map(item => `<span class="city-atlas-pick">${item}</span>`).join('')}
             </div>
           </div>
           <div class="city-atlas-block city-atlas-sample">
@@ -1425,7 +1464,7 @@ function getSeasonalEditorialCollections(){
     if (!root) return;
     const copy = getAtlasText(page);
     const groups = [
-      { key:'japan', label:copy.region.japan, cities:['tokyo','kyoto','osaka','fukuoka','sapporo'] },
+      { key:'japan', label:copy.region.japan, cities:['tokyo','osaka','kyoto','fukuoka','sapporo'] },
       { key:'korea', label:copy.region.korea, cities:['seoul','busan','jeju','gyeongju'] },
       { key:'greater', label:copy.region.greater, cities:['taipei','hongkong','macau'] }
     ];
