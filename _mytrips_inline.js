@@ -115,7 +115,7 @@
           publicDeskLabel: 'Public route desk',
           publicDeskPick: 'Editor pick',
           publicDeskSave: 'Save to My Trips',
-          publicDeskOpen: 'Open sample',
+          publicDeskOpen: 'Compare sample',
           publicDeskPlan: 'Continue in Planner',
           publicDeskSaved: 'Sample route saved to My Trips.',
           publicDeskIntro: 'A curated hub where public samples can become your next trip base.',
@@ -134,15 +134,15 @@
           routeClubGuide: 'Read related city',
           routeClubSaved: 'Trending route saved as your own version.',
           loopEmptyEyebrow: 'No saved loop yet',
-          loopEmptyTitle: 'Build one trip, then the loop gets smarter',
-          loopEmptyDesc: 'Once you save or reopen a trip, My Trips can recommend which guide or sample route to open next.',
+          loopEmptyTitle: 'Build one trip, then the city-first loop gets smarter',
+          loopEmptyDesc: 'Once you save or reopen a trip, My Trips can point you to the next guide, sample route, or related city branch that fits the tone you already liked.',
           loopOpenPlanner: 'Open Planner',
           loopReadMagazine: 'Read Magazine',
           loopGoodStart: 'Good starting points',
           loopTokyoGuide: 'Tokyo guide',
-          loopTokyoGuideDesc: 'Fast city, strong first route, and lots of branching options.',
+          loopTokyoGuideDesc: 'A strong first-entry city when you want density, nightlife, and several clean branches afterward.',
           loopBusanSample: 'Busan sample',
-          loopBusanSampleDesc: 'Good for scenic pacing and mixed-age travel.',
+          loopBusanSampleDesc: 'A softer scenic sample that works well for mixed-age travel, easier coast timing, and gentler night closes.',
           loopVaultEyebrow: 'From your vault',
           loopVaultTitle: 'can lead the next step too'
         },
@@ -811,6 +811,7 @@
         };
       }
 
+      function renderSharedSpotlight(shared){
         const node = $('sharedSpotlight');
         const section = $('sharedSpotlightSection');
         if (!node || !section) return;
@@ -1011,14 +1012,14 @@
         if (!anchor) {
           main.innerHTML = `
             <span class="eyebrow">${langCopy().loopEmptyEyebrow || "No saved loop yet"}</span>
-            <h3>${langCopy().loopEmptyTitle || "Build one trip, then the loop gets smarter"}</h3>
-            <p>${langCopy().loopEmptyDesc || "Once you save or reopen a trip, My Trips can recommend which guide or sample route to open next."}</p>
+            <h3>${langCopy().loopEmptyTitle || "Build one trip, then the city-first loop gets smarter"}</h3>
+            <p>${langCopy().loopEmptyDesc || "Once you save or reopen a trip, My Trips can point you to the next guide, sample route, or related city branch that fits the tone you already liked."}</p>
             <div class="card-actions"><a class="primary-btn" href="../">${langCopy().loopOpenPlanner || "Open Planner"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
           side.innerHTML = `
             <h3>${langCopy().loopGoodStart || "Good starting points"}</h3>
             <div class="trip-loop-list">
-              <article><h4>${langCopy().loopTokyoGuide || "Tokyo guide"}</h4><p>${langCopy().loopTokyoGuideDesc || "Fast city, strong first route, and lots of branching options."}</p></article>
-              <article><h4>${lang === 'ko' ? '부산 샘플' : lang === 'ja' ? '釜山サンプル' : lang === 'zhHant' ? '釜山範例' : 'Busan sample'}</h4><p>${lang === 'ko' ? '풍경 페이스와 세대 혼합 여행에 잘 맞습니다.' : lang === 'ja' ? '景色のテンポと幅広い年齢の旅に向いています。' : lang === 'zhHant' ? '很適合重視風景節奏與不同年齡同行的旅程。' : 'Good for scenic pacing and mixed-age travel.'}</p></article>
+              <article><h4>${langCopy().loopTokyoGuide || "Tokyo guide"}</h4><p>${langCopy().loopTokyoGuideDesc || "A strong first-entry city when you want density, nightlife, and several clean branches afterward."}</p></article>
+              <article><h4>${lang === 'ko' ? '부산 샘플' : lang === 'ja' ? '釜山サンプル' : lang === 'zhHant' ? '釜山範例' : 'Busan sample'}</h4><p>${lang === 'ko' ? '풍경 페이스와 세대 혼합 여행에 잘 맞습니다.' : lang === 'ja' ? '景色のテンポと幅広い年齢の旅に向いています。' : lang === 'zhHant' ? '很適合重視風景節奏與不同年齡同行的旅程。' : 'A softer scenic sample that works well for mixed-age travel, easier coast timing, and gentler night closes.'}</p></article>
             </div>`;
           return;
         }
@@ -1027,14 +1028,14 @@
         main.innerHTML = `
           <span class="eyebrow">${langCopy().loopVaultEyebrow || "From your vault"}</span>
           <h3>${current.name} ${langCopy().loopVaultTitle || "can lead the next step too"}</h3>
-          <p>${(anchor.planData?.summary || anchor.notes || 'Use your saved trip as a base, then deepen one city axis before branching into the next related city.').slice(0, 180)}</p>
+          <p>${(anchor.planData?.summary || anchor.notes || 'Use your saved trip as a base, deepen the strongest city axis inside it first, then branch only once the next city feels editorially related.').slice(0, 180)}</p>
           <div class="trip-loop-destinations">
             <span class="trip-loop-chip">${current.name}</span>
             ${related.map(city => `<span class="trip-loop-chip">${city.name}</span>`).join('')}
           </div>
           <div class="card-actions">
-            <a class="primary-btn" href="../${current.guide}">Read ${current.name}</a>
-            <a class="secondary-btn" href="../${current.example}">Open sample</a>
+            <a class="primary-btn" href="../${current.guide}">Read ${current.name} deeper</a>
+            <a class="secondary-btn" href="../${current.example}">Compare sample</a>
             <a class="soft-btn" href="../?destination=${encodeURIComponent(current.name)}">Plan again</a>
           </div>`;
         side.innerHTML = `
@@ -1043,7 +1044,7 @@
             ${related.map(city => `
               <article>
                 <h4>${city.name}</h4>
-                <p>${city.vibe} is a strong next read after ${current.name}.</p>
+                <p>${city.vibe} is a strong next read after ${current.name} when you want the next branch to feel connected in tone, not random.</p>
                 <div class="card-actions" style="margin-top:10px">
                   <a class="soft-btn" href="../${city.guide}">Guide</a>
                   <a class="ghost-btn" href="../${city.example}">Sample</a>

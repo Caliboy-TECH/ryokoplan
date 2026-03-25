@@ -208,8 +208,8 @@ window.RyokoPlanner = (() => {
       'meta[property="og:description"]': desc,
       'meta[name="twitter:title"]': title,
       'meta[name="twitter:description"]': desc,
-      'meta[property="og:image:alt"]': destination ? `${destination} city-first route preview` : 'Ryokoplan city-first route preview',
-      'meta[name="twitter:image:alt"]': destination ? `${destination} city-first route preview` : 'Ryokoplan city-first route preview'
+      'meta[property="og:image:alt"]': destination ? `${destination} city-first route cover` : 'Ryokoplan city-first route cover',
+      'meta[name="twitter:image:alt"]': destination ? `${destination} city-first route cover` : 'Ryokoplan city-first route cover'
     };
     Object.entries(entries).forEach(([selector, value]) => {
       let node = document.querySelector(selector);
@@ -340,39 +340,39 @@ window.RyokoPlanner = (() => {
     const slug = String(baseCity || '').trim().toLowerCase();
     const notes = {
       tokyo: {
-        result: uiCopy('도쿄는 큰 장면을 더 늘리기보다, 축 하나를 더 깊게 읽을 때 결과가 훨씬 세련돼집니다.', 'Tokyo gets cleaner when you deepen one axis instead of adding another headline stop.', '東京は大きなスポットを足すより、ひとつの軸を深く読むほうが結果がずっと洗練されます。', '東京比起再加一個大景點，更適合把其中一條軸線讀深，整體會乾淨很多。'),
-        share: uiCopy('공유받은 도쿄 루트라면, 바로 다른 랜드마크를 더하기보다 한 축을 더 깊게 읽는 편이 좋습니다.', 'For a shared Tokyo route, deepen one axis before stacking another landmark.', '共有された東京ルートなら、別の名所を足す前にひとつの軸を深く読むほうが合います。', '如果這是一條分享來的東京路線，先把其中一條軸線讀深，比再疊一個地標更適合。'),
-        guide: uiCopy('시부야-하라주쿠의 밀도, 아사쿠사-우에노의 고전축, 기요스미-긴자의 정돈된 결 중 하나를 더 깊게 읽어 보세요.', 'Choose one of Tokyo’s axes—Shibuya-Harajuku, Asakusa-Ueno, or Kiyosumi-Ginza—and read it deeper.', '渋谷・原宿、浅草・上野、清澄・銀座のどれか一軸を選んで、もう少し深く読んでみてください。', '從 Shibuya-Harajuku、Asakusa-Ueno、Kiyosumi-Ginza 之中挑一條軸線，再往內讀深一點。')
+        result: uiCopy('도쿄는 큰 장면을 더 늘리기보다, 축 하나를 더 깊게 읽을 때 결과가 훨씬 세련돼집니다.', 'Tokyo gets stronger when you pick one live axis—Shibuya and Harajuku for velocity, Asakusa and Ueno for first-timer clarity, or Kiyosumi and Ginza for polish—instead of stacking one more headline stop.', '東京は大きなスポットを足すより、ひとつの軸を深く読むほうが結果がずっと洗練されます。', '東京比起再加一個大景點，更適合把其中一條軸線讀深，整體會乾淨很多。'),
+        share: uiCopy('공유받은 도쿄 루트라면, 바로 다른 랜드마크를 더하기보다 한 축을 더 깊게 읽는 편이 좋습니다.', 'For a shared Tokyo route, sharpen one district line first, then decide whether the next move should be density, classic icons, or a calmer design-led pocket.', '共有された東京ルートなら、別の名所を足す前にひとつの軸を深く読むほうが合います。', '如果這是一條分享來的東京路線，先把其中一條軸線讀深，比再疊一個地標更適合。'),
+        guide: uiCopy('시부야-하라주쿠의 밀도, 아사쿠사-우에노의 고전축, 기요스미-긴자의 정돈된 결 중 하나를 더 깊게 읽어 보세요.', 'Choose one Tokyo line—Shibuya-Harajuku for city charge, Asakusa-Ueno for readable first scenes, or Kiyosumi-Ginza for a cleaner finish—and let that axis carry the next read.', '渋谷・原宿、浅草・上野、清澄・銀座のどれか一軸を選んで、もう少し深く読んでみてください。', '從 Shibuya-Harajuku、Asakusa-Ueno、Kiyosumi-Ginza 之中挑一條軸線，再往內讀深一點。')
       },
       kyoto: {
-        result: uiCopy('교토는 더 넣기보다 덜 건드리는 쪽이 좋습니다. 다음 읽기는 속도보다 여백을 지키는 방향이 잘 맞습니다.', 'Kyoto usually improves when the next move protects quiet space rather than adding more.', '京都は足すより、触りすぎないほうが合います。次の読み先も速度より余白を守る方向が向いています。', '京都通常不是靠加更多，而是靠保留留白。下一步也更適合守住安靜節奏。'),
-        share: uiCopy('공유받은 교토 루트라면, 비슷한 사찰 하나를 더하기보다 오후 여백 하나를 지키는 편이 더 좋습니다.', 'For a shared Kyoto route, protect one open afternoon before adding another temple stop.', '共有された京都ルートなら、寺をひとつ増やすより、午後の余白をひとつ守るほうがきれいです。', '如果是分享來的京都路線，比起再加一座寺，更適合先保住一段午後留白。'),
-        guide: uiCopy('교토는 히가시야마의 상징성, 가모가와의 여백, 서촌 쪽의 조용한 마감 중 어느 결을 남길지 먼저 정하세요.', 'Decide whether Kyoto should lean on Higashiyama icons, Kamo River calm, or a quieter western close.', '京都では、東山の象徴性、鴨川の余白、西側の静かな締めのどれを残すかを先に決めると整います。', '先決定京都要保留的是東山的象徵性、鴨川的留白，還是西側安靜的收尾，會更順。')
+        result: uiCopy('교토는 더 넣기보다 덜 건드리는 쪽이 좋습니다. 다음 읽기는 속도보다 여백을 지키는 방향이 잘 맞습니다.', 'Kyoto usually improves when the next move protects stillness—one temple district, one river edge, one evening lane—instead of asking the city to perform one more time.', '京都は足すより、触りすぎないほうが合います。次の読み先も速度より余白を守る方向が向いています。', '京都通常不是靠加更多，而是靠保留留白。下一步也更適合守住安靜節奏。'),
+        share: uiCopy('공유받은 교토 루트라면, 비슷한 사찰 하나를 더하기보다 오후 여백 하나를 지키는 편이 더 좋습니다.', 'For a shared Kyoto route, guard one open afternoon and one softer dusk before adding another temple pin. That is where Kyoto starts feeling expensive in the best way.', '共有された京都ルートなら、寺をひとつ増やすより、午後の余白をひとつ守るほうがきれいです。', '如果是分享來的京都路線，比起再加一座寺，更適合先保住一段午後留白。'),
+        guide: uiCopy('교토는 히가시야마의 상징성, 가모가와의 여백, 서촌 쪽의 조용한 마감 중 어느 결을 남길지 먼저 정하세요.', 'Decide whether Kyoto should lean on Higashiyama symbolism, Kamo River breathing room, or a quieter western close, then let the rest of the route stay secondary.', '京都では、東山の象徴性、鴨川の余白、西側の静かな締めのどれを残すかを先に決めると整います。', '先決定京都要保留的是東山的象徵性、鴨川的留白，還是西側安靜的收尾，會更順。')
       },
       seoul: {
-        result: uiCopy('서울은 같은 날의 동네 대비가 결과를 바꿉니다. 강한 구역 하나와 느슨한 포켓 하나를 같이 보는 쪽이 좋습니다.', 'Seoul gets better when one strong neighborhood is balanced by one looser pocket in the same day.', 'ソウルは同じ日の街区コントラストで結果が変わります。強い地区とゆるいポケットをひとつずつ置くのがきれいです。', '首爾的結果很常被同一天裡的街區對比拉開。放一個強區域，再配一個鬆一點的 pocket 會更好。'),
-        share: uiCopy('공유받은 서울 루트라면, 카페 동선과 야간 구간을 같이 보고 동네 대비를 더 선명하게 만드는 편이 좋습니다.', 'For a shared Seoul route, sharpen the contrast between café pockets and the late-night stretch.', '共有されたソウルルートなら、カフェの流れと夜の区間を一緒に見て、街区の対比をもう少し立てると合います。', '如果是分享來的首爾路線，建議把咖啡 pocket 和夜間段落一起看，讓街區對比更鮮明。'),
-        guide: uiCopy('성수-서울숲, 을지로-종로, 한남-이태원처럼 대비가 분명한 축을 한 번 더 읽어 보세요.', 'Re-read one contrast line like Seongsu-Seoul Forest, Euljiro-Jongno, or Hannam-Itaewon.', '聖水・ソウルの森、乙支路・鍾路、漢南・梨泰院のような対比の強い軸をもう一度読むと流れが見えます。', '再讀一次像 Seongsu-Seoul Forest、Euljiro-Jongno、Hannam-Itaewon 這種對比強的軸線，節奏會更清楚。')
+        result: uiCopy('서울은 같은 날의 동네 대비가 결과를 바꿉니다. 강한 구역 하나와 느슨한 포켓 하나를 같이 보는 쪽이 좋습니다.', 'Seoul gets better when one sharp neighborhood—Seongsu, Euljiro, Hannam—meets one looser pocket that lets the city breathe before the night comes in.', 'ソウルは同じ日の街区コントラストで結果が変わります。強い地区とゆるいポケットをひとつずつ置くのがきれいです。', '首爾的結果很常被同一天裡的街區對比拉開。放一個強區域，再配一個鬆一點的 pocket 會更好。'),
+        share: uiCopy('공유받은 서울 루트라면, 카페 동선과 야간 구간을 같이 보고 동네 대비를 더 선명하게 만드는 편이 좋습니다.', 'For a shared Seoul route, sharpen the handoff between daytime café pockets and the late-night district rather than trying to make every neighborhood peak at once.', '共有されたソウルルートなら、カフェの流れと夜の区間を一緒に見て、街区の対比をもう少し立てると合います。', '如果是分享來的首爾路線，建議把咖啡 pocket 和夜間段落一起看，讓街區對比更鮮明。'),
+        guide: uiCopy('성수-서울숲, 을지로-종로, 한남-이태원처럼 대비가 분명한 축을 한 번 더 읽어 보세요.', 'Re-read one Seoul contrast line—Seongsu to Seoul Forest, Euljiro to Jongno, or Hannam to Itaewon—and decide which side should own the day and which should own the close.', '聖水・ソウルの森、乙支路・鍾路、漢南・梨泰院のような対比の強い軸をもう一度読むと流れが見えます。', '再讀一次像 Seongsu-Seoul Forest、Euljiro-Jongno、Hannam-Itaewon 這種對比強的軸線，節奏會更清楚。')
       },
       busan: {
-        result: uiCopy('부산은 바다를 보는 시간대와 쉬는 창이 같이 잡혀야 좋습니다. 전망 하나와 느린 식사 하나를 같이 보세요.', 'Busan works best when the coast timing and one real rest window stay together.', '釜山は海を見る時間帯と休む窓が一緒に取れているときがいちばんきれいです。', '釜山最適合把看海的時間帶和真正的休息窗口一起留住。'),
-        share: uiCopy('공유받은 부산 루트라면, 바다 장면을 더 늘리기보다 이동 부담 없는 전망 하나를 더 선명하게 남기는 편이 좋습니다.', 'For a shared Busan route, make one easy coast view stronger instead of adding more sea scenes.', '共有された釜山ルートなら、海の場面を増やすより、負担の少ない眺めをひとつ強く残すほうが合います。', '如果是分享來的釜山路線，比起再加更多海景，更適合把一個移動負擔低的 view 留得更清楚。'),
-        guide: uiCopy('영도·흰여울·해운대 중 지금 페이스에 맞는 해안 축 하나를 먼저 고르세요.', 'Pick one coast axis—Yeongdo, Huinnyeoul, or Haeundae—that matches the pace you want.', '影島・白瀬・海雲台のうち、今のペースに合う海側の軸をひとつ先に選んでください。', '先從 Yeongdo、Huinnyeoul、Haeundae 裡挑一條符合你現在步調的海岸軸線。')
+        result: uiCopy('부산은 바다를 보는 시간대와 쉬는 창이 같이 잡혀야 좋습니다. 전망 하나와 느린 식사 하나를 같이 보세요.', 'Busan works best when the coast arrives at the right hour and one real rest window protects the route from turning into a string of slopes and transfers.', '釜山は海を見る時間帯と休む窓が一緒に取れているときがいちばんきれいです。', '釜山最適合把看海的時間帶和真正的休息窗口一起留住。'),
+        share: uiCopy('공유받은 부산 루트라면, 바다 장면을 더 늘리기보다 이동 부담 없는 전망 하나를 더 선명하게 남기는 편이 좋습니다.', 'For a shared Busan route, make one easy coast view memorable—Haeundae, Gwanganli, or Yeongdo—before adding another sea scene that steals energy.', '共有された釜山ルートなら、海の場面を増やすより、負担の少ない眺めをひとつ強く残すほうが合います。', '如果是分享來的釜山路線，比起再加更多海景，更適合把一個移動負擔低的 view 留得更清楚。'),
+        guide: uiCopy('영도·흰여울·해운대 중 지금 페이스에 맞는 해안 축 하나를 먼저 고르세요.', 'Pick one Busan coast axis—Yeongdo for texture, Huinnyeoul for a softer cliff edge, or Haeundae for cleaner ease—and let that mood set the rest pace.', '影島・白瀬・海雲台のうち、今のペースに合う海側の軸をひとつ先に選んでください。', '先從 Yeongdo、Huinnyeoul、Haeundae 裡挑一條符合你現在步調的海岸軸線。')
       },
       fukuoka: {
-        result: uiCopy('후쿠오카는 더 많이 보기보다 meal rhythm을 지키는 쪽이 훨씬 좋습니다. 식사와 산책의 간격을 다시 보세요.', 'Fukuoka gets stronger when the meal rhythm stays intact instead of pushing in more stops.', '福岡は多く見るより、食のリズムを守るほうがずっと良くなります。食事と散歩の間隔を見直してください。', '福岡比起塞更多停點，更適合守住 meal rhythm。先把用餐與散步之間的間隔看順。'),
-        share: uiCopy('공유받은 후쿠오카 루트라면, 명소 하나보다 식사 타이밍 하나를 더 정확하게 잡는 편이 낫습니다.', 'For a shared Fukuoka route, refine one meal window before adding another attraction.', '共有された福岡ルートなら、名所を増やす前に食事のタイミングをひとつ整えるほうが合います。', '如果是分享來的福岡路線，先把其中一段用餐時段調準，比再加一個景點更適合。'),
-        guide: uiCopy('하카타·텐진·오호리 쪽에서 식사 리듬과 짧은 이동이 같이 되는 축을 다시 읽어 보세요.', 'Re-read the Hakata, Tenjin, and Ohori axis where short moves and meal rhythm hold together.', '博多・天神・大濠の軸で、食事リズムと短い移動が一緒に成立する流れを見直してみてください。', '再讀一次 Hakata、Tenjin、Ohori 這條兼顧短移動與用餐節奏的軸線。')
+        result: uiCopy('후쿠오카는 더 많이 보기보다 meal rhythm을 지키는 쪽이 훨씬 좋습니다. 식사와 산책의 간격을 다시 보세요.', 'Fukuoka gets stronger when the meal rhythm stays intact—Tenjin, Hakata, Nakasu, one more coffee, one more bite—instead of turning the weekend into stop-counting.', '福岡は多く見るより、食のリズムを守るほうがずっと良くなります。食事と散歩の間隔を見直してください。', '福岡比起塞更多停點，更適合守住 meal rhythm。先把用餐與散步之間的間隔看順。'),
+        share: uiCopy('공유받은 후쿠오카 루트라면, 명소 하나보다 식사 타이밍 하나를 더 정확하게 잡는 편이 낫습니다.', 'For a shared Fukuoka route, refine one meal window and one walking pocket before adding another attraction. The city pays off through timing more than scale.', '共有された福岡ルートなら、名所を増やす前に食事のタイミングをひとつ整えるほうが合います。', '如果是分享來的福岡路線，先把其中一段用餐時段調準，比再加一個景點更適合。'),
+        guide: uiCopy('하카타·텐진·오호리 쪽에서 식사 리듬과 짧은 이동이 같이 되는 축을 다시 읽어 보세요.', 'Re-read the Hakata, Tenjin, and Ohori axis where short moves, coffee pockets, and meal timing still sit together. That is where Fukuoka feels exact.', '博多・天神・大濠の軸で、食事リズムと短い移動が一緒に成立する流れを見直してみてください。', '再讀一次 Hakata、Tenjin、Ohori 這條兼顧短移動與用餐節奏的軸線。')
       },
       taipei: {
-        result: uiCopy('타이베이는 밤 공기와 먹는 리듬이 같이 움직일 때 좋습니다. 야시장 하나보다 동선 하나를 더 매끈하게 보세요.', 'Taipei lands best when the night air and the food rhythm move together.', '台北は夜の空気と食のリズムが一緒に動くときにいちばん良く見えます。', '台北最適合讓夜晚空氣和吃的節奏一起走，不一定是再多一個夜市。'),
-        share: uiCopy('공유받은 타이베이 루트라면, 야시장 개수보다 저녁 전후의 리듬을 더 매끈하게 정리하는 편이 좋습니다.', 'For a shared Taipei route, smooth the pre-dinner and after-dinner rhythm before adding another market.', '共有された台北ルートなら、夜市を増やすより夕食前後の流れをなめらかに整えるほうが合います。', '如果是分享來的台北路線，比起再加一個夜市，更適合先把晚餐前後的節奏整理順。'),
-        guide: uiCopy('융캉제·츠펑·시먼 중 어느 밤 결을 더 읽을지 먼저 정하면 타이베이가 훨씬 또렷해집니다.', 'Taipei gets clearer once you choose whether Yongkang, Chifeng, or Ximending should lead the night.', '永康街・赤峰街・西門のどの夜の質感を主役にするかを先に決めると、台北がずっと明確になります。', '先決定要讓 Yongkang、Chifeng 還是 Ximending 帶出夜晚調性，台北就會清楚很多。')
+        result: uiCopy('타이베이는 밤 공기와 먹는 리듬이 같이 움직일 때 좋습니다. 야시장 하나보다 동선 하나를 더 매끈하게 보세요.', 'Taipei lands best when the night air, side-street appetite, and one slower dessert or tea pocket move together as one sequence.', '台北は夜の空気と食のリズムが一緒に動くときにいちばん良く見えます。', '台北最適合讓夜晚空氣和吃的節奏一起走，不一定是再多一個夜市。'),
+        share: uiCopy('공유받은 타이베이 루트라면, 야시장 개수보다 저녁 전후의 리듬을 더 매끈하게 정리하는 편이 좋습니다.', 'For a shared Taipei route, smooth the handoff from late afternoon into dinner and then into the second night scene before adding another market.', '共有された台北ルートなら、夜市を増やすより夕食前後の流れをなめらかに整えるほうが合います。', '如果是分享來的台北路線，比起再加一個夜市，更適合先把晚餐前後的節奏整理順。'),
+        guide: uiCopy('융캉제·츠펑·시먼 중 어느 밤 결을 더 읽을지 먼저 정하면 타이베이가 훨씬 또렷해집니다.', 'Taipei gets clearer once you choose whether Yongkang should open softly, Chifeng should add texture, or Ximending should carry the brighter late-night handoff.', '永康街・赤峰街・西門のどの夜の質感を主役にするかを先に決めると、台北がずっと明確になります。', '先決定要讓 Yongkang、Chifeng 還是 Ximending 帶出夜晚調性，台北就會清楚很多。')
       },
       hongkong: {
-        result: uiCopy('홍콩은 압축된 수직감이 강해서, 한 구간씩 숨을 쉬게 남겨야 결과가 좋아집니다.', 'Hong Kong stays sharp when one compressed vertical stretch is balanced by a breathing pocket.', '香港は圧縮された縦の密度が強いので、一区間ずつ呼吸できる余白を残すと結果が良くなります。', '香港的垂直壓縮感很強，所以每一段之間都要留一個能喘口氣的 pocket。'),
-        share: uiCopy('공유받은 홍콩 루트라면, 한 장면을 더 세게 만들기보다 경사와 야경 사이에 숨 쉴 구간을 남겨 두세요.', 'For a shared Hong Kong route, keep one breathing pocket between slope, harbor, and night.', '共有された香港ルートなら、景色を強くするより、坂・夜景・港のあいだに呼吸できる区間を残すほうが合います。', '如果是分享來的香港路線，比起再加強一個場景，更適合在坡地、夜景與港灣之間留一段喘息。'),
-        guide: uiCopy('센트럴·셩완, 침사추이, 완차이·코즈웨이베이 중 어느 수직 리듬을 먼저 읽을지 고르세요.', 'Choose whether Central-Sheung Wan, Tsim Sha Tsui, or Wan Chai-Causeway Bay should lead the vertical rhythm.', 'セントラル・上環、尖沙咀、湾仔・銅鑼湾のどの縦のリズムを先に読むかを決めると整います。', '先決定 Central-Sheung Wan、Tsim Sha Tsui、Wan Chai-Causeway Bay 哪一條要帶出這座城市的垂直節奏。')
+        result: uiCopy('홍콩은 압축된 수직감이 강해서, 한 구간씩 숨을 쉬게 남겨야 결과가 좋아집니다.', 'Hong Kong stays sharp when one compressed vertical stretch—Central slopes, Tsim Sha Tsui waterfront, Wan Chai neon—meets one deliberate breathing pocket.', '香港は圧縮された縦の密度が強いので、一区間ずつ呼吸できる余白を残すと結果が良くなります。', '香港的垂直壓縮感很強，所以每一段之間都要留一個能喘口氣的 pocket。'),
+        share: uiCopy('공유받은 홍콩 루트라면, 한 장면을 더 세게 만들기보다 경사와 야경 사이에 숨 쉴 구간을 남겨 두세요.', 'For a shared Hong Kong route, keep one breathing pocket between the slope, the harbor, and the night view, so the city stays cinematic instead of exhausting.', '共有された香港ルートなら、景色を強くするより、坂・夜景・港のあいだに呼吸できる区間を残すほうが合います。', '如果是分享來的香港路線，比起再加強一個場景，更適合在坡地、夜景與港灣之間留一段喘息。'),
+        guide: uiCopy('센트럴·셩완, 침사추이, 완차이·코즈웨이베이 중 어느 수직 리듬을 먼저 읽을지 고르세요.', 'Choose whether Central-Sheung Wan should lead with vertical pressure, Tsim Sha Tsui with harbor clarity, or Wan Chai-Causeway Bay with late neon, then keep the other districts in supporting roles.', 'セントラル・上環、尖沙咀、湾仔・銅鑼湾のどの縦のリズムを先に読むかを決めると整います。', '先決定 Central-Sheung Wan、Tsim Sha Tsui、Wan Chai-Causeway Bay 哪一條要帶出這座城市的垂直節奏。')
       }
     };
     const entry = notes[slug];
@@ -732,14 +732,14 @@ window.RyokoPlanner = (() => {
       <div class="shared-loop-shell">
         <div class="shared-loop-head">
           <span class="eyebrow">${uiCopy('city-first loop','City-first loop','city-first loop','city-first loop')}</span>
-          <strong>${uiCopy('공유 링크도 같은 도시 루프로 다시 읽습니다','A shared link should reopen the same city loop','共有リンクも同じ都市ループで読み直します','分享連結也要回到同一個城市循環')}</strong>
+          <strong>${uiCopy('공유 링크도 같은 도시 루프로 다시 읽습니다','A shared link should reopen the same city loop, not stop at the route preview','共有リンクも同じ都市ループで読み直します','分享連結也要回到同一個城市循環')}</strong>
         </div>
         <p class="card-copy">${priorityCityLoopNote(baseCity, signals, 'share') || adaptiveNudgeCopy(baseCity, signals)}</p>
         <div class="shared-loop-grid">
-          <a class="shared-loop-card" href="${atlasHref}"><span class="mini-label">Atlas</span><strong>${city.name}</strong><p>${uiCopy('도시 커버와 우선 동네를 다시 읽기','Reopen the cover and first districts','都市カバーと最初の地区を読み直す','重新讀城市封面與優先區域')}</p></a>
-          <a class="shared-loop-card" href="${guideHref}"><span class="mini-label">City</span><strong>${uiCopy('Neighborhood picks','Neighborhood picks','近所のピック','鄰里精選')}</strong><p>${uiCopy('이 공유 루트가 기대는 동네 결을 더 읽기','Read the neighborhood logic supporting this shared route','この共有ルートが寄りかかる近所のロジックを読む','把這條分享路線依靠的鄰里邏輯再讀深一點')}</p></a>
-          <a class="shared-loop-card" href="${exampleHref}"><span class="mini-label">Example</span><strong>${city.name}</strong><p>${uiCopy('비슷한 도시 예시와 속도 차이 비교','Compare pace against the city example','同じ都市のサンプルと速度感を比べる','和同城市範例比對節奏差異')}</p></a>
-          <a class="shared-loop-card" href="${window.RyokoApp.resolvePath(related.guide || city.guide)}"><span class="mini-label">Next</span><strong>${related.name}</strong><p>${uiCopy('비슷한 결의 다음 도시 가지 열기','Open the next related city branch','近いトーンの次都市ブランチを開く','打開調性相近的下一座城市分支')}</p></a>
+          <a class="shared-loop-card" href="${atlasHref}"><span class="mini-label">Atlas</span><strong>${city.name}</strong><p>${uiCopy('도시 커버와 우선 동네를 다시 읽기','Reopen the city cover, priority districts, and first neighborhood logic','都市カバーと最初の地区を読み直す','重新讀城市封面與優先區域')}</p></a>
+          <a class="shared-loop-card" href="${guideHref}"><span class="mini-label">City</span><strong>${uiCopy('Neighborhood picks','Neighborhood picks','近所のピック','鄰里精選')}</strong><p>${uiCopy('이 공유 루트가 기대는 동네 결을 더 읽기','Read the neighborhood logic holding this shared route together','この共有ルートが寄りかかる近所のロジックを読む','把這條分享路線依靠的鄰里邏輯再讀深一點')}</p></a>
+          <a class="shared-loop-card" href="${exampleHref}"><span class="mini-label">Example</span><strong>${city.name}</strong><p>${uiCopy('비슷한 도시 예시와 속도 차이 비교','Compare this pace against the stronger city example','同じ都市のサンプルと速度感を比べる','和同城市範例比對節奏差異')}</p></a>
+          <a class="shared-loop-card" href="${window.RyokoApp.resolvePath(related.guide || city.guide)}"><span class="mini-label">Next</span><strong>${related.name}</strong><p>${uiCopy('비슷한 결의 다음 도시 가지 열기','Open the next city branch that carries a similar editorial tone','近いトーンの次都市ブランチを開く','打開調性相近的下一座城市分支')}</p></a>
         </div>
         <div class="card-actions shared-loop-actions">
           <a class="soft-btn" href="${plannerHref}">${uiCopy('플래너에서 다듬기','Tune in Planner','Planner で整える','到 Planner 微調')}</a>
@@ -792,7 +792,7 @@ window.RyokoPlanner = (() => {
       {
         kicker: copy.nextBranch,
         title: uiCopy(`${related.name}까지 이어서 읽기`, `Branch into ${related.name}`, `${related.name}へ続けて読む`, `延伸閱讀到 ${related.name}`),
-        text: uiCopy(`${related.vibe} 톤의 도시를 이어서 읽으면 다음 저장 루프가 더 자연스럽게 이어집니다.`, `A ${related.vibe} city keeps the next save-and-read loop moving naturally.`, `${related.vibe}の空気を持つ都市へ続けると、次の保存と読み直しの流れが自然につながります。`, `接著讀一座帶有 ${related.vibe} 氛圍的城市，會讓下一輪保存與再閱讀更自然地延續下去。`),
+        text: uiCopy(`${related.vibe} 톤의 도시를 이어서 읽으면 다음 저장 루프가 더 자연스럽게 이어집니다.`, `A ${related.vibe} city keeps the next save-and-read loop moving naturally, especially when this result already leans in that direction.`, `${related.vibe}の空気を持つ都市へ続けると、次の保存と読み直しの流れが自然につながります。`, `接著讀一座帶有 ${related.vibe} 氛圍的城市，會讓下一輪保存與再閱讀更自然地延續下去。`),
         image: window.RyokoApp.resolvePath(related.image || cityImageFor(related.name)),
         actionLabel: copy.nextCity,
         actionHref: window.RyokoApp.resolvePath(related.guide)
@@ -1125,7 +1125,7 @@ window.RyokoPlanner = (() => {
     const visualCards = [
       { kicker: copy.cityCover, title: rawDestination, text: textValue(data.summary, copy.cityCoverText), image: coverImage },
       { kicker: copy.routeMood, title: textValue(dayOne.title, uiCopy('첫날의 리듬', 'Opening rhythm', '一日目のリズム', '第一天的節奏')), text: dayOnePlaces || copy.routeMoodText, image: routeMoodImage },
-      { kicker: copy.nextBranch, title: uiCopy(`${relatedName}까지 이어보기`, `Branch into ${relatedName}`, `${relatedName}へ続ける`, `延伸到 ${relatedName}`), text: uiCopy(`${textValue(related.vibe, 'editorial route')} 톤의 도시로 다음 탐색을 이어갈 수 있습니다.`, `This ${textValue(related.vibe, 'editorial route')} city is the cleanest next branch from here.`, `${textValue(related.vibe, 'editorial route')}の空気を持つ都市へ、そのまま次の探索をつなげられます。`, `這座帶有 ${textValue(related.vibe, 'editorial route')} 氛圍的城市，最適合作為下一段延伸。`), image: relatedImage }
+      { kicker: copy.nextBranch, title: uiCopy(`${relatedName}까지 이어보기`, `Branch into ${relatedName}`, `${relatedName}へ続ける`, `延伸到 ${relatedName}`), text: uiCopy(`${textValue(related.vibe, 'editorial route')} 톤의 도시로 다음 탐색을 이어갈 수 있습니다.`, `This ${textValue(related.vibe, 'editorial route')} city is the cleanest next branch from here if you want the next read to feel related, not random.`, `${textValue(related.vibe, 'editorial route')}の空気を持つ都市へ、そのまま次の探索をつなげられます。`, `這座帶有 ${textValue(related.vibe, 'editorial route')} 氛圍的城市，最適合作為下一段延伸。`), image: relatedImage }
     ].map(card => `
       <article class="story-card">
         <div class="story-image" style="background-image:linear-gradient(180deg, rgba(17,27,45,0.08), rgba(17,27,45,0.58)), url('${card.image}')"></div>
