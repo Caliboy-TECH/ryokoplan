@@ -132,7 +132,19 @@
           routeClubSave: 'Save my version',
           routeClubOpen: 'Open related sample',
           routeClubGuide: 'Read related city',
-          routeClubSaved: 'Trending route saved as your own version.'
+          routeClubSaved: 'Trending route saved as your own version.',
+          loopEmptyEyebrow: 'No saved loop yet',
+          loopEmptyTitle: 'Build one trip, then the loop gets smarter',
+          loopEmptyDesc: 'Once you save or reopen a trip, My Trips can recommend which guide or sample route to open next.',
+          loopOpenPlanner: 'Open Planner',
+          loopReadMagazine: 'Read Magazine',
+          loopGoodStart: 'Good starting points',
+          loopTokyoGuide: 'Tokyo guide',
+          loopTokyoGuideDesc: 'Fast city, strong first route, and lots of branching options.',
+          loopBusanSample: 'Busan sample',
+          loopBusanSampleDesc: 'Good for scenic pacing and mixed-age travel.',
+          loopVaultEyebrow: 'From your vault',
+          loopVaultTitle: 'can lead the next step too'
         },
         ja: {
           continueTitle: '旅の流れを続ける',
@@ -195,7 +207,19 @@
           routeClubSave: '自分版として保存',
           routeClubOpen: '関連サンプルを見る',
           routeClubGuide: '関連都市を読む',
-          routeClubSaved: 'トレンドルートを自分版として保存しました。'
+          routeClubSaved: 'トレンドルートを自分版として保存しました。',
+          loopEmptyEyebrow: 'まだ保存ループがありません',
+          loopEmptyTitle: '一つ旅程を作ると、次の流れがもっと見えやすくなります',
+          loopEmptyDesc: '旅程を保存したり再度開いたりすると、My Trips が次に読むガイドやサンプルルートを提案できます。',
+          loopOpenPlanner: 'Planner を開く',
+          loopReadMagazine: 'Magazine を読む',
+          loopGoodStart: '最初の入り口に向くもの',
+          loopTokyoGuide: 'Tokyo ガイド',
+          loopTokyoGuideDesc: '速い都市で、最初のルートが作りやすく、次の分岐も多いです。',
+          loopBusanSample: 'Busan サンプル',
+          loopBusanSampleDesc: '景色のペースと幅広い年齢の旅に向いています。',
+          loopVaultEyebrow: 'あなたの保管庫から',
+          loopVaultTitle: 'から次の一歩へつなげられます'
         },
         zhHant: {
           continueTitle: '接著你的旅程節奏',
@@ -986,14 +1010,14 @@
         const anchor = saved[0] || recent[0] || shared[0] || null;
         if (!anchor) {
           main.innerHTML = `
-            <span class="eyebrow">No saved loop yet</span>
-            <h3>Build one trip, then the loop gets smarter</h3>
-            <p>Once you save or reopen a trip, My Trips can recommend which guide or sample route to open next.</p>
-            <div class="card-actions"><a class="primary-btn" href="../">Open Planner</a><a class="secondary-btn" ../magazine/index.html>Open Magazine</a></div>`;
+            <span class="eyebrow">${langCopy().loopEmptyEyebrow || "No saved loop yet"}</span>
+            <h3>${langCopy().loopEmptyTitle || "Build one trip, then the loop gets smarter"}</h3>
+            <p>${langCopy().loopEmptyDesc || "Once you save or reopen a trip, My Trips can recommend which guide or sample route to open next."}</p>
+            <div class="card-actions"><a class="primary-btn" href="../">${langCopy().loopOpenPlanner || "Open Planner"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
           side.innerHTML = `
-            <h3>Good starting points</h3>
+            <h3>${langCopy().loopGoodStart || "Good starting points"}</h3>
             <div class="trip-loop-list">
-              <article><h4>Tokyo guide</h4><p>Fast city, strong first route, and lots of branching options.</p></article>
+              <article><h4>${langCopy().loopTokyoGuide || "Tokyo guide"}</h4><p>${langCopy().loopTokyoGuideDesc || "Fast city, strong first route, and lots of branching options."}</p></article>
               <article><h4>${lang === 'ko' ? '부산 샘플' : lang === 'ja' ? '釜山サンプル' : lang === 'zhHant' ? '釜山範例' : 'Busan sample'}</h4><p>${lang === 'ko' ? '풍경 페이스와 세대 혼합 여행에 잘 맞습니다.' : lang === 'ja' ? '景色のテンポと幅広い年齢の旅に向いています。' : lang === 'zhHant' ? '很適合重視風景節奏與不同年齡同行的旅程。' : 'Good for scenic pacing and mixed-age travel.'}</p></article>
             </div>`;
           return;
@@ -1001,8 +1025,8 @@
         const current = window.RyokoApp.getCityLoopData(anchor.destination) || { name: anchor.destination || 'Trip', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
         const related = window.RyokoApp.getRelatedCities(anchor.destination).slice(0,3);
         main.innerHTML = `
-          <span class="eyebrow">From your vault</span>
-          <h3>${current.name} can lead the next step too</h3>
+          <span class="eyebrow">${langCopy().loopVaultEyebrow || "From your vault"}</span>
+          <h3>${current.name} ${langCopy().loopVaultTitle || "can lead the next step too"}</h3>
           <p>${(anchor.planData?.summary || anchor.notes || 'Use your saved trip as a base, then deepen it with a city guide or branch to a related city.').slice(0, 180)}</p>
           <div class="trip-loop-destinations">
             <span class="trip-loop-chip">${current.name}</span>

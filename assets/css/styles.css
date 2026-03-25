@@ -2204,3 +2204,12 @@ body[data-page="planner"] .top-bar{z-index:62}
   .result-sticky-actions{grid-template-columns:1fr;}
   .lang-switch{gap:6px;}
 }
+
+/* release candidate QA patch: tiny overflow and touch-target fixes */
+@media (max-width: 560px){
+  .trip-loop-card .card-actions,
+  .trip-loop-side .card-actions{display:grid;grid-template-columns:1fr;gap:10px}
+  .trip-loop-card .card-actions > *,
+  .trip-loop-side .card-actions > *{width:100%;min-width:0;justify-content:center}
+  .lang-btn{min-height:40px}
+}
