@@ -1188,12 +1188,12 @@ window.RyokoApp = (() => {
       <section class="section city-section-band"><article class="cover-story-card story-band"><div class="editorial-kicker">${lang === 'ko' ? '편집 메모' : lang === 'ja' ? '編集メモ' : lang === 'zhHant' ? '編輯筆記' : 'Editorial note'}</div><h3>${lang === 'ko' ? '좋은 여행은 장소보다 도시의 템포를 먼저 맞출 때 선명해집니다' : lang === 'ja' ? '良い旅は、場所の数より先に街のテンポが合うと輪郭がはっきりします' : lang === 'zhHant' ? '好的旅程，通常是在清單之前先把城市節奏對上' : 'Trips get clearer when the city tempo lands before the checklist does'}</h3><p>${data.lead}</p></article></section>
       ${(() => {
         const atlasLocale = atlasLocaleMap[lang]?.[slug] || null;
-        const picks = neighborhoodDepthForCity(slug, data, atlasLocale);
+        const picks = getCityNeighborhoodProfiles(slug, data, atlasLocale);
         const picksIntro = lang === 'ko' ? 'City atlas에서 보던 동네 픽을 상세 가이드 안에서도 district와 함께 이어 읽을 수 있게 확장했습니다.' : lang === 'ja' ? 'City atlas で見た近所のピックを、この詳細ガイドの中でも district と一緒に読み継げるよう広げました。' : lang === 'zhHant' ? '把 City atlas 先看到的鄰里精選，直接延伸到這份詳細指南裡，並和 district 一起讀。' : 'The neighborhood picks from City atlas continue here with district depth, so the city still reads in one order.';
         const picksDesc = lang === 'ko' ? '먼저 읽기 좋은 동네와 연결 district, 들어가기 좋은 시간대를 같이 묶었습니다.' : lang === 'ja' ? '入りやすい近所、つながる district、相性のいい時間帯を一つの束で読めるようにしました。' : lang === 'zhHant' ? '把最適合先讀的近所、連動 district、以及最適時段放在同一個閱讀節奏裡。' : 'Each card ties the first neighborhood read to a district anchor and an easy entry window.';
         return `<section class="section city-neighborhood-bridge" id="city-neighborhoods"><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '동네 픽' : lang === 'ja' ? '近所のピック' : lang === 'zhHant' ? '鄰里精選' : 'Neighborhood picks'}</div><h2 class="section-title">${lang === 'ko' ? entry.planner + '를 여는 첫 동네들' : lang === 'ja' ? entry.planner + ' を開く最初の近所' : lang === 'zhHant' ? '打開 ' + entry.planner + ' 的第一批近所' : 'The neighborhoods that open ' + entry.planner}</h2><p class="section-desc">${picksIntro}</p></div></div><p class="city-neighborhood-intro">${picksDesc}</p><div class="city-neighborhood-grid city-neighborhood-grid-deep">${picks.map((item, i) => `<article class="city-neighborhood-card city-neighborhood-card-deep"><span class="district-index">0${i+1}</span><strong>${item.name}</strong><p>${item.note}</p><div class="city-neighborhood-meta"><span><strong>${item.linkedLabel}</strong>${item.district}</span><span><strong>${item.bestLabel}</strong>${item.window}</span></div><div class="city-neighborhood-deeper"><span class="mini-label">${item.routeLabel}</span><small>${item.deeper}</small></div></article>`).join('')}</div></article></section>`;
       })()}
-      <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? '샘플 루트' : lang === 'ja' ? 'サンプルルート' : lang === 'zhHant' ? '範例路線' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? '샘플 일정' : lang === 'ja' ? 'サンプル旅程' : lang === 'zhHant' ? '範例行程' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : lang === 'ja' ? 'サンプル全体を開く' : lang === 'zhHant' ? '打開完整範例' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : lang === 'ja' ? 'Planner で調整する' : lang === 'zhHant' ? '在 Planner 裡調整' : 'Customize in Planner'}</a></div></article></section>
+      <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? '샘플 루트' : lang === 'ja' ? 'サンプルルート' : lang === 'zhHant' ? '範例路線' : 'Sample route'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? '샘플 일정' : lang === 'ja' ? 'サンプル旅程' : lang === 'zhHant' ? '範例行程' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="city-route-variations"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '루트 변주' : lang === 'ja' ? 'ルートの変奏' : lang === 'zhHant' ? '路線變奏' : 'Route variations'}</div><h3 class="section-title">${lang === 'ko' ? entry.planner + '를 바꾸는 세 가지 방식' : lang === 'ja' ? entry.planner + ' を変える3つの方法' : lang === 'zhHant' ? '改寫 ' + entry.planner + ' 的三種方式' : 'Three ways to reshape ' + entry.planner}</h3><p class="section-desc">${lang === 'ko' ? '날씨, 속도, 밤 리듬에 따라 sample route를 바로 바꿔 읽을 수 있게 묶었습니다.' : lang === 'ja' ? '天気、速度感、夜のリズムに合わせてサンプルをすぐ曲げられるようにまとめました。' : lang === 'zhHant' ? '依照天氣、節奏與夜晚比重，這條 sample route 可以這樣直接改寫。' : 'Use these as quick switches when weather, speed, or the night rhythm changes.'}</p></div></div><div class="city-route-variation-grid">${getCityRouteVariations(slug).map(item => `<article class="city-route-variation-card"><span class="mini-label">${item.title}</span><p>${item.desc}</p></article>`).join('')}</div></div><div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : lang === 'ja' ? 'サンプル全体を開く' : lang === 'zhHant' ? '打開完整範例' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : lang === 'ja' ? 'Planner で調整する' : lang === 'zhHant' ? '在 Planner 裡調整' : 'Customize in Planner'}</a></div></article></section>
       <section class="section city-reading-grid city-reading-grid-rich" id="city-tips"><article class="info-card editorial-panel"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('localNotes')}</div><h2 class="section-title">${uiText('localTips')}</h2><p class="section-desc">${lang === 'ko' ? '작은 조정만으로도 여행 체감이 확실히 좋아집니다.' : lang === 'ja' ? '小さな工夫だけで旅の快適さがかなり変わります。' : lang === 'zhHant' ? '只要做一些小調整，整體旅行體感就會明顯更好。' : 'Small adjustments that noticeably improve the trip.'}</p></div></div><ul class="editorial-bullets">${data.tips.map(item => `<li>${item}</li>`).join('')}</ul></article><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('beforeYouGo')}</div><h2 class="section-title">${uiText('keepInMind')}</h2><p class="section-desc">${lang === 'ko' ? '출발 전에 챙겨두면 바로 체감되는 것들입니다.' : lang === 'ja' ? '出発前に整えておくと、すぐ効いてくるポイントです。' : lang === 'zhHant' ? '出發前先準備好，旅途中會立刻感受到差別。' : 'Small prep choices that pay off immediately.'}</p></div></div><ul class="editorial-bullets">${data.keep.map(item => `<li>${item}</li>`).join('')}</ul></article></section>
       ${(() => { const seasonal = getSeasonalCityFeature(entry.planner); return seasonal ? `<section class="section city-seasonal-bridge"><article class="info-card seasonal-bridge-card"><div class="section-head compact"><div><div class="editorial-kicker">${seasonal.label}</div><h2 class="section-title">${seasonal.title}</h2><p class="section-desc">${seasonal.desc}</p></div></div><div class="trip-chip-row seasonal-chip-row">${seasonal.chips.map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}</div></article></section>` : ''; })()}
       <section class="section footer-cta info-card city-final-cta"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${data.finalTitle}</h2><p>${data.finalDesc}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner'}</a><a class="secondary-btn" href="../magazine/index.html">${lang === 'ko' ? '매거진으로 돌아가기' : lang === 'ja' ? 'マガジンへ戻る' : lang === 'zhHant' ? '回到城市誌' : 'Back to Magazine'}</a></div></section>
@@ -1431,6 +1431,183 @@ function getSeasonalEditorialCollections(){
     hongkong:{ position:'center 39%', label:{ ko:'harbor light', en:'harbor light', ja:'港の光', zhHant:'海港燈光' } },
     macau:{ position:'center 43%', label:{ ko:'night heritage', en:'night heritage', ja:'夜の遺産', zhHant:'夜色遺產' } }
   };
+
+  const cityNeighborhoodProfiles = {
+    tokyo:{
+      ko:[
+        {name:'시부야',district:'Shibuya & Harajuku',window:'첫날 오후',note:'도쿄의 속도와 선택지를 가장 빨리 체감하게 해주는 첫 장면입니다.',deeper:'체크인은 가볍게 두고, 첫 저녁은 시부야에서 끝내면 도시 템포를 한 번에 잡기 좋습니다.'},
+        {name:'아사쿠사',district:'Asakusa & Ueno',window:'둘째 날 오전',note:'초행자도 읽기 쉬운 도쿄의 고전적인 축입니다.',deeper:'아침 공기가 남아 있을 때 들어가면 밀도는 높아도 피로가 덜하고, 이후 우에노나 박물관 축으로 이어지기 좋습니다.'},
+        {name:'기요스미',district:'Kiyosumi & Ginza',window:'해 질 무렵',note:'큰 장면 사이에 템포를 낮추기 좋은 조용한 레이어입니다.',deeper:'커피, 갤러리, 강변 산책 같은 느린 루프를 넣으면 도쿄가 체크리스트보다 결로 남습니다.'}
+      ],
+      en:[
+        {name:'Shibuya',district:'Shibuya & Harajuku',window:'arrival afternoon',note:'The fastest first scene for Tokyo energy, food choices, and orientation.',deeper:'Keep arrival light and let the first dinner land here so the city rhythm locks in without forcing too much.'},
+        {name:'Asakusa',district:'Asakusa & Ueno',window:'second morning',note:'A classic Tokyo axis that first-timers can read without much friction.',deeper:'It works best while the morning still feels open, then flows naturally into Ueno, a museum pocket, or a slower lunch.'},
+        {name:'Kiyosumi',district:'Kiyosumi & Ginza',window:'late afternoon',note:'A quieter layer that lets the city breathe between bigger headline stops.',deeper:'Add coffee, galleries, and a slower river walk here, and Tokyo starts to feel edited rather than crowded.'}
+      ]
+    },
+    osaka:{
+      ko:[
+        {name:'난바',district:'Namba & Dotonbori',window:'첫날 저녁',note:'오사카의 열기와 식사 리듬을 가장 빠르게 열어주는 중심입니다.',deeper:'첫날엔 긴 동선보다 난바 한 축만 깊게 읽는 편이 훨씬 오사카답고 덜 피곤합니다.'},
+        {name:'나카자키초',district:'Umeda & Nakazakicho',window:'둘째 날 오후',note:'쇼핑과 카페, 약간의 숨 고르기를 같이 넣기 좋은 포켓입니다.',deeper:'오사카의 웃긴 에너지 사이에 이 정도 느슨한 동네를 넣어야 먹거리 여행도 산만해지지 않습니다.'},
+        {name:'신세카이',district:'Shinsekai & Tennoji',window:'해 질 무렵',note:'조금 더 로컬하고 거친 질감을 느끼기 좋은 마감 구간입니다.',deeper:'전망 포인트나 저녁 한 끼와 함께 붙이면, 오사카의 밤이 과장 없이 자연스럽게 살아납니다.'}
+      ],
+      en:[
+        {name:'Namba',district:'Namba & Dotonbori',window:'first evening',note:'The quickest way to open Osaka through food, light, and easy momentum.',deeper:'On day one, reading Namba deeply is more useful than trying to cover too many zones.'},
+        {name:'Nakazakicho',district:'Umeda & Nakazakicho',window:'second afternoon',note:'A softer pocket for cafés, shopping, and a small reset.',deeper:'Osaka lands better when one lighter neighborhood interrupts the louder food rhythm.'},
+        {name:'Shinsekai',district:'Shinsekai & Tennoji',window:'near dusk',note:'A rougher local texture that gives the trip a stronger close.',deeper:'Pair it with one view point or dinner, and the city ends with character instead of just volume.'}
+      ]
+    },
+    kyoto:{
+      ko:[
+        {name:'기온',district:'Higashiyama',window:'이른 오전',note:'교토다운 장면을 가장 진하게 남기기 좋은 첫 축입니다.',deeper:'사람이 많아지기 전의 기온과 동산 축을 잡으면, 교토는 훨씬 조용하고 깊게 읽힙니다.'},
+        {name:'오카자키',district:'Kawaramachi & Demachiyanagi',window:'늦은 오전',note:'전시, 카페, 강변으로 교토를 조금 더 부드럽게 읽게 해주는 구간입니다.',deeper:'사원 하나 뒤에 오카자키 같은 포켓을 넣으면 하루가 종교시설 체크리스트로 무거워지지 않습니다.'},
+        {name:'가모가와',district:'Kawaramachi & Demachiyanagi',window:'해 질 무렵',note:'교토의 여백을 남겨주는 가장 좋은 마감 라인입니다.',deeper:'강변 산책 하나만 제대로 남겨도 교토는 훨씬 오래 기억됩니다.'}
+      ],
+      en:[
+        {name:'Gion',district:'Higashiyama',window:'early morning',note:'The clearest entry to Kyoto’s iconic texture before the city crowds up.',deeper:'Catch Gion and the east-side temple line early, and Kyoto reads deeper instead of busier.'},
+        {name:'Okazaki',district:'Kawaramachi & Demachiyanagi',window:'late morning',note:'A softer pocket for museums, cafés, and a calmer midday transition.',deeper:'One quiet pocket after a temple anchor keeps the day from turning into a heavy heritage checklist.'},
+        {name:'Kamogawa',district:'Kawaramachi & Demachiyanagi',window:'dusk',note:'The river line is where Kyoto’s empty space starts to matter.',deeper:'A single river walk at dusk often leaves a stronger memory than one more landmark stop.'}
+      ]
+    },
+    fukuoka:{
+      ko:[
+        {name:'텐진',district:'Tenjin & Daimyo',window:'첫날 오후',note:'짧은 여행에서도 바로 리듬을 잡아주는 도심 코어입니다.',deeper:'텐진은 카페, 쇼핑, 식사를 한 블록씩 쌓기 쉬워서 후쿠오카 초행의 첫 장면으로 안정적입니다.'},
+        {name:'나카스',district:'Hakata & Nakasu',window:'저녁',note:'먹는 리듬과 밤 공기를 같이 잡기 좋은 축입니다.',deeper:'야타이든 강변이든 저녁 흐름이 붙는 순간, 후쿠오카는 짧은 일정이어도 충분히 기억에 남습니다.'},
+        {name:'오호리 공원',district:'Tenjin & Daimyo',window:'둘째 날 오전',note:'컴팩트한 도시 안에 한 번의 여유를 넣어주는 포켓입니다.',deeper:'오호리 같은 공원 축을 하루 한 번 넣으면 먹거리 중심 일정도 숨이 생깁니다.'}
+      ],
+      en:[
+        {name:'Tenjin',district:'Tenjin & Daimyo',window:'arrival afternoon',note:'The easiest downtown core for settling into Fukuoka fast.',deeper:'It combines cafés, shopping, and meals in a compact radius, which makes it ideal for a short first-day edit.'},
+        {name:'Nakasu',district:'Hakata & Nakasu',window:'evening',note:'A strong night-food axis that gives the city its clearest after-dark tone.',deeper:'Once dinner and river air connect here, Fukuoka feels memorable even on a short trip.'},
+        {name:'Ohori Park',district:'Tenjin & Daimyo',window:'second morning',note:'A breathing pocket that softens an otherwise food-led route.',deeper:'One park loop like this gives the city shape, not just appetite.'}
+      ]
+    },
+    sapporo:{
+      ko:[
+        {name:'오도리',district:'Odori & Susukino',window:'첫날 오후',note:'삿포로의 넓은 축과 첫 인상을 가장 안정적으로 여는 코어입니다.',deeper:'오도리에서 출발하면 도시 축이 바로 읽히고, 이후 식사나 야경으로도 이어 붙이기 쉽습니다.'},
+        {name:'스스키노',district:'Odori & Susukino',window:'밤',note:'삿포로의 밤 리듬과 따뜻한 한 끼를 같이 붙이기 좋은 구간입니다.',deeper:'추운 계절일수록 밤을 짧게 선명하게 잡는 편이 도시 인상을 더 깊게 남깁니다.'},
+        {name:'마루야마',district:'Maruyama side',window:'둘째 날 오전',note:'조금 더 조용한 삿포로를 읽고 싶을 때 좋은 레이어입니다.',deeper:'도심 코어와 대비되는 공기 덕분에 삿포로가 더 입체적으로 느껴집니다.'}
+      ],
+      en:[
+        {name:'Odori',district:'Odori & Susukino',window:'arrival afternoon',note:'The clearest first axis for understanding Sapporo’s width and rhythm.',deeper:'Starting here makes later meals, winter walks, and evening views feel easier to connect.'},
+        {name:'Susukino',district:'Odori & Susukino',window:'night',note:'A warmer night pocket that lets the city close with food and light.',deeper:'In colder months, one short and vivid night scene often works better than overmoving.'},
+        {name:'Maruyama',district:'Maruyama side',window:'second morning',note:'A quieter layer that softens the trip and adds texture beyond the center.',deeper:'It gives Sapporo contrast, not just continuity.'}
+      ]
+    },
+    seoul:{
+      ko:[
+        {name:'성수',district:'Seongsu & Seoul Forest',window:'첫날 오후',note:'지금 서울의 공기와 보행감을 가장 빠르게 읽게 해주는 동네입니다.',deeper:'카페, 편집숍, 강변이나 숲 축을 묶기 쉬워서 첫날 서울의 밀도를 과하게 쓰지 않고 열 수 있습니다.'},
+        {name:'을지로',district:'Euljiro & Jongno',window:'저녁',note:'서울의 오래된 결과 밤 리듬이 같이 살아나는 축입니다.',deeper:'을지로는 너무 많은 설명 없이도 서울의 층을 보여줘서, 저녁 anchor로 강합니다.'},
+        {name:'연남',district:'Seongsu & Seoul Forest',window:'둘째 날 늦은 오후',note:'조금 더 가볍고 생활감 있는 결을 넣기 좋은 포켓입니다.',deeper:'성수·을지로 사이에 연남 같은 포켓을 넣으면 서울이 더 자연스럽고 덜 과밀하게 느껴집니다.'}
+      ],
+      en:[
+        {name:'Seongsu',district:'Seongsu & Seoul Forest',window:'arrival afternoon',note:'One of the fastest ways to read contemporary Seoul through walking, cafés, and texture.',deeper:'It opens the city without spending all your energy at once, which makes it ideal for a first-day rhythm.'},
+        {name:'Euljiro',district:'Euljiro & Jongno',window:'evening',note:'A strong evening axis where older layers and night energy sit together.',deeper:'Euljiro turns Seoul into a layered city instead of a simple shopping route.'},
+        {name:'Yeonnam',district:'Seongsu & Seoul Forest',window:'late second afternoon',note:'A lighter neighborhood pocket that adds everyday softness.',deeper:'Between stronger zones, a place like Yeonnam keeps the city from feeling too engineered.'}
+      ]
+    },
+    busan:{
+      ko:[
+        {name:'해운대',district:'Haeundae & Gwanganli',window:'첫날 오후',note:'부산의 대표 바다 장면을 가장 쉽게 가져오는 축입니다.',deeper:'첫날은 해운대처럼 바로 열리는 바다를 쓰고, 나머지 풍경은 다음 날로 남겨두는 편이 덜 피곤합니다.'},
+        {name:'광안리',district:'Haeundae & Gwanganli',window:'밤',note:'야경과 식사, 산책이 가장 자연스럽게 맞물리는 해변 라인입니다.',deeper:'밤의 광안리는 부산의 기억을 정리해 주는 마감 구간으로 강합니다.'},
+        {name:'남포',district:'Nampo & Gamcheon side',window:'둘째 날 오전',note:'항구 도시의 오래된 결과 시장 리듬을 읽기 좋은 축입니다.',deeper:'남포를 넣으면 부산이 단순한 바다 도시가 아니라 오래된 항구 도시로도 보이기 시작합니다.'}
+      ],
+      en:[
+        {name:'Haeundae',district:'Haeundae & Gwanganli',window:'arrival afternoon',note:'The easiest first coast scene for opening Busan without friction.',deeper:'Use one clear ocean anchor here first, then save the rest of the coast for later.'},
+        {name:'Gwanganli',district:'Haeundae & Gwanganli',window:'night',note:'The most natural shore for a night view, dinner, and a slower close.',deeper:'Gwanganli often leaves the clearest Busan memory when it is saved for the end of the day.'},
+        {name:'Nampo',district:'Nampo & Gamcheon side',window:'second morning',note:'A port-city layer with older streets and market rhythm.',deeper:'It makes Busan feel broader than just beaches and skyline.'}
+      ]
+    },
+    jeju:{
+      ko:[
+        {name:'애월',district:'Aewol & Hyeopjae',window:'첫날 오후',note:'제주의 바람과 카페, 해안 드라이브를 가장 가볍게 여는 축입니다.',deeper:'첫날부터 먼 포인트를 무리하게 찍기보다 애월처럼 가까운 바다 결을 여는 편이 섬 리듬과 잘 맞습니다.'},
+        {name:'협재',district:'Aewol & Hyeopjae',window:'둘째 날 오전',note:'제주의 맑은 바다색을 대표적으로 읽기 좋은 구간입니다.',deeper:'맑은 날이라면 협재 한 축을 깊게 보고, 다른 포인트는 과감히 줄이는 편이 더 만족스럽습니다.'},
+        {name:'서귀포',district:'Seogwipo & Jungmun',window:'해 질 무렵',note:'큰 풍경과 저녁 무드를 같이 잡기 좋은 남쪽 축입니다.',deeper:'남쪽으로 내려가는 날은 이동 수를 줄이고 서귀포나 중문 한 라인만 제대로 쓰는 편이 좋습니다.'}
+      ],
+      en:[
+        {name:'Aewol',district:'Aewol & Hyeopjae',window:'arrival afternoon',note:'An easy coastal opener for Jeju’s wind, cafés, and island pace.',deeper:'Rather than forcing distant landmarks on day one, opening the island through Aewol usually feels more natural.'},
+        {name:'Hyeopjae',district:'Aewol & Hyeopjae',window:'second morning',note:'A clear representative coast when the weather is good.',deeper:'On bright days, it is often better to stay longer here and cut the total number of stops.'},
+        {name:'Seogwipo',district:'Seogwipo & Jungmun',window:'late afternoon',note:'A southern line that carries bigger scenery and a softer evening close.',deeper:'The south works best when you reduce hops and let one scenic corridor hold the day.'}
+      ]
+    },
+    gyeongju:{
+      ko:[
+        {name:'황리단길',district:'Daereungwon & Hwangridan-gil',window:'첫날 오후',note:'지금의 경주와 고도 분위기를 같이 읽기 좋은 첫 장면입니다.',deeper:'낮에는 황리단길과 대릉원 축으로 도시 중심을 읽고, 밤을 위한 에너지를 남겨두는 편이 좋습니다.'},
+        {name:'대릉원',district:'Daereungwon & Hwangridan-gil',window:'둘째 날 오전',note:'경주의 역사 감각을 가장 담백하게 보여주는 중심입니다.',deeper:'아침 시간에 대릉원 축을 읽으면 고도 특유의 여백이 더 잘 느껴집니다.'},
+        {name:'월지',district:'Donggung & Wolji side',window:'해 질 무렵',note:'경주를 기억에 남게 만드는 가장 강한 저녁 장면입니다.',deeper:'이 도시에서는 일몰 이후 한 장면만 제대로 남겨도 전체 인상이 완성됩니다.'}
+      ],
+      en:[
+        {name:'Hwangridan-gil',district:'Daereungwon & Hwangridan-gil',window:'arrival afternoon',note:'A strong opening where contemporary shops and old-city mood meet.',deeper:'Read the center lightly first and save enough energy for the evening heritage mood.'},
+        {name:'Daereungwon',district:'Daereungwon & Hwangridan-gil',window:'second morning',note:'A calmer way to feel Gyeongju’s historical scale without too much effort.',deeper:'In the morning, the open space reads more clearly and the city feels less tour-heavy.'},
+        {name:'Wolji',district:'Donggung & Wolji side',window:'dusk',note:'The evening image that usually seals the city in memory.',deeper:'One dusk scene here often finishes the trip more fully than several extra daytime stops.'}
+      ]
+    },
+    taipei:{
+      ko:[
+        {name:'융캉제',district:'Yongkang Street & Dongmen',window:'첫날 오후',note:'타이베이의 먹는 리듬과 골목 결을 가장 부드럽게 여는 입구입니다.',deeper:'커피, 디저트, 첫 식사를 융캉제 쪽에 두면 도시는 급하지 않게 열리고 밤까지 체력이 남습니다.'},
+        {name:'시먼',district:'Ximen & Dihua Street',window:'저녁',note:'젊은 에너지와 야간 리듬을 붙이기 좋은 축입니다.',deeper:'시먼은 화려한 밤을 빠르게 열어 주지만, 다른 축과 섞을 땐 한 번의 pause가 필요합니다.'},
+        {name:'디화제',district:'Ximen & Dihua Street',window:'둘째 날 늦은 오전',note:'타이베이의 오래된 상업 결을 읽기 좋은 레이어입니다.',deeper:'디화제를 넣는 순간 타이베이가 단순한 먹거리 도시가 아니라 결이 있는 도시로 남습니다.'}
+      ],
+      en:[
+        {name:'Yongkang Street',district:'Yongkang Street & Dongmen',window:'arrival afternoon',note:'A gentle first entry to Taipei through food timing and walkable lanes.',deeper:'Coffee, dessert, and one easy meal here open the city softly and preserve energy for the night.'},
+        {name:'Ximen',district:'Ximen & Dihua Street',window:'evening',note:'A quicker way to shift into Taipei’s brighter social rhythm.',deeper:'Ximen can open the night fast, but it works best with one pause elsewhere in the day.'},
+        {name:'Dihua Street',district:'Ximen & Dihua Street',window:'late second morning',note:'A textured layer that keeps Taipei from feeling like food stops only.',deeper:'Once you add Dihua, the city starts to hold memory and material, not just appetite.'}
+      ]
+    },
+    hongkong:{
+      ko:[
+        {name:'센트럴',district:'Central & Sheung Wan',window:'첫날 오후',note:'홍콩의 수직 밀도와 언덕, 항구 감각을 가장 빠르게 읽게 해주는 축입니다.',deeper:'센트럴은 이동 피로도 있지만 도시 첫인상을 한 번에 강하게 주기 때문에 첫날 anchor로 좋습니다.'},
+        {name:'셩완',district:'Central & Sheung Wan',window:'둘째 날 오전',note:'조금 더 느슨한 카페와 골목, 오래된 결을 읽기 좋은 레이어입니다.',deeper:'센트럴의 강한 장면 뒤에 셩완을 붙이면 홍콩이 훨씬 더 입체적으로 남습니다.'},
+        {name:'침사추이',district:'Tsim Sha Tsui & Yau Ma Tei',window:'밤',note:'야경과 해안 리듬을 가장 직관적으로 가져오는 축입니다.',deeper:'홍콩의 밤은 한 장면만 제대로 남겨도 충분하니, 침사추이는 마감용으로 강합니다.'}
+      ],
+      en:[
+        {name:'Central',district:'Central & Sheung Wan',window:'arrival afternoon',note:'The quickest way to feel Hong Kong’s vertical energy, slopes, and harbor logic.',deeper:'It is a demanding anchor, but it gives the city a strong first frame right away.'},
+        {name:'Sheung Wan',district:'Central & Sheung Wan',window:'second morning',note:'A quieter layer of cafés, older texture, and slower uphill movement.',deeper:'After Central, Sheung Wan lets Hong Kong feel dimensional instead of just intense.'},
+        {name:'Tsim Sha Tsui',district:'Tsim Sha Tsui & Yau Ma Tei',window:'night',note:'The clearest night-view and waterfront line for closing the day.',deeper:'One sharp evening scene here often does more than adding several extra stops.'}
+      ]
+    },
+    macau:{
+      ko:[
+        {name:'세나도',district:'Senado area',window:'첫날 오후',note:'마카오의 구시가와 가벼운 먹거리 리듬을 가장 쉽게 여는 중심입니다.',deeper:'낮에는 세나도 한 축만 천천히 읽어도 마카오의 역사 결이 충분히 들어옵니다.'},
+        {name:'타이파',district:'Taipa & Cotai side',window:'저녁',note:'조금 더 밝고 화려한 밤 장면으로 넘어가기 좋은 완충 구간입니다.',deeper:'구시가 다음에 타이파를 넣으면 하루 리듬이 갑자기 튀지 않고 자연스럽게 확장됩니다.'},
+        {name:'코타이',district:'Taipa & Cotai side',window:'밤',note:'마카오의 화려한 밤을 가장 직관적으로 보여주는 축입니다.',deeper:'코타이는 하루의 마지막 장면 하나만 남겨도 충분히 기능합니다.'}
+      ],
+      en:[
+        {name:'Senado',district:'Senado area',window:'arrival afternoon',note:'The easiest old-core entry for Macau’s heritage and light food rhythm.',deeper:'One slow read of Senado already brings in most of the city’s historical texture.'},
+        {name:'Taipa',district:'Taipa & Cotai side',window:'evening',note:'A softer bridge between the old core and the brighter night side.',deeper:'Taipa helps the day expand naturally instead of jumping too fast into spectacle.'},
+        {name:'Cotai',district:'Taipa & Cotai side',window:'night',note:'The cleanest bright-night axis when Macau needs one stronger close.',deeper:'You usually need only one final scene here to make the contrast land.'}
+      ]
+    }
+  };
+
+  const cityRouteVariationMap = {
+    tokyo:{ko:[['비 오는 날','아사쿠사 대신 실내 전시와 카페 pocket을 길게 두세요. teamLab 같은 강한 한 장면은 남기되, 역 사이 이동 수를 줄이는 편이 좋습니다.'],['느린 버전','시부야·하라주쿠 한 축만 깊게 읽고, 둘째 날을 기요스미나 다이칸야마로 비워 두면 도시가 훨씬 덜 피곤합니다.'],['밤 버전','전망 포인트는 하나만 남기고, 늦은 식사와 골목 이자카야를 주인공으로 두면 도쿄의 밤 결이 살아납니다.']],en:[['Rainy version','Swap one outdoor icon for a stronger indoor museum or café pocket, and reduce the number of station-to-station jumps.'],['Slower version','Let Shibuya–Harajuku carry one day on its own, then give a calmer district like Kiyosumi or Daikanyama more air.'],['Night version','Keep only one skyline moment and let a later dinner plus a smaller izakaya block carry the close.']]},
+    osaka:{ko:[['비 오는 날','난바·우메다의 실내 이동과 arcade를 활용하고, 줄 긴 맛집 하나보다 실패 적은 여러 끼로 풀면 좋습니다.'],['느린 버전','난바와 우메다를 같은 날 깊게 넣지 말고, 하루 한 축만 읽으면 훨씬 오사카답습니다.'],['밤 버전','도톤보리로 시작하되, 마지막은 광장보다 작은 골목 술집이나 디저트로 가볍게 닫는 편이 좋습니다.']],en:[['Rainy version','Lean on arcades and indoor transitions between Namba and Umeda, and favor several easy meals over one long-line stop.'],['Slower version','Do not read Namba and Umeda deeply on the same day; Osaka feels better when one zone carries the day.'],['Night version','Open through Dotonbori, but let the close happen in a smaller bar lane or dessert stop instead of staying only on the main strip.']]},
+    kyoto:{ko:[['비 오는 날','사원 수를 줄이고 전시, 찻집, 정원 한 곳으로 템포를 다시 짜면 교토가 더 잘 남습니다.'],['느린 버전','하루에 사원 하나와 산책 하나만 남기고, 이동보다 앉는 시간을 더 많이 두세요.'],['밤 버전','교토는 늦은 밤보다 해 질 무렵이 핵심입니다. 강변이나 골목의 dusk를 주인공으로 두면 충분합니다.']],en:[['Rainy version','Cut the number of temple stops and rebuild the day around one museum, tea room, or garden pocket.'],['Slower version','Keep one temple and one walk only, then leave more room for sitting than moving.'],['Night version','Kyoto peaks closer to dusk than to late night; let one river or lane scene hold the close.']]},
+    seoul:{ko:[['비 오는 날','성수·을지로 대신 실내 카페, 전시, 백화점 underground를 끼워 넣어도 도시 결은 충분히 유지됩니다.'],['느린 버전','성수와 연남 중 한 축만 택하고, 저녁은 을지로 하나로 정리하면 서울의 밀도가 더 자연스럽습니다.'],['밤 버전','한강이나 루프톱은 하나만 남기고, 저녁은 을지로·종로의 오래된 결에 더 비중을 두세요.']],en:[['Rainy version','Seoul still holds together if you swap one outdoor district for indoor cafés, exhibitions, or a department-store basement chain.'],['Slower version','Choose either Seongsu or Yeonnam, not both deeply, and let Euljiro carry the evening.'],['Night version','Keep only one river or rooftop scene and give more weight to Euljiro or Jongno after dark.']]},
+    taipei:{ko:[['비 오는 날','야시장 비중을 조금 줄이고 카페, 서점, 실내 식사 중심으로 바꾸면 타이베이는 흐트러지지 않습니다.'],['느린 버전','융캉제와 디화제 중 한 축만 깊게 보고, 밤은 한 군데에서 길게 머무는 편이 좋습니다.'],['밤 버전','대만은 밤 시장만이 전부는 아닙니다. 늦은 디저트나 bar 한 곳을 넣으면 도시가 더 오래 남습니다.']],en:[['Rainy version','Taipei still works if you reduce the night-market share and lean more on cafés, bookshops, and indoor meals.'],['Slower version','Read either Yongkang or Dihua more deeply, then stay longer in one evening zone.'],['Night version','Night markets are not the only close; one late dessert or bar stop can give Taipei a longer aftertaste.']]}
+  };
+
+  function getCityNeighborhoodProfiles(slug, data, atlasLocale){
+    const localized = cityNeighborhoodProfiles[slug]?.[lang] || cityNeighborhoodProfiles[slug]?.en;
+    if (localized) {
+      const linkedLabel = lang === 'ko' ? '연결 district' : lang === 'ja' ? 'つながる district' : lang === 'zhHant' ? '連動 district' : 'Linked district';
+      const routeLabel = lang === 'ko' ? '읽는 포인트' : lang === 'ja' ? '読むポイント' : lang === 'zhHant' ? '閱讀重點' : 'Route note';
+      const bestLabel = lang === 'ko' ? '잘 여는 시간' : lang === 'ja' ? '入りやすい時間帯' : lang === 'zhHant' ? '最適時段' : 'Best window';
+      return localized.map(item => ({...item, linkedLabel, routeLabel, bestLabel}));
+    }
+    return neighborhoodDepthForCity(slug, data, atlasLocale);
+  }
+
+  function getCityRouteVariations(slug){
+    const base = cityRouteVariationMap[slug]?.[lang] || cityRouteVariationMap[slug]?.en || [];
+    if (base.length) return base.map(([title, desc]) => ({title, desc}));
+    return [
+      {title: lang === 'ko' ? '비 오는 날' : lang === 'ja' ? '雨の日' : lang === 'zhHant' ? '雨天版' : 'Rainy version', desc: lang === 'ko' ? '실내 포켓을 하나 더 두고 이동 수를 줄이세요.' : lang === 'ja' ? '屋内ポケットを一つ増やし、移動回数を減らしてください。' : lang === 'zhHant' ? '多放一個室內口袋，並減少移動次數。' : 'Add one more indoor pocket and reduce the number of moves.'},
+      {title: lang === 'ko' ? '느린 버전' : lang === 'ja' ? 'ゆっくり版' : lang === 'zhHant' ? '慢節奏版' : 'Slower version', desc: lang === 'ko' ? '하루에 강한 구역 수를 줄이고 쉬는 시간을 더 두세요.' : lang === 'ja' ? '一日に入れる強いエリアを減らし、休む時間を増やしてください。' : lang === 'zhHant' ? '把一天內的強勢區域減少，並多留休息時間。' : 'Use fewer strong zones in one day and leave more time to pause.'},
+      {title: lang === 'ko' ? '밤 버전' : lang === 'ja' ? '夜版' : lang === 'zhHant' ? '夜間版' : 'Night version', desc: lang === 'ko' ? '야간 anchor를 하나만 남기고 나머지는 가볍게 닫는 편이 좋습니다.' : lang === 'ja' ? '夜のアンカーは一つだけ残し、あとは軽く閉じるほうが向いています。' : lang === 'zhHant' ? '只保留一個夜間錨點，其餘用更輕的方式收尾。' : 'Keep one night anchor only, then close the rest more lightly.'}
+    ];
+  }
+
 
   function neighborhoodDepthForCity(slug, data, atlasLocale){
     const picks = (atlasLocale?.picks || data.districts.map(item => item[0]).slice(0,3)).slice(0,3);
