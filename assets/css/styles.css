@@ -3622,3 +3622,206 @@ body{
   object-fit:cover !important;
   object-position:center center !important;
 }
+
+
+/* v50 exact home-cover-desk fix */
+
+/* exact target: static home cover section */
+.home-cover-desk .cover-desk-grid{
+  display:grid !important;
+  grid-template-columns:minmax(0,1.52fr) minmax(320px,.9fr) !important;
+  gap:16px !important;
+  align-items:start !important;
+}
+
+.home-cover-desk .cover-desk-side{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:16px !important;
+  align-items:start !important;
+}
+
+.home-cover-desk .cover-story-card{
+  display:grid !important;
+  background:linear-gradient(180deg,#fffdfa 0%,#fff7ef 100%) !important;
+  border:1px solid var(--line) !important;
+  border-radius:30px !important;
+  box-shadow:var(--shadow) !important;
+  overflow:hidden !important;
+  min-width:0 !important;
+  align-items:stretch !important;
+}
+
+.home-cover-desk .cover-story-card-large{
+  grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr) !important;
+  min-height:420px !important;
+}
+
+.home-cover-desk .cover-story-card-compact{
+  grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr) !important;
+  min-height:200px !important;
+}
+
+.home-cover-desk .cover-story-media{
+  position:relative !important;
+  overflow:hidden !important;
+  min-height:100% !important;
+  background:#eadfce !important;
+}
+
+.home-cover-desk .cover-story-media img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+  display:block !important;
+}
+
+.home-cover-desk .cover-story-media.compact{
+  min-height:220px !important;
+}
+
+.home-cover-desk .cover-story-body{
+  position:relative !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  gap:12px !important;
+  padding:28px 24px !important;
+  min-width:0 !important;
+  background:linear-gradient(180deg,#fffdfa 0%,#fff7ef 100%) !important;
+}
+
+.home-cover-desk .cover-story-body.compact{
+  padding:22px 20px !important;
+}
+
+.home-cover-desk .cover-story-body h3{
+  margin:0 !important;
+  font-size:clamp(28px,3.2vw,40px) !important;
+  line-height:1.04 !important;
+  letter-spacing:-.04em !important;
+  word-break:keep-all !important;
+  overflow-wrap:anywhere !important;
+}
+
+.home-cover-desk .cover-story-body.compact h3{
+  font-size:clamp(22px,2.4vw,30px) !important;
+  line-height:1.08 !important;
+}
+
+.home-cover-desk .cover-story-body p{
+  margin:0 !important;
+  color:var(--muted) !important;
+  font-size:15px !important;
+  line-height:1.7 !important;
+  word-break:keep-all !important;
+  overflow-wrap:anywhere !important;
+}
+
+.home-cover-desk .cta-row{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:10px !important;
+  margin-top:4px !important;
+}
+
+.home-cover-desk .cta-row > *{
+  min-width:0 !important;
+}
+
+.home-cover-desk .section-head{
+  margin-bottom:14px !important;
+}
+
+.home-cover-desk .section-title,
+.home-cover-desk .section-desc{
+  max-width:100% !important;
+}
+
+/* stop accidental overlay-like effects */
+.home-cover-desk .cover-story-media::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  background:linear-gradient(180deg,rgba(12,25,38,.04) 0%,rgba(12,25,38,.10) 100%) !important;
+  pointer-events:none !important;
+}
+
+/* mobile exact fix */
+@media (max-width: 760px){
+  .home-cover-desk .cover-desk-grid{
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+  }
+
+  .home-cover-desk .cover-desk-side{
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+  }
+
+  .home-cover-desk .cover-story-card-large,
+  .home-cover-desk .cover-story-card-compact{
+    grid-template-columns:1fr !important;
+    min-height:0 !important;
+  }
+
+  .home-cover-desk .cover-story-media{
+    min-height:0 !important;
+    aspect-ratio:16/10 !important;
+  }
+
+  .home-cover-desk .cover-story-media.compact{
+    min-height:0 !important;
+    aspect-ratio:16/10 !important;
+  }
+
+  .home-cover-desk .cover-story-body,
+  .home-cover-desk .cover-story-body.compact{
+    padding:14px 14px 16px !important;
+  }
+
+  .home-cover-desk .cover-story-body h3{
+    font-size:clamp(1.8rem,8vw,2.5rem) !important;
+    line-height:1.08 !important;
+  }
+
+  .home-cover-desk .cover-story-body.compact h3{
+    font-size:clamp(1.45rem,6.5vw,1.9rem) !important;
+    line-height:1.12 !important;
+  }
+
+  .home-cover-desk .cover-story-body p{
+    font-size:.96rem !important;
+    line-height:1.58 !important;
+  }
+
+  .home-cover-desk .cta-row{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+  }
+
+  .home-cover-desk .cta-row > *{
+    width:100% !important;
+    min-height:46px !important;
+    justify-content:center !important;
+  }
+}
+
+/* small phones: more bottom clearance against dock */
+@media (max-width: 430px){
+  .home-cover-desk{
+    margin-bottom:18px !important;
+  }
+
+  .home-cover-desk + .top-story-ribbon,
+  .home-cover-desk + section,
+  .home-cover-desk + .section{
+    margin-top:18px !important;
+  }
+
+  .home-cover-desk .cover-story-card{
+    border-radius:24px !important;
+  }
+}
