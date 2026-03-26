@@ -1696,12 +1696,13 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'Tokyo stops feeling random once one softer layer sits behind the obvious first frame.',
         deeper:[
           ['Jinbocho side','After Asakusa or Ueno, a bookshop-and-tea layer keeps Tokyo from collapsing into only headline stops.'],
-          ['Kagurazaka side','A quieter slope-and-dinner close that lands better than forcing one more neon-heavy jump.']
+          ['Kagurazaka side','A quieter slope-and-dinner close that lands better than forcing one more neon-heavy jump.'],
+          ['Ginza-Tokyo Station museum edge','A strong rainy-day or reset layer when you want Tokyo to stay polished instead of fragmented by transfers.']
         ],
         visitTitle:'Choose whose Tokyo this is first',
-        visitDesc:'A first visit and a second visit should not open through the same route logic.',
-        first:['Asakusa → Ueno → Kiyosumi','The cleanest first-read line: readable icons first, then one quieter pocket to close the day.'],
-        second:['Kiyosumi → Jinbocho → Kagurazaka','On a second trip, let texture, books, and a softer dinner district hold the memory.'],
+        visitDesc:'A first visit and a return visit should not open through the same route logic. Tokyo gets cleaner once you decide whether icon clarity, design mood, or after-dark texture owns the day.',
+        first:['Asakusa → Ueno → Kiyosumi','The cleanest first-read line: readable icons first, then one quieter pocket to close the day without transfer fatigue.'],
+        second:['Kiyosumi → Jinbocho → Kagurazaka','On a return trip, let texture, books, and a softer dinner district hold the memory instead of repeating the loudest scenes.'],
         entryTitle:'Best entry routes',
         entryRoutes:[
           ['Classic first read','Asakusa → Ueno → Kiyosumi','The easiest first entry when you want Tokyo to feel clear, not over-programmed.'],
@@ -1734,12 +1735,13 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'Seoul needs one quieter layer behind the obvious contrast districts or the route starts to feel too loud.',
         deeper:[
           ['Seochon side','Smaller than Seongsu or Euljiro on paper, but one of the best layers for letting Seoul breathe.'],
-          ['Mangwon side','A better second-trip district when you want everyday texture before skyline or shopping energy.']
+          ['Mangwon side','A better second-trip district when you want everyday texture before skyline or shopping energy.'],
+          ['Euljiro backstreet pocket','A useful middle layer when you want older Seoul rhythm without turning the whole day into late-night grit.']
         ],
-        visitTitle:'Open a first Seoul and a second Seoul differently',
-        visitDesc:'The first read should lean on strong contrast; the second can lean on lived-in texture.',
-        first:['Seongsu → Euljiro → Seochon','A clear first-Seoul line: contrast first, then one quieter district so the city can settle.'],
-        second:['Mangwon → Seochon → Euljiro late','A better repeat-visit route when you want local rhythm to stay with you longer.'],
+        visitTitle:'Open a first Seoul and a return Seoul differently',
+        visitDesc:'The first read should lean on strong contrast; the return read can lean on lived-in texture, older grain, and one calmer district in the middle.',
+        first:['Seongsu → Euljiro → Seochon','A clear first-Seoul line: contrast first, then one quieter district so the city can settle before night.'],
+        second:['Mangwon → Seochon → Euljiro late','A better repeat-visit route when you want local rhythm, older texture, and a slower afternoon to stay with you longer.'],
         entryTitle:'Best entry routes',
         entryRoutes:[
           ['Contrast opener','Seongsu → Seoul Forest → Euljiro','The clearest way to read old and new Seoul in one frame.'],
@@ -1772,11 +1774,12 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'Kyoto lasts longer when one small pocket of quiet follows the iconic frame.',
         deeper:[
           ['Okazaki museum side','After a temple-heavy start, this museum-and-café layer keeps Kyoto lighter and more readable.'],
-          ['Nishijin side','A better second-trip layer when you want lived-in quiet instead of another crowded east-side repeat.']
+          ['Nishijin side','A better second-trip layer when you want lived-in quiet instead of another crowded east-side repeat.'],
+          ['Demachiyanagi river edge','A soft reset layer when you want Kyoto to breathe instead of stacking one more temple or shopping stop.']
         ],
         visitTitle:'A first Kyoto and a return Kyoto',
-        visitDesc:'The first visit can lean on east-side icons; the second usually lands better through a quieter west or river edge line.',
-        first:['Higashiyama early → Gion edge → Kamo dusk','The cleanest first-Kyoto line: iconic early, then a soft dusk close.'],
+        visitDesc:'The first visit can lean on east-side icons; the return trip usually lands better through a quieter west pocket, a river edge, or one museum-led pause.',
+        first:['Higashiyama early → Gion edge → Kamo dusk','The cleanest first-Kyoto line: iconic early, then a soft dusk close before the city hardens into a checklist.'],
         second:['Okazaki → Nishijin → Kamo dusk','On a return visit, quieter pockets and the river often hold memory better than repeating the obvious frame.'],
         entryTitle:'Best entry routes',
         entryRoutes:[
@@ -1810,11 +1813,12 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'Taipei sharpens when one textural pocket sits beside the food line instead of letting appetite do all the work.',
         deeper:[
           ['Chifeng side','A strong middle-texture layer where shopping, cafés, and older material all overlap.'],
-          ['Treasure Hill side','A better repeat-visit layer when you want a slower river-and-pause rhythm.']
+          ['Treasure Hill side','A better repeat-visit layer when you want a slower river-and-pause rhythm.'],
+          ['Xinyi backstreet dessert pocket','A useful late-day layer when you want Taipei to stay bright without becoming only market energy.']
         ],
         visitTitle:'First Taipei versus return Taipei',
-        visitDesc:'The first visit can stay food-first; the second often lands better through bookshop, river, and tea-room pockets.',
-        first:['Yongkang → Dihua → one night market','The clearest first-Taipei line: food, lanes, and one vivid night close.'],
+        visitDesc:'The first visit can stay food-first; the return trip often lands better through bookshop, river, tea-room, and dessert pockets that slow the city down.',
+        first:['Yongkang → Dihua → one night market','The clearest first-Taipei line: food, lanes, and one vivid night close without trying to cover every market.'],
         second:['Chifeng → Treasure Hill → tea-room close','On a second visit, texture and pause usually carry more memory than another pure food sprint.'],
         entryTitle:'Best entry routes',
         entryRoutes:[
@@ -1848,11 +1852,12 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'Hong Kong lands better when one breathing layer sits behind the vertical headline stops.',
         deeper:[
           ['PMQ / Soho side','A middle layer that stops Central from flipping too quickly into another high-pressure district.'],
-          ['West Kowloon side','A better return-trip axis when you want to read the harbor from a quieter angle.']
+          ['West Kowloon side','A better return-trip axis when you want to read the harbor from a quieter angle.'],
+          ['Wan Chai backstreet dessert line','A useful late pivot when you want to lower the pressure after the skyline without losing Hong Kong’s density.']
         ],
         visitTitle:'First Hong Kong and return Hong Kong',
-        visitDesc:'The first visit can lean on sharp vertical contrast; the second can read ferry, harbor, and slope streets more delicately.',
-        first:['Central → Sheung Wan → Tsim Sha Tsui night','The easiest first-Hong Kong line: compressed vertical energy first, then one harbor close.'],
+        visitDesc:'The first visit can lean on sharp vertical contrast; the return trip can read ferry, harbor, dessert pockets, and slope streets more delicately.',
+        first:['Central → Sheung Wan → Tsim Sha Tsui night','The easiest first-Hong Kong line: compressed vertical energy first, then one harbor close instead of splitting the skyline twice.'],
         second:['Sheung Wan → PMQ/Soho → West Kowloon close','A better return line when you want slopes and harbor edge to carry the mood instead of only skyline drama.'],
         entryTitle:'Best entry routes',
         entryRoutes:[
@@ -1886,11 +1891,12 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'Busan improves once one lived-in harbor layer sits behind the obvious sea-line postcard frame.',
         deeper:[
           ['Yeongdo side','A strong extra axis when you want to read the sea again through a different height and texture.'],
-          ['Bosu / Nampo side','Older everyday texture that keeps Busan from ending as only Haeundae and Gwangalli.']
+          ['Bosu / Nampo side','Older everyday texture that keeps Busan from ending as only Haeundae and Gwangalli.'],
+          ['Millak late-night shore pocket','A useful last scene when you want one looser waterline after the brighter coast districts.']
         ],
         visitTitle:'First Busan and return Busan',
-        visitDesc:'The first visit should stay coast-anchored; the second can lean harder on harbor-side everyday texture.',
-        first:['Haeundae → Gwangalli → one night shore','The clearest first-Busan line: easy coast access, then one crisp night close.'],
+        visitDesc:'The first visit should stay coast-anchored; the return trip can lean harder on harbor-side texture, older everyday streets, and one slower night shore.',
+        first:['Haeundae → Gwangalli → one night shore','The clearest first-Busan line: easy coast access, then one crisp night close without over-crossing the city.'],
         second:['Yeongdo → Nampo/Bosu → Gwangalli close','A better repeat line when you want harbor texture to hold the memory.'],
         entryTitle:'Best entry routes',
         entryRoutes:[
@@ -1924,10 +1930,11 @@ function getSeasonalEditorialCollections(){
         deeperDesc:'Because Fukuoka is so compact, one softer layer after the food line makes a surprising difference.',
         deeper:[
           ['Hakata Station side','A practical layer that stabilizes movement and meals for a first Fukuoka read.'],
-          ['Yakuin side','A better repeat-visit pocket when you want something less busy than a Tenjin-heavy route.']
+          ['Yakuin side','A better repeat-visit pocket when you want something less busy than a Tenjin-heavy route.'],
+          ['Ropponmatsu bookshop-café pocket','A useful middle layer when you want Fukuoka to feel softer than only food and transit efficiency.']
         ],
         visitTitle:'First Fukuoka and return Fukuoka',
-        visitDesc:'The first visit can stay compact and food-first; the second often lands better through quieter everyday pockets.',
+        visitDesc:'The first visit can stay compact and food-first; the return trip often lands better through quieter everyday pockets, parks, and one softer café line.',
         first:['Hakata → Tenjin → yatai close','The clearest first-Fukuoka line: short movement, strong meal rhythm, and one compact night close.'],
         second:['Yakuin → Ohori edge → compact dinner close','A better return route when you want a looser neighborhood rhythm instead of only yatai energy.'],
         entryTitle:'Best entry routes',
@@ -2191,7 +2198,7 @@ function getPriorityDeepening(slug=''){
   const exampleVariationPolishMap = {
     'tokyo-3n4d-first-trip': {
       ko:[
-        ['비 오는 날','아사쿠사의 큰 장면을 억지로 지키기보다 긴자·기요스미 쪽 indoor pocket을 먼저 두고 역 점프를 한 번 덜어내세요. 도쿄는 비 오는 날일수록 한 구역의 결을 깊게 읽는 편이 훨씬 더 에디토리얼하게 남습니다.'],
+        ['비 오는 날','아사쿠사의 큰 장면을 억지로 지키기보다 긴자·기요스미 쪽 indoor pocket을 먼저 두고 역 점프를 한 번 덜어내세요. 도쿄는 비 오는 날일수록 한 구역의 결을 깊게 읽고, 중간엔 미술관이나 디저트 pocket 하나를 두는 편이 훨씬 더 에디토리얼하게 남습니다.'],
         ['느린 버전','시부야·하라주쿠를 하루에 다 쓰려 하지 말고, 다이칸야마나 기요스미 같은 calmer pocket에 오후를 남기면 도쿄의 밀도와 여백이 같이 살아납니다.'],
         ['밤 버전','전망 포인트 하나만 남기고, 늦은 저녁은 작은 이자카야 골목이나 디저트 바 쪽으로 닫으세요. 도쿄의 밤은 큰 조명보다 마지막 한 구간의 결이 더 오래 갑니다.']
       ],
@@ -2827,7 +2834,7 @@ function getPriorityMagazineArticles(){
           {city:'Seoul', title:'서울을 대비만으로 끝내지 않는 법', desc:'서울은 대비가 큰 도시라 quieter district 하나를 중간에 넣어야 도시가 더 오래 남습니다.', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
           {city:'Kyoto', title:'뻔한 장면 뒤에 두는 더 부드러운 교토', desc:'상징적인 장면 뒤에 강변이나 museum pocket을 붙여야 교토가 더 가볍고 길게 남습니다.', guide:`${base}city/kyoto.html#city-priority-depth`, sample:`${base}example/kyoto-2n3d-slow-trip.html`},
           {city:'Taipei', title:'타이베이는 food-first만으론 부족하다', desc:'타이베이는 식사 축 옆에 texture pocket을 붙일 때 도시가 훨씬 선명해집니다.', guide:`${base}city/taipei.html#city-priority-depth`, sample:`${base}example/taipei-3n4d-night-food.html`},
-          {city:'Hong Kong', title:'홍콩의 수직감 뒤에 필요한 숨 고르기', desc:'홍콩은 skyline 뒤에 slope street나 harbor edge를 붙일수록 훨씬 더 세련되게 남습니다.', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
+          {city:'Hong Kong', title:'홍콩의 수직감 뒤에 필요한 숨 고르기', desc:'홍콩은 skyline 뒤에 slope street나 harbor edge를 붙일수록 훨씬 세련되게 남습니다.', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
           {city:'Busan', title:'엽서 같은 바다 그 너머의 부산', desc:'부산은 coast line 뒤에 harbor-side everyday texture를 붙일 때 훨씬 입체적으로 읽힙니다.', guide:`${base}city/busan.html#city-priority-depth`, sample:`${base}example/busan-2n3d-with-parents.html`},
           {city:'Fukuoka', title:'컴팩트한 루트와 더 부드러운 로컬 pocket', desc:'후쿠오카는 food-first 축 뒤에 quiet local pocket 하나만 붙여도 완성도가 크게 올라갑니다.', guide:`${base}city/fukuoka.html#city-priority-depth`, sample:`${base}example/fukuoka-2n3d-food-trip.html`}
         ]
@@ -2839,7 +2846,7 @@ function getPriorityMagazineArticles(){
         guide:'Read city guide', sample:'Read sample route',
         items:[
           {city:'Tokyo', title:'First Tokyo, then the quieter second Tokyo', desc:'Open Tokyo through its clearest icons first, then return through books, dinner, and quieter pockets.', guide:`${base}city/tokyo.html#city-priority-depth`, sample:`${base}example/tokyo-3n4d-first-trip.html`},
-          {city:'Seoul', title:'How to keep Seoul from becoming only contrast', desc:'Seoul reads best when one quieter district sits between its louder old/new contrast.', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
+          {city:'Seoul', title:'How to keep Seoul from becoming only contrast', desc:'Seoul reads better when one quieter district sits between its louder old/new contrast.', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
           {city:'Kyoto', title:'A softer Kyoto after the obvious frame', desc:'After the iconic first frame, a river edge or museum pocket keeps Kyoto lighter and easier to hold.', guide:`${base}city/kyoto.html#city-priority-depth`, sample:`${base}example/kyoto-2n3d-slow-trip.html`},
           {city:'Taipei', title:'Food-first is not enough for Taipei', desc:'Taipei sharpens when one textural pocket sits beside the meal line.', guide:`${base}city/taipei.html#city-priority-depth`, sample:`${base}example/taipei-3n4d-night-food.html`},
           {city:'Hong Kong', title:'The breathing layer behind Hong Kong verticality', desc:'Hong Kong feels more elegant when slope streets or the harbor edge soften the skyline pressure.', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
