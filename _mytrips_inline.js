@@ -108,14 +108,14 @@
           collectionRoutes: 'routes',
           collectionPlaces: 'saved places',
           collectionOpen: 'Open latest',
-          collectionGuide: 'Read city',
+          collectionGuide: 'City guide',
           collectionExample: 'Sample route',
           collectionMixed: 'A mixed archive of saved, recent, and shared routes',
           collectionSavedOnly: 'Mostly built from your saved routes',
           collectionSharedHeavy: 'A city with a stronger shared-trip mix',
           collectionRecentHeavy: 'A city you reopened often recently',
           continueReading: 'Continue reading',
-          collectionLayer: 'Read city layer',
+          collectionLayer: 'City guide layer',
           publicDeskLabel: 'Public route desk',
           publicDeskPick: 'Editor pick',
           publicDeskSave: 'Save to My Trips',
@@ -654,7 +654,7 @@ function visitEntryMarkup(city='', extraClass=''){
             ${visitEntryMarkup(latest.destination, 'trip-entry-inline-soft')}
             <div class="hero-actions">
               <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
-              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'Read city layer'}</a>
+              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'City guide layer'}</a>
               <a class="ghost-btn" href="${articleHrefForCity(latest.destination)}">${articleLabel()}</a>
               <button class="secondary-btn" data-copy="${latest.id}">${window.RyokoApp.t('trips.tripShare')}</button>
             </div>
@@ -848,7 +848,7 @@ function visitEntryMarkup(city='', extraClass=''){
               </div>
               <p class="trip-archive-copy">${getMetaSummary(latest) || langVariant('이 도시에 다시 쓸 수 있는 루트 베이스입니다.','A reusable route base for this city.','この都市で何度も使えるルートベースです。','這是一條可重複使用於這座城市的路線基底。')}</p>
               <div class="trip-chip-row">${items.slice(0,4).map(item => `<span class="trip-mini-chip">${item.title || label}</span>`).join('')}</div>
-              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">${langVariant('최근 루트 열기','Open latest','最新ルートを開く','打開最新路線')}</a><a class="ghost-btn" href="../city/${city.toLowerCase()}.html">${langVariant('도시 읽기','Read city','都市を読む','閱讀城市')}</a></div>
+              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">${langVariant('최근 루트 열기','Open latest','最新ルートを開く','打開最新路線')}</a><a class="ghost-btn" href="../city/${city.toLowerCase()}.html">${langVariant('도시 읽기','City guide','都市を読む','閱讀城市')}</a></div>
             </article>`;
         }).join('');
       }

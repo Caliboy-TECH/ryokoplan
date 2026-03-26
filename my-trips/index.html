@@ -348,18 +348,18 @@
           collectionRoutes: 'routes',
           collectionPlaces: 'saved places',
           collectionOpen: 'Open latest',
-          collectionGuide: 'Read city',
+          collectionGuide: 'City guide',
           collectionExample: 'Sample route',
           collectionMixed: 'A mixed archive of saved, recent, and shared routes',
           collectionSavedOnly: 'Mostly built from your saved routes',
           collectionSharedHeavy: 'A city with a stronger shared-trip mix',
           collectionRecentHeavy: 'A city you reopened often recently',
           continueReading: 'Continue reading',
-          collectionLayer: 'Read city layer',
+          collectionLayer: 'City guide layer',
           publicDeskLabel: 'Public route desk',
           publicDeskPick: 'Editor pick',
           publicDeskSave: 'Save to My Trips',
-          publicDeskOpen: 'Open sample',
+          publicDeskOpen: 'Sample',
           publicDeskPlan: 'Continue in Planner',
           publicDeskSaved: 'Sample route saved to My Trips.',
           publicDeskIntro: 'A curated hub where public samples can become your next trip base.',
@@ -741,7 +741,7 @@
             ${visitEntryMarkup(latest.destination, 'trip-entry-inline-soft')}
             <div class="hero-actions">
               <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
-              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'Read city layer'}</a>
+              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'City guide layer'}</a>
               <a class="ghost-btn" href="${articleHrefForCity(latest.destination)}">${articleLabel()}</a>
               <button class="secondary-btn" data-copy="${latest.id}">${window.RyokoApp.t('trips.tripShare')}</button>
             </div>
@@ -941,7 +941,7 @@
               </div>
               <p class="trip-archive-copy">${getMetaSummary(latest) || 'A reusable route base for this city.'}</p>
               <div class="trip-chip-row">${items.slice(0,4).map(item => `<span class="trip-mini-chip">${item.title || label}</span>`).join('')}</div>
-              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">Open latest</a><a class="ghost-btn" href="../city/${city.toLowerCase()}.html">Read city</a></div>
+              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">Open latest</a><a class="ghost-btn" href="../city/${city.toLowerCase()}.html">City guide</a></div>
             </article>`;
         }).join('');
       }
