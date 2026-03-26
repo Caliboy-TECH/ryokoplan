@@ -3138,3 +3138,243 @@ img{max-width:100%}
     margin-bottom:14px !important;
   }
 }
+
+
+/* v48 screenshot-driven mobile fix */
+:root{
+  --mobile-dock-safe: 138px;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+@media (max-width: 560px){
+  html, body{
+    max-width:100%;
+    overflow-x:hidden !important;
+  }
+
+  /* prevent right-edge clipping / horizontal drift */
+  .page-shell,
+  .hero-shell,
+  .cover-desk,
+  .compact-cover-row,
+  .section,
+  .section-inner,
+  .city-atlas-grid,
+  .priority-story-row,
+  .priority-article-grid,
+  .secondary-story-grid,
+  .priority-crosslink-grid,
+  .trip-detail-grid,
+  .city-collections-grid,
+  .shared-product-grid,
+  .loop-grid,
+  .trip-loop-grid,
+  .result-wrap,
+  .result-hero-card{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    box-sizing:border-box;
+  }
+
+  /* give room for bottom dock so CTA/button area is not hidden */
+  body,
+  main,
+  .page-shell,
+  .result-wrap,
+  .home-main,
+  .magazine-main,
+  .mytrips-main{
+    padding-bottom: calc(var(--mobile-dock-safe) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* cards should breathe a bit more on phone */
+  .cover-desk,
+  .compact-cover-row,
+  .priority-story-mini,
+  .priority-article-card,
+  .secondary-story-card,
+  .shared-product-card,
+  .city-collection-card,
+  .shared-spotlight-card,
+  .trip-detail-hero,
+  .trip-continue-card,
+  .loop-card,
+  .shared-loop-card,
+  .trip-loop-card,
+  .trip-loop-side,
+  .result-hero-card{
+    border-radius: 22px !important;
+  }
+
+  /* screenshots show hero text clipping on JP due to too-large title */
+  .cover-desk .section-title,
+  .compact-cover-row .section-title,
+  .priority-story-mini h3,
+  .priority-article-card h3,
+  .secondary-story-card h3,
+  .city-atlas-card h3,
+  .result-hero-card h1,
+  .result-hero-card h2{
+    font-size: clamp(1.7rem, 7vw, 2.5rem) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.03em !important;
+    word-break: keep-all !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .cover-desk .section-desc,
+  .compact-cover-row .section-desc,
+  .priority-story-mini p,
+  .priority-article-card p,
+  .secondary-story-card p,
+  .shared-product-card p,
+  .city-collection-snippet span,
+  .city-collection-continue span,
+  .shared-spotlight-note span,
+  .trip-detail-copy p{
+    font-size: .92rem !important;
+    line-height: 1.55 !important;
+    word-break: keep-all !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  /* hero CTA stack with full width */
+  .cover-desk .card-actions,
+  .compact-cover-row .card-actions,
+  .cta-row{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+  }
+
+  .cover-desk .card-actions > *,
+  .compact-cover-row .card-actions > *,
+  .cta-row > *{
+    width:100% !important;
+    min-width:0 !important;
+    min-height:48px !important;
+    justify-content:center !important;
+  }
+
+  /* image collage / hero media should not overflow */
+  .cover-media,
+  .compact-cover-media,
+  .cover-collage,
+  .cover-mosaic{
+    width:100% !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+    border-radius:22px !important;
+  }
+
+  .cover-media img,
+  .compact-cover-media img,
+  .cover-collage img,
+  .cover-mosaic img{
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center center !important;
+  }
+
+  /* dock should not feel too tall or crush content */
+  .mobile-dock,
+  .app-dock,
+  .bottom-dock{
+    left:10px !important;
+    right:10px !important;
+    bottom: max(10px, env(safe-area-inset-bottom, 0px)) !important;
+    width:auto !important;
+    max-width:none !important;
+    padding:10px 10px calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+    border-radius:28px !important;
+  }
+
+  .mobile-dock .dock-item,
+  .app-dock .dock-item,
+  .bottom-dock .dock-item{
+    min-width:0 !important;
+  }
+
+  .mobile-dock .dock-label,
+  .app-dock .dock-label,
+  .bottom-dock .dock-label{
+    font-size:.82rem !important;
+    line-height:1.2 !important;
+  }
+}
+
+@media (max-width: 430px){
+  :root{
+    --mobile-dock-safe: 146px;
+  }
+
+  .section{
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .cover-desk,
+  .compact-cover-row,
+  .priority-story-mini,
+  .priority-article-card,
+  .secondary-story-card,
+  .shared-product-card,
+  .city-collection-card,
+  .shared-spotlight-card,
+  .trip-detail-hero,
+  .trip-continue-card,
+  .loop-card,
+  .shared-loop-card,
+  .trip-loop-card,
+  .trip-loop-side,
+  .result-hero-card{
+    padding: 0 !important;
+    overflow:hidden !important;
+  }
+
+  .cover-desk .section-copy,
+  .compact-cover-row .section-copy,
+  .priority-story-mini .card-copy,
+  .priority-article-card .card-copy,
+  .secondary-story-card .card-copy,
+  .shared-product-card .card-copy,
+  .city-collection-body,
+  .shared-spotlight-copy,
+  .trip-detail-copy,
+  .trip-continue-copy,
+  .result-hero-card .hero-copy{
+    padding: 14px !important;
+  }
+
+  .cover-desk .section-title,
+  .compact-cover-row .section-title{
+    font-size: clamp(1.55rem, 8vw, 2.15rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  /* JP screenshot shows line extending right; force narrower text measure */
+  .cover-desk .section-copy,
+  .compact-cover-row .section-copy{
+    max-width: 100% !important;
+  }
+
+  .cover-desk .section-desc,
+  .compact-cover-row .section-desc{
+    font-size: .9rem !important;
+    line-height: 1.52 !important;
+  }
+
+  .mobile-dock,
+  .app-dock,
+  .bottom-dock{
+    left:8px !important;
+    right:8px !important;
+    border-radius:24px !important;
+  }
+}
