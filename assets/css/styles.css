@@ -4755,3 +4755,143 @@ body{
     border-radius:20px !important;
   }
 }
+
+
+/* v61 richer article structure */
+.priority-article-grid-rich{
+  grid-template-columns:1fr !important;
+  gap:18px !important;
+}
+.priority-article-card-rich{
+  display:grid;
+  gap:14px;
+}
+.priority-article-card-rich h3{
+  font-size:1.32rem;
+  line-height:1.22;
+}
+.priority-article-intro{
+  font-size:1rem;
+  line-height:1.65;
+  color:var(--muted);
+}
+.priority-article-block{
+  display:grid;
+  gap:8px;
+  padding:14px 16px;
+  border:1px solid rgba(21,39,58,.08);
+  border-radius:18px;
+  background:linear-gradient(180deg,rgba(255,249,242,.95),rgba(255,255,255,.98));
+}
+.priority-article-block strong{
+  font-size:.78rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#9b6d46;
+}
+.priority-article-block p{
+  line-height:1.68;
+}
+.priority-article-meta-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.priority-article-meta-card{
+  display:grid;
+  gap:8px;
+  padding:14px 16px;
+  border-radius:18px;
+  border:1px solid rgba(21,39,58,.08);
+  background:#fffdfa;
+}
+.priority-article-meta-card span{
+  font-size:.78rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#9b6d46;
+}
+.priority-article-meta-card p{
+  line-height:1.62;
+}
+@media (max-width:760px){
+  .priority-article-meta-grid{
+    grid-template-columns:1fr;
+  }
+  .priority-article-card-rich h3{
+    font-size:1.12rem;
+    line-height:1.28;
+  }
+  .priority-article-intro,
+  .priority-article-block p,
+  .priority-article-meta-card p{
+    font-size:.93rem;
+    line-height:1.6;
+  }
+}
+
+
+/* v62 share + mytrips product polish */
+.shared-product-grid,
+.city-collections-grid,
+.trip-loop-grid{
+  align-items:stretch;
+}
+.shared-product-card,
+.city-collection-card,
+.trip-loop-card,
+.trip-loop-side{
+  background:linear-gradient(180deg,rgba(255,252,247,.98),rgba(255,247,239,.98));
+  border:1px solid rgba(21,39,58,.08);
+  box-shadow:0 14px 32px rgba(18,31,45,.06);
+}
+.shared-product-card h3,
+.city-collection-card h3,
+.trip-loop-card h3,
+.trip-loop-side h3{
+  letter-spacing:-0.015em;
+}
+.shared-spotlight-card{
+  background:linear-gradient(180deg,rgba(255,253,249,.98),rgba(255,246,236,.98));
+}
+.trip-entry-inline,
+.trip-rhythm-inline,
+.trip-rhythm-inline-soft{
+  padding:10px 12px;
+  border-radius:16px;
+  border:1px solid rgba(21,39,58,.06);
+  background:rgba(255,250,244,.92);
+}
+.trip-entry-inline strong,
+.trip-rhythm-inline strong,
+.trip-rhythm-inline-soft strong{
+  font-size:.72rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#9b6d46;
+}
+.city-collection-actions,
+.card-actions,
+.trip-card-actions{
+  gap:8px;
+}
+.city-collection-actions > *,
+.card-actions > *,
+.trip-card-actions > *{
+  border-radius:14px !important;
+}
+.city-collection-snippet,
+.city-collection-continue,
+.shared-spotlight-note{
+  background:rgba(255,255,255,.78);
+  border:1px solid rgba(21,39,58,.06);
+}
+@media (max-width:760px){
+  .shared-product-card,
+  .city-collection-card,
+  .trip-loop-card,
+  .trip-loop-side,
+  .shared-spotlight-card{
+    box-shadow:0 10px 24px rgba(18,31,45,.05);
+  }
+}

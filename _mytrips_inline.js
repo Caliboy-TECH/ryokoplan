@@ -114,7 +114,7 @@
           collectionSavedOnly: 'Mostly built from your saved routes',
           collectionSharedHeavy: 'A city with a stronger shared-trip mix',
           collectionRecentHeavy: 'A city you reopened often recently',
-          continueReading: 'Continue reading',
+          continueReading: 'Continue reading next',
           collectionLayer: 'City guide layer',
           publicDeskLabel: 'Public route desk',
           publicDeskPick: 'Editor pick',
@@ -1059,7 +1059,7 @@ function visitEntryMarkup(city='', extraClass=''){
               ${tips ? `<ul class="trip-detail-list">${tips}</ul>` : '<p class="card-copy">No extra local tips stored on this trip yet.</p>'}
             </article>
             <article class="info-card trip-detail-panel">
-              <h3>${langVariant('다음 가지','Branch next','次の分岐','下一個分支')}</h3>
+              <h3>${langVariant('다음 가지','Continue with','次の分岐','下一個分支')}</h3>
               <div class="trip-detail-branch-list">
                 <a class="trip-detail-branch" href="../${city.example}">
                   <strong>${city.name} sample route</strong>
@@ -1200,7 +1200,7 @@ function visitEntryMarkup(city='', extraClass=''){
             <a class="soft-btn" href="../?destination=${encodeURIComponent(current.name)}">Plan again</a>
           </div>`;
         side.innerHTML = `
-          <h3>${langVariant('관련 가지','Related branches','関連する分岐','相關分支')}</h3>
+          <h3>${langVariant('관련 가지','Read next','関連する分岐','相關分支')}</h3>
           ${visitEntryMarkup(anchor.destination)}
           <div class="trip-loop-list">
             ${related.map(city => `
