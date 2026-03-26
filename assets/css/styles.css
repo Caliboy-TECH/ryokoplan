@@ -3825,3 +3825,273 @@ body{
     border-radius:24px !important;
   }
 }
+
+
+/* v51 offset / clipping / dock-safe fix */
+*, *::before, *::after{
+  box-sizing:border-box;
+}
+
+html{
+  overflow-x:clip;
+}
+
+body{
+  overflow-x:clip !important;
+  max-width:100%;
+}
+
+img, video{
+  max-width:100%;
+  height:auto;
+}
+
+/* prevent section cards from drifting sideways */
+.section,
+.home-cover-desk,
+.priority-story-strip,
+.priority-article-section,
+.secondary-story-section,
+.top-story-ribbon,
+.result-wrap,
+.mytrips-main,
+.magazine-main,
+.home-main{
+  margin-left:auto !important;
+  margin-right:auto !important;
+  max-width:100% !important;
+}
+
+/* common cards should stay centered */
+.home-cover-desk .cover-story-card,
+.priority-story-mini,
+.priority-article-card,
+.secondary-story-card,
+.shared-product-card,
+.city-collection-card,
+.shared-spotlight-card,
+.trip-detail-hero,
+.trip-continue-card,
+.loop-card,
+.shared-loop-card,
+.trip-loop-card,
+.trip-loop-side{
+  margin-left:auto !important;
+  margin-right:auto !important;
+  max-width:100% !important;
+  min-width:0 !important;
+}
+
+/* avoid internal media pushing layout wider */
+.home-cover-desk .cover-story-media,
+.cover-media,
+.compact-cover-media,
+.city-collection-cover,
+.shared-spotlight-media,
+.trip-detail-media,
+.trip-continue-media{
+  width:100% !important;
+  max-width:100% !important;
+  overflow:hidden !important;
+}
+
+.home-cover-desk .cover-story-media img,
+.cover-media img,
+.compact-cover-media img,
+.city-collection-cover img,
+.shared-spotlight-media img,
+.trip-detail-media img,
+.trip-continue-media img{
+  width:100% !important;
+  height:100% !important;
+  display:block !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+}
+
+/* make all phone layouts centered and fully inside viewport */
+@media (max-width: 760px){
+  :root{
+    --dock-safe-bottom-v51: 206px;
+  }
+
+  body,
+  main,
+  .page-shell,
+  .home-main,
+  .magazine-main,
+  .mytrips-main,
+  .result-main,
+  .result-wrap{
+    padding-bottom:calc(var(--dock-safe-bottom-v51) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .section{
+    width:100% !important;
+    max-width:100% !important;
+    padding-left:14px !important;
+    padding-right:14px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+
+  .home-cover-desk,
+  .priority-story-strip,
+  .priority-article-section,
+  .secondary-story-section,
+  .top-story-ribbon{
+    width:100% !important;
+    max-width:100% !important;
+    padding-left:0 !important;
+    padding-right:0 !important;
+    overflow-x:clip !important;
+  }
+
+  .home-cover-desk .cover-desk-grid,
+  .home-cover-desk .cover-desk-side,
+  .priority-story-row,
+  .priority-article-grid,
+  .secondary-story-grid,
+  .priority-crosslink-grid,
+  .trip-detail-grid,
+  .city-collections-grid,
+  .shared-product-grid,
+  .loop-grid,
+  .trip-loop-grid{
+    width:100% !important;
+    max-width:100% !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    transform:none !important;
+  }
+
+  .home-cover-desk .cover-story-card,
+  .priority-story-mini,
+  .priority-article-card,
+  .secondary-story-card,
+  .shared-product-card,
+  .city-collection-card,
+  .shared-spotlight-card,
+  .trip-detail-hero,
+  .trip-continue-card,
+  .loop-card,
+  .shared-loop-card,
+  .trip-loop-card,
+  .trip-loop-side{
+    width:100% !important;
+    max-width:100% !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    transform:none !important;
+  }
+
+  .home-cover-desk .cover-story-body,
+  .home-cover-desk .cover-story-body.compact,
+  .shared-spotlight-copy,
+  .trip-detail-copy,
+  .trip-continue-copy,
+  .city-collection-body{
+    width:100% !important;
+    max-width:100% !important;
+  }
+
+  /* card text area should not poke outside right edge */
+  .home-cover-desk .cover-story-body h3,
+  .home-cover-desk .cover-story-body p,
+  .priority-story-mini h3,
+  .priority-story-mini p,
+  .priority-article-card h3,
+  .priority-article-card p,
+  .secondary-story-card h3,
+  .secondary-story-card p,
+  .shared-product-card h3,
+  .shared-product-card p,
+  .trip-detail-copy h3,
+  .trip-detail-copy p{
+    max-width:100% !important;
+    overflow-wrap:anywhere !important;
+    word-break:keep-all !important;
+  }
+
+  /* exact home card breathing from edges */
+  .home-cover-desk .cover-story-card{
+    border-radius:24px !important;
+  }
+
+  .home-cover-desk .cover-story-media{
+    aspect-ratio:16/10 !important;
+  }
+
+  .home-cover-desk .cover-story-body{
+    padding:16px 16px 18px !important;
+  }
+
+  .home-cover-desk .cover-story-body h3{
+    font-size:clamp(1.75rem, 7.5vw, 2.35rem) !important;
+    line-height:1.08 !important;
+  }
+
+  .home-cover-desk .cover-story-body.compact h3{
+    font-size:clamp(1.35rem, 6vw, 1.75rem) !important;
+    line-height:1.12 !important;
+  }
+
+  /* step cards in screenshots were slightly clipped */
+  .top-story-ribbon .info-card,
+  .priority-story-strip .info-card,
+  .priority-article-section .info-card,
+  .secondary-story-section .info-card{
+    width:100% !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+  }
+
+  /* stronger dock-safe; keep dock centered */
+  .mobile-dock,
+  .app-dock,
+  .bottom-dock{
+    position:fixed !important;
+    left:12px !important;
+    right:12px !important;
+    width:auto !important;
+    max-width:none !important;
+    margin:0 auto !important;
+    bottom:max(12px, env(safe-area-inset-bottom, 0px)) !important;
+    transform:none !important;
+    border-radius:26px !important;
+    padding:12px 12px calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .mobile-dock .dock-item,
+  .app-dock .dock-item,
+  .bottom-dock .dock-item{
+    min-width:0 !important;
+  }
+}
+
+@media (max-width: 430px){
+  :root{
+    --dock-safe-bottom-v51: 218px;
+  }
+
+  .section{
+    padding-left:12px !important;
+    padding-right:12px !important;
+  }
+
+  .home-cover-desk .cover-story-body{
+    padding:14px 14px 16px !important;
+  }
+
+  .home-cover-desk .cover-story-body h3{
+    font-size:clamp(1.62rem, 8vw, 2.05rem) !important;
+  }
+
+  .mobile-dock,
+  .app-dock,
+  .bottom-dock{
+    left:8px !important;
+    right:8px !important;
+    border-radius:24px !important;
+  }
+}
