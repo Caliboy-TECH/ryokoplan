@@ -1928,7 +1928,7 @@ function getSeasonalEditorialCollections(){
         ],
         visitTitle:'First Fukuoka and return Fukuoka',
         visitDesc:'The first visit can stay compact and food-first; the second often lands better through quieter everyday pockets.',
-        first:['Hakata → Tenjin → yatai close','The clearest first-Fukuoka line: short movement, strong meal rhythm, one compact night close.'],
+        first:['Hakata → Tenjin → yatai close','The clearest first-Fukuoka line: short movement, strong meal rhythm, and one compact night close.'],
         second:['Yakuin → Ohori edge → compact dinner close','A better return route when you want a looser neighborhood rhythm instead of only yatai energy.'],
         entryTitle:'Best entry routes',
         entryRoutes:[
@@ -2827,7 +2827,7 @@ function getPriorityMagazineArticles(){
           {city:'Seoul', title:'서울을 대비만으로 끝내지 않는 법', desc:'서울은 대비가 큰 도시라 quieter district 하나를 중간에 넣어야 도시가 더 오래 남습니다.', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
           {city:'Kyoto', title:'뻔한 장면 뒤에 두는 더 부드러운 교토', desc:'상징적인 장면 뒤에 강변이나 museum pocket을 붙여야 교토가 더 가볍고 길게 남습니다.', guide:`${base}city/kyoto.html#city-priority-depth`, sample:`${base}example/kyoto-2n3d-slow-trip.html`},
           {city:'Taipei', title:'타이베이는 food-first만으론 부족하다', desc:'타이베이는 식사 축 옆에 texture pocket을 붙일 때 도시가 훨씬 선명해집니다.', guide:`${base}city/taipei.html#city-priority-depth`, sample:`${base}example/taipei-3n4d-night-food.html`},
-          {city:'Hong Kong', title:'홍콩의 수직감 뒤에 필요한 숨 고르기', desc:'홍콩은 skyline 뒤에 slope street나 harbor edge를 붙일수록 훨씬 세련되게 남습니다.', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
+          {city:'Hong Kong', title:'홍콩의 수직감 뒤에 필요한 숨 고르기', desc:'홍콩은 skyline 뒤에 slope street나 harbor edge를 붙일수록 훨씬 더 세련되게 남습니다.', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},
           {city:'Busan', title:'엽서 같은 바다 그 너머의 부산', desc:'부산은 coast line 뒤에 harbor-side everyday texture를 붙일 때 훨씬 입체적으로 읽힙니다.', guide:`${base}city/busan.html#city-priority-depth`, sample:`${base}example/busan-2n3d-with-parents.html`},
           {city:'Fukuoka', title:'컴팩트한 루트와 더 부드러운 로컬 pocket', desc:'후쿠오카는 food-first 축 뒤에 quiet local pocket 하나만 붙여도 완성도가 크게 올라갑니다.', guide:`${base}city/fukuoka.html#city-priority-depth`, sample:`${base}example/fukuoka-2n3d-food-trip.html`}
         ]
@@ -2839,7 +2839,7 @@ function getPriorityMagazineArticles(){
         guide:'Read city guide', sample:'Read sample route',
         items:[
           {city:'Tokyo', title:'First Tokyo, then the quieter second Tokyo', desc:'Open Tokyo through its clearest icons first, then return through books, dinner, and quieter pockets.', guide:`${base}city/tokyo.html#city-priority-depth`, sample:`${base}example/tokyo-3n4d-first-trip.html`},
-          {city:'Seoul', title:'How to keep Seoul from becoming only contrast', desc:'Seoul reads better when one quieter district sits between its louder old/new contrast.', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
+          {city:'Seoul', title:'How to keep Seoul from becoming only contrast', desc:'Seoul reads best when one quieter district sits between its louder old/new contrast.', guide:`${base}city/seoul.html#city-priority-depth`, sample:`${base}example/seoul-2n3d-city-vibes.html`},
           {city:'Kyoto', title:'A softer Kyoto after the obvious frame', desc:'After the iconic first frame, a river edge or museum pocket keeps Kyoto lighter and easier to hold.', guide:`${base}city/kyoto.html#city-priority-depth`, sample:`${base}example/kyoto-2n3d-slow-trip.html`},
           {city:'Taipei', title:'Food-first is not enough for Taipei', desc:'Taipei sharpens when one textural pocket sits beside the meal line.', guide:`${base}city/taipei.html#city-priority-depth`, sample:`${base}example/taipei-3n4d-night-food.html`},
           {city:'Hong Kong', title:'The breathing layer behind Hong Kong verticality', desc:'Hong Kong feels more elegant when slope streets or the harbor edge soften the skyline pressure.', guide:`${base}city/hongkong.html#city-priority-depth`, sample:`${base}example/hongkong-3n4d-harbor-rhythm.html`},

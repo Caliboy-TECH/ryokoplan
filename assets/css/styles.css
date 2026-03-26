@@ -4472,3 +4472,48 @@ img, video{
     bottom:max(84px, calc(env(safe-area-inset-bottom, 0px) + 12px)) !important;
   }
 }
+
+
+/* v56 final JP/ZH mobile QA */
+@media (max-width: 760px){
+  :lang(ja) .mobile-dock .dock-label,
+  :lang(zh-Hant) .mobile-dock .dock-label,
+  [lang="ja"] .mobile-dock .dock-label,
+  [lang="zh-Hant"] .mobile-dock .dock-label,
+  [lang="zhHant"] .mobile-dock .dock-label,
+  :lang(ja) .app-dock .dock-label,
+  :lang(zh-Hant) .app-dock .dock-label,
+  [lang="ja"] .app-dock .dock-label,
+  [lang="zh-Hant"] .app-dock .dock-label,
+  [lang="zhHant"] .app-dock .dock-label{
+    font-size:.78rem !important;
+    line-height:1.12 !important;
+  }
+
+  :lang(ja) .card-actions > *,
+  :lang(zh-Hant) .card-actions > *,
+  [lang="ja"] .card-actions > *,
+  [lang="zh-Hant"] .card-actions > *,
+  [lang="zhHant"] .card-actions > *,
+  :lang(ja) .city-collection-actions > *,
+  :lang(zh-Hant) .city-collection-actions > *,
+  [lang="ja"] .city-collection-actions > *,
+  [lang="zh-Hant"] .city-collection-actions > *,
+  [lang="zhHant"] .city-collection-actions > *{
+    font-size:.9rem !important;
+    min-height:44px !important;
+  }
+
+  :lang(ja) .trip-entry-chip,
+  :lang(zh-Hant) .trip-entry-chip,
+  [lang="ja"] .trip-entry-chip,
+  [lang="zh-Hant"] .trip-entry-chip,
+  [lang="zhHant"] .trip-entry-chip,
+  :lang(ja) .trip-rhythm-chip,
+  :lang(zh-Hant) .trip-rhythm-chip,
+  [lang="ja"] .trip-rhythm-chip,
+  [lang="zh-Hant"] .trip-rhythm-chip,
+  [lang="zhHant"] .trip-rhythm-chip{
+    font-size:10.8px !important;
+  }
+}
