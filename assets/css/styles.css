@@ -2916,3 +2916,225 @@ img{max-width:100%}
     font-size:.92rem;
   }
 }
+
+
+/* v47 extra mobile rescue */
+@media (max-width: 560px){
+  .hero-shell,
+  .cover-desk,
+  .compact-cover-row,
+  .atlas-card,
+  .city-atlas-card,
+  .city-atlas-featured,
+  .city-atlas-grid{
+    min-width:0;
+  }
+
+  .cover-desk,
+  .compact-cover-row,
+  .city-atlas-grid,
+  .priority-story-row,
+  .priority-article-grid,
+  .secondary-story-grid,
+  .priority-crosslink-grid,
+  .loop-grid,
+  .trip-loop-grid,
+  .shared-product-grid,
+  .city-collections-grid,
+  .trip-detail-grid,
+  .district-grid,
+  .district-grid-rich,
+  .city-neighborhood-grid,
+  .city-route-variation-grid,
+  .visit-lens-grid{
+    grid-template-columns:1fr !important;
+  }
+
+  .cover-desk,
+  .compact-cover-row,
+  .shared-spotlight-card,
+  .trip-detail-hero,
+  .trip-continue-card{
+    display:grid;
+    grid-template-columns:1fr !important;
+    gap:12px !important;
+  }
+
+  .cover-media,
+  .compact-cover-media,
+  .city-atlas-cover,
+  .city-atlas-image,
+  .shared-spotlight-media,
+  .trip-detail-media,
+  .city-collection-cover,
+  .trip-continue-media{
+    aspect-ratio:16/10 !important;
+    min-height:0 !important;
+    max-height:none !important;
+    width:100% !important;
+  }
+
+  .cover-media img,
+  .compact-cover-media img,
+  .city-atlas-cover img,
+  .city-atlas-image img,
+  .shared-spotlight-media img,
+  .trip-detail-media img,
+  .city-collection-cover img,
+  .trip-continue-media img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center center !important;
+  }
+
+  .compact-cover-copy,
+  .shared-spotlight-copy,
+  .trip-detail-copy,
+  .trip-continue-copy,
+  .city-collection-body,
+  .atlas-card-body,
+  .city-atlas-body{
+    padding:12px !important;
+  }
+
+  .section-head,
+  .section-head.compact,
+  .result-section-head{
+    margin-bottom:10px !important;
+  }
+
+  .section-title,
+  .result-hero-card h1,
+  .result-hero-card h2,
+  .city-atlas-card h3,
+  .priority-story-mini h3,
+  .priority-article-card h3,
+  .secondary-story-card h3,
+  .shared-product-card h3,
+  .trip-detail-copy h3,
+  .shared-spotlight-copy h3{
+    font-size:1.02rem !important;
+    line-height:1.32 !important;
+    letter-spacing:-0.01em;
+    overflow-wrap:anywhere;
+  }
+
+  .section-desc,
+  .hero-sub,
+  .city-atlas-card p,
+  .priority-story-mini p,
+  .priority-article-card p,
+  .secondary-story-card p,
+  .shared-product-card p,
+  .trip-detail-copy p,
+  .shared-spotlight-note span,
+  .city-collection-snippet span,
+  .city-collection-continue span{
+    font-size:.88rem !important;
+    line-height:1.48 !important;
+  }
+
+  .card-actions,
+  .city-collection-actions,
+  .trip-card-actions,
+  .public-route-actions,
+  .operating-edit-actions,
+  .result-sticky-actions,
+  .cta-row{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+  }
+
+  .card-actions > *,
+  .city-collection-actions > *,
+  .trip-card-actions > *,
+  .public-route-actions > *,
+  .operating-edit-actions > *,
+  .result-sticky-actions > *,
+  .cta-row > *{
+    width:100% !important;
+    min-width:0 !important;
+    min-height:40px !important;
+    justify-content:center !important;
+  }
+
+  .trip-entry-row,
+  .trip-rhythm-row,
+  .result-jump-row,
+  .chip-row,
+  .city-neighborhood-meta,
+  .city-atlas-rhythm-row{
+    display:flex !important;
+    flex-wrap:wrap !important;
+    gap:6px !important;
+  }
+
+  .trip-entry-chip,
+  .trip-rhythm-chip,
+  .trip-mini-chip,
+  .jump-chip,
+  .city-atlas-rhythm-chip{
+    max-width:100%;
+    white-space:normal !important;
+    overflow-wrap:anywhere;
+    min-height:24px !important;
+    font-size:11px !important;
+    padding:4px 8px !important;
+  }
+
+  .result-sticky-bar{
+    left:10px !important;
+    right:10px !important;
+    bottom:76px !important;
+    width:auto !important;
+    max-width:none !important;
+  }
+
+  .mobile-dock,
+  .app-dock,
+  .bottom-dock{
+    padding-left:max(10px, env(safe-area-inset-left));
+    padding-right:max(10px, env(safe-area-inset-right));
+  }
+}
+
+@media (max-width: 390px){
+  .section-title,
+  .result-hero-card h1,
+  .result-hero-card h2{
+    font-size:.98rem !important;
+  }
+
+  .section-desc,
+  .hero-sub,
+  .priority-story-mini p,
+  .priority-article-card p,
+  .secondary-story-card p,
+  .shared-product-card p,
+  .trip-detail-copy p,
+  .city-atlas-card p{
+    font-size:.85rem !important;
+    line-height:1.45 !important;
+  }
+
+  .shared-spotlight-copy,
+  .trip-detail-copy,
+  .trip-continue-copy,
+  .city-collection-body,
+  .result-hero-card,
+  .loop-card,
+  .shared-loop-card,
+  .trip-loop-card,
+  .trip-loop-side{
+    padding:11px !important;
+  }
+
+  .section,
+  .priority-story-strip,
+  .priority-article-section,
+  .secondary-story-section{
+    margin-bottom:14px !important;
+  }
+}
