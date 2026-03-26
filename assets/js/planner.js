@@ -1129,6 +1129,8 @@ function getPriorityRefinePack(city=''){
       entry: uiCopy('Entry routes','Entry routes','入口ルート','入口路線')
     };
     const entryPack = getPriorityEntryPack(textValue(data.destination, readForm().destination || ''));
+    const editorial = priorityResultEditorialMap[String(textValue(data.destination, readForm().destination || '')).trim().toLowerCase()];
+    const editorialPack = editorial ? (editorial[window.RyokoApp?.lang || 'ko'] || editorial.en || editorial.ko) : null;
     node.innerHTML = `
       <div class="section-head result-section-head">
         <div>
@@ -1143,7 +1145,14 @@ function getPriorityRefinePack(city=''){
         <article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.variants}</span></div>${pack.variants.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>
         ${entryPack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.visit}</span></div><div class="summary-line editorial-line"><strong>${entryPack.first[0]}</strong><span>${entryPack.first[1]} — ${entryPack.first[2]}</span></div><div class="summary-line editorial-line"><strong>${entryPack.second[0]}</strong><span>${entryPack.second[1]} — ${entryPack.second[2]}</span></div></article>` : ''}
         ${entryPack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.entry}</span></div>${entryPack.entries.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>` : ''}
-      </div>`;
+      </div>
+      ${editorialPack ? `<div class="result-editorial-memo-grid">
+        <article class="result-editorial-memo-card info-card"><span>${editorialPack.title}</span><p>${editorialPack.why}</p></article>
+        <article class="result-editorial-memo-card info-card"><span>${window.RyokoApp?.lang === 'ko' ? 'Best for' : window.RyokoApp?.lang === 'ja' ? 'Best for' : window.RyokoApp?.lang === 'zhHant' ? 'Best for' : 'Best for'}</span><p>${editorialPack.bestFor}</p></article>
+        <article class="result-editorial-memo-card info-card"><span>${window.RyokoApp?.lang === 'ko' ? 'If it rains' : window.RyokoApp?.lang === 'ja' ? 'If it rains' : window.RyokoApp?.lang === 'zhHant' ? 'If it rains' : 'If it rains'}</span><p>${editorialPack.rainy}</p></article>
+        <article class="result-editorial-memo-card info-card"><span>${window.RyokoApp?.lang === 'ko' ? 'If you want it slower' : window.RyokoApp?.lang === 'ja' ? 'If you want it slower' : window.RyokoApp?.lang === 'zhHant' ? 'If you want it slower' : 'If you want it slower'}</span><p>${editorialPack.slower}</p></article>
+        <article class="result-editorial-memo-card info-card result-editorial-memo-card-wide"><span>${window.RyokoApp?.lang === 'ko' ? 'One thing to swap' : window.RyokoApp?.lang === 'ja' ? 'One thing to swap' : window.RyokoApp?.lang === 'zhHant' ? 'One thing to swap' : 'One thing to swap'}</span><p>${editorialPack.swap}</p></article>
+      </div>` : ''}`;
   }
 
   function renderLoopSection(data){
