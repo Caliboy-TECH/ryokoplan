@@ -3378,3 +3378,247 @@ body{
     border-radius:24px !important;
   }
 }
+
+
+/* v49 home cover / dock overlap correction */
+
+/* 1) First home cover should be a normal stacked editorial card, not overlayed */
+.home-cover-card,
+.cover-desk-card,
+.editorial-cover-card{
+  position:relative;
+  overflow:hidden;
+}
+
+.home-cover-card .cover-media,
+.cover-desk .cover-media,
+.editorial-cover-card .cover-media{
+  position:relative !important;
+  z-index:1;
+}
+
+.home-cover-card .section-copy,
+.cover-desk .section-copy,
+.editorial-cover-card .section-copy{
+  position:relative !important;
+  z-index:2;
+  background:transparent !important;
+}
+
+.cover-desk{
+  align-items:start !important;
+}
+
+.cover-desk .cover-media + .section-copy,
+.cover-desk .section-copy{
+  margin-top:0 !important;
+}
+
+.cover-desk .section-copy{
+  padding:18px 18px 20px !important;
+}
+
+.cover-desk .section-title{
+  max-width:100% !important;
+}
+
+.cover-desk .section-desc{
+  max-width:100% !important;
+}
+
+.cover-desk .card-actions{
+  margin-top:16px !important;
+}
+
+/* prevent text from sitting on top of collage image on desktop */
+@media (min-width: 761px){
+  .cover-desk{
+    display:grid !important;
+    grid-template-columns:minmax(0,1.55fr) minmax(280px,.95fr) !important;
+    gap:16px !important;
+  }
+
+  .cover-desk > .cover-main,
+  .cover-desk > .cover-primary,
+  .cover-desk > :first-child{
+    min-width:0;
+  }
+
+  .cover-desk .cover-main,
+  .cover-desk .cover-primary{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+  }
+
+  .cover-desk .cover-media{
+    border-radius:26px 26px 0 0 !important;
+    overflow:hidden;
+  }
+
+  .cover-desk .section-copy{
+    border-top:0 !important;
+    border-radius:0 0 26px 26px !important;
+    background:var(--panel, #f7f2eb) !important;
+  }
+
+  .cover-desk .cover-side,
+  .compact-cover-row{
+    align-self:start !important;
+  }
+
+  .compact-cover-row{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+  }
+
+  .compact-cover-row .compact-cover-card{
+    min-width:0;
+  }
+}
+
+/* 2) Mobile: first cover must be single-column and copy fully below image */
+@media (max-width: 760px){
+  .cover-desk{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+  }
+
+  .cover-desk .cover-main,
+  .cover-desk .cover-primary,
+  .compact-cover-row,
+  .cover-desk > :first-child,
+  .cover-desk > :nth-child(2){
+    width:100% !important;
+    min-width:0 !important;
+  }
+
+  .cover-desk .cover-media{
+    border-radius:24px 24px 0 0 !important;
+    overflow:hidden;
+  }
+
+  .cover-desk .section-copy{
+    display:block !important;
+    width:100% !important;
+    padding:14px 14px 16px !important;
+    background:var(--panel, #f7f2eb) !important;
+    border-radius:0 0 24px 24px !important;
+    border-top:0 !important;
+  }
+
+  .cover-desk .section-title{
+    font-size:clamp(1.45rem, 7.4vw, 2.15rem) !important;
+    line-height:1.1 !important;
+    margin-top:8px !important;
+    margin-bottom:10px !important;
+  }
+
+  .cover-desk .section-desc{
+    font-size:.96rem !important;
+    line-height:1.55 !important;
+    margin-top:0 !important;
+    margin-bottom:0 !important;
+  }
+
+  .cover-desk .card-actions{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+    margin-top:16px !important;
+  }
+
+  .cover-desk .card-actions > *{
+    width:100% !important;
+    min-height:46px !important;
+    justify-content:center !important;
+  }
+
+  .compact-cover-row{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+  }
+
+  .compact-cover-row .compact-cover-card{
+    overflow:hidden !important;
+    border-radius:22px !important;
+  }
+
+  .compact-cover-row .compact-cover-copy{
+    padding:14px !important;
+  }
+
+  .compact-cover-row .compact-cover-title{
+    font-size:clamp(1.2rem, 6.2vw, 1.7rem) !important;
+    line-height:1.14 !important;
+  }
+
+  .compact-cover-row .compact-cover-desc{
+    font-size:.92rem !important;
+    line-height:1.5 !important;
+  }
+}
+
+/* 3) Dock overlap: content must always have extra clearance */
+:root{
+  --mobile-dock-safe-v49: 176px;
+}
+
+@media (max-width: 760px){
+  body,
+  main,
+  .page-shell,
+  .home-main,
+  .magazine-main,
+  .mytrips-main,
+  .result-wrap,
+  .result-main{
+    padding-bottom:calc(var(--mobile-dock-safe-v49) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .mobile-dock,
+  .app-dock,
+  .bottom-dock{
+    left:10px !important;
+    right:10px !important;
+    width:auto !important;
+    bottom:max(10px, env(safe-area-inset-bottom, 0px)) !important;
+    z-index:90 !important;
+  }
+}
+
+@media (max-width: 430px){
+  :root{
+    --mobile-dock-safe-v49: 188px;
+  }
+}
+
+/* 4) Stop wide text blocks from creating fake horizontal overflow */
+.cover-desk .section-title,
+.cover-desk .section-desc,
+.compact-cover-row .compact-cover-title,
+.compact-cover-row .compact-cover-desc{
+  overflow-wrap:anywhere !important;
+  word-break:keep-all !important;
+  max-width:100% !important;
+}
+
+/* 5) Safer image sizing for first hero collage */
+.cover-media,
+.compact-cover-media{
+  width:100% !important;
+  max-width:100% !important;
+  overflow:hidden !important;
+}
+
+.cover-media img,
+.compact-cover-media img{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+}
