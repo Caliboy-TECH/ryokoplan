@@ -4517,3 +4517,241 @@ img, video{
     font-size:10.8px !important;
   }
 }
+
+
+/* v57 final release-ready micro QA */
+/* no feature changes; only small stability polish */
+
+html{
+  scroll-padding-bottom: 120px;
+}
+
+body{
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.section,
+.info-card,
+.result-hero-card,
+.shared-spotlight-card,
+.trip-detail-hero,
+.trip-continue-card,
+.city-collection-card,
+.shared-product-card,
+.loop-card,
+.shared-loop-card,
+.trip-loop-card,
+.trip-loop-side{
+  backface-visibility:hidden;
+}
+
+.section-title,
+.section-desc,
+.info-card h3,
+.info-card p,
+.result-hero-card h1,
+.result-hero-card h2,
+.result-hero-card p{
+  max-width:100%;
+}
+
+.card-actions > *,
+.city-collection-actions > *,
+.trip-card-actions > *,
+.public-route-actions > *,
+.operating-edit-actions > *,
+.result-sticky-actions > *,
+.cta-row > *{
+  transition: none !important;
+}
+
+.result-sticky-bar{
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@media (max-width: 980px){
+  .shared-spotlight-card,
+  .trip-detail-hero,
+  .trip-continue-card,
+  .cover-desk-grid,
+  .cover-desk-side,
+  .priority-story-row,
+  .priority-article-grid,
+  .secondary-story-grid,
+  .shared-product-grid,
+  .city-collections-grid,
+  .trip-detail-grid,
+  .loop-grid,
+  .trip-loop-grid{
+    align-items:start !important;
+  }
+}
+
+@media (max-width: 760px){
+  :root{
+    --dock-safe-bottom-v57: 264px;
+  }
+
+  body,
+  main,
+  .page-shell,
+  .home-main,
+  .magazine-main,
+  .mytrips-main,
+  .result-main,
+  .result-wrap{
+    padding-bottom:calc(var(--dock-safe-bottom-v57) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .section{
+    scroll-margin-top: 12px;
+    scroll-margin-bottom: 120px;
+  }
+
+  .home-cover-desk,
+  .top-story-ribbon,
+  .priority-story-strip,
+  .priority-article-section,
+  .secondary-story-section,
+  .result-wrap,
+  .mytrips-main{
+    overflow-x:clip !important;
+  }
+
+  .priority-story-mini,
+  .priority-article-card,
+  .secondary-story-card,
+  .shared-product-card,
+  .city-collection-card,
+  .shared-spotlight-card,
+  .trip-detail-hero,
+  .trip-continue-card,
+  .loop-card,
+  .shared-loop-card,
+  .trip-loop-card,
+  .trip-loop-side{
+    box-shadow: 0 10px 28px rgba(18,31,45,.07) !important;
+  }
+
+  .priority-story-mini h3,
+  .priority-article-card h3,
+  .secondary-story-card h3,
+  .shared-product-card h3,
+  .shared-spotlight-copy h3,
+  .trip-detail-copy h3,
+  .city-collection-card h3,
+  .loop-card h3,
+  .trip-loop-card h3,
+  .trip-loop-side h3{
+    line-height:1.25 !important;
+  }
+
+  .priority-story-mini p,
+  .priority-article-card p,
+  .secondary-story-card p,
+  .shared-product-card p,
+  .shared-spotlight-note span,
+  .trip-detail-copy p,
+  .city-collection-snippet span,
+  .city-collection-continue span,
+  .loop-card p,
+  .shared-loop-card p,
+  .trip-loop-list p{
+    line-height:1.5 !important;
+  }
+
+  .priority-story-mini p,
+  .priority-article-card p,
+  .secondary-story-card p,
+  .shared-product-card p,
+  .shared-spotlight-note span,
+  .trip-detail-copy p,
+  .city-collection-snippet span,
+  .city-collection-continue span{
+    -webkit-line-clamp:3 !important;
+  }
+
+  .card-actions,
+  .city-collection-actions,
+  .trip-card-actions,
+  .public-route-actions,
+  .operating-edit-actions,
+  .result-sticky-actions,
+  .cta-row{
+    gap:8px !important;
+  }
+
+  .card-actions > *,
+  .city-collection-actions > *,
+  .trip-card-actions > *,
+  .public-route-actions > *,
+  .operating-edit-actions > *,
+  .result-sticky-actions > *,
+  .cta-row > *{
+    border-radius:14px !important;
+  }
+
+  .mobile-dock,
+  .app-dock,
+  .bottom-dock{
+    left:8px !important;
+    right:8px !important;
+    width:auto !important;
+    max-width:none !important;
+    bottom:max(84px, calc(env(safe-area-inset-bottom, 0px) + 10px)) !important;
+    padding:10px 10px calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+    border-radius:24px !important;
+  }
+
+  .mobile-dock .dock-label,
+  .app-dock .dock-label,
+  .bottom-dock .dock-label{
+    font-size:.79rem !important;
+    line-height:1.15 !important;
+  }
+}
+
+@media (max-width: 430px){
+  :root{
+    --dock-safe-bottom-v57: 278px;
+  }
+
+  .section{
+    padding-left:12px !important;
+    padding-right:12px !important;
+  }
+
+  .priority-story-mini,
+  .priority-article-card,
+  .secondary-story-card,
+  .shared-product-card,
+  .city-collection-card,
+  .shared-spotlight-card,
+  .trip-detail-hero,
+  .trip-continue-card,
+  .loop-card,
+  .shared-loop-card,
+  .trip-loop-card,
+  .trip-loop-side{
+    border-radius:20px !important;
+  }
+
+  .card-actions > *,
+  .city-collection-actions > *,
+  .trip-card-actions > *,
+  .public-route-actions > *,
+  .operating-edit-actions > *,
+  .result-sticky-actions > *,
+  .cta-row > *{
+    min-height:42px !important;
+    font-size:.9rem !important;
+  }
+
+  .result-sticky-bar{
+    left:8px !important;
+    right:8px !important;
+    border-radius:20px !important;
+  }
+}
