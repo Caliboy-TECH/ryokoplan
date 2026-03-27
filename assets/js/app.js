@@ -1111,6 +1111,29 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
           </article>
         </div>
       </section>
+      <section class="section hero-hierarchy-band hero-hierarchy-band-magazine">
+        <div class="section-head hero-hierarchy-head">
+          <div><span class="eyebrow">${lang === 'ko' ? 'Magazine 읽기' : lang === 'ja' ? 'Magazine の読み方' : lang === 'zhHant' ? '如何閱讀 Magazine' : 'How to read Magazine'}</span><h2 class="section-title">${lang === 'ko' ? '동아시아 14개 도시를 같은 shelf가 아니라 다른 track으로 읽게 만듭니다' : lang === 'ja' ? '東アジア14都市を、同じ棚ではなく別々の track として読めるようにします' : lang === 'zhHant' ? '讓東亞 14 座城市不是被看成同一排 shelf，而是不同的 track' : 'The 14 East Asia cities should read as distinct tracks, not one flat shelf'}</h2><p class="section-desc">${lang === 'ko' ? '도시 수가 늘어난 지금은 더 많은 카드보다, 어디서 시작하고 무엇과 이어 읽는지 먼저 들어오는 위계가 중요합니다.' : lang === 'ja' ? '都市数が増えた今は、カードの数よりも、どこから入り何と続けて読むかが先に伝わる階層が大事です。' : lang === 'zhHant' ? '現在城市變多之後，比起再堆更多卡片，更重要的是先看懂從哪裡開始、再接到哪裡。' : 'Now that the city set is larger, the hierarchy matters more than adding more cards: where to start, and what to read next.'}</p></div>
+        </div>
+        <div class="hero-hierarchy-grid">
+          <article class="hero-hierarchy-card hero-hierarchy-card-strong">
+            <span class="hero-hierarchy-kicker">${lang === 'ko' ? 'Field' : lang === 'ja' ? 'Field' : lang === 'zhHant' ? 'Field' : 'Field'}</span>
+            <strong>${lang === 'ko' ? '14-city East Asia desk' : lang === 'ja' ? '14-city East Asia desk' : lang === 'zhHant' ? '14-city East Asia desk' : '14-city East Asia desk'}</strong>
+            <p>${lang === 'ko' ? '이제 Magazine은 release 도시만 보여주는 shelf가 아니라, expansion까지 포함한 동아시아 city desk로 먼저 읽히게 정리됐습니다.' : lang === 'ja' ? 'Magazine はもう release 都市だけの棚ではなく、expansion まで含む East Asia city desk として先に読めるようになりました。' : lang === 'zhHant' ? '現在的 Magazine 不再只是 release 城市 shelf，而會先被讀成一個含 expansion 的 East Asia city desk。' : 'Magazine now reads first as an East Asia city desk that includes the expansion layer, not only the release shelf.'}</p>
+            <div class="hero-hierarchy-chip-row"><span class="hero-hierarchy-chip">Japan</span><span class="hero-hierarchy-chip">Korea</span><span class="hero-hierarchy-chip">Greater China</span></div>
+          </article>
+          <article class="hero-hierarchy-card">
+            <span class="hero-hierarchy-kicker">${lang === 'ko' ? 'Tracks' : lang === 'ja' ? 'Tracks' : lang === 'zhHant' ? 'Tracks' : 'Tracks'}</span>
+            <strong>${lang === 'ko' ? 'fast · food · coast · heritage · night' : lang === 'ja' ? 'fast · food · coast · heritage · night' : lang === 'zhHant' ? 'fast · food · coast · heritage · night' : 'fast · food · coast · heritage · night'}</strong>
+            <p>${lang === 'ko' ? '도시는 국가 순서보다 reading track으로 먼저 걸러지고, 그 다음 city guide와 sample이 자연스럽게 따라오게 만들었습니다.' : lang === 'ja' ? '都市は国順より先に reading track で絞り、その後に city guide と sample が自然についてくるようにしています。' : lang === 'zhHant' ? '城市會先按 reading track 被篩選，再自然接到 city guide 與 sample。' : 'Cities now filter first by reading track, then hand off naturally into the guide and the sample route.'}</p>
+          </article>
+          <article class="hero-hierarchy-card">
+            <span class="hero-hierarchy-kicker">${lang === 'ko' ? 'Use' : lang === 'ja' ? 'Use' : lang === 'zhHant' ? 'Use' : 'Use'}</span>
+            <strong>${lang === 'ko' ? '한 도시를 읽고, 한 샘플로 확인하고, 한 여정으로 남깁니다' : lang === 'ja' ? '一つの都市を読み、一つのサンプルで確かめ、一つの旅程として残します' : lang === 'zhHant' ? '讀一座城市，用一條 sample 確認，再留下成一段旅程' : 'Read one city, confirm with one sample, keep one route'}</strong>
+            <p>${lang === 'ko' ? 'Magazine의 첫 스크린은 더 많이 보여주기보다, 다음 클릭이 어디로 이어져야 하는지 먼저 알려주는 방향으로 정리했습니다.' : lang === 'ja' ? 'Magazine の最初の画面は、たくさん見せるより次のクリックがどこへ向かうべきかを先に示す方向で整えています。' : lang === 'zhHant' ? 'Magazine 的第一個畫面不是先塞更多東西，而是先告訴你下一次點擊應該往哪裡走。' : 'The first screen of Magazine now prioritizes where the next click should go, not how many things it can show.'}</p>
+          </article>
+        </div>
+      </section>
       <section class="section magazine-cover-strip">
         <div class="section-head">
           <div><span class="eyebrow">${uiText('frontPageEdit')}</span><h2 class="section-title">${lang === 'ko' ? '이번 주 동아시아 커버' : lang === 'ja' ? '今週の東アジアカバー' : lang === 'zhHant' ? '本週東亞封面' : 'This week’s East Asia cover'}</h2><p class="section-desc">${lang === 'ko' ? '일본, 한국, 대만·홍콩·마카오까지 한 호흡 안에서 읽히도록 첫 셸프를 다시 정리했습니다.' : lang === 'ja' ? '日本・韓国・台北／香港／マカオが一つの流れで読めるよう、最初の棚を整えました。' : lang === 'zhHant' ? '把日本、韓國，以及台北／香港／澳門放進同一個閱讀節奏裡，重新整理了第一層書架。' : 'The first shelf is rebalanced so Japan, Korea, and Taipei / Hong Kong / Macau read as one East Asia edit.'}</p></div>

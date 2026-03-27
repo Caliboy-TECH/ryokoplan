@@ -5071,3 +5071,34 @@ body{
 .city-atlas-overlay-foot{display:flex;justify-content:flex-start;gap:.42rem;flex-wrap:wrap}
 @media (max-width: 1100px){.east-asia-taxonomy-shell{grid-template-columns:1fr}.east-asia-track-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.city-atlas-toolbar{grid-template-columns:1fr}.city-atlas-toolbar-meta{justify-items:start}.east-asia-region-lines{grid-template-columns:1fr 1fr}}
 @media (max-width: 720px){.east-asia-metric-grid,.east-asia-layer-row,.east-asia-track-grid,.east-asia-region-lines{grid-template-columns:1fr}.east-asia-taxonomy-lead,.east-asia-track-card,.east-asia-region-card{padding:16px}.city-atlas-toolbar{padding:14px}.city-atlas-toolbar .finder-group{flex-wrap:wrap}.east-asia-city-chip-row{gap:6px}}
+
+
+/* v77 hero hierarchy polish */
+.hero-hierarchy-band{position:relative;overflow:hidden;background:linear-gradient(180deg,#fffdf9 0%,#fff7ef 100%)}
+.hero-hierarchy-band::before{content:"";position:absolute;inset:auto -8% -34% auto;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,199,154,.2),transparent 70%);pointer-events:none}
+.hero-hierarchy-head{margin-bottom:14px}
+.hero-hierarchy-grid{display:grid;gap:12px}
+.hero-hierarchy-card{position:relative;padding:18px 18px 17px;border-radius:24px;border:1px solid rgba(224,212,195,.92);background:linear-gradient(180deg,#fffdfa 0%,#fff8f0 100%);box-shadow:0 18px 40px rgba(20,33,48,.05)}
+.hero-hierarchy-card-strong{background:linear-gradient(135deg,#18324f 0%,#244562 100%);border-color:rgba(35,70,99,.9);box-shadow:0 24px 56px rgba(21,39,58,.16)}
+.hero-hierarchy-card-strong strong,.hero-hierarchy-card-strong p,.hero-hierarchy-card-strong .hero-hierarchy-kicker{color:#fff}
+.hero-hierarchy-card-strong p{color:rgba(255,255,255,.82)}
+.hero-hierarchy-kicker{display:block;margin-bottom:10px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#9a6a43}
+.hero-hierarchy-card strong{display:block;font-size:22px;line-height:1.1;letter-spacing:-.04em;color:var(--secondary)}
+.hero-hierarchy-card p{margin:10px 0 0;color:var(--muted);font-size:14px;line-height:1.68}
+.hero-hierarchy-chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.hero-hierarchy-chip{display:inline-flex;align-items:center;padding:8px 11px;border-radius:999px;border:1px solid rgba(220,208,191,.92);background:rgba(255,252,246,.92);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#17324f}
+.hero-hierarchy-card-strong .hero-hierarchy-chip{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:#fff}
+.hero-hierarchy-band-home{margin-top:18px}
+.hero-hierarchy-band-magazine{margin-top:14px}
+body[data-page="planner"] .hero-hierarchy-band-home{margin-top:10px}
+body[data-page="magazine"] .hero-hierarchy-band-magazine{margin-top:10px}
+@media (min-width: 760px){
+  .hero-hierarchy-grid{grid-template-columns:1.08fr .96fr .96fr}
+}
+@media (max-width: 759px){
+  .hero-hierarchy-band{padding:18px 16px}
+  .hero-hierarchy-grid{grid-template-columns:1fr}
+  .hero-hierarchy-card{padding:16px 15px 15px;border-radius:20px}
+  .hero-hierarchy-card strong{font-size:20px}
+  .hero-hierarchy-card p{font-size:13px;line-height:1.6}
+}
