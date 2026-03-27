@@ -4972,3 +4972,30 @@ body{
 .result-editorial-continue-list p{
   line-height:1.58;
 }
+
+
+.expansion-front-section{background:linear-gradient(180deg,#fffdf9 0%,#f8f3eb 100%)}
+.expansion-front-shell{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1.28fr);gap:18px;align-items:start}
+.expansion-front-lead{padding:22px;border-radius:26px;background:linear-gradient(180deg,#fffefb 0%,#fff7ef 100%);border:1px solid var(--line)}
+.expansion-front-lead h3{margin:8px 0 10px;font-size:1.45rem;line-height:1.18}
+.expansion-front-lead p{margin:0;color:var(--muted)}
+.expansion-front-pill-row,.expansion-front-fast-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.expansion-front-pill{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:.84rem;font-weight:700;color:#8d613b}
+.expansion-front-fast-row .soft-chip{margin:0}
+.expansion-front-column-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.expansion-front-column{padding:18px;border-radius:24px;background:#fff;border:1px solid var(--line)}
+.expansion-front-column-head h3{margin:6px 0 6px;font-size:1.02rem;line-height:1.25}
+.expansion-front-column-head p{margin:0;color:var(--muted);font-size:.95rem}
+.expansion-front-card-list{display:grid;gap:12px;margin-top:14px}
+.expansion-front-city-card{padding:14px;border-radius:18px;background:#fcfaf6;border:1px solid #ece3d6}
+.expansion-front-city-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.expansion-front-city-top strong{font-size:1rem}
+.expansion-front-city-vibe{font-size:.74rem;color:#8d613b;text-transform:uppercase;letter-spacing:.04em}
+.expansion-front-city-card p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.5}
+.expansion-front-city-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.expansion-front-city-actions .soft-btn,.expansion-front-city-actions .ghost-btn{padding:10px 12px;border-radius:14px}
+.expansion-front-note{margin-top:14px;padding:14px 16px;border-radius:18px;background:#f2f5f7;border:1px solid #e0e8ee;color:#486072}
+@media (max-width: 980px){
+  .expansion-front-shell{grid-template-columns:1fr}
+  .expansion-front-column-grid{grid-template-columns:1fr}
+}

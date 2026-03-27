@@ -1117,7 +1117,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
         <div class="section-head"><div><span class="eyebrow">${data.finderEyebrow}</span><h2 class="section-title">${data.finderTitle}</h2><p class="section-desc">${data.finderDesc}</p></div></div>
         <div class="finder-toolbar info-card">
           <input id="magazineCitySearch" class="input finder-search" placeholder="${data.finderSearchPH}">
-          <div class="finder-group"> <button class="tab-btn active" data-country-filter="all">${data.countryAll}</button><button class="tab-btn" data-country-filter="japan">${data.countryJapan}</button><button class="tab-btn" data-country-filter="korea">${data.countryKorea}</button></div>
+          <div class="finder-group"> <button class="tab-btn active" data-country-filter="all">${data.countryAll}</button><button class="tab-btn" data-country-filter="japan">${data.countryJapan}</button><button class="tab-btn" data-country-filter="korea">${data.countryKorea}</button><button class="tab-btn" data-country-filter="greater-china">${data.countryGreaterChina}</button></div>
           <div class="finder-group"> <button class="tab-btn active" data-vibe-filter="all">${data.vibeAll}</button><button class="tab-btn" data-vibe-filter="fast">${data.vibeFast}</button><button class="tab-btn" data-vibe-filter="slow">${data.vibeSlow}</button><button class="tab-btn" data-vibe-filter="food">${data.vibeFood}</button><button class="tab-btn" data-vibe-filter="coast">${data.vibeCoast}</button></div>
         </div>
         <div class="magazine-grid featured-grid">${cityMarkup}</div>
@@ -2801,6 +2801,51 @@ function renderTripsSeasonalDesk(){
     editorialData.magazine[code] = Object.assign(base, magazineLangPatches[code], editorialData.magazine[code] || {});
   });
 
+
+  function getExpansionFrontDeskCopy(page='home'){
+    const map = {
+      home: {
+        ko:{eyebrow:'Expansion city desk', title:'이제 다음 7개 도시도 홈에서 바로 들어가게 만듭니다', desc:'release 도시 다음으로 열릴 도시들을 홈 front door에서 바로 읽고, sample과 Planner까지 끊기지 않게 붙였습니다.', leadTitle:'확장 도시를 실제 클릭으로 연결하는 앞문', leadDesc:'Osaka는 food-led compact city로, Sapporo는 seasonal city로, Macau는 short-night heritage city로 다르게 열리게 정리했습니다.', quickLabel:'빠른 시작', city:'도시 보기', sample:'샘플 보기', plan:'플래너 베이스', more:'매거진에서 전체 보기', region:{japan:['Japan desk','Osaka / Sapporo / Sendai / Okinawa까지 이제 같은 흐름 안에서 읽힙니다.'],korea:['Korea desk','Jeju와 Gyeongju는 scenic·heritage 축으로 release 도시와 다르게 들어갑니다.'],greater:['Greater China desk','Macau는 Hong Kong/Taipei 다음 분기로 바로 이어지도록 정리했습니다.']}, note:'홈에서 바로 expansion 도시를 누를 수 있게 열어두면, release 도시 이후의 다음 클릭이 훨씬 자연스럽습니다.'},
+        en:{eyebrow:'Expansion city desk', title:'The next seven cities now open from the home front door', desc:'After the release cities, the next layer now opens directly from home with clean paths into the city guide, sample route, and Planner.', leadTitle:'A front door for the next city layer', leadDesc:'Osaka opens as a food-led compact city, Sapporo as a seasonal city, and Macau as a short-night heritage city so the expansion layer does not feel generic.', quickLabel:'Quick starts', city:'Read city', sample:'Read sample', plan:'Planner base', more:'See the full magazine desk', region:{japan:['Japan desk','Osaka, Sapporo, Sendai, and Okinawa now read as one follow-up layer after the main release cities.'],korea:['Korea desk','Jeju and Gyeongju enter through scenic and heritage pacing rather than through the same city-density logic.'],greater:['Greater China desk','Macau now sits as a clear next branch after Hong Kong and Taipei.']}, note:'Once expansion cities are visible from home, the next click after the release layer stops feeling accidental.'},
+        ja:{eyebrow:'Expansion city desk', title:'次の7都市もホームからそのまま入れるようにします', desc:'release 都市の次に開く都市たちを、ホームの front door からそのまま読んで sample と Planner まで切れずにつなぎました。', leadTitle:'次の都市層へ入る front door', leadDesc:'Osaka は food-led compact city、Sapporo は seasonal city、Macau は short-night heritage city として開くように整理しています。', quickLabel:'すぐ始める', city:'都市を見る', sample:'サンプルを見る', plan:'Planner ベース', more:'Magazine 全体を見る', region:{japan:['Japan desk','Osaka・Sapporo・Sendai・Okinawa まで、同じ流れで追えるようにしました。'],korea:['Korea desk','Jeju と Gyeongju は scenic / heritage 軸で別の入り方を持たせています。'],greater:['Greater China desk','Macau は Hong Kong / Taipei の次の分岐として見えやすくしました。']}, note:'ホームから expansion 都市が見えるだけで、release 層の次のクリックがずっと自然になります。'},
+        zhHant:{eyebrow:'Expansion city desk', title:'接下來這 7 座城市，現在也能直接從首頁進去', desc:'在 release 城市之後，下一層城市現在可以直接從首頁接到城市指南、sample route 和 Planner，不再只是藏在後面。', leadTitle:'替下一層城市做好的 front door', leadDesc:'Osaka 會以 food-led compact city 開啟，Sapporo 會以 seasonal city 開啟，Macau 則作為 short-night heritage city 出現，讓擴張層不再模糊。', quickLabel:'快速開始', city:'讀城市', sample:'看 sample', plan:'Planner base', more:'到 Magazine 看完整 desk', region:{japan:['Japan desk','Osaka、Sapporo、Sendai、Okinawa 現在可以作為 release 之後的下一層一起讀。'],korea:['Korea desk','Jeju 與 Gyeongju 會用 scenic / heritage 的節奏進場，不再和高密度城市混在一起。'],greater:['Greater China desk','Macau 現在被整理成 Hong Kong / Taipei 之後很自然的下一個分支。']}, note:'當 expansion 城市能從首頁被看見，release 之後的下一次點擊就不再像是隨機的。'}
+      },
+      magazine: {
+        ko:{eyebrow:'Expansion city desk', title:'Release 다음에 바로 읽게 될 다음 도시들', desc:'이제 Magazine 안에서도 expansion 도시가 따로 묻히지 않고, region별로 같은 shelf에서 바로 읽히게 정리했습니다.', leadTitle:'Release 다음 레이어를 분명하게 여는 매거진 desk', leadDesc:'Osaka / Sapporo / Sendai / Okinawa / Jeju / Gyeongju / Macau를 region과 mood 기준으로 다시 묶어 다음 읽기를 더 쉽게 만들었습니다.', quickLabel:'바로 시작', city:'도시 보기', sample:'샘플 보기', plan:'플래너 베이스', more:'city finder로 이동', region:{japan:['Japan next reads','Japan 쪽 expansion은 food, weather, north-side calm, island reset 네 축으로 분리해 읽습니다.'],korea:['Korea next reads','Jeju와 Gyeongju는 coast / heritage 같은 slower axis로 release 도시와 분리해 붙였습니다.'],greater:['Greater China next read','Macau는 short, compact, walkable heritage-night city로 별도 entry를 줬습니다.']}, note:'이제 Magazine은 release 도시만 읽고 끝나는 곳이 아니라, 다음 도시층으로 가지를 치는 입구가 됩니다.'},
+        en:{eyebrow:'Expansion city desk', title:'The next cities after the release layer', desc:'Inside Magazine, expansion cities are no longer buried behind the main seven. They now sit in the same shelf structure with clearer region-led entry points.', leadTitle:'A magazine desk for the layer after the release cities', leadDesc:'Osaka, Sapporo, Sendai, Okinawa, Jeju, Gyeongju, and Macau are regrouped by region and mood so the next read feels intentional.', quickLabel:'Start fast', city:'Read city', sample:'Read sample', plan:'Planner base', more:'Jump to city finder', region:{japan:['Japan next reads','Japan-side expansion now splits into food, weather, north-side calm, and island reset.'],korea:['Korea next reads','Jeju and Gyeongju enter through coast and heritage pacing instead of release-city density.'],greater:['Greater China next read','Macau gets its own compact, walkable heritage-night entry.']}, note:'Magazine should now feel like a branching point into the next city layer, not just a shelf for the release cities.'},
+        ja:{eyebrow:'Expansion city desk', title:'release の次に読む都市たちをはっきり見せます', desc:'Magazine の中でも expansion 都市が埋もれず、region ごとに同じ shelf の中でそのまま読めるように整えました。', leadTitle:'release の次の層を開く magazine desk', leadDesc:'Osaka / Sapporo / Sendai / Okinawa / Jeju / Gyeongju / Macau を region と mood で組み直し、次の読み先を見つけやすくしました。', quickLabel:'すぐ始める', city:'都市を見る', sample:'サンプルを見る', plan:'Planner ベース', more:'city finder へ', region:{japan:['Japan next reads','日本側の expansion は food・weather・north-side calm・island reset の4軸で読み直します。'],korea:['Korea next reads','Jeju と Gyeongju は coast / heritage の slower axis として分けています。'],greater:['Greater China next read','Macau は compact で歩ける heritage-night city として独立させました。']}, note:'Magazine は release 都市の棚で終わらず、その次の都市層への枝分かれ口になります。'},
+        zhHant:{eyebrow:'Expansion city desk', title:'把 release 之後該讀的下一層城市直接打開', desc:'在 Magazine 裡，expansion 城市現在不再被埋住，而是按 region 重新整理成可以直接接著讀的 shelf。', leadTitle:'替 release 之後的下一層城市做好的 magazine desk', leadDesc:'Osaka / Sapporo / Sendai / Okinawa / Jeju / Gyeongju / Macau 重新依照 region 與 mood 排好，讓下一步更容易選。', quickLabel:'快速開始', city:'讀城市', sample:'看 sample', plan:'Planner base', more:'前往 city finder', region:{japan:['Japan next reads','日本側的 expansion 現在拆成 food、weather、north-side calm、island reset 四條線。'],korea:['Korea next reads','Jeju 與 Gyeongju 會作為 coast / heritage 的 slower axis 被分開讀。'],greater:['Greater China next read','Macau 會以 compact、walkable 的 heritage-night city 身分單獨出現。']}, note:'現在的 Magazine 不只停在 release 城市，而是會把你自然帶到下一層城市。'}
+      }
+    };
+    const scope = map[page] || map.home;
+    return scope[lang] || scope.en;
+  }
+
+  function renderExpansionFrontDesk(){
+    const roots = [
+      { id:'homeExpansionDeskRoot', page:'home' },
+      { id:'magazineExpansionDeskRoot', page:'magazine' }
+    ];
+    const groups = [
+      { key:'japan', slugs:['osaka','sapporo','sendai','okinawa'] },
+      { key:'korea', slugs:['jeju','gyeongju'] },
+      { key:'greater', slugs:['macau'] }
+    ];
+    const featuredByPage = { home:['osaka','sapporo','macau'], magazine:['osaka','okinawa','gyeongju'] };
+    const planLabel = lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'Planner を開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner';
+    roots.forEach(({ id, page }) => {
+      const root = document.getElementById(id);
+      if (!root) return;
+      const copy = getExpansionFrontDeskCopy(page);
+      const storyPack = getSecondaryCityStories()[lang] || getSecondaryCityStories().en;
+      const itemMap = Object.fromEntries((storyPack.items || []).map(item => [String(item.city || '').toLowerCase(), item]));
+      const featured = (featuredByPage[page] || []).map(slug => cityLoopMap[slug]).filter(Boolean);
+      const baseLink = page === 'home' ? `${pathRoot}magazine/index.html#cityFinder` : '#cityFinder';
+      root.innerHTML = `<section class="section expansion-front-section" id="${page}ExpansionFrontDesk"><div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div><div class="expansion-front-shell"><article class="expansion-front-lead info-card"><span class="collection-kicker">${copy.quickLabel}</span><h3>${copy.leadTitle}</h3><p>${copy.leadDesc}</p><div class="expansion-front-pill-row">${featured.map(city => `<span class="expansion-front-pill">${city.name} · ${city.vibe}</span>`).join('')}</div><div class="expansion-front-fast-row">${featured.map(city => `<button class="soft-chip" data-start-city="${city.name}">${city.name}</button>`).join('')}</div><div class="card-actions"><a class="soft-btn" href="${baseLink}">${copy.more}</a><a class="ghost-btn" href="${plannerUrlForCity(featured[0]?.name || 'Osaka')}">${planLabel}</a></div><div class="expansion-front-note">${copy.note}</div></article><div class="expansion-front-column-grid">${groups.map(group => `<article class="expansion-front-column info-card"><div class="expansion-front-column-head"><span class="collection-kicker">${copy.region[group.key][0]}</span><h3>${copy.region[group.key][0]}</h3><p>${copy.region[group.key][1]}</p></div><div class="expansion-front-card-list">${group.slugs.map(slug => { const city = cityLoopMap[slug]; if (!city) return ''; const item = itemMap[slug] || { title: city.name, desc: city.vibe, cityHref: pathRoot + city.guide, sampleHref: pathRoot + city.example }; return `<article class="expansion-front-city-card"><div class="expansion-front-city-top"><strong>${city.name}</strong><span class="expansion-front-city-vibe">${city.vibe}</span></div><p>${item.desc || city.vibe}</p><div class="expansion-front-city-actions"><a class="soft-btn" href="${item.cityHref || (pathRoot + city.guide)}">${copy.city}</a><a class="ghost-btn" href="${item.sampleHref || (pathRoot + city.example)}">${copy.sample}</a><button class="ghost-btn" data-start-city="${city.name}">${copy.plan}</button></div></article>`; }).join('')}</div></article>`).join('')}</div></div></section>`;
+      root.querySelectorAll('[data-start-city]').forEach(btn => btn.addEventListener('click', () => { location.href = plannerUrlForCity(btn.dataset.startCity || ''); }));
+    });
+  }
+
   function initMagazine(){
     if (document.body.dataset.page !== 'magazine') return;
     renderMagazineLoop();
@@ -2832,7 +2877,8 @@ function renderTripsSeasonalDesk(){
     function apply(){
       let visible = 0;
       cards.forEach(card => {
-        const matchesCountry = country === 'all' || card.dataset.country === country;
+        const greaterChinaCountries = ['taiwan','hong kong','macau'];
+        const matchesCountry = country === 'all' || (country === 'greater-china' ? greaterChinaCountries.includes(card.dataset.country) : card.dataset.country === country);
         const vibeList = String(card.dataset.vibe || '').split(/\s+/).filter(Boolean);
         const matchesVibe = vibe === 'all' || vibeList.includes(vibe);
         const haystack = `${card.dataset.search || ''} ${card.textContent || ''}`.toLowerCase();
@@ -3307,6 +3353,7 @@ function renderTripsSeasonalDesk(){
     renderSignalPersonalDesk('magazine');
     renderMagazineSeasonalDesk();
     renderTripsSeasonalDesk();
+    renderExpansionFrontDesk();
     window.addEventListener('ryoko:langchange', () => {
       renderMagazineLanding();
       renderHomeDiscovery();
@@ -3322,6 +3369,7 @@ function renderTripsSeasonalDesk(){
       renderSignalPersonalDesk('magazine');
       renderMagazineSeasonalDesk();
       renderTripsSeasonalDesk();
+      renderExpansionFrontDesk();
       localizeLangButtonLabels();
       localizeStaticIndexSections();
     localizeExtendedStaticSections();
