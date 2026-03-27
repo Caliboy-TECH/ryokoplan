@@ -1403,15 +1403,12 @@ function getPriorityRefinePack(city=''){
     const destination = data.destination || readForm().destination || '';
     const custom = getPriorityResultMicroBriefPack(destination);
     if (custom?.length) return custom;
-    const firstDay = data.days?.[0] || {};
-    const lastDay = data.days?.[data.days?.length - 1] || {};
-    const firstPlace = normalizePlaces(firstDay)[0]?.name || textValue(firstDay.title, uiCopy('첫날 시작', 'Opening day'));
-    const lastMove = normalizePlaces(lastDay).slice(-1)[0]?.name || textValue(lastDay.title, uiCopy('마지막 날', 'Final day'));
-    const voice = window.RyokoApp?.getCityVoice?.(destination);
+    const voice = window.RyokoApp?.getCityVoice?.(destination) || {};
+    const loop = window.RyokoApp?.getCityLoopData?.(destination) || { vibe: '' };
     return [
-      { kicker: uiCopy('시작점', 'Start clean'), text: uiCopy(`${firstPlace} 쪽에서 시작하면 첫 인상이 덜 산만합니다.`, `Start around ${firstPlace} for a cleaner opening tone.`) },
-      { kicker: uiCopy('리듬 유지', 'Keep the rhythm'), text: voice?.watch || buildEditorNote(data) },
-      { kicker: uiCopy('이 일정의 결', 'Trip tone'), text: voice?.strap || textValue(data.bestFor, uiCopy('도시를 무리 없이 읽고 싶은 여행자', 'Travelers who want a smoother, better-paced city route.')) }
+      { kicker: uiCopy('Lead with', 'Lead with', 'Lead with', 'Lead with'), text: voice?.strap || textValue(data.pace, (loop.vibe || uiCopy('도시의 기본 템포를 먼저 가져가세요.', 'Take the city tempo first.'))) },
+      { kicker: uiCopy('Protect', 'Protect', 'Protect', 'Protect'), text: voice?.watch || buildEditorNote(data) },
+      { kicker: uiCopy('Keep', 'Keep', 'Keep', 'Keep'), text: voice?.reward || textValue(data.bestFor, uiCopy('이 도시가 잘 남는 장면을 끝까지 지키세요.', 'Keep the part of the city that actually stays with you.')) }
     ];
   }
   function renderSignature(data){

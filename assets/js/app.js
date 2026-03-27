@@ -25,6 +25,18 @@ window.RyokoApp = (() => {
     hongkong: { name:'Hong Kong', country:'Hong Kong', guide:'city/hongkong.html', example:'example/hongkong-3n4d-harbor-rhythm.html', image:'assets/images/cities/hongkong.jpg', vibe:'vertical harbor nights' },
     macau: { name:'Macau', country:'Macau', guide:'city/macau.html', example:'example/macau-2n3d-night-lanes.html', image:'assets/images/cities/macau.jpg', vibe:'compact heritage nights' }
   };
+  const canonicalExampleSlugMap = {
+    'osaka-2n3d-family':'osaka-2n3d-food-trip',
+    'sapporo-3n4d-snow-soft':'sapporo-2n3d-winter-city',
+    'sendai-2n3d-city-rest':'sendai-2n3d-calm-city',
+    'okinawa-3n4d-island-breeze':'okinawa-3n4d-sea-reset',
+    'macau-2n3d-heritage-night':'macau-2n3d-night-lanes'
+  };
+
+  function canonicalizeExampleSlug(slug=''){
+    return canonicalExampleSlugMap[String(slug || '').trim()] || String(slug || '').trim();
+  }
+
   const loopPairs = {
     tokyo:['kyoto','sendai','seoul'], osaka:['kyoto','fukuoka','tokyo'], kyoto:['osaka','tokyo','gyeongju'], fukuoka:['osaka','busan','tokyo'],
     sapporo:['sendai','tokyo','fukuoka'], sendai:['tokyo','sapporo','seoul'], okinawa:['taipei','jeju','macau'],
@@ -265,6 +277,59 @@ window.RyokoApp = (() => {
   }
   function getRelatedCities(city=''){
     return (loopPairs[slugifyCity(city)] || []).map(key => cityLoopMap[key]).filter(Boolean);
+  }
+
+
+  function editorialToneLabel(type='lead'){
+    if (lang === 'ko') return type === 'lead' ? '먼저 잡기' : type === 'protect' ? '지킬 것' : '끝까지 남길 것';
+    if (lang === 'ja') return type === 'lead' ? '先に持つもの' : type === 'protect' ? '守ること' : '最後まで残すこと';
+    if (lang === 'zhHant') return type === 'lead' ? '先抓住' : type === 'protect' ? '要守住' : '最後要留下';
+    return type === 'lead' ? 'Lead with' : type === 'protect' ? 'Protect' : 'Keep';
+  }
+
+  function getSharedEditorialTonePack(city='', context='city'){
+    const loop = getCityLoopData(city) || { name: city, vibe: '' };
+    const voice = getCityVoice(city) || {};
+    const moodChips = String(voice.mood || loop.vibe || '').split('/').map(item => item.trim()).filter(Boolean).slice(0, 3);
+    if (context === 'example') {
+      return {
+        id: 'example-tone',
+        eyebrow: lang === 'ko' ? 'Editorial tone' : lang === 'ja' ? 'Editorial tone' : lang === 'zhHant' ? 'Editorial tone' : 'Editorial tone',
+        title: lang === 'ko' ? `${city} 샘플을 읽는 공통 기준` : lang === 'ja' ? `${city} sample を読む共通の基準` : lang === 'zhHant' ? `閱讀 ${city} sample 的共通基準` : `The shared line for reading ${city} samples`,
+        desc: lang === 'ko' ? '리스트를 복사하기보다, 이 도시의 결을 만드는 기준 문장부터 먼저 가져가세요.' : lang === 'ja' ? 'リストをそのまま写すより、この都市らしさを作る基準の文を先に持ち帰る方が合います。' : lang === 'zhHant' ? '與其直接複製清單，更適合先帶走讓這座城市成立的那句基準。' : 'Before you copy the list, take the line that makes this city feel like itself.',
+        cards: [
+          { label: editorialToneLabel('lead'), body: voice.strap || loop.vibe || city },
+          { label: editorialToneLabel('protect'), body: voice.watch || (lang === 'ko' ? '과한 이동으로 이 도시의 템포를 깨지 않기.' : 'Do not let over-routing break the city rhythm.') },
+          { label: editorialToneLabel('keep'), body: voice.reward || (lang === 'ko' ? '이 도시가 잘 남는 장면을 끝까지 보존하기.' : 'Keep the part of the city that actually stays with you.') }
+        ],
+        chips: moodChips,
+        primary: lang === 'ko' ? '플래너에서 조정' : lang === 'ja' ? 'Planner で調整' : lang === 'zhHant' ? '在 Planner 調整' : 'Tune in Planner',
+        secondary: lang === 'ko' ? '도시 가이드' : lang === 'ja' ? '都市ガイド' : lang === 'zhHant' ? '城市指南' : 'City guide'
+      };
+    }
+    return {
+      id: 'city-tone',
+      eyebrow: lang === 'ko' ? 'Editorial tone' : lang === 'ja' ? 'Editorial tone' : lang === 'zhHant' ? 'Editorial tone' : 'Editorial tone',
+      title: lang === 'ko' ? `${city}를 읽는 공통 기준` : lang === 'ja' ? `${city} を読む共通の基準` : lang === 'zhHant' ? `閱讀 ${city} 的共通基準` : `The shared line for reading ${city}`,
+      desc: lang === 'ko' ? '이 도시는 어디를 많이 가느냐보다 어떤 템포로 읽느냐가 더 중요합니다.' : lang === 'ja' ? 'この都市はどれだけ多く回るかより、どんなテンポで読むかの方が重要です。' : lang === 'zhHant' ? '這座城市更重要的不是去了多少，而是用什麼節奏去讀。' : 'This city is shaped less by coverage than by the tempo you keep while reading it.',
+      cards: [
+        { label: editorialToneLabel('lead'), body: voice.strap || loop.vibe || city },
+        { label: editorialToneLabel('protect'), body: voice.watch || (lang === 'ko' ? '이동 과적을 막고 도시의 결을 흐리지 않기.' : 'Protect the route from overload so the city still reads clearly.') },
+        { label: editorialToneLabel('keep'), body: voice.reward || (lang === 'ko' ? '이 도시가 끝까지 남는 장면을 지키기.' : 'Keep the part of the city that actually stays with you.') }
+      ],
+      chips: moodChips,
+      primary: lang === 'ko' ? '샘플 일정 보기' : lang === 'ja' ? 'サンプル旅程を見る' : lang === 'zhHant' ? '看範例行程' : 'See sample plan',
+      secondary: lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'Planner を開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner'
+    };
+  }
+
+  function renderSharedEditorialToneBand(city='', context='city'){
+    const pack = getSharedEditorialTonePack(city, context);
+    const citySlug = slugifyCity(city);
+    const loop = getCityLoopData(city) || { guide: `city/${citySlug}.html`, example: '#' };
+    const primaryHref = context === 'city' ? `../${loop.example || '#'}` : plannerUrlForCity(city);
+    const secondaryHref = context === 'city' ? plannerUrlForCity(city) : `../${loop.guide || ('city/' + citySlug + '.html')}`;
+    return `<section class="section shared-editorial-tone-band" id="${pack.id}"><div class="section-head compact"><div><span class="eyebrow">${pack.eyebrow}</span><h2 class="section-title">${pack.title}</h2><p class="section-desc">${pack.desc}</p></div></div><div class="shared-editorial-tone-grid">${pack.cards.map(item => `<article class="info-card shared-editorial-tone-card"><span class="collection-kicker">${item.label}</span><p>${item.body}</p></article>`).join('')}</div><div class="shared-editorial-tone-foot"><div class="trip-chip-row">${(pack.chips || []).map(chip => `<span class="trip-mini-chip">${chip}</span>`).join('')}</div><div class="card-actions"><a class="soft-btn" href="${primaryHref}">${pack.primary}</a><a class="ghost-btn" href="${secondaryHref}">${pack.secondary}</a></div></div></section>`;
   }
 
   function normalizeSignalTag(tag=''){
@@ -1181,6 +1246,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
   }
 
   function renderExampleOps(slug){
+    slug = canonicalizeExampleSlug(slug);
     const entry = editorialData.example[slug];
     if (!entry) return '';
     const data = entry[lang] || entry.en;
@@ -1312,6 +1378,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
   }
 
   function renderExpansionExampleFront(slug, entry){
+    slug = canonicalizeExampleSlug(slug);
     const pack = getExpansionExampleFrontPack(slug);
     if (!pack || !entry) return '';
     const exampleData = editorialData.example[slug]?.[lang] || editorialData.example[slug]?.en || editorialData.example[slug]?.ko || {};
@@ -1555,7 +1622,8 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
         <div class="city-detail-copy city-copy-magazine cover-copy-column"><div class="cover-meta-row"><span class="cover-meta-pill">${uiText('cityGuide')}</span><span class="cover-meta-pill">${entry.planner}</span></div><span class="eyebrow">${data.eyebrow}</span><h1>${entry.planner}</h1><p class="city-detail-lead">${data.lead}</p><div class="city-strapline">${(getCityVoice(entry.planner)?.strap || '')}</div><div class="mini-vibe-row">${data.chips.map(ch => `<span class="mini-vibe-chip">${ch}</span>`).join('')}</div><div class="city-voice-strip"><span class="city-voice-pill"><strong>${lang === 'ko' ? '좋은 점' : lang === 'ja' ? '良いところ' : lang === 'zhHant' ? '適合重點' : 'Rewards'}</strong><span>${(getCityVoice(entry.planner)?.reward || '')}</span></span><span class="city-voice-pill"><strong>${lang === 'ko' ? '주의할 점' : lang === 'ja' ? '気をつけたい点' : lang === 'zhHant' ? '留意重點' : 'Watch'}</strong><span>${(getCityVoice(entry.planner)?.watch || '')}</span></span><span class="city-voice-pill"><strong>${lang === 'ko' ? '무드' : lang === 'ja' ? 'トーン' : lang === 'zhHant' ? '氛圍' : 'Tone'}</strong><span>${(getCityVoice(entry.planner)?.mood || '')}</span></span></div><div class="cover-note-line"><strong>${uiText('coverNote')}</strong><span>${data.whyDesc}</span></div><div class="hero-actions hero-actions-strong cover-actions-row"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? entry.planner + ' 여행 짜기' : lang === 'ja' ? entry.planner + ' の旅を作る' : lang === 'zhHant' ? '規劃 ' + entry.planner + ' 旅程' : 'Plan ' + entry.planner}</a><a class="ghost-btn" href="../example/${entry.example}">${lang === 'ko' ? '샘플 일정 보기' : lang === 'ja' ? 'サンプル旅程を見る' : lang === 'zhHant' ? '看範例行程' : 'See sample plan'}</a></div></div>
         <div class="city-detail-visual city-visual-stack cover-visual-column"><img src="../${entry.image}" alt="${entry.planner}"><div class="glass-note strong"><strong>${data.why}</strong><span>${data.bestFor}</span></div><div class="visual-stack-card route-card dark strong"><strong>${uiText('readFirst')}</strong><span>${(getCityVoice(entry.planner)?.strap || data.pace)}</span></div><div class="visual-stack-card light city-stack-meta"><strong>${uiText('bestSeason')}</strong><span>${data.season}</span></div></div>
       </section>
-      <section class="section city-quicknav-wrap"><div class="city-quicknav"><a class="jump-chip" href="#city-overview">${uiText('overview')}</a><a class="jump-chip" href="#city-districts">${uiText('districts')}</a><a class="jump-chip" href="#city-neighborhoods">${lang === 'ko' ? '동네 픽' : lang === 'ja' ? '近所のピック' : lang === 'zhHant' ? '鄰里精選' : 'Neighborhood picks'}</a><a class="jump-chip" href="#city-sample">${uiText('sample')}</a><a class="jump-chip" href="#city-tips">${lang === 'ko' ? '팁' : lang === 'ja' ? 'ヒント' : lang === 'zhHant' ? '小提示' : 'Tips'}</a></div></section>
+      <section class="section city-quicknav-wrap"><div class="city-quicknav"><a class="jump-chip" href="#city-tone">${lang === 'ko' ? '톤' : lang === 'ja' ? 'トーン' : lang === 'zhHant' ? '語氣' : 'Tone'}</a><a class="jump-chip" href="#city-overview">${uiText('overview')}</a><a class="jump-chip" href="#city-districts">${uiText('districts')}</a><a class="jump-chip" href="#city-neighborhoods">${lang === 'ko' ? '동네 픽' : lang === 'ja' ? '近所のピック' : lang === 'zhHant' ? '鄰里精選' : 'Neighborhood picks'}</a><a class="jump-chip" href="#city-sample">${uiText('sample')}</a><a class="jump-chip" href="#city-tips">${lang === 'ko' ? '팁' : lang === 'ja' ? 'ヒント' : lang === 'zhHant' ? '小提示' : 'Tips'}</a></div></section>
+      ${renderSharedEditorialToneBand(entry.planner, 'city')}
       ${renderExpansionCityGuideFront(slug, entry)}
       <section class="section city-overview-composition" id="city-overview"><div class="city-overview-lead"><div class="editorial-kicker">${uiText('overview')}</div><h2 class="section-title">${lang === 'ko' ? entry.planner + '를 읽는 첫 장면' : lang === 'ja' ? entry.planner + ' を読む最初の場面' : lang === 'zhHant' ? '讀 ' + entry.planner + ' 的第一個畫面' : 'The first read of ' + entry.planner}</h2><p class="section-desc">${data.whyDesc}</p></div><div class="city-meta-strip"><article class="meta-card feature"><span class="meta-label">${lang === 'ko' ? '잘 맞는 여행' : lang === 'ja' ? '向いている旅' : lang === 'zhHant' ? '適合的旅程' : 'Best for'}</span><span class="meta-value">${data.bestFor}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? '추천 페이스' : lang === 'ja' ? 'おすすめのペース' : lang === 'zhHant' ? '建議節奏' : 'Suggested pace'}</span><span class="meta-value">${data.pace}</span></article><article class="meta-card"><span class="meta-label">${uiText('bestSeason')}</span><span class="meta-value">${data.season}</span></article></div></section>
       ${renderCityModules(slug, entry.planner)}
@@ -1630,8 +1698,16 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
   }
 
   function renderExamplePage(){
-    const slug = document.body.dataset.exampleSlug;
-    if (!slug) return;
+    const rawSlug = document.body.dataset.exampleSlug;
+    if (!rawSlug) return;
+    const slug = canonicalizeExampleSlug(rawSlug);
+    if (rawSlug !== slug) {
+      const canonicalHref = `../example/${slug}.html`;
+      if (!location.pathname.endsWith(`/${slug}.html`) && !location.pathname.endsWith(`${slug}.html`)) {
+        location.replace(canonicalHref);
+        return;
+      }
+    }
     const entry = editorialData.example[slug];
     const city = editorialData.city[slug.split('-').slice(0,1)[0]] || editorialData.city[(entry?.city || '').toLowerCase()];
     if (!entry || !city) return;
@@ -1645,7 +1721,8 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
     const exampleFrontJump = exampleFront ? `<a class="jump-chip" href="#example-opener">${uiCopy('오프너','Opener','オープナー','前導')}</a>` : '';
     root.innerHTML = `
       <section class="city-detail-hero hero-card city-hero-polish city-hero-magazine cover-system-shell cover-system-shell-example example-hero--${slug}"><div class="city-detail-copy city-copy-magazine cover-copy-column"><div class="cover-meta-row"><span class="cover-meta-pill">${uiText('planExample')}</span><span class="cover-meta-pill">${entry.city}</span></div><span class="eyebrow">${lang === 'ko' ? '일정 예시' : lang === 'ja' ? '旅程サンプル' : lang === 'zhHant' ? '行程範例' : 'Plan Example'}</span><h1>${title}</h1><p class="city-detail-lead">${lead}</p><div class="mini-vibe-row"><span class="mini-vibe-chip">${entry.city}</span><span class="mini-vibe-chip">${cityData.pace}</span><span class="mini-vibe-chip">${cityData.bestFor.split(',')[0]}</span></div><div class="cover-note-line"><strong>${lang === 'ko' ? '이 베이스로 시작' : lang === 'ja' ? 'このベースを使う' : lang === 'zhHant' ? '用這個基底開始' : 'Use this as a base'}</strong><span>${lang === 'ko' ? '리스트보다 구조를 가져가고, 도시는 그 도시다운 템포로 남겨두는 편이 좋습니다.' : lang === 'ja' ? 'リストより先に構造を持ち帰り、都市はその街らしいテンポを残す方が向いています。' : lang === 'zhHant' ? '比起帶走清單，更適合先帶走節奏結構，並保留城市本來的步調。' : 'Borrow the structure first, and keep the city in its own natural tempo.'}</span></div><div class="city-strapline compact">${(getCityVoice(entry.city)?.strap || '')}</div><div class="hero-actions hero-actions-strong cover-actions-row"><a class="primary-btn" href="${plannerUrlForCity(entry.city)}">${lang === 'ko' ? '플래너에서 커스텀' : lang === 'ja' ? 'Planner で調整する' : lang === 'zhHant' ? '在 Planner 裡調整' : 'Customize in Planner'}</a><a class="ghost-btn" href="../city/${entry.guide}">${lang === 'ko' ? '도시 가이드 읽기' : lang === 'ja' ? '都市ガイドを読む' : lang === 'zhHant' ? '讀城市指南' : 'Read city guide guide'}</a></div></div><div class="city-detail-visual city-visual-stack cover-visual-column"><img src="../${entry.image}" alt="${title}"><div class="route-card dark strong"><strong>${uiText('exampleItinerary')}</strong><span>${lang === 'ko' ? '하루별 구조, 예산 감각, 현지 팁까지 한 번에.' : lang === 'ja' ? '一日の構造、予算感、現地のヒントまで一度に見られます。' : lang === 'zhHant' ? '一天的節奏、預算感和在地提示，都能一次看完。' : 'Day-by-day structure, budget feel, and local tips in one view.'}</span></div><div class="visual-stack-card light city-stack-meta"><strong>${uiText('cityMood')}</strong><span>${cityData.bestFor.split(',')[0]}</span></div></div></section>
-      <section class="section city-quicknav-wrap"><div class="city-quicknav">${exampleFrontJump}<a class="jump-chip" href="#example-flow">${lang === 'ko' ? '흐름' : lang === 'ja' ? '流れ' : lang === 'zhHant' ? '節奏' : 'Flow'}</a><a class="jump-chip" href="#example-why">${lang === 'ko' ? 'Why it works' : 'Why it works'}</a><a class="jump-chip" href="#example-next">${uiText('nextMove')}</a></div></section>
+      <section class="section city-quicknav-wrap"><div class="city-quicknav">${exampleFrontJump}<a class="jump-chip" href="#example-tone">${lang === 'ko' ? '톤' : lang === 'ja' ? 'トーン' : lang === 'zhHant' ? '語氣' : 'Tone'}</a><a class="jump-chip" href="#example-flow">${lang === 'ko' ? '흐름' : lang === 'ja' ? '流れ' : lang === 'zhHant' ? '節奏' : 'Flow'}</a><a class="jump-chip" href="#example-why">${lang === 'ko' ? 'Why it works' : 'Why it works'}</a><a class="jump-chip" href="#example-next">${uiText('nextMove')}</a></div></section>
+      ${renderSharedEditorialToneBand(entry.city, 'example')}
       ${exampleFront}
       <section class="section city-overview-composition"><div class="city-overview-lead"><div class="editorial-kicker">${uiText('atAGlance')}</div><h2 class="section-title">${lang === 'ko' ? '먼저 이 샘플의 결을 읽어보세요' : lang === 'ja' ? 'まずこのサンプルのトーンを読んでみてください' : lang === 'zhHant' ? '先讀懂這個範例的節奏與語氣' : 'Read the tone of the sample first'}</h2><p class="section-desc">${lang === 'ko' ? '이 예시는 장소 리스트보다 하루 리듬을 가져가는 데 더 큰 가치가 있습니다.' : lang === 'ja' ? 'このサンプルは、場所の一覧というより一日のテンポを見るための土台として使うのが向いています。' : lang === 'zhHant' ? '這個範例比起固定清單，更適合拿來理解一天的節奏。' : 'This example is more useful as a pacing reference than as a strict checklist.'}</p></div><div class="city-meta-strip"><article class="meta-card feature"><span class="meta-label">${lang === 'ko' ? '잘 맞는 여행' : lang === 'ja' ? '向いている旅' : lang === 'zhHant' ? '適合的旅程' : 'Best for'}</span><span class="meta-value">${cityData.bestFor}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? '추천 페이스' : lang === 'ja' ? 'おすすめのペース' : lang === 'zhHant' ? '建議節奏' : 'Suggested pace'}</span><span class="meta-value">${cityData.pace}</span></article><article class="meta-card"><span class="meta-label">${lang === 'ko' ? '예산 감각' : lang === 'ja' ? '予算感' : lang === 'zhHant' ? '預算感受' : 'Budget feel'}</span><span class="meta-value">${cityData.budgetFeel}</span></article></div></section>
       ${renderCityOps(slug.split('-')[0])}
@@ -2175,6 +2252,7 @@ const exampleVariationPolishMap = {
 };
 
 function getCityRouteVariations(slug){
+    slug = canonicalizeExampleSlug(slug);
     const polished = exampleVariationPolishMap[slug]?.[lang] || exampleVariationPolishMap[slug]?.en || [];
     const base = polished.length ? polished : (cityRouteVariationMap[slug]?.[lang] || cityRouteVariationMap[slug]?.en || []);
     const citySlug = cityGuideSlugFromExample(slug);
@@ -2226,28 +2304,25 @@ function getCityRouteVariations(slug){
   }
 
   function getExampleCrossLinks(slug){
+    slug = canonicalizeExampleSlug(slug);
     const citySlug = cityGuideSlugFromExample(slug);
     const cityName = editorialData.example[slug]?.city || '';
     const map = {
       'tokyo-3n4d-first-trip': ['osaka-2n3d-food-trip','kyoto-2n3d-slow-trip'],
-      'osaka-2n3d-family': ['kyoto-2n3d-slow-trip','tokyo-3n4d-first-trip'],
+      'osaka-2n3d-food-trip': ['kyoto-2n3d-slow-trip','tokyo-3n4d-first-trip'],
       'kyoto-2n3d-slow-trip': ['osaka-2n3d-food-trip','fukuoka-2n3d-food-trip'],
       'seoul-2n3d-city-vibes': ['busan-2n3d-with-parents','taipei-3n4d-night-food'],
       'busan-2n3d-with-parents': ['jeju-2n3d-slow-reset','seoul-2n3d-city-vibes'],
       'fukuoka-2n3d-food-trip': ['taipei-3n4d-night-food','osaka-2n3d-food-trip'],
-      'sapporo-3n4d-snow-soft': ['sendai-2n3d-calm-city','tokyo-3n4d-first-trip'],
-      'sendai-2n3d-city-rest': ['sapporo-2n3d-winter-city','tokyo-3n4d-first-trip'],
-      'okinawa-3n4d-island-breeze': ['jeju-2n3d-slow-reset','busan-2n3d-with-parents'],
+      'sapporo-2n3d-winter-city': ['sendai-2n3d-calm-city','tokyo-3n4d-first-trip'],
+      'sendai-2n3d-calm-city': ['sapporo-2n3d-winter-city','tokyo-3n4d-first-trip'],
+      'okinawa-3n4d-sea-reset': ['jeju-2n3d-slow-reset','busan-2n3d-with-parents'],
       'jeju-2n3d-slow-reset': ['okinawa-3n4d-sea-reset','busan-2n3d-with-parents'],
       'gyeongju-2n3d-heritage-walk': ['kyoto-2n3d-slow-trip','macau-2n3d-night-lanes'],
       'taipei-3n4d-night-food': ['hongkong-3n4d-harbor-rhythm','fukuoka-2n3d-food-trip'],
       'hongkong-3n4d-harbor-rhythm': ['macau-2n3d-night-lanes','taipei-3n4d-night-food'],
       'macau-2n3d-night-lanes': ['hongkong-3n4d-harbor-rhythm','taipei-3n4d-night-food'],
-      'osaka-2n3d-food-trip': ['kyoto-2n3d-slow-trip','tokyo-3n4d-first-trip'],
-      'sapporo-2n3d-winter-city': ['sendai-2n3d-calm-city','tokyo-3n4d-first-trip'],
-      'sendai-2n3d-calm-city': ['sapporo-2n3d-winter-city','tokyo-3n4d-first-trip'],
-      'okinawa-3n4d-sea-reset': ['jeju-2n3d-slow-reset','busan-2n3d-with-parents'],
-      'macau-2n3d-heritage-night': ['hongkong-3n4d-harbor-rhythm','taipei-3n4d-night-food']
+      'macau-2n3d-night-lanes': ['hongkong-3n4d-harbor-rhythm','taipei-3n4d-night-food']
     };
     const siblings = (map[slug] || []).map(key => editorialData.example[key]).filter(Boolean);
     const labels = {
@@ -2278,6 +2353,7 @@ function getCityRouteVariations(slug){
   }
 
   function renderExampleFlowBridge(slug){
+    slug = canonicalizeExampleSlug(slug);
     const entry = editorialData.example[slug];
     if (!entry) return '';
     const citySlug = cityGuideSlugFromExample(slug);
