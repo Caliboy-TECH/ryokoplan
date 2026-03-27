@@ -319,7 +319,7 @@ window.RyokoApp = (() => {
       ],
       chips: moodChips,
       primary: lang === 'ko' ? '샘플 일정 보기' : lang === 'ja' ? 'サンプル旅程を見る' : lang === 'zhHant' ? '看範例行程' : 'See sample plan',
-      secondary: lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'Planner を開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner'
+      secondary: lang === 'ko' ? '이 도시부터 시작' : lang === 'ja' ? 'この都市から始める' : lang === 'zhHant' ? '從這座城市開始' : 'Start with this city'
     };
   }
 
@@ -733,7 +733,7 @@ window.RyokoApp = (() => {
         heroTitle: '도시를 먼저 읽고, 그다음 여행을 만드세요',
         heroDesc: '지금 필요한 건 정보 더미보다 도시의 결, 이동 리듬, 그리고 바로 여행 흐름으로 이어지는 입구입니다. 매거진을 플래너 앞의 에디토리얼 첫 장처럼 다시 정리했습니다.',
         heroChips: ['East Asia city edit', 'Japan · Korea · Greater China', 'planner-ready routes'],
-        startPlanner: '플래너 열기',
+        startPlanner: '이 도시부터 시작',
         browseCities: '도시 둘러보기',
         featureKicker: 'Editor\'s note',
         featureMeta: 'Better first route',
@@ -784,7 +784,7 @@ window.RyokoApp = (() => {
         slowKicker:'슬로우 트립', slowTitle:'체크리스트보다 리듬으로 보는 교토', slowDesc:'사람 없는 시간대와 쉬는 구간까지 생각해야 교토가 더 좋게 느껴집니다.', openKyoto:'교토 샘플 열기',
         howKicker:'Magazine 활용법', howSteps:[['1. 무드 고르기','fast city / slow route / food-led / coast 중 지금 끌리는 것부터.'],['2. 도시 하나 읽기','vibe, pace, district focus, local tips로 감을 잡습니다.'],['3. 바로 Planner','도시 선택을 그대로 일정 생성으로 넘깁니다.']],
         bannerTitle:'도시를 읽고, 루트를 남기세요', bannerDesc:'Ryokoplan은 매거진과 플래너와 저장된 루트가 한 흐름일 때 가장 자연스럽습니다. 도시를 먼저 읽고, 루트를 만들고, 저장하고, 다시 이어보세요.', bannerPlanner:'여행 시작하기', bannerTrips:'My Trips 열기',
-        loopFreshEyebrow:'Fresh start', loopFreshTitle:'도시 하나를 제대로 읽으면 첫 루트가 쉬워집니다', loopFreshDesc:'아직 저장한 여행이 없어도 괜찮습니다. 매거진은 첫 루트로 들어가는 가장 자연스러운 입구가 될 수 있습니다.', loopFreshA:'Tokyo 읽기', loopFreshB:'플래너 열기', loopSideTitle:'좋은 첫 진입', loopSideItems:['Tokyo · 밀도와 리듬 파악용', 'Kyoto · 여백이 필요한 여행', 'Seoul · 동네 감각 중심']
+        loopFreshEyebrow:'Fresh start', loopFreshTitle:'도시 하나를 제대로 읽으면 첫 루트가 쉬워집니다', loopFreshDesc:'아직 저장한 여행이 없어도 괜찮습니다. 매거진은 첫 루트로 들어가는 가장 자연스러운 입구가 될 수 있습니다.', loopFreshA:'Tokyo 읽기', loopFreshB:'이 도시부터 시작', loopSideTitle:'좋은 첫 진입', loopSideItems:['Tokyo · 밀도와 리듬 파악용', 'Kyoto · 여백이 필요한 여행', 'Seoul · 동네 감각 중심']
       },
       en: {
         title: 'Ryokoplan — Magazine',
@@ -792,7 +792,7 @@ window.RyokoApp = (() => {
         heroTitle: 'Read the city first. Then build the trip.',
         heroDesc: 'What matters here is not more information, but a clearer read on city mood, movement, and where the trip should begin. Magazine now works as the editorial front door to Planner.',
         heroChips: ['East Asia city edit', 'Japan · Korea · Greater China', 'planner-ready routes'],
-        startPlanner: 'Open Planner',
+        startPlanner: 'Start with this city',
         browseCities: 'Browse cities',
         featureKicker: 'Editor\'s note',
         featureMeta: 'Better first route',
@@ -843,7 +843,7 @@ window.RyokoApp = (() => {
         slowKicker:'ゆっくり旅', slowTitle:'Kyoto by rhythm, not by checklist', slowDesc:'The city feels better when you consider calm hours, rests, and fewer anchors.', openKyoto:'Open Kyoto sample',
         howKicker:'How to use Magazine', howSteps:[['1. Pick a mood','Start with fast city, slow route, food-led, or coast.'],['2. Read one city','Get vibe, pace, district focus, and local tips first.'],['3. Jump to Planner','Carry the city choice straight into a usable itinerary.']],
         bannerTitle:'Read the city. Then keep the route.', bannerDesc:'Ryokoplan is strongest when Magazine, Planner, and saved routes feel like one continuous flow. Read one city well, shape the route, save it, and return to it later.', bannerPlanner:'Start planning', bannerTrips:'Open My Trips',
-        loopFreshEyebrow:'Fresh start', loopFreshTitle:'One good city read makes the first route easier', loopFreshDesc:'You do not need a saved trip yet. Magazine can still be the cleanest first entry into your first route.', loopFreshA:'Read Tokyo', loopFreshB:'Open Planner', loopSideTitle:'Good first entries', loopSideItems:['Tokyo · density and rhythm', 'Kyoto · slower reset', 'Seoul · neighborhood contrast']
+        loopFreshEyebrow:'Fresh start', loopFreshTitle:'One good city read makes the first route easier', loopFreshDesc:'You do not need a saved trip yet. Magazine can still be the cleanest first entry into your first route.', loopFreshA:'Read Tokyo', loopFreshB:'Start with this city', loopSideTitle:'Good first entries', loopSideItems:['Tokyo · density and rhythm', 'Kyoto · slower reset', 'Seoul · neighborhood contrast']
       }
     },
     city: {
@@ -1139,7 +1139,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
               <div class="dispatch-lines">
                 <div><strong>${lang === 'ko' ? '도시 무드' : lang === 'ja' ? '都市ムード' : lang === 'zhHant' ? '城市氛圍' : 'City mood'}</strong><span>${lang === 'ko' ? 'Fast city, slow reset, food-led, coast mode로 먼저 좁힙니다.' : lang === 'ja' ? 'Fast city、slow reset、food-led、coast mode のどれに近いかで先に絞ります。' : lang === 'zhHant' ? '先用 fast city、slow reset、food-led、coast mode 這些感覺來縮小。' : 'Filter first by fast city, slow reset, food-led, or coast mode.'}</span></div>
                 <div><strong>${lang === 'ko' ? '샘플 흐름' : lang === 'ja' ? 'サンプルの流れ' : lang === 'zhHant' ? '範例節奏' : 'Sample flow'}</strong><span>${lang === 'ko' ? '좋은 일정이 어떤 템포로 보이는지 먼저 읽게 합니다.' : lang === 'ja' ? '良い旅程がどんなテンポで見えるのかを、作る前に先に読めるようにします。' : lang === 'zhHant' ? '先讓你在生成前看懂，一條好的路線會是什麼節奏。' : 'Let readers see how a strong route actually flows before they generate.'}</span></div>
-                <div><strong>${lang === 'ko' ? '플래너 연결' : lang === 'ja' ? 'Planner への橋渡し' : lang === 'zhHant' ? '接到 Planner' : 'Planner bridge'}</strong><span>${lang === 'ko' ? '마음에 드는 도시와 무드에서 바로 플래너로 연결됩니다.' : lang === 'ja' ? '気に入った都市やムードから、そのまま Planner へつなげられます。' : lang === 'zhHant' ? '只要遇到喜歡的城市或節奏，就能直接接到 Planner。' : 'Every strong city or route can jump directly into Planner.'}</span></div>
+                <div><strong>${lang === 'ko' ? '여정 연결' : lang === 'ja' ? '旅程への橋渡し' : lang === 'zhHant' ? '接到旅程' : 'Route bridge'}</strong><span>${lang === 'ko' ? '마음에 드는 도시와 무드에서 바로 나만의 여정으로 이어집니다.' : lang === 'ja' ? '気に入った都市やムードから、そのまま自分の旅程へつなげられます。' : lang === 'zhHant' ? '只要遇到喜歡的城市或節奏，就能直接接到自己的旅程。' : 'Every strong city or route can carry directly into your own route.'}</span></div>
               </div>
             </article>
           </div>
@@ -1157,19 +1157,19 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
             <h3>${lang === 'ko' ? 'Tokyo dense weekend, 그런데 너무 빡빡하지 않게' : lang === 'ja' ? '密度はあるけれど詰め込みすぎない東京週末ベース' : lang === 'zhHant' ? '高密度但不會過滿的東京週末基底' : 'Tokyo dense weekend, without making it feel overpacked'}</h3>
             <p>${lang === 'ko' ? '대표 지역은 챙기되, 하루 한 구간은 숨을 쉬게 두는 2박 3일 베이스입니다.' : lang === 'ja' ? '主要エリアは押さえつつ、毎日にひとつやわらかい余白を残す2泊3日の東京ベースです。' : lang === 'zhHant' ? '保留代表區域，但每天都留一段能喘口氣的節奏，是這個東京 2晚3天基底的重點。' : 'A 2-night Tokyo base that still hits the big districts but leaves one softer pocket each day.'}</p>
             <div class="trip-mini-chip-row"><span class="trip-mini-chip">Tokyo</span><span class="trip-mini-chip">2N3D</span><span class="trip-mini-chip">${lang === 'ko' ? '주말' : lang === 'ja' ? '週末' : lang === 'zhHant' ? '週末' : 'Weekend'}</span></div>
-            <div class="cta-row"><button class="primary-btn" data-start-city="Tokyo">${lang === 'ko' ? '플래너로 시작' : lang === 'ja' ? 'Planner で始める' : lang === 'zhHant' ? '在 Planner 開始' : 'Start in Planner'}</button><a class="secondary-btn" href="../example/tokyo-3n4d-first-trip.html">${lang === 'ko' ? '샘플 보기' : lang === 'ja' ? 'サンプルを見る' : lang === 'zhHant' ? '看範例' : 'Read sample route'}</a></div>
+            <div class="cta-row"><button class="primary-btn" data-start-city="Tokyo">${lang === 'ko' ? '플래너로 시작' : lang === 'ja' ? 'Planner で始める' : lang === 'zhHant' ? '在 Planner 開始' : 'Start from this city'}</button><a class="secondary-btn" href="../example/tokyo-3n4d-first-trip.html">${lang === 'ko' ? '샘플 보기' : lang === 'ja' ? 'サンプルを見る' : lang === 'zhHant' ? '看範例' : 'Read sample route'}</a></div>
           </article>
           <article class="dispatch-edit-card">
             <span class="collection-kicker">${lang === 'ko' ? '우천일 노트' : lang === 'ja' ? '雨の日ノート' : lang === 'zhHant' ? '雨天筆記' : 'Rainy-day note'}</span>
             <h3>${lang === 'ko' ? 'Seoul rainy-day fallback' : lang === 'ja' ? '雨の日でも崩れにくいソウルの代替ベース' : lang === 'zhHant' ? '下雨天也不容易失衡的首爾替代基底' : 'Seoul rainy-day fallback'}</h3>
             <p>${lang === 'ko' ? '실내 밀도와 동네 이동을 가볍게 유지하는 서울 우천일 베이스입니다.' : lang === 'ja' ? '室内の密度を保ちながら、街区の移動を軽くつなぐソウルの雨の日ベースです。' : lang === 'zhHant' ? '這是把室內密度和街區移動都維持得更輕一些的首爾雨天基底。' : 'A Seoul fallback that stays indoor-friendly while keeping the neighborhood line intact.'}</p>
-            <div class="cta-row compact-actions"><button class="ghost-btn" data-start-city="Seoul">${lang === 'ko' ? '플래너로 시작' : lang === 'ja' ? 'Planner で始める' : lang === 'zhHant' ? '在 Planner 開始' : 'Start in Planner'}</button><a class="soft-link" href="../city/seoul.html">${lang === 'ko' ? '도시 가이드' : lang === 'ja' ? '都市ガイド' : lang === 'zhHant' ? '城市指南' : 'City guide'}</a></div>
+            <div class="cta-row compact-actions"><button class="ghost-btn" data-start-city="Seoul">${lang === 'ko' ? '플래너로 시작' : lang === 'ja' ? 'Planner で始める' : lang === 'zhHant' ? '在 Planner 開始' : 'Start from this city'}</button><a class="soft-link" href="../city/seoul.html">${lang === 'ko' ? '도시 가이드' : lang === 'ja' ? '都市ガイド' : lang === 'zhHant' ? '城市指南' : 'City guide'}</a></div>
           </article>
           <article class="dispatch-edit-card">
             <span class="collection-kicker">${lang === 'ko' ? '가족 페이스' : lang === 'ja' ? '家族ペース' : lang === 'zhHant' ? '家庭節奏' : 'Family pace'}</span>
             <h3>${lang === 'ko' ? 'Jeju easy pace with parents' : lang === 'ja' ? '親と行く、やわらかな済州ペース' : lang === 'zhHant' ? '和父母同行的濟州輕鬆節奏' : 'Jeju easy pace with parents'}</h3>
             <p>${lang === 'ko' ? '이동은 단순하게, 풍경과 식사는 충분히 남기는 느린 제주 베이스입니다.' : lang === 'ja' ? '移動はシンプルに、景色と食事、休憩の余白を残すゆるやかな済州ベースです。' : lang === 'zhHant' ? '移動保持簡單，把風景、用餐和休息的空間都留出來的濟州慢節奏基底。' : 'A slower Jeju base with simple movement, enough scenery, and room for meals and rest.'}</p>
-            <div class="cta-row compact-actions"><button class="ghost-btn" data-start-city="Jeju">${lang === 'ko' ? '플래너로 시작' : lang === 'ja' ? 'Planner で始める' : lang === 'zhHant' ? '在 Planner 開始' : 'Start in Planner'}</button><a class="soft-link" href="../city/jeju.html">${lang === 'ko' ? '도시 가이드' : lang === 'ja' ? '都市ガイド' : lang === 'zhHant' ? '城市指南' : 'City guide'}</a></div>
+            <div class="cta-row compact-actions"><button class="ghost-btn" data-start-city="Jeju">${lang === 'ko' ? '플래너로 시작' : lang === 'ja' ? 'Planner で始める' : lang === 'zhHant' ? '在 Planner 開始' : 'Start from this city'}</button><a class="soft-link" href="../city/jeju.html">${lang === 'ko' ? '도시 가이드' : lang === 'ja' ? '都市ガイド' : lang === 'zhHant' ? '城市指南' : 'City guide'}</a></div>
           </article>
         </div>
       </section>
@@ -1603,8 +1603,8 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
     if (!pack || !entry) return '';
     const sampleHref = `../example/${entry.example}`;
     const plannerHref = plannerUrlForCity(entry.planner);
-    const readSample = lang === 'ko' ? '샘플 루트 열기' : lang === 'ja' ? 'サンプルルートを開く' : lang === 'zhHant' ? '打開範例路線' : 'Open sample route';
-    const openPlanner = lang === 'ko' ? '플래너에서 바로 시작' : lang === 'ja' ? 'Planner でそのまま始める' : lang === 'zhHant' ? '直接在 Planner 開始' : 'Start in Planner';
+    const readSample = lang === 'ko' ? '샘플 루트 읽기' : lang === 'ja' ? 'サンプルルートを読む' : lang === 'zhHant' ? '閱讀範例路線' : 'Read sample route';
+    const openPlanner = lang === 'ko' ? '이 도시부터 바로 시작' : lang === 'ja' ? 'この都市からそのまま始める' : lang === 'zhHant' ? '直接從這座城市開始' : 'Start from this city';
     return `<section class="section expansion-city-guide-front"><div class="section-head compact"><div><span class="eyebrow">${pack.eyebrow}</span><h2 class="section-title">${pack.title}</h2><p class="section-desc">${pack.intro}</p></div></div><div class="expansion-city-guide-grid"><article class="info-card expansion-city-guide-card expansion-city-guide-card-feature"><span class="collection-kicker">${pack.coverTitle}</span><h3>${pack.coverBody}</h3><div class="expansion-city-guide-note"><strong>${pack.protectLabel}</strong><p>${pack.protectBody}</p></div><div class="card-actions"><a class="primary-btn" href="${sampleHref}">${readSample}</a><a class="secondary-btn" href="${plannerHref}">${openPlanner}</a></div></article><article class="info-card expansion-city-guide-card"><span class="collection-kicker">${pack.visitTitle}</span><div class="expansion-city-visit-row"><div><span class="mini-label">${pack.firstLabel}</span><strong>${pack.firstRoute}</strong><p>${pack.firstNote}</p></div><div><span class="mini-label">${pack.returnLabel}</span><strong>${pack.returnRoute}</strong><p>${pack.returnNote}</p></div></div></article><article class="info-card expansion-city-guide-card"><span class="collection-kicker">${pack.switchTitle}</span><div class="expansion-city-switch-list">${(pack.switches || []).map(item => `<div class="expansion-city-switch-item"><strong>${item[0]}</strong><p>${item[1]}</p></div>`).join('')}</div></article></div></section>`;
   }
 
@@ -1640,7 +1640,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
       <section class="section" id="city-sample"><div class="section-head"><div><div class="editorial-kicker">${lang === 'ko' ? '샘플 루트' : lang === 'ja' ? 'サンプルルート' : lang === 'zhHant' ? '範例路線' : 'Sample'}</div><h2 class="section-title">${data.sampleTitle}</h2><p class="section-desc">${data.sampleDesc}</p></div></div><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${lang === 'ko' ? '샘플 일정' : lang === 'ja' ? 'サンプル旅程' : lang === 'zhHant' ? '範例行程' : 'Sample itinerary'}</div><h3 class="editorial-example-title">${entry.planner}</h3><div class="example-summary editorial-summary timeline-style">${data.sampleDays.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div><div class="city-route-variations"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '루트 변주' : lang === 'ja' ? 'ルートの変奏' : lang === 'zhHant' ? '路線變奏' : 'Route variations'}</div><h3 class="section-title">${lang === 'ko' ? entry.planner + '를 바꾸는 세 가지 방식' : lang === 'ja' ? entry.planner + ' を変える3つの方法' : lang === 'zhHant' ? '改寫 ' + entry.planner + ' 的三種方式' : 'Three ways to reshape ' + entry.planner}</h3><p class="section-desc">${lang === 'ko' ? '날씨, 속도, 밤 리듬에 따라 sample route를 바로 바꿔 읽을 수 있게 묶었습니다.' : lang === 'ja' ? '天気、速度感、夜のリズムに合わせてサンプルをすぐ曲げられるようにまとめました。' : lang === 'zhHant' ? '依照天氣、節奏與夜晚比重，這條 sample route 可以這樣直接改寫。' : 'Use these as quick switches when weather, speed, or the night rhythm changes.'}</p></div></div><div class="city-route-variation-grid">${getCityRouteVariations(slug).map(item => `<article class="city-route-variation-card"><span class="mini-label">${item.title}</span><strong class="city-route-variation-focus">${item.focus || ''}</strong><p>${item.desc}</p><div class="card-actions city-route-variation-actions"><a class="soft-link" href="${item.href || ('../city/' + cityGuideSlugFromExample(slug) + '.html')}">${lang === 'ko' ? '도시 가이드에서 이어 보기' : lang === 'ja' ? '都市ガイドで続きを読む' : lang === 'zhHant' ? '到城市指南繼續看' : 'Continue in city guide'}</a></div></article>`).join('')}</div></div>${renderPriorityExampleDepthSection(slug, entry)}${renderPriorityCrosslinks(cityGuideSlugFromExample(slug), 'example')}${renderPriorityCrosslinks(slug, 'city')}<div class="cta-row cta-row-priority"><a class="primary-btn" href="../example/${entry.example}">${lang === 'ko' ? '전체 샘플 열기' : lang === 'ja' ? 'サンプル全体を開く' : lang === 'zhHant' ? '打開完整範例' : 'Open full example'}</a><a class="soft-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너에서 커스텀' : lang === 'ja' ? 'Planner で調整する' : lang === 'zhHant' ? '在 Planner 裡調整' : 'Customize in Planner'}</a><a class="ghost-btn" href="../city/${cityGuideSlugFromExample(slug)}.html">${lang === 'ko' ? '도시 가이드로 돌아가기' : lang === 'ja' ? '都市ガイドへ戻る' : lang === 'zhHant' ? '回到城市指南' : 'Back to city guide'}</a></div></article></section>
       <section class="section city-reading-grid city-reading-grid-rich" id="city-tips"><article class="info-card editorial-panel"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('localNotes')}</div><h2 class="section-title">${uiText('localTips')}</h2><p class="section-desc">${lang === 'ko' ? '작은 조정만으로도 여행 체감이 확실히 좋아집니다.' : lang === 'ja' ? '小さな工夫だけで旅の快適さがかなり変わります。' : lang === 'zhHant' ? '只要做一些小調整，整體旅行體感就會明顯更好。' : 'Small adjustments that noticeably improve the trip.'}</p></div></div><ul class="editorial-bullets">${data.tips.map(item => `<li>${item}</li>`).join('')}</ul></article><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${uiText('beforeYouGo')}</div><h2 class="section-title">${uiText('keepInMind')}</h2><p class="section-desc">${lang === 'ko' ? '출발 전에 챙겨두면 바로 체감되는 것들입니다.' : lang === 'ja' ? '出発前に整えておくと、すぐ効いてくるポイントです。' : lang === 'zhHant' ? '出發前先準備好，旅途中會立刻感受到差別。' : 'Small prep choices that pay off immediately.'}</p></div></div><ul class="editorial-bullets">${data.keep.map(item => `<li>${item}</li>`).join('')}</ul></article></section>
       ${(() => { const seasonal = getSeasonalCityFeature(entry.planner); return seasonal ? `<section class="section city-seasonal-bridge"><article class="info-card seasonal-bridge-card"><div class="section-head compact"><div><div class="editorial-kicker">${seasonal.label}</div><h2 class="section-title">${seasonal.title}</h2><p class="section-desc">${seasonal.desc}</p></div></div><div class="trip-chip-row seasonal-chip-row">${seasonal.chips.map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}</div></article></section>` : ''; })()}
-      <section class="section footer-cta info-card city-final-cta"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${data.finalTitle}</h2><p>${data.finalDesc}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner'}</a><a class="secondary-btn" href="../example/${entry.example}">${lang === 'ko' ? '샘플 읽기' : lang === 'ja' ? 'サンプルを読む' : lang === 'zhHant' ? '讀範例路線' : 'Read sample route'}</a><a class="ghost-btn" href="${exampleAtlasHref()}">${lang === 'ko' ? 'atlas 보기' : lang === 'ja' ? 'atlas を見る' : lang === 'zhHant' ? '看 atlas' : 'See atlas'}</a></div></section>
+      <section class="section footer-cta info-card city-final-cta"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${data.finalTitle}</h2><p>${data.finalDesc}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '이 도시부터 시작' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '從這座城市開始' : 'Start with this city'}</a><a class="secondary-btn" href="../example/${entry.example}">${lang === 'ko' ? '샘플 읽기' : lang === 'ja' ? 'サンプルを読む' : lang === 'zhHant' ? '讀範例路線' : 'Read sample route'}</a><a class="ghost-btn" href="${exampleAtlasHref()}">${lang === 'ko' ? 'atlas 보기' : lang === 'ja' ? 'atlas を見る' : lang === 'zhHant' ? '看 atlas' : 'See atlas'}</a></div></section>
       <div class="footer">Ryokoplan ${guideLabel}</div>`;
     document.title = `${entry.planner} — Ryokoplan`;
   }
@@ -1730,7 +1730,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
       ${renderExampleFlowBridge(slug)}
       <section class="section" id="example-flow"><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${uiText('dayByDay')}</div><h2 class="section-title">${lang === 'ko' ? '루트는 이렇게 전개됩니다' : lang === 'ja' ? 'ルートはこのテンポで展開します' : lang === 'zhHant' ? '路線會以這個節奏展開' : 'How the route unfolds'}</h2><div class="example-summary editorial-summary timeline-style">${sample.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div></article></section>
       <section class="section city-reading-grid city-reading-grid-rich" id="example-why"><article class="info-card editorial-panel editorial-panel-contrast"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '왜 잘 맞는지' : lang === 'ja' ? 'なぜうまくはまるのか' : lang === 'zhHant' ? '為什麼這樣更成立' : 'Why it lands'}</div><h2 class="section-title">${uiText('whyItWorks')}</h2><p class="section-desc">${lang === 'ko' ? '포인트는 많이 보는 게 아니라 도시를 일관되게 느끼게 만드는 것입니다.' : lang === 'ja' ? '大事なのは全部行くことではなく、街を一つの流れとして感じられることです。' : lang === 'zhHant' ? '重點不是把所有地方都塞進去，而是讓整座城市感覺是連成一個節奏。' : 'The point is not to do everything, but to make the city feel coherent.'}</p></div></div><ul class="editorial-bullets">${(editorialData.example[slug]?.[lang] || editorialData.example[slug]?.en || {}).whyBullets.map(item => `<li>${item}</li>`).join('')}</ul></article><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '편집 전에 조정할 점' : lang === 'ja' ? '編集前に整える点' : lang === 'zhHant' ? '正式編排前先調整' : 'Adjust before editing'}</div><h2 class="section-title">${uiText('adjustBeforeEditing')}</h2><p class="section-desc">${lang === 'ko' ? '커스텀 전에 기준으로 삼기 좋은 포인트입니다.' : lang === 'ja' ? '自分用に変える前に、先に押さえておくと良い基準です。' : lang === 'zhHant' ? '在客製之前，先拿來當基準的幾個重點。' : 'Good baseline decisions before you customize it.'}</p></div></div><ul class="editorial-bullets"><li>${(editorialData.example[slug]?.[lang] || editorialData.example[slug]?.en || {}).swapNote}</li><li>${(editorialData.example[slug]?.[lang] || editorialData.example[slug]?.en || {}).energyControl}</li><li>${cityData.keep[0]}</li></ul></article></section>
-      <section class="section footer-cta info-card city-final-cta" id="example-next"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${lang === 'ko' ? '리스트보다 이 루트의 결을 가져가세요' : lang === 'ja' ? 'リストより、このルートのトーンを持ち帰ってください' : lang === 'zhHant' ? '帶走這條路線的節奏，而不只是清單' : 'Take the route logic, not just the list'}</h2><p>${lang === 'ko' ? '플래너에서 일수, 동행, 무드만 바꿔도 같은 결의 다른 여행으로 확장할 수 있습니다.' : lang === 'ja' ? 'Planner では日数、同行者、ムードを変えるだけで、同じトーンの別の旅に広げられます。' : lang === 'zhHant' ? '在 Planner 裡，只要改天數、同行者和氛圍，就能延伸成同樣調性的另一趟旅程。' : 'In Planner, keep the tone but change days, pace, companion, and mood to make it yours.'}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.city)}">${lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner'}</a><a class="secondary-btn" href="../city/${cityGuideSlugFromExample(slug)}.html">${lang === 'ko' ? '도시 가이드로 돌아가기' : lang === 'ja' ? '都市ガイドへ戻る' : lang === 'zhHant' ? '回到城市指南' : 'Back to city guide'}</a><a class="ghost-btn" href="${exampleAtlasHref()}">${lang === 'ko' ? 'atlas 보기' : lang === 'ja' ? 'atlas を見る' : lang === 'zhHant' ? '看 atlas' : 'See atlas'}</a></div></section><div class="footer">Ryokoplan Magazine</div>`;
+      <section class="section footer-cta info-card city-final-cta" id="example-next"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${lang === 'ko' ? '리스트보다 이 루트의 결을 가져가세요' : lang === 'ja' ? 'リストより、このルートのトーンを持ち帰ってください' : lang === 'zhHant' ? '帶走這條路線的節奏，而不只是清單' : 'Take the route logic, not just the list'}</h2><p>${lang === 'ko' ? '플래너에서 일수, 동행, 무드만 바꿔도 같은 결의 다른 여행으로 확장할 수 있습니다.' : lang === 'ja' ? 'Planner では日数、同行者、ムードを変えるだけで、同じトーンの別の旅に広げられます。' : lang === 'zhHant' ? '在 Planner 裡，只要改天數、同行者和氛圍，就能延伸成同樣調性的另一趟旅程。' : 'In Planner, keep the tone but change days, pace, companion, and mood to make it yours.'}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.city)}">${lang === 'ko' ? '이 도시부터 시작' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '從這座城市開始' : 'Start with this city'}</a><a class="secondary-btn" href="../city/${cityGuideSlugFromExample(slug)}.html">${lang === 'ko' ? '도시 가이드로 돌아가기' : lang === 'ja' ? '都市ガイドへ戻る' : lang === 'zhHant' ? '回到城市指南' : 'Back to city guide'}</a><a class="ghost-btn" href="${exampleAtlasHref()}">${lang === 'ko' ? 'atlas 보기' : lang === 'ja' ? 'atlas を見る' : lang === 'zhHant' ? '看 atlas' : 'See atlas'}</a></div></section><div class="footer">Ryokoplan Magazine</div>`;
     document.title = `${title} — Ryokoplan`;
   }
   function buildDiscoveryItems(){
@@ -2012,16 +2012,16 @@ function getSeasonalEditorialCollections(){
   function getAtlasText(page='home'){
     const copyMap = {
       home: {
-        ko:{eyebrow:'City atlas', title:'주요 도시를 cover부터 sample route까지 한 번에 읽기', desc:'각 도시의 첫 인상, 읽는 포인트, 바로 참고할 sample rhythm을 같은 화면에 붙였습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Open Planner'},
-        en:{eyebrow:'City atlas', title:'Read key cities from cover to sample route in one sweep', desc:'Each city now shows its cover, district focus, neighborhood picks, and route rhythm in one continuous block.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Open Planner'},
-        ja:{eyebrow:'シティアトラス', title:'主要都市をカバーからサンプルルートまで一気に読む', desc:'各都市の第一印象、読みどころ、街区の焦点、近所のピック、参考ルートまでを一つの流れで読めるようにまとめました。', region:{japan:'日本 edit', korea:'韓国 edit', greater:'華語圏 edit'}, districts:'注目エリア', picks:'近所のピック', sample:'サンプルルート', guide:'ガイドを見る', plan:'Planner を開く'},
-        zhHant:{eyebrow:'城市 atlas', title:'把主要城市從封面一路讀到範例路線', desc:'每座城市都把第一印象、閱讀切口、街區重點、鄰里精選和範例路線接在同一段閱讀流程裡。', region:{japan:'日本 edit', korea:'韓國 edit', greater:'華語城市 edit'}, districts:'街區重點', picks:'鄰里精選', sample:'範例路線', guide:'讀城市指南', plan:'打開 Planner'}
+        ko:{eyebrow:'City atlas', title:'주요 도시를 cover부터 sample route까지 한 번에 읽기', desc:'각 도시의 첫 인상, 읽는 포인트, 바로 참고할 sample rhythm을 같은 화면에 붙였습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Start with this city'},
+        en:{eyebrow:'City atlas', title:'Read key cities from cover to sample route in one sweep', desc:'Each city now shows its cover, district focus, neighborhood picks, and route rhythm in one continuous block.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Start with this city'},
+        ja:{eyebrow:'シティアトラス', title:'主要都市をカバーからサンプルルートまで一気に読む', desc:'各都市の第一印象、読みどころ、街区の焦点、近所のピック、参考ルートまでを一つの流れで読めるようにまとめました。', region:{japan:'日本 edit', korea:'韓国 edit', greater:'華語圏 edit'}, districts:'注目エリア', picks:'近所のピック', sample:'サンプルルート', guide:'ガイドを見る', plan:'この都市から始める'},
+        zhHant:{eyebrow:'城市 atlas', title:'把主要城市從封面一路讀到範例路線', desc:'每座城市都把第一印象、閱讀切口、街區重點、鄰里精選和範例路線接在同一段閱讀流程裡。', region:{japan:'日本 edit', korea:'韓國 edit', greater:'華語城市 edit'}, districts:'街區重點', picks:'鄰里精選', sample:'範例路線', guide:'讀城市指南', plan:'從這座城市開始'}
       },
       magazine: {
-        ko:{eyebrow:'City atlas', title:'도시별 cover, district, sample route를 한 셸프에서', desc:'Magazine 안에서 바로 도시별 editorial intro와 district highlights, neighborhood picks, sample rhythm까지 이어서 읽을 수 있게 확장했습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Open Planner'},
-        en:{eyebrow:'City atlas', title:'City cover, district focus, and sample route in one shelf', desc:'Magazine now expands each major city into a tighter editorial block with intro, district highlights, neighborhood picks, and route rhythm together.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Open Planner'},
-        ja:{eyebrow:'シティアトラス', title:'都市ごとのカバー、注目エリア、サンプルルートを一つの棚で', desc:'Magazine の中で、主要都市ごとの導入、街区の焦点、近所のピック、参考ルートまでを続けて読めるように整えました。', region:{japan:'日本 edit', korea:'韓国 edit', greater:'華語圏 edit'}, districts:'注目エリア', picks:'近所のピック', sample:'サンプルルート', guide:'ガイドを見る', plan:'Planner を開く'},
-        zhHant:{eyebrow:'城市 atlas', title:'把城市封面、街區焦點與範例路線收進同一個書架', desc:'Magazine 現在把主要城市的導語、街區重點、鄰里精選和路線節奏接成同一個閱讀段落。', region:{japan:'日本 edit', korea:'韓國 edit', greater:'華語城市 edit'}, districts:'街區重點', picks:'鄰里精選', sample:'範例路線', guide:'讀城市指南', plan:'打開 Planner'}
+        ko:{eyebrow:'City atlas', title:'도시별 cover, district, sample route를 한 셸프에서', desc:'Magazine 안에서 바로 도시별 editorial intro와 district highlights, neighborhood picks, sample rhythm까지 이어서 읽을 수 있게 확장했습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Start with this city'},
+        en:{eyebrow:'City atlas', title:'City cover, district focus, and sample route in one shelf', desc:'Magazine now expands each major city into a tighter editorial block with intro, district highlights, neighborhood picks, and route rhythm together.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Start with this city'},
+        ja:{eyebrow:'シティアトラス', title:'都市ごとのカバー、注目エリア、サンプルルートを一つの棚で', desc:'Magazine の中で、主要都市ごとの導入、街区の焦点、近所のピック、参考ルートまでを続けて読めるように整えました。', region:{japan:'日本 edit', korea:'韓国 edit', greater:'華語圏 edit'}, districts:'注目エリア', picks:'近所のピック', sample:'サンプルルート', guide:'ガイドを見る', plan:'この都市から始める'},
+        zhHant:{eyebrow:'城市 atlas', title:'把城市封面、街區焦點與範例路線收進同一個書架', desc:'Magazine 現在把主要城市的導語、街區重點、鄰里精選和路線節奏接成同一個閱讀段落。', region:{japan:'日本 edit', korea:'韓國 edit', greater:'華語城市 edit'}, districts:'街區重點', picks:'鄰里精選', sample:'範例路線', guide:'讀城市指南', plan:'從這座城市開始'}
       }
     };
     return (copyMap[page] && (copyMap[page][lang] || copyMap[page].en)) || copyMap.home.en;
@@ -2496,7 +2496,7 @@ function getCityRouteVariations(slug){
       desc: lang === 'ko' ? '이 샘플은 단독 페이지가 아니라 city atlas와 도시 가이드의 연장선입니다.' : lang === 'ja' ? 'このサンプルは単独ページではなく、city atlas と都市ガイドの延長線です。' : lang === 'zhHant' ? '這個 example 不是獨立頁，而是 city atlas 與城市指南的延長。' : 'This example works best as a continuation of the atlas card and the city guide.',
       atlas: lang === 'ko' ? 'atlas로 돌아가기' : lang === 'ja' ? 'atlas に戻る' : lang === 'zhHant' ? '回到 atlas' : 'Back to atlas',
       city: lang === 'ko' ? '도시 가이드 더 읽기' : lang === 'ja' ? '都市ガイドを深く読む' : lang === 'zhHant' ? '繼續讀城市指南' : 'Read the city guide',
-      planner: lang === 'ko' ? '이 흐름으로 플래너 열기' : lang === 'ja' ? 'この流れで Planner を開く' : lang === 'zhHant' ? '用這個節奏打開 Planner' : 'Open Planner with this logic'
+      planner: lang === 'ko' ? '이 도시 결로 여정 이어가기' : lang === 'ja' ? 'この街を旅程へつなぐ' : lang === 'zhHant' ? '把這座城市接進你的旅程' : 'Carry this city into your route'
     };
     const flow = getExampleCrossLinks(slug);
     const extraCards = (flow.cards || []).slice(2,6).map(card => `<a class="example-flow-card example-flow-card-quiet" href="${card.href}" data-signal-tags="${(card.tags||[]).join('|')}" data-signal-city="${cityName}" data-signal-title="${card.title}" data-signal-source="example-crosslink"><span class="mini-label">${card.label}</span><strong>${card.title}</strong><p>${card.desc}</p></a>`).join('');
@@ -2721,9 +2721,9 @@ function getCityRouteVariations(slug){
       anchor.insertAdjacentElement('afterend', root);
     }
     const copy = (lang === 'ko') ? {
-      eyebrow:'Seasonal editorial system', title:'Read the city bases that fit this season first', desc:'After the trending shelf comes season and situation. Start from trip temperature and time-of-day, and the city narrows faster.', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample', plan: lang==='ja' ? 'Planner へ進む' : lang==='zhHant' ? '接到 Planner' : 'Continue in Planner'
+      eyebrow:'Seasonal editorial system', title:'Read the city bases that fit this season first', desc:'After the trending shelf comes season and situation. Start from trip temperature and time-of-day, and the city narrows faster.', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample', plan: lang==='ja' ? 'この流れを続ける' : lang==='zhHant' ? '把這條流動接下去' : 'Continue this route'
     } : {
-      eyebrow:'季節の編集システム', title:'この季節に合うベースから先に読む', desc:'注目棚の次に来るのは季節と状況です。旅の温度や時間帯から入ると、都市がもっと早く絞れます。', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample', plan: lang==='ja' ? 'Planner へ進む' : lang==='zhHant' ? '接到 Planner' : 'Continue in Planner'
+      eyebrow:'季節の編集システム', title:'この季節に合うベースから先に読む', desc:'注目棚の次に来るのは季節と状況です。旅の温度や時間帯から入ると、都市がもっと早く絞れます。', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample', plan: lang==='ja' ? 'この流れを続ける' : lang==='zhHant' ? '把這條流動接下去' : 'Continue this route'
     };
     const items = getSeasonalEditorialCollections().magazine;
     root.innerHTML = `
@@ -3298,7 +3298,7 @@ function renderTripsSeasonalDesk(){
     if (document.body.dataset.page !== 'magazine') return;
     const host = document.getElementById('magazineCommunityRoot');
     if (!host) return;
-    const copyMap = { ko:{eyebrow:'Route club', title:'지금 잘 먹히는 공개 베이스와 다음 도시 분기', desc:'매거진을 읽고 끝나지 않게, 에디터 픽과 다음으로 잘 이어지는 도시를 한 셸프에 모았습니다.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample', save: lang==='ja' ? 'プランナーへ進む' : lang==='zhHant' ? '接到規劃器' : 'Continue in Planner'}, en:{eyebrow:'Route club', title:'Public bases that work now, plus the next city branch', desc:'This keeps the magazine from ending on reading alone by grouping editor picks and smoother next-city branches in one shelf.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample', save:'Continue in Planner'}, ja:{eyebrow:'ルートクラブ', title:'今よくはまる公開ベースと次の都市分岐', desc:'マガジンを読んで終わらせず、エディターピックと次に続く都市分岐を一つの棚にまとめました。', picks:'エディターピック', trending:'注目ベース', branches:'次の分岐', guide:'都市ガイド', sample:'サンプルルート', save:'Planner へつなぐ'}, zhHant:{eyebrow:'路線俱樂部', title:'現在好用的公開基底與下一座城市分支', desc:'不讓城市誌停在閱讀，而是把編輯精選與下一個城市分支放進同一個架上。', picks:'編輯精選', trending:'熱門基底', branches:'下一個分支', guide:'城市指南', sample:'範例路線', save:'接到 Planner'}};
+    const copyMap = { ko:{eyebrow:'Route club', title:'지금 잘 먹히는 공개 베이스와 다음 도시 분기', desc:'매거진을 읽고 끝나지 않게, 에디터 픽과 다음으로 잘 이어지는 도시를 한 셸프에 모았습니다.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample', save: lang==='ja' ? 'この流れを続ける' : lang==='zhHant' ? '把這條流動接下去' : 'Continue this route'}, en:{eyebrow:'Route club', title:'Public bases that work now, plus the next city branch', desc:'This keeps the magazine from ending on reading alone by grouping editor picks and smoother next-city branches in one shelf.', picks:'Editor picks', trending:'Trending bases', branches:'Branch next', guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample', save:'Continue this route'}, ja:{eyebrow:'ルートクラブ', title:'今よくはまる公開ベースと次の都市分岐', desc:'マガジンを読んで終わらせず、エディターピックと次に続く都市分岐を一つの棚にまとめました。', picks:'エディターピック', trending:'注目ベース', branches:'次の分岐', guide:'都市ガイド', sample:'サンプルルート', save:'この流れを続ける'}, zhHant:{eyebrow:'路線俱樂部', title:'現在好用的公開基底與下一座城市分支', desc:'不讓城市誌停在閱讀，而是把編輯精選與下一個城市分支放進同一個架上。', picks:'編輯精選', trending:'熱門基底', branches:'下一個分支', guide:'城市指南', sample:'範例路線', save:'把這條流動接下去'}};
     const copy = copyMap[lang] || copyMap.en;
     const data = getCommunityCollections();
     host.innerHTML = `
@@ -3440,10 +3440,10 @@ function renderTripsSeasonalDesk(){
     const top = getTopSignalTags(3);
     const tagLabel = top.map(tag => tag.replace('-', ' ')).join(' · ');
     const copyMap = {
-      ko: { eyebrow:'Your rhythm', title:'최근 반응한 신호를 바탕으로 다시 고른 셸프', desc:`최근 읽은 베이스에서 ${tagLabel} 결이 더 자주 보였습니다. 앞단 큐레이션도 그 신호를 먼저 보여줍니다.`, guide:'도시 가이드', sample:'샘플 루트', plan: page === 'home' ? '이 베이스로 시작' : '플래너로 이어가기' },
-      en: { eyebrow:'Your rhythm', title:'A shelf reshaped by the signals you keep opening', desc:`Your recent reads leaned toward ${tagLabel}. This shelf pushes those tones forward first.`, guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample', plan: page === 'home' ? 'Start from this base' : 'Continue in Planner' },
-      ja: { eyebrow:'あなたのリズム', title:'最近ひらいた気配から組み直した棚', desc:`最近よく開いたベースには ${tagLabel} の流れが見えました。最初の棚もそのトーンを少し前に出しています。`, guide:'都市ガイド', sample:'サンプルルート', plan: page === 'home' ? 'このベースから始める' : 'Planner へつなぐ' },
-      zhHant: { eyebrow:'你的節奏', title:'依照你最近常打開的訊號重新排過的架子', desc:`你最近打開的基底裡，${tagLabel} 這種節奏更常出現。前面的策展也會先把這些調性往前放。`, guide:'城市指南', sample:'範例路線', plan: page === 'home' ? '從這個基底開始' : '接到 Planner' }
+      ko: { eyebrow:'Your rhythm', title:'최근 반응한 신호를 바탕으로 다시 고른 셸프', desc:`최근 읽은 베이스에서 ${tagLabel} 결이 더 자주 보였습니다. 앞단 큐레이션도 그 신호를 먼저 보여줍니다.`, guide:'도시 가이드', sample:'샘플 루트', plan: page === 'home' ? '이 베이스로 시작' : '이 흐름 이어가기' },
+      en: { eyebrow:'Your rhythm', title:'A shelf reshaped by the signals you keep opening', desc:`Your recent reads leaned toward ${tagLabel}. This shelf pushes those tones forward first.`, guide: lang==='ja' ? '都市ガイド' : lang==='zhHant' ? '城市指南' : 'City guide', sample: lang==='ja' ? 'サンプルルート' : lang==='zhHant' ? '範例路線' : 'Sample', plan: page === 'home' ? 'Start from this base' : 'Continue this route' },
+      ja: { eyebrow:'あなたのリズム', title:'最近ひらいた気配から組み直した棚', desc:`最近よく開いたベースには ${tagLabel} の流れが見えました。最初の棚もそのトーンを少し前に出しています。`, guide:'都市ガイド', sample:'サンプルルート', plan: page === 'home' ? 'このベースから始める' : 'この流れを続ける' },
+      zhHant: { eyebrow:'你的節奏', title:'依照你最近常打開的訊號重新排過的架子', desc:`你最近打開的基底裡，${tagLabel} 這種節奏更常出現。前面的策展也會先把這些調性往前放。`, guide:'城市指南', sample:'範例路線', plan: page === 'home' ? '從這個基底開始' : '把這條流動接下去' }
     };
     const copy = copyMap[lang] || copyMap.en;
     root.innerHTML = `
@@ -3501,7 +3501,7 @@ function renderTripsSeasonalDesk(){
       { key:'greater', slugs:['macau'] }
     ];
     const featuredByPage = { home:['osaka','sapporo','macau'], magazine:['osaka','okinawa','gyeongju'] };
-    const planLabel = lang === 'ko' ? '플래너 열기' : lang === 'ja' ? 'Planner を開く' : lang === 'zhHant' ? '打開 Planner' : 'Open Planner';
+    const planLabel = lang === 'ko' ? '이 도시부터 시작' : lang === 'ja' ? 'この都市から始める' : lang === 'zhHant' ? '從這座城市開始' : 'Start with this city';
     roots.forEach(({ id, page }) => {
       const root = document.getElementById(id);
       if (!root) return;
@@ -3643,8 +3643,8 @@ function renderTripsSeasonalDesk(){
     if (fill) fill.style.width = `${25 + complete * 18.75}%`;
     if (hints) {
       const lines = [
-        `<div class="planner-hint-line"><strong>Best when</strong><span>${companion ? `you are planning for ${companion} and want the route to feel intentional.` : 'you want a quick first version without overthinking the inputs.'}</span></div>`,
-        `<div class="planner-hint-line"><strong>What changes</strong><span>${style ? `${style} will shape the pacing, neighborhood mix, and stop density.` : 'style, companion, and notes combine to shape the pacing and place mix.'} ${tripMood ? `The ${tripMood} mood changes how polished or playful the route feels.` : ''} ${budgetMode ? `${budgetMode} spending adjusts where nicer moments are placed.` : ''}</span></div>`
+        `<div class="planner-hint-line"><strong>Best when</strong><span>${companion ? `you are planning for ${companion} and want the route to feel intentional.` : 'you want a strong first route without overthinking the choices.'}</span></div>`,
+        `<div class="planner-hint-line"><strong>What changes</strong><span>${style ? `${style} will shape the pacing, neighborhood mix, and stop density.` : 'style, companion, and notes reshape the pacing and place mix.'} ${tripMood ? `The ${tripMood} mood changes how polished or playful the route feels.` : ''} ${budgetMode ? `${budgetMode} spending adjusts where nicer moments are placed.` : ''}</span></div>`
       ];
       hints.innerHTML = lines.join('');
     }
@@ -3699,22 +3699,22 @@ function renderTripsSeasonalDesk(){
     const page = document.body.dataset.page || 'planner';
     const labels = {
       ko: {
-        planner: { kicker: 'Planner note', title: '도시 무드를 먼저 잡고, 바로 저장 가능한 일정으로 연결합니다.', chips: ['East Asia city edit', 'Magazine-led planning', 'Save / Share / PDF'] },
+        planner: { kicker: 'City note', title: '도시 무드를 먼저 읽고, 그 결이 살아 있는 여정으로 잇습니다.', chips: ['East Asia city edit', 'Magazine-led routes', 'Save / Share / PDF'] },
         magazine: { kicker: 'Magazine note', title: '도시를 읽는 흐름이 좋아야 플랜도 더 자연스럽게 짜입니다.', chips: ['City guides', 'Samples', 'Local rhythm'] },
         trips: { kicker: 'My Trips note', title: '저장한 일정과 공유받은 일정을 한 흐름 안에서 다시 꺼내봅니다.', chips: ['Saved trips', 'Recent plans', 'Shared links'] }
       },
       en: {
-        planner: { kicker: 'Planner note', title: 'Start from the city mood, then move into a trip worth saving.', chips: ['East Asia city edit', 'Magazine-led planning', 'Save / Share / PDF'] },
+        planner: { kicker: 'City note', title: 'Read the city mood first, then shape a route worth keeping.', chips: ['East Asia city edit', 'Magazine-led routes', 'Save / Share / PDF'] },
         magazine: { kicker: 'Magazine note', title: 'The better the city reads, the more natural the plan feels.', chips: ['City guides', 'Samples', 'Local rhythm'] },
         trips: { kicker: 'My Trips note', title: 'Reopen saved and shared itineraries without losing the story around them.', chips: ['Saved trips', 'Recent plans', 'Shared links'] }
       },
       ja: {
-        planner: { kicker: 'Plannerノート', title: '街のムードを先につかみ、そのまま保存したくなる旅程へつなげます。', chips: ['東アジア・シティエディット', 'マガジン主導の設計', '保存 / 共有 / PDF'] },
+        planner: { kicker: 'Cityノート', title: '街のムードを先に読み、その空気が残る旅程へつなげます。', chips: ['東アジア・シティエディット', 'マガジン主導のルート', '保存 / 共有 / PDF'] },
         magazine: { kicker: 'Magazineノート', title: '街の読み方が整うほど、旅の流れも自然になります。', chips: ['都市ガイド', 'サンプルルート', '街のリズム'] },
         trips: { kicker: 'My Tripsノート', title: '保存した旅程も共有された旅程も、流れを切らさずにまた開けます。', chips: ['保存したルート', '最近のプラン', '共有リンク'] }
       },
       zhHant: {
-        planner: { kicker: 'Planner 筆記', title: '先抓住城市的氣氛，再順著那個感覺接到值得保存的旅程。', chips: ['東亞城市編輯選', 'Magazine 主導規劃', '儲存 / 分享 / PDF'] },
+        planner: { kicker: 'City 筆記', title: '先讀城市的氣氛，再把那個感覺接到值得留下的旅程。', chips: ['東亞城市編輯選', 'Magazine 主導路線', '儲存 / 分享 / PDF'] },
         magazine: { kicker: 'Magazine 筆記', title: '城市讀得越清楚，旅程也會排得更自然。', chips: ['城市指南', '範例路線', '在地節奏'] },
         trips: { kicker: 'My Trips 筆記', title: '把已儲存和收到的旅程放在同一個流裡，之後也能再接著打開。', chips: ['已存旅程', '最近計畫', '共享連結'] }
       }
@@ -3859,9 +3859,9 @@ function renderTripsSeasonalDesk(){
           '.brand-manifesto-note p':'Read the city. Then build the trip.\nThis line keeps the homepage, magazine, city guides, and results in one consistent tone.',
           '.home-cover-desk .eyebrow':'This week’s cover',
           '.home-cover-desk .section-title':'A homepage cover that opens with the city, not the form',
-          '.home-cover-desk .section-desc':'The first screen now behaves more like an editorial cover: city mood first, route ideas second, Planner after that.',
+          '.home-cover-desk .section-desc':'The first screen now behaves more like an editorial cover: city mood first, route ideas second, your own route after that.',
           '.cover-story-card-large .primary-btn':'Open magazine',
-          '.cover-story-card-large .secondary-btn':'Open sample route'
+          '.cover-story-card-large .secondary-btn':'Read sample route'
         },
         ja: {
           '.brand-manifesto .eyebrow':'ブランド方向',
@@ -3880,7 +3880,7 @@ function renderTripsSeasonalDesk(){
           '.home-cover-desk .section-desc':'最初の画面は入力フォームではなく、街のムードと サンプルルートから始まるエディトリアルカバーとして整えました。',
           '.cover-story-card-large h3':'速い都市と遅い都市を一つの画面で読む',
           '.cover-story-card-large p':'Tokyo, Osaka, Kyoto, Fukuoka を単なる一覧ではなく、リズムとムードの差として見せます。',
-          '.cover-story-card-large .secondary-btn':'サンプルルートを開く',
+          '.cover-story-card-large .secondary-btn':'サンプルルートを読む',
           '.cover-story-card-compact h3':'Seoul から Jeju まで、温度の違う都市たち',
           '.cover-story-card-compact p':'都市ごとの空気感と移動密度を先に読み、韓国の中でも結がどう分かれるかを見せます。',
           '.dispatch-card .collection-kicker':'クイックディスパッチ',
@@ -3888,11 +3888,11 @@ function renderTripsSeasonalDesk(){
           '.dispatch-lines div:nth-of-type(1) span':'読みたい都市を mood と pace から先に絞ります。',
           '.dispatch-lines div:nth-of-type(2) strong':'sample route',
           '.dispatch-lines div:nth-of-type(2) span':'良い旅程がどんな流れに見えるかを先に確認できます。',
-          '.dispatch-lines div:nth-of-type(3) strong':'即 Planner',
-          '.dispatch-lines div:nth-of-type(3) span':'気に入った都市やムードを押すと、値が入ったまま Planner が始まります。',
+          '.dispatch-lines div:nth-of-type(3) strong':'すぐ旅程へ',
+          '.dispatch-lines div:nth-of-type(3) span':'気に入った都市やムードを押すと、その空気を保ったまま旅程が始まります。',
           '.top-story-card:first-child .eyebrow':'エディターズピック',
           '.top-story-card:first-child strong':'Tokyo after dark · Kyoto reset · Busan sea line',
-          '.top-story-card:first-child span':'各都市の代表ムードを先に読んで、そのまま sample や Planner へ進みます。',
+          '.top-story-card:first-child span':'各都市の代表ムードを先に読んで、そのまま sample や自分の旅程へ進みます。',
           '.top-story-card.soft .eyebrow':'快速入口',
           '.top-story-card.soft strong':'先に都市を読む',
           '.top-story-card.soft span':'説明より先にシーンが入るよう、ホームの第一印象をマガジンカバーのように整えました。'
@@ -3914,7 +3914,7 @@ function renderTripsSeasonalDesk(){
           '.home-cover-desk .section-desc':'第一眼不是輸入表單，而是先用城市氛圍與範例路線打開的 editorial cover。',
           '.cover-story-card-large h3':'在同一個畫面讀快城市與慢城市',
           '.cover-story-card-large p':'把 Tokyo、Osaka、Kyoto、Fukuoka 當成節奏與 mood 的差異，而不是平面目的地清單。',
-          '.cover-story-card-large .secondary-btn':'打開範例路線',
+          '.cover-story-card-large .secondary-btn':'閱讀範例路線',
           '.cover-story-card-compact h3':'從 Seoul 到 Jeju，溫度不同的城市們',
           '.cover-story-card-compact p':'先讀城市的空氣感與移動密度，再看同一個韓國裡怎麼分出不同節奏。',
           '.dispatch-card .collection-kicker':'クイックディスパッチ',
@@ -3938,7 +3938,7 @@ function renderTripsSeasonalDesk(){
           '.magazine-shell .utility-banner .section-title':'都市のムードを先に読み、保存できる旅程へすぐつなげます。'
         },
         zhHant: {
-          '.magazine-shell .utility-banner .eyebrow':'Planner 筆記',
+          '.magazine-shell .utility-banner .eyebrow':'City 筆記',
           '.magazine-shell .utility-banner .section-title':'先抓城市 mood，再直接接到可保存的旅程。'
         }
       },
@@ -3968,20 +3968,20 @@ function renderTripsSeasonalDesk(){
     title:'Ryokoplan — Magazine',
     heroEyebrow:'Ryokoplan Magazine',
     heroTitle:'街を読んで、その先に旅を組み立てる',
-    heroDesc:'必要なのは情報の量ではなく、街の質感、移動のリズム、そしてそのまま旅へつながる入口です。Magazine を Planner の手前にあるエディトリアルの最初の一枚として整えました。',
-    heroChips:['日本・韓国中心','都市エディトリアルガイド','そのまま Planner へ'],
-    startPlanner:'Planner を開く', browseCities:'都市を見る',
+    heroDesc:'必要なのは情報の量ではなく、街の質感、移動のリズム、そしてそのまま旅へつながる入口です。Magazine は自分の旅へ入っていく前の、最初のエディトリアルページとして整えました。',
+    heroChips:['日本・韓国中心','都市エディトリアルガイド','そのまま旅程へ'],
+    startPlanner:'この都市から始める', browseCities:'都市を見る',
     featureMeta:'Better first route', featureTitle:'Tokyo → Kyoto → Osaka、リズムで読む最初の日本旅', featureDesc:'東京の密度、京都の余白、大阪の気楽さを順序よく置くと、初回でもずっと軽く感じられます。', featureLinks:['Tokyo のムード','Kyoto のペース','サンプル旅程'],
-    sideKicker:'Magazine の役割', sideTitle:'読むだけで終わらず、そのまま旅へ進む入口', sideLines:[['City mood first','ランドマークより先に、街区の感触、ペース、合う旅タイプを見せます。'],['Less random browsing','fast city / slow day / food-led のように、今の気分からすぐ入れます。'],['Straight into Planner','気に入った都市やサンプルはそのまま Planner の値へつながります。']], sideButtons:['都市ガイド','保存した旅'],
+    sideKicker:'Magazine の役割', sideTitle:'読むだけで終わらず、そのまま旅へ進む入口', sideLines:[['City mood first','ランドマークより先に、街区の感触、ペース、合う旅タイプを見せます。'],['Less random browsing','fast city / slow day / food-led のように、今の気分からすぐ入れます。'],['Carry it into your route','気に入った都市やサンプルは、そのまま自分の旅程へつながります。']], sideButtons:['都市ガイド','保存した旅'],
     loopEyebrow:'Recommendation loop', loopTitle:'読んだあと、そのままルートへ進めるように', loopDesc:'最近見た旅や保存した旅があれば次の都市を提案し、なければ強い入口を先に見せます。',
     finderEyebrow:'City finder', finderTitle:'国より先に、ムードから都市を選ぶ', finderDesc:'ただのカード一覧ではなく、フィルターと検索でその場で絞り込めます。', finderSearchPH:'都市名・国・mood で検索', countryAll:'すべて', countryJapan:'Japan', countryKorea:'Korea', vibeAll:'すべての mood', vibeFast:'Fast city', vibeSlow:'Slow day', vibeFood:'Food-led', vibeCoast:'Coast',
     cityMeta:{tokyo:'日本編輯 · 快節奏城市', osaka:'日本編輯 · 輕鬆美食城市', kyoto:'日本編輯 · 留白慢旅行', fukuoka:'日本編輯 · 緊湊美食城市', sapporo:'日本編輯 · 雪光城市', sendai:'日本編輯 · 綠意城市停頓點', okinawa:'日本編輯 · 柔和島風', seoul:'韓國編輯 · 快節奏城市', busan:'韓國編輯 · 海景與美食', jeju:'韓國編輯 · 海邊與自然', gyeongju:'韓國編輯 · 安靜歷史旅', taipei:'繁中城市編輯 · 夜食節奏', hongkong:'繁中城市編輯 · 垂直港灣夜景', macau:'繁中城市編輯 · 緊湊遺產夜色'},
     cityCopy:{tokyo:'大きな見どころと静かな街区が同居する都市。街区ごとに読むと、全体がやわらかくほどけます。', osaka:'食べて、歩いて、休むリズムが近くに集まり、短い旅でも満足度が高い都市です。', kyoto:'詰め込まないほど良くなる都市。路地、川辺、寺エリアが余白を作ります。', fukuoka:'短い旅でも満足度を作りやすい、食中心のコンパクトシティです。', seoul:'どの街区を束ねるかで旅のムードが決まる都市です。', busan:'海景と市場のリズムが混ざり、ソウルとは違う開いたテンポになります。', jeju:'風景、カフェ、移動の余裕を軸にしてこそ済州らしくなります。', gyeongju:'数をこなすより、歴史の質感と歩くテンポを守る方が強い都市です。'},
-    guideBtn:'都市ガイド', planBtn:'旅程を作る', emptyTitle:'条件に合う都市がありません', emptyDesc:'フィルターを少しゆるめると、近いムードの都市が見つかります。', curatedEyebrow:'厳選ルート', curatedTitle:'同じ都市でも、入り方のトーンは変わります', curatedDesc:'同行者やペースが変われば、同じ都市でも別の編集トーンから入る方が自然です。', bentoFeatureKicker:'ルートから始める', bentoFeatureTitle:'良い旅程のテンポを先に読む', bentoFeatureDesc:'Planner を開く前に、良い日程がどんな密度で流れるかをサンプルで先に見せます。', readSample:'サンプルを見る', usePlanner:'Planner で使う', parentsKicker:'親と一緒に', parentsTitle:'親と行く釜山は海景と休息の置き方が先です', parentsDesc:'景色の窓と移動負担を軽くすると、より自然な釜山ルートになります。', openBusan:'Busan を開く', slowKicker:'スロートリップ', slowTitle:'京都は見どころより間の時間が残る方がいい', slowDesc:'寺、川辺、カフェをゆるくつなぐと、京都らしさがもっと長く残ります。', openKyoto:'Kyoto を開く', howKicker:'使い方', howSteps:[['Read the mood','都市を先に読んで'],['Open a sample','サンプルでテンポを見て'],['Start in Planner','自分の旅へつなげる']], bannerTitle:'街を読んで、ルートを残す旅支度', bannerDesc:'街を読んで、流れをつかみ、そのまま自分の旅程へつなげて保存できる流れがこのページの役割です。', bannerPlanner:'Planner を開く', bannerTrips:'My Trips を開く'
+    guideBtn:'都市ガイド', planBtn:'旅程を作る', emptyTitle:'条件に合う都市がありません', emptyDesc:'フィルターを少しゆるめると、近いムードの都市が見つかります。', curatedEyebrow:'厳選ルート', curatedTitle:'同じ都市でも、入り方のトーンは変わります', curatedDesc:'同行者やペースが変われば、同じ都市でも別の編集トーンから入る方が自然です。', bentoFeatureKicker:'ルートから始める', bentoFeatureTitle:'良い旅程のテンポを先に読む', bentoFeatureDesc:'この都市から始める前に、良い日程がどんな密度で流れるかをサンプルで先に見せます。', readSample:'サンプルを見る', usePlanner:'Planner で使う', parentsKicker:'親と一緒に', parentsTitle:'親と行く釜山は海景と休息の置き方が先です', parentsDesc:'景色の窓と移動負担を軽くすると、より自然な釜山ルートになります。', openBusan:'Busan を開く', slowKicker:'スロートリップ', slowTitle:'京都は見どころより間の時間が残る方がいい', slowDesc:'寺、川辺、カフェをゆるくつなぐと、京都らしさがもっと長く残ります。', openKyoto:'Kyoto を開く', howKicker:'使い方', howSteps:[['Read the mood','都市を先に読んで'],['Open a sample','サンプルでテンポを見て'],['Start from this city','自分の旅へつなげる']], bannerTitle:'街を読んで、ルートを残す旅支度', bannerDesc:'街を読んで、流れをつかみ、そのまま自分の旅程へつなげて保存できる流れがこのページの役割です。', bannerPlanner:'この都市から始める', bannerTrips:'My Trips を開く'
   };
   editorialData.magazine.zhHant = {
     ...editorialData.magazine.en,
-    title:'Ryokoplan — Magazine', heroEyebrow:'Ryokoplan 城市誌', heroTitle:'先讀懂東亞城市，再把旅程接起來', heroDesc:'現在更重要的不是更多資訊，而是城市的質感、移動節奏，以及能直接接到旅程的入口。', heroChips:['聚焦日本／韓國／繁中城市','城市編輯指南','可直接接到規劃'], startPlanner:'打開規劃器', browseCities:'看城市指南', featureMeta:'Better first route', featureTitle:'Tokyo → Kyoto → Osaka，用節奏讀第一次日本旅程', featureDesc:'把東京的密度、京都的留白、大阪的輕鬆感排成順序，第一次去也會輕很多。', featureLinks:['東京的 mood','京都的 pace','範例路線'], sideKicker:'Magazine 的作用', sideTitle:'不是讀完就結束，而是接到旅程的入口', sideLines:[['City mood first','先讓你看街區感、步調與適合的旅行型，而不是只看地標。'],['Less random browsing','可以直接從 fast city / slow day / food-led 這種現在的感覺切進去。'],['Straight into Planner','喜歡的城市或範例路線都能直接接到 Planner。']], sideButtons:['城市指南','已存旅程'], loopEyebrow:'Recommendation loop', loopTitle:'讓閱讀可以直接接成路線', loopDesc:'如果有最近看過或存過的旅程，就先推下一座城市；沒有的話，就先給你最強入口。', finderEyebrow:'City finder', finderTitle:'先用 mood 選城市', finderDesc:'不只是城市卡片，而是可以直接用篩選與搜尋縮小。', finderSearchPH:'用城市、國家、mood 搜尋', countryAll:'全部', countryJapan:'Japan', countryKorea:'Korea', vibeAll:'全部 mood', vibeFast:'Fast city', vibeSlow:'Slow day', vibeFood:'Food-led', vibeCoast:'Coast', cityMeta:{tokyo:'日本編輯 · 快節奏城市', osaka:'日本編輯 · 輕鬆美食城市', kyoto:'日本編輯 · 留白慢旅行', fukuoka:'日本編輯 · 緊湊美食城市', sapporo:'日本編輯 · 雪光城市', sendai:'日本編輯 · 綠意城市停頓點', okinawa:'日本編輯 · 柔和島風', seoul:'韓國編輯 · 快節奏城市', busan:'韓國編輯 · 海景與美食', jeju:'韓國編輯 · 海邊與自然', gyeongju:'韓國編輯 · 安靜歷史旅', taipei:'繁中城市編輯 · 夜食節奏', hongkong:'繁中城市編輯 · 垂直港灣夜景', macau:'繁中城市編輯 · 緊湊遺產夜色'}, cityCopy:{tokyo:'大場景與安靜街區並存的城市。用街區去讀，整體會更柔順。', osaka:'吃、走、休息的距離很近，短旅行也能做出很高的滿足感。', kyoto:'越不塞越好的城市。巷弄、河邊與寺區會把留白做出來。', fukuoka:'短去也很夠，用美食當主軸就很容易排得乾淨的緊湊城市。', sapporo:'雪光、冷空氣與一頓溫暖的晚餐，最能留下這座城市的冬季記憶。', sendai:'綠蔭大道、市場口袋與安靜的用餐節奏，更能讀出仙台的城市性格。', okinawa:'海風、柔和日照與鬆弛的開車節奏，才會讓沖繩看起來像真正的沖繩。', seoul:'不是景點數，而是怎麼把街區組在一起，決定整趟旅程的氣氛。', busan:'海景和市場節奏交疊，會走出和首爾不同的開放步調。', jeju:'要把風景、咖啡館與移動留白一起算進去，才會像真正的濟州。', gyeongju:'比起多看幾個點，守住歷史質感與步行節奏更重要。', taipei:'夜食節奏、巷弄層次和偏晚的空氣感，最容易留下來。', hongkong:'就算停留不長，也會留下很強的港灣壓縮感、垂直密度和夜坡節奏。', macau:'很適合用短步行去讀廣場尺度、遺產質地與安靜夜色收尾的緊湊城市。'}, guideBtn:'看城市指南', planBtn:'排行程', emptyTitle:'沒有符合條件的城市', emptyDesc:'把篩選放寬一點，就能看到更接近的 mood。', curatedEyebrow:'精選路線', curatedTitle:'同一座城市，也會有不同的進入語氣', curatedDesc:'同行對象與節奏一變，同一座城市就該用不同的編輯入口去讀。', bentoFeatureKicker:'從路線開始', bentoFeatureTitle:'先讀懂好旅程的節奏', bentoFeatureDesc:'在打開 Planner 前，先用 sample 看看好的行程怎麼流動。', readSample:'看 sample', usePlanner:'在 Planner 使用', parentsKicker:'和父母一起', parentsTitle:'和父母去釜山，要先把海景與休息窗口放對', parentsDesc:'把看景時間與移動負擔壓順，會得到更自然的釜山路線。', openBusan:'打開 Busan', slowKicker:'慢步旅行', slowTitle:'京都更適合把空白留給時間，而不是把景點塞滿', slowDesc:'把寺區、河邊與咖啡館鬆鬆接起來，京都感會留得更久。', openKyoto:'打開 Kyoto', howKicker:'使用方式', howSteps:[['Read the mood','先讀城市氣質'],['Open a sample','先看 sample 節奏'],['Start in Planner','再接到你的旅程']], bannerTitle:'先讀城市，再把路線留下來', bannerDesc:'這裡的重點不是只看完，而是把城市讀成自己的旅程，接著留下來、之後再回來。', bannerPlanner:'打開 Planner', bannerTrips:'打開 My Trips'
+    title:'Ryokoplan — Magazine', heroEyebrow:'Ryokoplan 城市誌', heroTitle:'先讀懂東亞城市，再把旅程接起來', heroDesc:'現在更重要的不是更多資訊，而是城市的質感、移動節奏，以及能直接接到旅程的入口。', heroChips:['聚焦日本／韓國／繁中城市','城市編輯指南','可直接接到規劃'], startPlanner:'打開規劃器', browseCities:'看城市指南', featureMeta:'Better first route', featureTitle:'Tokyo → Kyoto → Osaka，用節奏讀第一次日本旅程', featureDesc:'把東京的密度、京都的留白、大阪的輕鬆感排成順序，第一次去也會輕很多。', featureLinks:['東京的 mood','京都的 pace','範例路線'], sideKicker:'Magazine 的作用', sideTitle:'不是讀完就結束，而是接到旅程的入口', sideLines:[['City mood first','先讓你看街區感、步調與適合的旅行型，而不是只看地標。'],['Less random browsing','可以直接從 fast city / slow day / food-led 這種現在的感覺切進去。'],['Straight into Planner','喜歡的城市或範例路線都能直接接到 Planner。']], sideButtons:['城市指南','已存旅程'], loopEyebrow:'Recommendation loop', loopTitle:'讓閱讀可以直接接成路線', loopDesc:'如果有最近看過或存過的旅程，就先推下一座城市；沒有的話，就先給你最強入口。', finderEyebrow:'City finder', finderTitle:'先用 mood 選城市', finderDesc:'不只是城市卡片，而是可以直接用篩選與搜尋縮小。', finderSearchPH:'用城市、國家、mood 搜尋', countryAll:'全部', countryJapan:'Japan', countryKorea:'Korea', vibeAll:'全部 mood', vibeFast:'Fast city', vibeSlow:'Slow day', vibeFood:'Food-led', vibeCoast:'Coast', cityMeta:{tokyo:'日本編輯 · 快節奏城市', osaka:'日本編輯 · 輕鬆美食城市', kyoto:'日本編輯 · 留白慢旅行', fukuoka:'日本編輯 · 緊湊美食城市', sapporo:'日本編輯 · 雪光城市', sendai:'日本編輯 · 綠意城市停頓點', okinawa:'日本編輯 · 柔和島風', seoul:'韓國編輯 · 快節奏城市', busan:'韓國編輯 · 海景與美食', jeju:'韓國編輯 · 海邊與自然', gyeongju:'韓國編輯 · 安靜歷史旅', taipei:'繁中城市編輯 · 夜食節奏', hongkong:'繁中城市編輯 · 垂直港灣夜景', macau:'繁中城市編輯 · 緊湊遺產夜色'}, cityCopy:{tokyo:'大場景與安靜街區並存的城市。用街區去讀，整體會更柔順。', osaka:'吃、走、休息的距離很近，短旅行也能做出很高的滿足感。', kyoto:'越不塞越好的城市。巷弄、河邊與寺區會把留白做出來。', fukuoka:'短去也很夠，用美食當主軸就很容易排得乾淨的緊湊城市。', sapporo:'雪光、冷空氣與一頓溫暖的晚餐，最能留下這座城市的冬季記憶。', sendai:'綠蔭大道、市場口袋與安靜的用餐節奏，更能讀出仙台的城市性格。', okinawa:'海風、柔和日照與鬆弛的開車節奏，才會讓沖繩看起來像真正的沖繩。', seoul:'不是景點數，而是怎麼把街區組在一起，決定整趟旅程的氣氛。', busan:'海景和市場節奏交疊，會走出和首爾不同的開放步調。', jeju:'要把風景、咖啡館與移動留白一起算進去，才會像真正的濟州。', gyeongju:'比起多看幾個點，守住歷史質感與步行節奏更重要。', taipei:'夜食節奏、巷弄層次和偏晚的空氣感，最容易留下來。', hongkong:'就算停留不長，也會留下很強的港灣壓縮感、垂直密度和夜坡節奏。', macau:'很適合用短步行去讀廣場尺度、遺產質地與安靜夜色收尾的緊湊城市。'}, guideBtn:'看城市指南', planBtn:'排行程', emptyTitle:'沒有符合條件的城市', emptyDesc:'把篩選放寬一點，就能看到更接近的 mood。', curatedEyebrow:'精選路線', curatedTitle:'同一座城市，也會有不同的進入語氣', curatedDesc:'同行對象與節奏一變，同一座城市就該用不同的編輯入口去讀。', bentoFeatureKicker:'從路線開始', bentoFeatureTitle:'先讀懂好旅程的節奏', bentoFeatureDesc:'在從這座城市開始 前，先用 sample 看看好的行程怎麼流動。', readSample:'看 sample', usePlanner:'在 Planner 使用', parentsKicker:'和父母一起', parentsTitle:'和父母去釜山，要先把海景與休息窗口放對', parentsDesc:'把看景時間與移動負擔壓順，會得到更自然的釜山路線。', openBusan:'打開 Busan', slowKicker:'慢步旅行', slowTitle:'京都更適合把空白留給時間，而不是把景點塞滿', slowDesc:'把寺區、河邊與咖啡館鬆鬆接起來，京都感會留得更久。', openKyoto:'打開 Kyoto', howKicker:'使用方式', howSteps:[['Read the mood','先讀城市氣質'],['Open a sample','先看 sample 節奏'],['Start from this city','再接到你的旅程']], bannerTitle:'先讀城市，再把路線留下來', bannerDesc:'這裡的重點不是只看完，而是把城市讀成自己的旅程，接著留下來、之後再回來。', bannerPlanner:'從這座城市開始', bannerTrips:'打開 My Trips'
   };
 
 

@@ -54,8 +54,8 @@
           publicDeskLabel: '퍼블릭 루트 데스크',
           publicDeskPick: '에디터 픽',
           publicDeskSave: '내 루트로 저장',
-          publicDeskOpen: '샘플 열기',
-          publicDeskPlan: '플래너로 이어가기',
+          publicDeskOpen: '샘플 읽기',
+          publicDeskPlan: '이 흐름 이어가기',
           publicDeskSaved: '샘플 루트를 My Trips에 저장했어요.',
           publicDeskIntro: '공개 샘플에서 바로 내 버전으로 이어지는 큐레이션 허브',
           publicDeskWeekend: '주말용 베이스',
@@ -120,7 +120,7 @@
           publicDeskPick: 'Editor pick',
           publicDeskSave: 'Save to My Trips',
           publicDeskOpen: 'Compare sample',
-          publicDeskPlan: 'Continue in Planner',
+          publicDeskPlan: 'Continue this route',
           publicDeskSaved: 'Sample route saved to My Trips.',
           publicDeskIntro: 'A curated hub where public samples can become your next trip base.',
           publicDeskWeekend: 'Weekend base',
@@ -140,7 +140,7 @@
           loopEmptyEyebrow: 'No saved loop yet',
           loopEmptyTitle: 'Save one trip, then the city-first loop gets smarter',
           loopEmptyDesc: 'Once a trip is saved or reopened, My Trips can point you to the next guide, sample route, or related city branch that fits the tone you already liked.',
-          loopOpenPlanner: 'Open Planner',
+          loopOpenPlanner: 'Start a new route',
           loopReadMagazine: 'Read Magazine',
           loopGoodStart: 'Good starting points',
           loopTokyoGuide: 'Tokyo guide',
@@ -197,7 +197,7 @@
           publicDeskPick: 'エディターピック',
           publicDeskSave: 'My Trips に保存',
           publicDeskOpen: 'サンプルを開く',
-          publicDeskPlan: 'Planner へつなぐ',
+          publicDeskPlan: 'この流れを続ける',
           publicDeskSaved: 'サンプルルートを My Trips に保存しました。',
           publicDeskIntro: '公開サンプルから自分の次の旅へつながるキュレーションハブ',
           publicDeskWeekend: '週末ベース',
@@ -217,7 +217,7 @@
           loopEmptyEyebrow: 'まだ保存ループがありません',
           loopEmptyTitle: '一つ旅程を作ると、次の流れがもっと見えやすくなります',
           loopEmptyDesc: '旅程を保存したり再度開いたりすると、My Trips が次に読むガイドやサンプルルートを提案できます。',
-          loopOpenPlanner: 'Planner を開く',
+          loopOpenPlanner: '新しいルートを始める',
           loopReadMagazine: 'Magazine を読む',
           loopGoodStart: '最初の入り口に向くもの',
           loopTokyoGuide: 'Tokyo ガイド',
@@ -274,7 +274,7 @@
           publicDeskPick: '編輯精選',
           publicDeskSave: '存到 My Trips',
           publicDeskOpen: '打開範例',
-          publicDeskPlan: '接到 Planner',
+          publicDeskPlan: '把這條流動接下去',
           publicDeskSaved: '已把範例路線存到 My Trips。',
           publicDeskIntro: '讓公開範例直接變成下一份旅程底稿的策展區',
           publicDeskWeekend: '週末底稿',
@@ -850,7 +850,7 @@ function visitEntryMarkup(city='', extraClass=''){
         if (!target) return;
         const collections = (window.RyokoStorage.getSavedPlaceCollections?.() || []).sort((a, b) => b.places.length - a.places.length || String(a.city || '').localeCompare(String(b.city || '')));
         if (!collections.length) {
-          target.innerHTML = `<div class="trip-archive-empty"><strong>${langVariant('아직 저장한 장소가 없어요','No saved places yet','まだ保存した場所がありません','還沒有已保存地點')}</strong><span>${langVariant('플래너 결과에서 하트를 누르면 장소 아카이브가 쌓이기 시작합니다.','Tap hearts inside planner results and your place archive will start to build itself.','プランナー結果でハートを押すと、場所アーカイブが少しずつ育っていきます。','在 Planner 結果裡點愛心後，你的地點收藏檔案就會開始累積。')}</span></div>`;
+          target.innerHTML = `<div class="trip-archive-empty"><strong>${langVariant('아직 저장한 장소가 없어요','No saved places yet','まだ保存した場所がありません','還沒有已保存地點')}</strong><span>${langVariant('루트 상세에서 하트를 누르면 장소 아카이브가 쌓이기 시작합니다.','Tap hearts inside route details and your place archive will start to build itself.','ルート詳細でハートを押すと、場所アーカイブが少しずつ育っていきます。','在路線詳情裡點愛心後，你的地點收藏檔案就會開始累積。')}</span></div>`;
           return;
         }
         target.innerHTML = collections.slice(0, 6).map(entry => `
@@ -1214,7 +1214,7 @@ function visitEntryMarkup(city='', extraClass=''){
             <span class="eyebrow">${langCopy().loopEmptyEyebrow || "No saved loop yet"}</span>
             <h3>${langCopy().loopEmptyTitle || "Save one trip, then the city-first loop gets smarter"}</h3>
             <p>${langCopy().loopEmptyDesc || "Once a trip is saved or reopened, My Trips can point you to the next guide, sample route, or related city branch that fits the tone you already liked."}</p>
-            <div class="card-actions"><a class="primary-btn" href="../">${langCopy().loopOpenPlanner || "Open Planner"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
+            <div class="card-actions"><a class="primary-btn" href="../">${langCopy().loopOpenPlanner || "Start a new route"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
           side.innerHTML = `
             <h3>${langCopy().loopGoodStart || "Good starting points"}</h3>
             <div class="trip-loop-list">
