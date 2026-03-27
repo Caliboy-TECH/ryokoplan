@@ -144,6 +144,10 @@
         <div id="cityCollectionsGrid" class="city-collections-grid"></div>
       </section>
 
+      <section class="section expansion-front-section" id="expansionTripsDeskSection">
+        <div id="expansionTripsDeskRoot"></div>
+      </section>
+
       <section class="section">
         <div class="section-head">
           <div><h2 class="section-title" data-t="trips.tabLead">원하는 방식으로 찾아보세요</h2></div>
@@ -244,8 +248,9 @@
       const sections = { saved: $('savedSection'), recent: $('recentSection'), shared: $('sharedSection') };
       const imgMap = {
         Tokyo:'../assets/images/cities/tokyo.jpg', Osaka:'../assets/images/cities/osaka.jpg', Kyoto:'../assets/images/cities/kyoto.jpg',
-        Fukuoka:'../assets/images/cities/fukuoka.jpg', Seoul:'../assets/images/cities/seoul.jpg', Busan:'../assets/images/cities/busan.jpg',
-        Jeju:'../assets/images/cities/jeju.jpg', Gyeongju:'../assets/images/cities/gyeongju.jpg'
+        Fukuoka:'../assets/images/cities/fukuoka.jpg', Sapporo:'../assets/images/cities/sapporo.jpg', Sendai:'../assets/images/cities/sendai.jpg', Okinawa:'../assets/images/cities/okinawa.jpg',
+        Seoul:'../assets/images/cities/seoul.jpg', Busan:'../assets/images/cities/busan.jpg', Jeju:'../assets/images/cities/jeju.jpg', Gyeongju:'../assets/images/cities/gyeongju.jpg',
+        Taipei:'../assets/images/cities/taipei.jpg', 'Hong Kong':'../assets/images/cities/hongkong.jpg', Macau:'../assets/images/cities/macau.jpg'
       };
       const copyByLang = {
         ko: {
@@ -563,7 +568,7 @@
           duration:'2N3D', companionKo:'혼자/친구', companionEn:'Solo / Friends', vibeKo:'레인 스왑', vibeEn:'Rain swap', bestKo:'비 오는 날, 동네 이동', bestEn:'Rainy day, neighborhood flow'
         },
         {
-          key:'jeju-soft-drive', city:'Jeju', titleKo:'Jeju soft drive base', titleEn:'Jeju soft drive base', badgeKey:'publicDeskFamily', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../example/busan-2n3d-with-parents.html',
+          key:'jeju-soft-drive', city:'Jeju', titleKo:'Jeju soft drive base', titleEn:'Jeju soft drive base', badgeKey:'publicDeskFamily', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../example/jeju-2n3d-slow-reset.html',
           summaryKo:'제주의 이동 현실을 반영해서 과속하지 않는 드라이브형 공개 베이스입니다.', summaryEn:'A gentler Jeju base that respects drive time, open space, and lower route density.',
           duration:'2N3D', companionKo:'가족/커플', companionEn:'Family / Couple', vibeKo:'드라이브 리듬', vibeEn:'Drive rhythm', bestKo:'제주 초행, 느린 일정', bestEn:'First Jeju, slower pace'
         }
@@ -577,13 +582,13 @@
           chipsKo:['트렌딩', '야간 리듬', '동네 대비'], chipsEn:['Trending', 'Night rhythm', 'Neighborhood contrast'], duration:'2N3D'
         },
         {
-          key:'kyoto-to-gyeongju-quiet', source:'Kyoto', city:'Gyeongju', titleKo:'교토 다음엔 경주의 조용한 템포', titleEn:'Quiet Gyeongju after Kyoto', image:'../assets/images/cities/gyeongju.jpg', guide:'../city/gyeongju.html', example:'../city/gyeongju.html',
+          key:'kyoto-to-gyeongju-quiet', source:'Kyoto', city:'Gyeongju', titleKo:'교토 다음엔 경주의 조용한 템포', titleEn:'Quiet Gyeongju after Kyoto', image:'../assets/images/cities/gyeongju.jpg', guide:'../city/gyeongju.html', example:'../example/gyeongju-2n3d-heritage-walk.html',
           summaryKo:'교토의 여백과 낮은 에너지 밀도가 좋았다면, 경주는 더 느린 문화 리듬으로 자연스럽게 이어집니다.',
           summaryEn:'If Kyoto worked because of space and lower energy density, Gyeongju keeps that line going with an even slower cultural tempo.',
           chipsKo:['슬로우', '문화 리듬', '낮은 밀도'], chipsEn:['Slow', 'Cultural rhythm', 'Low density'], duration:'2N3D'
         },
         {
-          key:'busan-to-jeju-soft', source:'Busan', city:'Jeju', titleKo:'부산 다음엔 제주 소프트 드라이브', titleEn:'Soft Jeju drive after Busan', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../city/jeju.html',
+          key:'busan-to-jeju-soft', source:'Busan', city:'Jeju', titleKo:'부산 다음엔 제주 소프트 드라이브', titleEn:'Soft Jeju drive after Busan', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../example/jeju-2n3d-slow-reset.html',
           summaryKo:'부산에서 전망과 완만한 템포가 잘 맞았다면, 제주는 더 느슨한 드라이브형 분기로 잘 이어집니다.',
           summaryEn:'If Busan worked for views and a softer tempo, Jeju is the next branch for a more open drive-based route.',
           chipsKo:['코스트', '드라이브', '가벼운 분기'], chipsEn:['Coast', 'Drive', 'Softer branch'], duration:'2N3D'
@@ -633,11 +638,108 @@
           chipsKo:['친구', '밤 리듬', '다음날 보호'], chipsEn:['Friends', 'Night rhythm', 'Protect next day'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
         },
         {
-          key:'jeju-parents-easy', city:'Jeju', titleKo:'제주 부모님 이지 페이스', titleEn:'Jeju easy pace with parents', labelKo:'동행 에디트', labelEn:'Companion edit', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../example/busan-2n3d-with-parents.html',
+          key:'jeju-parents-easy', city:'Jeju', titleKo:'제주 부모님 이지 페이스', titleEn:'Jeju easy pace with parents', labelKo:'동행 에디트', labelEn:'Companion edit', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../example/jeju-2n3d-slow-reset.html',
           summaryKo:'운전과 풍경, 식사 리듬을 무리 없이 맞춘 부모님 동행용 제주 베이스입니다.', summaryEn:'A Jeju parent-friendly base built around easy drive logic, view windows, and meal rhythm.',
           chipsKo:['부모님', '드라이브', '쉬운 페이스'], chipsEn:['Parents', 'Drive', 'Easy pace'], duration:'2N3D', companionKo:'가족/부모님', companionEn:'Family / Parents'
         }
       ];
+
+      const expansionTripsByRegion = {
+        japan:['Osaka','Sapporo','Sendai','Okinawa'],
+        korea:['Jeju','Gyeongju'],
+        greater:['Macau']
+      };
+
+      function expansionTripsCopy(){
+        return window.RyokoApp.lang === 'ko' ? {
+          eyebrow:'Expansion trip vault', title:'확장 도시도 이제 My Trips 안에서 다시 꺼내 읽습니다', desc:'release 도시 다음 레이어였던 expansion 도시들을, 저장·최근·공유 흐름 기준으로 다시 묶어 다음 시작점처럼 보이게 정리했습니다.', leadTitle:'확장 도시를 보관하고 다시 여는 제품형 shelf', leadDesc:'Osaka는 food-led compact base로, Sapporo는 seasonal city base로, Macau는 short-night heritage base로 다시 열립니다.', note:'확장 도시도 저장·최근·공유 흐름 안에서 보이면 release 다음 클릭이 더 자연스럽게 이어집니다.', quickLabel:'지금 상태', city:'도시 보기', sample:'샘플 보기', open:'최근 루트', publicBase:'퍼블릭 베이스', saved:'저장', recent:'최근', shared:'공유', none:'아직 쌓인 루트 없음', region:{japan:['Japan expansion desk','food / weather / calm north / island reset 축으로 다시 읽습니다.'], korea:['Korea expansion desk','Jeju와 Gyeongju는 scenic / heritage 루프 안에서 다시 열립니다.'], greater:['Greater China branch','Macau는 Hong Kong / Taipei 다음 분기로 짧고 선명하게 보관됩니다.']}}
+          : window.RyokoApp.lang === 'ja' ? {
+          eyebrow:'Expansion trip vault', title:'expansion 都市も My Trips の中でまた開けるようにします', desc:'release の次の層だった expansion 都市を、保存・最近・共有の流れでまとめ直し、次の出発点として見えるようにしました。', leadTitle:'expansion 都市を保管してまた開く shelf', leadDesc:'Osaka は food-led compact base、Sapporo は seasonal city base、Macau は short-night heritage base として再び開きます。', note:'expansion 都市も保存・最近・共有の流れで見えると、release の次のクリックがずっと自然になります。', quickLabel:'現在の状態', city:'都市を見る', sample:'サンプルを見る', open:'最近のルート', publicBase:'公開ベース', saved:'保存', recent:'最近', shared:'共有', none:'まだ蓄積されたルートはありません', region:{japan:['Japan expansion desk','food / weather / calm north / island reset の軸で読み直します。'], korea:['Korea expansion desk','Jeju と Gyeongju は scenic / heritage ループの中で再び開きます。'], greater:['Greater China branch','Macau は Hong Kong / Taipei の次の分岐として短く鮮明に保管されます。']}}
+          : window.RyokoApp.lang === 'zhHant' ? {
+          eyebrow:'Expansion trip vault', title:'現在也能在 My Trips 裡重新打開 expansion 城市', desc:'把原本屬於 release 之後那一層的 expansion 城市，依已存、最近、分享三種流動重新整理成下一個起點。', leadTitle:'把 expansion 城市存下並重新打開的 shelf', leadDesc:'Osaka 會以 food-led compact base 重新打開，Sapporo 會以 seasonal city base 重新打開，Macau 則是 short-night heritage base。', note:'當 expansion 城市也能在已存、最近、分享流裡被看見，release 之後的下一次點擊就會自然很多。', quickLabel:'目前狀態', city:'讀城市', sample:'看 sample', open:'最近路線', publicBase:'公開 base', saved:'已存', recent:'最近', shared:'分享', none:'還沒有累積路線', region:{japan:['Japan expansion desk','重新以 food / weather / calm north / island reset 四條線來讀。'], korea:['Korea expansion desk','Jeju 與 Gyeongju 會在 scenic / heritage 迴圈裡重新打開。'], greater:['Greater China branch','Macau 會作為 Hong Kong / Taipei 之後短而清楚的下一個分支被保留下來。']}}
+          : {
+          eyebrow:'Expansion trip vault', title:'Expansion cities now reopen from inside My Trips too', desc:'The expansion layer after the release cities is regrouped through saved, recent, and shared flows so it feels like a real next starting point.', leadTitle:'A product shelf for reopening the expansion layer', leadDesc:'Osaka returns as a food-led compact base, Sapporo as a seasonal city base, and Macau as a short-night heritage base.', note:'Once expansion cities become visible through saved, recent, and shared flows, the click after the release layer stops feeling random.', quickLabel:'Current status', city:'Read city', sample:'Read sample', open:'Open recent route', publicBase:'Public base', saved:'saved', recent:'recent', shared:'shared', none:'No route stack yet', region:{japan:['Japan expansion desk','Reopen these through food, weather, north-side calm, and island reset.'], korea:['Korea expansion desk','Jeju and Gyeongju now sit inside scenic and heritage loops.'], greater:['Greater China branch','Macau is kept as a short, clear branch after Hong Kong and Taipei.']}}
+      }
+
+      function expansionCityFallback(city){
+        const map = {
+          Osaka:'Compact food-led city that gets stronger once one meal line and one calmer pocket stay together.',
+          Sapporo:'A seasonal north-city base that works better when blocks stay shorter and one warm close carries the night.',
+          Sendai:'A calmer city base where green avenues, market pockets, and a quieter dinner close matter more than speed.',
+          Okinawa:'An island reset base that opens through one coast line, then protects slower pockets and hotel recovery.',
+          Jeju:'A scenic drive base that works best when route shape, weather, and rest windows matter more than stop count.',
+          Gyeongju:'A softer heritage base that reads better through dusk, hanok lanes, and a lighter walking rhythm.',
+          Macau:'A compact heritage-night base that gets clearer when old lanes and one short night scene stay separated.'
+        };
+        return map[city] || 'A city base worth saving, reopening, and branching from later.';
+      }
+
+      function renderExpansionTripsDesk(saved, recent, shared){
+        const node = $('expansionTripsDeskRoot');
+        const section = $('expansionTripsDeskSection');
+        if (!node || !section) return;
+        const copy = expansionTripsCopy();
+        const all = [...saved, ...recent, ...shared];
+        const perCity = city => ({
+          saved: saved.filter(item => String(item.destination||'').toLowerCase() === city.toLowerCase()),
+          recent: recent.filter(item => String(item.destination||'').toLowerCase() === city.toLowerCase()),
+          shared: shared.filter(item => String(item.destination||'').toLowerCase() === city.toLowerCase())
+        });
+        const renderCityCard = city => {
+          const loop = window.RyokoApp.getCityLoopData(city) || { name:city, guide:`city/${city.toLowerCase()}.html`, example:`city/${city.toLowerCase()}.html`, vibe:'' };
+          const groups = perCity(city);
+          const merged = sortItems([...groups.saved, ...groups.recent, ...groups.shared]);
+          const latest = merged[0] || null;
+          const statusChips = [];
+          if (groups.saved.length) statusChips.push(`${groups.saved.length} ${copy.saved}`);
+          if (groups.recent.length) statusChips.push(`${groups.recent.length} ${copy.recent}`);
+          if (groups.shared.length) statusChips.push(`${groups.shared.length} ${copy.shared}`);
+          if (!statusChips.length) statusChips.push(copy.publicBase);
+          const desc = latest ? (getMetaSummary(latest) || cityLoopBranchNote(city) || expansionCityFallback(city)) : (cityLoopBranchNote(city) || expansionCityFallback(city));
+          const actionHref = latest ? shareUrl(latest) : `../${loop.example || loop.guide}`;
+          const actionLabel = latest ? copy.open : copy.sample;
+          return `
+            <article class="expansion-front-city-card">
+              <div class="expansion-front-city-top"><strong>${city}</strong><span class="expansion-front-city-vibe">${loop.vibe || copy.publicBase}</span></div>
+              <p>${desc}</p>
+              <div class="trip-chip-row">${statusChips.map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}</div>
+              ${rhythmMarkup(city, 'trip-rhythm-inline-soft')}
+              ${visitEntryMarkup(city, 'trip-entry-inline-soft')}
+              <div class="expansion-front-city-actions">
+                <a class="soft-btn" href="${actionHref}">${actionLabel}</a>
+                <a class="ghost-btn" href="../${loop.guide}">${copy.city}</a>
+                <a class="ghost-btn" href="../${loop.example || loop.guide}">${copy.sample}</a>
+              </div>
+            </article>`;
+        };
+        node.innerHTML = `
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">${copy.eyebrow}</span>
+              <h2 class="section-title">${copy.title}</h2>
+              <p class="section-desc">${copy.desc}</p>
+            </div>
+          </div>
+          <div class="expansion-front-shell">
+            <article class="expansion-front-lead">
+              <div class="cover-meta-row"><span class="cover-meta-pill">My Trips</span><span class="cover-meta-pill">Expansion layer</span></div>
+              <h3>${copy.leadTitle}</h3>
+              <p>${copy.leadDesc}</p>
+              <div class="expansion-front-pill-row">
+                <span class="expansion-front-pill">Saved / Recent / Shared</span>
+                <span class="expansion-front-pill">City-first continuation</span>
+                <span class="expansion-front-pill">Canonical sample links</span>
+              </div>
+              <div class="expansion-front-note">${copy.note}</div>
+            </article>
+            <div class="expansion-front-column-grid">
+              ${Object.entries(expansionTripsByRegion).map(([key, cities]) => {
+                const region = copy.region[key];
+                return `<section class="expansion-front-column"><div class="expansion-front-column-head"><span class="eyebrow">${copy.quickLabel}</span><h3>${region[0]}</h3><p>${region[1]}</p></div><div class="expansion-front-card-list">${cities.map(renderCityCard).join('')}</div></section>`;
+              }).join('')}
+            </div>
+          </div>`;
+      }
 
       function langCopy(){ return copyByLang[window.RyokoApp.lang] || copyByLang.en; }
       function activeTab(name){
@@ -742,6 +844,7 @@
             <div class="hero-actions">
               <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
               <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'City guide layer'}</a>
+              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).example || (window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionExample || 'Sample route'}</a>
               <a class="ghost-btn" href="${articleHrefForCity(latest.destination)}">${articleLabel()}</a>
               <button class="secondary-btn" data-copy="${latest.id}">${window.RyokoApp.t('trips.tripShare')}</button>
             </div>
@@ -933,6 +1036,7 @@
         target.innerHTML = rows.slice(0, 6).map(([city, items]) => {
           const latest = sortItems(items)[0];
           const label = latest?.planData?.vibe || latest?.duration || 'Route base';
+          const loop = window.RyokoApp.getCityLoopData(city) || {};
           return `
             <article class="trip-archive-line">
               <div class="trip-archive-topline">
@@ -941,7 +1045,7 @@
               </div>
               <p class="trip-archive-copy">${getMetaSummary(latest) || 'A reusable route base for this city.'}</p>
               <div class="trip-chip-row">${items.slice(0,4).map(item => `<span class="trip-mini-chip">${item.title || label}</span>`).join('')}</div>
-              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">Open latest</a><a class="ghost-btn" href="../city/${city.toLowerCase()}.html">City guide</a></div>
+              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">Open latest</a><a class="ghost-btn" href="../${loop.guide || `city/${city.toLowerCase()}.html`}">City guide</a><a class="ghost-btn" href="../${loop.example || loop.guide || `city/${city.toLowerCase()}.html`}">Sample</a></div>
             </article>`;
         }).join('');
       }
@@ -1107,6 +1211,48 @@
             en:'Hong Kong branches more cleanly when one breathing pocket sits between the compressed scenes.',
             ja:'香港は圧縮された場面のあいだに呼吸できる区間を残すと、次の枝へつながりやすくなります。',
             zhHant:'香港要在壓縮感很強的場景之間留一段能喘口氣的區間，才更容易延伸到下一個分支。'
+          },
+          Osaka: {
+            ko:'오사카는 많이 넣기보다 식사 리듬과 한 번의 quieter pocket을 같이 남길 때 저장한 루트가 훨씬 잘 남습니다.',
+            en:'Osaka usually keeps its value longer when the saved route protects meal rhythm plus one quieter pocket.',
+            ja:'大阪は食のリズムと静かなポケットをひとつ残すほうが、保存したルートが長く生きます。',
+            zhHant:'大阪比較適合把吃的節奏和一個安靜 pocket 一起保住，保存下來的路線會更耐用。'
+          },
+          Sapporo: {
+            ko:'삿포로는 블록 수를 줄이고 따뜻한 식사와 짧은 밤 장면 하나를 남길 때 다시 열어보기 좋은 베이스가 됩니다.',
+            en:'Sapporo becomes a better reopenable base when wide blocks are reduced and one warm meal plus one short night scene carry the trip.',
+            ja:'札幌は歩くブロック数を減らし、温かい食事と短い夜景を一つ残すほうが、また開きやすいベースになります。',
+            zhHant:'札幌更適合減少大區塊步行，留下一頓溫暖晚餐和一個短夜景，之後也更容易重新打開。'
+          },
+          Sendai: {
+            ko:'센다이는 headline보다 pause가 중요한 도시라, 초록길과 식사 포켓을 같이 남기는 편이 저장 루프와 잘 맞습니다.',
+            en:'Sendai fits the save-and-reopen loop best when green avenues and meal pockets stay together instead of forcing another headline stop.',
+            ja:'仙台は見出しスポットより pause が大事なので、緑の道と食事ポケットを一緒に残すほうが保存ループに合います。',
+            zhHant:'仙台比 headline 景點更在乎 pause，所以把綠蔭大道和用餐 pocket 一起留下，會更符合保存再閱讀的循環。'
+          },
+          Okinawa: {
+            ko:'오키나와는 해안선 하나와 slower pocket 하나를 같이 남겨야 다음 읽기로 자연스럽게 이어집니다.',
+            en:'Okinawa branches more naturally when one coast line and one slower pocket stay together.',
+            ja:'沖縄は海岸線ひとつと slower pocket ひとつを一緒に残すと、次の読みに自然につながります。',
+            zhHant:'沖繩要同時留下海岸線的一段和一個更慢的 pocket，才會自然接到下一步。'
+          },
+          Jeju: {
+            ko:'제주는 stop 수보다 이동과 날씨 대응이 중요해서, 풍경 창과 쉬는 시간을 같이 남길수록 저장한 루트가 더 강해집니다.',
+            en:'Jeju usually gets stronger when the saved route protects scenery windows and recovery time rather than adding more stops.',
+            ja:'済州はスポット数より移動と天気対応が重要なので、景色の窓と休む時間を残すほど保存したルートが強くなります。',
+            zhHant:'濟州比起再加停點，更適合保留風景窗口和休息時間，這樣保存下來的路線會更強。'
+          },
+          Gyeongju: {
+            ko:'경주는 해질 무렵의 유산 무드와 한옥 골목 하나를 같이 남길 때 다음 읽기로 이어지는 힘이 커집니다.',
+            en:'Gyeongju carries forward better when one dusk heritage mood and one hanok-lane pocket stay together.',
+            ja:'慶州は夕暮れの遺産ムードと韓屋の路地をひとつ残すと、次の読みに続く力が強くなります。',
+            zhHant:'慶州在把黃昏遺產氛圍和一段韓屋巷弄一起留下時，會更有延伸到下一步的力量。'
+          },
+          Macau: {
+            ko:'마카오는 old lane과 짧은 night close를 분리해 두는 편이 저장한 루트와 다음 분기 모두에 더 잘 맞습니다.',
+            en:'Macau usually works better for both saving and branching when the old lanes and short night close stay clearly separated.',
+            ja:'Macau は old lane と短い night close を分けておくほうが、保存にも次の分岐にもよく合います。',
+            zhHant:'Macau 比較適合把老街和短夜景收尾分開保留，這樣不論保存或延伸到下一分支都更順。'
           }
         };
         const entry = map[city];
@@ -1193,6 +1339,7 @@
               <button class="soft-btn" data-save="${item.id}">${langCopy().saveAsMine}</button>
               <button class="ghost-btn" data-my-version="${item.id}">${langCopy().makeMyVersion}</button>
               <a class="soft-btn" href="../${city.guide}">Read ${city.name}</a>
+              <a class="ghost-btn" href="../${city.example || city.guide}">Read sample</a>
             </div>
           </div>`;
       }
@@ -1454,6 +1601,7 @@
         renderPublicRouteDesk();
         renderRouteClub();
         renderOperatingEdits();
+        renderExpansionTripsDesk(saved, recent, shared);
         renderSharedSpotlight(shared);
         renderTripLoop(saved, recent, shared);
         renderCityCollections(saved, recent, shared);

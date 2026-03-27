@@ -191,12 +191,19 @@ window.RyokoPlanner = (() => {
     const title = destination ? `${destination} route — Ryokoplan` : `${routeTitle} — Ryokoplan`;
     const shareMetaMap = {
       Tokyo:'A Tokyo route shaped around cleaner axes, softer resets, and a city-first reading order.',
+      Osaka:'An Osaka route shaped around compact meal rhythm, easier arcades, and one calmer pocket.',
       Kyoto:'A Kyoto route built around quiet windows, slower pockets, and a cleaner editorial pace.',
+      Fukuoka:'A Fukuoka route shaped by compact food rhythm and short, readable movement.',
+      Sapporo:'A Sapporo route tuned around winter blocks, warm meals, and one shorter snow-lit close.',
+      Sendai:'A Sendai route built around green avenues, market pockets, and a calmer meal rhythm.',
+      Okinawa:'An Okinawa route shaped by one coast line, slower reset windows, and lighter island pacing.',
       Seoul:'A Seoul route balancing stronger neighborhood contrast with a smoother city rhythm.',
       Busan:'A Busan route built around coast timing, view pockets, and easier movement.',
-      Fukuoka:'A Fukuoka route shaped by compact food rhythm and short, readable movement.',
+      Jeju:'A Jeju route tuned around drive reality, scenery windows, and softer rest-led movement.',
+      Gyeongju:'A Gyeongju route built around dusk heritage mood, hanok lanes, and lighter walking rhythm.',
       Taipei:'A Taipei route tuned around night-food rhythm, layered alleys, and softer pacing.',
-      'Hong Kong':'A Hong Kong route tuned for harbor density, vertical contrast, and a cleaner night close.'
+      'Hong Kong':'A Hong Kong route tuned for harbor density, vertical contrast, and a cleaner night close.',
+      Macau:'A Macau route shaped around compact heritage lanes, quieter squares, and one short night close.'
     };
     const desc = destination
       ? (shareMetaMap[destination] || `${destination} in a city-first flow. Read the neighborhoods, compare the route, and shape the trip.`)
@@ -314,8 +321,9 @@ window.RyokoPlanner = (() => {
     const slug = String(destination || '').trim().toLowerCase();
     const map = {
       tokyo:'assets/images/cities/tokyo.jpg', osaka:'assets/images/cities/osaka.jpg', kyoto:'assets/images/cities/kyoto.jpg',
-      fukuoka:'assets/images/cities/fukuoka.jpg', seoul:'assets/images/cities/seoul.jpg', busan:'assets/images/cities/busan.jpg',
-      jeju:'assets/images/cities/jeju.jpg', gyeongju:'assets/images/cities/gyeongju.jpg'
+      fukuoka:'assets/images/cities/fukuoka.jpg', sapporo:'assets/images/cities/sapporo.jpg', sendai:'assets/images/cities/sendai.jpg', okinawa:'assets/images/cities/okinawa.jpg',
+      seoul:'assets/images/cities/seoul.jpg', busan:'assets/images/cities/busan.jpg', jeju:'assets/images/cities/jeju.jpg', gyeongju:'assets/images/cities/gyeongju.jpg',
+      taipei:'assets/images/cities/taipei.jpg', hongkong:'assets/images/cities/hongkong.jpg', macau:'assets/images/cities/macau.jpg'
     };
     return map[slug] || 'assets/images/hero/planner-preview.jpg';
   }
@@ -323,8 +331,9 @@ window.RyokoPlanner = (() => {
     const slug = String(destination || '').trim().toLowerCase();
     const map = {
       tokyo:'assets/images/examples/tokyo-first-trip.jpg', osaka:'assets/images/examples/osaka-family.jpg', kyoto:'assets/images/examples/kyoto-slow.jpg',
-      fukuoka:'assets/images/examples/fukuoka-food.jpg', seoul:'assets/images/examples/seoul-city-vibes.jpg', busan:'assets/images/examples/busan-parents.jpg',
-      jeju:'assets/images/cities/jeju.jpg', gyeongju:'assets/images/cities/gyeongju.jpg'
+      fukuoka:'assets/images/examples/fukuoka-food.jpg', sapporo:'assets/images/examples/sapporo-snow-soft.jpg', sendai:'assets/images/examples/sendai-city-rest.jpg', okinawa:'assets/images/examples/okinawa-island-breeze.jpg',
+      seoul:'assets/images/examples/seoul-city-vibes.jpg', busan:'assets/images/examples/busan-parents.jpg', jeju:'assets/images/cities/jeju.jpg', gyeongju:'assets/images/cities/gyeongju.jpg',
+      taipei:'assets/images/examples/taipei-night-food.jpg', hongkong:'assets/images/examples/hongkong-harbor-rhythm.jpg', macau:'assets/images/examples/macau-heritage-night.jpg'
     };
     return map[slug] || cityImageFor(destination);
   }
