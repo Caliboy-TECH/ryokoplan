@@ -469,6 +469,563 @@ window.RyokoPlanner = (() => {
     macau:{ ko:['홍콩을 이어 읽으면 vertical harbor night와 compact heritage night의 차이가 또렷해집니다.','타이파이/타이베이 쪽으로 가지를 치면 greater China night rhythm을 더 넓게 읽을 수 있습니다.'], en:['Continue with Hong Kong for a sharper contrast between vertical harbor nights and compact heritage nights.','Branch into Taipei when you want to widen the Greater China night-rhythm read.']}
   };
 
+
+  const priorityResultHeroPackMap = {
+  "osaka": {
+    "ko": {
+      "eyebrow": "오사카 결과 브리프",
+      "coverMeta": "Osaka editorial result",
+      "coverNote": "오사카 결과는 명소 수보다 meal rhythm과 쉬는 구간이 보이도록 다시 편집했습니다.",
+      "factRhythm": "Meal-first rhythm with one softer reset",
+      "factShape": "한 개의 food core · 한 개의 quieter pocket · 짧은 night close",
+      "factBest": "짧은 일정에서도 먹고 걷고 쉬는 리듬을 남기고 싶은 사람",
+      "editorNote": "이 결과는 오사카를 더 많이 넣기보다, 한 축은 먹는 리듬으로 밀고 다른 한 축은 쉬는 pocket으로 눌러서 도시가 과열되지 않게 잡은 버전입니다.",
+      "visualTitle": "오사카 food-core edit",
+      "visualDesc": "headline spot을 늘리기보다 food axis와 reset pocket을 같이 남기는 쪽으로 정리했습니다.",
+      "visualKicker": "Food-led city edit"
+    },
+    "en": {
+      "eyebrow": "Osaka result brief",
+      "coverMeta": "Osaka editorial result",
+      "coverNote": "This Osaka result is framed around meal rhythm and reset windows, not a higher attraction count.",
+      "factRhythm": "Meal-first rhythm with one softer reset",
+      "factShape": "One food core · one quieter pocket · one short night close",
+      "factBest": "Travelers who want clear food-walk-rest rhythm on a shorter trip",
+      "editorNote": "This version keeps Osaka from overheating by letting one axis carry the food energy while another stays softer and more breathable.",
+      "visualTitle": "Osaka food-core edit",
+      "visualDesc": "Instead of adding more headline spots, this route keeps the food axis and the reset pocket visible together.",
+      "visualKicker": "Food-led city edit"
+    }
+  },
+  "sapporo": {
+    "ko": {
+      "eyebrow": "삿포로 결과 브리프",
+      "coverMeta": "Sapporo editorial result",
+      "coverNote": "삿포로 결과는 넓은 축과 따뜻한 pocket이 같이 읽히도록 겨울 도시 리듬 중심으로 정리했습니다.",
+      "factRhythm": "Wide winter axis with warm indoor pockets",
+      "factShape": "넓은 중심축 · 실내 연결 · 짧은 야간 글로우",
+      "factBest": "계절감은 느끼되 겨울 도시 피로는 줄이고 싶은 사람",
+      "editorNote": "이 결과는 삿포로를 눈 구경 리스트로 만들지 않고, 차가운 바깥 축과 따뜻한 한 끼/실내 pocket이 번갈아 나오도록 잡아 겨울 리듬이 무너지지 않게 만든 버전입니다.",
+      "visualTitle": "삿포로 winter-light flow",
+      "visualDesc": "cold air, indoor link, warm meal pocket이 같이 보이게 정리한 겨울 도시 루트입니다.",
+      "visualKicker": "Winter city edit"
+    },
+    "en": {
+      "eyebrow": "Sapporo result brief",
+      "coverMeta": "Sapporo editorial result",
+      "coverNote": "This Sapporo result is organized around winter-city rhythm, where a wider axis and a warm pocket need to stay together.",
+      "factRhythm": "Wide winter axis with warm indoor pockets",
+      "factShape": "A broad center line · indoor links · a short night glow",
+      "factBest": "Travelers who want seasonal atmosphere without piling on winter fatigue",
+      "editorNote": "This version keeps Sapporo from turning into a cold-weather checklist by alternating the open winter line with warmer meal and indoor pockets.",
+      "visualTitle": "Sapporo winter-light flow",
+      "visualDesc": "The route keeps cold air, indoor links, and one warm meal pocket readable on the same page.",
+      "visualKicker": "Winter city edit"
+    }
+  },
+  "sendai": {
+    "ko": {
+      "eyebrow": "센다이 결과 브리프",
+      "coverMeta": "Sendai editorial result",
+      "coverNote": "센다이 결과는 stopover처럼 보이지 않도록 calm axis와 meal pocket이 같이 살아나게 정리했습니다.",
+      "factRhythm": "Calm avenue rhythm with a market pause",
+      "factShape": "차분한 중심축 · market pocket · 조용한 dinner close",
+      "factBest": "과밀한 체크리스트보다 도시 텍스처를 더 오래 남기고 싶은 사람",
+      "editorNote": "이 결과는 센다이를 지나가는 도시처럼 다루지 않고, calm axis 하나와 meal pocket 하나가 도시 성격을 끝까지 끌고 가도록 만든 버전입니다.",
+      "visualTitle": "센다이 calm-city flow",
+      "visualDesc": "green axis, market pause, quiet dinner close로 끝나는 차분한 도시 루트입니다.",
+      "visualKicker": "Calm city edit"
+    },
+    "en": {
+      "eyebrow": "Sendai result brief",
+      "coverMeta": "Sendai editorial result",
+      "coverNote": "This Sendai result is edited so the city reads as a calm destination, not a stopover gap.",
+      "factRhythm": "Calm avenue rhythm with a market pause",
+      "factShape": "A softer city axis · one market pocket · one quiet dinner close",
+      "factBest": "Travelers who want city texture to linger longer than checklist density",
+      "editorNote": "This version keeps Sendai grounded by letting one calm line and one meal pocket define the city from start to finish.",
+      "visualTitle": "Sendai calm-city flow",
+      "visualDesc": "The route closes through a green axis, a market pause, and one quieter dinner rhythm.",
+      "visualKicker": "Calm city edit"
+    }
+  },
+  "okinawa": {
+    "ko": {
+      "eyebrow": "오키나와 결과 브리프",
+      "coverMeta": "Okinawa editorial result",
+      "coverNote": "오키나와 결과는 beach count보다 drive pause와 바다 장면의 간격이 보이도록 편집했습니다.",
+      "factRhythm": "Sea scenes with deliberate drive pauses",
+      "factShape": "바다 앵커 · drive reset · 부드러운 dusk close",
+      "factBest": "풍경은 충분히 보되 섬 전체를 과하게 훑고 싶지는 않은 사람",
+      "editorNote": "이 결과는 오키나와를 beach 리스트로 만들지 않고, sea opener 뒤에 resort pause와 느린 dusk close가 들어와 섬 리듬이 무너지지 않게 잡은 버전입니다.",
+      "visualTitle": "오키나와 sea-reset flow",
+      "visualDesc": "바다 장면은 남기되, drive와 resort pause가 같이 읽히는 섬 루트입니다.",
+      "visualKicker": "Island reset edit"
+    },
+    "en": {
+      "eyebrow": "Okinawa result brief",
+      "coverMeta": "Okinawa editorial result",
+      "coverNote": "This Okinawa result is edited around drive pauses and sea spacing, not a higher beach count.",
+      "factRhythm": "Sea scenes with deliberate drive pauses",
+      "factShape": "A sea anchor · a drive reset · a soft dusk close",
+      "factBest": "Travelers who want scenery without turning the island into a rushed sweep",
+      "editorNote": "This version avoids beach-list logic by letting the sea opener, the resort pause, and the softer dusk close protect the island rhythm.",
+      "visualTitle": "Okinawa sea-reset flow",
+      "visualDesc": "The route keeps the sea vivid while making the drive and reset windows readable too.",
+      "visualKicker": "Island reset edit"
+    }
+  },
+  "jeju": {
+    "ko": {
+      "eyebrow": "제주 결과 브리프",
+      "coverMeta": "Jeju editorial result",
+      "coverNote": "제주 결과는 동서 전체를 다 훑기보다 한 coast line을 더 깊게 남기도록 다시 정리했습니다.",
+      "factRhythm": "One stronger coast line with slower pauses",
+      "factShape": "한 해안축 · café pause · 느린 dinner close",
+      "factBest": "풍경과 휴식의 밸런스를 원하고 이동 피로는 줄이고 싶은 사람",
+      "editorNote": "이 결과는 제주를 넓게 소모하지 않고, 한쪽 coast line과 café pause를 더 깊게 읽어 풍경과 휴식을 같이 남기도록 만든 버전입니다.",
+      "visualTitle": "제주 one-coast edit",
+      "visualDesc": "한 해안축을 더 깊게 읽고 나머지는 비워 두는 쪽으로 정리한 섬 루트입니다.",
+      "visualKicker": "Soft coast edit"
+    },
+    "en": {
+      "eyebrow": "Jeju result brief",
+      "coverMeta": "Jeju editorial result",
+      "coverNote": "This Jeju result is reorganized around one deeper coast line instead of trying to cover both sides of the island.",
+      "factRhythm": "One stronger coast line with slower pauses",
+      "factShape": "A single coast axis · café pauses · a slower dinner close",
+      "factBest": "Travelers who want a better scenery-rest balance with less movement fatigue",
+      "editorNote": "This version keeps Jeju from feeling too spread out by reading one coast line more deeply and leaving more room for pauses.",
+      "visualTitle": "Jeju one-coast edit",
+      "visualDesc": "The route deepens one coast axis and leaves the rest more open and breathable.",
+      "visualKicker": "Soft coast edit"
+    }
+  },
+  "gyeongju": {
+    "ko": {
+      "eyebrow": "경주 결과 브리프",
+      "coverMeta": "Gyeongju editorial result",
+      "coverNote": "경주 결과는 heritage count보다 dusk와 quiet lane rhythm이 먼저 보이게 정리했습니다.",
+      "factRhythm": "Heritage scenes held by dusk and lane rhythm",
+      "factShape": "유산축 · dusk walk · quiet dinner pocket",
+      "factBest": "역사 도시를 장면과 템포로 읽고 싶은 사람",
+      "editorNote": "이 결과는 경주를 유적 리스트로 밀지 않고, dusk walk와 lane rhythm이 도시 전체를 묶도록 만들어 더 오래 남게 한 버전입니다.",
+      "visualTitle": "경주 dusk-heritage flow",
+      "visualDesc": "heritage scene보다 dusk와 quiet lane이 먼저 기억나게 정리한 경주 루트입니다.",
+      "visualKicker": "Heritage dusk edit"
+    },
+    "en": {
+      "eyebrow": "Gyeongju result brief",
+      "coverMeta": "Gyeongju editorial result",
+      "coverNote": "This Gyeongju result is framed so dusk and quiet lane rhythm lead before a higher heritage count does.",
+      "factRhythm": "Heritage scenes held by dusk and lane rhythm",
+      "factShape": "A heritage axis · a dusk walk · a quiet dinner pocket",
+      "factBest": "Travelers who want to read a heritage city through scene and tempo",
+      "editorNote": "This version avoids checklist pressure by letting dusk and quieter lanes tie the whole city together more elegantly.",
+      "visualTitle": "Gyeongju dusk-heritage flow",
+      "visualDesc": "The route is shaped so dusk and quiet lanes stay in memory longer than the raw heritage count.",
+      "visualKicker": "Heritage dusk edit"
+    }
+  },
+  "macau": {
+    "ko": {
+      "eyebrow": "마카오 결과 브리프",
+      "coverMeta": "Macau editorial result",
+      "coverNote": "마카오 결과는 old core와 bright side를 둘 다 세게 끌기보다, day-night contrast만 선명하게 남기도록 정리했습니다.",
+      "factRhythm": "Compact old core with one bright close",
+      "factShape": "old-core walk · bridge pocket · one bright night finish",
+      "factBest": "짧은 일정에서도 heritage와 night tone을 같이 보고 싶은 사람",
+      "editorNote": "이 결과는 마카오를 작게 믿는 쪽으로 잡았습니다. old core와 bright side를 모두 길게 끌지 않고, bridge pocket을 사이에 두고 contrast만 선명하게 남깁니다.",
+      "visualTitle": "마카오 compact contrast flow",
+      "visualDesc": "짧은 old-core walk와 one bright close만 남겨 contrast가 흐려지지 않게 만든 루트입니다.",
+      "visualKicker": "Compact contrast edit"
+    },
+    "en": {
+      "eyebrow": "Macau result brief",
+      "coverMeta": "Macau editorial result",
+      "coverNote": "This Macau result keeps the old core and the bright side from competing by holding only the day-night contrast clearly.",
+      "factRhythm": "Compact old core with one bright close",
+      "factShape": "An old-core walk · a bridge pocket · one bright night finish",
+      "factBest": "Travelers who want both heritage and night tone on a shorter route",
+      "editorNote": "This version trusts Macau’s scale. It does not drag both the old core and the bright side too far, and leaves the contrast clear instead.",
+      "visualTitle": "Macau compact contrast flow",
+      "visualDesc": "A shorter old-core walk and one bright close keep the contrast elegant instead of noisy.",
+      "visualKicker": "Compact contrast edit"
+    }
+  }
+};
+
+  const priorityResultMicroBriefMap = {
+  "osaka": {
+    "ko": [
+      {
+        "kicker": "Food axis",
+        "text": "Namba나 main food core를 하루의 중심축으로 두고, 나머지는 쉬는 pocket으로 눌러 주세요."
+      },
+      {
+        "kicker": "Reset pocket",
+        "text": "Nakanoshima나 quieter west side가 들어와야 오사카가 오래 갑니다."
+      },
+      {
+        "kicker": "Night finish",
+        "text": "야간은 길게 늘리기보다 one bright close만 남기는 편이 더 세련됩니다."
+      }
+    ],
+    "en": [
+      {
+        "kicker": "Food axis",
+        "text": "Let one food core such as Namba carry the day, then use the rest of the route as softer resets."
+      },
+      {
+        "kicker": "Reset pocket",
+        "text": "A quieter west-side layer like Nakanoshima keeps Osaka from burning too hot for too long."
+      },
+      {
+        "kicker": "Night finish",
+        "text": "The night usually lands better when it stays as one bright close instead of a longer spread."
+      }
+    ]
+  },
+  "sapporo": {
+    "ko": [
+      {
+        "kicker": "Winter width",
+        "text": "오도리 같은 넓은 축을 먼저 잡고, 중간에 따뜻한 식사 pocket을 넣어 주세요."
+      },
+      {
+        "kicker": "Indoor link",
+        "text": "눈이나 비가 오면 지하 연결과 실내 전망을 더 빨리 앞당기는 편이 좋습니다."
+      },
+      {
+        "kicker": "Short glow",
+        "text": "야간은 짧게 남겨야 겨울 도시 피로가 덜 쌓입니다."
+      }
+    ],
+    "en": [
+      {
+        "kicker": "Winter width",
+        "text": "Open through a wider line like Odori, then place one warm meal pocket in the middle."
+      },
+      {
+        "kicker": "Indoor link",
+        "text": "In snow or rain, underground links and indoor views should come forward earlier."
+      },
+      {
+        "kicker": "Short glow",
+        "text": "Keeping the night shorter helps the winter-city rhythm stay lighter."
+      }
+    ]
+  },
+  "sendai": {
+    "ko": [
+      {
+        "kicker": "Calm opener",
+        "text": "역 근처나 조젠지도리처럼 이해 쉬운 calm axis로 먼저 열어 주세요."
+      },
+      {
+        "kicker": "Market pause",
+        "text": "시장이나 아케이드 pocket이 들어와야 센다이가 transit city처럼 보이지 않습니다."
+      },
+      {
+        "kicker": "Quiet close",
+        "text": "저녁은 크게 퍼뜨리기보다 quiet dinner close로 정리하는 편이 맞습니다."
+      }
+    ],
+    "en": [
+      {
+        "kicker": "Calm opener",
+        "text": "Open through a readable calm axis like the station area or Jozenji-dori."
+      },
+      {
+        "kicker": "Market pause",
+        "text": "A market or arcade pocket keeps Sendai from reading like a transit gap."
+      },
+      {
+        "kicker": "Quiet close",
+        "text": "The evening lands better as one quieter dinner close than as a wider spread."
+      }
+    ]
+  },
+  "okinawa": {
+    "ko": [
+      {
+        "kicker": "Sea opener",
+        "text": "첫 장면은 바다로 여되, 너무 먼 beach 추가는 빨리 끊어 주세요."
+      },
+      {
+        "kicker": "Drive pause",
+        "text": "오키나와는 drive spacing이 route quality를 크게 좌우합니다."
+      },
+      {
+        "kicker": "Soft dusk",
+        "text": "마감은 resort pause나 dusk close처럼 느리게 닫는 편이 좋습니다."
+      }
+    ],
+    "en": [
+      {
+        "kicker": "Sea opener",
+        "text": "Open with the sea, but cut the urge to add one more distant beach early."
+      },
+      {
+        "kicker": "Drive pause",
+        "text": "In Okinawa, drive spacing changes the quality of the whole route."
+      },
+      {
+        "kicker": "Soft dusk",
+        "text": "The close usually works best as a slower dusk or resort pause."
+      }
+    ]
+  },
+  "jeju": {
+    "ko": [
+      {
+        "kicker": "One coast",
+        "text": "동서 전체보다 한 coast line을 더 깊게 읽는 쪽이 이번 결과와 잘 맞습니다."
+      },
+      {
+        "kicker": "Café pause",
+        "text": "제주는 café pause를 빼면 scenic drive만 남아 금방 피곤해집니다."
+      },
+      {
+        "kicker": "Local close",
+        "text": "숙소 근처 dinner close를 단단하게 남겨야 route가 덜 흩어집니다."
+      }
+    ],
+    "en": [
+      {
+        "kicker": "One coast",
+        "text": "This result works best when one coast line is read more deeply than the whole island."
+      },
+      {
+        "kicker": "Café pause",
+        "text": "Without café pauses, Jeju quickly turns into scenery and drive fatigue only."
+      },
+      {
+        "kicker": "Local close",
+        "text": "A stronger dinner close near the stay keeps the route from scattering."
+      }
+    ]
+  },
+  "gyeongju": {
+    "ko": [
+      {
+        "kicker": "Dusk first",
+        "text": "경주는 dusk가 들어가야 heritage texture가 더 깊어집니다."
+      },
+      {
+        "kicker": "Lane rhythm",
+        "text": "quiet lane과 hanok pocket이 같이 있어야 결과가 더 오래 남습니다."
+      },
+      {
+        "kicker": "Edit down",
+        "text": "유적 개수 하나를 덜고 한 장면을 더 길게 두는 편이 훨씬 좋습니다."
+      }
+    ],
+    "en": [
+      {
+        "kicker": "Dusk first",
+        "text": "Gyeongju’s heritage texture deepens once dusk becomes part of the route."
+      },
+      {
+        "kicker": "Lane rhythm",
+        "text": "Quiet lanes and hanok pockets help the result linger much longer."
+      },
+      {
+        "kicker": "Edit down",
+        "text": "Cut one heritage count and let one scene stay longer instead."
+      }
+    ]
+  },
+  "macau": {
+    "ko": [
+      {
+        "kicker": "Old-core first",
+        "text": "Senado나 old core를 짧고 분명하게 먼저 읽는 편이 가장 좋습니다."
+      },
+      {
+        "kicker": "Bridge pocket",
+        "text": "Taipa bridge pocket이 들어와야 day-night contrast가 덜 거칠어집니다."
+      },
+      {
+        "kicker": "One bright close",
+        "text": "night scene은 Cotai one bright close만 남겨도 충분합니다."
+      }
+    ],
+    "en": [
+      {
+        "kicker": "Old-core first",
+        "text": "Macau usually opens best through a short, clear old-core read."
+      },
+      {
+        "kicker": "Bridge pocket",
+        "text": "A Taipa bridge pocket makes the day-night contrast feel less abrupt."
+      },
+      {
+        "kicker": "One bright close",
+        "text": "One brighter Cotai close is usually enough for the night."
+      }
+    ]
+  }
+};
+
+  const priorityResultVisualStoryMap = {
+  "osaka": {
+    "ko": {
+      "coverTitle": "오사카 food-core cover",
+      "coverText": "이번 결과는 오사카를 attraction list가 아니라 meal rhythm이 보이는 도시로 다시 읽게 만드는 cover입니다.",
+      "routeTitle": "한 축은 loud, 한 축은 softer",
+      "routeText": "food core 뒤에 quieter west pocket을 넣어 route가 과열되지 않게 잡았습니다.",
+      "packageTitle": "왜 이 route가 오래 가는지",
+      "packageText": "오사카는 더 많이 넣을수록 좋아지는 도시가 아니라, meal spacing과 night close를 더 정확히 잡을수록 좋아집니다.",
+      "branchTitle": "교토 또는 후쿠오카로 이어 읽기",
+      "branchText": "quiet contrast가 필요하면 Kyoto, compact food rhythm 비교가 필요하면 Fukuoka 쪽으로 가지를 치는 편이 자연스럽습니다."
+    },
+    "en": {
+      "coverTitle": "Osaka food-core cover",
+      "coverText": "This cover reframes Osaka as a city of meal rhythm rather than a simple attraction list.",
+      "routeTitle": "One louder axis, one softer line",
+      "routeText": "A quieter west-side pocket is placed behind the food core so the route does not overheat.",
+      "packageTitle": "Why this route holds",
+      "packageText": "Osaka gets stronger when meal spacing and the night close are tuned more carefully, not when more stops are added.",
+      "branchTitle": "Continue into Kyoto or Fukuoka",
+      "branchText": "Branch into Kyoto for quieter contrast, or into Fukuoka to compare a more compact food-city rhythm."
+    }
+  },
+  "sapporo": {
+    "ko": {
+      "coverTitle": "삿포로 winter-light cover",
+      "coverText": "이 cover는 삿포로를 눈 구경 도시가 아니라 cold air와 warm pocket이 번갈아 나오는 도시로 읽게 만듭니다.",
+      "routeTitle": "차가운 축과 따뜻한 pocket",
+      "routeText": "넓은 바깥 축 뒤에 실내 연결과 warm meal pocket을 넣어 겨울 리듬을 정리했습니다.",
+      "packageTitle": "왜 이 route가 겨울에 강한지",
+      "packageText": "겨울 도시는 stop 수보다 회복 구간 배치가 더 중요합니다. 이 route는 그 간격을 먼저 잡았습니다.",
+      "branchTitle": "센다이 또는 도쿄로 이어 읽기",
+      "branchText": "부드러운 북쪽 축을 더 읽고 싶다면 Sendai, 밀도 차이를 크게 보고 싶다면 Tokyo로 이어가면 좋습니다."
+    },
+    "en": {
+      "coverTitle": "Sapporo winter-light cover",
+      "coverText": "This cover reads Sapporo through cold air and warm pockets rather than as a snow-spot list.",
+      "routeTitle": "Cold lines and warm pockets",
+      "routeText": "The wider outdoor axis is balanced by indoor links and one warm meal pocket.",
+      "packageTitle": "Why this route works in winter",
+      "packageText": "In a winter city, recovery windows matter more than one extra stop. This route is built around that spacing.",
+      "branchTitle": "Continue into Sendai or Tokyo",
+      "branchText": "Move into Sendai for a softer northern read, or Tokyo if you want the density contrast to sharpen."
+    }
+  },
+  "sendai": {
+    "ko": {
+      "coverTitle": "센다이 calm-city cover",
+      "coverText": "이 cover는 센다이를 transit gap이 아니라 calm axis가 있는 도시로 다시 읽게 만듭니다.",
+      "routeTitle": "green axis와 meal pocket",
+      "routeText": "조젠지도리 같은 calm line과 시장/아케이드 pocket이 같이 있어야 센다이가 살아납니다.",
+      "packageTitle": "왜 이 route가 stopover처럼 안 보이는지",
+      "packageText": "센다이는 하나의 강한 축과 하나의 meal pocket만 정확해도 도시 성격이 분명해집니다.",
+      "branchTitle": "삿포로 또는 서울로 이어 읽기",
+      "branchText": "부드러운 북쪽 도시 결을 넓히려면 Sapporo, calm-versus-fast contrast를 보려면 Seoul이 잘 붙습니다."
+    },
+    "en": {
+      "coverTitle": "Sendai calm-city cover",
+      "coverText": "This cover reframes Sendai as a city with a calm axis, not just a stopover gap.",
+      "routeTitle": "A green line and one meal pocket",
+      "routeText": "A calm line like Jozenji-dori and a market pocket help Sendai hold together.",
+      "packageTitle": "Why this does not feel like a stopover",
+      "packageText": "In Sendai, one strong axis and one meal pocket are often enough to make the city feel complete.",
+      "branchTitle": "Continue into Sapporo or Seoul",
+      "branchText": "Choose Sapporo to widen the softer north-city read, or Seoul for a calm-versus-fast contrast."
+    }
+  },
+  "okinawa": {
+    "ko": {
+      "coverTitle": "오키나와 sea-reset cover",
+      "coverText": "이 cover는 오키나와를 beach count보다 sea opener와 pause spacing으로 읽게 만드는 버전입니다.",
+      "routeTitle": "바다 뒤에 쉬는 구간을 남기기",
+      "routeText": "sea scene은 유지하되 drive pause와 resort pocket을 같이 남겨 섬 리듬을 지켰습니다.",
+      "packageTitle": "왜 이 route가 덜 피곤한지",
+      "packageText": "오키나와는 한 장면을 더 보는 것보다, 멀어지는 이동을 하나 덜어내는 편이 더 큰 차이를 만듭니다.",
+      "branchTitle": "제주 또는 타이베이로 이어 읽기",
+      "branchText": "다른 island route를 보고 싶다면 Jeju, sea air와 city night contrast를 보고 싶다면 Taipei가 잘 붙습니다."
+    },
+    "en": {
+      "coverTitle": "Okinawa sea-reset cover",
+      "coverText": "This cover reads Okinawa through sea openings and pause spacing rather than a higher beach count.",
+      "routeTitle": "Leave rest behind the sea scenes",
+      "routeText": "The sea stays vivid, but the drive pause and resort pocket keep the island rhythm protected.",
+      "packageTitle": "Why this route feels lighter",
+      "packageText": "In Okinawa, removing one longer movement often changes the day more than adding one more scenic point.",
+      "branchTitle": "Continue into Jeju or Taipei",
+      "branchText": "Choose Jeju for another island route, or Taipei if you want a sea-air versus night-city contrast."
+    }
+  },
+  "jeju": {
+    "ko": {
+      "coverTitle": "제주 one-coast cover",
+      "coverText": "이 cover는 제주를 넓게 훑는 도시가 아니라 한 coast line을 더 깊게 남기는 도시로 다시 읽게 만듭니다.",
+      "routeTitle": "한쪽 해안축을 더 깊게",
+      "routeText": "한 coast line에 무게를 두고 café pause와 dinner close로 route를 단단하게 잡았습니다.",
+      "packageTitle": "왜 이 route가 더 제주답게 남는지",
+      "packageText": "제주는 더 많이 보는 것보다 한쪽 해안의 tempo를 더 깊게 읽을 때 훨씬 더 또렷하게 남습니다.",
+      "branchTitle": "부산 또는 경주로 이어 읽기",
+      "branchText": "coast city contrast를 보고 싶다면 Busan, 느린 한국 trip 축을 넓히고 싶다면 Gyeongju가 잘 붙습니다."
+    },
+    "en": {
+      "coverTitle": "Jeju one-coast cover",
+      "coverText": "This cover reframes Jeju around one deeper coast line instead of a wider island sweep.",
+      "routeTitle": "Read one coast more deeply",
+      "routeText": "The route stays tighter by giving more weight to one coast axis, café pauses, and a dinner close.",
+      "packageTitle": "Why this feels more like Jeju",
+      "packageText": "Jeju usually lingers more clearly when one coast tempo is read deeply instead of everything being covered more widely.",
+      "branchTitle": "Continue into Busan or Gyeongju",
+      "branchText": "Choose Busan for a coast-city contrast, or Gyeongju if you want to widen the slower Korea-trip axis."
+    }
+  },
+  "gyeongju": {
+    "ko": {
+      "coverTitle": "경주 dusk-heritage cover",
+      "coverText": "이 cover는 경주를 heritage count보다 dusk와 lane rhythm으로 먼저 읽게 만드는 버전입니다.",
+      "routeTitle": "유산 뒤에 lane과 dusk를 남기기",
+      "routeText": "유적 수를 더하는 대신, quiet lane과 dusk walk가 도시 전체를 묶도록 정리했습니다.",
+      "packageTitle": "왜 이 route가 더 오래 남는지",
+      "packageText": "경주는 볼거리의 개수보다 느린 템포와 해 질 무렵의 장면을 어떻게 남기느냐가 더 중요합니다.",
+      "branchTitle": "교토 또는 부산으로 이어 읽기",
+      "branchText": "quiet heritage city 비교가 필요하면 Kyoto, 역사 도시와 coast city 대비가 필요하면 Busan이 잘 붙습니다."
+    },
+    "en": {
+      "coverTitle": "Gyeongju dusk-heritage cover",
+      "coverText": "This cover reads Gyeongju through dusk and lane rhythm before a raw heritage count.",
+      "routeTitle": "Keep dusk and lanes behind the heritage axis",
+      "routeText": "Instead of adding more sites, the route lets quiet lanes and a dusk walk hold the city together.",
+      "packageTitle": "Why this route lingers longer",
+      "packageText": "In Gyeongju, slower tempo and dusk scenes matter more than a higher sightseeing count.",
+      "branchTitle": "Continue into Kyoto or Busan",
+      "branchText": "Choose Kyoto for a quieter heritage-city comparison, or Busan for a heritage-versus-coast contrast."
+    }
+  },
+  "macau": {
+    "ko": {
+      "coverTitle": "마카오 compact-contrast cover",
+      "coverText": "이 cover는 마카오를 old core와 bright side가 싸우지 않도록 compact contrast로 읽게 만듭니다.",
+      "routeTitle": "짧은 old core, 짧은 bright close",
+      "routeText": "heritage walk와 night close를 둘 다 짧고 분명하게 두어 도시 scale을 믿는 쪽으로 정리했습니다.",
+      "packageTitle": "왜 이 route가 더 세련되게 남는지",
+      "packageText": "마카오는 양쪽을 다 길게 끄는 순간 contrast가 흐려집니다. bridge pocket 하나와 one bright close가 핵심입니다.",
+      "branchTitle": "홍콩 또는 타이베이로 이어 읽기",
+      "branchText": "vertical harbor night contrast를 보고 싶다면 Hong Kong, greater China night rhythm을 넓히고 싶다면 Taipei가 자연스럽습니다."
+    },
+    "en": {
+      "coverTitle": "Macau compact-contrast cover",
+      "coverText": "This cover keeps Macau elegant by reading it as compact contrast instead of letting the old core and bright side compete.",
+      "routeTitle": "A short old core and a short bright close",
+      "routeText": "The route trusts Macau’s scale by keeping both the heritage walk and the night close short and clear.",
+      "packageTitle": "Why this route feels more controlled",
+      "packageText": "Macau loses elegance when both sides are stretched too far. One bridge pocket and one bright close are usually enough.",
+      "branchTitle": "Continue into Hong Kong or Taipei",
+      "branchText": "Choose Hong Kong for a vertical harbor-night contrast, or Taipei to widen the Greater China night rhythm."
+    }
+  }
+};
+
+
 const priorityCityEntryMap = {
     tokyo:{
       ko:{visitTitle:'Visit split', first:['First-time','Asakusa → Ueno → Kiyosumi','읽기 쉬운 축부터 quiet pocket으로 마감하세요.'], second:['Second-time','Kiyosumi → Jinbocho → Kagurazaka','두 번째라면 재질과 저녁 결이 더 오래 남습니다.'], entries:[['Classic first read','Asakusa → Ueno → Kiyosumi'],['Design-soft read','Daikanyama → Nakameguro → Shibuya late'],['Night-led read','Shinjuku side → Omoide lane → late café']]},
@@ -641,6 +1198,31 @@ function getPriorityRefinePack(city=''){
     };
   }
 
+
+  function getPriorityResultHeroPack(city=''){
+    const slug = String(city || '').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+    const entry = priorityResultHeroPackMap[slug];
+    if (!entry) return null;
+    const lang = window.RyokoApp?.lang || 'ko';
+    return entry[lang] || entry.en || entry.ko || null;
+  }
+
+  function getPriorityResultMicroBriefPack(city=''){
+    const slug = String(city || '').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+    const entry = priorityResultMicroBriefMap[slug];
+    if (!entry) return null;
+    const lang = window.RyokoApp?.lang || 'ko';
+    return entry[lang] || entry.en || entry.ko || null;
+  }
+
+  function getPriorityResultVisualStoryPack(city=''){
+    const slug = String(city || '').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+    const entry = priorityResultVisualStoryMap[slug];
+    if (!entry) return null;
+    const lang = window.RyokoApp?.lang || 'ko';
+    return entry[lang] || entry.en || entry.ko || null;
+  }
+
   function getSeasonalResultFeature(destination=''){
     const slug = String(destination||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
     const map = {
@@ -676,26 +1258,30 @@ function getPriorityRefinePack(city=''){
     const visualDesc = qs('resultVisualDesc');
     const visualKicker = qs('resultVisualKicker');
     const voice = window.RyokoApp?.getCityVoice?.(destination);
-    if (eyebrow) eyebrow.textContent = uiCopy(`${destination} 루트 노트`, `${destination} route note`);
-    if (coverMeta) coverMeta.textContent = uiCopy(`${destination} 플래너 에디트`, `${destination} planner edit`);
-    if (coverNote) coverNote.textContent = uiCopy(`${destination} 결과도 홈과 매거진에서 쓰는 같은 커버 규칙으로 읽히게 정리했습니다.`, `${destination} results now follow the same cover framing used on the home and magazine pages.`);
-    if (rhythm) rhythm.textContent = textValue(data.pace, 'Balanced city pacing');
-    if (shape) shape.textContent = summarizeRouteShape(data);
-    if (best) best.textContent = textValue(data.bestFor, 'Travelers who want a smoother route');
-    if (note) note.textContent = buildEditorNote(data);
+    const heroPack = getPriorityResultHeroPack(destination);
+    if (eyebrow) eyebrow.textContent = heroPack?.eyebrow || uiCopy(`${destination} 루트 노트`, `${destination} route note`);
+    if (coverMeta) coverMeta.textContent = heroPack?.coverMeta || uiCopy(`${destination} 플래너 에디트`, `${destination} planner edit`);
+    if (coverNote) coverNote.textContent = heroPack?.coverNote || uiCopy(`${destination} 결과도 홈과 매거진에서 쓰는 같은 커버 규칙으로 읽히게 정리했습니다.`, `${destination} results now follow the same cover framing used on the home and magazine pages.`);
+    if (rhythm) rhythm.textContent = heroPack?.factRhythm || textValue(data.pace, 'Balanced city pacing');
+    if (shape) shape.textContent = heroPack?.factShape || summarizeRouteShape(data);
+    if (best) best.textContent = heroPack?.factBest || textValue(data.bestFor, 'Travelers who want a smoother route');
+    if (note) note.textContent = heroPack?.editorNote || buildEditorNote(data);
     if (visual) {
       visual.style.backgroundImage = `linear-gradient(180deg, rgba(17,27,45,0.08) 0%, rgba(17,27,45,0.58) 100%), url("${cityImageFor(destination)}")`;
     }
-    if (visualTitle) visualTitle.textContent = voice?.strap || uiCopy(`${destination} 에디토리얼 플로우`, `${destination} editorial flow`);
-    if (visualDesc) visualDesc.textContent = textValue(data.summary, 'Built like a readable magazine route instead of a crowded checklist.');
-    if (visualKicker) visualKicker.textContent = voice?.mood || textValue(data.vibe, 'City cover');
+    if (visualTitle) visualTitle.textContent = heroPack?.visualTitle || voice?.strap || uiCopy(`${destination} 에디토리얼 플로우`, `${destination} editorial flow`);
+    if (visualDesc) visualDesc.textContent = heroPack?.visualDesc || textValue(data.summary, 'Built like a readable magazine route instead of a crowded checklist.');
+    if (visualKicker) visualKicker.textContent = heroPack?.visualKicker || voice?.mood || textValue(data.vibe, 'City cover');
   }
   function buildMicroBrief(data){
+    const destination = data.destination || readForm().destination || '';
+    const custom = getPriorityResultMicroBriefPack(destination);
+    if (custom?.length) return custom;
     const firstDay = data.days?.[0] || {};
     const lastDay = data.days?.[data.days?.length - 1] || {};
     const firstPlace = normalizePlaces(firstDay)[0]?.name || textValue(firstDay.title, uiCopy('첫날 시작', 'Opening day'));
     const lastMove = normalizePlaces(lastDay).slice(-1)[0]?.name || textValue(lastDay.title, uiCopy('마지막 날', 'Final day'));
-    const voice = window.RyokoApp?.getCityVoice?.(data.destination || readForm().destination || '');
+    const voice = window.RyokoApp?.getCityVoice?.(destination);
     return [
       { kicker: uiCopy('시작점', 'Start clean'), text: uiCopy(`${firstPlace} 쪽에서 시작하면 첫 인상이 덜 산만합니다.`, `Start around ${firstPlace} for a cleaner opening tone.`) },
       { kicker: uiCopy('리듬 유지', 'Keep the rhythm'), text: voice?.watch || buildEditorNote(data) },
@@ -1013,35 +1599,36 @@ function getPriorityRefinePack(city=''){
     if (title) title.textContent = uiCopy('결과를 기사형 패키지처럼 읽게 만듭니다', 'See the result like an editorial package', '結果を小さなエディトリアルパッケージのように読めるようにします', '讓這份結果像一個小型 editorial package 一樣被閱讀');
     if (desc) desc.textContent = copy.routeNoteDesc;
     const seasonal = getSeasonalResultFeature(baseCity);
+    const storyPack = getPriorityResultVisualStoryPack(baseCity);
     const cards = [
       {
         kicker: copy.cityCover,
-        title: `${current.name}`,
-        text: textValue(data.summary, uiCopy('이 여정의 전체 리듬을 먼저 잡아주는 대표 컷입니다.', 'This is the cover frame that sets the route tone first.')),
+        title: storyPack?.coverTitle || `${current.name}`,
+        text: storyPack?.coverText || textValue(data.summary, uiCopy('이 여정의 전체 리듬을 먼저 잡아주는 대표 컷입니다.', 'This is the cover frame that sets the route tone first.')),
         image: window.RyokoApp.resolvePath(current.image || cityImageFor(baseCity)),
         actionLabel: uiCopy('도시 가이드', 'City guide', '都市ガイド', '城市指南'),
         actionHref: window.RyokoApp.resolvePath(current.guide)
       },
       {
         kicker: copy.routeMood,
-        title: textValue(dayOne.title, uiCopy('첫날의 리듬', 'Opening rhythm')),
-        text: dayOnePlaces || uiCopy('첫날은 강한 앵커와 부드러운 포켓을 섞어 과밀하지 않게 시작합니다.', 'Day one mixes one anchor and softer pockets so the route opens cleanly.'),
+        title: storyPack?.routeTitle || textValue(dayOne.title, uiCopy('첫날의 리듬', 'Opening rhythm')),
+        text: storyPack?.routeText || dayOnePlaces || uiCopy('첫날은 강한 앵커와 부드러운 포켓을 섞어 과밀하지 않게 시작합니다.', 'Day one mixes one anchor and softer pockets so the route opens cleanly.'),
         image: window.RyokoApp.resolvePath(exampleImageFor(baseCity)),
         actionLabel: copy.sampleRead,
         actionHref: window.RyokoApp.resolvePath(current.example)
       },
       {
-        kicker: uiCopy('시즌 노트', 'Seasonal note', '季節ノート', '季節筆記'),
-        title: seasonal.title,
-        text: seasonal.desc,
+        kicker: storyPack ? uiCopy('루트 패키지', 'Route package', 'ルートパッケージ', '路線套組') : uiCopy('시즌 노트', 'Seasonal note', '季節ノート', '季節筆記'),
+        title: storyPack?.packageTitle || seasonal.title,
+        text: storyPack?.packageText || seasonal.desc,
         image: window.RyokoApp.resolvePath(current.image || cityImageFor(baseCity)),
         actionLabel: copy.plannerBase,
         actionHref: '#plannerForm'
       },
       {
         kicker: copy.nextBranch,
-        title: uiCopy(`${related.name}까지 이어서 읽기`, `Branch into ${related.name}`, `${related.name}へ続けて読む`, `延伸閱讀到 ${related.name}`),
-        text: uiCopy(`${related.vibe} 톤의 도시를 이어서 읽으면 다음 저장 루프가 더 자연스럽게 이어집니다.`, `A ${related.vibe} city keeps the next save-and-read loop moving naturally, especially when this result already leans in that direction.`, `${related.vibe}の空気を持つ都市へ続けると、次の保存と読み直しの流れが自然につながります。`, `接著讀一座帶有 ${related.vibe} 氛圍的城市，會讓下一輪保存與再閱讀更自然地延續下去。`),
+        title: storyPack?.branchTitle || uiCopy(`${related.name}까지 이어서 읽기`, `Branch into ${related.name}`, `${related.name}へ続けて読む`, `延伸閱讀到 ${related.name}`),
+        text: storyPack?.branchText || uiCopy(`${related.vibe} 톤의 도시를 이어서 읽으면 다음 저장 루프가 더 자연스럽게 이어집니다.`, `A ${related.vibe} city keeps the next save-and-read loop moving naturally, especially when this result already leans in that direction.`, `${related.vibe}の空気を持つ都市へ続けると、次の保存と読み直しの流れが自然につながります。`, `接著讀一座帶有 ${related.vibe} 氛圍的城市，會讓下一輪保存與再閱讀更自然地延續下去。`),
         image: window.RyokoApp.resolvePath(related.image || cityImageFor(related.name)),
         actionLabel: copy.nextCity,
         actionHref: window.RyokoApp.resolvePath(related.guide)
