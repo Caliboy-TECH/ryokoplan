@@ -349,7 +349,7 @@
           chipsKo:['코스트', '드라이브', '가벼운 분기'], chipsEn:['Coast', 'Drive', 'Softer branch'], duration:'2N3D'
         },
         {
-          key:'fukuoka-to-osaka-food', source:'Fukuoka', city:'Osaka', titleKo:'후쿠오카 다음엔 오사카 푸드 업시프트', titleEn:'Food upshift to Osaka after Fukuoka', image:'../assets/images/cities/osaka.jpg', guide:'../city/osaka.html', example:'../example/osaka-2n3d-family.html',
+          key:'fukuoka-to-osaka-food', source:'Fukuoka', city:'Osaka', titleKo:'후쿠오카 다음엔 오사카 푸드 업시프트', titleEn:'Food upshift to Osaka after Fukuoka', image:'../assets/images/cities/osaka.jpg', guide:'../city/osaka.html', example:'../example/osaka-2n3d-food-trip.html',
           summaryKo:'짧은 후쿠오카 푸드 리듬이 좋았다면, 오사카는 더 진한 식사 동선과 에너지를 주는 다음 샘플입니다.',
           summaryEn:'If Fukuoka worked as a compact food rhythm, Osaka is the next sample for heavier meal sequencing and more energy.',
           chipsKo:['푸드', '업시프트', '주말'], chipsEn:['Food-led', 'Upshift', 'Weekend'], duration:'2N3D'
