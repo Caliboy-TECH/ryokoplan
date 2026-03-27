@@ -5034,3 +5034,40 @@ body{
 .shared-editorial-tone-card p{margin:8px 0 0;color:#50606f;line-height:1.6}
 .shared-editorial-tone-foot{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid rgba(21,39,58,.08)}
 @media (max-width: 900px){.shared-editorial-tone-grid{grid-template-columns:1fr}}
+
+.east-asia-taxonomy-section{display:grid;gap:1rem;background:linear-gradient(180deg,#fffdf9 0%,#f7f2ea 100%)}
+.east-asia-taxonomy-shell{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1.28fr);gap:18px;align-items:start}
+.east-asia-taxonomy-lead{padding:22px;border-radius:28px;background:linear-gradient(180deg,#fffefb 0%,#fff8f0 100%);border:1px solid var(--line)}
+.east-asia-metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
+.east-asia-metric-card{padding:12px 14px;border-radius:18px;background:#fff;border:1px solid var(--line);display:grid;gap:4px}
+.east-asia-metric-card strong{font-size:1rem;line-height:1.1}
+.east-asia-metric-card span{color:var(--muted);font-size:.88rem;line-height:1.45}
+.east-asia-layer-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.east-asia-layer-card{padding:16px;border-radius:22px;background:#fff;border:1px solid var(--line);display:grid;gap:8px}
+.east-asia-layer-card strong{font-size:1.3rem;line-height:1}
+.east-asia-layer-card p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.55}
+.east-asia-track-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.east-asia-track-card{padding:18px;border-radius:24px;background:#fff;border:1px solid var(--line);display:grid;gap:10px}
+.east-asia-track-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.east-asia-track-count{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;padding:0 8px;border-radius:999px;background:#f6efe7;border:1px solid #eadccb;font-size:.78rem;font-weight:700;color:#8d613b}
+.east-asia-track-card h3{margin:0;font-size:1.06rem;line-height:1.22}
+.east-asia-track-card p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.58}
+.east-asia-city-chip-row{display:flex;flex-wrap:wrap;gap:8px}
+.east-asia-city-chip{display:inline-flex;align-items:center;min-height:32px;padding:6px 11px;border-radius:999px;background:#fcfaf6;border:1px solid #ece3d6;color:var(--ink);font-size:.83rem;font-weight:700;text-decoration:none}
+.east-asia-city-chip:hover{text-decoration:none;background:#fff}
+.east-asia-region-grid{display:grid;grid-template-columns:1fr}
+.east-asia-region-card{padding:18px;border-radius:24px;background:#fff;border:1px solid var(--line)}
+.east-asia-region-lines{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.east-asia-region-line{padding:14px;border-radius:18px;background:#fcfaf6;border:1px solid #ece3d6;display:grid;gap:4px}
+.east-asia-region-line strong{font-size:.98rem;line-height:1.2}
+.east-asia-region-line span{color:var(--muted);font-size:.9rem;line-height:1.45}
+.east-asia-region-line small{color:#8d613b;font-weight:700;font-size:.78rem}
+.city-atlas-toolbar{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,2fr) auto;gap:14px;align-items:end;padding:16px 18px;border-radius:24px;background:linear-gradient(180deg,#fffefb 0%,#fff7ef 100%);border:1px solid var(--line)}
+.city-atlas-toolbar-group{display:grid;gap:8px}
+.city-atlas-toolbar-label{font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8d613b}
+.city-atlas-toolbar-meta{display:grid;justify-items:end;gap:4px;color:var(--muted);font-size:.86rem;line-height:1.45}
+.city-atlas-count{font-size:1rem;line-height:1.1;color:var(--ink)}
+.city-atlas-layer-chip{display:inline-flex;align-items:center;padding:.34rem .62rem;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px);font-size:.74rem;font-weight:700;letter-spacing:.02em;color:#fff8f0}
+.city-atlas-overlay-foot{display:flex;justify-content:flex-start;gap:.42rem;flex-wrap:wrap}
+@media (max-width: 1100px){.east-asia-taxonomy-shell{grid-template-columns:1fr}.east-asia-track-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.city-atlas-toolbar{grid-template-columns:1fr}.city-atlas-toolbar-meta{justify-items:start}.east-asia-region-lines{grid-template-columns:1fr 1fr}}
+@media (max-width: 720px){.east-asia-metric-grid,.east-asia-layer-row,.east-asia-track-grid,.east-asia-region-lines{grid-template-columns:1fr}.east-asia-taxonomy-lead,.east-asia-track-card,.east-asia-region-card{padding:16px}.city-atlas-toolbar{padding:14px}.city-atlas-toolbar .finder-group{flex-wrap:wrap}.east-asia-city-chip-row{gap:6px}}
