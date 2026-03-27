@@ -4933,3 +4933,42 @@ body{
     padding:14px 15px;
   }
 }
+
+
+/* v64 loop refinement */
+.branch-suggestion-inline{
+  display:grid;
+  gap:8px;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(21,39,58,.06);
+  background:rgba(255,251,246,.94);
+}
+.branch-suggestion-inline strong{
+  font-size:.76rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#9b6d46;
+}
+.branch-suggestion-inline p{
+  line-height:1.55;
+}
+.branch-suggestion-list{
+  display:grid;
+  gap:6px;
+}
+.branch-suggestion-list span{
+  display:block;
+  line-height:1.5;
+  color:var(--muted);
+}
+.result-editorial-continue-card{
+  background:linear-gradient(180deg,rgba(255,249,242,.98),rgba(255,255,255,.98));
+}
+.result-editorial-continue-list{
+  display:grid;
+  gap:8px;
+}
+.result-editorial-continue-list p{
+  line-height:1.58;
+}

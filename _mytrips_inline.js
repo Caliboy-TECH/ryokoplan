@@ -114,7 +114,7 @@
           collectionSavedOnly: 'Mostly built from your saved routes',
           collectionSharedHeavy: 'A city with a stronger shared-trip mix',
           collectionRecentHeavy: 'A city you reopened often recently',
-          continueReading: 'Continue reading next',
+          continueReading: 'Continue reading',
           collectionLayer: 'City guide layer',
           publicDeskLabel: 'Public route desk',
           publicDeskPick: 'Editor pick',
@@ -528,6 +528,45 @@
         const pack = map[slug];
         if (!pack) return null;
         const lang = window.RyokoApp.lang === 'zhHant' ? 'zhHant' : (window.RyokoApp.lang || 'en');
+        return pack[lang] || pack.en || null;
+      }
+
+      
+      function branchSuggestionPack(city=''){
+        const slug = String(city || '').trim().toLowerCase();
+        const packs = {
+          tokyo:{
+            ko:{title:'다음으로 읽을 분기', intro:'이 도쿄 루트를 저장했다면, 다음엔 quieter pocket이나 sample route로 이어 읽는 편이 좋습니다.', article:'Tokyo article로 quieter layer 먼저 읽기', city:'Tokyo city guide로 district deeper notes 다시 보기', sample:'Tokyo sample route로 rainy / slower / night variation 비교'},
+            en:{title:'Read next', intro:'If you saved this Tokyo route, the next best move is usually a quieter pocket or a sample branch.', article:'Open the Tokyo article for the quieter city layer', city:'Reopen the Tokyo city guide for deeper district notes', sample:'Compare the Tokyo sample route through rainy / slower / night versions'}
+          },
+          seoul:{
+            ko:{title:'다음으로 읽을 분기', intro:'이 서울 루트 다음엔 quieter district 기준으로 다시 읽는 쪽이 자연스럽습니다.', article:'Seoul article로 contrast 뒤 quieter district 먼저 읽기', city:'Seoul city guide로 Seochon / Mangwon / Jongno deeper notes 보기', sample:'Seoul sample route로 slower / night 차이 비교'},
+            en:{title:'Read next', intro:'After saving this Seoul route, the next natural move is usually through quieter districts.', article:'Open the Seoul article for the quieter layer behind contrast', city:'Reopen the Seoul city guide for Seochon, Mangwon, and Jongno deeper notes', sample:'Compare the Seoul sample route through slower and night variations'}
+          },
+          kyoto:{
+            ko:{title:'다음으로 읽을 분기', intro:'이 교토 루트를 저장했다면 다음은 river edge와 quieter west side 쪽으로 이어 읽는 편이 좋습니다.', article:'Kyoto article로 iconic frame 뒤 quieter layer 읽기', city:'Kyoto city guide로 Okazaki / Nishijin / Kamo notes 보기', sample:'Kyoto sample route로 rainy / slower / dusk rhythm 비교'},
+            en:{title:'Read next', intro:'If you saved this Kyoto route, the strongest next branch usually moves toward the river edge and quieter west side.', article:'Open the Kyoto article for the quieter layer behind the iconic frame', city:'Reopen the Kyoto city guide for Okazaki, Nishijin, and Kamo notes', sample:'Compare the Kyoto sample route through rainy, slower, and dusk-led rhythm'}
+          },
+          taipei:{
+            ko:{title:'다음으로 읽을 분기', intro:'이 타이베이 루트 다음엔 food-first 뒤 texture pocket을 더 읽는 분기가 좋습니다.', article:'Taipei article로 appetite 뒤 texture layer 읽기', city:'Taipei city guide로 Chifeng / Dihua / Treasure Hill notes 보기', sample:'Taipei sample route로 rainy / slower / night close 비교'},
+            en:{title:'Read next', intro:'After this Taipei route, the best branch usually goes deeper into the texture pocket behind the food line.', article:'Open the Taipei article for the layer beyond appetite', city:'Reopen the Taipei city guide for Chifeng, Dihua, and Treasure Hill notes', sample:'Compare the Taipei sample route through rainy, slower, and night-close versions'}
+          },
+          hongkong:{
+            ko:{title:'다음으로 읽을 분기', intro:'이 홍콩 루트 다음엔 skyline보다 slope street와 harbor edge를 더 읽는 쪽이 자연스럽습니다.', article:'Hong Kong article로 skyline 뒤 editorial layer 읽기', city:'Hong Kong city guide로 PMQ / Sheung Wan / West Kowloon notes 보기', sample:'Hong Kong sample route로 slower / night variation 비교'},
+            en:{title:'Read next', intro:'After this Hong Kong route, the most natural branch usually deepens through slope streets and the harbor edge.', article:'Open the Hong Kong article for the editorial layer behind the skyline', city:'Reopen the Hong Kong city guide for PMQ, Sheung Wan, and West Kowloon notes', sample:'Compare the Hong Kong sample route through slower and night variations'}
+          },
+          busan:{
+            ko:{title:'다음으로 읽을 분기', intro:'이 부산 루트 다음엔 coast 뒤 harbor texture를 더 읽는 분기가 좋습니다.', article:'Busan article로 sea 뒤 port-city layer 읽기', city:'Busan city guide로 Yeongdo / Nampo / Bosu notes 보기', sample:'Busan sample route로 rainy / slower / night shore 비교'},
+            en:{title:'Read next', intro:'After this Busan route, the strongest next branch usually goes deeper into the harbor texture behind the coast.', article:'Open the Busan article for the port-city layer behind the sea', city:'Reopen the Busan city guide for Yeongdo, Nampo, and Bosu notes', sample:'Compare the Busan sample route through rainy, slower, and night-shore versions'}
+          },
+          fukuoka:{
+            ko:{title:'다음으로 읽을 분기', intro:'이 후쿠오카 루트 다음엔 compact food line 뒤 quiet local pocket을 더 읽는 편이 좋습니다.', article:'Fukuoka article로 compact route 뒤 local layer 읽기', city:'Fukuoka city guide로 Yakuin / Ohori edge notes 보기', sample:'Fukuoka sample route로 rainy / slower / compact night 비교'},
+            en:{title:'Read next', intro:'After this Fukuoka route, the best next branch usually goes toward the quiet local pocket behind the compact food line.', article:'Open the Fukuoka article for the local layer behind the compact route', city:'Reopen the Fukuoka city guide for Yakuin and Ohori edge notes', sample:'Compare the Fukuoka sample route through rainy, slower, and compact-night versions'}
+          }
+        };
+        const pack = packs[slug];
+        if (!pack) return null;
+        const lang = window.RyokoApp && window.RyokoApp.lang ? window.RyokoApp.lang : 'en';
         return pack[lang] || pack.en || null;
       }
 
