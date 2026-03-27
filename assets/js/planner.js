@@ -1223,6 +1223,132 @@ function getPriorityRefinePack(city=''){
     return entry[lang] || entry.en || entry.ko || null;
   }
 
+
+  const priorityResultDayPolishMap = {
+    osaka: {
+      ko:[
+        { title:'난바 food axis로 첫 장면을 여는 날', intro:'난바 한 축만 먼저 붙잡고, 긴 줄 하나보다 두세 번의 짧은 식사 장면으로 오사카의 템포를 엽니다.', localTip:'도톤보리 전체를 길게 끌기보다 난바 코어 한 구역만 또렷하게 남기면 첫날 피로가 훨씬 덜합니다.' },
+        { title:'우메다 reset 뒤 작은 밤 장면을 남기는 날', intro:'낮엔 우메다와 나카자키초 쪽으로 숨을 고르고, 밤엔 메인 스트립 전체가 아니라 작은 골목 하나만 선명하게 남깁니다.', localTip:'비 오는 날엔 arcade와 실내 상가를 먼저 쓰고, 밤 장면은 bar lane이나 dessert close 하나로 줄이는 편이 좋습니다.' },
+        { title:'간식과 역 동선으로 가볍게 닫는 마지막 날', intro:'마지막 날은 역 근처 간식과 짧은 쇼핑 정도로만 정리해 food trip의 밀도를 흐리지 않습니다.', localTip:'출발 전 마지막 식사는 긴 대기보다 회전 빠른 local spot이 전체 리듬을 더 깨끗하게 지켜줍니다.' }
+      ],
+      en:[
+        { title:'A first day that opens through the Namba food axis', intro:'Open Osaka through one Namba line first, using two or three shorter meal scenes instead of one exhausting queue.', localTip:'If you keep the first day inside one tighter Namba core, Osaka lands with much less fatigue.' },
+        { title:'A Umeda reset before one smaller late-night lane', intro:'Lower the middle of the day through Umeda and Nakazakicho, then leave only one smaller lane vivid at night instead of dragging the whole main strip.', localTip:'On rainy days, let arcades and indoor malls lead, then reduce the late-night close to one dessert stop or bar lane.' },
+        { title:'A lighter final day built around snacks and station logic', intro:'Use the final hours for one practical snack stop, shorter shopping, and an easy station-side close so the food-trip density stays intact.', localTip:'Before departure, a faster local counter usually protects the tone better than one last famous queue.' }
+      ],
+      ja:[
+        { title:'難波の food axis で開く最初の日', intro:'最初は難波の一本だけを深く読み、長い行列一つより短い食事シーンを二つ三つ置いて Osaka のテンポを開きます。', localTip:'初日を難波のコアに絞るほど、Osaka は疲れずに強く残ります。' },
+        { title:'梅田の reset と小さな夜の路地', intro:'昼は梅田と中崎町で少し呼吸を入れ、夜はメインストリップ全部ではなく小さな路地を一つだけ残します。', localTip:'雨の日は arcade と屋内モールを前に出し、夜の締めは dessert か bar lane 一つで十分です。' },
+        { title:'駅まわりで軽く閉じる最後の日', intro:'最終日は駅まわりの軽い食事と短い買い物だけにして、food trip の密度を濁らせないように閉じます。', localTip:'出発前は有名店の長い列より、回転の早い local counter の方が全体のリズムを守れます。' }
+      ],
+      zhHant:[
+        { title:'用 Namba food axis 打開的第一天', intro:'先只把 Namba 這一條軸線讀深，與其排一條很長的隊，不如用兩三段短一點的食物場景打開 Osaka 的節奏。', localTip:'第一天越集中在 Namba 核心，Osaka 越容易留下清楚而不疲倦的第一印象。' },
+        { title:'Umeda reset 之後只留一條小夜巷', intro:'白天用 Umeda 和 Nakazakicho 把節奏放鬆一點，晚上不要整條主街都拉滿，只留一條小巷夜景就夠。', localTip:'雨天先把 arcade 和室內商場放前面，夜裡只用 dessert 或 bar lane 收尾就很好。' },
+        { title:'用小吃和車站節奏輕輕收尾的最後一天', intro:'最後一天只留車站附近的小吃、短購物和輕收尾，別把這趟 food trip 的密度沖散。', localTip:'出發前與其排最後一條名店長隊，不如去一間翻桌快的 local counter，更能守住節奏。' }
+      ]
+    },
+    sapporo: {
+      ko:[
+        { title:'오도리의 넓이와 따뜻한 저녁으로 시작하는 날', intro:'오도리 축으로 도시의 넓이를 먼저 읽고, 따뜻한 저녁 한 끼로 겨울 도시의 첫 인상을 안정적으로 잡습니다.', localTip:'삿포로는 첫날에 넓은 블록을 너무 많이 걷기보다 중심축 하나와 warm meal 하나를 좋게 잡는 편이 낫습니다.' },
+        { title:'겨울 공기와 quieter side를 같이 읽는 날', intro:'낮엔 넓은 축을 짧게 읽고 마루야마 같은 quieter side를 끼운 뒤, 밤엔 스스키노 장면 하나만 선명하게 남깁니다.', localTip:'눈이나 비가 강해지면 지하 상가, indoor view, café pocket을 끼워 겨울 도시 리듬이 끊기지 않게 하세요.' },
+        { title:'카페와 market pocket으로 깨끗하게 닫는 마지막 날', intro:'마지막 날은 카페나 market pocket 정도만 붙이고 짧게 닫아 삿포로의 겨울 공기를 흐리지 않습니다.', localTip:'출발일엔 한 끼를 길게 잡기보다 역 접근이 쉬운 market pocket 하나가 더 잘 맞습니다.' }
+      ],
+      en:[
+        { title:'A first day built on Odori width and one warm dinner', intro:'Read Sapporo’s width through the Odori axis first, then let one warm dinner set the winter-city tone cleanly.', localTip:'Sapporo usually lands better when day one protects one central axis and one warm meal instead of too many wide-block walks.' },
+        { title:'A winter day with one quieter side in the middle', intro:'Keep the wider axis brief, add a quieter side such as Maruyama, and leave only one Susukino scene vivid at night.', localTip:'When snow or rain rises, use underground malls, indoor viewpoints, and one café pocket to keep the winter rhythm intact.' },
+        { title:'A clean final day through cafés and market pockets', intro:'Close through one café or market pocket only, then leave early enough that the winter air stays crisp instead of overworked.', localTip:'On departure day, a practical market stop often works better than one last long sit-down meal.' }
+      ]
+    },
+    sendai: {
+      ko:[
+        { title:'도심에 조용히 적응하는 첫날', intro:'역과 아케이드 축으로 도심에 가볍게 적응하고, 첫 저녁을 조용하게 닫아 센다이의 calm tone을 잡습니다.', localTip:'센다이는 첫날부터 headline spot을 많이 넣기보다 도심 적응과 식사 리듬을 먼저 안정시키는 편이 좋습니다.' },
+        { title:'green line과 market pause가 중심이 되는 날', intro:'조젠지도리 같은 green line을 한 번 깊게 읽고, market pocket과 느린 식사로 하루를 과하게 밀지 않습니다.', localTip:'비 오는 날엔 강변보다 아케이드와 café pocket 비중을 높이면 센다이의 calm flow가 더 잘 유지됩니다.' },
+        { title:'한 동네와 짧은 커피로 마무리하는 마지막 날', intro:'마지막 날은 강한 장면보다 한 동네와 짧은 커피 정도만 남겨 센다이의 pause를 지킵니다.', localTip:'출발 전엔 마지막 한 장면을 더 넣는 것보다 station-side 정리를 일찍 시작하는 편이 전체 인상에 더 좋습니다.' }
+      ],
+      en:[
+        { title:'A first day that settles downtown quietly', intro:'Ease into Sendai through the station and arcade axis, then close the first evening quietly so the calm tone arrives early.', localTip:'Sendai works better when the first day stabilizes downtown rhythm instead of chasing too many headline stops.' },
+        { title:'A day held together by one green line and a market pause', intro:'Read one green line such as Jozenji-dori more deeply, then hold the day together with a market pocket and a slower meal.', localTip:'When rain comes in, increase the arcade and café share instead of leaning harder on the river route.' },
+        { title:'A final day shaped by one soft neighborhood and coffee', intro:'Leave one softer neighborhood and a short coffee stop for the final hours instead of forcing one more headline scene.', localTip:'Before departure, starting station-side logistics earlier usually protects the city impression more than squeezing in one last detour.' }
+      ]
+    },
+    okinawa: {
+      ko:[
+        { title:'해안선 하나와 휴식으로 적응하는 첫날', intro:'도착일엔 해변 수를 늘리지 말고 coast 하나와 쉬는 시간만 남겨 섬의 템포에 먼저 적응합니다.', localTip:'첫날부터 여러 해변을 건드리기보다 숙소 근처 coast line 하나와 early dinner 정도가 가장 안정적입니다.' },
+        { title:'맑은 시간대를 바다에 주는 날', intro:'맑은 시간대를 바다에 주고, 이동 횟수는 줄여 오키나와의 색과 바람을 길게 남깁니다.', localTip:'해가 강한 날은 midday move를 줄이고 dusk sea 쪽으로 무게를 옮기면 훨씬 더 island-like하게 남습니다.' },
+        { title:'드라이브와 resort pause가 중심이 되는 날', intro:'드라이브를 하루의 전부로 만들지 말고 긴 점심과 resort pause를 같이 넣어 sea-reset 구조를 완성합니다.', localTip:'비나 바람이 강해지면 해변 수를 빠르게 줄이고 café/resort pocket 비중을 더 높이세요.' },
+        { title:'마지막 풍경 하나만 남기고 닫는 날', intro:'마지막 날은 브런치나 짧은 바다 장면 하나만 두고 부드럽게 닫아 섬의 공기를 지켜둡니다.', localTip:'출발일엔 욕심내서 한 방향을 더 돌기보다 공항 동선 안쪽의 마지막 view 하나가 더 잘 맞습니다.' }
+      ],
+      en:[
+        { title:'An arrival day built on one coast and real rest', intro:'On arrival day, keep only one coast scene plus real rest so you adjust to the island tempo before trying to cover it.', localTip:'One nearby coast line and an early dinner usually work better than touching several beaches immediately.' },
+        { title:'A sea day that gives the clearest hours to the coast', intro:'Give the clearest hours to the sea, then reduce transfer count so Okinawa’s color and wind stay in the route longer.', localTip:'On brighter days, cutting midday moves and shifting weight toward dusk sea often makes the island feel much more itself.' },
+        { title:'A drive day anchored by lunch and a resort pause', intro:'Do not let the drive become the whole day; anchor it with one long lunch and a resort pause so the sea-reset structure holds.', localTip:'If rain or wind rises, cut beach count quickly and expand cafés or resort pockets instead.' },
+        { title:'A final day that leaves only one last view', intro:'Close with brunch or one short sea scene only, then leave gently enough that the island air still lingers.', localTip:'On departure day, one last airport-side view often works better than trying to force one more big loop.' }
+      ]
+    },
+    jeju: {
+      ko:[
+        { title:'서쪽 coast와 카페 하나로 여는 첫날', intro:'서쪽 coast 한 축과 카페 하나만 또렷하게 두고, 제주의 바람에 먼저 적응하는 식으로 시작합니다.', localTip:'첫날은 오름이나 실외 포인트를 여러 개 넣기보다 coast line 하나와 café pocket 하나가 훨씬 제주답습니다.' },
+        { title:'풍경과 긴 점심을 같이 남기는 날', intro:'남쪽 scenic core를 깊게 읽되, 풍경 사이에 긴 점심과 쉬는 pocket을 넣어 제주를 checklist로 만들지 않습니다.', localTip:'맑은 날엔 scenic drive를 길게 쓰고, 바람이 거세면 café와 bakery pocket 쪽으로 빠르게 전환하는 편이 좋습니다.' },
+        { title:'바람을 보며 방향 하나만 고르는 마지막 날', intro:'마지막 날은 바람과 날씨를 보고 한 방향만 짧게 읽은 뒤 부드럽게 빠져나옵니다.', localTip:'출발 전 마지막 장면은 욕심내기보다 숙소나 공항 동선과 잘 붙는 coast stop 하나가 가장 안정적입니다.' }
+      ],
+      en:[
+        { title:'A first day opened by one west-coast line and one café', intro:'Open Jeju through one west-coast line and one café only, using the arrival day to adjust to wind and island pace.', localTip:'On day one, one coast line plus one café pocket usually feels more like Jeju than several outdoor anchors.' },
+        { title:'A scenic day held together by one longer lunch', intro:'Read the south scenic core more deeply, but hold the day together with one longer lunch and a real reset pocket so Jeju never turns into a checklist.', localTip:'On clear days, stretch the scenic drive; when wind rises, pivot more quickly into cafés, bakeries, or indoor pockets.' },
+        { title:'A final morning guided by wind and one direction only', intro:'Let the final morning follow the wind and weather, choose only one direction, then leave softly instead of squeezing in one more circuit.', localTip:'Before departure, one coast stop that sits neatly on the airport line usually works better than one last ambitious detour.' }
+      ]
+    },
+    gyeongju: {
+      ko:[
+        { title:'대릉원 축을 천천히 여는 첫날', intro:'대릉원과 황리단길 주변을 천천히 걸으며 도시의 낮은 리듬에 먼저 몸을 맞춥니다.', localTip:'경주는 첫날부터 유적 수를 늘리기보다 tomb core와 한옥 거리의 걸음 속도를 먼저 맞추는 편이 좋습니다.' },
+        { title:'heritage walk와 dusk 장면이 중심이 되는 날', intro:'낮엔 유적 걷기, 오후엔 한옥 카페 pause, 밤엔 월지나 old-core dusk 한 장면으로 경주의 결을 완성합니다.', localTip:'비가 오면 야외 유적 수를 줄이고 museum pocket이나 hanok café 쪽 비중을 더 높이세요.' },
+        { title:'조용한 아침으로 고도(古都)를 닫는 마지막 날', intro:'마지막 날은 박물관이나 짧은 산책 정도만 남겨 고도(古都)의 공기를 흐리지 않고 닫습니다.', localTip:'출발 전엔 황리단길보다 더 조용한 lane이나 museum edge가 마지막 인상으로 더 잘 남습니다.' }
+      ],
+      en:[
+        { title:'A first day that settles slowly into the tomb core', intro:'Walk slowly through the tomb core and Hwangridan-gil first so your pace drops into Gyeongju before the city asks for more heritage.', localTip:'Gyeongju usually starts better when the first day matches walking speed to the old core instead of multiplying heritage stops.' },
+        { title:'A day carried by heritage walking and one dusk scene', intro:'Use the day for a heritage walk, the afternoon for one hanok café pause, and the evening for a single Wolji or old-core dusk scene.', localTip:'If rain appears, reduce the outdoor heritage load and let museum pockets or hanok cafés carry more of the day.' },
+        { title:'A final morning that protects the old-capital air', intro:'Leave only a museum pocket or one short walk for the final morning so the old-capital air stays intact to the end.', localTip:'Before departure, a quieter lane or museum edge often leaves a better final impression than returning to the busier café strip.' }
+      ]
+    },
+    macau: {
+      ko:[
+        { title:'세나도와 old lanes로 스케일을 잡는 첫날', intro:'첫날은 세나도와 old-lane 축만 짧고 선명하게 읽어 마카오의 compact scale에 먼저 적응합니다.', localTip:'마카오는 첫날에 구역을 늘리기보다 old core 한 축만 또렷하게 잡는 편이 훨씬 깔끔합니다.' },
+        { title:'타이파 대비와 bright close가 중심이 되는 날', intro:'낮엔 타이파로 한 번 넘어가 대비를 만들고, 밤엔 bright scene 하나만 남겨 골목과 조명의 contrast를 정리합니다.', localTip:'비 오는 날엔 heritage walk를 줄이고 tea room, dessert pocket, indoor resort fallback을 더 빨리 붙이세요.' },
+        { title:'디저트 pocket 하나로 부드럽게 닫는 마지막 날', intro:'마지막 날은 디저트나 tea room pocket 하나 정도만 더해 부드럽게 빠져나오는 편이 좋습니다.', localTip:'출발일엔 세나도 재방문보다 hotel-side dessert close나 quiet square가 더 안정적으로 마무리됩니다.' }
+      ],
+      en:[
+        { title:'A first day that sets scale through Senado and old lanes', intro:'Open Macau through Senado and the old-lane axis only, keeping the first day short enough to adjust to the city’s compact scale.', localTip:'Macau usually reads much cleaner when day one stays inside one old-core axis instead of widening too early.' },
+        { title:'A contrast day built on Taipa and one bright close', intro:'Cross into Taipa to build contrast, then leave only one bright night scene so the lanes and lights do not compete too hard.', localTip:'When rain arrives, shorten the heritage walk fast and bring tea rooms, dessert pockets, or indoor resort fallback forward.' },
+        { title:'A softer final day led by one dessert pocket', intro:'A dessert or tea-room pocket is usually enough for the final hours before a softer departure.', localTip:'On departure day, a hotel-side dessert close or quiet square often works better than reopening the main Senado core.' }
+      ]
+    }
+  };
+
+  function getPriorityResultDayPack(destination=''){
+    const slug = String(destination || '').trim().toLowerCase();
+    const entry = priorityResultDayPolishMap[slug];
+    if (!entry) return [];
+    const lang = window.RyokoApp?.lang || 'ko';
+    return entry[lang] || entry.en || [];
+  }
+
+  function applyPriorityResultDayPolish(data){
+    const pack = getPriorityResultDayPack(data?.destination || '');
+    if (!pack.length || !Array.isArray(data?.days) || !data.days.length) return data;
+    return {
+      ...data,
+      days: data.days.map((day, idx) => {
+        const current = pack[idx] || pack[Math.min(idx, pack.length - 1)] || null;
+        if (!current) return day;
+        return {
+          ...day,
+          title: current.title || day.title,
+          intro: current.intro || day.intro || day.summary || '',
+          localTip: current.localTip || day.localTip || ''
+        };
+      })
+    };
+  }
+
   function getSeasonalResultFeature(destination=''){
     const slug = String(destination||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
     const map = {
@@ -1862,6 +1988,7 @@ function getPriorityRefinePack(city=''){
     qs('checklistList').innerHTML = checklist.map(item => `<div class="check-item"><span class="check-icon">✓</span><div class="check-text">${item}</div></div>`).join('');
   }
   function renderPlan(data){
+    data = applyPriorityResultDayPolish(data);
     window.__RYOKO_LAST_RESULT__ = data;
     qs('resultTitle').textContent = data.title || `${data.destination} editorial route`;
     qs('resultSummary').textContent = normalizeSummary(data);

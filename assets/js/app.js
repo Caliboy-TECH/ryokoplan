@@ -1577,6 +1577,58 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
     document.title = `${entry.planner} — Ryokoplan`;
   }
 
+
+  const priorityExampleFlowMap = {
+    'osaka-2n3d-food-trip': {
+      ko:[['Day 1 · Namba meal settle','난바 한 축만 먼저 붙잡고, 긴 줄 하나보다 두세 번의 짧은 식사 장면으로 오사카의 템포를 엽니다.'],['Day 2 · Umeda reset and one late lane','낮엔 우메다와 나카자키초 쪽으로 숨을 고르고, 밤엔 메인 스트립 전체가 아니라 작은 골목 하나만 또렷하게 남깁니다.'],['Day 3 · Soft station-side close','마지막 날은 역 근처 간식과 짧은 쇼핑 정도로만 정리해 food trip의 밀도를 흐리지 않습니다.']],
+      en:[['Day 1 · Namba meal settle','Open Osaka through one Namba axis first, using two or three shorter food scenes instead of one exhausting queue.'],['Day 2 · Umeda reset and one late lane','Use Umeda and Nakazakicho to lower the middle of the day, then leave only one smaller late lane vivid at night.'],['Day 3 · Soft station-side close','Keep the final day to a lighter snack, one practical shopping stop, and an easy station-side finish so the food-trip density stays intact.']],
+      ja:[['Day 1 · Namba meal settle','最初は難波の一本だけを深く読み、長い行列一つより短い食事シーンを二つ三つ置いて Osaka のテンポを開きます。'],['Day 2 · Umeda reset and one late lane','昼は梅田と中崎町で少し呼吸を入れ、夜はメインストリップ全部ではなく小さな路地を一つだけ残します。'],['Day 3 · Soft station-side close','最終日は駅まわりの軽い食事と短い買い物だけにして、food trip の密度を濁らせないように閉じます。']],
+      zhHant:[['Day 1 · Namba meal settle','先只把 Namba 這一條軸線讀深，與其排一條很長的隊，不如用兩三段短一點的食物場景打開 Osaka 的節奏。'],['Day 2 · Umeda reset and one late lane','白天用 Umeda 和 Nakazakicho 把節奏放鬆一點，晚上不要整條主街都拉滿，只留一條小巷夜景就夠。'],['Day 3 · Soft station-side close','最後一天只留車站附近的小吃、短購物和輕收尾，別把這趟 food trip 的密度沖散。']]
+    },
+    'sapporo-2n3d-winter-city': {
+      ko:[['Day 1 · Odori width and a warm dinner','오도리 축으로 도시의 넓이를 먼저 읽고, 따뜻한 저녁 한 끼로 겨울 도시의 첫 인상을 안정적으로 잡습니다.'],['Day 2 · Winter air with one quieter side','낮엔 넓은 축을 짧게 읽고 마루야마 같은 quieter side를 끼운 뒤, 밤엔 스스키노 장면 하나만 선명하게 남깁니다.'],['Day 3 · Café, market, and a clean departure','마지막 날은 카페나 market pocket 정도만 붙이고 짧게 닫아 삿포로의 겨울 공기를 흐리지 않습니다.']],
+      en:[['Day 1 · Odori width and a warm dinner','Read Sapporo’s width through the Odori axis first, then let one warm dinner set the winter-city tone cleanly.'],['Day 2 · Winter air with one quieter side','Keep the wider axis brief, add a quieter side such as Maruyama, and leave only one Susukino scene vivid at night.'],['Day 3 · Café, market, and a clean departure','Close through one café or market pocket only, then leave early enough that the winter air stays crisp instead of overworked.']],
+      ja:[['Day 1 · Odori width and a warm dinner','まず大通の軸で街の横幅を読み、そのあと温かい夕食一つで winter city の最初のトーンを整えます。'],['Day 2 · Winter air with one quieter side','広い軸は短く読み、円山のような静かな側を一つ挟んでから、夜はすすきのの場面を一つだけ残します。'],['Day 3 · Café, market, and a clean departure','最終日はカフェか market pocket を一つだけ足して短く閉じ、札幌の冬の空気を濁らせないようにします.']],
+      zhHant:[['Day 1 · Odori width and a warm dinner','先用 Odori 這條軸線讀出城市的寬度，再用一頓溫熱晚餐把 winter city 的第一印象穩穩立起來。'],['Day 2 · Winter air with one quieter side','大軸線只要短讀，再插入像 Maruyama 這樣較安靜的一側，晚上只留一個 Susukino 場景就夠。'],['Day 3 · Café, market, and a clean departure','最後一天只補一個 café 或 market pocket，提早收尾，讓札幌冬天的空氣感保持乾淨。']]
+    },
+    'sendai-2n3d-calm-city': {
+      ko:[['Day 1 · Downtown settle without rush','역과 아케이드 축으로 도심에 가볍게 적응하고, 첫 저녁을 조용하게 닫아 센다이의 calm tone을 잡습니다.'],['Day 2 · Green line and market pause','조젠지도리 같은 green line을 한 번 깊게 읽고, market pocket과 느린 식사로 하루를 과하게 밀지 않습니다.'],['Day 3 · One soft neighborhood before leaving','마지막 날은 강한 장면보다 한 동네와 짧은 커피 정도만 남겨 센다이의 pause를 지킵니다.']],
+      en:[['Day 1 · Downtown settle without rush','Ease into Sendai through the station and arcade axis, then close the first evening quietly so the calm tone arrives early.'],['Day 2 · Green line and market pause','Read one green line such as Jozenji-dori more deeply, then hold the day together with a market pocket and a slower meal.'],['Day 3 · One soft neighborhood before leaving','Leave one softer neighborhood and a short coffee stop for the final hours instead of forcing one more headline scene.']],
+      ja:[['Day 1 · Downtown settle without rush','駅とアーケードの軸で無理なく街に入り、最初の夜を静かに閉じて Sendai の calm tone を早めに作ります。'],['Day 2 · Green line and market pause','定禅寺通のような green line を一本だけ深く読み、market pocket と遅めの食事で一日を押し込みすぎないようにします。'],['Day 3 · One soft neighborhood before leaving','最後の数時間は強い場面より、一つの静かな近所と短いコーヒーだけを残します。']],
+      zhHant:[['Day 1 · Downtown settle without rush','先沿著車站和 arcade 軸線輕輕進城，再把第一晚安靜地收住，讓 Sendai 的 calm tone 早一點落下來。'],['Day 2 · Green line and market pause','把像 Jozenji-dori 這樣的 green line 讀深一點，再用 market pocket 和一頓慢餐把一天穩穩接住。'],['Day 3 · One soft neighborhood before leaving','最後幾個小時別再硬塞 headline 場景，只留一個柔和街區和短短咖啡就好。']]
+    },
+    'okinawa-3n4d-sea-reset': {
+      ko:[['Day 1 · One coast, then rest','도착일엔 해변 수를 늘리지 말고 coast 하나와 쉬는 시간만 남겨 섬의 템포에 먼저 적응합니다.'],['Day 2 · Clear sea day with fewer jumps','맑은 시간대를 바다에 주고, 이동 횟수는 줄여 오키나와의 색과 바람을 길게 남깁니다.'],['Day 3 · Drive, lunch, resort pause','드라이브를 하루의 전부로 만들지 말고 긴 점심과 resort pause를 같이 넣어 sea-reset 구조를 완성합니다.'],['Day 4 · Soft departure with one last view','마지막 날은 브런치나 짧은 바다 장면 하나만 두고 부드럽게 닫아 섬의 공기를 지켜둡니다.']],
+      en:[['Day 1 · One coast, then rest','On arrival day, keep only one coast scene plus real rest so you adjust to the island tempo before trying to cover it.'],['Day 2 · Clear sea day with fewer jumps','Give the clearest hours to the sea, then reduce transfer count so Okinawa’s color and wind stay in the route longer.'],['Day 3 · Drive, lunch, resort pause','Do not let the drive become the whole day; anchor it with one long lunch and a resort pause so the sea-reset structure holds.'],['Day 4 · Soft departure with one last view','Close with brunch or one short sea scene only, then leave gently enough that the island air still lingers.']],
+      ja:[['Day 1 · One coast, then rest','到着日は海辺を増やさず、一つの coast と休む時間だけを残して島のテンポに先に慣れます。'],['Day 2 · Clear sea day with fewer jumps','いちばん澄んだ時間を海に渡し、移動回数を減らして Okinawa の色と風を長く残します。'],['Day 3 · Drive, lunch, resort pause','ドライブを一日の全部にせず、長めの昼食と resort pause を一緒に置いて sea-reset の形を作ります。'],['Day 4 · Soft departure with one last view','最後の日は brunch か短い海の場面を一つだけ残し、やわらかく閉じて島の空気を守ります。']],
+      zhHant:[['Day 1 · One coast, then rest','抵達日不要急著加很多海邊，只留一個 coast 畫面和真正的休息，先讓身體進到島的節奏。'],['Day 2 · Clear sea day with fewer jumps','把最清澈的時段留給海，再把移動次數降下來，讓 Okinawa 的色和風多停留一點。'],['Day 3 · Drive, lunch, resort pause','別讓開車變成整天的全部，配上一頓長午餐和 resort pause，sea-reset 的結構才會成立。'],['Day 4 · Soft departure with one last view','最後一天只留 brunch 或最後一個短海景，輕輕收尾，讓島的空氣還能留在身上。']]
+    },
+    'jeju-2n3d-slow-reset': {
+      ko:[['Day 1 · West-coast entry and one café','서쪽 coast 한 축과 카페 하나만 또렷하게 두고, 제주의 바람에 먼저 적응하는 식으로 시작합니다.'],['Day 2 · Scenic core with a longer lunch','남쪽 scenic core를 깊게 읽되, 풍경 사이에 긴 점심과 쉬는 pocket을 넣어 제주를 checklist로 만들지 않습니다.'],['Day 3 · Wind-aware morning and departure','마지막 날은 바람과 날씨를 보고 한 방향만 짧게 읽은 뒤 부드럽게 빠져나옵니다.']],
+      en:[['Day 1 · West-coast entry and one café','Open Jeju through one west-coast line and one café only, using the arrival day to adjust to wind and island pace.'],['Day 2 · Scenic core with a longer lunch','Read the south scenic core more deeply, but hold the day together with one longer lunch and a real reset pocket so Jeju never turns into a checklist.'],['Day 3 · Wind-aware morning and departure','Let the final morning follow the wind and weather, choose only one direction, then leave softly instead of squeezing in one more circuit.']],
+      ja:[['Day 1 · West-coast entry and one café','西側 coast の一本とカフェ一つだけで開き、到着日は風と島のテンポに体を合わせる日にします。'],['Day 2 · Scenic core with a longer lunch','南側の scenic core を少し深く読みながら、長めの昼食と休む pocket を入れて Jeju を checklist にしないようにします。'],['Day 3 · Wind-aware morning and departure','最終日の朝は風と天気を見て方向を一つだけ選び、もう一周を詰め込まずにやわらかく抜けます。']],
+      zhHant:[['Day 1 · West-coast entry and one café','先用西側 coast 線和一間 café 打開，抵達日主要是讓自己慢慢進到風和島的節奏裡。'],['Day 2 · Scenic core with a longer lunch','把南側 scenic core 讀深一點，但中間一定要留長午餐和 reset pocket，別把 Jeju 做成 checklist。'],['Day 3 · Wind-aware morning and departure','最後一個早上跟著風和天氣走，只選一個方向短短地讀，再柔和地離開，不再補一圈。']]
+    },
+    'gyeongju-2n3d-heritage-walk': {
+      ko:[['Day 1 · Tomb core and a slow settle','대릉원과 황리단길 주변을 천천히 걸으며 도시의 낮은 리듬에 먼저 몸을 맞춥니다.'],['Day 2 · Heritage walk, hanok pause, and dusk','낮엔 유적 걷기, 오후엔 한옥 카페 pause, 밤엔 월지나 old-core dusk 한 장면으로 경주의 결을 완성합니다.'],['Day 3 · Quiet morning before leaving','마지막 날은 박물관이나 짧은 산책 정도만 남겨 고도(古都)의 공기를 흐리지 않고 닫습니다.']],
+      en:[['Day 1 · Tomb core and a slow settle','Walk slowly through the tomb core and Hwangridan-gil first so your pace drops into Gyeongju before the city asks for more heritage.'],['Day 2 · Heritage walk, hanok pause, and dusk','Use the day for a heritage walk, the afternoon for one hanok café pause, and the evening for a single Wolji or old-core dusk scene.'],['Day 3 · Quiet morning before leaving','Leave only a museum pocket or one short walk for the final morning so the old-capital air stays intact to the end.']],
+      ja:[['Day 1 · Tomb core and a slow settle','古墳群と皇理団通りのまわりをゆっくり歩き、まずは街の低いテンポに体を合わせます。'],['Day 2 · Heritage walk, hanok pause, and dusk','昼は heritage walk、午後は韓屋カフェの pause、夜は月池か旧市街の dusk を一つだけ残します。'],['Day 3 · Quiet morning before leaving','最後の朝は museum pocket か短い散歩だけを残し、古都の空気を濁さずに閉じます。']],
+      zhHant:[['Day 1 · Tomb core and a slow settle','先慢慢走過古墳核心和皇理團路，讓自己的步調先降到 Gyeongju 這座古都的節奏裡。'],['Day 2 · Heritage walk, hanok pause, and dusk','白天是 heritage walk，下午放一個 hanok café pause，晚上只留一個 Wolji 或 old-core dusk 畫面。'],['Day 3 · Quiet morning before leaving','最後一個早上只留 museum pocket 或短散步，別把古都的空氣收得太急。']]
+    },
+    'macau-2n3d-night-lanes': {
+      ko:[['Day 1 · Senado and the old lanes first','첫날은 세나도와 old-lane 축만 짧고 선명하게 읽어 마카오의 compact scale에 먼저 적응합니다.'],['Day 2 · Taipa bridge and one bright close','낮엔 타이파로 한 번 넘어가 대비를 만들고, 밤엔 bright scene 하나만 남겨 골목과 조명의 contrast를 정리합니다.'],['Day 3 · Dessert pocket and a softer exit','마지막 날은 디저트나 tea room pocket 하나 정도만 더해 부드럽게 빠져나오는 편이 좋습니다.']],
+      en:[['Day 1 · Senado and the old lanes first','Open Macau through Senado and the old-lane axis only, keeping the first day short enough to adjust to the city’s compact scale.'],['Day 2 · Taipa bridge and one bright close','Cross into Taipa to build contrast, then leave only one bright night scene so the lanes and lights do not compete too hard.'],['Day 3 · Dessert pocket and a softer exit','A dessert or tea-room pocket is usually enough for the final hours before a softer departure.']],
+      ja:[['Day 1 · Senado and the old lanes first','初日はセナドと old-lane の軸だけを短く読み、マカオの compact なスケールに先に慣れます。'],['Day 2 · Taipa bridge and one bright close','昼はタイパへ渡って対比を作り、夜は bright scene を一つだけ残して路地と光の contrast を整えます。'],['Day 3 · Dessert pocket and a softer exit','最後の数時間は dessert か tea-room pocket 一つで十分なので、やわらかく抜ける方が合います。']],
+      zhHant:[['Day 1 · Senado and the old lanes first','第一天只讀 Senado 和 old-lane 這條軸線，而且要收得短，先適應 Macau 這座城市的 compact scale。'],['Day 2 · Taipa bridge and one bright close','白天過到 Taipa 做出對比，晚上只留一個 bright scene，讓巷子和燈光不要互相搶。'],['Day 3 · Dessert pocket and a softer exit','最後幾個小時其實只要一個 dessert 或 tea-room pocket，再柔和離開就夠了。']]
+    }
+  };
+
+  function getPriorityExampleFlow(slug, fallback = []){
+    const entry = priorityExampleFlowMap[slug];
+    if (!entry) return fallback;
+    return entry[lang] || entry.en || fallback;
+  }
+
   function renderExamplePage(){
     const slug = document.body.dataset.exampleSlug;
     if (!slug) return;
@@ -1584,7 +1636,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
     const city = editorialData.city[slug.split('-').slice(0,1)[0]] || editorialData.city[(entry?.city || '').toLowerCase()];
     if (!entry || !city) return;
     const cityData = city[lang] || city.en;
-    const sample = cityData.sampleDays || [];
+    const sample = getPriorityExampleFlow(slug, cityData.sampleDays || []);
     const root = document.getElementById('examplePageRoot');
     if (!root) return;
     const title = lang === 'ko' ? entry.titleKo : entry.titleEn;
