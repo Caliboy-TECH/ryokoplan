@@ -957,6 +957,7 @@ const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
 const firstRunGuideDismissKey = 'ryoko:first-run-guide-dismissed:v101';
 const startPathMemoryKey = 'ryoko:start-path-memory:v102';
 const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
+const quickResumeDismissKey = 'ryoko:quick-resume-dismissed:v103';
 function betaLaunchCopy(){
   return lang === 'ko'
     ? { eyebrow:'Public beta', title:'Ryokoplan is now open in beta.', desc:'Routes, city notes, and saved flows are live. If anything feels off, send quick feedback from the page you are on.', primary:"What\'s new", secondary:'Send feedback', dismiss:'Hide' }
@@ -1044,6 +1045,7 @@ function writeStartPathMemory(payload={}){
   try {
     localStorage.setItem(startPathMemoryKey, JSON.stringify(next));
     localStorage.removeItem(startPathRecallDismissKey);
+    localStorage.removeItem(quickResumeDismissKey);
   } catch {}
   trackEvent('ryoko_start_path_memory_saved', { sourcePage: next.sourcePage, kind: next.kind, city: next.city || '' });
   return next;
@@ -1052,6 +1054,8 @@ function clearStartPathMemory(){
   try {
     localStorage.removeItem(startPathMemoryKey);
     localStorage.removeItem(startPathRecallDismissKey);
+    localStorage.removeItem(quickResumeDismissKey);
+    localStorage.removeItem(quickResumeDismissKey);
   } catch {}
 }
 function startPathRecallCopy(memory){
@@ -1088,6 +1092,153 @@ function startPathRecallCopy(memory){
   };
   const langPack = copies[lang] || copies.en;
   return langPack[memory?.kind] || langPack.magazine;
+}
+
+function buildRouteResultHrefFromTrip(trip){
+  if (!trip) return navHref('planner');
+  try {
+    const encoded = window.RyokoStorage?.encodeShare ? window.RyokoStorage.encodeShare(trip) : '';
+    if (!encoded) return plannerUrlForCity(trip.destination || currentFeedbackCity() || 'Tokyo');
+    return `${pathRoot}index.html?trip=${encodeURIComponent(encoded)}#resultTop`;
+  } catch {
+    return plannerUrlForCity(trip.destination || currentFeedbackCity() || 'Tokyo');
+  }
+}
+function latestTripForQuickResume(city=''){
+  const pools = [
+    ...(window.RyokoStorage?.getRecentTrips?.() || []),
+    ...(window.RyokoStorage?.getSavedTrips?.() || []),
+    ...(window.RyokoStorage?.getSharedTrips?.() || [])
+  ];
+  const normalized = String(city || '').toLowerCase();
+  const exact = normalized ? pools.find(item => String(item.destination || '').toLowerCase() === normalized) : null;
+  return exact || pools[0] || null;
+}
+function quickResumePayload(memory){
+  const cityName = memory?.city || 'Tokyo';
+  const loop = getCityLoopData(cityName) || getCityLoopData('Tokyo') || { name:cityName, guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
+  const latestTrip = latestTripForQuickResume(loop.name || cityName);
+  const baseHref = memory?.href || (memory?.kind === 'magazine' ? navHref('magazine') : memory?.kind === 'sample' ? resolvePath(loop.example || 'example/tokyo-3n4d-first-trip.html') : memory?.kind === 'route' ? plannerUrlForCity(loop.name || cityName) : resolvePath(loop.guide || 'city/tokyo.html'));
+  const nextHref = memory?.kind === 'city'
+    ? resolvePath(loop.example || 'example/tokyo-3n4d-first-trip.html')
+    : memory?.kind === 'sample'
+      ? plannerUrlForCity(loop.name || cityName)
+      : memory?.kind === 'route'
+        ? resolvePath(loop.guide || 'city/tokyo.html')
+        : resolvePath(loop.guide || 'city/tokyo.html');
+  const nextKind = memory?.kind === 'city' ? 'sample' : memory?.kind === 'sample' ? 'route' : 'city';
+  const latestHref = latestTrip ? buildRouteResultHrefFromTrip(latestTrip) : plannerUrlForCity(loop.name || cityName);
+  return { cityName: loop.name || cityName, loop, latestTrip, baseHref, nextHref, nextKind, latestHref };
+}
+function quickResumeCopy(memory){
+  const pack = quickResumePayload(memory);
+  const cityName = pack.cityName;
+  const lastType = memory?.kind === 'sample' ? 'sample' : memory?.kind === 'route' ? 'route' : memory?.kind === 'magazine' ? 'Magazine' : 'city guide';
+  const nextType = pack.nextKind === 'sample' ? 'sample' : pack.nextKind === 'route' ? 'route' : 'city guide';
+  const latestTitle = pack.latestTrip?.title || pack.latestTrip?.destination || cityName;
+  const copies = {
+    ko: {
+      eyebrow:'빠르게 다시 이어보기',
+      title:`지난번 ${cityName} 쪽에서 시작한 흐름을 바로 이어갈 수 있어요.`,
+      desc:'첫 진입에서 고른 시작 방식과 최근 route를 함께 붙여서, 다시 들어와도 덜 헤매게 만들었습니다.',
+      cards:[
+        ['Last start', `${lastType}부터 다시`, '지난번 고른 시작 방식으로 바로 돌아갑니다.', pack.baseHref, '이어 보기', 'base'],
+        ['Best next', `${nextType}로 한 단계만 더`, '같은 도시 톤을 이어가기에 가장 자연스러운 다음 클릭입니다.', pack.nextHref, '다음으로', pack.nextKind],
+        ['Resume route', latestTitle, pack.latestTrip ? '최근에 본 route 결과를 다시 열어 바로 이어갈 수 있습니다.' : '아직 route가 없으면 이 도시 기준으로 바로 시작할 수 있습니다.', pack.latestHref, pack.latestTrip ? 'result 열기' : 'route 시작', 'route-result']
+      ],
+      dismiss:'숨기기'
+    },
+    en: {
+      eyebrow:'Quick resume',
+      title:`Pick up the ${cityName} flow you started last time.`,
+      desc:'The start path you chose first, plus one useful next step and the latest route result, now sit together so re-entry feels easier.',
+      cards:[
+        ['Last start', `Return to the ${lastType}`, 'Jump back into the same entry path you chose last time.', pack.baseHref, 'Continue there', 'base'],
+        ['Best next', `Add one ${nextType}`, 'The cleanest next click if you want the same city tone to keep moving.', pack.nextHref, 'Open next step', pack.nextKind],
+        ['Resume route', latestTitle, pack.latestTrip ? 'Re-open the latest route result tied to this city and keep going.' : 'No saved route yet — start directly from this city rhythm.', pack.latestHref, pack.latestTrip ? 'Open result' : 'Start route', 'route-result']
+      ],
+      dismiss:'Hide'
+    },
+    ja: {
+      eyebrow:'クイック再開',
+      title:`前回 ${cityName} から入った流れをそのまま再開できます。`,
+      desc:'最初に選んだ入口、次に読むと自然な一手、そして直近の route をまとめて置いて、再訪時の迷いを減らします。',
+      cards:[
+        ['Last start', `${lastType} へ戻る`, '前回選んだ入口へそのまま戻ります。', pack.baseHref, '続きを開く', 'base'],
+        ['Best next', `${nextType} を一つ足す`, '同じ都市トーンを続けるなら、いちばん自然な次のクリックです。', pack.nextHref, '次を開く', pack.nextKind],
+        ['Resume route', latestTitle, pack.latestTrip ? 'この都市にひもづく直近の route 結果を開いて続けられます。' : 'まだ route がなければ、この都市のリズムからそのまま始められます。', pack.latestHref, pack.latestTrip ? '結果を開く' : 'route を始める', 'route-result']
+      ],
+      dismiss:'閉じる'
+    },
+    zhHant: {
+      eyebrow:'快速續接',
+      title:`可以直接接回你上次從 ${cityName} 開始的流。`,
+      desc:'把你第一次選的入口、最自然的下一步，以及最近一條 route 放在一起，讓回訪更不容易迷路。',
+      cards:[
+        ['Last start', `回到上次的 ${lastType}`, '直接回到你上次選的入口。', pack.baseHref, '繼續這裡', 'base'],
+        ['Best next', `再接一個 ${nextType}`, '如果想把同一個城市的調性接下去，這是最自然的一步。', pack.nextHref, '打開下一步', pack.nextKind],
+        ['Resume route', latestTitle, pack.latestTrip ? '重新打開這座城市最近的 route 結果，直接接著往下。' : '如果還沒有 route，就先從這座城市的節奏開始。', pack.latestHref, pack.latestTrip ? '打開結果' : '開始 route', 'route-result']
+      ],
+      dismiss:'隱藏'
+    }
+  };
+  return copies[lang] || copies.en;
+}
+function shouldShowQuickResumeShelf(){
+  const page = document.body?.dataset?.page || '';
+  if (!(page === 'planner' || page === 'magazine')) return false;
+  if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
+  if (shouldShowFirstRunGuide()) return false;
+  if (shouldShowQuickResumeShelf()) return false;
+  const memory = readStartPathMemory();
+  if (!memory || !memory.kind) return false;
+  try { if (localStorage.getItem(quickResumeDismissKey) === '1') return false; } catch {}
+  return true;
+}
+function syncQuickResumeShelf(){
+  const shelf = document.getElementById('quickResumeShelf');
+  if (!shelf) return;
+  if (!shouldShowQuickResumeShelf()) { shelf.classList.add('is-hidden'); return; }
+  const memory = readStartPathMemory();
+  const copy = quickResumeCopy(memory);
+  shelf.classList.remove('is-hidden');
+  shelf.querySelector('[data-quick-resume-eyebrow]')?.replaceChildren(document.createTextNode(copy.eyebrow));
+  shelf.querySelector('[data-quick-resume-title]')?.replaceChildren(document.createTextNode(copy.title));
+  shelf.querySelector('[data-quick-resume-desc]')?.replaceChildren(document.createTextNode(copy.desc));
+  const cards = shelf.querySelector('[data-quick-resume-cards]');
+  if (cards) cards.innerHTML = copy.cards.map((card, idx) => `<article class="quick-resume-card ${idx === 0 ? 'quick-resume-card-strong' : ''}"><span class="quick-resume-card-kicker">${card[0]}</span><strong>${card[1]}</strong><p>${card[2]}</p><a class="${idx === 0 ? 'primary-btn' : idx === 1 ? 'secondary-btn' : 'ghost-btn'}" href="${card[3]}" data-quick-resume-action="${card[5]}">${card[4]}</a></article>`).join('');
+  const dismiss = shelf.querySelector('[data-quick-resume-dismiss]');
+  if (dismiss) dismiss.textContent = copy.dismiss;
+}
+function ensureQuickResumeShelf(){
+  let shelf = document.getElementById('quickResumeShelf');
+  if (!shouldShowQuickResumeShelf()) { if (shelf) shelf.classList.add('is-hidden'); return; }
+  if (!shelf) {
+    shelf = document.createElement('section');
+    shelf.id = 'quickResumeShelf';
+    shelf.className = 'section quick-resume-shelf';
+    shelf.setAttribute('role', 'region');
+    shelf.setAttribute('aria-live', 'polite');
+    shelf.innerHTML = '<div class="section-head quick-resume-head"><div><span class="eyebrow" data-quick-resume-eyebrow></span><h2 class="section-title" data-quick-resume-title></h2><p class="section-desc" data-quick-resume-desc></p></div><button class="ghost-btn quick-resume-dismiss" type="button" data-quick-resume-dismiss></button></div><div class="quick-resume-grid" data-quick-resume-cards></div>';
+    const anchor = document.querySelector('.hero-hierarchy-band-home, .hero-hierarchy-band-magazine, .brand-manifesto, #magazineAppRoot');
+    if (anchor?.parentNode) anchor.insertAdjacentElement('afterend', shelf);
+    else {
+      const container = document.querySelector('main .container') || document.body;
+      container.prepend(shelf);
+    }
+    shelf.addEventListener('click', event => {
+      const action = event.target.closest('[data-quick-resume-action]');
+      if (!action) return;
+      trackEvent('ryoko_quick_resume_cta_clicked', { sourcePage: document.body?.dataset?.page || 'unknown', action: action.dataset.quickResumeAction || '', kind: readStartPathMemory()?.kind || '' });
+    });
+    shelf.querySelector('[data-quick-resume-dismiss]')?.addEventListener('click', () => {
+      try { localStorage.setItem(quickResumeDismissKey, '1'); } catch {}
+      shelf.classList.add('is-hidden');
+      trackEvent('ryoko_quick_resume_dismissed', { sourcePage: document.body?.dataset?.page || 'unknown', kind: readStartPathMemory()?.kind || '' });
+    });
+    trackEvent('ryoko_quick_resume_shown', { sourcePage: document.body?.dataset?.page || 'unknown', kind: readStartPathMemory()?.kind || '' });
+  }
+  syncQuickResumeShelf();
 }
 function shouldShowStartPathRecallBar(){
   const page = document.body?.dataset?.page || '';
@@ -5046,6 +5197,7 @@ function renderTripsSeasonalDesk(){
     initPwaSupport();
     ensureBetaLaunchBar();
     ensureFirstRunGuide();
+    ensureQuickResumeShelf();
     ensureStartPathRecallBar();
     ensureLaunchFeedbackCta();
     ensureInstallCta();
@@ -5110,6 +5262,7 @@ function renderTripsSeasonalDesk(){
       initAccessibilityPolish();
       ensureBetaLaunchBar();
       ensureFirstRunGuide();
+      ensureQuickResumeShelf();
       ensureStartPathRecallBar();
       ensureLaunchFeedbackCta();
       ensureInstallCta();
