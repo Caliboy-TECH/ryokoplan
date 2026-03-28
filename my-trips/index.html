@@ -28,7 +28,7 @@
         <span class="brand-mark"><img src="../assets/images/brand/logo-mark.svg" alt="Ryokoplan"></span>
         <span class="brand-copy">
           <span class="brand-title"><span class="ryoko">Ryoko</span><span class="plan">plan</span></span>
-          <span class="brand-sub" data-t="nav.travelPlanner">Travel Planner</span>
+          <span class="brand-sub" data-t="nav.travelPlanner">City Editorial</span>
         </span>
       </a>
       <div class="top-actions">
@@ -46,7 +46,7 @@
         <h1 data-t="trips.heroTitle">저장한 여정을 다시 꺼내보세요</h1>
         <p data-t="trips.heroDesc">최근 만든 일정, 저장한 플랜, 공유받은 여행까지 한곳에서 쉽게 다시 보고 이어서 정리할 수 있어요.</p>
         <div class="hero-actions">
-          <a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a>
+          <a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">새 여정 시작</a>
           <a class="secondary-btn" data-nav="magazine" data-t="trips.browse">매거진 보기</a>
         </div>
       </section>
@@ -101,7 +101,7 @@
         <article class="collection-card info-card trip-archive-card">
           <span class="collection-kicker" data-lang-ko="저장한 장소" data-lang-en="Saved places" data-lang-ja="保存した場所" data-lang-zhhant="已存地點">저장한 장소</span>
           <h3 data-lang-ko="여정에서 저장한 장소를 다시 읽기" data-lang-en="Places you marked along the way" data-lang-ja="旅の途中で保存した場所をもう一度読む" data-lang-zhhant="重新讀你旅途中存下的地點">여정에서 저장한 장소를 다시 읽기</h3>
-          <p data-lang-ko="플래너 결과에서 눌렀던 하트가 여기 모여, My Trips가 진짜 여행 아카이브처럼 보이게 됩니다." data-lang-en="Hearts from your planner results now collect here, so My Trips feels more like a real travel archive." data-lang-ja="プランナー結果で付けたハートがここに集まり、My Trips が本当の旅のアーカイブのように見えてきます。" data-lang-zhhant="你在 Planner 結果裡按過的愛心會聚在這裡，讓 My Trips 更像真正的旅行檔案庫。">플래너 결과에서 눌렀던 하트가 여기 모여, My Trips가 진짜 여행 아카이브처럼 보이게 됩니다.</p>
+          <p data-lang-ko="루트 화면에서 눌렀던 하트가 여기 모여, My Trips가 진짜 여행 아카이브처럼 보이게 됩니다." data-lang-en="Hearts from route pages collect here, so My Trips feels more like a real travel archive." data-lang-ja="ルート画面で付けたハートがここに集まり、My Trips が本当の旅のアーカイブのように見えてきます。" data-lang-zhhant="你在路線頁面裡按過的愛心會聚在這裡，讓 My Trips 更像真正的旅行檔案庫。">루트 화면에서 눌렀던 하트가 여기 모여, My Trips가 진짜 여행 아카이브처럼 보이게 됩니다.</p>
           <div id="savedPlacesCollections" class="trip-archive-collections"></div>
         </article>
         <article class="collection-card info-card trip-archive-card">
@@ -181,7 +181,7 @@
           </div>
         </div>
         <div id="savedGrid" class="trips-grid"></div>
-        <div id="savedEmpty" class="empty-state hidden info-card"><h3 data-t="trips.emptySaved">아직 저장된 여정이 없어요</h3><p data-t="trips.emptySavedDesc">마음에 드는 여행 계획을 저장해두면 다음에 더 빠르게 다시 꺼내볼 수 있어요.</p><div class="cta-row" style="justify-content:center;margin-top:14px"><a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a></div></div>
+        <div id="savedEmpty" class="empty-state hidden info-card"><h3 data-t="trips.emptySaved">아직 저장된 여정이 없어요</h3><p data-t="trips.emptySavedDesc">마음에 드는 여행 계획을 저장해두면 다음에 더 빠르게 다시 꺼내볼 수 있어요.</p><div class="cta-row" style="justify-content:center;margin-top:14px"><a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">새 여정 시작</a></div></div>
       </section>
 
       <section id="recentSection" class="section hidden">
@@ -237,7 +237,7 @@
         <h3 data-t="trips.utilTitle">내 여행을 더 쉽게 이어가세요</h3>
         <p data-t="trips.footerDesc">읽었던 가이드, 저장한 일정, 공유받은 여행까지 Ryokoplan 안에서 하나의 흐름으로 이어집니다.</p>
         <div class="cta-row">
-          <a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">플래너 열기</a>
+          <a class="primary-btn" data-nav="planner" data-t="trips.openPlanner">새 여정 시작</a>
           <a class="secondary-btn" data-nav="magazine" data-t="trips.browse">매거진 보기</a>
         </div>
       </section>
@@ -379,7 +379,7 @@
           publicDeskPick: 'Editor pick',
           publicDeskSave: 'Save to My Trips',
           publicDeskOpen: 'Sample',
-          publicDeskPlan: 'Continue in Planner',
+          publicDeskPlan: 'Continue this route',
           publicDeskSaved: 'Sample route saved to My Trips.',
           publicDeskIntro: 'A curated hub where public samples can become your next trip base.',
           publicDeskWeekend: 'Weekend base',
@@ -399,7 +399,7 @@
           loopEmptyEyebrow: 'No saved loop yet',
           loopEmptyTitle: 'Build one trip, then the loop gets smarter',
           loopEmptyDesc: 'Once you save or reopen a trip, My Trips can recommend which guide or sample route to open next.',
-          loopOpenPlanner: 'Open Planner',
+          loopOpenPlanner: 'Start a new route',
           loopReadMagazine: 'Read Magazine',
           loopGoodStart: 'Good starting points',
           loopTokyoGuide: 'Tokyo guide',
@@ -1021,7 +1021,7 @@
         if (!target) return;
         const collections = (window.RyokoStorage.getSavedPlaceCollections?.() || []).sort((a, b) => b.places.length - a.places.length || String(a.city || '').localeCompare(String(b.city || '')));
         if (!collections.length) {
-          target.innerHTML = `<div class="trip-archive-empty"><strong>No saved places yet</strong><span>Tap hearts inside planner results and your place archive will start to build itself.</span></div>`;
+          target.innerHTML = `<div class="trip-archive-empty"><strong>No saved places yet</strong><span>Tap hearts across route pages and your place archive will start to build itself.</span></div>`;
           return;
         }
         target.innerHTML = collections.slice(0, 6).map(entry => `
@@ -1408,8 +1408,8 @@
               <h3>${langVariant('City-first 가지','City / sample / article','City-first の分岐','City-first 分支')}</h3>
               <div class="trip-detail-branch-list">
                 <a class="trip-detail-branch" href="../${city.example}">
-                  <strong>${city.name} sample route</strong>
-                  <span>Use the sample route to compare pace against this saved trip.</span>
+                  <strong>${city.name} sample</strong>
+                  <span>Use the sample to compare pace against this saved trip.</span>
                 </a>
                 ${related.map(rel => `<a class="trip-detail-branch" href="../${rel.guide}"><strong>${rel.name}</strong><span>${rel.vibe} is a strong next read after ${city.name}.</span></a>`).join('')}
               </div>
@@ -1522,7 +1522,7 @@
             <span class="eyebrow">${langCopy().loopEmptyEyebrow || "No saved loop yet"}</span>
             <h3>${langCopy().loopEmptyTitle || "Build one trip, then the loop gets smarter"}</h3>
             <p>${langCopy().loopEmptyDesc || "Save or reopen one trip, and My Trips can suggest the next guide, sample, and entry route."}</p>
-            <div class="card-actions"><a class="primary-btn" href="../">${langCopy().loopOpenPlanner || "Open Planner"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
+            <div class="card-actions"><a class="primary-btn" href="../">${langCopy().loopOpenPlanner || "Start a new route"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
           side.innerHTML = `
             <h3>${langCopy().loopGoodStart || "Good starting points"}</h3>
             <div class="trip-loop-list">

@@ -12,7 +12,7 @@
           continueTitle: 'Continue your trip flow',
           continueDesc: '가장 최근에 열어본 여정부터 바로 이어서 볼 수 있어요.',
           noContinue: '아직 이어볼 여정이 없어요',
-          noContinueDesc: '플래너에서 첫 일정을 만들거나, 공유 링크를 열어보세요.',
+          noContinueDesc: '첫 여정을 시작하거나, 공유 링크를 열어보세요.',
           useAsBase: '이 일정으로 이어가기',
           saveAsMine: '내 여정에 저장',
           remove: '제거',
@@ -30,7 +30,7 @@
           searchPH: '도시명이나 제목으로 검색',
           importedLabel: '직접 가져온 링크',
           continueMeta: '가장 최근에 다시 본 일정',
-          tripBase: '이 일정으로 새 여행 시작',
+          tripBase: '이 루트로 새 여정 시작',
           tripSaved: '저장한 내 여정',
           tripRecent: '최근 본 흐름',
           tripShared: '공유받은 일정',
@@ -77,7 +77,7 @@
           continueTitle: 'Continue your trip flow',
           continueDesc: 'Jump back into the last trip you opened or shaped.',
           noContinue: 'No trip to continue yet',
-          noContinueDesc: 'Create your first plan or import a shared Ryokoplan link.',
+          noContinueDesc: 'Start your first route or import a shared Ryokoplan link.',
           useAsBase: 'Continue this trip',
           saveAsMine: 'Save to My Trips',
           remove: 'Remove',
@@ -95,7 +95,7 @@
           searchPH: 'Search by city or title',
           importedLabel: 'Imported link',
           continueMeta: 'Most recent trip to reopen',
-          tripBase: 'Use this trip as a new base',
+          tripBase: 'Use this route as a new base',
           tripSaved: 'Saved to My Trips',
           tripRecent: 'Recently opened',
           tripShared: 'Shared itinerary',
@@ -122,17 +122,17 @@
           publicDeskOpen: 'Compare sample',
           publicDeskPlan: 'Continue this route',
           publicDeskSaved: 'Sample route saved to My Trips.',
-          publicDeskIntro: 'A curated hub where public samples can become your next trip base.',
+          publicDeskIntro: 'A curated hub where public samples can become your next route base.',
           publicDeskWeekend: 'Weekend base',
           publicDeskSlow: 'Slow mood',
           publicDeskFamily: 'Family pacing',
           publicDeskFood: 'Food-led',
           editSave: 'Save base',
-          editOpen: 'Open route',
+          editOpen: 'Read route',
           editGuide: 'Read guide',
           editSaved: 'Editorial base saved to My Trips.',
           routeClubTitle: 'Trending route club',
-          routeClubLabel: 'A shape people keep saving now',
+          routeClubLabel: 'A route shape people keep saving now',
           routeClubSave: 'Save my version',
           routeClubOpen: 'Open related sample',
           routeClubGuide: 'Read related city',
@@ -1102,7 +1102,7 @@ function visitEntryMarkup(city='', extraClass=''){
               <div class="trip-detail-branch-list">
                 <a class="trip-detail-branch" href="../${city.example}">
                   <strong>${city.name} sample route</strong>
-                  <span>${langVariant('이 저장본을 더 선명한 도시 베이스와 나란히 놓고 비교해 보세요.','Use the sample route to compare this saved edit against a clearer city baseline.','この保存ルートを、もっと輪郭のはっきりした都市ベースと並べて比べてみてください。','把這份儲存路線和更清楚的城市基準放在一起比較看看。')}</span>
+                  <span>${langVariant('이 저장본을 더 선명한 도시 베이스와 나란히 놓고 비교해 보세요.','Use the sample to compare this saved edit against a clearer city baseline.','この保存ルートを、もっと輪郭のはっきりした都市ベースと並べて比べてみてください。','把這份儲存路線和更清楚的城市基準放在一起比較看看。')}</span>
                 </a>
                 ${related.map(rel => `<a class="trip-detail-branch" href="../${rel.guide}"><strong>${rel.name}</strong><span>${rel.vibe} is a strong next read after ${city.name}.</span></a>`).join('')}
               </div>
