@@ -1053,6 +1053,81 @@ function ensureBetaLaunchBar(){
   syncBetaLaunchBar();
 }
 
+
+function campaignEntryParams(){
+  const params = new URLSearchParams(location.search);
+  const campaign = String(params.get('campaign') || params.get('utm_campaign') || '').trim();
+  const start = String(params.get('start') || '').trim().toLowerCase();
+  const city = String(params.get('city') || '').trim();
+  const sample = String(params.get('sample') || '').trim();
+  const page = document.body?.dataset?.page || '';
+  if (!(page === 'planner' || page === 'magazine')) return null;
+  if (!campaign && !start && !city && !sample) return null;
+  const loop = getCityLoopData(city || inferStartPathCityFromHref(sample) || 'Tokyo') || getCityLoopData('Tokyo');
+  const startKind = ['city','sample','route','magazine'].includes(start) ? start : (sample ? 'sample' : city ? 'city' : 'magazine');
+  return {
+    campaign,
+    start: startKind,
+    city: loop?.name || city || 'Tokyo',
+    sample: sample || loop?.example || '',
+    loop
+  };
+}
+function campaignEntryCopy(entry){
+  const cityName = entry?.city || 'Tokyo';
+  const campaignName = entry?.campaign || 'launch';
+  const labelMap = { city:'city guide', sample:'sample', route:'route start', magazine:'Magazine' };
+  const active = labelMap[entry?.start] || 'city guide';
+  const copies = {
+    ko:{ eyebrow:'캠페인 링크', title:`이 링크는 ${cityName}부터 가장 빠르게 시작하게 맞춰져 있어요.`, desc:`${campaignName} 기준 진입 링크입니다. 먼저 ${active === 'city guide' ? '도시 가이드' : active === 'sample' ? '샘플' : active === 'route start' ? '루트 시작' : '매거진'}부터 열고 흐름을 이어가면 가장 자연스럽습니다.`, actions:[['도시 가이드', resolvePath(entry.loop?.guide || 'city/tokyo.html'),'city'],['샘플 보기', resolvePath(entry.sample || entry.loop?.example || 'example/tokyo-3n4d-first-trip.html'),'sample'],['루트 시작', plannerUrlForCity(cityName, { entryKind:'campaign', entryTitle:`${cityName} campaign start`, entryCity:cityName, entrySource:'campaign', ...(cityEntryPresetFor(cityName) || {}) }),'route']], dismiss:'닫기'},
+    en:{ eyebrow:'Campaign link', title:`This link is tuned to open ${cityName} the fast way.`, desc:`You arrived through ${campaignName}. Open the ${active} first, then keep the city → sample → route flow moving from there.`, actions:[['Open city guide', resolvePath(entry.loop?.guide || 'city/tokyo.html'),'city'],['Read sample', resolvePath(entry.sample || entry.loop?.example || 'example/tokyo-3n4d-first-trip.html'),'sample'],['Start route', plannerUrlForCity(cityName, { entryKind:'campaign', entryTitle:`${cityName} campaign start`, entryCity:cityName, entrySource:'campaign', ...(cityEntryPresetFor(cityName) || {}) }),'route']], dismiss:'Hide'},
+    ja:{ eyebrow:'キャンペーンリンク', title:`このリンクは ${cityName} からすばやく始める前提で整えています。`, desc:`${campaignName} 経由で来ています。まずは ${active === 'city guide' ? 'city guide' : active === 'sample' ? 'sample' : active === 'route start' ? 'route' : 'Magazine'} を開き、そのまま city → sample → route でつなぐのがいちばん自然です。`, actions:[['city guide', resolvePath(entry.loop?.guide || 'city/tokyo.html'),'city'],['sample を見る', resolvePath(entry.sample || entry.loop?.example || 'example/tokyo-3n4d-first-trip.html'),'sample'],['route を始める', plannerUrlForCity(cityName, { entryKind:'campaign', entryTitle:`${cityName} campaign start`, entryCity:cityName, entrySource:'campaign', ...(cityEntryPresetFor(cityName) || {}) }),'route']], dismiss:'閉じる'},
+    zhHant:{ eyebrow:'Campaign link', title:`這個連結已經替你把起點對準 ${cityName}。`, desc:`你是從 ${campaignName} 進來的。先打開最適合的 ${active === 'city guide' ? 'city guide' : active === 'sample' ? 'sample' : active === 'route start' ? 'route' : 'Magazine'}，再順著 city → sample → route 往下走最自然。`, actions:[['城市指南', resolvePath(entry.loop?.guide || 'city/tokyo.html'),'city'],['看 sample', resolvePath(entry.sample || entry.loop?.example || 'example/tokyo-3n4d-first-trip.html'),'sample'],['開始 route', plannerUrlForCity(cityName, { entryKind:'campaign', entryTitle:`${cityName} campaign start`, entryCity:cityName, entrySource:'campaign', ...(cityEntryPresetFor(cityName) || {}) }),'route']], dismiss:'隱藏'}
+  };
+  return copies[lang] || copies.en;
+}
+function syncCampaignEntryBar(){
+  const bar = document.getElementById('campaignEntryBar');
+  const entry = campaignEntryParams();
+  if (!bar || !entry) return;
+  const copy = campaignEntryCopy(entry);
+  bar.classList.remove('is-hidden');
+  bar.querySelector('[data-campaign-eyebrow]')?.replaceChildren(document.createTextNode(copy.eyebrow));
+  bar.querySelector('[data-campaign-title]')?.replaceChildren(document.createTextNode(copy.title));
+  bar.querySelector('[data-campaign-desc]')?.replaceChildren(document.createTextNode(copy.desc));
+  const actions = bar.querySelector('[data-campaign-actions]');
+  if (actions) {
+    actions.innerHTML = copy.actions.map((action, idx) => `<a class="${idx === 0 ? 'primary-btn' : idx === 1 ? 'secondary-btn' : 'ghost-btn'}" href="${action[1]}" data-campaign-action="${action[2]}">${action[0]}</a>`).join('');
+    actions.querySelectorAll('[data-campaign-action]').forEach(link => {
+      link.addEventListener('click', () => {
+        writeStartPathMemory({ kind: link.dataset.campaignAction || '', href: link.getAttribute('href') || '', sourcePage: 'campaign-entry', city: entry.city || '' });
+        trackEvent('ryoko_campaign_entry_clicked', { campaign: entry.campaign || '', city: entry.city || '', action: link.dataset.campaignAction || '' });
+      }, { once:true });
+    });
+  }
+  const dismiss = bar.querySelector('[data-campaign-dismiss]');
+  if (dismiss) dismiss.textContent = copy.dismiss;
+}
+function ensureCampaignEntryBar(){
+  const entry = campaignEntryParams();
+  let bar = document.getElementById('campaignEntryBar');
+  if (!entry) { if (bar) bar.classList.add('is-hidden'); return; }
+  if (!bar) {
+    bar = document.createElement('section');
+    bar.id = 'campaignEntryBar';
+    bar.className = 'campaign-entry-bar';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Campaign entry note');
+    bar.innerHTML = '<div class="campaign-entry-inner"><div class="campaign-entry-copy"><span class="campaign-entry-eyebrow" data-campaign-eyebrow></span><strong class="campaign-entry-title" data-campaign-title></strong><p class="campaign-entry-desc" data-campaign-desc></p></div><div class="campaign-entry-actions" data-campaign-actions></div><button class="campaign-entry-dismiss" type="button" data-campaign-dismiss></button></div>';
+    const anchor = document.getElementById('betaLaunchBar') || document.querySelector('.top-bar');
+    if (anchor && anchor.parentNode) anchor.insertAdjacentElement('afterend', bar);
+    else document.body.prepend(bar);
+    bar.querySelector('[data-campaign-dismiss]')?.addEventListener('click', () => bar.classList.add('is-hidden'));
+    trackEvent('ryoko_campaign_entry_shown', { campaign: entry.campaign || '', city: entry.city || '', start: entry.start || '' });
+  }
+  syncCampaignEntryBar();
+}
+
 function inferStartPathCityFromHref(href=''){
   const value = String(href || '').toLowerCase();
   const matches = Object.values(CITY_LOOP).find(entry => {
@@ -5559,6 +5634,7 @@ function renderTripsSeasonalDesk(){
     initLaunchFeedback();
     initPwaSupport();
     ensureBetaLaunchBar();
+    ensureCampaignEntryBar();
     ensureFirstRunGuide();
     ensureQuickResumeShelf();
     ensureReadingHistoryShelf();
@@ -5625,6 +5701,7 @@ function renderTripsSeasonalDesk(){
       renderExpansionFrontDesk();
       initAccessibilityPolish();
       ensureBetaLaunchBar();
+      ensureCampaignEntryBar();
       ensureFirstRunGuide();
       ensureQuickResumeShelf();
       ensureReadingHistoryShelf();

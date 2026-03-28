@@ -1,11 +1,12 @@
 {
-  "release": "v112",
-  "version": "v112",
+  "release": "v114",
+  "version": "v114",
   "channel": "beta",
-  "codename": "planner-latest-route-resume",
+  "codename": "campaign-entry-links",
   "updatedAt": "2026-03-29",
-  "headline": "Latest route session resume for Planner",
+  "headline": "Promotion-friendly campaign entry links and handoff bar.",
   "notes": [
+    "Adds campaign-aware entry links so promo traffic can open city, sample, or route starts with clearer handoff.",
     "Planner now keeps a fresh latest route session and offers resume or use-as-base actions on return.",
     "Release-check can reset latest route session state and now reports it alongside draft status.",
     "Planner release tooling also fixes missing planner-draft reset handlers in release-check."
