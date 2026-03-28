@@ -1,13 +1,13 @@
 {
-  "release": "v100",
-  "version": "v100",
+  "release": "v101",
+  "version": "v101",
   "channel": "beta",
-  "codename": "public-beta-launch-layer",
-  "updatedAt": "2026-03-28",
-  "headline": "Added a dismissible public beta launch bar with direct links to release notes and feedback.",
+  "codename": "first-run-guide-layer",
+  "updatedAt": "2026-03-29",
+  "headline": "Added a once-per-browser first-run guide on home and magazine, plus release-check reset support.",
   "notes": [
-    "Added a dismissible public beta launch bar across core product pages.",
-    "The beta bar links directly to What's new and the page-aware feedback desk.",
-    "Release-check can now reset the beta notice and includes its dismissal state in the release report."
+    "Added a first-run guide sheet on home and magazine with direct actions into city, sample, and route flows.",
+    "The guide is dismissible per browser and tracks shown, dismissed, and CTA click events.",
+    "Release-check can now reset the first-run guide and includes its dismissed state in the release report."
   ]
 }

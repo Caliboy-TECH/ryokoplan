@@ -954,6 +954,7 @@ function buildFeedbackHref(extra={}){
 }
 
 const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
+const firstRunGuideDismissKey = 'ryoko:first-run-guide-dismissed:v101';
 function betaLaunchCopy(){
   return lang === 'ko'
     ? { eyebrow:'Public beta', title:'Ryokoplan is now open in beta.', desc:'Routes, city notes, and saved flows are live. If anything feels off, send quick feedback from the page you are on.', primary:"What\'s new", secondary:'Send feedback', dismiss:'Hide' }
@@ -1010,6 +1011,134 @@ function ensureBetaLaunchBar(){
   }
   syncBetaLaunchBar();
 }
+
+function firstRunGuideCopy(){
+  const page = document.body?.dataset?.page || 'planner';
+  const pageKey = page === 'magazine' ? 'magazine' : 'planner';
+  const copies = {
+    planner: {
+      ko: {
+        eyebrow:'처음이라면 여기서',
+        title:'Ryokoplan 시작 흐름은 세 가지면 충분합니다.',
+        desc:'도시를 읽고, 샘플 하나를 보고, 바로 route를 열어보세요. 첫 공개 베타에선 이 흐름이 가장 이해하기 쉽습니다.',
+        steps:[['1. Magazine','도시를 먼저 읽습니다.'],['2. Sample','좋은 흐름 하나를 먼저 봅니다.'],['3. Route','바로 내 route로 이어갑니다.']],
+        actions:[['매거진 열기', navHref('magazine'),'magazine'],['샘플 보기', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['루트 시작', navHref('planner'),'route']],
+        dismiss:'닫기'
+      },
+      en: {
+        eyebrow:'Start here',
+        title:'Three simple ways into Ryokoplan.',
+        desc:'Read one city, open one sample, then move straight into a route. For the public beta, this is still the clearest way to enter the product.',
+        steps:[['1. Magazine','Read the city first.'],['2. Sample','See one strong route rhythm.'],['3. Route','Start your own route from there.']],
+        actions:[['Open Magazine', navHref('magazine'),'magazine'],['Read sample', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['Open route start', navHref('planner'),'route']],
+        dismiss:'Hide'
+      },
+      ja: {
+        eyebrow:'最初はここから',
+        title:'Ryokoplan への入り方は三つで十分です。',
+        desc:'都市を読み、サンプルを一つ見て、そのまま route へ入ってください。ベータ公開中はいちばんわかりやすい入口です。',
+        steps:[['1. Magazine','まず都市を読みます。'],['2. Sample','良い流れを一つ見ます。'],['3. Route','そのまま自分の route へつなげます。']],
+        actions:[['Magazine を開く', navHref('magazine'),'magazine'],['sample を見る', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['route を始める', navHref('planner'),'route']],
+        dismiss:'閉じる'
+      },
+      zhHant: {
+        eyebrow:'先從這裡開始',
+        title:'進入 Ryokoplan，其實只要三步。',
+        desc:'先讀一座城市，看一條 sample，再直接打開 route。對目前的 public beta 來說，這還是最清楚的入口。',
+        steps:[['1. Magazine','先讀城市。'],['2. Sample','先看一條好的節奏。'],['3. Route','再接到你的 route。']],
+        actions:[['打開 Magazine', navHref('magazine'),'magazine'],['看 sample', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['開始 route', navHref('planner'),'route']],
+        dismiss:'隱藏'
+      }
+    },
+    magazine: {
+      ko: {
+        eyebrow:'매거진 첫 진입',
+        title:'이 페이지는 city → sample → route 순서로 읽으면 가장 쉽습니다.',
+        desc:'지금은 도시를 먼저 읽고, 샘플로 톤을 잡은 뒤, route로 이어가는 흐름이 가장 자연스럽습니다.',
+        steps:[['1. City guide','도시 결을 먼저 봅니다.'],['2. Sample','좋은 리듬을 sample로 확인합니다.'],['3. Route','route로 이어가 저장합니다.']],
+        actions:[['도시 가이드', resolvePath('city/tokyo.html'),'city'],['샘플 보기', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['루트 시작', navHref('planner'),'route']],
+        dismiss:'닫기'
+      },
+      en: {
+        eyebrow:'Magazine first run',
+        title:'This page works best as city → sample → route.',
+        desc:'Read a city guide first, use one sample to set the tone, then carry that rhythm into a route.',
+        steps:[['1. City guide','Read one city layer first.'],['2. Sample','Use one sample to calibrate the rhythm.'],['3. Route','Carry that into a route and save it.']],
+        actions:[['Open city guide', resolvePath('city/tokyo.html'),'city'],['Read sample', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['Open route start', navHref('planner'),'route']],
+        dismiss:'Hide'
+      },
+      ja: {
+        eyebrow:'Magazine の最初の入り方',
+        title:'このページは city → sample → route の順で読むのがいちばん自然です。',
+        desc:'都市ガイドを先に読み、sample でトーンをつかみ、その流れを route へ持っていってください。',
+        steps:[['1. City guide','まず都市の層を読みます。'],['2. Sample','sample で良い流れを見ます。'],['3. Route','そのまま route へつなげて保存します。']],
+        actions:[['都市ガイド', resolvePath('city/tokyo.html'),'city'],['sample を見る', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['route を始める', navHref('planner'),'route']],
+        dismiss:'閉じる'
+      },
+      zhHant: {
+        eyebrow:'Magazine 初次進入',
+        title:'這個頁面最適合用 city → sample → route 的順序去讀。',
+        desc:'先讀城市指南，再用一條 sample 定下節奏，最後把那個感覺帶進你的 route。',
+        steps:[['1. City guide','先讀一層城市。'],['2. Sample','用 sample 對準節奏。'],['3. Route','把節奏接到 route 並保存。']],
+        actions:[['城市指南', resolvePath('city/tokyo.html'),'city'],['看 sample', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['開始 route', navHref('planner'),'route']],
+        dismiss:'隱藏'
+      }
+    }
+  };
+  return copies[pageKey][lang] || copies[pageKey].en;
+}
+function shouldShowFirstRunGuide(){
+  const page = document.body?.dataset?.page || '';
+  if (!(page === 'planner' || page === 'magazine')) return false;
+  if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
+  try { if (localStorage.getItem(firstRunGuideDismissKey) === '1') return false; } catch {}
+  return true;
+}
+function syncFirstRunGuide(){
+  const sheet = document.getElementById('firstRunGuideSheet');
+  if (!sheet) return;
+  if (!shouldShowFirstRunGuide()) { sheet.classList.add('is-hidden'); return; }
+  const copy = firstRunGuideCopy();
+  sheet.classList.remove('is-hidden');
+  sheet.querySelector('[data-guide-eyebrow]')?.replaceChildren(document.createTextNode(copy.eyebrow));
+  sheet.querySelector('[data-guide-title]')?.replaceChildren(document.createTextNode(copy.title));
+  sheet.querySelector('[data-guide-desc]')?.replaceChildren(document.createTextNode(copy.desc));
+  const steps = sheet.querySelector('[data-guide-steps]');
+  if (steps) steps.innerHTML = copy.steps.map(step => `<li><strong>${step[0]}</strong><span>${step[1]}</span></li>`).join('');
+  const actions = sheet.querySelector('[data-guide-actions]');
+  if (actions) actions.innerHTML = copy.actions.map((action, idx) => `<a class="${idx === 0 ? 'primary-btn' : idx === 1 ? 'secondary-btn' : 'ghost-btn'}" href="${action[1]}" data-guide-action="${action[2]}">${action[0]}</a>`).join('');
+  const dismiss = sheet.querySelector('[data-guide-dismiss]');
+  if (dismiss) dismiss.textContent = copy.dismiss;
+}
+function ensureFirstRunGuide(){
+  let sheet = document.getElementById('firstRunGuideSheet');
+  if (!shouldShowFirstRunGuide()) { if (sheet) sheet.classList.add('is-hidden'); return; }
+  if (!sheet) {
+    sheet = document.createElement('aside');
+    sheet.id = 'firstRunGuideSheet';
+    sheet.className = 'first-run-guide-sheet';
+    sheet.setAttribute('role', 'dialog');
+    sheet.setAttribute('aria-live', 'polite');
+    sheet.innerHTML = '<div class="first-run-guide-card"><div class="first-run-guide-copy"><span class="first-run-guide-eyebrow" data-guide-eyebrow></span><strong class="first-run-guide-title" data-guide-title></strong><p class="first-run-guide-desc" data-guide-desc></p><ol class="first-run-guide-steps" data-guide-steps></ol></div><div class="first-run-guide-actions" data-guide-actions></div><button class="first-run-guide-dismiss" type="button" data-guide-dismiss></button></div>';
+    document.body.appendChild(sheet);
+    sheet.addEventListener('click', event => {
+      const action = event.target.closest('[data-guide-action]');
+      if (!action) return;
+      trackEvent('ryoko_first_run_guide_cta_clicked', {
+        sourcePage: document.body?.dataset?.page || 'unknown',
+        action: action.dataset.guideAction || ''
+      });
+    });
+    sheet.querySelector('[data-guide-dismiss]')?.addEventListener('click', () => {
+      try { localStorage.setItem(firstRunGuideDismissKey, '1'); } catch {}
+      sheet.classList.add('is-hidden');
+      trackEvent('ryoko_first_run_guide_dismissed', { sourcePage: document.body?.dataset?.page || 'unknown' });
+    });
+    trackEvent('ryoko_first_run_guide_shown', { sourcePage: document.body?.dataset?.page || 'unknown' });
+  }
+  syncFirstRunGuide();
+}
+
 function buildWhatsNewHref(){
   return `${pathRoot}whats-new/index.html`;
 }
@@ -4776,6 +4905,7 @@ function renderTripsSeasonalDesk(){
     initLaunchFeedback();
     initPwaSupport();
     ensureBetaLaunchBar();
+    ensureFirstRunGuide();
     ensureLaunchFeedbackCta();
     ensureInstallCta();
     if (document.body.dataset.page === 'planner') applyHomeHead();
@@ -4838,6 +4968,7 @@ function renderTripsSeasonalDesk(){
       renderExpansionFrontDesk();
       initAccessibilityPolish();
       ensureBetaLaunchBar();
+      ensureFirstRunGuide();
       ensureLaunchFeedbackCta();
       ensureInstallCta();
       syncInstallCta();

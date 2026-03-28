@@ -5244,3 +5244,24 @@ main:focus{outline:none}
 @media (prefers-reduced-motion: reduce){
   .beta-launch-bar,.beta-launch-inner,.beta-launch-actions,.beta-launch-dismiss,.launch-install-cta{transition:none}
 }
+
+
+.first-run-guide-sheet{position:fixed;right:18px;bottom:90px;z-index:84;max-width:420px;width:min(420px,calc(100vw - 24px));}
+.first-run-guide-card{background:rgba(252,248,241,.96);backdrop-filter:blur(18px);border:1px solid rgba(206,188,163,.55);border-radius:24px;box-shadow:0 20px 50px rgba(18,32,47,.16);padding:18px;display:grid;gap:14px;}
+.first-run-guide-eyebrow{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#fff2e8;color:#b96534;font-size:11px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;width:max-content;}
+.first-run-guide-title{display:block;font-size:1.05rem;line-height:1.35;color:#15273a;}
+.first-run-guide-desc{margin:8px 0 0;color:#5d6f82;font-size:.95rem;line-height:1.55;}
+.first-run-guide-steps{margin:0;padding-left:18px;display:grid;gap:8px;color:#4f6275;}
+.first-run-guide-steps li{padding-left:2px;}
+.first-run-guide-steps strong{display:block;color:#15273a;font-size:.93rem;margin-bottom:2px;}
+.first-run-guide-steps span{font-size:.88rem;line-height:1.45;}
+.first-run-guide-actions{display:flex;flex-wrap:wrap;gap:10px;}
+.first-run-guide-actions .primary-btn,.first-run-guide-actions .secondary-btn,.first-run-guide-actions .ghost-btn{flex:1 1 150px;justify-content:center;}
+.first-run-guide-dismiss{justify-self:flex-end;border:0;background:transparent;color:#5d6f82;font-size:.85rem;font-weight:700;padding:0;cursor:pointer;}
+.first-run-guide-sheet.is-hidden{display:none;}
+@media (max-width:720px){
+  .first-run-guide-sheet{left:12px;right:12px;bottom:88px;max-width:none;width:auto;}
+  .first-run-guide-card{border-radius:22px;padding:16px;}
+  .first-run-guide-actions{flex-direction:column;}
+  .first-run-guide-actions .primary-btn,.first-run-guide-actions .secondary-btn,.first-run-guide-actions .ghost-btn{width:100%;}
+}
