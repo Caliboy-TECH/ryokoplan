@@ -737,6 +737,87 @@ window.RyokoApp = (() => {
       });
     });
   }
+
+const LAUNCH_SESSION_KEY = 'ryoko_launch_session_v1';
+let launchFeedbackBooted = false;
+function getLaunchSessionId(){
+  try {
+    const existing = sessionStorage.getItem(LAUNCH_SESSION_KEY);
+    if (existing) return existing;
+    const created = `ryoko-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`;
+    sessionStorage.setItem(LAUNCH_SESSION_KEY, created);
+    return created;
+  } catch {
+    return `ryoko-${Date.now().toString(36)}`;
+  }
+}
+function trackEvent(name, detail={}){
+  const payload = {
+    event: name,
+    page: document.body?.dataset?.page || 'unknown',
+    path: location.pathname,
+    lang,
+    sessionId: getLaunchSessionId(),
+    timestamp: new Date().toISOString(),
+    ...detail
+  };
+  try {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(payload);
+  } catch {}
+  try {
+    window.dispatchEvent(new CustomEvent('ryoko:track', { detail: payload }));
+  } catch {}
+  return payload;
+}
+function ensureNetworkBanner(){
+  let banner = document.getElementById('launchNetworkBanner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'launchNetworkBanner';
+    banner.className = 'launch-network-banner';
+    banner.setAttribute('role', 'status');
+    banner.setAttribute('aria-live', 'polite');
+    document.body.appendChild(banner);
+  }
+  return banner;
+}
+function updateNetworkBanner(){
+  const banner = ensureNetworkBanner();
+  const online = navigator.onLine !== false;
+  if (online) {
+    banner.classList.remove('is-visible');
+    banner.textContent = '';
+    return;
+  }
+  const message = lang === 'ko'
+    ? '오프라인 상태예요. 일부 여정 생성과 공유 기능이 잠시 제한될 수 있어요.'
+    : lang === 'ja'
+      ? 'オフラインです。旅程生成や共有の一部が一時的に制限される場合があります。'
+      : lang === 'zhHant'
+        ? '你目前離線中，部分路線生成與分享功能可能會暫時受限。'
+        : 'You are offline. Some route generation and sharing actions may be limited for a moment.';
+  banner.textContent = message;
+  banner.classList.add('is-visible');
+}
+function initLaunchFeedback(){
+  if (launchFeedbackBooted) return;
+  launchFeedbackBooted = true;
+  trackEvent('ryoko_page_view', {
+    hasTripParam: new URLSearchParams(location.search).has('trip'),
+    hasDestinationParam: new URLSearchParams(location.search).has('destination')
+  });
+  updateNetworkBanner();
+  window.addEventListener('online', () => {
+    updateNetworkBanner();
+    trackEvent('ryoko_network_online');
+  });
+  window.addEventListener('offline', () => {
+    updateNetworkBanner();
+    trackEvent('ryoko_network_offline');
+  });
+}
+
   function getSignalRecommendations(context={}){
     const signals = detectSignalTags(context);
     const pools = [
@@ -4463,6 +4544,7 @@ function renderTripsSeasonalDesk(){
   function initCommon(){
     document.documentElement.lang = lang;
     initAccessibilityPolish();
+    initLaunchFeedback();
     if (document.body.dataset.page === 'planner') applyHomeHead();
     if (document.body.dataset.page === 'trips') applyTripsHead();
     renderMagazineLanding();
@@ -4545,6 +4627,6 @@ function renderTripsSeasonalDesk(){
         </div>
       </article>`;
   }
-  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, getCityVoice, slugifyCity, resolvePath, applyPlannerPreset, getSignalRecommendations, detectSignalTags, recordSignalInteraction, getTopSignalTags, get lang(){return lang;}, pathRoot, navHref };
+  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, getCityVoice, slugifyCity, resolvePath, applyPlannerPreset, getSignalRecommendations, detectSignalTags, recordSignalInteraction, getTopSignalTags, trackEvent, get lang(){return lang;}, pathRoot, navHref };
 })();
 window.addEventListener('DOMContentLoaded', () => { window.RyokoApp.initCommon(); window.RyokoApp.initMagazine(); });

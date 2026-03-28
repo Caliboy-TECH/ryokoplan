@@ -159,6 +159,76 @@ window.RyokoPlanner = (() => {
     button.removeAttribute('aria-busy');
     if (button.dataset.defaultLabel) button.innerHTML = button.dataset.defaultLabel;
   }
+
+let lastGeneratePayload = null;
+function plannerFeedbackCopy(){
+  const lang = window.RyokoApp?.lang || 'ko';
+  return {
+    loadingTitle: lang === 'ko' ? '도시 리듬을 읽는 중이에요' : lang === 'ja' ? '街のリズムを読んでいます' : lang === 'zhHant' ? '正在讀這座城市的節奏' : 'Reading the city rhythm',
+    loadingDesc: lang === 'ko' ? '조금 더 좋은 흐름으로 묶고 있어요.' : lang === 'ja' ? 'もう少し読みやすい流れに整えています。' : lang === 'zhHant' ? '正在整理成更順的路線節奏。' : 'Shaping the route into a cleaner flow.',
+    readyTitle: lang === 'ko' ? '루트가 준비됐어요' : lang === 'ja' ? 'ルートの準備ができました' : lang === 'zhHant' ? '路線已經準備好了' : 'Your route is ready',
+    readyDesc: lang === 'ko' ? '결과 화면으로 바로 이어서 읽어보세요.' : lang === 'ja' ? 'このまま結果の流れを読んでください。' : lang === 'zhHant' ? '可以直接接著看結果頁了。' : 'You can move straight into the result now.',
+    fallbackTitle: lang === 'ko' ? '우선 샘플 리듬으로 이어둘게요' : lang === 'ja' ? '先にサンプルの流れでつないでおきます' : lang === 'zhHant' ? '先用 sample 節奏接上這條路線' : 'Using a sample rhythm for now',
+    fallbackDesc: lang === 'ko' ? '지금은 생성 응답이 불안정해서, 같은 도시의 샘플 톤으로 먼저 보여드렸어요.' : lang === 'ja' ? 'いまは生成応答が不安定だったため、同じ都市のサンプルのトーンで先に見せています。' : lang === 'zhHant' ? '目前生成回應不夠穩定，所以先用同城市的 sample tone 帶你往下走。' : 'The live response was unstable, so this opens with a sample tone from the same city first.',
+    offlineTitle: lang === 'ko' ? '오프라인 상태라 샘플 리듬으로 열었어요' : lang === 'ja' ? 'オフラインのためサンプルの流れで開きました' : lang === 'zhHant' ? '因為目前離線，所以先用 sample 節奏打開' : 'Opened with a sample rhythm while offline',
+    offlineDesc: lang === 'ko' ? '네트워크가 돌아오면 다시 시도해서 더 맞는 결과로 바꿀 수 있어요.' : lang === 'ja' ? 'ネットワークが戻ったら、もう一度試してより合う結果に整えられます。' : lang === 'zhHant' ? '等網路恢復後，可以再試一次換成更貼近的結果。' : 'Once the connection returns, retry and the route can be shaped into a better fit.',
+    retry: lang === 'ko' ? '다시 시도' : lang === 'ja' ? 'もう一度試す' : lang === 'zhHant' ? '再試一次' : 'Retry',
+    dismiss: lang === 'ko' ? '닫기' : lang === 'ja' ? '閉じる' : lang === 'zhHant' ? '關閉' : 'Dismiss'
+  };
+}
+function ensurePlannerFeedbackPanel(){
+  let panel = qs('plannerFeedbackPanel');
+  if (panel) return panel;
+  const anchor = qs('resultTop') || document.querySelector('.result-wrap') || document.querySelector('.planner-grid');
+  if (!anchor || !anchor.parentNode) return null;
+  panel = document.createElement('div');
+  panel.id = 'plannerFeedbackPanel';
+  panel.className = 'planner-feedback-panel hidden';
+  panel.setAttribute('role', 'status');
+  panel.setAttribute('aria-live', 'polite');
+  panel.innerHTML = `
+    <div class="planner-feedback-copy">
+      <span class="planner-feedback-kicker"></span>
+      <strong class="planner-feedback-title"></strong>
+      <p class="planner-feedback-desc"></p>
+    </div>
+    <div class="planner-feedback-actions">
+      <button type="button" class="soft-btn planner-feedback-retry hidden"></button>
+      <button type="button" class="ghost-btn planner-feedback-dismiss"></button>
+    </div>`;
+  anchor.parentNode.insertBefore(panel, anchor);
+  panel.querySelector('.planner-feedback-dismiss')?.addEventListener('click', () => panel.classList.add('hidden'));
+  panel.querySelector('.planner-feedback-retry')?.addEventListener('click', async () => {
+    if (!lastGeneratePayload) return;
+    panel.classList.add('hidden');
+    await generate(lastGeneratePayload);
+  });
+  return panel;
+}
+function setPlannerFeedback(mode='info', options={}){
+  const panel = ensurePlannerFeedbackPanel();
+  if (!panel) return;
+  const copy = plannerFeedbackCopy();
+  const title = options.title || (mode === 'loading' ? copy.loadingTitle : mode === 'success' ? copy.readyTitle : mode === 'offline' ? copy.offlineTitle : copy.fallbackTitle);
+  const desc = options.desc || (mode === 'loading' ? copy.loadingDesc : mode === 'success' ? copy.readyDesc : mode === 'offline' ? copy.offlineDesc : copy.fallbackDesc);
+  panel.className = `planner-feedback-panel planner-feedback-${mode}`;
+  panel.classList.remove('hidden');
+  panel.querySelector('.planner-feedback-kicker').textContent = options.kicker || (mode === 'loading' ? 'Route' : mode === 'success' ? 'Ready' : mode === 'offline' ? 'Offline' : 'Fallback');
+  panel.querySelector('.planner-feedback-title').textContent = title;
+  panel.querySelector('.planner-feedback-desc').textContent = desc;
+  const retry = panel.querySelector('.planner-feedback-retry');
+  const dismiss = panel.querySelector('.planner-feedback-dismiss');
+  if (retry) {
+    retry.textContent = copy.retry;
+    retry.classList.toggle('hidden', !(options.retry && lastGeneratePayload));
+  }
+  if (dismiss) dismiss.textContent = copy.dismiss;
+}
+function clearPlannerFeedback(){
+  const panel = qs('plannerFeedbackPanel');
+  if (panel) panel.classList.add('hidden');
+}
+
   function revealResult(){
     const result = qs('resultTop');
     if (!result) return;
@@ -2175,28 +2245,57 @@ function getPriorityRefinePack(city=''){
     window.currentTripPayload = { ...readForm(), planData:data, title:data.title || data.destination };
     window.RyokoStorage.addRecentTrip({ ...window.currentTripPayload, destination:data.destination || readForm().destination });
   }
-  async function generate(){
-    const payload = readForm();
-    if (!payload.destination) { showToast(uiCopy('도시를 먼저 선택해 주세요.','Choose a city first.'), 'warn'); return; }
-    setButtonBusy(qs('submitBtn'), window.RyokoApp.t('planner.generating'));
-    try {
-      const res = await fetch(`${window.RyokoApp.pathRoot}api/generate`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
-      if (!res.ok) throw new Error('API failed');
-      const data = await res.json();
-      renderPlan(data);
-      revealResult();
-      showToast(uiCopy('여정을 준비했어요.','Your trip is ready.'), 'success');
-    } catch (e) {
-      const fallback = samplePlans[payload.destination.toLowerCase()] || samplePlans.tokyo;
-      renderPlan({...fallback, destination: payload.destination || fallback.destination});
-      revealResult();
-      showToast(uiCopy('샘플 리듬으로 먼저 보여드릴게요.','Loaded a sample route as a fallback.'), 'info');
-    } finally {
-      resetButtonBusy(qs('submitBtn'));
-    }
+
+async function generate(forcedPayload=null){
+  const payload = forcedPayload || readForm();
+  if (!payload.destination) { showToast(uiCopy('도시를 먼저 선택해 주세요.','Choose a city first.'), 'warn'); return; }
+  lastGeneratePayload = { ...payload };
+  window.RyokoApp?.trackEvent?.('ryoko_route_generate_started', {
+    destination: payload.destination,
+    duration: payload.duration || '',
+    companion: payload.companion || '',
+    style: payload.style || '',
+    localMode: !!payload.localMode
+  });
+  setPlannerFeedback('loading');
+  setButtonBusy(qs('submitBtn'), window.RyokoApp.t('planner.generating'));
+  try {
+    const res = await fetch(`${window.RyokoApp.pathRoot}api/generate`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    if (!res.ok) throw new Error(`API failed:${res.status}`);
+    const data = await res.json();
+    renderPlan(data);
+    setPlannerFeedback('success');
+    revealResult();
+    showToast(uiCopy('여정을 준비했어요.','Your trip is ready.'), 'success');
+    window.RyokoApp?.trackEvent?.('ryoko_route_generate_succeeded', {
+      destination: payload.destination,
+      usedFallback: false,
+      dayCount: Array.isArray(data.days) ? data.days.length : 0
+    });
+  } catch (e) {
+    const fallback = samplePlans[payload.destination.toLowerCase()] || samplePlans.tokyo;
+    renderPlan({...fallback, destination: payload.destination || fallback.destination});
+    const offline = navigator.onLine === false;
+    setPlannerFeedback(offline ? 'offline' : 'fallback', { retry:true });
+    revealResult();
+    showToast(
+      offline
+        ? uiCopy('오프라인이라 샘플 리듬으로 먼저 열었어요.','Opened a sample rhythm while offline.')
+        : uiCopy('샘플 리듬으로 먼저 보여드릴게요.','Loaded a sample route as a fallback.'),
+      'info'
+    );
+    window.RyokoApp?.trackEvent?.('ryoko_route_generate_fallback', {
+      destination: payload.destination,
+      offline,
+      error: String(e && e.message || 'fallback')
+    });
+  } finally {
+    resetButtonBusy(qs('submitBtn'));
   }
-  function useExample(key='tokyo'){
+}
+function useExample(key='tokyo'){
     const plan = samplePlans[key] || samplePlans.tokyo;
+    window.RyokoApp?.trackEvent?.('ryoko_sample_loaded', { destination: plan.destination || key, source: 'planner_example_button' });
     qs('destination').value = plan.destination;
     qs('notes').value = normalizeSummary(plan);
     renderPlan(plan);
@@ -2206,6 +2305,7 @@ function getPriorityRefinePack(city=''){
   function saveCurrentTrip(){
     if (!window.currentTripPayload) return showToast(uiCopy('먼저 여정을 만들어 주세요.','Generate a trip first.'), 'warn');
     const saved = window.RyokoStorage.saveTrip(window.currentTripPayload);
+    window.RyokoApp?.trackEvent?.('ryoko_trip_saved', { destination: saved.destination || '', title: saved.title || '' });
     showToast(uiCopy(`${saved.title || saved.destination} 저장 완료`,`Saved ${saved.title || saved.destination}`), 'success');
   }
   async function shareCurrentTrip(){
@@ -2222,12 +2322,14 @@ function getPriorityRefinePack(city=''){
     if (navigator.share) {
       try {
         await navigator.share(shareData);
+        window.RyokoApp?.trackEvent?.('ryoko_trip_shared', { destination: window.currentTripPayload?.destination || '', channel: 'native_share' });
         showToast(uiCopy('공유 패널을 열었어요.','Opened share sheet.'), 'success');
         return;
       } catch {}
     }
     try {
       await navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${url}`);
+      window.RyokoApp?.trackEvent?.('ryoko_trip_shared', { destination: window.currentTripPayload?.destination || '', channel: 'clipboard' });
       showToast(uiCopy('링크를 복사했어요.','Link copied.'), 'success');
     } catch {
       window.prompt('Copy this link', url);
@@ -2235,6 +2337,7 @@ function getPriorityRefinePack(city=''){
   }
   function savePdf(){
     const printWindow = window.open('', '_blank');
+    window.RyokoApp?.trackEvent?.('ryoko_trip_pdf_opened', { destination: window.currentTripPayload?.destination || '' });
     if (!window.currentTripPayload) return showToast(uiCopy('먼저 여정을 만들어 주세요.','Generate a trip first.'), 'warn');
     if (!printWindow) return showToast(uiCopy('팝업이 차단되어 PDF 창을 열 수 없어요.','Popup blocked. Allow a new tab to export PDF.'), 'warn');
     const data = window.currentTripPayload.planData || {};
@@ -2532,6 +2635,7 @@ function getPriorityRefinePack(city=''){
     const payload = window.RyokoStorage.decodeShare(code);
     if (!payload) return;
     window.sharedTripSource = { ...payload, importedFromLink: true };
+    window.RyokoApp?.trackEvent?.('ryoko_shared_trip_loaded', { destination: payload.destination || payload.planData?.destination || '' });
     window.currentTripPayload = { ...payload, sharedSource: 'link' };
     if (payload.destination) qs('destination').value = payload.destination;
     if (payload.notes) qs('notes').value = payload.notes;
@@ -2556,6 +2660,9 @@ function getPriorityRefinePack(city=''){
     qs('exampleBtn').addEventListener('click', () => useExample('tokyo'));
     bindJumpChips();
     bindStickyBar();
+    ensurePlannerFeedbackPanel();
+    window.addEventListener('offline', () => { if (window.currentTripPayload) setPlannerFeedback('offline'); });
+    window.addEventListener('online', () => { const panel = qs('plannerFeedbackPanel'); if (panel && panel.classList.contains('planner-feedback-offline')) panel.classList.add('hidden'); });
     qs('saveTripBtn').addEventListener('click', saveCurrentTrip);
     qs('shareTripBtn').addEventListener('click', shareCurrentTrip);
     qs('pdfTripBtn').addEventListener('click', savePdf);
