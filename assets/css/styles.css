@@ -5354,3 +5354,17 @@ main:focus{outline:none}
   .planner-draft-head{flex-direction:column}
   .planner-draft-age{align-self:flex-start}
 }
+
+.planner-latest-route-card{margin-top:16px;border:1px solid rgba(210,220,230,.95);background:linear-gradient(180deg,#fbfdff 0%,#f1f6fa 100%);box-shadow:0 14px 28px rgba(17,39,61,.05)}
+.planner-latest-route-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.planner-latest-route-head h3{margin:6px 0 4px;font-size:18px;line-height:1.25}
+.planner-latest-route-head p{margin:0;color:#5d6f82;font-size:13px}
+.planner-latest-route-age{display:inline-flex;align-items:center;padding:7px 11px;border-radius:999px;background:#eef6fb;border:1px solid rgba(86,132,171,.16);color:#36526b;font-size:12px;font-weight:700;white-space:nowrap}
+.planner-latest-route-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.planner-latest-route-chip{display:inline-flex;align-items:center;padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.92);border:1px solid rgba(201,217,230,.95);font-size:12px;font-weight:600;color:#42576d}
+.planner-latest-route-note{margin:14px 0 0;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.92);border:1px solid rgba(213,224,233,.95);color:#556578;font-size:13px;line-height:1.55}
+.planner-latest-route-actions{margin-top:14px}
+@media (max-width:768px){
+  .planner-latest-route-head{flex-direction:column}
+  .planner-latest-route-age{align-self:flex-start}
+}

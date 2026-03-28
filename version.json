@@ -1,13 +1,13 @@
 {
-  "release": "v111",
-  "version": "v111",
+  "release": "v112",
+  "version": "v112",
   "channel": "beta",
-  "codename": "planner-draft-autosave",
+  "codename": "planner-latest-route-resume",
   "updatedAt": "2026-03-29",
-  "headline": "Planner draft autosave + resume restore",
+  "headline": "Latest route session resume for Planner",
   "notes": [
-    "Planner now autosaves an in-progress draft for 7 days and offers a resume card on return.",
-    "Release-check can reset planner draft state and reports draft freshness.",
-    "Entry-aware planner flow now feels less fragile across reloads or short drop-offs."
+    "Planner now keeps a fresh latest route session and offers resume or use-as-base actions on return.",
+    "Release-check can reset latest route session state and now reports it alongside draft status.",
+    "Planner release tooling also fixes missing planner-draft reset handlers in release-check."
   ]
 }

@@ -87,6 +87,10 @@ window.RyokoPlanner = (() => {
   const plannerDraftDismissKey = 'ryoko:planner-draft-dismissed:v111';
   const plannerDraftMaxAgeMs = 1000 * 60 * 60 * 24 * 7;
   let plannerDraftSaveTimer = null;
+  const latestRouteSessionKey = 'ryoko:planner-last-result:v112';
+  const latestRouteDismissKey = 'ryoko:planner-last-result-dismissed:v112';
+  const latestRouteMaxAgeMs = 1000 * 60 * 60 * 24 * 7;
+  let latestRouteCurrentSessionId = '';
 
   function parseStoredJson(raw, fallback=null){
     try { return JSON.parse(raw); } catch { return fallback; }
@@ -262,6 +266,153 @@ window.RyokoPlanner = (() => {
     window.addEventListener('beforeunload', () => writePlannerDraft(true));
   }
 
+
+  function clearLatestRouteSession(options={}){
+    localStorage.removeItem(latestRouteSessionKey);
+    if (!options.keepDismiss) localStorage.removeItem(latestRouteDismissKey);
+    const card = qs('plannerLatestRouteCard');
+    if (card) card.classList.add('hidden');
+  }
+  function readLatestRouteSession(){
+    const item = parseStoredJson(localStorage.getItem(latestRouteSessionKey) || 'null', null);
+    if (!item || !item.savedAt || !item.tripPayload?.planData) return null;
+    const age = Date.now() - new Date(item.savedAt).getTime();
+    if (!Number.isFinite(age) || age < 0 || age > latestRouteMaxAgeMs) {
+      clearLatestRouteSession();
+      return null;
+    }
+    return item;
+  }
+  function latestRouteAgeLabel(savedAt=''){
+    if (!savedAt) return '';
+    const diff = Date.now() - new Date(savedAt).getTime();
+    if (!Number.isFinite(diff) || diff < 0) return '';
+    const minutes = Math.floor(diff / (1000 * 60));
+    if (minutes < 1) return uiCopy('방금 저장됨', 'Saved just now', 'たった今保存', '剛剛儲存');
+    if (minutes < 60) return uiCopy(`${minutes}분 전 결과`, `${minutes}m ago`, `${minutes}分前`, `${minutes} 分鐘前`);
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return uiCopy(`${hours}시간 전 결과`, `${hours}h ago`, `${hours}時間前`, `${hours} 小時前`);
+    const days = Math.floor(hours / 24);
+    return uiCopy(`${days}일 전 결과`, `${days}d ago`, `${days}日前`, `${days} 天前`);
+  }
+  function latestRouteIsDismissed(item){
+    if (!item?.savedAt) return false;
+    return localStorage.getItem(latestRouteDismissKey) === item.savedAt;
+  }
+  function latestRouteSummary(item){
+    const payload = item?.tripPayload || {};
+    const plan = payload.planData || {};
+    const destination = payload.destination || plan.destination || '';
+    const title = payload.title || plan.title || (destination ? `${destination} route` : uiCopy('최근 결과', 'Recent route', '最近の結果', '最近結果'));
+    const context = [payload.duration || plan.duration || '', payload.companion || plan.companion || '', plan.bestFor || ''].filter(Boolean).join(' · ');
+    return {
+      title,
+      destination,
+      context: context || normalizeSummary(plan) || uiCopy('직전에 보던 route result를 다시 이어갈 수 있어요.', 'Pick up the route result you were just looking at.', 'さっき見ていた route result をそのまま再開できます。', '可以直接接回你剛剛看到的 route result。'),
+      note: normalizeSummary(plan) || '',
+      plan
+    };
+  }
+  function ensureLatestRouteCard(){
+    let card = qs('plannerLatestRouteCard');
+    if (card) return card;
+    const helper = document.querySelector('.planner-helper-panel');
+    const shell = document.querySelector('.planner-shell');
+    if (!shell) return null;
+    card = document.createElement('article');
+    card.id = 'plannerLatestRouteCard';
+    card.className = 'planner-latest-route-card info-card hidden';
+    if (helper?.nextSibling) shell.insertBefore(card, helper.nextSibling);
+    else if (helper) shell.appendChild(card);
+    else shell.prepend(card);
+    return card;
+  }
+  function saveLatestRouteSession(source='route_result'){
+    if (!window.currentTripPayload?.planData) return;
+    const payload = { ...window.currentTripPayload };
+    const href = window.RyokoApp?.buildRouteResultHrefFromTrip?.(payload) || `${location.pathname}${location.search || ''}#resultTop`;
+    const item = {
+      sessionId: `route_${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
+      savedAt: new Date().toISOString(),
+      source,
+      href,
+      tripPayload: payload
+    };
+    localStorage.setItem(latestRouteSessionKey, JSON.stringify(item));
+    localStorage.removeItem(latestRouteDismissKey);
+    latestRouteCurrentSessionId = item.sessionId;
+    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_route_saved', { destination: payload.destination || payload.planData?.destination || '', source });
+    renderLatestRouteCard();
+  }
+  function restoreLatestRouteSession(){
+    const item = readLatestRouteSession();
+    if (!item) return;
+    const payload = item.tripPayload || {};
+    if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(payload);
+    if (payload.notes && qs('notes')) qs('notes').value = payload.notes;
+    if (payload.planData) renderPlan(payload.planData);
+    latestRouteCurrentSessionId = item.sessionId || '';
+    renderLatestRouteCard();
+    revealResult();
+    smoothJump('resultTop');
+    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_route_restored', { destination: payload.destination || payload.planData?.destination || '' });
+    showToast(uiCopy('최근 route result를 다시 열었어요.', 'Reopened your latest route result.', '直前の route result を再度開きました。', '已重新打開你最近的 route result。'), 'success');
+  }
+  function useLatestRouteAsBase(){
+    const item = readLatestRouteSession();
+    if (!item) return;
+    const payload = item.tripPayload || {};
+    if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(payload);
+    if (payload.notes && qs('notes')) qs('notes').value = payload.notes;
+    syncPlannerRecipe();
+    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_route_used_as_base', { destination: payload.destination || payload.planData?.destination || '' });
+    showToast(uiCopy('최근 route를 새 베이스로 가져왔어요.', 'Loaded your latest route as a new base.', '最近の route を新しいベースとして読み込みました。', '已把最近的 route 當成新的 base。'), 'info');
+    document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+  function dismissLatestRouteSession(){
+    const item = readLatestRouteSession();
+    if (!item?.savedAt) return;
+    localStorage.setItem(latestRouteDismissKey, item.savedAt);
+    renderLatestRouteCard();
+    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_route_dismissed', { destination: item.tripPayload?.destination || item.tripPayload?.planData?.destination || '' });
+  }
+  function renderLatestRouteCard(forceVisible=false){
+    const card = ensureLatestRouteCard();
+    if (!card) return;
+    const item = readLatestRouteSession();
+    const blocked = !item || (!forceVisible && latestRouteIsDismissed(item)) || (item?.sessionId && item.sessionId === latestRouteCurrentSessionId) || !!(new URLSearchParams(location.search).has('trip'));
+    if (blocked) {
+      card.classList.add('hidden');
+      card.innerHTML = '';
+      return;
+    }
+    const summary = latestRouteSummary(item);
+    card.classList.remove('hidden');
+    card.innerHTML = `
+      <div class="planner-latest-route-head">
+        <div>
+          <span class="eyebrow">${uiCopy('Latest route', 'Latest route', 'Latest route', 'Latest route')}</span>
+          <h3>${escapeHtml(summary.title)}</h3>
+          <p>${escapeHtml(summary.context)}</p>
+        </div>
+        <span class="planner-latest-route-age">${escapeHtml(latestRouteAgeLabel(item.savedAt))}</span>
+      </div>
+      <div class="planner-latest-route-meta">
+        <span class="planner-latest-route-chip">${escapeHtml(summary.destination || uiCopy('Route result','Route result','route result','route result'))}</span>
+        ${summary.plan.tripMood ? `<span class="planner-latest-route-chip">${escapeHtml(textValue(summary.plan.tripMood,''))}</span>` : ''}
+        ${summary.plan.dayDensity ? `<span class="planner-latest-route-chip">${escapeHtml(textValue(summary.plan.dayDensity,''))}</span>` : ''}
+        ${summary.plan.budgetMode ? `<span class="planner-latest-route-chip">${escapeHtml(textValue(summary.plan.budgetMode,''))}</span>` : ''}
+      </div>
+      ${summary.note ? `<p class="planner-latest-route-note">${escapeHtml(summary.note)}</p>` : ''}
+      <div class="card-actions planner-latest-route-actions">
+        <button type="button" class="primary-btn" id="plannerLatestRouteResumeBtn">${uiCopy('최근 결과 다시 열기', 'Resume latest result', '最近の結果を再開', '繼續最近結果')}</button>
+        <button type="button" class="secondary-btn" id="plannerLatestRouteBaseBtn">${uiCopy('이 결과를 새 베이스로', 'Use as new base', 'この結果を新しいベースに', '把這個結果當成新 base')}</button>
+        <button type="button" class="ghost-btn" id="plannerLatestRouteHideBtn">${uiCopy('지금은 숨기기', 'Hide for now', '今は隠す', '先隱藏')}</button>
+      </div>`;
+    qs('plannerLatestRouteResumeBtn')?.addEventListener('click', restoreLatestRouteSession);
+    qs('plannerLatestRouteBaseBtn')?.addEventListener('click', useLatestRouteAsBase);
+    qs('plannerLatestRouteHideBtn')?.addEventListener('click', dismissLatestRouteSession);
+  }
 
   function qs(id){ return document.getElementById(id); }
   function options(arr){ return arr.map(item => `<option value="${item}">${item}</option>`).join(''); }
@@ -2652,6 +2803,7 @@ function getPriorityRefinePack(city=''){
     window.RyokoStorage.addRecentTrip(recentTrip);
     const routeHref = window.RyokoApp?.buildRouteResultHrefFromTrip?.(recentTrip) || `${location.pathname}${location.search || ''}#resultTop`;
     window.RyokoApp?.saveReadingHistory?.({ kind:'route', city:data.destination || readForm().destination || '', title:data.title || `${data.destination || readForm().destination || 'City'} editorial route`, href: routeHref, sourcePage:'route', summary: normalizeSummary(data) });
+    renderLatestRouteCard();
   }
 
 async function generate(forcedPayload=null){
@@ -2672,6 +2824,7 @@ async function generate(forcedPayload=null){
     if (!res.ok) throw new Error(`API failed:${res.status}`);
     const data = await res.json();
     renderPlan(data);
+    saveLatestRouteSession('generate_success');
     setPlannerFeedback('success');
     revealResult();
     showToast(uiCopy('여정을 준비했어요.','Your trip is ready.'), 'success');
@@ -2683,6 +2836,7 @@ async function generate(forcedPayload=null){
   } catch (e) {
     const fallback = samplePlans[payload.destination.toLowerCase()] || samplePlans.tokyo;
     renderPlan({...fallback, destination: payload.destination || fallback.destination});
+    saveLatestRouteSession(navigator.onLine === false ? 'generate_offline_fallback' : 'generate_fallback');
     const offline = navigator.onLine === false;
     setPlannerFeedback(offline ? 'offline' : 'fallback', { retry:true });
     revealResult();
@@ -2707,6 +2861,7 @@ function useExample(key='tokyo'){
     qs('destination').value = plan.destination;
     qs('notes').value = normalizeSummary(plan);
     renderPlan(plan);
+    saveLatestRouteSession('sample_button');
     revealResult();
     showToast(uiCopy('샘플 루트를 불러왔어요.','Sample route loaded.'), 'info');
   }
@@ -3085,13 +3240,16 @@ function useExample(key='tokyo'){
     if (payload.budgetMode) document.querySelectorAll('[data-pill-group="budgetMode"]').forEach(btn => btn.classList.toggle('active', btn.dataset.pillValue === payload.budgetMode));
     renderPlan(payload.planData || payload);
     window.RyokoStorage.addSharedTrip(payload);
+    saveLatestRouteSession('shared_trip');
     renderPlannerDraftCard();
+    renderLatestRouteCard();
   }
   function init(){
     if (!document.body.dataset.page || document.body.dataset.page !== 'planner') return;
     refreshOptions();
     bindPlannerDraftAutosave();
     renderPlannerDraftCard();
+    renderLatestRouteCard();
     bindSelectionChips();
     applyPresetFromQuery();
     window.addEventListener('ryoko:langchange', () => {
@@ -3100,6 +3258,7 @@ function useExample(key='tokyo'){
       if (existing) renderPlan(existing);
       ensurePlannerEntryContext();
       renderPlannerDraftCard();
+      renderLatestRouteCard();
     });
     qs('localToggle').addEventListener('click', () => qs('localToggle').classList.toggle('on'));
     qs('submitBtn').addEventListener('click', generate);
@@ -3109,6 +3268,7 @@ function useExample(key='tokyo'){
     ensurePlannerFeedbackPanel();
     window.addEventListener('offline', () => { if (window.currentTripPayload) setPlannerFeedback('offline'); });
     window.addEventListener('online', () => { const panel = qs('plannerFeedbackPanel'); if (panel && panel.classList.contains('planner-feedback-offline')) panel.classList.add('hidden'); });
+    window.addEventListener('storage', event => { if ([latestRouteSessionKey, latestRouteDismissKey].includes(event.key)) renderLatestRouteCard(); });
     qs('saveTripBtn').addEventListener('click', saveCurrentTrip);
     qs('shareTripBtn').addEventListener('click', shareCurrentTrip);
     qs('pdfTripBtn').addEventListener('click', savePdf);
