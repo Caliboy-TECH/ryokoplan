@@ -143,6 +143,47 @@ window.RyokoPlanner = (() => {
     const group = copies[entry?.entryKind] || copies.default;
     return group[window.RyokoApp?.lang || 'ko'] || group.en;
   }
+  function plannerEntryContextActions(entry){
+    const cityName = entry?.entryCity || '';
+    const city = (window.RyokoApp?.getCityLoopData?.(cityName) || null);
+    const guideHref = city ? window.RyokoApp.resolvePath(city.guide || `city/${String(cityName || '').toLowerCase()}.html`) : '#';
+    const sampleHref = city ? window.RyokoApp.resolvePath(city.example || 'example/tokyo-3n4d-first-trip.html') : '#';
+    const latestTrip = (window.RyokoStorage?.getRecentTrips?.() || []).find(item => String(item.destination || '').toLowerCase() === String(cityName || '').toLowerCase());
+    const latestHref = latestTrip && window.RyokoApp?.buildRouteResultHrefFromTrip ? window.RyokoApp.buildRouteResultHrefFromTrip(latestTrip) : '';
+    const lang = window.RyokoApp?.lang || 'ko';
+    const t = {
+      reopenGuide: lang === 'ko' ? '도시 가이드 다시 보기' : lang === 'ja' ? '都市ガイドをもう一度開く' : lang === 'zhHant' ? '重新打開城市指南' : 'Reopen city guide',
+      reopenSample: lang === 'ko' ? '샘플 다시 읽기' : lang === 'ja' ? 'サンプルをもう一度読む' : lang === 'zhHant' ? '重新讀範例' : 'Reopen sample',
+      recentResult: lang === 'ko' ? '최근 result 열기' : lang === 'ja' ? '最近の result を開く' : lang === 'zhHant' ? '打開最近 result' : 'Open recent result',
+      routeStart: lang === 'ko' ? '이 route로 바로 시작' : lang === 'ja' ? 'この route から始める' : lang === 'zhHant' ? '從這條 route 開始' : 'Start from this route'
+    };
+    if (entry?.entryKind === 'city') {
+      return [
+        guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'secondary-btn' } : null,
+        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopenSample, style: 'ghost-btn' } : null,
+        latestHref ? { href: latestHref, label: t.recentResult, style: 'ghost-btn' } : null
+      ].filter(Boolean);
+    }
+    if (entry?.entryKind === 'sample') {
+      return [
+        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopenSample, style: 'secondary-btn' } : null,
+        guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'ghost-btn' } : null,
+        latestHref ? { href: latestHref, label: t.recentResult, style: 'ghost-btn' } : null
+      ].filter(Boolean);
+    }
+    if (entry?.entryKind === 'route') {
+      return [
+        latestHref ? { href: latestHref, label: t.recentResult, style: 'secondary-btn' } : null,
+        guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'ghost-btn' } : null,
+        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopenSample, style: 'ghost-btn' } : null
+      ].filter(Boolean);
+    }
+    return [
+      guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'secondary-btn' } : null,
+      sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopenSample, style: 'ghost-btn' } : null,
+      latestHref ? { href: latestHref, label: t.recentResult, style: 'ghost-btn' } : null
+    ].filter(Boolean);
+  }
   function ensurePlannerEntryContext(){
     const shell = document.querySelector('.planner-shell');
     if (!shell) return;
@@ -161,8 +202,16 @@ window.RyokoPlanner = (() => {
       else shell.prepend(node);
     }
     const copy = plannerEntryContextCopy(entry);
+    const actions = plannerEntryContextActions(entry);
     node.classList.remove('hidden');
-    node.innerHTML = `<div class="planner-entry-context-row"><div class="planner-entry-context-copy"><span class="eyebrow">${escapeHtml(copy.eyebrow)}</span><strong>${escapeHtml(copy.title)}</strong><p>${escapeHtml(copy.desc)}</p></div><div class="planner-entry-context-meta"><span class="planner-entry-context-chip">${escapeHtml(copy.chip)}</span>${entry.entryCity ? `<span class="planner-entry-context-chip muted">${escapeHtml(entry.entryCity)}</span>` : ''}</div></div>`;
+    node.innerHTML = `<div class="planner-entry-context-row"><div class="planner-entry-context-copy"><span class="eyebrow">${escapeHtml(copy.eyebrow)}</span><strong>${escapeHtml(copy.title)}</strong><p>${escapeHtml(copy.desc)}</p>${actions.length ? `<div class="planner-entry-context-actions">${actions.map(action => `<a class="${action.style}" href="${action.href}" data-entry-context-action="${escapeHtml(action.label)}">${escapeHtml(action.label)}</a>`).join('')}</div>` : ''}</div><div class="planner-entry-context-meta"><span class="planner-entry-context-chip">${escapeHtml(copy.chip)}</span>${entry.entryCity ? `<span class="planner-entry-context-chip muted">${escapeHtml(entry.entryCity)}</span>` : ''}</div></div>`;
+    node.querySelectorAll('[data-entry-context-action]').forEach(link => link.addEventListener('click', () => {
+      window.RyokoApp?.trackEvent?.('ryoko_planner_entry_context_action_clicked', {
+        entryKind: entry.entryKind || '',
+        entryCity: entry.entryCity || '',
+        actionLabel: link.dataset.entryContextAction || ''
+      });
+    }));
   }
   function budgetLabel(key){
     const raw = String(key || '').trim();

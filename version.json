@@ -1,14 +1,14 @@
 {
-  "release": "v106",
-  "version": "v106",
+  "release": "v107",
+  "version": "v107",
   "channel": "beta",
-  "codename": "planner-entry-handoff-context",
-  "updatedAt": "2026-03-30T00:35:00+09:00",
-  "headline": "Planner starts now keep the city/sample context visible instead of feeling cold.",
+  "codename": "planner-entry-mini-loop",
+  "updatedAt": "2026-03-30T00:55:00+09:00",
+  "headline": "Planner entry context now keeps the city or sample close with a usable mini loop instead of a passive note.",
   "notes": [
-    "Planner links from city guides now carry a city-start context into the route start screen.",
-    "Planner links from sample pages now carry the sample title and city so the route opens with clearer continuity.",
-    "Added a planner entry-context card that explains why this route start is showing up and what it is based on.",
-    "Kept the change lightweight so existing planner links still work even without the new context parameters."
+    "Planner entry context cards now include direct links back to the relevant city guide, matching sample, and recent result when available.",
+    "City-guide starts reopen the guide or sample more easily while staying in the same city context.",
+    "Sample-based starts can jump back to the sample or city guide without losing the planner handoff.",
+    "Added click telemetry for planner entry-context actions so the mini loop is easier to observe during beta."
   ]
 }
