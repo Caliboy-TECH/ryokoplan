@@ -2243,7 +2243,10 @@ function getPriorityRefinePack(city=''){
     updateStickyCopy(data);
     updateShareMeta(data);
     window.currentTripPayload = { ...readForm(), planData:data, title:data.title || data.destination };
-    window.RyokoStorage.addRecentTrip({ ...window.currentTripPayload, destination:data.destination || readForm().destination });
+    const recentTrip = { ...window.currentTripPayload, destination:data.destination || readForm().destination };
+    window.RyokoStorage.addRecentTrip(recentTrip);
+    const routeHref = window.RyokoApp?.buildRouteResultHrefFromTrip?.(recentTrip) || `${location.pathname}${location.search || ''}#resultTop`;
+    window.RyokoApp?.saveReadingHistory?.({ kind:'route', city:data.destination || readForm().destination || '', title:data.title || `${data.destination || readForm().destination || 'City'} editorial route`, href: routeHref, sourcePage:'route', summary: normalizeSummary(data) });
   }
 
 async function generate(forcedPayload=null){

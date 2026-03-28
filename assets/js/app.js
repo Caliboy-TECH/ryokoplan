@@ -952,12 +952,18 @@ function buildFeedbackHref(extra={}){
   });
   return `${pathRoot}contact/index.html?${params.toString()}`;
 }
+function isPrimaryEntrySurface(){
+  const path = location.pathname || '/';
+  return path === '/' || path.endsWith('/index.html') && !path.includes('/city/') && !path.includes('/example/') && !path.includes('/my-trips/') && !path.includes('/privacy/') && !path.includes('/terms/') && !path.includes('/contact/') && !path.includes('/whats-new/') && !path.includes('/release-check/') || path.endsWith('/magazine/') || path.endsWith('/magazine/index.html');
+}
 
 const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
 const firstRunGuideDismissKey = 'ryoko:first-run-guide-dismissed:v101';
 const startPathMemoryKey = 'ryoko:start-path-memory:v102';
 const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
 const quickResumeDismissKey = 'ryoko:quick-resume-dismissed:v103';
+const readingHistoryKey = 'ryoko:reading-history:v104';
+const readingHistoryDismissKey = 'ryoko:reading-history-dismissed:v104';
 function betaLaunchCopy(){
   return lang === 'ko'
     ? { eyebrow:'Public beta', title:'Ryokoplan is now open in beta.', desc:'Routes, city notes, and saved flows are live. If anything feels off, send quick feedback from the page you are on.', primary:"What\'s new", secondary:'Send feedback', dismiss:'Hide' }
@@ -1130,6 +1136,167 @@ function quickResumePayload(memory){
   const latestHref = latestTrip ? buildRouteResultHrefFromTrip(latestTrip) : plannerUrlForCity(loop.name || cityName);
   return { cityName: loop.name || cityName, loop, latestTrip, baseHref, nextHref, nextKind, latestHref };
 }
+function readReadingHistory(){
+  try {
+    const parsed = JSON.parse(localStorage.getItem(readingHistoryKey) || 'null');
+    return parsed && typeof parsed === 'object' ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+function writeReadingHistory(payload={}){
+  const href = String(payload.href || `${location.pathname}${location.search || ''}`).trim();
+  const next = {
+    kind: String(payload.kind || '').trim(),
+    href,
+    sourcePage: String(payload.sourcePage || document.body?.dataset?.page || 'unknown'),
+    city: String(payload.city || inferStartPathCityFromHref(href) || ''),
+    title: String(payload.title || payload.city || '').trim(),
+    summary: String(payload.summary || '').trim(),
+    savedAt: payload.savedAt || new Date().toISOString()
+  };
+  if (!next.kind || !next.href) return null;
+  try {
+    localStorage.setItem(readingHistoryKey, JSON.stringify(next));
+    localStorage.removeItem(readingHistoryDismissKey);
+  } catch {}
+  trackEvent('ryoko_reading_history_saved', { kind: next.kind, city: next.city || '', sourcePage: next.sourcePage });
+  return next;
+}
+function clearReadingHistory(){
+  try {
+    localStorage.removeItem(readingHistoryKey);
+    localStorage.removeItem(readingHistoryDismissKey);
+  } catch {}
+}
+function readingHistoryPayload(item){
+  const cityName = item?.city || 'Tokyo';
+  const loop = getCityLoopData(cityName) || getCityLoopData('Tokyo') || { name:cityName, guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
+  const latestTrip = latestTripForQuickResume(loop.name || cityName);
+  const continueHref = item?.href || (item?.kind === 'sample' ? resolvePath(loop.example || 'example/tokyo-3n4d-first-trip.html') : item?.kind === 'route' ? plannerUrlForCity(loop.name || cityName) : resolvePath(loop.guide || 'city/tokyo.html'));
+  const pairKind = item?.kind === 'city' ? 'sample' : item?.kind === 'sample' ? 'route' : 'city';
+  const pairHref = pairKind === 'sample'
+    ? resolvePath(loop.example || 'example/tokyo-3n4d-first-trip.html')
+    : pairKind === 'route'
+      ? plannerUrlForCity(loop.name || cityName)
+      : resolvePath(loop.guide || 'city/tokyo.html');
+  const latestHref = latestTrip ? buildRouteResultHrefFromTrip(latestTrip) : plannerUrlForCity(loop.name || cityName);
+  return { cityName: loop.name || cityName, loop, latestTrip, continueHref, pairHref, pairKind, latestHref };
+}
+function readingHistoryCopy(item){
+  const pack = readingHistoryPayload(item);
+  const cityName = pack.cityName;
+  const typeLabel = item?.kind === 'sample' ? 'sample' : item?.kind === 'route' ? 'route' : 'city guide';
+  const pairLabel = pack.pairKind === 'sample' ? 'sample' : pack.pairKind === 'route' ? 'route' : 'city guide';
+  const lastTitle = item?.title || `${cityName} ${typeLabel}`;
+  const latestTitle = pack.latestTrip?.title || pack.latestTrip?.destination || cityName;
+  const copies = {
+    ko: {
+      eyebrow:'Continue reading',
+      title:`최근 읽던 ${cityName} 흐름을 다시 이어갈 수 있어요.`,
+      desc:'방금 전까지 보던 city / sample / route 맥락을 붙여서, 다시 들어와도 흐름이 끊기지 않게 만들었습니다.',
+      cards:[
+        ['Last read', lastTitle, '최근 읽던 페이지로 바로 돌아갑니다.', pack.continueHref, '계속 읽기', 'continue'],
+        ['Pair with', `${pairLabel} 한 단계 더`, '같은 도시 톤을 이어가기에 가장 자연스러운 다음 클릭입니다.', pack.pairHref, pack.pairKind === 'route' ? 'route 열기' : pack.pairKind === 'sample' ? 'sample 보기' : 'guide 보기', 'pair'],
+        ['Latest route', latestTitle, pack.latestTrip ? '최근 route 결과를 다시 열어 이어갑니다.' : '아직 recent route가 없으면 이 도시 기준으로 바로 시작할 수 있습니다.', pack.latestHref, pack.latestTrip ? 'result 열기' : 'route 시작', 'latest-route']
+      ],
+      dismiss:'숨기기'
+    },
+    en: {
+      eyebrow:'Continue reading',
+      title:`Pick up the ${cityName} thread you were reading most recently.`,
+      desc:'Your last city / sample / route read is kept here so coming back feels more like a continuation than a reset.',
+      cards:[
+        ['Last read', lastTitle, 'Return to the page you were reading most recently.', pack.continueHref, 'Continue reading', 'continue'],
+        ['Pair with', `Add one ${pairLabel}`, 'The cleanest next click if you want the same city thread to keep moving.', pack.pairHref, pack.pairKind === 'route' ? 'Open route' : pack.pairKind === 'sample' ? 'Read sample' : 'Read guide', 'pair'],
+        ['Latest route', latestTitle, pack.latestTrip ? 'Re-open the latest route result attached to this city.' : 'No recent route yet — start directly from this city rhythm.', pack.latestHref, pack.latestTrip ? 'Open result' : 'Start route', 'latest-route']
+      ],
+      dismiss:'Hide'
+    },
+    ja: {
+      eyebrow:'Continue reading',
+      title:`直近で読んでいた ${cityName} の流れをそのまま戻せます。`,
+      desc:'最後に見ていた city / sample / route の文脈を残して、再訪時も流れが切れないようにしました。',
+      cards:[
+        ['Last read', lastTitle, '直近で読んでいたページへ戻ります。', pack.continueHref, '続きを読む', 'continue'],
+        ['Pair with', `${pairLabel} を一つ足す`, '同じ都市の流れを続けるなら、いちばん自然な次のクリックです。', pack.pairHref, pack.pairKind === 'route' ? 'route を開く' : pack.pairKind === 'sample' ? 'sample を見る' : 'guide を見る', 'pair'],
+        ['Latest route', latestTitle, pack.latestTrip ? 'この都市にひもづく直近の route 結果を開けます。' : 'まだ recent route がなければ、この都市のリズムからそのまま始められます。', pack.latestHref, pack.latestTrip ? '結果を開く' : 'route を始める', 'latest-route']
+      ],
+      dismiss:'閉じる'
+    },
+    zhHant: {
+      eyebrow:'Continue reading',
+      title:`可以直接接回你最近讀到的 ${cityName} 流。`,
+      desc:'把最後看的 city / sample / route 脈絡留在這裡，讓回來時更像續上，而不是重來一次。',
+      cards:[
+        ['Last read', lastTitle, '直接回到你最近讀到的頁面。', pack.continueHref, '繼續閱讀', 'continue'],
+        ['Pair with', `再接一個 ${pairLabel}`, '如果想把同一座城市的線索接下去，這是最自然的一步。', pack.pairHref, pack.pairKind === 'route' ? '打開 route' : pack.pairKind === 'sample' ? '看 sample' : '看 guide', 'pair'],
+        ['Latest route', latestTitle, pack.latestTrip ? '重新打開這座城市最近一條 route 結果。' : '如果還沒有 recent route，就先從這座城市的節奏開始。', pack.latestHref, pack.latestTrip ? '打開結果' : '開始 route', 'latest-route']
+      ],
+      dismiss:'隱藏'
+    }
+  };
+  return copies[lang] || copies.en;
+}
+function shouldShowReadingHistoryShelf(){
+  const page = document.body?.dataset?.page || '';
+  if (!(page === 'planner' || page === 'magazine')) return false;
+  if (!isPrimaryEntrySurface()) return false;
+  if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
+  if (shouldShowFirstRunGuide()) return false;
+  const item = readReadingHistory();
+  if (!item || !item.kind) return false;
+  try { if (localStorage.getItem(readingHistoryDismissKey) === '1') return false; } catch {}
+  const memory = readStartPathMemory();
+  if (memory?.href && item.href && memory.href === item.href) return false;
+  return true;
+}
+function syncReadingHistoryShelf(){
+  const shelf = document.getElementById('readingHistoryShelf');
+  if (!shelf) return;
+  if (!shouldShowReadingHistoryShelf()) { shelf.classList.add('is-hidden'); return; }
+  const item = readReadingHistory();
+  const copy = readingHistoryCopy(item);
+  shelf.classList.remove('is-hidden');
+  shelf.querySelector('[data-reading-history-eyebrow]')?.replaceChildren(document.createTextNode(copy.eyebrow));
+  shelf.querySelector('[data-reading-history-title]')?.replaceChildren(document.createTextNode(copy.title));
+  shelf.querySelector('[data-reading-history-desc]')?.replaceChildren(document.createTextNode(copy.desc));
+  const cards = shelf.querySelector('[data-reading-history-cards]');
+  if (cards) cards.innerHTML = copy.cards.map((card, idx) => `<article class="reading-history-card ${idx === 0 ? 'reading-history-card-strong' : ''}"><span class="reading-history-card-kicker">${card[0]}</span><strong>${card[1]}</strong><p>${card[2]}</p><a class="${idx === 0 ? 'primary-btn' : idx === 1 ? 'secondary-btn' : 'ghost-btn'}" href="${card[3]}" data-reading-history-action="${card[5]}">${card[4]}</a></article>`).join('');
+  const dismiss = shelf.querySelector('[data-reading-history-dismiss]');
+  if (dismiss) dismiss.textContent = copy.dismiss;
+}
+function ensureReadingHistoryShelf(){
+  let shelf = document.getElementById('readingHistoryShelf');
+  if (!shouldShowReadingHistoryShelf()) { if (shelf) shelf.classList.add('is-hidden'); return; }
+  if (!shelf) {
+    shelf = document.createElement('section');
+    shelf.id = 'readingHistoryShelf';
+    shelf.className = 'section reading-history-shelf';
+    shelf.setAttribute('role', 'region');
+    shelf.setAttribute('aria-live', 'polite');
+    shelf.innerHTML = '<div class="section-head reading-history-head"><div><span class="eyebrow" data-reading-history-eyebrow></span><h2 class="section-title" data-reading-history-title></h2><p class="section-desc" data-reading-history-desc></p></div><button class="ghost-btn reading-history-dismiss" type="button" data-reading-history-dismiss></button></div><div class="reading-history-grid" data-reading-history-cards></div>';
+    const quickResume = document.getElementById('quickResumeShelf');
+    const anchor = quickResume || document.querySelector('.hero-hierarchy-band-home, .hero-hierarchy-band-magazine, .brand-manifesto, #magazineAppRoot');
+    if (anchor?.parentNode) anchor.insertAdjacentElement('afterend', shelf);
+    else {
+      const container = document.querySelector('main .container') || document.body;
+      container.prepend(shelf);
+    }
+    shelf.addEventListener('click', event => {
+      const action = event.target.closest('[data-reading-history-action]');
+      if (!action) return;
+      trackEvent('ryoko_reading_history_cta_clicked', { sourcePage: document.body?.dataset?.page || 'unknown', action: action.dataset.readingHistoryAction || '', kind: readReadingHistory()?.kind || '' });
+    });
+    shelf.querySelector('[data-reading-history-dismiss]')?.addEventListener('click', () => {
+      try { localStorage.setItem(readingHistoryDismissKey, '1'); } catch {}
+      shelf.classList.add('is-hidden');
+      trackEvent('ryoko_reading_history_dismissed', { sourcePage: document.body?.dataset?.page || 'unknown', kind: readReadingHistory()?.kind || '' });
+    });
+    trackEvent('ryoko_reading_history_shown', { sourcePage: document.body?.dataset?.page || 'unknown', kind: readReadingHistory()?.kind || '' });
+  }
+  syncReadingHistoryShelf();
+}
 function quickResumeCopy(memory){
   const pack = quickResumePayload(memory);
   const cityName = pack.cityName;
@@ -1187,9 +1354,9 @@ function quickResumeCopy(memory){
 function shouldShowQuickResumeShelf(){
   const page = document.body?.dataset?.page || '';
   if (!(page === 'planner' || page === 'magazine')) return false;
+  if (!isPrimaryEntrySurface()) return false;
   if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
   if (shouldShowFirstRunGuide()) return false;
-  if (shouldShowQuickResumeShelf()) return false;
   const memory = readStartPathMemory();
   if (!memory || !memory.kind) return false;
   try { if (localStorage.getItem(quickResumeDismissKey) === '1') return false; } catch {}
@@ -1243,6 +1410,7 @@ function ensureQuickResumeShelf(){
 function shouldShowStartPathRecallBar(){
   const page = document.body?.dataset?.page || '';
   if (!(page === 'planner' || page === 'magazine')) return false;
+  if (!isPrimaryEntrySurface()) return false;
   if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
   if (shouldShowFirstRunGuide()) return false;
   const memory = readStartPathMemory();
@@ -1376,6 +1544,7 @@ function firstRunGuideCopy(){
 function shouldShowFirstRunGuide(){
   const page = document.body?.dataset?.page || '';
   if (!(page === 'planner' || page === 'magazine')) return false;
+  if (!isPrimaryEntrySurface()) return false;
   if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
   try { if (localStorage.getItem(firstRunGuideDismissKey) === '1') return false; } catch {}
   return true;
@@ -2737,6 +2906,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
       url:`city/${slug}.html`
     });
     applyCityStructuredData(slug, entry, cityDesc);
+    writeReadingHistory({ kind:'city', city: entry.planner, title: `${entry.planner} ${guideLabel}`, href: `${location.pathname}${location.search || ''}`, sourcePage:'city', summary: cityDesc });
     document.title = `${entry.planner} — Ryokoplan`;
   }
 
@@ -2835,6 +3005,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
       url:`example/${slug}.html`
     });
     applyExampleStructuredData(slug, entry, title, exampleDesc, sample);
+    writeReadingHistory({ kind:'sample', city: entry.city, title, href: `${location.pathname}${location.search || ''}`, sourcePage:'sample', summary: exampleDesc });
   }
   function buildDiscoveryItems(){
     const guideBase = document.body.dataset.page === 'planner' ? '' : '../';
@@ -5198,6 +5369,7 @@ function renderTripsSeasonalDesk(){
     ensureBetaLaunchBar();
     ensureFirstRunGuide();
     ensureQuickResumeShelf();
+    ensureReadingHistoryShelf();
     ensureStartPathRecallBar();
     ensureLaunchFeedbackCta();
     ensureInstallCta();
@@ -5263,6 +5435,7 @@ function renderTripsSeasonalDesk(){
       ensureBetaLaunchBar();
       ensureFirstRunGuide();
       ensureQuickResumeShelf();
+      ensureReadingHistoryShelf();
       ensureStartPathRecallBar();
       ensureLaunchFeedbackCta();
       ensureInstallCta();
@@ -5290,6 +5463,6 @@ function renderTripsSeasonalDesk(){
         </div>
       </article>`;
   }
-  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, getCityVoice, slugifyCity, resolvePath, applyPlannerPreset, getSignalRecommendations, detectSignalTags, recordSignalInteraction, getTopSignalTags, trackEvent, get lang(){return lang;}, pathRoot, navHref };
+  return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, getCityVoice, slugifyCity, resolvePath, applyPlannerPreset, getSignalRecommendations, detectSignalTags, recordSignalInteraction, getTopSignalTags, trackEvent, readReadingHistory, saveReadingHistory: writeReadingHistory, clearReadingHistory, buildRouteResultHrefFromTrip, get lang(){return lang;}, pathRoot, navHref };
 })();
 window.addEventListener('DOMContentLoaded', () => { window.RyokoApp.initCommon(); window.RyokoApp.initMagazine(); });

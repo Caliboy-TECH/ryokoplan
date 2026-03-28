@@ -1,13 +1,13 @@
 {
-  "release": "v103",
-  "version": "v103",
+  "release": "v104",
+  "version": "v104",
   "channel": "beta",
-  "codename": "quick-resume-shelf",
-  "updatedAt": "2026-03-29",
-  "headline": "Quick resume shelf for returning visitors",
+  "codename": "reading-history-and-quick-resume-fix",
+  "updatedAt": "2026-03-29T00:00:00Z",
+  "headline": "Adds reading history recall, fixes quick resume gating, and extends release-check reset tools.",
   "notes": [
-    "Added a quick resume shelf on home and magazine based on the last chosen start path.",
-    "Linked the shelf to the latest matching route result when one exists.",
-    "Extended release-check with a reset control and state for the quick resume layer."
+    "Adds reading history memory across city guides, samples, and route results.",
+    "Shows a continue-reading shelf on home and magazine when a recent read exists.",
+    "Fixes the quick-resume gating bug and extends release-check with reading-history reset and state visibility."
   ]
 }
