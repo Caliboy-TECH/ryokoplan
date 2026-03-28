@@ -1,0 +1,28 @@
+{
+  "name": "Ryokoplan — City-first Travel Editorial",
+  "short_name": "Ryokoplan",
+  "description": "Read the city. Then build the trip. A city-first travel editorial app for East Asia.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fcfaf6",
+  "theme_color": "#15273a",
+  "icons": [
+    {
+      "src": "/assets/images/brand/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/brand/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/brand/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

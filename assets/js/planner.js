@@ -209,10 +209,16 @@ window.RyokoPlanner = (() => {
       ? (shareMetaMap[destination] || `${destination} in a city-first flow. Read the neighborhoods, compare the route, and shape the trip.`)
       : (normalizeSummary(data) || 'Read the city. Then build the trip.');
     document.title = title;
-    const cleanUrl = location.href.split('#')[0];
+    const pageUrl = new URL(location.href);
+    pageUrl.hash = '';
+    const cleanUrl = pageUrl.toString();
+    const isParameterized = [...pageUrl.searchParams.keys()].length > 0;
+    const canonicalHref = isParameterized ? `${pageUrl.origin}${pageUrl.pathname}` : cleanUrl;
+    const robotsValue = isParameterized ? 'noindex,follow' : 'index,follow';
     const coverImage = 'https://ryokoplan.com/assets/images/brand/og-cover.svg';
     const entries = {
       'meta[name="description"]': desc,
+      'meta[name="robots"]': robotsValue,
       'meta[property="og:title"]': title,
       'meta[property="og:description"]': desc,
       'meta[property="og:url"]': cleanUrl,
@@ -241,7 +247,7 @@ window.RyokoPlanner = (() => {
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', cleanUrl);
+    canonical.setAttribute('href', canonicalHref);
   }
   function refreshOptions(){
     const currentDuration = qs('duration')?.selectedIndex || 0;

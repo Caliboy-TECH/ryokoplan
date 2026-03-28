@@ -60,6 +60,8 @@ window.RyokoApp = (() => {
     ensureHeadTag('meta', 'twitter:image', imageUrl);
     ensureHeadTag('meta', 'twitter:image:alt', imageAlt || 'Ryokoplan city-first travel editorial');
     ensureHeadTag('link', 'canonical', canonicalUrl);
+    ensureHeadTag('link', 'manifest', absoluteUrl('site.webmanifest'));
+    ensureHeadTag('link', 'apple-touch-icon', absoluteUrl('assets/images/brand/apple-touch-icon.png'));
   }
 
   function applyHomeHead(){
