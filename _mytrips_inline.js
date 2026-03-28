@@ -95,7 +95,7 @@
           searchPH: 'Search by city or title',
           importedLabel: 'Imported link',
           continueMeta: 'Most recent trip to reopen',
-          tripBase: 'Use this route as a new base',
+          tripBase: 'Start from this route',
           tripSaved: 'Saved to My Trips',
           tripRecent: 'Recently opened',
           tripShared: 'Shared itinerary',

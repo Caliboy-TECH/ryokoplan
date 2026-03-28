@@ -2302,6 +2302,33 @@ function useExample(key='tokyo'){
     revealResult();
     showToast(uiCopy('샘플 루트를 불러왔어요.','Sample route loaded.'), 'info');
   }
+  function startFromCurrentResult(){
+    const current = window.currentTripPayload?.planData || window.__RYOKO_LAST_RESULT__;
+    if (!current) return useExample('tokyo');
+    const preset = {
+      destination: textValue(current.destination, ''),
+      duration: textValue(current.duration, ''),
+      companion: textValue(current.companion, ''),
+      style: textValue(current.style, ''),
+      notes: normalizeSummary(current),
+      tripMood: textValue(current.tripMood, ''),
+      dayDensity: textValue(current.dayDensity, ''),
+      budgetMode: textValue(current.budgetMode, '')
+    };
+    if (window.RyokoApp?.applyPlannerPreset) {
+      window.RyokoApp.applyPlannerPreset(preset);
+    } else {
+      if (preset.destination && qs('destination')) qs('destination').value = preset.destination;
+      if (preset.duration && qs('duration')) qs('duration').value = preset.duration;
+      if (preset.companion && qs('companion')) qs('companion').value = preset.companion;
+      if (preset.style && qs('style')) qs('style').value = preset.style;
+      if (qs('notes')) qs('notes').value = preset.notes || '';
+    }
+    syncPlannerRecipe();
+    document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
+    qs('destination')?.focus({ preventScroll:true });
+    showToast(uiCopy('지금 보고 있는 루트에서 바로 이어갈게요.','Starting from the route already on screen.'), 'info');
+  }
   function saveCurrentTrip(){
     if (!window.currentTripPayload) return showToast(uiCopy('먼저 여정을 만들어 주세요.','Generate a trip first.'), 'warn');
     const saved = window.RyokoStorage.saveTrip(window.currentTripPayload);
@@ -2657,7 +2684,7 @@ function useExample(key='tokyo'){
     });
     qs('localToggle').addEventListener('click', () => qs('localToggle').classList.toggle('on'));
     qs('submitBtn').addEventListener('click', generate);
-    qs('exampleBtn').addEventListener('click', () => useExample('tokyo'));
+    qs('exampleBtn').addEventListener('click', startFromCurrentResult);
     bindJumpChips();
     bindStickyBar();
     ensurePlannerFeedbackPanel();
