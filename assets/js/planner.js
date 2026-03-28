@@ -83,6 +83,186 @@ window.RyokoPlanner = (() => {
     }
   };
 
+  const plannerDraftKey = 'ryoko:planner-draft:v111';
+  const plannerDraftDismissKey = 'ryoko:planner-draft-dismissed:v111';
+  const plannerDraftMaxAgeMs = 1000 * 60 * 60 * 24 * 7;
+  let plannerDraftSaveTimer = null;
+
+  function parseStoredJson(raw, fallback=null){
+    try { return JSON.parse(raw); } catch { return fallback; }
+  }
+  function plannerDraftAgeLabel(savedAt=''){
+    if (!savedAt) return '';
+    const diff = Date.now() - new Date(savedAt).getTime();
+    if (!Number.isFinite(diff) || diff < 0) return '';
+    const minutes = Math.floor(diff / (1000 * 60));
+    if (minutes < 1) return uiCopy('방금 저장됨', 'Saved just now', 'たった今保存', '剛剛儲存');
+    if (minutes < 60) return uiCopy(`${minutes}분 전 저장`, `Saved ${minutes}m ago`, `${minutes}分前に保存`, `${minutes} 分鐘前儲存`);
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return uiCopy(`${hours}시간 전 저장`, `Saved ${hours}h ago`, `${hours}時間前に保存`, `${hours} 小時前儲存`);
+    const days = Math.floor(hours / 24);
+    return uiCopy(`${days}일 전 저장`, `Saved ${days}d ago`, `${days}日前に保存`, `${days} 天前儲存`);
+  }
+  function clearPlannerDraft(options={}){
+    localStorage.removeItem(plannerDraftKey);
+    if (!options.keepDismiss) localStorage.removeItem(plannerDraftDismissKey);
+    const card = qs('plannerDraftCard');
+    if (card) card.classList.add('hidden');
+  }
+  function readPlannerDraft(){
+    const item = parseStoredJson(localStorage.getItem(plannerDraftKey) || 'null', null);
+    if (!item || !item.savedAt) return null;
+    const age = Date.now() - new Date(item.savedAt).getTime();
+    if (!Number.isFinite(age) || age < 0 || age > plannerDraftMaxAgeMs) {
+      clearPlannerDraft();
+      return null;
+    }
+    return item;
+  }
+  function plannerDraftIsDismissed(item){
+    if (!item?.savedAt) return false;
+    return localStorage.getItem(plannerDraftDismissKey) === item.savedAt;
+  }
+  function plannerDraftPayload(){
+    const form = readForm();
+    const entry = plannerEntryParams();
+    return {
+      ...form,
+      entryKind: entry?.entryKind || '',
+      entryTitle: entry?.entryTitle || '',
+      entryCity: entry?.entryCity || form.destination || '',
+      entrySource: entry?.entrySource || '',
+      savedAt: new Date().toISOString()
+    };
+  }
+  function plannerDraftHasContent(payload){
+    if (!payload) return false;
+    return !!(
+      payload.destination || payload.notes || payload.style || payload.companion ||
+      (Array.isArray(payload.travelerTraits) && payload.travelerTraits.length) ||
+      payload.tripMood !== 'balanced' || payload.dayDensity !== 'balanced' || payload.budgetMode !== 'balanced' ||
+      payload.localMode
+    );
+  }
+  function writePlannerDraft(force=false){
+    if (document.body.dataset.page !== 'planner') return;
+    const payload = plannerDraftPayload();
+    if (!plannerDraftHasContent(payload) && !force) {
+      clearPlannerDraft({ keepDismiss:true });
+      return;
+    }
+    localStorage.setItem(plannerDraftKey, JSON.stringify(payload));
+    renderPlannerDraftCard();
+  }
+  function queuePlannerDraftSave(immediate=false){
+    clearTimeout(plannerDraftSaveTimer);
+    if (immediate) {
+      writePlannerDraft(true);
+      return;
+    }
+    plannerDraftSaveTimer = setTimeout(() => writePlannerDraft(), 450);
+  }
+  function plannerDraftSummary(item){
+    const title = item.destination ? `${item.destination} · ${item.duration || uiCopy('여정', 'route')}` : uiCopy('작성 중인 여정', 'Draft route', '下書きの旅程', '草稿旅程');
+    const context = item.entryKind === 'sample'
+      ? uiCopy('샘플에서 이어짐', 'Continues from a sample', 'サンプルから続く', '從 sample 延伸')
+      : item.entryKind === 'city'
+      ? uiCopy('도시 가이드에서 이어짐', 'Continues from a city guide', '都市ガイドから続く', '從城市指南延伸')
+      : uiCopy('직접 다듬던 리듬', 'A route you were shaping', '自分で整えていた流れ', '你剛剛在整理的路線');
+    const detail = [item.companion, item.style].filter(Boolean).join(' · ');
+    return { title, context, detail };
+  }
+  function restorePlannerDraft(){
+    const item = readPlannerDraft();
+    if (!item) return;
+    if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(item);
+    syncPlannerRecipe();
+    renderPlannerDraftCard(true);
+    window.RyokoApp?.trackEvent?.('ryoko_planner_draft_restored', { destination: item.destination || '', entryKind: item.entryKind || '', traitsCount: Array.isArray(item.travelerTraits) ? item.travelerTraits.length : 0 });
+    showToast(uiCopy('작성 중이던 여정을 복구했어요.', 'Restored your draft route.', '下書きの旅程を復元しました。', '已恢復你剛剛編輯的草稿路線。'), 'success');
+  }
+  function dismissPlannerDraft(){
+    const item = readPlannerDraft();
+    if (item?.savedAt) localStorage.setItem(plannerDraftDismissKey, item.savedAt);
+    renderPlannerDraftCard();
+    window.RyokoApp?.trackEvent?.('ryoko_planner_draft_dismissed', { destination: item?.destination || '' });
+  }
+  function renderPlannerDraftCard(forceVisible=false){
+    const shell = document.querySelector('.planner-helper-panel');
+    if (!shell) return;
+    let card = qs('plannerDraftCard');
+    if (!card) {
+      card = document.createElement('div');
+      card.id = 'plannerDraftCard';
+      card.className = 'planner-draft-card info-card hidden';
+      shell.insertAdjacentElement('afterend', card);
+    }
+    const item = readPlannerDraft();
+    const blocked = !forceVisible && (!item || plannerDraftIsDismissed(item) || new URLSearchParams(location.search).has('trip'));
+    if (blocked) {
+      card.classList.add('hidden');
+      card.innerHTML = '';
+      return;
+    }
+    const summary = plannerDraftSummary(item);
+    card.classList.remove('hidden');
+    card.innerHTML = `
+      <div class="planner-draft-head">
+        <div>
+          <span class="eyebrow">${uiCopy('Draft resume', 'Draft resume', 'Draft resume', 'Draft resume')}</span>
+          <h3>${escapeHtml(summary.title)}</h3>
+          <p>${escapeHtml(summary.context)}</p>
+        </div>
+        <span class="planner-draft-age">${escapeHtml(plannerDraftAgeLabel(item.savedAt))}</span>
+      </div>
+      <div class="planner-draft-meta">
+        <span class="planner-draft-chip">${escapeHtml(item.tripMood || 'balanced')}</span>
+        <span class="planner-draft-chip">${escapeHtml(item.dayDensity || 'balanced')}</span>
+        <span class="planner-draft-chip">${escapeHtml(item.budgetMode || 'balanced')}</span>
+        ${summary.detail ? `<span class="planner-draft-chip">${escapeHtml(summary.detail)}</span>` : ''}
+      </div>
+      ${item.notes ? `<p class="planner-draft-note">${escapeHtml(item.notes)}</p>` : ''}
+      <div class="card-actions planner-draft-actions">
+        <button type="button" class="primary-btn" id="plannerDraftRestoreBtn">${uiCopy('이 draft 이어쓰기', 'Resume this draft', 'この draft を再開', '繼續這份 draft')}</button>
+        <button type="button" class="secondary-btn" id="plannerDraftFreshBtn">${uiCopy('새로 시작', 'Start fresh', '新しく始める', '重新開始')}</button>
+        <button type="button" class="ghost-btn" id="plannerDraftHideBtn">${uiCopy('지금은 숨기기', 'Hide for now', '今は隠す', '先隱藏')}</button>
+      </div>`;
+    qs('plannerDraftRestoreBtn')?.addEventListener('click', restorePlannerDraft);
+    qs('plannerDraftFreshBtn')?.addEventListener('click', () => {
+      clearPlannerDraft();
+      window.RyokoApp?.trackEvent?.('ryoko_planner_draft_cleared', { destination: item?.destination || '' });
+      showToast(uiCopy('저장된 draft를 지우고 새로 시작합니다.', 'Cleared the saved draft and started fresh.', '保存された draft を消して新しく始めます。', '已清除已存 draft，重新開始。'), 'info');
+    });
+    qs('plannerDraftHideBtn')?.addEventListener('click', dismissPlannerDraft);
+  }
+  function bindPlannerDraftAutosave(){
+    const selectors = ['destination','duration','companion','style','notes'];
+    selectors.forEach(id => {
+      const el = qs(id);
+      if (!el || el.dataset.draftBound === '1') return;
+      el.dataset.draftBound = '1';
+      el.addEventListener('input', () => queuePlannerDraftSave());
+      el.addEventListener('change', () => queuePlannerDraftSave());
+    });
+    document.querySelectorAll('[data-pill-group]').forEach(btn => {
+      if (btn.dataset.draftBound === '1') return;
+      btn.dataset.draftBound = '1';
+      btn.addEventListener('click', () => queuePlannerDraftSave());
+    });
+    qs('localToggle')?.addEventListener('click', () => setTimeout(() => queuePlannerDraftSave(), 0));
+    const needsGrid = qs('needsGrid');
+    if (needsGrid && needsGrid.dataset.draftBound !== '1') {
+      needsGrid.dataset.draftBound = '1';
+      needsGrid.addEventListener('change', () => queuePlannerDraftSave());
+      needsGrid.addEventListener('click', () => setTimeout(() => queuePlannerDraftSave(), 0));
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') queuePlannerDraftSave(true);
+    });
+    window.addEventListener('beforeunload', () => writePlannerDraft(true));
+  }
+
+
   function qs(id){ return document.getElementById(id); }
   function options(arr){ return arr.map(item => `<option value="${item}">${item}</option>`).join(''); }
   function getDayLabel(day){ const lang = window.RyokoApp?.lang || 'ko'; if (lang === 'ko') return `${day}일차`; if (lang === 'ja') return `${day}日目`; if (lang === 'zhHant') return `第 ${day} 天`; return `Day ${day}`; }
@@ -2885,6 +3065,7 @@ function useExample(key='tokyo'){
     if (destination && qs('destination')) qs('destination').value = destination;
     if (entry && !params.get('trip')) {
       applyPlannerEntrySuggestedPreset(entry);
+      queuePlannerDraftSave();
     }
     ensurePlannerEntryContext();
   }
@@ -2904,10 +3085,13 @@ function useExample(key='tokyo'){
     if (payload.budgetMode) document.querySelectorAll('[data-pill-group="budgetMode"]').forEach(btn => btn.classList.toggle('active', btn.dataset.pillValue === payload.budgetMode));
     renderPlan(payload.planData || payload);
     window.RyokoStorage.addSharedTrip(payload);
+    renderPlannerDraftCard();
   }
   function init(){
     if (!document.body.dataset.page || document.body.dataset.page !== 'planner') return;
     refreshOptions();
+    bindPlannerDraftAutosave();
+    renderPlannerDraftCard();
     bindSelectionChips();
     applyPresetFromQuery();
     window.addEventListener('ryoko:langchange', () => {
@@ -2915,6 +3099,7 @@ function useExample(key='tokyo'){
       const existing = window.__RYOKO_LAST_RESULT__;
       if (existing) renderPlan(existing);
       ensurePlannerEntryContext();
+      renderPlannerDraftCard();
     });
     qs('localToggle').addEventListener('click', () => qs('localToggle').classList.toggle('on'));
     qs('submitBtn').addEventListener('click', generate);

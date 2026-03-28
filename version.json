@@ -1,13 +1,13 @@
 {
-  "release": "v110",
-  "version": "v110",
+  "release": "v111",
+  "version": "v111",
   "channel": "beta",
-  "codename": "entry-aware-notes-and-traits",
-  "updatedAt": "2026-03-30T02:05:00+09:00",
-  "headline": "Planner handoffs now carry richer entry-aware notes, traits, and sample defaults into the form.",
+  "codename": "planner-draft-autosave",
+  "updatedAt": "2026-03-29",
+  "headline": "Planner draft autosave + resume restore",
   "notes": [
-    "City and sample CTAs can now pass duration, companion, style, notes, local mode, and traveler-trait hints into Planner.",
-    "Planner entry presets now merge those richer handoff values and show them inside the entry-context card.",
-    "Traveler-trait preset matching now resolves meaning across languages instead of relying on exact localized labels."
+    "Planner now autosaves an in-progress draft for 7 days and offers a resume card on return.",
+    "Release-check can reset planner draft state and reports draft freshness.",
+    "Entry-aware planner flow now feels less fragile across reloads or short drop-offs."
   ]
 }
