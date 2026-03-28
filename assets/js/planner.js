@@ -108,25 +108,31 @@ window.RyokoPlanner = (() => {
     const entryTitle = String(params.get('entryTitle') || '').trim();
     const entryCity = String(params.get('entryCity') || params.get('destination') || '').trim();
     const entrySource = String(params.get('entrySource') || '').trim();
+    const entryDuration = String(params.get('entryDuration') || '').trim();
+    const entryCompanion = String(params.get('entryCompanion') || '').trim();
+    const entryStyle = String(params.get('entryStyle') || '').trim();
+    const entryNotes = String(params.get('entryNotes') || '').trim();
+    const entryNeeds = String(params.get('entryNeeds') || '').split('|').map(item => String(item || '').trim()).filter(Boolean);
+    const entryLocalMode = params.get('entryLocalMode');
     if (!entryKind && !entryTitle && !entryCity) return null;
-    return { entryKind, entryTitle, entryCity, entrySource };
+    return { entryKind, entryTitle, entryCity, entrySource, entryDuration, entryCompanion, entryStyle, entryNotes, entryNeeds, entryLocalMode: entryLocalMode === '1' ? true : entryLocalMode === '0' ? false : null };
   }
 
   const plannerEntryPresetProfiles = {
-    tokyo:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'balanced', style:'city highlights + hidden gems' },
-    osaka:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'balanced', style:'food + local neighborhoods' },
-    kyoto:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'slow + quiet' },
-    fukuoka:{ tripMood:'balanced', dayDensity:'balanced', budgetMode:'smart', style:'food + local neighborhoods' },
-    sapporo:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'slow + quiet' },
-    sendai:{ tripMood:'editorial', dayDensity:'light', budgetMode:'smart', style:'slow + quiet' },
-    okinawa:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'scenic + easy pace' },
-    seoul:{ tripMood:'vivid', dayDensity:'balanced', budgetMode:'balanced', style:'city vibes + food + neighborhoods' },
-    busan:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'coastal + easy pace' },
-    jeju:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'scenic + easy pace' },
-    gyeongju:{ tripMood:'editorial', dayDensity:'light', budgetMode:'balanced', style:'slow + quiet' },
-    taipei:{ tripMood:'vivid', dayDensity:'balanced', budgetMode:'balanced', style:'food + local neighborhoods' },
-    hongkong:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'treat', style:'city highlights + hidden gems' },
-    macau:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'treat', style:'city highlights + hidden gems' }
+    tokyo:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'balanced', style:'city highlights + hidden gems', notes:'Keep one iconic axis, then leave one calmer local pocket so Tokyo does not start too loud.', localMode:true },
+    osaka:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'balanced', style:'food + local neighborhoods', notes:'Let the day revolve around two or three shorter meal scenes instead of one oversized checklist.', localMode:true },
+    kyoto:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'slow + quiet', notes:'Protect the quiet windows first, then let one dusk walk carry the close.' },
+    fukuoka:{ tripMood:'balanced', dayDensity:'balanced', budgetMode:'smart', style:'food + local neighborhoods', notes:'Keep transfers short and let the meal rhythm carry the route.' },
+    sapporo:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'slow + quiet', notes:'Keep the wider axis clean, then add one warmer pocket before night.', travelerTraits:['seniors'] },
+    sendai:{ tripMood:'editorial', dayDensity:'light', budgetMode:'smart', style:'slow + quiet', notes:'Use one calm green line and one market pause instead of stacking too many central stops.' },
+    okinawa:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'scenic + easy pace', notes:'Give the clearest hours to the coast and leave real rest in the middle of the day.' },
+    seoul:{ tripMood:'vivid', dayDensity:'balanced', budgetMode:'balanced', style:'city vibes + food + neighborhoods', notes:'Keep one sharper neighborhood contrast, then let the rest of the day breathe.' },
+    busan:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'coastal + easy pace', notes:'Protect view timing and rest windows so the coast never turns into pure transfer fatigue.', travelerTraits:['seniors'] },
+    jeju:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'scenic + easy pace', notes:'Leave enough room for wind, driving time, and one slower café pocket.', travelerTraits:['seniors'] },
+    gyeongju:{ tripMood:'editorial', dayDensity:'light', budgetMode:'balanced', style:'slow + quiet', notes:'Keep the heritage walk gentle and let one dusk scene carry the memory.', travelerTraits:['seniors'] },
+    taipei:{ tripMood:'vivid', dayDensity:'balanced', budgetMode:'balanced', style:'food + local neighborhoods', notes:'Keep the food rhythm strong, then let one lane pocket slow the day down.' },
+    hongkong:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'treat', style:'city highlights + hidden gems', notes:'Balance one strong vertical district with one breathing pocket before the night close.' },
+    macau:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'treat', style:'city highlights + hidden gems', notes:'Keep the old lanes brief and clear, then leave one brighter night scene for contrast.', travelerTraits:['seniors'] }
   };
   function plannerEntrySuggestedPreset(entry){
     const slug = String(entry?.entryCity || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '');
@@ -138,6 +144,12 @@ window.RyokoPlanner = (() => {
       preset.tripMood = profile.tripMood || 'balanced';
       preset.dayDensity = profile.dayDensity || 'balanced';
     }
+    if (entry?.entryDuration) preset.duration = entry.entryDuration;
+    if (entry?.entryCompanion) preset.companion = entry.entryCompanion;
+    if (entry?.entryStyle) preset.style = entry.entryStyle;
+    if (entry?.entryNotes) preset.notes = entry.entryNotes;
+    if (Array.isArray(entry?.entryNeeds) && entry.entryNeeds.length) preset.travelerTraits = entry.entryNeeds;
+    if (typeof entry?.entryLocalMode === 'boolean') preset.localMode = entry.entryLocalMode;
     return preset;
   }
   function plannerEntrySuggestedPresetCopy(entry){
@@ -145,11 +157,18 @@ window.RyokoPlanner = (() => {
     const mood = prettyPillValue('tripMood', preset.tripMood || 'balanced');
     const density = prettyPillValue('dayDensity', preset.dayDensity || 'balanced');
     const budget = prettyPillValue('budgetMode', preset.budgetMode || 'balanced');
+    const style = textValue(preset.style, '');
+    const companion = textValue(preset.companion, '');
+    const duration = textValue(preset.duration, '');
+    const needs = Array.isArray(preset.travelerTraits) ? preset.travelerTraits.filter(Boolean) : [];
     const lang = window.RyokoApp?.lang || 'ko';
     if (lang === 'ko') {
       return {
         label:'추천 핸드오프',
         desc:`${mood} · ${density} · ${budget} 쪽으로 시작하면 방금 읽던 맥락이 더 자연스럽게 이어집니다.`,
+        detail:[duration, companion, style].filter(Boolean).join(' · '),
+        note:preset.notes || '',
+        needsLabel: needs.length ? `추천 traits · ${needs.join(' · ')}` : '',
         apply:'추천 리듬 적용'
       };
     }
@@ -157,6 +176,9 @@ window.RyokoPlanner = (() => {
       return {
         label:'おすすめの引き継ぎ',
         desc:`${mood} · ${density} · ${budget} で始めると、さっき読んでいた流れをそのまま持ち込みやすくなります。`,
+        detail:[duration, companion, style].filter(Boolean).join(' · '),
+        note:preset.notes || '',
+        needsLabel: needs.length ? `おすすめ traits · ${needs.join(' · ')}` : '',
         apply:'おすすめのリズムを適用'
       };
     }
@@ -164,12 +186,18 @@ window.RyokoPlanner = (() => {
       return {
         label:'建議接續方式',
         desc:`以 ${mood} · ${density} · ${budget} 開始，會更自然地接住剛才閱讀的脈絡。`,
+        detail:[duration, companion, style].filter(Boolean).join(' · '),
+        note:preset.notes || '',
+        needsLabel: needs.length ? `建議 traits · ${needs.join(' · ')}` : '',
         apply:'套用建議節奏'
       };
     }
     return {
       label:'Suggested handoff',
       desc:`Start with ${mood} · ${density} · ${budget} so the route keeps carrying the context you just read.`,
+      detail:[duration, companion, style].filter(Boolean).join(' · '),
+      note:preset.notes || '',
+      needsLabel: needs.length ? `Suggested traits · ${needs.join(' · ')}` : '',
       apply:'Apply suggested rhythm'
     };
   }
@@ -182,7 +210,12 @@ window.RyokoPlanner = (() => {
       entryCity: entry?.entryCity || '',
       tripMood: preset.tripMood || '',
       dayDensity: preset.dayDensity || '',
-      budgetMode: preset.budgetMode || ''
+      budgetMode: preset.budgetMode || '',
+      duration: preset.duration || '',
+      companion: preset.companion || '',
+      style: preset.style || '',
+      needsCount: Array.isArray(preset.travelerTraits) ? preset.travelerTraits.length : 0,
+      localMode: typeof preset.localMode === 'boolean' ? String(preset.localMode) : ''
     });
   }
   function plannerEntryContextCopy(entry){
@@ -280,7 +313,7 @@ window.RyokoPlanner = (() => {
     const preset = plannerEntrySuggestedPreset(entry);
     const presetCopy = plannerEntrySuggestedPresetCopy(entry);
     node.classList.remove('hidden');
-    node.innerHTML = `<div class="planner-entry-context-row"><div class="planner-entry-context-copy"><span class="eyebrow">${escapeHtml(copy.eyebrow)}</span><strong>${escapeHtml(copy.title)}</strong><p>${escapeHtml(copy.desc)}</p><div class="planner-entry-suggested"><div class="planner-entry-suggested-copy"><span class="planner-entry-suggested-label">${escapeHtml(presetCopy.label)}</span><p>${escapeHtml(presetCopy.desc)}</p><div class="planner-entry-suggested-chips"><span class="planner-entry-context-chip warm">${escapeHtml(prettyPillValue('tripMood', preset.tripMood || 'balanced'))}</span><span class="planner-entry-context-chip muted">${escapeHtml(prettyPillValue('dayDensity', preset.dayDensity || 'balanced'))}</span><span class="planner-entry-context-chip muted">${escapeHtml(prettyPillValue('budgetMode', preset.budgetMode || 'balanced'))}</span></div></div><button class="soft-btn" type="button" id="plannerEntryPresetBtn">${escapeHtml(presetCopy.apply)}</button></div>${actions.length ? `<div class="planner-entry-context-actions">${actions.map(action => `<a class="${action.style}" href="${action.href}" data-entry-context-action="${escapeHtml(action.label)}">${escapeHtml(action.label)}</a>`).join('')}</div>` : ''}</div><div class="planner-entry-context-meta"><span class="planner-entry-context-chip">${escapeHtml(copy.chip)}</span>${entry.entryCity ? `<span class="planner-entry-context-chip muted">${escapeHtml(entry.entryCity)}</span>` : ''}</div></div>`;
+    node.innerHTML = `<div class="planner-entry-context-row"><div class="planner-entry-context-copy"><span class="eyebrow">${escapeHtml(copy.eyebrow)}</span><strong>${escapeHtml(copy.title)}</strong><p>${escapeHtml(copy.desc)}</p><div class="planner-entry-suggested"><div class="planner-entry-suggested-copy"><span class="planner-entry-suggested-label">${escapeHtml(presetCopy.label)}</span><p>${escapeHtml(presetCopy.desc)}</p>${presetCopy.detail ? `<div class="planner-entry-suggested-detail">${escapeHtml(presetCopy.detail)}</div>` : ''}${presetCopy.note ? `<div class="planner-entry-suggested-note">${escapeHtml(presetCopy.note)}</div>` : ''}${presetCopy.needsLabel ? `<div class="planner-entry-suggested-traits">${escapeHtml(presetCopy.needsLabel)}</div>` : ''}<div class="planner-entry-suggested-chips"><span class="planner-entry-context-chip warm">${escapeHtml(prettyPillValue('tripMood', preset.tripMood || 'balanced'))}</span><span class="planner-entry-context-chip muted">${escapeHtml(prettyPillValue('dayDensity', preset.dayDensity || 'balanced'))}</span><span class="planner-entry-context-chip muted">${escapeHtml(prettyPillValue('budgetMode', preset.budgetMode || 'balanced'))}</span></div></div><button class="soft-btn" type="button" id="plannerEntryPresetBtn">${escapeHtml(presetCopy.apply)}</button></div>${actions.length ? `<div class="planner-entry-context-actions">${actions.map(action => `<a class="${action.style}" href="${action.href}" data-entry-context-action="${escapeHtml(action.label)}">${escapeHtml(action.label)}</a>`).join('')}</div>` : ''}</div><div class="planner-entry-context-meta"><span class="planner-entry-context-chip">${escapeHtml(copy.chip)}</span>${entry.entryCity ? `<span class="planner-entry-context-chip muted">${escapeHtml(entry.entryCity)}</span>` : ''}</div></div>`;
     node.querySelectorAll('[data-entry-context-action]').forEach(link => link.addEventListener('click', () => {
       window.RyokoApp?.trackEvent?.('ryoko_planner_entry_context_action_clicked', {
         entryKind: entry.entryKind || '',

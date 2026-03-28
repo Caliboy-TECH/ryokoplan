@@ -1,13 +1,13 @@
 {
-  "release": "v109",
-  "version": "v109",
+  "release": "v110",
+  "version": "v110",
   "channel": "beta",
-  "codename": "cross-language-preset-stability",
-  "updatedAt": "2026-03-30T01:35:00+09:00",
-  "headline": "Planner preset handoffs now resolve duration, companion, and style more reliably across languages.",
+  "codename": "entry-aware-notes-and-traits",
+  "updatedAt": "2026-03-30T02:05:00+09:00",
+  "headline": "Planner handoffs now carry richer entry-aware notes, traits, and sample defaults into the form.",
   "notes": [
-    "Preset application now resolves duration, companion, and style by meaning instead of exact localized labels.",
-    "City, sample, and route handoffs stay more stable when the UI language is Korean, Japanese, or Traditional Chinese.",
-    "Planner entry presets can now carry local mode and traveler-trait setup more safely into the form."
+    "City and sample CTAs can now pass duration, companion, style, notes, local mode, and traveler-trait hints into Planner.",
+    "Planner entry presets now merge those richer handoff values and show them inside the entry-context card.",
+    "Traveler-trait preset matching now resolves meaning across languages instead of relying on exact localized labels."
   ]
 }
