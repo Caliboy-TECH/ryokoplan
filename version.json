@@ -1,0 +1,12 @@
+{
+  "name": "Ryokoplan",
+  "release": "v91",
+  "base": "v90",
+  "date": "2026-03-28",
+  "track": "launch-redirects-and-version-endpoint",
+  "notes": [
+    "Adds server-side redirects for legacy sample slugs to canonical sample routes.",
+    "Adds version.json for deploy verification and smoke tests.",
+    "Disables caching on version.json so the deployed release can be checked immediately."
+  ]
+}

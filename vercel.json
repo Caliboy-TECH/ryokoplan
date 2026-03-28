@@ -40,6 +40,67 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
+    },
+    {
+      "source": "/version.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/example/osaka-2n3d-family",
+      "destination": "/example/osaka-2n3d-food-trip",
+      "statusCode": 308
+    },
+    {
+      "source": "/example/osaka-2n3d-family.html",
+      "destination": "/example/osaka-2n3d-food-trip",
+      "statusCode": 308
+    },
+    {
+      "source": "/example/sapporo-3n4d-snow-soft",
+      "destination": "/example/sapporo-2n3d-winter-city",
+      "statusCode": 308
+    },
+    {
+      "source": "/example/sapporo-3n4d-snow-soft.html",
+      "destination": "/example/sapporo-2n3d-winter-city",
+      "statusCode": 308
+    },
+    {
+      "source": "/example/sendai-2n3d-city-rest",
+      "destination": "/example/sendai-2n3d-calm-city",
+      "statusCode": 308
+    },
+    {
+      "source": "/example/sendai-2n3d-city-rest.html",
+      "destination": "/example/sendai-2n3d-calm-city",
+      "statusCode": 308
+    },
+    {
+      "source": "/example/okinawa-3n4d-island-breeze",
+      "destination": "/example/okinawa-3n4d-sea-reset",
+      "statusCode": 308
+    },
+    {
+      "source": "/example/okinawa-3n4d-island-breeze.html",
+      "destination": "/example/okinawa-3n4d-sea-reset",
+      "statusCode": 308
+    },
+    {
+      "source": "/example/macau-2n3d-heritage-night",
+      "destination": "/example/macau-2n3d-night-lanes",
+      "statusCode": 308
+    },
+    {
+      "source": "/example/macau-2n3d-heritage-night.html",
+      "destination": "/example/macau-2n3d-night-lanes",
+      "statusCode": 308
     }
   ]
 }
