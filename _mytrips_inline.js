@@ -677,7 +677,7 @@ function visitEntryMarkup(city='', extraClass=''){
               <div class="eyebrow">Trip vault</div>
               <h2 class="section-title trip-tight-title">${copy.noContinue}</h2>
               <p class="section-desc">${copy.noContinueDesc}</p>
-              <div class="hero-actions"><a class="primary-btn" data-nav="planner">${window.RyokoApp.t('trips.openPlanner')}</a></div>
+              <div class="hero-actions"><a class="primary-btn" data-nav="planner" href="../index.html#planner-start">${window.RyokoApp.t('trips.openPlanner')}</a></div>
             </div>`;
           return;
         }
@@ -1214,7 +1214,7 @@ function visitEntryMarkup(city='', extraClass=''){
             <span class="eyebrow">${langCopy().loopEmptyEyebrow || "No saved loop yet"}</span>
             <h3>${langCopy().loopEmptyTitle || "Save one trip, then the city-first loop gets smarter"}</h3>
             <p>${langCopy().loopEmptyDesc || "Once a trip is saved or reopened, My Trips can point you to the next guide, sample route, or related city branch that fits the tone you already liked."}</p>
-            <div class="card-actions"><a class="primary-btn" href="../">${langCopy().loopOpenPlanner || "Start a new route"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
+            <div class="card-actions"><a class="primary-btn" href="../index.html#planner-start">${langCopy().loopOpenPlanner || "Start a new route"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
           side.innerHTML = `
             <h3>${langCopy().loopGoodStart || "Good starting points"}</h3>
             <div class="trip-loop-list">
