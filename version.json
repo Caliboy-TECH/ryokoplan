@@ -1,13 +1,13 @@
 {
-  "release": "v96",
-  "version": "v96",
+  "release": "v97",
+  "version": "v97",
   "channel": "beta",
-  "codename": "telemetry-inspector",
+  "codename": "release-diagnostics-panel",
   "updatedAt": "2026-03-28",
-  "headline": "Release check now includes a local telemetry inspector for launch smoke tests.",
+  "headline": "Release check now includes automated deploy diagnostics for core files and trust pages.",
   "notes": [
-    "Release check now shows recent local launch telemetry events for smoke-test validation.",
-    "Telemetry can be reloaded, copied, and cleared without opening DevTools.",
-    "Launch events are persisted locally on the current browser for easier beta QA."
+    "Release check now runs same-origin diagnostics for version.json, robots.txt, manifest, service worker, social card asset, trust pages, and 404 availability.",
+    "Diagnostics can be rerun and copied directly from the release-check page.",
+    "Release-check markup was cleaned up so the checklist, diagnostics, and telemetry cards render as separate sections more reliably."
   ]
 }

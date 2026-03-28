@@ -1,0 +1,288 @@
+
+    const storageKey = 'ryoko:release-check-v97';
+    const checkboxes = Array.from(document.querySelectorAll('[data-check]'));
+    const telemetryStorageKey = 'ryoko:launch-event-log:v1';
+    let lastDiagnostics = [];
+
+    function renderOnlineStatus(){
+      const el = document.getElementById('onlineStatus');
+      if (!el) return;
+      const online = navigator.onLine;
+      el.classList.toggle('is-online', online);
+      el.classList.toggle('is-offline', !online);
+      el.querySelector('span:last-child').textContent = online ? 'Online — ready for smoke test' : 'Offline — some checks will not work';
+    }
+
+    function loadChecks(){
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+        checkboxes.forEach(box => { box.checked = !!saved[box.dataset.check]; });
+      } catch {}
+    }
+
+    function saveChecks(){
+      const payload = {};
+      checkboxes.forEach(box => { payload[box.dataset.check] = box.checked; });
+      localStorage.setItem(storageKey, JSON.stringify(payload));
+    }
+
+    async function loadPwaStatus(){
+      const summary = document.getElementById('pwaSummary');
+      if (!summary) return;
+      const standalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+      if (!('serviceWorker' in navigator)) {
+        summary.textContent = 'Service worker is not supported in this browser.';
+        return;
+      }
+      try {
+        const registration = await navigator.serviceWorker.getRegistration('../sw.js') || await navigator.serviceWorker.getRegistration('/');
+        if (registration) {
+          summary.textContent = standalone
+            ? 'Service worker active · app already running in standalone mode.'
+            : 'Service worker registered · open the home page on a supported browser to test install prompt.';
+        } else {
+          summary.textContent = 'No service worker registration yet. Open the home page once after deploy, then check again.';
+        }
+      } catch (err) {
+        summary.textContent = 'Could not read service worker status: ' + String(err);
+      }
+    }
+
+    function readTelemetryLog(){
+      try {
+        const parsed = JSON.parse(localStorage.getItem(telemetryStorageKey) || '[]');
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function renderTelemetry(){
+      const summary = document.getElementById('telemetrySummary');
+      const latest = document.getElementById('telemetryLatest');
+      const dump = document.getElementById('telemetryDump');
+      const events = readTelemetryLog();
+      if (!events.length) {
+        if (summary) summary.textContent = 'No events stored yet on this browser.';
+        if (latest) latest.textContent = 'Open the site and trigger a few actions first.';
+        if (dump) dump.textContent = '[]';
+        return;
+      }
+      const last = events[events.length - 1] || {};
+      if (summary) summary.textContent = events.length + ' recent event(s) stored locally.';
+      if (latest) latest.textContent = [last.event || 'unknown', last.page || 'unknown', last.timestamp || ''].filter(Boolean).join(' · ');
+      if (dump) dump.textContent = JSON.stringify(events, null, 2);
+    }
+
+    async function copyTelemetry(){
+      const payload = document.getElementById('telemetryDump')?.textContent || '[]';
+      try {
+        await navigator.clipboard.writeText(payload);
+        alert('Telemetry log copied.');
+      } catch {
+        alert('Could not copy telemetry log in this browser.');
+      }
+    }
+
+    function clearTelemetry(){
+      localStorage.removeItem(telemetryStorageKey);
+      renderTelemetry();
+      alert('Telemetry log cleared.');
+    }
+
+    async function loadVersion(){
+      const summary = document.getElementById('versionSummary');
+      const dump = document.getElementById('versionDump');
+      try {
+        const res = await fetch('../version.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('version.json request failed');
+        const json = await res.json();
+        const currentRelease = json.release || json.version || 'unknown';
+        const currentCodename = json.codename ? ' · ' + json.codename : '';
+        summary.innerHTML = '<code>/version.json</code> loaded — current release: <strong>' + currentRelease + '</strong>' + currentCodename;
+        dump.textContent = JSON.stringify(json, null, 2);
+      } catch (err) {
+        summary.textContent = 'Could not load /version.json. Confirm the deploy finished and the file is reachable.';
+        dump.textContent = String(err);
+      }
+    }
+
+    function clearLocalTripData(){
+      const keys = Object.keys(localStorage).filter(key => /^ryoko:/i.test(key));
+      keys.forEach(key => localStorage.removeItem(key));
+      alert(keys.length ? 'Cleared ' + keys.length + ' Ryokoplan local keys.' : 'No Ryokoplan local keys found.');
+      renderTelemetry();
+    }
+
+    async function fetchText(url){
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.text();
+    }
+
+    function diagnosticItemMarkup(item){
+      return '<div class="diagnostic-item">'
+        + '<div class="diagnostic-copy"><strong>' + item.name + '</strong><p>' + item.detail + '</p></div>'
+        + '<span class="diagnostic-status ' + item.status + '">' + item.status + '</span>'
+        + '</div>';
+    }
+
+    function renderDiagnostics(items){
+      const list = document.getElementById('diagnosticList');
+      const summary = document.getElementById('diagnosticSummary');
+      if (!list || !summary) return;
+      lastDiagnostics = items;
+      const pass = items.filter(item => item.status === 'pass').length;
+      const fail = items.filter(item => item.status === 'fail').length;
+      const warn = items.filter(item => item.status === 'warn').length;
+      summary.innerHTML = [
+        '<span class="diagnostic-pill">Pass ' + pass + '</span>',
+        '<span class="diagnostic-pill">Warn ' + warn + '</span>',
+        '<span class="diagnostic-pill">Fail ' + fail + '</span>'
+      ].join('');
+      list.innerHTML = items.map(diagnosticItemMarkup).join('');
+    }
+
+    async function runDiagnostics(){
+      const checks = [
+        {
+          name: 'version.json',
+          run: async () => {
+            const res = await fetch('../version.json', { cache: 'no-store' });
+            if (!res.ok) return { status:'fail', detail:'Request failed with HTTP ' + res.status + '.' };
+            const json = await res.json();
+            const release = json.release || json.version || 'unknown';
+            return { status:'pass', detail:'Loaded release ' + release + (json.codename ? ' · ' + json.codename : '') + '.' };
+          }
+        },
+        {
+          name: 'robots.txt',
+          run: async () => {
+            const text = await fetchText('../robots.txt');
+            const ok = /Sitemap:/i.test(text) && /Disallow:\s*\/api\//i.test(text);
+            return ok
+              ? { status:'pass', detail:'Sitemap and /api/ disallow rules are present.' }
+              : { status:'warn', detail:'robots.txt loaded, but sitemap or /api/ disallow marker was not found.' };
+          }
+        },
+        {
+          name: 'site.webmanifest',
+          run: async () => {
+            const res = await fetch('../site.webmanifest', { cache: 'no-store' });
+            if (!res.ok) return { status:'fail', detail:'Manifest request failed with HTTP ' + res.status + '.' };
+            const json = await res.json();
+            return json.name && json.start_url
+              ? { status:'pass', detail:'Manifest loaded with app name and start_url.' }
+              : { status:'warn', detail:'Manifest loaded, but expected app name or start_url field looked incomplete.' };
+          }
+        },
+        {
+          name: 'sw.js',
+          run: async () => {
+            const text = await fetchText('../sw.js');
+            return /CACHE_NAME|self\.addEventListener\('fetch'/.test(text)
+              ? { status:'pass', detail:'Service worker file is reachable and contains cache/fetch logic.' }
+              : { status:'warn', detail:'Service worker file loaded, but expected cache/fetch markers were not found.' };
+          }
+        },
+        {
+          name: 'OG cover image',
+          run: async () => {
+            const res = await fetch('../assets/images/brand/og-cover.png', { cache: 'no-store' });
+            return res.ok
+              ? { status:'pass', detail:'PNG social card is reachable.' }
+              : { status:'fail', detail:'OG cover PNG returned HTTP ' + res.status + '.' };
+          }
+        },
+        {
+          name: 'home head markers',
+          run: async () => {
+            const text = await fetchText('../index.html');
+            const hasCanonical = /rel="canonical"/i.test(text);
+            const hasOgPng = /og-cover\.png/i.test(text);
+            return hasCanonical && hasOgPng
+              ? { status:'pass', detail:'Home includes canonical and PNG social preview markers.' }
+              : { status:'warn', detail:'Home loaded, but canonical or PNG social preview marker looked incomplete.' };
+          }
+        },
+        {
+          name: 'trust pages',
+          run: async () => {
+            const urls = ['../privacy/','../terms/','../contact/','../whats-new/'];
+            const results = await Promise.all(urls.map(url => fetch(url, { cache:'no-store' }).then(res => res.ok)));
+            const ok = results.every(Boolean);
+            return ok
+              ? { status:'pass', detail:'Privacy, terms, contact, and What’s new all returned 200-level responses.' }
+              : { status:'fail', detail:'One or more trust pages did not return a successful response.' };
+          }
+        },
+        {
+          name: '404 page',
+          run: async () => {
+            const text = await fetchText('../404.html');
+            return /Ryokoplan/i.test(text)
+              ? { status:'pass', detail:'404 page is reachable and branded.' }
+              : { status:'warn', detail:'404 page loaded, but branding marker looked incomplete.' };
+          }
+        },
+        {
+          name: 'release-check cache policy',
+          run: async () => {
+            const res = await fetch('./', { cache:'no-store' });
+            const cache = res.headers.get('cache-control') || '';
+            return /no-store|max-age=0/i.test(cache)
+              ? { status:'pass', detail:'Release-check cache policy looks deployment-friendly (' + cache + ').' }
+              : { status:'warn', detail:'Release-check loaded, but cache-control did not clearly advertise no-store/max-age=0.' };
+          }
+        }
+      ];
+
+      const items = [];
+      for (const check of checks) {
+        try {
+          const result = await check.run();
+          items.push({ name: check.name, status: result.status, detail: result.detail });
+        } catch (err) {
+          items.push({ name: check.name, status: 'fail', detail: String(err) });
+        }
+      }
+      renderDiagnostics(items);
+    }
+
+    async function copyDiagnostics(){
+      const payload = JSON.stringify(lastDiagnostics, null, 2);
+      try {
+        await navigator.clipboard.writeText(payload);
+        alert('Diagnostics copied.');
+      } catch {
+        alert('Could not copy diagnostics in this browser.');
+      }
+    }
+
+    checkboxes.forEach(box => box.addEventListener('change', saveChecks));
+    document.getElementById('reloadVersionBtn').addEventListener('click', loadVersion);
+    document.getElementById('clearLocalBtn').addEventListener('click', clearLocalTripData);
+    document.getElementById('reloadTelemetryBtn').addEventListener('click', renderTelemetry);
+    document.getElementById('copyTelemetryBtn').addEventListener('click', copyTelemetry);
+    document.getElementById('clearTelemetryBtn').addEventListener('click', clearTelemetry);
+    document.getElementById('runDiagnosticsBtn').addEventListener('click', runDiagnostics);
+    document.getElementById('copyDiagnosticsBtn').addEventListener('click', copyDiagnostics);
+    document.getElementById('resetChecksBtn').addEventListener('click', () => {
+      checkboxes.forEach(box => { box.checked = false; });
+      saveChecks();
+    });
+    window.addEventListener('online', renderOnlineStatus);
+    window.addEventListener('offline', renderOnlineStatus);
+    window.addEventListener('storage', event => {
+      if (event.key === telemetryStorageKey || event.key === storageKey) {
+        loadChecks();
+        renderTelemetry();
+      }
+    });
+    renderOnlineStatus();
+    loadChecks();
+    loadVersion();
+    loadPwaStatus();
+    renderTelemetry();
+    runDiagnostics();
+  
