@@ -185,6 +185,102 @@ window.RyokoPlanner = (() => {
       btn.setAttribute('aria-label', isSaved ? uiCopy('저장됨', 'Saved') : uiCopy('장소 저장', 'Save place'));
     }));
   }
+  function absoluteUrl(input=''){
+    const siteOrigin = 'https://ryokoplan.com';
+    const value = String(input || '').trim();
+    if (!value) return siteOrigin;
+    if (/^https?:\/\//i.test(value)) return value;
+    const normalized = value.replace(/^\.\//,'').replace(/^\.\.\//,'').replace(/^\/+/, '');
+    return `${siteOrigin}/${normalized}`;
+  }
+  function setStructuredData(id, payload){
+    if (!id) return;
+    let node = document.head.querySelector(`script[type="application/ld+json"]#${id}`);
+    if (!payload) {
+      if (node) node.remove();
+      return;
+    }
+    if (!node) {
+      node = document.createElement('script');
+      node.type = 'application/ld+json';
+      node.id = id;
+      document.head.appendChild(node);
+    }
+    node.textContent = JSON.stringify(payload);
+  }
+  function updateShareStructuredData(data, canonicalHref, cleanUrl){
+    const destination = textValue(data?.destination, '').trim();
+    const routeTitle = data?.title || destination || 'Ryokoplan route';
+    const description = normalizeSummary(data) || 'Read the city. Then build the trip.';
+    const dayItems = (data?.days || []).map((day, dayIndex) => ({
+      '@type':'ListItem',
+      position:dayIndex + 1,
+      name:textValue(day.title, `Day ${dayIndex + 1}`),
+      itemListElement:(normalizePlaces(day) || []).map((place, placeIndex) => ({
+        '@type':'ListItem',
+        position:placeIndex + 1,
+        name:textValue(place.name, `Stop ${placeIndex + 1}`),
+        description:textValue(place.reason, '')
+      }))
+    }));
+    const graph = {
+      '@context':'https://schema.org',
+      '@graph':[
+        {
+          '@type':'Organization',
+          '@id':'https://ryokoplan.com#organization',
+          name:'Ryokoplan',
+          url:'https://ryokoplan.com',
+          logo:absoluteUrl('assets/images/brand/apple-touch-icon.png')
+        },
+        {
+          '@type':'WebSite',
+          '@id':'https://ryokoplan.com#website',
+          url:'https://ryokoplan.com',
+          name:'Ryokoplan',
+          publisher:{'@id':'https://ryokoplan.com#organization'}
+        },
+        {
+          '@type':'BreadcrumbList',
+          '@id':`${canonicalHref}#breadcrumb`,
+          itemListElement:[
+            { '@type':'ListItem', position:1, name:'Ryokoplan', item:'https://ryokoplan.com' },
+            { '@type':'ListItem', position:2, name: destination || 'Route', item: canonicalHref }
+          ]
+        },
+        {
+          '@type':'TouristDestination',
+          '@id':`${canonicalHref}#destination`,
+          name: destination || 'East Asia city route',
+          url: canonicalHref,
+          description,
+          image:absoluteUrl(cityImageFor(destination || ''))
+        },
+        {
+          '@type':'ItemList',
+          '@id':`${canonicalHref}#route-days`,
+          name:`${routeTitle} day flow`,
+          itemListOrder:'https://schema.org/ItemListOrdered',
+          numberOfItems:dayItems.length,
+          itemListElement:dayItems
+        },
+        {
+          '@type':'WebPage',
+          '@id':`${cleanUrl}#webpage`,
+          url: cleanUrl,
+          name:`${routeTitle} — Ryokoplan`,
+          description,
+          isPartOf:{'@id':'https://ryokoplan.com#website'},
+          breadcrumb:{'@id':`${canonicalHref}#breadcrumb`},
+          about:{'@id':`${canonicalHref}#destination`},
+          mainEntity:{'@id':`${canonicalHref}#route-days`},
+          primaryImageOfPage:{'@type':'ImageObject', url:absoluteUrl('assets/images/brand/og-cover.png')}
+        }
+      ]
+    };
+    setStructuredData('ryoko-structured-data', graph);
+  }
+
   function updateShareMeta(data){
     const destination = textValue(data?.destination, '').trim();
     const routeTitle = data?.title || destination || 'Ryokoplan';
@@ -249,6 +345,7 @@ window.RyokoPlanner = (() => {
       document.head.appendChild(canonical);
     }
     canonical.setAttribute('href', canonicalHref);
+    updateShareStructuredData(data, canonicalHref, cleanUrl);
   }
   function refreshOptions(){
     const currentDuration = qs('duration')?.selectedIndex || 0;
