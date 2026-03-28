@@ -1,13 +1,13 @@
 {
-  "release": "v95",
-  "version": "v95",
+  "release": "v96",
+  "version": "v96",
   "channel": "beta",
-  "codename": "pwa-install-and-offline-shell",
+  "codename": "telemetry-inspector",
   "updatedAt": "2026-03-28",
-  "headline": "Added a service worker, install prompt, and a basic offline shell for Ryokoplan.",
+  "headline": "Release check now includes a local telemetry inspector for launch smoke tests.",
   "notes": [
-    "Added /sw.js with a lightweight app-shell cache strategy for core pages and assets.",
-    "Added an install CTA that appears when Ryokoplan is installable as a PWA.",
-    "Added /offline.html as a branded offline fallback instead of dropping to a raw browser error page."
+    "Release check now shows recent local launch telemetry events for smoke-test validation.",
+    "Telemetry can be reloaded, copied, and cleared without opening DevTools.",
+    "Launch events are persisted locally on the current browser for easier beta QA."
   ]
 }

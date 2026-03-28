@@ -739,6 +739,8 @@ window.RyokoApp = (() => {
   }
 
 const LAUNCH_SESSION_KEY = 'ryoko_launch_session_v1';
+const LAUNCH_EVENT_LOG_KEY = 'ryoko:launch-event-log:v1';
+const MAX_LAUNCH_EVENTS = 80;
 let launchFeedbackBooted = false;
 let installPromptEvent = null;
 let pwaBooted = false;
@@ -752,6 +754,24 @@ function getLaunchSessionId(){
   } catch {
     return `ryoko-${Date.now().toString(36)}`;
   }
+}
+function readLaunchEventLog(){
+  try {
+    const parsed = JSON.parse(localStorage.getItem(LAUNCH_EVENT_LOG_KEY) || '[]');
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+function writeLaunchEventLog(events=[]){
+  try {
+    localStorage.setItem(LAUNCH_EVENT_LOG_KEY, JSON.stringify(events.slice(-MAX_LAUNCH_EVENTS)));
+  } catch {}
+}
+function appendLaunchEvent(payload){
+  const current = readLaunchEventLog();
+  current.push(payload);
+  writeLaunchEventLog(current);
 }
 function trackEvent(name, detail={}){
   const payload = {
@@ -767,6 +787,7 @@ function trackEvent(name, detail={}){
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push(payload);
   } catch {}
+  appendLaunchEvent(payload);
   try {
     window.dispatchEvent(new CustomEvent('ryoko:track', { detail: payload }));
   } catch {}

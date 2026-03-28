@@ -136,12 +136,33 @@
           <div class="release-actions">
             <button class="secondary-btn" id="resetChecksBtn" type="button">Reset checks</button>
           </div>
+        <section class="release-check-card">
+          <span class="eyebrow">Telemetry inspector</span>
+          <h2 class="section-title" style="margin-top:8px;">Recent launch events</h2>
+          <p class="release-check-copy">Events are stored locally on this browser after you interact with the live site. Use this to confirm page views, route generation, save/share actions, install signals, and fallback events without opening DevTools.</p>
+          <div class="release-kv" style="margin-top:14px;">
+            <article class="info-card">
+              <strong>Event count</strong>
+              <span id="telemetrySummary">Loading recent events…</span>
+            </article>
+            <article class="info-card">
+              <strong>Latest event</strong>
+              <span id="telemetryLatest">Checking local log…</span>
+            </article>
+          </div>
+          <pre id="telemetryDump" class="release-version-box">Loading telemetry log…</pre>
+          <div class="release-actions">
+            <button class="secondary-btn" id="reloadTelemetryBtn" type="button">Reload telemetry</button>
+            <button class="ghost-btn" id="copyTelemetryBtn" type="button">Copy telemetry</button>
+            <button class="ghost-btn" id="clearTelemetryBtn" type="button">Clear telemetry</button>
+          </div>
+          <p class="release-inline-note">Tip: open the home page, generate one route, save once, share once, then come back here and confirm those events appear in the log.</p>
         </section>
       </div>
     </div>
   </main>
   <script>
-    const storageKey = 'ryoko:release-check-v95';
+    const storageKey = 'ryoko:release-check-v96';
     const checkboxes = Array.from(document.querySelectorAll('[data-check]'));
     function renderOnlineStatus(){
       const el = document.getElementById('onlineStatus');
@@ -183,6 +204,45 @@
         summary.textContent = 'Could not read service worker status: ' + String(err);
       }
     }
+    const telemetryStorageKey = 'ryoko:launch-event-log:v1';
+    function readTelemetryLog(){
+      try {
+        const parsed = JSON.parse(localStorage.getItem(telemetryStorageKey) || '[]');
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+    function renderTelemetry(){
+      const summary = document.getElementById('telemetrySummary');
+      const latest = document.getElementById('telemetryLatest');
+      const dump = document.getElementById('telemetryDump');
+      const events = readTelemetryLog();
+      if (!events.length) {
+        if (summary) summary.textContent = 'No events stored yet on this browser.';
+        if (latest) latest.textContent = 'Open the site and trigger a few actions first.';
+        if (dump) dump.textContent = '[]';
+        return;
+      }
+      const last = events[events.length - 1] || {};
+      if (summary) summary.textContent = events.length + ' recent event(s) stored locally.';
+      if (latest) latest.textContent = [last.event || 'unknown', last.page || 'unknown', last.timestamp || ''].filter(Boolean).join(' · ');
+      if (dump) dump.textContent = JSON.stringify(events, null, 2);
+    }
+    async function copyTelemetry(){
+      const payload = document.getElementById('telemetryDump')?.textContent || '[]';
+      try {
+        await navigator.clipboard.writeText(payload);
+        alert('Telemetry log copied.');
+      } catch {
+        alert('Could not copy telemetry log in this browser.');
+      }
+    }
+    function clearTelemetry(){
+      localStorage.removeItem(telemetryStorageKey);
+      renderTelemetry();
+      alert('Telemetry log cleared.');
+    }
     async function loadVersion(){
       const summary = document.getElementById('versionSummary');
       const dump = document.getElementById('versionDump');
@@ -203,20 +263,31 @@
       const keys = Object.keys(localStorage).filter(key => /^ryoko:/i.test(key));
       keys.forEach(key => localStorage.removeItem(key));
       alert(keys.length ? 'Cleared ' + keys.length + ' Ryokoplan local keys.' : 'No Ryokoplan local keys found.');
+      renderTelemetry();
     }
     checkboxes.forEach(box => box.addEventListener('change', saveChecks));
     document.getElementById('reloadVersionBtn').addEventListener('click', loadVersion);
     document.getElementById('clearLocalBtn').addEventListener('click', clearLocalTripData);
+    document.getElementById('reloadTelemetryBtn').addEventListener('click', renderTelemetry);
+    document.getElementById('copyTelemetryBtn').addEventListener('click', copyTelemetry);
+    document.getElementById('clearTelemetryBtn').addEventListener('click', clearTelemetry);
     document.getElementById('resetChecksBtn').addEventListener('click', () => {
       checkboxes.forEach(box => { box.checked = false; });
       saveChecks();
     });
     window.addEventListener('online', renderOnlineStatus);
     window.addEventListener('offline', renderOnlineStatus);
+    window.addEventListener('storage', event => {
+      if (event.key === telemetryStorageKey || event.key === storageKey) {
+        loadChecks();
+        renderTelemetry();
+      }
+    });
     renderOnlineStatus();
     loadChecks();
     loadVersion();
     loadPwaStatus();
+    renderTelemetry();
   </script>
 </body>
 </html>
