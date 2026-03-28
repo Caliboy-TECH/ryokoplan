@@ -94,6 +94,7 @@
           <button class="ghost-btn" id="openFeedbackDeskTopBtn" type="button">Send to feedback desk</button>
           <button class="ghost-btn" id="resetBetaNoticeTopBtn" type="button">Reset beta notice</button>
           <button class="ghost-btn" id="resetFirstRunGuideTopBtn" type="button">Reset first-run guide</button>
+          <button class="ghost-btn" id="resetStartPathTopBtn" type="button">Reset start-path memory</button>
         </div>
         <p class="release-inline-note">Tip: open this page after each upload and check that the release value matches the zip you just deployed.</p>
       </section>
@@ -212,10 +213,12 @@
     </div>
   </main>
   <script>
-    const storageKey = 'ryoko:release-check-v101';
+    const storageKey = 'ryoko:release-check-v102';
     const releaseDraftStorageKey = 'ryoko:release-report-draft:v1';
     const betaDismissKey = 'ryoko:beta-launch-dismissed:v100';
     const firstRunGuideKey = 'ryoko:first-run-guide-dismissed:v101';
+    const startPathMemoryKey = 'ryoko:start-path-memory:v102';
+    const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
     const checkboxes = Array.from(document.querySelectorAll('[data-check]'));
     const telemetryStorageKey = 'ryoko:launch-event-log:v1';
     let lastDiagnostics = [];
@@ -246,6 +249,15 @@
     function resetBetaNotice(){
       try { localStorage.removeItem(betaDismissKey); } catch {}
       alert('Beta notice reset for this browser. Reload a product page to see it again.');
+      updateReleaseReportPreview();
+    }
+
+    function resetStartPathMemory(){
+      try {
+        localStorage.removeItem(startPathMemoryKey);
+        localStorage.removeItem(startPathRecallDismissKey);
+      } catch {}
+      alert('Start-path memory reset for this browser.');
       updateReleaseReportPreview();
     }
 
@@ -612,7 +624,9 @@
         latestTelemetry: telemetry[telemetry.length - 1] || null,
         pwaSummary: document.getElementById('pwaSummary')?.textContent || '',
         betaNoticeDismissed: localStorage.getItem(betaDismissKey) === '1',
-        firstRunGuideDismissed: localStorage.getItem(firstRunGuideKey) === '1'
+        firstRunGuideDismissed: localStorage.getItem(firstRunGuideKey) === '1',
+        startPathRecallDismissed: localStorage.getItem(startPathRecallDismissKey) === '1',
+        startPathMemory: (() => { try { return JSON.parse(localStorage.getItem(startPathMemoryKey) || 'null'); } catch { return null; } })()
       };
     }
 
@@ -665,6 +679,7 @@
     document.getElementById('openFeedbackDeskTopBtn').addEventListener('click', openFeedbackDesk);
     document.getElementById('resetBetaNoticeTopBtn').addEventListener('click', resetBetaNotice);
     document.getElementById('resetFirstRunGuideTopBtn').addEventListener('click', resetFirstRunGuide);
+    document.getElementById('resetStartPathTopBtn').addEventListener('click', resetStartPathMemory);
     document.getElementById('reloadTelemetryBtn').addEventListener('click', renderTelemetry);
     document.getElementById('copyTelemetryBtn').addEventListener('click', copyTelemetry);
     document.getElementById('clearTelemetryBtn').addEventListener('click', clearTelemetry);
@@ -677,7 +692,7 @@
     window.addEventListener('online', renderOnlineStatus);
     window.addEventListener('offline', renderOnlineStatus);
     window.addEventListener('storage', event => {
-      if (event.key === telemetryStorageKey || event.key === storageKey) {
+      if ([telemetryStorageKey, storageKey, startPathMemoryKey, startPathRecallDismissKey, betaDismissKey, firstRunGuideKey].includes(event.key)) {
         loadChecks();
         renderTelemetry();
         updateReleaseReportPreview();

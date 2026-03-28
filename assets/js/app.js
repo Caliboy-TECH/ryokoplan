@@ -955,6 +955,8 @@ function buildFeedbackHref(extra={}){
 
 const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
 const firstRunGuideDismissKey = 'ryoko:first-run-guide-dismissed:v101';
+const startPathMemoryKey = 'ryoko:start-path-memory:v102';
+const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
 function betaLaunchCopy(){
   return lang === 'ko'
     ? { eyebrow:'Public beta', title:'Ryokoplan is now open in beta.', desc:'Routes, city notes, and saved flows are live. If anything feels off, send quick feedback from the page you are on.', primary:"What\'s new", secondary:'Send feedback', dismiss:'Hide' }
@@ -1012,6 +1014,139 @@ function ensureBetaLaunchBar(){
   syncBetaLaunchBar();
 }
 
+function inferStartPathCityFromHref(href=''){
+  const value = String(href || '').toLowerCase();
+  const matches = Object.values(CITY_LOOP).find(entry => {
+    const guide = String(entry.guide || '').toLowerCase();
+    const example = String(entry.example || '').toLowerCase();
+    return (guide && value.includes(guide)) || (example && value.includes(example)) || value.includes(slugifyCity(entry.name));
+  });
+  return matches?.name || '';
+}
+function readStartPathMemory(){
+  try {
+    const parsed = JSON.parse(localStorage.getItem(startPathMemoryKey) || 'null');
+    return parsed && typeof parsed === 'object' ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+function writeStartPathMemory(payload={}){
+  const href = String(payload.href || '');
+  const next = {
+    kind: String(payload.kind || '').trim(),
+    href,
+    sourcePage: String(payload.sourcePage || document.body?.dataset?.page || 'unknown'),
+    city: String(payload.city || inferStartPathCityFromHref(href) || ''),
+    savedAt: payload.savedAt || new Date().toISOString()
+  };
+  if (!next.kind) return null;
+  try {
+    localStorage.setItem(startPathMemoryKey, JSON.stringify(next));
+    localStorage.removeItem(startPathRecallDismissKey);
+  } catch {}
+  trackEvent('ryoko_start_path_memory_saved', { sourcePage: next.sourcePage, kind: next.kind, city: next.city || '' });
+  return next;
+}
+function clearStartPathMemory(){
+  try {
+    localStorage.removeItem(startPathMemoryKey);
+    localStorage.removeItem(startPathRecallDismissKey);
+  } catch {}
+}
+function startPathRecallCopy(memory){
+  const cityName = memory?.city || 'Tokyo';
+  const loop = getCityLoopData(cityName) || getCityLoopData('Tokyo') || { name: cityName, guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
+  const guideHref = resolvePath(loop.guide || 'city/tokyo.html');
+  const sampleHref = resolvePath(loop.example || 'example/tokyo-3n4d-first-trip.html');
+  const routeHref = plannerUrlForCity(loop.name || cityName || 'Tokyo');
+  const copies = {
+    ko: {
+      city: { eyebrow:'다시 이어서 보기', title:`지난번엔 ${cityName} city guide부터 시작했어요.`, desc:'그 흐름을 그대로 이어서 sample이나 route로 넘어가면 가장 자연스럽습니다.', actions:[[`${cityName} guide`, guideHref, 'guide'],['sample 보기', sampleHref, 'sample'],['route 시작', routeHref, 'route']], dismiss:'숨기기' },
+      sample: { eyebrow:'다시 이어서 보기', title:`지난번엔 ${cityName} sample로 톤을 잡았어요.`, desc:'같은 sample을 다시 열거나, 그 리듬을 바로 route로 가져가면 덜 헤맵니다.', actions:[['sample 다시 보기', sampleHref, 'sample'],['route 시작', routeHref, 'route'],[`${cityName} guide`, guideHref, 'guide']], dismiss:'숨기기' },
+      magazine: { eyebrow:'다시 이어서 보기', title:'지난번엔 Magazine부터 들어갔어요.', desc:`${cityName} guide나 sample로 이어가면 흐름을 다시 잡기 쉽습니다.`, actions:[['Magazine', navHref('magazine'), 'magazine'],[`${cityName} guide`, guideHref, 'guide'],['sample 보기', sampleHref, 'sample']], dismiss:'숨기기' },
+      route: { eyebrow:'다시 이어서 보기', title:'지난번엔 바로 route부터 시작했어요.', desc:`이번엔 ${cityName} sample이나 guide를 함께 보면 route 톤을 더 쉽게 다듬을 수 있습니다.`, actions:[['route 다시 열기', routeHref, 'route'],['sample 보기', sampleHref, 'sample'],[`${cityName} guide`, guideHref, 'guide']], dismiss:'숨기기' }
+    },
+    en: {
+      city: { eyebrow:'Pick up where you left off', title:`Last time you started with the ${cityName} city guide.`, desc:'Re-open that guide, then move into the paired sample or a route start for the smoothest handoff.', actions:[[`${cityName} guide`, guideHref, 'guide'],['Read sample', sampleHref, 'sample'],['Start route', routeHref, 'route']], dismiss:'Hide' },
+      sample: { eyebrow:'Pick up where you left off', title:`Last time you calibrated the tone with the ${cityName} sample.`, desc:'Open that sample again, or carry the same rhythm straight into a route.', actions:[['Read sample again', sampleHref, 'sample'],['Start route', routeHref, 'route'],[`${cityName} guide`, guideHref, 'guide']], dismiss:'Hide' },
+      magazine: { eyebrow:'Pick up where you left off', title:'Last time you entered through Magazine.', desc:`Continue with the ${cityName} guide or sample to keep the city-first flow intact.`, actions:[['Open Magazine', navHref('magazine'), 'magazine'],[`${cityName} guide`, guideHref, 'guide'],['Read sample', sampleHref, 'sample']], dismiss:'Hide' },
+      route: { eyebrow:'Pick up where you left off', title:'Last time you jumped straight into a route.', desc:`This time, pair it with the ${cityName} sample or guide first if you want an easier city-first handoff.`, actions:[['Re-open route', routeHref, 'route'],['Read sample', sampleHref, 'sample'],[`${cityName} guide`, guideHref, 'guide']], dismiss:'Hide' }
+    },
+    ja: {
+      city: { eyebrow:'続きから始める', title:`前回は ${cityName} の city guide から入りました。`, desc:'そのまま sample や route へつなぐと、流れを戻しやすくなります。', actions:[[`${cityName} guide`, guideHref, 'guide'],['sample を見る', sampleHref, 'sample'],['route を始める', routeHref, 'route']], dismiss:'閉じる' },
+      sample: { eyebrow:'続きから始める', title:`前回は ${cityName} の sample でトーンを合わせました。`, desc:'同じ sample を開くか、その流れをそのまま route へ持っていくのが自然です。', actions:[['sample を開く', sampleHref, 'sample'],['route を始める', routeHref, 'route'],[`${cityName} guide`, guideHref, 'guide']], dismiss:'閉じる' },
+      magazine: { eyebrow:'続きから始める', title:'前回は Magazine から入りました。', desc:`${cityName} guide や sample へ進むと、city-first の流れを戻しやすくなります。`, actions:[['Magazine', navHref('magazine'), 'magazine'],[`${cityName} guide`, guideHref, 'guide'],['sample を見る', sampleHref, 'sample']], dismiss:'閉じる' },
+      route: { eyebrow:'続きから始める', title:'前回は route から直接入りました。', desc:`今回は ${cityName} の sample や guide を一緒に見ると、route のトーンを整えやすくなります。`, actions:[['route を開く', routeHref, 'route'],['sample を見る', sampleHref, 'sample'],[`${cityName} guide`, guideHref, 'guide']], dismiss:'閉じる' }
+    },
+    zhHant: {
+      city: { eyebrow:'接著上次繼續', title:`你上次是從 ${cityName} 的 city guide 開始。`, desc:'直接接到 sample 或 route，會是最自然的延續方式。', actions:[[`${cityName} guide`, guideHref, 'guide'],['看 sample', sampleHref, 'sample'],['開始 route', routeHref, 'route']], dismiss:'隱藏' },
+      sample: { eyebrow:'接著上次繼續', title:`你上次先用 ${cityName} 的 sample 定下節奏。`, desc:'可以先重開同一條 sample，或直接把那個節奏帶進 route。', actions:[['重看 sample', sampleHref, 'sample'],['開始 route', routeHref, 'route'],[`${cityName} guide`, guideHref, 'guide']], dismiss:'隱藏' },
+      magazine: { eyebrow:'接著上次繼續', title:'你上次是從 Magazine 進來的。', desc:`接著去看 ${cityName} guide 或 sample，會最容易把 city-first 的流程接回來。`, actions:[['打開 Magazine', navHref('magazine'), 'magazine'],[`${cityName} guide`, guideHref, 'guide'],['看 sample', sampleHref, 'sample']], dismiss:'隱藏' },
+      route: { eyebrow:'接著上次繼續', title:'你上次是直接打開 route。', desc:`這次先搭配 ${cityName} 的 sample 或 guide，會更容易把整體調性抓準。`, actions:[['打開 route', routeHref, 'route'],['看 sample', sampleHref, 'sample'],[`${cityName} guide`, guideHref, 'guide']], dismiss:'隱藏' }
+    }
+  };
+  const langPack = copies[lang] || copies.en;
+  return langPack[memory?.kind] || langPack.magazine;
+}
+function shouldShowStartPathRecallBar(){
+  const page = document.body?.dataset?.page || '';
+  if (!(page === 'planner' || page === 'magazine')) return false;
+  if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
+  if (shouldShowFirstRunGuide()) return false;
+  const memory = readStartPathMemory();
+  if (!memory || !memory.kind) return false;
+  try { if (localStorage.getItem(startPathRecallDismissKey) === '1') return false; } catch {}
+  return true;
+}
+function syncStartPathRecallBar(){
+  const bar = document.getElementById('startPathRecallBar');
+  if (!bar) return;
+  if (!shouldShowStartPathRecallBar()) { bar.classList.add('is-hidden'); return; }
+  const memory = readStartPathMemory();
+  const copy = startPathRecallCopy(memory);
+  bar.classList.remove('is-hidden');
+  bar.querySelector('[data-recall-eyebrow]')?.replaceChildren(document.createTextNode(copy.eyebrow));
+  bar.querySelector('[data-recall-title]')?.replaceChildren(document.createTextNode(copy.title));
+  bar.querySelector('[data-recall-desc]')?.replaceChildren(document.createTextNode(copy.desc));
+  const actions = bar.querySelector('[data-recall-actions]');
+  if (actions) actions.innerHTML = copy.actions.map((action, idx) => `<a class="${idx === 0 ? 'primary-btn' : idx === 1 ? 'secondary-btn' : 'ghost-btn'}" href="${action[1]}" data-recall-action="${action[2]}">${action[0]}</a>`).join('');
+  const dismiss = bar.querySelector('[data-recall-dismiss]');
+  if (dismiss) dismiss.textContent = copy.dismiss;
+}
+function ensureStartPathRecallBar(){
+  let bar = document.getElementById('startPathRecallBar');
+  if (!shouldShowStartPathRecallBar()) { if (bar) bar.classList.add('is-hidden'); return; }
+  if (!bar) {
+    bar = document.createElement('section');
+    bar.id = 'startPathRecallBar';
+    bar.className = 'start-path-recall-bar';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-live', 'polite');
+    bar.innerHTML = '<div class="start-path-recall-inner"><div class="start-path-recall-copy"><span class="start-path-recall-eyebrow" data-recall-eyebrow></span><strong class="start-path-recall-title" data-recall-title></strong><p class="start-path-recall-desc" data-recall-desc></p></div><div class="start-path-recall-actions" data-recall-actions></div><button class="start-path-recall-dismiss" type="button" data-recall-dismiss></button></div>';
+    const beta = document.getElementById('betaLaunchBar');
+    const header = document.querySelector('.top-bar');
+    if (beta?.parentNode) beta.insertAdjacentElement('afterend', bar);
+    else if (header?.parentNode) header.insertAdjacentElement('afterend', bar);
+    else document.body.prepend(bar);
+    bar.addEventListener('click', event => {
+      const action = event.target.closest('[data-recall-action]');
+      if (!action) return;
+      trackEvent('ryoko_start_path_recall_cta_clicked', {
+        sourcePage: document.body?.dataset?.page || 'unknown',
+        action: action.dataset.recallAction || '',
+        kind: readStartPathMemory()?.kind || ''
+      });
+    });
+    bar.querySelector('[data-recall-dismiss]')?.addEventListener('click', () => {
+      try { localStorage.setItem(startPathRecallDismissKey, '1'); } catch {}
+      bar.classList.add('is-hidden');
+      trackEvent('ryoko_start_path_recall_dismissed', { sourcePage: document.body?.dataset?.page || 'unknown', kind: readStartPathMemory()?.kind || '' });
+    });
+    trackEvent('ryoko_start_path_recall_shown', { sourcePage: document.body?.dataset?.page || 'unknown', kind: readStartPathMemory()?.kind || '' });
+  }
+  syncStartPathRecallBar();
+}
 function firstRunGuideCopy(){
   const page = document.body?.dataset?.page || 'planner';
   const pageKey = page === 'magazine' ? 'magazine' : 'planner';
@@ -1124,6 +1259,11 @@ function ensureFirstRunGuide(){
     sheet.addEventListener('click', event => {
       const action = event.target.closest('[data-guide-action]');
       if (!action) return;
+      writeStartPathMemory({
+        kind: action.dataset.guideAction || '',
+        href: action.getAttribute('href') || '',
+        sourcePage: document.body?.dataset?.page || 'unknown'
+      });
       trackEvent('ryoko_first_run_guide_cta_clicked', {
         sourcePage: document.body?.dataset?.page || 'unknown',
         action: action.dataset.guideAction || ''
@@ -4906,6 +5046,7 @@ function renderTripsSeasonalDesk(){
     initPwaSupport();
     ensureBetaLaunchBar();
     ensureFirstRunGuide();
+    ensureStartPathRecallBar();
     ensureLaunchFeedbackCta();
     ensureInstallCta();
     if (document.body.dataset.page === 'planner') applyHomeHead();
@@ -4969,6 +5110,7 @@ function renderTripsSeasonalDesk(){
       initAccessibilityPolish();
       ensureBetaLaunchBar();
       ensureFirstRunGuide();
+      ensureStartPathRecallBar();
       ensureLaunchFeedbackCta();
       ensureInstallCta();
       syncInstallCta();
