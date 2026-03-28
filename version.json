@@ -1,13 +1,13 @@
 {
-  "release": "v99",
-  "version": "v99",
+  "release": "v100",
+  "version": "v100",
   "channel": "beta",
-  "codename": "release-report-handoff",
+  "codename": "public-beta-launch-layer",
   "updatedAt": "2026-03-28",
-  "headline": "Release-check can now hand off a full QA report directly into the feedback desk.",
+  "headline": "Added a dismissible public beta launch bar with direct links to release notes and feedback.",
   "notes": [
-    "Added release-check → feedback desk handoff using local draft storage.",
-    "Contact page can now detect, summarize, and include the latest release-check draft in the feedback template.",
-    "Added clear-draft control so testers can reset release-check context after sending a report."
+    "Added a dismissible public beta launch bar across core product pages.",
+    "The beta bar links directly to What's new and the page-aware feedback desk.",
+    "Release-check can now reset the beta notice and includes its dismissal state in the release report."
   ]
 }

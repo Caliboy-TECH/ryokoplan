@@ -92,6 +92,7 @@
           <button class="ghost-btn" id="clearLocalBtn" type="button">Clear local trip data</button>
           <button class="ghost-btn" id="copyReleaseReportTopBtn" type="button">Copy release report</button>
           <button class="ghost-btn" id="openFeedbackDeskTopBtn" type="button">Send to feedback desk</button>
+          <button class="ghost-btn" id="resetBetaNoticeTopBtn" type="button">Reset beta notice</button>
         </div>
         <p class="release-inline-note">Tip: open this page after each upload and check that the release value matches the zip you just deployed.</p>
       </section>
@@ -210,8 +211,9 @@
     </div>
   </main>
   <script>
-    const storageKey = 'ryoko:release-check-v99';
+    const storageKey = 'ryoko:release-check-v100';
     const releaseDraftStorageKey = 'ryoko:release-report-draft:v1';
+    const betaDismissKey = 'ryoko:beta-launch-dismissed:v100';
     const checkboxes = Array.from(document.querySelectorAll('[data-check]'));
     const telemetryStorageKey = 'ryoko:launch-event-log:v1';
     let lastDiagnostics = [];
@@ -237,6 +239,12 @@
       const payload = {};
       checkboxes.forEach(box => { payload[box.dataset.check] = box.checked; });
       localStorage.setItem(storageKey, JSON.stringify(payload));
+    }
+
+    function resetBetaNotice(){
+      try { localStorage.removeItem(betaDismissKey); } catch {}
+      alert('Beta notice reset for this browser. Reload a product page to see it again.');
+      updateReleaseReportPreview();
     }
 
     async function loadPwaStatus(){
@@ -600,7 +608,8 @@
         smoke: lastSmoke,
         telemetryCount: telemetry.length,
         latestTelemetry: telemetry[telemetry.length - 1] || null,
-        pwaSummary: document.getElementById('pwaSummary')?.textContent || ''
+        pwaSummary: document.getElementById('pwaSummary')?.textContent || '',
+        betaNoticeDismissed: localStorage.getItem(betaDismissKey) === '1'
       };
     }
 
@@ -651,6 +660,7 @@
     document.getElementById('copyReleaseReportTopBtn').addEventListener('click', copyReleaseReport);
     document.getElementById('openFeedbackDeskBtn').addEventListener('click', openFeedbackDesk);
     document.getElementById('openFeedbackDeskTopBtn').addEventListener('click', openFeedbackDesk);
+    document.getElementById('resetBetaNoticeTopBtn').addEventListener('click', resetBetaNotice);
     document.getElementById('reloadTelemetryBtn').addEventListener('click', renderTelemetry);
     document.getElementById('copyTelemetryBtn').addEventListener('click', copyTelemetry);
     document.getElementById('clearTelemetryBtn').addEventListener('click', clearTelemetry);

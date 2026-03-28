@@ -953,6 +953,63 @@ function buildFeedbackHref(extra={}){
   return `${pathRoot}contact/index.html?${params.toString()}`;
 }
 
+const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
+function betaLaunchCopy(){
+  return lang === 'ko'
+    ? { eyebrow:'Public beta', title:'Ryokoplan is now open in beta.', desc:'Routes, city notes, and saved flows are live. If anything feels off, send quick feedback from the page you are on.', primary:"What\'s new", secondary:'Send feedback', dismiss:'Hide' }
+    : lang === 'ja'
+      ? { eyebrow:'Public beta', title:'Ryokoplan はベータ公開中です。', desc:'都市ノート、ルート、保存フローは使えます。気になる点があれば、今見ているページからそのまま共有してください。', primary:"What\'s new", secondary:'フィードバック', dismiss:'閉じる' }
+      : lang === 'zhHant'
+        ? { eyebrow:'Public beta', title:'Ryokoplan 目前以 beta 形式公開。', desc:'城市筆記、路線與已存流程都可使用；如果哪裡不順，請直接從目前頁面送出回饋。', primary:"What\'s new", secondary:'送出回饋', dismiss:'隱藏' }
+        : { eyebrow:'Public beta', title:'Ryokoplan is now open in beta.', desc:'City notes, routes, and saved flows are live. If anything feels off, send quick feedback from the page you are on.', primary:"What\'s new", secondary:'Send feedback', dismiss:'Hide' };
+}
+function shouldShowBetaLaunchBar(){
+  const page = document.body?.dataset?.page || '';
+  if (!document.body) return false;
+  if (page === 'legal' || page === 'release-check') return false;
+  if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
+  try { if (localStorage.getItem(betaLaunchDismissKey) === '1') return false; } catch {}
+  return true;
+}
+function syncBetaLaunchBar(){
+  const bar = document.getElementById('betaLaunchBar');
+  if (!bar) return;
+  const copy = betaLaunchCopy();
+  bar.classList.toggle('is-hidden', !shouldShowBetaLaunchBar());
+  bar.querySelector('[data-beta-eyebrow]')?.replaceChildren(document.createTextNode(copy.eyebrow));
+  bar.querySelector('[data-beta-title]')?.replaceChildren(document.createTextNode(copy.title));
+  bar.querySelector('[data-beta-desc]')?.replaceChildren(document.createTextNode(copy.desc));
+  const primary = bar.querySelector('[data-beta-primary]');
+  const secondary = bar.querySelector('[data-beta-secondary]');
+  const dismiss = bar.querySelector('[data-beta-dismiss]');
+  if (primary) { primary.textContent = copy.primary; primary.setAttribute('href', buildWhatsNewHref()); }
+  if (secondary) { secondary.textContent = copy.secondary; secondary.setAttribute('href', buildFeedbackHref({ source: 'beta-launch-bar' })); }
+  if (dismiss) dismiss.textContent = copy.dismiss;
+}
+function ensureBetaLaunchBar(){
+  if (!document.body) return;
+  let bar = document.getElementById('betaLaunchBar');
+  if (!bar) {
+    bar = document.createElement('section');
+    bar.id = 'betaLaunchBar';
+    bar.className = 'beta-launch-bar';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Beta launch note');
+    bar.innerHTML = '<div class="beta-launch-inner"><div class="beta-launch-copy"><span class="beta-launch-eyebrow" data-beta-eyebrow></span><strong class="beta-launch-title" data-beta-title></strong><p class="beta-launch-desc" data-beta-desc></p></div><div class="beta-launch-actions"><a class="soft-btn" data-beta-primary></a><a class="ghost-btn" data-beta-secondary></a><button class="beta-launch-dismiss" type="button" data-beta-dismiss></button></div></div>';
+    const header = document.querySelector('.top-bar');
+    if (header && header.parentNode) header.insertAdjacentElement('afterend', bar);
+    else document.body.prepend(bar);
+    bar.querySelector('[data-beta-dismiss]')?.addEventListener('click', () => {
+      try { localStorage.setItem(betaLaunchDismissKey, '1'); } catch {}
+      bar.classList.add('is-hidden');
+      trackEvent('ryoko_beta_bar_dismissed', { sourcePage: document.body?.dataset?.page || 'unknown' });
+    });
+    bar.querySelector('[data-beta-primary]')?.addEventListener('click', () => trackEvent('ryoko_beta_whats_new_opened'));
+    bar.querySelector('[data-beta-secondary]')?.addEventListener('click', () => trackEvent('ryoko_beta_feedback_opened'));
+    trackEvent('ryoko_beta_bar_shown', { sourcePage: document.body?.dataset?.page || 'unknown' });
+  }
+  syncBetaLaunchBar();
+}
 function buildWhatsNewHref(){
   return `${pathRoot}whats-new/index.html`;
 }
@@ -4718,6 +4775,7 @@ function renderTripsSeasonalDesk(){
     initAccessibilityPolish();
     initLaunchFeedback();
     initPwaSupport();
+    ensureBetaLaunchBar();
     ensureLaunchFeedbackCta();
     ensureInstallCta();
     if (document.body.dataset.page === 'planner') applyHomeHead();
@@ -4779,6 +4837,7 @@ function renderTripsSeasonalDesk(){
       renderTripsSeasonalDesk();
       renderExpansionFrontDesk();
       initAccessibilityPolish();
+      ensureBetaLaunchBar();
       ensureLaunchFeedbackCta();
       ensureInstallCta();
       syncInstallCta();
