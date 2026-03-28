@@ -1,13 +1,13 @@
 {
-  "release": "v108",
-  "version": "v108",
+  "release": "v109",
+  "version": "v109",
   "channel": "beta",
-  "codename": "planner-entry-suggested-rhythm",
-  "updatedAt": "2026-03-30T00:55:00+09:00",
-  "headline": "Planner entry now carries a suggested route rhythm from city and sample handoffs.",
+  "codename": "cross-language-preset-stability",
+  "updatedAt": "2026-03-30T01:35:00+09:00",
+  "headline": "Planner preset handoffs now resolve duration, companion, and style more reliably across languages.",
   "notes": [
-    "Planner entry-context now shows a suggested route rhythm and lets you apply it with one tap.",
-    "City and sample handoffs prefill a more fitting mood, density, and spend baseline.",
-    "Planner start feels less cold because the entry context now shapes the route setup too."
+    "Preset application now resolves duration, companion, and style by meaning instead of exact localized labels.",
+    "City, sample, and route handoffs stay more stable when the UI language is Korean, Japanese, or Traditional Chinese.",
+    "Planner entry presets can now carry local mode and traveler-trait setup more safely into the form."
   ]
 }

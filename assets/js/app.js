@@ -4969,17 +4969,78 @@ function renderTripsSeasonalDesk(){
     return document.querySelector(`[data-pill-group="${group}"].active`)?.dataset.pillValue || '';
   }
 
+  function normalizePlannerPresetValue(value=''){
+    return String(value || '').trim().toLowerCase().replace(/[^a-z0-9가-힣一-龯ぁ-んァ-ン]+/g, '');
+  }
+
+  function plannerPresetOptionIndex(kind, value=''){
+    const normalized = normalizePlannerPresetValue(value);
+    if (!normalized) return -1;
+    const matchers = {
+      duration:[
+        ['1n2d','1night2days','1박2일','1泊2日','1晚2天'],
+        ['2n3d','2night3days','2박3일','2泊3日','2晚3天'],
+        ['3n4d','3night4days','3박4일','3泊4日','3晚4天'],
+        ['4n5d','4night5days','4박5일','4泊5日','4晚5天']
+      ],
+      companion:[
+        ['solo','alone','혼자','1인','一人','ひとり','自己'],
+        ['couple','pair','커플','연인','情侣','情侶','カップル'],
+        ['family','가족','家族'],
+        ['friends','friend','친구','友達','朋友']
+      ],
+      style:[
+        ['classicsightseeing','sightseeing','classic','tourist','관광위주','名所中心','經典亮點','balancedfirsttriplocalpockets','firsttrip'],
+        ['foodfirst','맛집위주','食中心','餐飲優先','foodlocalneighborhoods','meal'],
+        ['photovibes','vibes','photo','감성사진','写真ムード','照片氛圍','cityvibesfoodneighborhoods','design'],
+        ['slowerpace','slow','quiet','여유롭게','ゆったり','慢一點','slowquiet','coastaleasypace','sceniceasypace','softreset'],
+        ['shopping','쇼핑','ショッピング','購物'],
+        ['hiddenspots','hidden','숨은장소','隠れスポット','隱藏角落','hiddengems','localpockets','cityhighlightshiddengems']
+      ]
+    };
+    const groups = matchers[kind] || [];
+    return groups.findIndex(group => group.some(token => normalized.includes(token)));
+  }
+
+  function applyPlannerPresetSelect(selectEl, kind, rawValue=''){
+    if (!selectEl || !rawValue) return;
+    if ([...selectEl.options].some(option => option.value === rawValue)) {
+      selectEl.value = rawValue;
+      return;
+    }
+    const index = plannerPresetOptionIndex(kind, rawValue);
+    if (index >= 0 && selectEl.options[index]) {
+      selectEl.selectedIndex = index;
+    }
+  }
+
+  function applyPlannerPresetNeeds(values=[]){
+    const wanted = new Set((Array.isArray(values) ? values : [values]).map(item => normalizePlannerPresetValue(item)).filter(Boolean));
+    if (!wanted.size) return;
+    document.querySelectorAll('#needsGrid input').forEach(input => {
+      const chip = input.closest('.option-chip');
+      const matched = wanted.has(normalizePlannerPresetValue(input.value));
+      input.checked = matched;
+      chip?.classList.toggle('is-selected', matched);
+    });
+  }
+
   function applyPlannerPreset(preset={}){
     const destination = document.getElementById('destination');
     const duration = document.getElementById('duration');
     const companion = document.getElementById('companion');
     const style = document.getElementById('style');
     const notes = document.getElementById('notes');
+    const localToggle = document.getElementById('localToggle');
     if (destination && preset.destination) destination.value = preset.destination;
-    if (duration && preset.duration) duration.value = preset.duration;
-    if (companion && preset.companion) companion.value = preset.companion;
-    if (style && preset.style) style.value = preset.style;
+    applyPlannerPresetSelect(duration, 'duration', preset.duration);
+    applyPlannerPresetSelect(companion, 'companion', preset.companion);
+    applyPlannerPresetSelect(style, 'style', preset.style);
     if (notes && preset.notes) notes.value = preset.notes;
+    if (typeof preset.localMode === 'boolean' && localToggle) {
+      localToggle.classList.toggle('on', !!preset.localMode);
+    }
+    if (preset.travelerTraits || preset.needs) applyPlannerPresetNeeds(preset.travelerTraits || preset.needs || []);
     if (preset.tripMood) setPillValue('tripMood', preset.tripMood);
     if (preset.dayDensity) setPillValue('dayDensity', preset.dayDensity);
     if (preset.budgetMode) setPillValue('budgetMode', preset.budgetMode);
@@ -4989,6 +5050,8 @@ function renderTripsSeasonalDesk(){
       el.classList.add('is-focused');
       setTimeout(() => el.classList.remove('is-focused'), 900);
     });
+    document.querySelectorAll('#needsGrid input').forEach(input => input.dispatchEvent(new Event('change', { bubbles:true })));
+    localToggle?.dispatchEvent(new Event('ryoko:local-toggle-sync', { bubbles:true }));
   }
 
   function syncPlannerRecipe(){
@@ -5036,6 +5099,7 @@ function renderTripsSeasonalDesk(){
       el.addEventListener('change', syncPlannerRecipe);
     });
     document.getElementById('localToggle')?.addEventListener('click', () => setTimeout(syncPlannerRecipe, 0));
+    document.getElementById('localToggle')?.addEventListener('ryoko:local-toggle-sync', () => setTimeout(syncPlannerRecipe, 0));
     document.querySelectorAll('[data-pill-group]').forEach(btn => btn.addEventListener('click', () => {
       const group = btn.dataset.pillGroup;
       setPillValue(group, btn.dataset.pillValue || '');
