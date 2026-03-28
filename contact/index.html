@@ -41,12 +41,30 @@
     <div class="container legal-page-shell">
       <section class="info-card">
         <span class="eyebrow">Contact</span>
-        <h1 class="section-title">Contact</h1>
-        <p class="section-desc">A simple contact page for launch feedback and support.</p>
+        <h1 class="section-title">Launch feedback desk</h1>
+        <p class="section-desc">Use this page to report broken links, unclear copy, route issues, or anything that felt off during the beta launch.</p>
+      </section>
+      <section class="section info-card" id="feedbackContextCard">
+        <div class="legal-copy">
+          <div><h3>Current context</h3><p id="feedbackContextSummary">Open this page from anywhere in Ryokoplan and we will carry that page context here automatically.</p></div>
+          <div><h3>Captured page</h3><p id="feedbackContextPath">Waiting for page context…</p></div>
+          <div><h3>Language</h3><p id="feedbackContextLang">Waiting…</p></div>
+          <div><h3>Build version</h3><p id="feedbackContextVersion">Checking version…</p></div>
+        </div>
       </section>
       <section class="section info-card">
         <div class="legal-copy">
-          <div><h3>What to send</h3><p>Include the city, page URL, and what felt broken, unclear, or off-tone. Screenshots help a lot.</p></div><div><h3>Best for</h3><p>Broken links, unclear wording, route issues, language mismatches, share problems, and launch feedback.</p></div><div><h3>Response note</h3><p>Ryokoplan is still in an early release phase, so response times may vary.</p></div><div><h3>Contact method</h3><p>Add your preferred contact email or form destination here before public launch.</p></div>
+          <div><h3>What to include</h3><p>Tell us what page you were on, what you expected, what happened instead, and what felt broken, unclear, or off-tone.</p></div>
+          <div><h3>Best for</h3><p>Broken links, unclear wording, route issues, language mismatches, share problems, save/reopen issues, and launch feedback.</p></div>
+          <div><h3>Fast path</h3><p>Copy the report block below and paste it into email, DM, or your internal bug tracker.</p></div>
+          <div><h3>Response note</h3><p>Ryokoplan is still in an early release phase, so fixes may land in batches.</p></div>
+        </div>
+      </section>
+      <section class="section info-card">
+        <div class="section-head compact"><div><span class="eyebrow">Report block</span><h2 class="section-title">Copy this launch report</h2><p class="section-desc">It includes page, path, language, build version, and room for your own note.</p></div></div>
+        <div class="info-card" style="padding:0;border:none;box-shadow:none;background:transparent">
+          <textarea id="feedbackTemplate" readonly style="width:100%;min-height:220px;border-radius:22px;border:1px solid var(--line,#e7dfd3);padding:18px;background:#fffdf9;color:#15273a;font:inherit;line-height:1.55"></textarea>
+          <div class="cta-row cta-row-priority" style="margin-top:14px"><button class="primary-btn" id="copyFeedbackTemplateBtn" type="button">Copy report</button><button class="secondary-btn" id="copyFeedbackUrlBtn" type="button">Copy page URL</button><a class="ghost-btn" href="../release-check/index.html">Open release check</a></div>
         </div>
       </section>
       <section class="section footer-cta info-card">
@@ -58,5 +76,49 @@
       <div class="footer-links"><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../contact/index.html">Contact</a></div>
     </div>
   </main>
+  <script>
+    (function(){
+      const params = new URLSearchParams(location.search);
+      const path = params.get('path') || '(no page context passed)';
+      const sourcePage = params.get('sourcePage') || 'unknown';
+      const city = params.get('city') || '';
+      const lang = params.get('lang') || document.documentElement.lang || 'en';
+      const pageUrl = path.startsWith('http') ? path : 'https://ryokoplan.com' + path;
+      const contextSummary = document.getElementById('feedbackContextSummary');
+      const pathNode = document.getElementById('feedbackContextPath');
+      const langNode = document.getElementById('feedbackContextLang');
+      const versionNode = document.getElementById('feedbackContextVersion');
+      const templateNode = document.getElementById('feedbackTemplate');
+      const summaryBits = [sourcePage, city ? 'city: ' + city : '', lang ? 'lang: ' + lang : ''].filter(Boolean).join(' · ');
+      if (contextSummary) contextSummary.textContent = summaryBits || 'Open this page from anywhere in Ryokoplan and we will carry that page context here automatically.';
+      if (pathNode) pathNode.textContent = pageUrl;
+      if (langNode) langNode.textContent = lang;
+      const templateBase = (version='unknown') => `[Ryokoplan beta feedback]\nSource page: ${sourcePage}\nCity: ${city || '-'}\nLanguage: ${lang}\nVersion: ${version}\nURL: ${pageUrl}\n\nWhat I expected:\n- \n\nWhat happened instead:\n- \n\nWhy it felt off / unclear:\n- \n\nScreenshot or extra note:\n- `;
+      templateNode.value = templateBase('checking…');
+      fetch('/version.json', { cache:'no-store' })
+        .then(r => r.ok ? r.json() : Promise.reject(new Error('version unavailable')))
+        .then(data => {
+          const version = data.version || 'unknown';
+          if (versionNode) versionNode.textContent = version;
+          templateNode.value = templateBase(version);
+        })
+        .catch(() => {
+          if (versionNode) versionNode.textContent = 'unknown';
+          templateNode.value = templateBase('unknown');
+        });
+      document.getElementById('copyFeedbackTemplateBtn')?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(templateNode.value);
+          document.getElementById('copyFeedbackTemplateBtn').textContent = 'Copied';
+        } catch {}
+      });
+      document.getElementById('copyFeedbackUrlBtn')?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(pageUrl);
+          document.getElementById('copyFeedbackUrlBtn').textContent = 'Copied';
+        } catch {}
+      });
+    })();
+  </script>
 </body>
 </html>

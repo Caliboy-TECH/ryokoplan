@@ -818,6 +818,63 @@ function initLaunchFeedback(){
   });
 }
 
+function feedbackButtonCopy(){
+  return lang === 'ko'
+    ? { label:'베타 피드백', short:'피드백', aria:'현재 페이지 피드백 보내기' }
+    : lang === 'ja'
+      ? { label:'ベータフィードバック', short:'フィードバック', aria:'このページのフィードバックを送る' }
+      : lang === 'zhHant'
+        ? { label:'Beta 回饋', short:'回饋', aria:'針對目前頁面送出回饋' }
+        : { label:'Beta feedback', short:'Feedback', aria:'Send feedback about this page' };
+}
+function currentFeedbackCity(){
+  const params = new URLSearchParams(location.search);
+  return document.body?.dataset?.citySlug || params.get('destination') || params.get('city') || '';
+}
+function buildFeedbackHref(extra={}){
+  const params = new URLSearchParams();
+  params.set('sourcePage', document.body?.dataset?.page || 'unknown');
+  params.set('path', `${location.pathname}${location.search}`);
+  params.set('lang', lang);
+  const city = currentFeedbackCity();
+  if (city) params.set('city', city);
+  Object.entries(extra || {}).forEach(([key, value]) => {
+    if (value == null || value === '') return;
+    params.set(key, String(value));
+  });
+  return `${pathRoot}contact/index.html?${params.toString()}`;
+}
+function syncFeedbackLinks(){
+  const href = buildFeedbackHref();
+  document.querySelectorAll('a[href$="contact/index.html"], a[href="contact/index.html"], a[href="../contact/index.html"], a[href="/contact/index.html"]').forEach(link => {
+    link.setAttribute('href', href);
+  });
+  const cta = document.getElementById('launchFeedbackCta');
+  if (cta) {
+    const copy = feedbackButtonCopy();
+    cta.href = href;
+    cta.setAttribute('aria-label', copy.aria);
+    cta.querySelector('.launch-feedback-cta-label')?.replaceChildren(document.createTextNode(copy.label));
+  }
+}
+function ensureLaunchFeedbackCta(){
+  if (document.body?.dataset?.page === 'legal') { syncFeedbackLinks(); return; }
+  if (document.body?.dataset?.page === 'release-check') { syncFeedbackLinks(); return; }
+  let cta = document.getElementById('launchFeedbackCta');
+  if (!cta) {
+    cta = document.createElement('a');
+    cta.id = 'launchFeedbackCta';
+    cta.className = 'launch-feedback-cta';
+    cta.innerHTML = '<span class="launch-feedback-cta-dot"></span><span class="launch-feedback-cta-label"></span>';
+    document.body.appendChild(cta);
+    cta.addEventListener('click', () => trackEvent('ryoko_feedback_opened', {
+      sourcePage: document.body?.dataset?.page || 'unknown',
+      city: currentFeedbackCity() || ''
+    }));
+  }
+  syncFeedbackLinks();
+}
+
   function getSignalRecommendations(context={}){
     const signals = detectSignalTags(context);
     const pools = [
@@ -4545,6 +4602,7 @@ function renderTripsSeasonalDesk(){
     document.documentElement.lang = lang;
     initAccessibilityPolish();
     initLaunchFeedback();
+    ensureLaunchFeedbackCta();
     if (document.body.dataset.page === 'planner') applyHomeHead();
     if (document.body.dataset.page === 'trips') applyTripsHead();
     renderMagazineLanding();
@@ -4604,6 +4662,7 @@ function renderTripsSeasonalDesk(){
       renderTripsSeasonalDesk();
       renderExpansionFrontDesk();
       initAccessibilityPolish();
+      ensureLaunchFeedbackCta();
       localizeLangButtonLabels();
       localizeStaticIndexSections();
     localizeExtendedStaticSections();
