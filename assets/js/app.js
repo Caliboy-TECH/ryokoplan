@@ -964,6 +964,38 @@ const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
 const quickResumeDismissKey = 'ryoko:quick-resume-dismissed:v103';
 const readingHistoryKey = 'ryoko:reading-history:v104';
 const readingHistoryDismissKey = 'ryoko:reading-history-dismissed:v104';
+const startPathMemoryMaxAgeMs = 1000 * 60 * 60 * 24 * 14;
+const readingHistoryMaxAgeMs = 1000 * 60 * 60 * 24 * 14;
+function parseStoredJson(key){
+  try {
+    const parsed = JSON.parse(localStorage.getItem(key) || 'null');
+    return parsed && typeof parsed === 'object' ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+function timestampIsFresh(value, maxAgeMs){
+  const time = Date.parse(value || '');
+  if (!Number.isFinite(time)) return false;
+  return (Date.now() - time) <= maxAgeMs;
+}
+function clearEntryAssistState(){
+  try {
+    localStorage.removeItem(firstRunGuideDismissKey);
+    localStorage.removeItem(startPathMemoryKey);
+    localStorage.removeItem(startPathRecallDismissKey);
+    localStorage.removeItem(quickResumeDismissKey);
+    localStorage.removeItem(readingHistoryKey);
+    localStorage.removeItem(readingHistoryDismissKey);
+  } catch {}
+}
+function entryAssistPriority(){
+  if (shouldShowFirstRunGuide()) return 'first-run-guide';
+  if (shouldShowReadingHistoryShelf()) return 'reading-history';
+  if (shouldShowQuickResumeShelf()) return 'quick-resume';
+  if (shouldShowStartPathRecallBar()) return 'start-path-recall';
+  return '';
+}
 function betaLaunchCopy(){
   return lang === 'ko'
     ? { eyebrow:'Public beta', title:'Ryokoplan is now open in beta.', desc:'Routes, city notes, and saved flows are live. If anything feels off, send quick feedback from the page you are on.', primary:"What\'s new", secondary:'Send feedback', dismiss:'Hide' }
@@ -1031,12 +1063,17 @@ function inferStartPathCityFromHref(href=''){
   return matches?.name || '';
 }
 function readStartPathMemory(){
-  try {
-    const parsed = JSON.parse(localStorage.getItem(startPathMemoryKey) || 'null');
-    return parsed && typeof parsed === 'object' ? parsed : null;
-  } catch {
+  const parsed = parseStoredJson(startPathMemoryKey);
+  if (!parsed) return null;
+  if (!timestampIsFresh(parsed.savedAt, startPathMemoryMaxAgeMs)) {
+    try {
+      localStorage.removeItem(startPathMemoryKey);
+      localStorage.removeItem(startPathRecallDismissKey);
+      localStorage.removeItem(quickResumeDismissKey);
+    } catch {}
     return null;
   }
+  return parsed;
 }
 function writeStartPathMemory(payload={}){
   const href = String(payload.href || '');
@@ -1060,7 +1097,6 @@ function clearStartPathMemory(){
   try {
     localStorage.removeItem(startPathMemoryKey);
     localStorage.removeItem(startPathRecallDismissKey);
-    localStorage.removeItem(quickResumeDismissKey);
     localStorage.removeItem(quickResumeDismissKey);
   } catch {}
 }
@@ -1137,12 +1173,16 @@ function quickResumePayload(memory){
   return { cityName: loop.name || cityName, loop, latestTrip, baseHref, nextHref, nextKind, latestHref };
 }
 function readReadingHistory(){
-  try {
-    const parsed = JSON.parse(localStorage.getItem(readingHistoryKey) || 'null');
-    return parsed && typeof parsed === 'object' ? parsed : null;
-  } catch {
+  const parsed = parseStoredJson(readingHistoryKey);
+  if (!parsed) return null;
+  if (!timestampIsFresh(parsed.savedAt, readingHistoryMaxAgeMs)) {
+    try {
+      localStorage.removeItem(readingHistoryKey);
+      localStorage.removeItem(readingHistoryDismissKey);
+    } catch {}
     return null;
   }
+  return parsed;
 }
 function writeReadingHistory(payload={}){
   const href = String(payload.href || `${location.pathname}${location.search || ''}`).trim();
@@ -1357,6 +1397,7 @@ function shouldShowQuickResumeShelf(){
   if (!isPrimaryEntrySurface()) return false;
   if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
   if (shouldShowFirstRunGuide()) return false;
+  if (shouldShowReadingHistoryShelf()) return false;
   const memory = readStartPathMemory();
   if (!memory || !memory.kind) return false;
   try { if (localStorage.getItem(quickResumeDismissKey) === '1') return false; } catch {}
@@ -1413,6 +1454,8 @@ function shouldShowStartPathRecallBar(){
   if (!isPrimaryEntrySurface()) return false;
   if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
   if (shouldShowFirstRunGuide()) return false;
+  if (shouldShowReadingHistoryShelf()) return false;
+  if (shouldShowQuickResumeShelf()) return false;
   const memory = readStartPathMemory();
   if (!memory || !memory.kind) return false;
   try { if (localStorage.getItem(startPathRecallDismissKey) === '1') return false; } catch {}
