@@ -52,6 +52,9 @@
           <div><h3>Build version</h3><p id="feedbackContextVersion">Checking version…</p></div>
         </div>
       </section>
+      <section class="section info-card" id="releaseDraftCard">
+        <div class="section-head compact"><div><span class="eyebrow">Release-check handoff</span><h2 class="section-title">Carry QA context into feedback</h2><p class="section-desc" id="releaseDraftSummary">No release-check draft detected on this browser yet.</p></div></div>
+      </section>
       <section class="section info-card">
         <div class="legal-copy">
           <div><h3>What to include</h3><p>Tell us what page you were on, what you expected, what happened instead, and what felt broken, unclear, or off-tone.</p></div>
@@ -64,7 +67,7 @@
         <div class="section-head compact"><div><span class="eyebrow">Report block</span><h2 class="section-title">Copy this launch report</h2><p class="section-desc">It includes page, path, language, build version, and room for your own note.</p></div></div>
         <div class="info-card" style="padding:0;border:none;box-shadow:none;background:transparent">
           <textarea id="feedbackTemplate" readonly style="width:100%;min-height:220px;border-radius:22px;border:1px solid var(--line,#e7dfd3);padding:18px;background:#fffdf9;color:#15273a;font:inherit;line-height:1.55"></textarea>
-          <div class="cta-row cta-row-priority" style="margin-top:14px"><button class="primary-btn" id="copyFeedbackTemplateBtn" type="button">Copy report</button><button class="secondary-btn" id="copyFeedbackUrlBtn" type="button">Copy page URL</button><a class="ghost-btn" href="../release-check/index.html">Open release check</a><a class="ghost-btn" href="../whats-new/index.html">What's new</a></div>
+          <div class="cta-row cta-row-priority" style="margin-top:14px"><button class="primary-btn" id="copyFeedbackTemplateBtn" type="button">Copy report</button><button class="secondary-btn" id="copyFeedbackUrlBtn" type="button">Copy page URL</button><button class="ghost-btn" id="clearReleaseDraftBtn" type="button">Clear release draft</button><a class="ghost-btn" href="../release-check/index.html">Open release check</a><a class="ghost-btn" href="../whats-new/index.html">What's new</a></div>
         </div>
       </section>
       <section class="section footer-cta info-card">
@@ -79,8 +82,9 @@
   <script>
     (function(){
       const params = new URLSearchParams(location.search);
+      const releaseDraftStorageKey = 'ryoko:release-report-draft:v1';
       const path = params.get('path') || '(no page context passed)';
-      const sourcePage = params.get('sourcePage') || 'unknown';
+      const sourcePage = params.get('sourcePage') || params.get('source') || 'unknown';
       const city = params.get('city') || '';
       const lang = params.get('lang') || document.documentElement.lang || 'en';
       const pageUrl = path.startsWith('http') ? path : 'https://ryokoplan.com' + path;
@@ -89,34 +93,74 @@
       const langNode = document.getElementById('feedbackContextLang');
       const versionNode = document.getElementById('feedbackContextVersion');
       const templateNode = document.getElementById('feedbackTemplate');
+      const releaseDraftSummary = document.getElementById('releaseDraftSummary');
+
+      function readReleaseDraft(){
+        try { return localStorage.getItem(releaseDraftStorageKey) || ''; } catch { return ''; }
+      }
+
+      function clearReleaseDraft(){
+        try { localStorage.removeItem(releaseDraftStorageKey); } catch {}
+      }
+
+      function summarizeReleaseDraft(text){
+        if (!text) return 'No release-check draft detected on this browser yet.';
+        try {
+          const json = JSON.parse(text);
+          const version = json?.version?.release || json?.version?.version || 'unknown';
+          const diagnostics = Array.isArray(json?.diagnostics) ? json.diagnostics.length : 0;
+          const smoke = Array.isArray(json?.smoke) ? json.smoke.length : 0;
+          const telemetry = json?.telemetryCount ?? 0;
+          return `Imported release-check draft · ${version} · diagnostics ${diagnostics} · smoke ${smoke} · telemetry ${telemetry}.`;
+        } catch {
+          return 'Imported release-check draft from this browser.';
+        }
+      }
+
+      function templateBase(version='unknown', draftText=''){
+        return `[Ryokoplan beta feedback]\nSource page: ${sourcePage}\nCity: ${city || '-'}\nLanguage: ${lang}\nVersion: ${version}\nURL: ${pageUrl}\n\nWhat I expected:\n- \n\nWhat happened instead:\n- \n\nWhy it felt off / unclear:\n- \n\nScreenshot or extra note:\n- ` + (draftText ? `\n\n[Attached release-check draft]\n${draftText}` : '');
+      }
+
       const summaryBits = [sourcePage, city ? 'city: ' + city : '', lang ? 'lang: ' + lang : ''].filter(Boolean).join(' · ');
       if (contextSummary) contextSummary.textContent = summaryBits || 'Open this page from anywhere in Ryokoplan and we will carry that page context here automatically.';
       if (pathNode) pathNode.textContent = pageUrl;
       if (langNode) langNode.textContent = lang;
-      const templateBase = (version='unknown') => `[Ryokoplan beta feedback]\nSource page: ${sourcePage}\nCity: ${city || '-'}\nLanguage: ${lang}\nVersion: ${version}\nURL: ${pageUrl}\n\nWhat I expected:\n- \n\nWhat happened instead:\n- \n\nWhy it felt off / unclear:\n- \n\nScreenshot or extra note:\n- `;
-      templateNode.value = templateBase('checking…');
+      const draftText = readReleaseDraft();
+      if (releaseDraftSummary) releaseDraftSummary.textContent = summarizeReleaseDraft(draftText);
+      templateNode.value = templateBase('checking…', draftText);
+
       fetch('/version.json', { cache:'no-store' })
         .then(r => r.ok ? r.json() : Promise.reject(new Error('version unavailable')))
         .then(data => {
-          const version = data.version || 'unknown';
-          if (versionNode) versionNode.textContent = version;
-          templateNode.value = templateBase(version);
+          const version = data.release || data.version || 'unknown';
+          if (versionNode) versionNode.textContent = version + (data.codename ? ' · ' + data.codename : '');
+          templateNode.value = templateBase(version, draftText);
         })
         .catch(() => {
           if (versionNode) versionNode.textContent = 'unknown';
-          templateNode.value = templateBase('unknown');
+          templateNode.value = templateBase('unknown', draftText);
         });
+
       document.getElementById('copyFeedbackTemplateBtn')?.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(templateNode.value);
           document.getElementById('copyFeedbackTemplateBtn').textContent = 'Copied';
         } catch {}
       });
+
       document.getElementById('copyFeedbackUrlBtn')?.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(pageUrl);
           document.getElementById('copyFeedbackUrlBtn').textContent = 'Copied';
         } catch {}
+      });
+
+      document.getElementById('clearReleaseDraftBtn')?.addEventListener('click', () => {
+        clearReleaseDraft();
+        if (releaseDraftSummary) releaseDraftSummary.textContent = 'Release-check draft cleared on this browser.';
+        const marker = '\n\n[Attached release-check draft]';
+        const index = templateNode.value.indexOf(marker);
+        if (index >= 0) templateNode.value = templateNode.value.slice(0, index);
       });
     })();
   </script>

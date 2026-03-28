@@ -91,6 +91,7 @@
           <a class="ghost-btn" href="../whats-new/index.html" target="_blank" rel="noopener">Open release notes</a>
           <button class="ghost-btn" id="clearLocalBtn" type="button">Clear local trip data</button>
           <button class="ghost-btn" id="copyReleaseReportTopBtn" type="button">Copy release report</button>
+          <button class="ghost-btn" id="openFeedbackDeskTopBtn" type="button">Send to feedback desk</button>
         </div>
         <p class="release-inline-note">Tip: open this page after each upload and check that the release value matches the zip you just deployed.</p>
       </section>
@@ -178,6 +179,7 @@
               <button class="secondary-btn" id="runSmokeBtn" type="button">Run smoke runner</button>
               <button class="ghost-btn" id="copySmokeBtn" type="button">Copy smoke results</button>
               <button class="ghost-btn" id="copyReleaseReportBtn" type="button">Copy release report</button>
+              <button class="ghost-btn" id="openFeedbackDeskBtn" type="button">Send to feedback desk</button>
             </div>
           </section>
 
@@ -208,7 +210,8 @@
     </div>
   </main>
   <script>
-    const storageKey = 'ryoko:release-check-v98';
+    const storageKey = 'ryoko:release-check-v99';
+    const releaseDraftStorageKey = 'ryoko:release-report-draft:v1';
     const checkboxes = Array.from(document.querySelectorAll('[data-check]'));
     const telemetryStorageKey = 'ryoko:launch-event-log:v1';
     let lastDiagnostics = [];
@@ -617,6 +620,28 @@
       }
     }
 
+    function saveReleaseDraft(){
+      const payload = JSON.stringify(buildReleaseReport(), null, 2);
+      try {
+        localStorage.setItem(releaseDraftStorageKey, payload);
+        return payload;
+      } catch {
+        return payload;
+      }
+    }
+
+    function openFeedbackDesk(){
+      saveReleaseDraft();
+      const params = new URLSearchParams({
+        sourcePage: 'release-check',
+        path: '/release-check/',
+        lang: document.documentElement.lang || 'en',
+        draft: 'release-report',
+        pageUrl: location.href
+      });
+      location.href = '../contact/index.html?' + params.toString();
+    }
+
     checkboxes.forEach(box => box.addEventListener('change', saveChecks));
     document.getElementById('reloadVersionBtn').addEventListener('click', loadVersion);
     document.getElementById('clearLocalBtn').addEventListener('click', clearLocalTripData);
@@ -624,6 +649,8 @@
     document.getElementById('copySmokeBtn').addEventListener('click', copySmoke);
     document.getElementById('copyReleaseReportBtn').addEventListener('click', copyReleaseReport);
     document.getElementById('copyReleaseReportTopBtn').addEventListener('click', copyReleaseReport);
+    document.getElementById('openFeedbackDeskBtn').addEventListener('click', openFeedbackDesk);
+    document.getElementById('openFeedbackDeskTopBtn').addEventListener('click', openFeedbackDesk);
     document.getElementById('reloadTelemetryBtn').addEventListener('click', renderTelemetry);
     document.getElementById('copyTelemetryBtn').addEventListener('click', copyTelemetry);
     document.getElementById('clearTelemetryBtn').addEventListener('click', clearTelemetry);

@@ -1,13 +1,13 @@
 {
-  "release": "v98",
-  "version": "v98",
+  "release": "v99",
+  "version": "v99",
   "channel": "beta",
-  "codename": "smoke-runner-and-release-report",
+  "codename": "release-report-handoff",
   "updatedAt": "2026-03-28",
-  "headline": "Release-check now includes a core smoke runner and one-click release report export.",
+  "headline": "Release-check can now hand off a full QA report directly into the feedback desk.",
   "notes": [
-    "Added a same-origin smoke runner for the core product pages in /release-check/.",
-    "Added one-click release report export combining version, diagnostics, smoke results, checks, and telemetry.",
-    "Updated release-check storage key for the new build."
+    "Added release-check → feedback desk handoff using local draft storage.",
+    "Contact page can now detect, summarize, and include the latest release-check draft in the feedback template.",
+    "Added clear-draft control so testers can reset release-check context after sending a report."
   ]
 }
