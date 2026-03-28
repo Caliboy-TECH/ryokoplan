@@ -114,6 +114,59 @@ window.RyokoPlanner = (() => {
     const normalized = raw.toLowerCase();
     return map[normalized] || raw.charAt(0).toUpperCase() + raw.slice(1);
   }
+  function prefersReducedMotion(){
+    return typeof window !== 'undefined' && typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  function ensureToastStack(){
+    let stack = qs('toastStack');
+    if (!stack) {
+      stack = document.createElement('div');
+      stack.id = 'toastStack';
+      stack.className = 'toast-stack';
+      stack.setAttribute('role', 'status');
+      stack.setAttribute('aria-live', 'polite');
+      stack.setAttribute('aria-atomic', 'true');
+      document.body.appendChild(stack);
+    }
+    return stack;
+  }
+  function showToast(message='', tone='info'){
+    if (!message) return;
+    const stack = ensureToastStack();
+    const chip = document.createElement('div');
+    chip.className = `toast-chip toast-${tone}`;
+    chip.textContent = String(message);
+    stack.appendChild(chip);
+    requestAnimationFrame(() => chip.classList.add('is-visible'));
+    const remove = () => {
+      chip.classList.remove('is-visible');
+      setTimeout(() => chip.remove(), prefersReducedMotion() ? 20 : 220);
+    };
+    setTimeout(remove, tone === 'warn' ? 2600 : 2200);
+  }
+  function setButtonBusy(button, label=''){
+    if (!button) return;
+    if (!button.dataset.defaultLabel) button.dataset.defaultLabel = button.innerHTML;
+    button.disabled = true;
+    button.classList.add('is-busy');
+    button.setAttribute('aria-busy', 'true');
+    if (label) button.textContent = label;
+  }
+  function resetButtonBusy(button){
+    if (!button) return;
+    button.disabled = false;
+    button.classList.remove('is-busy');
+    button.removeAttribute('aria-busy');
+    if (button.dataset.defaultLabel) button.innerHTML = button.dataset.defaultLabel;
+  }
+  function revealResult(){
+    const result = qs('resultTop');
+    if (!result) return;
+    result.setAttribute('tabindex', '-1');
+    result.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block:'start' });
+    setTimeout(() => { try { result.focus({ preventScroll:true }); } catch {} }, prefersReducedMotion() ? 0 : 80);
+  }
+
   function storageKey(destination='trip'){
     return `ryoko:savedPlaces:${String(destination).toLowerCase()}`;
   }

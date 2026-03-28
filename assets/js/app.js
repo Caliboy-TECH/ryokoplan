@@ -776,12 +776,42 @@ window.RyokoApp = (() => {
     const dict = window.RYOKO_TRANSLATIONS?.[activeLang] || window.RYOKO_TRANSLATIONS?.en || window.RYOKO_TRANSLATIONS?.ko || {};
     return path.split('.').reduce((acc, key) => acc?.[key], dict) ?? '';
   }
+  function accessibilityCopy(){
+    return {
+      ko:'본문으로 건너뛰기',
+      en:'Skip to content',
+      ja:'本文へスキップ',
+      zhHant:'跳至內容'
+    }[lang] || 'Skip to content';
+  }
+  function updateLanguageButtonsState(root=document){
+    root.querySelectorAll('[data-lang-btn]').forEach(btn => {
+      const active = btn.dataset.langBtn === lang;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+  }
+  function initAccessibilityPolish(){
+    const main = document.querySelector('main');
+    if (main) {
+      if (!main.id) main.id = 'main-content';
+      if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+    }
+    if (main && !document.querySelector('.skip-link')) {
+      const skip = document.createElement('a');
+      skip.className = 'skip-link';
+      skip.href = '#main-content';
+      skip.textContent = accessibilityCopy();
+      document.body.insertBefore(skip, document.body.firstChild);
+    }
+    updateLanguageButtonsState();
+  }
   function setLanguage(next){
     lang = supportedLangs.includes(next) ? next : 'en';
     localStorage.setItem('ryoko_lang_v2', lang);
     document.documentElement.lang = lang;
     applyTranslations();
-    document.querySelectorAll('[data-lang-btn]').forEach(btn => btn.classList.toggle('active', btn.dataset.langBtn === lang));
+    updateLanguageButtonsState();
     renderMobileDock();
     window.dispatchEvent(new CustomEvent('ryoko:langchange', { detail: { lang } }));
   }
@@ -808,7 +838,9 @@ window.RyokoApp = (() => {
   function bindLanguageButtons(root=document){
     root.querySelectorAll('[data-lang-btn]').forEach(btn => {
       btn.addEventListener('click', () => setLanguage(btn.dataset.langBtn));
-      btn.classList.toggle('active', btn.dataset.langBtn === lang);
+      const active = btn.dataset.langBtn === lang;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-pressed', String(active));
     });
   }
   function navHref(target){
@@ -4430,6 +4462,7 @@ function renderTripsSeasonalDesk(){
 
   function initCommon(){
     document.documentElement.lang = lang;
+    initAccessibilityPolish();
     if (document.body.dataset.page === 'planner') applyHomeHead();
     if (document.body.dataset.page === 'trips') applyTripsHead();
     renderMagazineLanding();
@@ -4488,6 +4521,7 @@ function renderTripsSeasonalDesk(){
       renderMagazineSeasonalDesk();
       renderTripsSeasonalDesk();
       renderExpansionFrontDesk();
+      initAccessibilityPolish();
       localizeLangButtonLabels();
       localizeStaticIndexSections();
     localizeExtendedStaticSections();
