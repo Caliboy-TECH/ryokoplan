@@ -1,14 +1,13 @@
 {
-  "release": "v107",
-  "version": "v107",
+  "release": "v108",
+  "version": "v108",
   "channel": "beta",
-  "codename": "planner-entry-mini-loop",
+  "codename": "planner-entry-suggested-rhythm",
   "updatedAt": "2026-03-30T00:55:00+09:00",
-  "headline": "Planner entry context now keeps the city or sample close with a usable mini loop instead of a passive note.",
+  "headline": "Planner entry now carries a suggested route rhythm from city and sample handoffs.",
   "notes": [
-    "Planner entry context cards now include direct links back to the relevant city guide, matching sample, and recent result when available.",
-    "City-guide starts reopen the guide or sample more easily while staying in the same city context.",
-    "Sample-based starts can jump back to the sample or city guide without losing the planner handoff.",
-    "Added click telemetry for planner entry-context actions so the mini loop is easier to observe during beta."
+    "Planner entry-context now shows a suggested route rhythm and lets you apply it with one tap.",
+    "City and sample handoffs prefill a more fitting mood, density, and spend baseline.",
+    "Planner start feels less cold because the entry context now shapes the route setup too."
   ]
 }

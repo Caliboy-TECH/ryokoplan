@@ -5324,3 +5324,15 @@ main:focus{outline:none}
   .planner-entry-context-actions{gap:8px}
   .planner-entry-context-actions .secondary-btn,.planner-entry-context-actions .ghost-btn{width:100%;justify-content:center}
 }
+
+
+.planner-entry-suggested{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin:14px 0 0;padding:14px 16px;border-radius:18px;background:linear-gradient(180deg,#fffdf9 0%,#fff6ee 100%);border:1px solid rgba(236,190,149,.45)}
+.planner-entry-suggested-copy{min-width:0;flex:1}
+.planner-entry-suggested-label{display:block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#b96732;margin-bottom:6px}
+.planner-entry-suggested-copy p{margin:0;color:#7e6956}
+.planner-entry-suggested-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.planner-entry-context-chip.warm{background:#fff2e4;border-color:rgba(236,190,149,.55);color:#a85f25}
+@media (max-width: 768px){
+  .planner-entry-suggested{flex-direction:column}
+  .planner-entry-suggested .soft-btn{width:100%}
+}

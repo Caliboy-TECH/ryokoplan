@@ -111,6 +111,80 @@ window.RyokoPlanner = (() => {
     if (!entryKind && !entryTitle && !entryCity) return null;
     return { entryKind, entryTitle, entryCity, entrySource };
   }
+
+  const plannerEntryPresetProfiles = {
+    tokyo:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'balanced', style:'city highlights + hidden gems' },
+    osaka:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'balanced', style:'food + local neighborhoods' },
+    kyoto:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'slow + quiet' },
+    fukuoka:{ tripMood:'balanced', dayDensity:'balanced', budgetMode:'smart', style:'food + local neighborhoods' },
+    sapporo:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'slow + quiet' },
+    sendai:{ tripMood:'editorial', dayDensity:'light', budgetMode:'smart', style:'slow + quiet' },
+    okinawa:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'scenic + easy pace' },
+    seoul:{ tripMood:'vivid', dayDensity:'balanced', budgetMode:'balanced', style:'city vibes + food + neighborhoods' },
+    busan:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'coastal + easy pace' },
+    jeju:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'scenic + easy pace' },
+    gyeongju:{ tripMood:'editorial', dayDensity:'light', budgetMode:'balanced', style:'slow + quiet' },
+    taipei:{ tripMood:'vivid', dayDensity:'balanced', budgetMode:'balanced', style:'food + local neighborhoods' },
+    hongkong:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'treat', style:'city highlights + hidden gems' },
+    macau:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'treat', style:'city highlights + hidden gems' }
+  };
+  function plannerEntrySuggestedPreset(entry){
+    const slug = String(entry?.entryCity || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '');
+    const profile = plannerEntryPresetProfiles[slug] || { tripMood:'editorial', dayDensity:'balanced', budgetMode:'balanced', style:'' };
+    const preset = { ...profile };
+    if (entry?.entryKind === 'sample') {
+      preset.tripMood = 'editorial';
+    } else if (entry?.entryKind === 'route') {
+      preset.tripMood = profile.tripMood || 'balanced';
+      preset.dayDensity = profile.dayDensity || 'balanced';
+    }
+    return preset;
+  }
+  function plannerEntrySuggestedPresetCopy(entry){
+    const preset = plannerEntrySuggestedPreset(entry);
+    const mood = prettyPillValue('tripMood', preset.tripMood || 'balanced');
+    const density = prettyPillValue('dayDensity', preset.dayDensity || 'balanced');
+    const budget = prettyPillValue('budgetMode', preset.budgetMode || 'balanced');
+    const lang = window.RyokoApp?.lang || 'ko';
+    if (lang === 'ko') {
+      return {
+        label:'추천 핸드오프',
+        desc:`${mood} · ${density} · ${budget} 쪽으로 시작하면 방금 읽던 맥락이 더 자연스럽게 이어집니다.`,
+        apply:'추천 리듬 적용'
+      };
+    }
+    if (lang === 'ja') {
+      return {
+        label:'おすすめの引き継ぎ',
+        desc:`${mood} · ${density} · ${budget} で始めると、さっき読んでいた流れをそのまま持ち込みやすくなります。`,
+        apply:'おすすめのリズムを適用'
+      };
+    }
+    if (lang === 'zhHant') {
+      return {
+        label:'建議接續方式',
+        desc:`以 ${mood} · ${density} · ${budget} 開始，會更自然地接住剛才閱讀的脈絡。`,
+        apply:'套用建議節奏'
+      };
+    }
+    return {
+      label:'Suggested handoff',
+      desc:`Start with ${mood} · ${density} · ${budget} so the route keeps carrying the context you just read.`,
+      apply:'Apply suggested rhythm'
+    };
+  }
+  function applyPlannerEntrySuggestedPreset(entry){
+    const preset = plannerEntrySuggestedPreset(entry);
+    if (!preset) return;
+    if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(preset);
+    window.RyokoApp?.trackEvent?.('ryoko_planner_entry_preset_applied', {
+      entryKind: entry?.entryKind || '',
+      entryCity: entry?.entryCity || '',
+      tripMood: preset.tripMood || '',
+      dayDensity: preset.dayDensity || '',
+      budgetMode: preset.budgetMode || ''
+    });
+  }
   function plannerEntryContextCopy(entry){
     const cityName = entry?.entryCity || 'Tokyo';
     const title = entry?.entryTitle || cityName;
@@ -203,8 +277,10 @@ window.RyokoPlanner = (() => {
     }
     const copy = plannerEntryContextCopy(entry);
     const actions = plannerEntryContextActions(entry);
+    const preset = plannerEntrySuggestedPreset(entry);
+    const presetCopy = plannerEntrySuggestedPresetCopy(entry);
     node.classList.remove('hidden');
-    node.innerHTML = `<div class="planner-entry-context-row"><div class="planner-entry-context-copy"><span class="eyebrow">${escapeHtml(copy.eyebrow)}</span><strong>${escapeHtml(copy.title)}</strong><p>${escapeHtml(copy.desc)}</p>${actions.length ? `<div class="planner-entry-context-actions">${actions.map(action => `<a class="${action.style}" href="${action.href}" data-entry-context-action="${escapeHtml(action.label)}">${escapeHtml(action.label)}</a>`).join('')}</div>` : ''}</div><div class="planner-entry-context-meta"><span class="planner-entry-context-chip">${escapeHtml(copy.chip)}</span>${entry.entryCity ? `<span class="planner-entry-context-chip muted">${escapeHtml(entry.entryCity)}</span>` : ''}</div></div>`;
+    node.innerHTML = `<div class="planner-entry-context-row"><div class="planner-entry-context-copy"><span class="eyebrow">${escapeHtml(copy.eyebrow)}</span><strong>${escapeHtml(copy.title)}</strong><p>${escapeHtml(copy.desc)}</p><div class="planner-entry-suggested"><div class="planner-entry-suggested-copy"><span class="planner-entry-suggested-label">${escapeHtml(presetCopy.label)}</span><p>${escapeHtml(presetCopy.desc)}</p><div class="planner-entry-suggested-chips"><span class="planner-entry-context-chip warm">${escapeHtml(prettyPillValue('tripMood', preset.tripMood || 'balanced'))}</span><span class="planner-entry-context-chip muted">${escapeHtml(prettyPillValue('dayDensity', preset.dayDensity || 'balanced'))}</span><span class="planner-entry-context-chip muted">${escapeHtml(prettyPillValue('budgetMode', preset.budgetMode || 'balanced'))}</span></div></div><button class="soft-btn" type="button" id="plannerEntryPresetBtn">${escapeHtml(presetCopy.apply)}</button></div>${actions.length ? `<div class="planner-entry-context-actions">${actions.map(action => `<a class="${action.style}" href="${action.href}" data-entry-context-action="${escapeHtml(action.label)}">${escapeHtml(action.label)}</a>`).join('')}</div>` : ''}</div><div class="planner-entry-context-meta"><span class="planner-entry-context-chip">${escapeHtml(copy.chip)}</span>${entry.entryCity ? `<span class="planner-entry-context-chip muted">${escapeHtml(entry.entryCity)}</span>` : ''}</div></div>`;
     node.querySelectorAll('[data-entry-context-action]').forEach(link => link.addEventListener('click', () => {
       window.RyokoApp?.trackEvent?.('ryoko_planner_entry_context_action_clicked', {
         entryKind: entry.entryKind || '',
@@ -212,6 +288,10 @@ window.RyokoPlanner = (() => {
         actionLabel: link.dataset.entryContextAction || ''
       });
     }));
+    qs('plannerEntryPresetBtn')?.addEventListener('click', () => {
+      applyPlannerEntrySuggestedPreset(entry);
+      showToast(uiCopy('추천 리듬을 적용했어요.','Applied the suggested route rhythm.'), 'info');
+    });
   }
   function budgetLabel(key){
     const raw = String(key || '').trim();
@@ -2768,7 +2848,11 @@ function useExample(key='tokyo'){
   function applyPresetFromQuery(){
     const params = new URLSearchParams(location.search);
     const destination = params.get('destination');
+    const entry = plannerEntryParams();
     if (destination && qs('destination')) qs('destination').value = destination;
+    if (entry && !params.get('trip')) {
+      applyPlannerEntrySuggestedPreset(entry);
+    }
     ensurePlannerEntryContext();
   }
 
