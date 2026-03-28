@@ -1,8 +1,9 @@
 
-    const storageKey = 'ryoko:release-check-v97';
+    const storageKey = 'ryoko:release-check-v98';
     const checkboxes = Array.from(document.querySelectorAll('[data-check]'));
     const telemetryStorageKey = 'ryoko:launch-event-log:v1';
     let lastDiagnostics = [];
+    let lastSmoke = [];
 
     function renderOnlineStatus(){
       const el = document.getElementById('onlineStatus');
@@ -66,12 +67,14 @@
         if (summary) summary.textContent = 'No events stored yet on this browser.';
         if (latest) latest.textContent = 'Open the site and trigger a few actions first.';
         if (dump) dump.textContent = '[]';
+        updateReleaseReportPreview();
         return;
       }
       const last = events[events.length - 1] || {};
       if (summary) summary.textContent = events.length + ' recent event(s) stored locally.';
       if (latest) latest.textContent = [last.event || 'unknown', last.page || 'unknown', last.timestamp || ''].filter(Boolean).join(' · ');
       if (dump) dump.textContent = JSON.stringify(events, null, 2);
+      updateReleaseReportPreview();
     }
 
     async function copyTelemetry(){
@@ -87,6 +90,7 @@
     function clearTelemetry(){
       localStorage.removeItem(telemetryStorageKey);
       renderTelemetry();
+      updateReleaseReportPreview();
       alert('Telemetry log cleared.');
     }
 
@@ -101,9 +105,11 @@
         const currentCodename = json.codename ? ' · ' + json.codename : '';
         summary.innerHTML = '<code>/version.json</code> loaded — current release: <strong>' + currentRelease + '</strong>' + currentCodename;
         dump.textContent = JSON.stringify(json, null, 2);
+        updateReleaseReportPreview();
       } catch (err) {
         summary.textContent = 'Could not load /version.json. Confirm the deploy finished and the file is reachable.';
         dump.textContent = String(err);
+        updateReleaseReportPreview();
       }
     }
 
@@ -112,6 +118,7 @@
       keys.forEach(key => localStorage.removeItem(key));
       alert(keys.length ? 'Cleared ' + keys.length + ' Ryokoplan local keys.' : 'No Ryokoplan local keys found.');
       renderTelemetry();
+      updateReleaseReportPreview();
     }
 
     async function fetchText(url){
@@ -247,6 +254,7 @@
         }
       }
       renderDiagnostics(items);
+      updateReleaseReportPreview();
     }
 
     async function copyDiagnostics(){
@@ -259,9 +267,154 @@
       }
     }
 
+    function renderSmoke(items){
+      const list = document.getElementById('smokeList');
+      const summary = document.getElementById('smokeSummary');
+      if (!list || !summary) return;
+      lastSmoke = items;
+      const pass = items.filter(item => item.status === 'pass').length;
+      const fail = items.filter(item => item.status === 'fail').length;
+      const warn = items.filter(item => item.status === 'warn').length;
+      summary.innerHTML = [
+        '<span class="diagnostic-pill">Pass ' + pass + '</span>',
+        '<span class="diagnostic-pill">Warn ' + warn + '</span>',
+        '<span class="diagnostic-pill">Fail ' + fail + '</span>'
+      ].join('');
+      list.innerHTML = items.map(diagnosticItemMarkup).join('');
+      updateReleaseReportPreview();
+    }
+
+    async function runSmokeRunner(){
+      const checks = [
+        {
+          name: 'Home shell',
+          run: async () => {
+            const text = await fetchText('../');
+            const ok = /id="planner-start"/i.test(text) && /Read the city\.|도시를 읽고,/i.test(text);
+            return ok ? { status:'pass', detail:'Home includes planner anchor and city-first hero copy.' } : { status:'fail', detail:'Home loaded, but planner-start anchor or hero marker was missing.' };
+          }
+        },
+        {
+          name: 'Magazine shell',
+          run: async () => {
+            const text = await fetchText('../magazine/');
+            const ok = /id="magazineHeroRoot"|id="cityAtlasRoot"|id="magazineAtlasRoot"/i.test(text) || /magazine\/index\.html/i.test(text);
+            return ok ? { status:'pass', detail:'Magazine shell loaded with atlas/hero markers.' } : { status:'fail', detail:'Magazine shell loaded, but expected atlas or hero markers were not found.' };
+          }
+        },
+        {
+          name: 'City guide shell',
+          run: async () => {
+            const text = await fetchText('../city/tokyo');
+            const ok = /data-city-slug="tokyo"/i.test(text) && /id="cityPageRoot"/i.test(text);
+            return ok ? { status:'pass', detail:'Tokyo city guide shell and cityPageRoot are present.' } : { status:'fail', detail:'Tokyo city guide did not expose the expected city root markers.' };
+          }
+        },
+        {
+          name: 'Sample shell',
+          run: async () => {
+            const text = await fetchText('../example/tokyo-3n4d-first-trip');
+            const ok = /data-example-slug="tokyo-3n4d-first-trip"/i.test(text) && /id="examplePageRoot"/i.test(text);
+            return ok ? { status:'pass', detail:'Canonical sample shell and example root are present.' } : { status:'fail', detail:'Sample shell loaded, but expected example markers were not found.' };
+          }
+        },
+        {
+          name: 'My Trips shell',
+          run: async () => {
+            const text = await fetchText('../my-trips/');
+            const ok = /id="savedGrid"/i.test(text) && /id="recentGrid"/i.test(text) && /id="sharedGrid"/i.test(text);
+            return ok ? { status:'pass', detail:'My Trips loaded with saved/recent/shared roots.' } : { status:'fail', detail:'My Trips shell loaded, but one or more archive roots were missing.' };
+          }
+        },
+        {
+          name: 'Trust and notes pages',
+          run: async () => {
+            const targets = [
+              ['../contact/','launch feedback desk'],
+              ['../whats-new/','release notes'],
+              ['../offline.html','offline'],
+            ];
+            const results = await Promise.all(targets.map(async ([url, marker]) => {
+              const text = await fetchText(url);
+              return text.toLowerCase().includes(marker);
+            }));
+            return results.every(Boolean)
+              ? { status:'pass', detail:'Contact, What’s new, and offline shell all returned the expected markers.' }
+              : { status:'warn', detail:'One of contact / what’s new / offline loaded without the expected content marker.' };
+          }
+        }
+      ];
+      const items = [];
+      for (const check of checks) {
+        try {
+          const result = await check.run();
+          items.push({ name: check.name, status: result.status, detail: result.detail });
+        } catch (err) {
+          items.push({ name: check.name, status: 'fail', detail: String(err) });
+        }
+      }
+      renderSmoke(items);
+    }
+
+    async function copySmoke(){
+      const payload = JSON.stringify(lastSmoke, null, 2);
+      try {
+        await navigator.clipboard.writeText(payload);
+        alert('Smoke results copied.');
+      } catch {
+        alert('Could not copy smoke results in this browser.');
+      }
+    }
+
+    function safeParseJson(text){
+      try { return JSON.parse(text); } catch { return null; }
+    }
+
+    function buildReleaseReport(){
+      const versionRaw = document.getElementById('versionDump')?.textContent || '{}';
+      const version = safeParseJson(versionRaw) || { raw: versionRaw };
+      const telemetry = readTelemetryLog();
+      const checks = {};
+      checkboxes.forEach(box => { checks[box.dataset.check] = !!box.checked; });
+      return {
+        generatedAt: new Date().toISOString(),
+        online: navigator.onLine,
+        location: location.href,
+        userAgent: navigator.userAgent,
+        standalone: !!(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches),
+        version,
+        checks,
+        diagnostics: lastDiagnostics,
+        smoke: lastSmoke,
+        telemetryCount: telemetry.length,
+        latestTelemetry: telemetry[telemetry.length - 1] || null,
+        pwaSummary: document.getElementById('pwaSummary')?.textContent || ''
+      };
+    }
+
+    function updateReleaseReportPreview(){
+      const node = document.getElementById('releaseReportPreview');
+      if (!node) return;
+      node.textContent = JSON.stringify(buildReleaseReport(), null, 2);
+    }
+
+    async function copyReleaseReport(){
+      const payload = JSON.stringify(buildReleaseReport(), null, 2);
+      try {
+        await navigator.clipboard.writeText(payload);
+        alert('Release report copied.');
+      } catch {
+        alert('Could not copy release report in this browser.');
+      }
+    }
+
     checkboxes.forEach(box => box.addEventListener('change', saveChecks));
     document.getElementById('reloadVersionBtn').addEventListener('click', loadVersion);
     document.getElementById('clearLocalBtn').addEventListener('click', clearLocalTripData);
+    document.getElementById('runSmokeBtn').addEventListener('click', runSmokeRunner);
+    document.getElementById('copySmokeBtn').addEventListener('click', copySmoke);
+    document.getElementById('copyReleaseReportBtn').addEventListener('click', copyReleaseReport);
+    document.getElementById('copyReleaseReportTopBtn').addEventListener('click', copyReleaseReport);
     document.getElementById('reloadTelemetryBtn').addEventListener('click', renderTelemetry);
     document.getElementById('copyTelemetryBtn').addEventListener('click', copyTelemetry);
     document.getElementById('clearTelemetryBtn').addEventListener('click', clearTelemetry);
@@ -277,6 +430,7 @@
       if (event.key === telemetryStorageKey || event.key === storageKey) {
         loadChecks();
         renderTelemetry();
+        updateReleaseReportPreview();
       }
     });
     renderOnlineStatus();
@@ -285,4 +439,6 @@
     loadPwaStatus();
     renderTelemetry();
     runDiagnostics();
+    runSmokeRunner();
+    updateReleaseReportPreview();
   

@@ -1,13 +1,13 @@
 {
-  "release": "v97",
-  "version": "v97",
+  "release": "v98",
+  "version": "v98",
   "channel": "beta",
-  "codename": "release-diagnostics-panel",
+  "codename": "smoke-runner-and-release-report",
   "updatedAt": "2026-03-28",
-  "headline": "Release check now includes automated deploy diagnostics for core files and trust pages.",
+  "headline": "Release-check now includes a core smoke runner and one-click release report export.",
   "notes": [
-    "Release check now runs same-origin diagnostics for version.json, robots.txt, manifest, service worker, social card asset, trust pages, and 404 availability.",
-    "Diagnostics can be rerun and copied directly from the release-check page.",
-    "Release-check markup was cleaned up so the checklist, diagnostics, and telemetry cards render as separate sections more reliably."
+    "Added a same-origin smoke runner for the core product pages in /release-check/.",
+    "Added one-click release report export combining version, diagnostics, smoke results, checks, and telemetry.",
+    "Updated release-check storage key for the new build."
   ]
 }
