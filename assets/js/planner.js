@@ -166,6 +166,18 @@ window.RyokoPlanner = (() => {
     }
     plannerDraftSaveTimer = setTimeout(() => writePlannerDraft(), 450);
   }
+  function plannerResumeState(){
+    const hasTripQuery = new URLSearchParams(location.search).has('trip');
+    const draft = readPlannerDraft();
+    const latest = readLatestRouteSession();
+    const draftVisible = !!(draft && !plannerDraftIsDismissed(draft) && !hasTripQuery);
+    const latestVisible = !!(latest && !latestRouteIsDismissed(latest) && !(latest?.sessionId && latest.sessionId === latestRouteCurrentSessionId) && !hasTripQuery);
+    const draftTs = draft?.savedAt ? new Date(draft.savedAt).getTime() : 0;
+    const latestTs = latest?.savedAt ? new Date(latest.savedAt).getTime() : 0;
+    const active = draftVisible && latestVisible ? (latestTs >= draftTs ? 'latest' : 'draft') : (draftVisible ? 'draft' : (latestVisible ? 'latest' : 'none'));
+    return { draft, latest, draftVisible, latestVisible, active, hasTripQuery, draftAgeDays: draft?.savedAt ? Math.floor((Date.now() - new Date(draft.savedAt).getTime()) / (1000 * 60 * 60 * 24)) : null, latestAgeDays: latest?.savedAt ? Math.floor((Date.now() - new Date(latest.savedAt).getTime()) / (1000 * 60 * 60 * 24)) : null };
+  }
+
   function plannerDraftSummary(item){
     const title = item.destination ? `${item.destination} · ${item.duration || uiCopy('여정', 'route')}` : uiCopy('작성 중인 여정', 'Draft route', '下書きの旅程', '草稿旅程');
     const context = item.entryKind === 'sample'
@@ -201,8 +213,9 @@ window.RyokoPlanner = (() => {
       card.className = 'planner-draft-card info-card hidden';
       shell.insertAdjacentElement('afterend', card);
     }
-    const item = readPlannerDraft();
-    const blocked = !forceVisible && (!item || plannerDraftIsDismissed(item) || new URLSearchParams(location.search).has('trip'));
+    const resumeState = plannerResumeState();
+    const item = resumeState.draft;
+    const blocked = !forceVisible && (!item || resumeState.active !== 'draft');
     if (blocked) {
       card.classList.add('hidden');
       card.innerHTML = '';
@@ -379,8 +392,9 @@ window.RyokoPlanner = (() => {
   function renderLatestRouteCard(forceVisible=false){
     const card = ensureLatestRouteCard();
     if (!card) return;
-    const item = readLatestRouteSession();
-    const blocked = !item || (!forceVisible && latestRouteIsDismissed(item)) || (item?.sessionId && item.sessionId === latestRouteCurrentSessionId) || !!(new URLSearchParams(location.search).has('trip'));
+    const resumeState = plannerResumeState();
+    const item = resumeState.latest;
+    const blocked = !item || (!forceVisible && resumeState.active !== 'latest');
     if (blocked) {
       card.classList.add('hidden');
       card.innerHTML = '';
@@ -3268,7 +3282,12 @@ function useExample(key='tokyo'){
     ensurePlannerFeedbackPanel();
     window.addEventListener('offline', () => { if (window.currentTripPayload) setPlannerFeedback('offline'); });
     window.addEventListener('online', () => { const panel = qs('plannerFeedbackPanel'); if (panel && panel.classList.contains('planner-feedback-offline')) panel.classList.add('hidden'); });
-    window.addEventListener('storage', event => { if ([latestRouteSessionKey, latestRouteDismissKey].includes(event.key)) renderLatestRouteCard(); });
+    window.addEventListener('storage', event => {
+      if ([latestRouteSessionKey, latestRouteDismissKey, plannerDraftKey, plannerDraftDismissKey].includes(event.key)) {
+        renderPlannerDraftCard();
+        renderLatestRouteCard();
+      }
+    });
     qs('saveTripBtn').addEventListener('click', saveCurrentTrip);
     qs('shareTripBtn').addEventListener('click', shareCurrentTrip);
     qs('pdfTripBtn').addEventListener('click', savePdf);
@@ -3278,6 +3297,6 @@ function useExample(key='tokyo'){
     loadSharedTrip();
     if (!window.currentTripPayload) renderPlan(samplePlans.tokyo);
   }
-  return { init, renderPlan };
+  return { init, renderPlan, plannerResumeState };
 })();
 window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
