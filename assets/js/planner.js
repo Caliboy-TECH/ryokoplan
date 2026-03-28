@@ -215,7 +215,7 @@ window.RyokoPlanner = (() => {
     const isParameterized = [...pageUrl.searchParams.keys()].length > 0;
     const canonicalHref = isParameterized ? `${pageUrl.origin}${pageUrl.pathname}` : cleanUrl;
     const robotsValue = isParameterized ? 'noindex,follow' : 'index,follow';
-    const coverImage = 'https://ryokoplan.com/assets/images/brand/og-cover.svg';
+    const coverImage = 'https://ryokoplan.com/assets/images/brand/og-cover.png';
     const entries = {
       'meta[name="description"]': desc,
       'meta[name="robots"]': robotsValue,
@@ -223,6 +223,7 @@ window.RyokoPlanner = (() => {
       'meta[property="og:description"]': desc,
       'meta[property="og:url"]': cleanUrl,
       'meta[property="og:image"]': coverImage,
+      'meta[property="og:image:type"]': 'image/png',
       'meta[name="twitter:title"]': title,
       'meta[name="twitter:description"]': desc,
       'meta[name="twitter:image"]': coverImage,

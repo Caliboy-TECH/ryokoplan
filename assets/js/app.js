@@ -40,7 +40,7 @@ window.RyokoApp = (() => {
 
   function updatePageHead({ title, description, image, imageAlt, url, type='website', robots='index,follow' } = {}){
     const canonicalUrl = absoluteUrl(url || location.pathname.replace(/^\//,''));
-    const imageUrl = absoluteUrl(image || 'assets/images/brand/og-cover.svg');
+    const imageUrl = absoluteUrl(image || 'assets/images/brand/og-cover.png');
     if (title) document.title = title;
     ensureHeadTag('meta', 'description', description || 'Read the city. Then build the trip.');
     ensureHeadTag('meta', 'robots', robots);
@@ -51,6 +51,7 @@ window.RyokoApp = (() => {
     ensureHeadTag('meta', 'og:description', description || 'Read the city. Then build the trip.');
     ensureHeadTag('meta', 'og:url', canonicalUrl);
     ensureHeadTag('meta', 'og:image', imageUrl);
+    ensureHeadTag('meta', 'og:image:type', 'image/png');
     ensureHeadTag('meta', 'og:image:width', '1200');
     ensureHeadTag('meta', 'og:image:height', '630');
     ensureHeadTag('meta', 'og:image:alt', imageAlt || 'Ryokoplan city-first travel editorial');
@@ -68,7 +69,7 @@ window.RyokoApp = (() => {
     updatePageHead({
       title:'Ryokoplan — City-first Travel Editorial',
       description:'Read the city first. Then build the trip. A city-first travel editorial app for East Asia with Planner, Magazine, and My Trips.',
-      image:'assets/images/brand/og-cover.svg',
+      image:'assets/images/brand/og-cover.png',
       imageAlt:'Ryokoplan East Asia city-first travel editorial cover',
       url:''
     });
@@ -78,7 +79,7 @@ window.RyokoApp = (() => {
     updatePageHead({
       title:data?.title || 'Ryokoplan — Magazine',
       description:(data?.heroDesc || 'Read East Asia cities before you shape the route. City guides, sample routes, and a magazine-first travel flow.').replace(/<[^>]+>/g,'').trim(),
-      image:'assets/images/brand/og-cover.svg',
+      image:'assets/images/brand/og-cover.png',
       imageAlt:'Ryokoplan Magazine East Asia city desk',
       url:'magazine/index.html'
     });
@@ -88,7 +89,7 @@ window.RyokoApp = (() => {
     updatePageHead({
       title:'Ryokoplan — My Trips',
       description:'Keep saved routes, shared trips, and recent city reads in one editorial travel loop for East Asia.',
-      image:'assets/images/brand/og-cover.svg',
+      image:'assets/images/brand/og-cover.png',
       imageAlt:'Ryokoplan My Trips saved city routes',
       url:'my-trips/index.html'
     });
