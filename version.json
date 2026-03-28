@@ -1,14 +1,14 @@
 {
-  "release": "v105",
-  "version": "v105",
+  "release": "v106",
+  "version": "v106",
   "channel": "beta",
-  "codename": "entry-assist-priority-and-freshness",
-  "updatedAt": "2026-03-29T23:59:00+09:00",
-  "headline": "Entry assist surfaces now expire stale memory and follow a calmer priority order.",
+  "codename": "planner-entry-handoff-context",
+  "updatedAt": "2026-03-30T00:35:00+09:00",
+  "headline": "Planner starts now keep the city/sample context visible instead of feeling cold.",
   "notes": [
-    "Added freshness expiry for start-path memory and reading history so old resume prompts age out automatically.",
-    "Prioritized entry-assist surfaces so first-run, reading-history, quick-resume, and start-path recall no longer stack at once.",
-    "Fixed release-check reset handlers and added a one-click reset for the full entry-assist state.",
-    "Expanded release-check reporting with memory age/freshness and current entry-assist priority."
+    "Planner links from city guides now carry a city-start context into the route start screen.",
+    "Planner links from sample pages now carry the sample title and city so the route opens with clearer continuity.",
+    "Added a planner entry-context card that explains why this route start is showing up and what it is based on.",
+    "Kept the change lightweight so existing planner links still work even without the new context parameters."
   ]
 }

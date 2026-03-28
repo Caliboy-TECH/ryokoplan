@@ -101,6 +101,69 @@ window.RyokoPlanner = (() => {
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
   }
+
+  function plannerEntryParams(){
+    const params = new URLSearchParams(location.search);
+    const entryKind = String(params.get('entryKind') || '').trim();
+    const entryTitle = String(params.get('entryTitle') || '').trim();
+    const entryCity = String(params.get('entryCity') || params.get('destination') || '').trim();
+    const entrySource = String(params.get('entrySource') || '').trim();
+    if (!entryKind && !entryTitle && !entryCity) return null;
+    return { entryKind, entryTitle, entryCity, entrySource };
+  }
+  function plannerEntryContextCopy(entry){
+    const cityName = entry?.entryCity || 'Tokyo';
+    const title = entry?.entryTitle || cityName;
+    const copies = {
+      city: {
+        ko:{ eyebrow:'시작 컨텍스트', title:`${cityName} city guide에서 바로 이어서 시작합니다.`, desc:`방금 읽은 도시 결을 그대로 가져와 ${cityName} route를 여는 흐름입니다.`, chip:'City guide' },
+        en:{ eyebrow:'Start context', title:`Starting straight from the ${cityName} city guide.`, desc:`Carry the city reading directly into a ${cityName} route instead of starting cold.`, chip:'City guide' },
+        ja:{ eyebrow:'開始コンテキスト', title:`${cityName} の city guide からそのまま始めます。`, desc:`いま読んだ都市の流れをそのまま ${cityName} の route に持ち込みます。`, chip:'City guide' },
+        zhHant:{ eyebrow:'開始脈絡', title:`直接從 ${cityName} city guide 接著開始。`, desc:`把剛剛讀到的城市節奏直接帶進 ${cityName} 的 route。`, chip:'City guide' }
+      },
+      sample: {
+        ko:{ eyebrow:'시작 컨텍스트', title:`${title} sample을 바탕으로 route를 엽니다.`, desc:'샘플의 리듬을 그대로 들고 와서 출발점으로 삼을 수 있게 정리했습니다.', chip:'Sample route' },
+        en:{ eyebrow:'Start context', title:`Opening the route from the ${title} sample.`, desc:'This carries the sample rhythm forward so the route starts with a clearer shape.', chip:'Sample route' },
+        ja:{ eyebrow:'開始コンテキスト', title:`${title} sample を土台に route を開きます。`, desc:'sample のリズムをそのまま持ち込めるように整えています。', chip:'Sample route' },
+        zhHant:{ eyebrow:'開始脈絡', title:`以 ${title} sample 為基底打開 route。`, desc:'把 sample 的節奏直接帶進來，讓 route 一開始就更有形狀。', chip:'Sample route' }
+      },
+      route: {
+        ko:{ eyebrow:'시작 컨텍스트', title:`${title} route를 바탕으로 다시 시작합니다.`, desc:'방금 보던 route를 기준점으로 삼아 더 빠르게 다시 다듬을 수 있습니다.', chip:'Route base' },
+        en:{ eyebrow:'Start context', title:`Starting again from the ${title} route.`, desc:'Use the route you were just reading as a cleaner base for the next version.', chip:'Route base' },
+        ja:{ eyebrow:'開始コンテキスト', title:`${title} route を基準にもう一度始めます。`, desc:'さっき見ていた route をベースに、次の版をもっと速く整えられます。', chip:'Route base' },
+        zhHant:{ eyebrow:'開始脈絡', title:`以 ${title} route 為基準重新開始。`, desc:'把剛剛看的 route 當成基底，會更快整理出下一版。', chip:'Route base' }
+      },
+      default: {
+        ko:{ eyebrow:'시작 컨텍스트', title:`${cityName}에서 route를 시작합니다.`, desc:'읽던 도시 맥락을 가져와 바로 이 시작점에 맞췄습니다.', chip:'Route start' },
+        en:{ eyebrow:'Start context', title:`Starting the route in ${cityName}.`, desc:'This keeps the city context close so the route does not begin cold.', chip:'Route start' },
+        ja:{ eyebrow:'開始コンテキスト', title:`${cityName} から route を始めます。`, desc:'読んでいた都市の文脈を近くに残したまま始められます。', chip:'Route start' },
+        zhHant:{ eyebrow:'開始脈絡', title:`從 ${cityName} 開始這條 route。`, desc:'把剛剛的城市脈絡留在附近，讓 route 不會從零開始。', chip:'Route start' }
+      }
+    };
+    const group = copies[entry?.entryKind] || copies.default;
+    return group[window.RyokoApp?.lang || 'ko'] || group.en;
+  }
+  function ensurePlannerEntryContext(){
+    const shell = document.querySelector('.planner-shell');
+    if (!shell) return;
+    const entry = plannerEntryParams();
+    let node = qs('plannerEntryContext');
+    if (!entry || new URLSearchParams(location.search).has('trip')) {
+      if (node) node.classList.add('hidden');
+      return;
+    }
+    if (!node) {
+      node = document.createElement('div');
+      node.id = 'plannerEntryContext';
+      node.className = 'planner-entry-context info-card';
+      const anchor = document.querySelector('.planner-helper-panel') || shell.querySelector('.planner-onboarding-bar');
+      if (anchor) anchor.insertAdjacentElement('afterend', node);
+      else shell.prepend(node);
+    }
+    const copy = plannerEntryContextCopy(entry);
+    node.classList.remove('hidden');
+    node.innerHTML = `<div class="planner-entry-context-row"><div class="planner-entry-context-copy"><span class="eyebrow">${escapeHtml(copy.eyebrow)}</span><strong>${escapeHtml(copy.title)}</strong><p>${escapeHtml(copy.desc)}</p></div><div class="planner-entry-context-meta"><span class="planner-entry-context-chip">${escapeHtml(copy.chip)}</span>${entry.entryCity ? `<span class="planner-entry-context-chip muted">${escapeHtml(entry.entryCity)}</span>` : ''}</div></div>`;
+  }
   function budgetLabel(key){
     const raw = String(key || '').trim();
     const lang = window.RyokoApp?.lang || 'ko';
@@ -2657,6 +2720,7 @@ function useExample(key='tokyo'){
     const params = new URLSearchParams(location.search);
     const destination = params.get('destination');
     if (destination && qs('destination')) qs('destination').value = destination;
+    ensurePlannerEntryContext();
   }
 
   function loadSharedTrip(){
@@ -2684,6 +2748,7 @@ function useExample(key='tokyo'){
       refreshOptions();
       const existing = window.__RYOKO_LAST_RESULT__;
       if (existing) renderPlan(existing);
+      ensurePlannerEntryContext();
     });
     qs('localToggle').addEventListener('click', () => qs('localToggle').classList.toggle('on'));
     qs('submitBtn').addEventListener('click', generate);
