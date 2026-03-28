@@ -1,13 +1,13 @@
 {
-  "release": "v94",
-  "version": "v94",
+  "release": "v95",
+  "version": "v95",
   "channel": "beta",
-  "codename": "release-notes-and-footer-fix",
+  "codename": "pwa-install-and-offline-shell",
   "updatedAt": "2026-03-28",
-  "headline": "Added a What's new page, fixed release-check build parsing, and restored dynamic footer legal links.",
+  "headline": "Added a service worker, install prompt, and a basic offline shell for Ryokoplan.",
   "notes": [
-    "Added /whats-new/ as a beta-facing release notes page that reads directly from version.json.",
-    "release-check now reads either release or version so the active build is shown correctly after deploy.",
-    "Dynamic city and sample pages now have a working footer legal-link helper again, including a What's new link."
+    "Added /sw.js with a lightweight app-shell cache strategy for core pages and assets.",
+    "Added an install CTA that appears when Ryokoplan is installable as a PWA.",
+    "Added /offline.html as a branded offline fallback instead of dropping to a raw browser error page."
   ]
 }

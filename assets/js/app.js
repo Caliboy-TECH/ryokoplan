@@ -740,6 +740,8 @@ window.RyokoApp = (() => {
 
 const LAUNCH_SESSION_KEY = 'ryoko_launch_session_v1';
 let launchFeedbackBooted = false;
+let installPromptEvent = null;
+let pwaBooted = false;
 function getLaunchSessionId(){
   try {
     const existing = sessionStorage.getItem(LAUNCH_SESSION_KEY);
@@ -815,6 +817,91 @@ function initLaunchFeedback(){
   window.addEventListener('offline', () => {
     updateNetworkBanner();
     trackEvent('ryoko_network_offline');
+  });
+}
+
+function isStandaloneMode(){
+  try {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  } catch {
+    return false;
+  }
+}
+function installButtonCopy(){
+  return lang === 'ko'
+    ? { label:'Ryokoplan 설치', aria:'Ryokoplan 앱 설치하기' }
+    : lang === 'ja'
+      ? { label:'Ryokoplan をインストール', aria:'Ryokoplan アプリをインストールする' }
+      : lang === 'zhHant'
+        ? { label:'安裝 Ryokoplan', aria:'安裝 Ryokoplan 應用程式' }
+        : { label:'Install Ryokoplan', aria:'Install the Ryokoplan app' };
+}
+function syncInstallCta(){
+  const cta = document.getElementById('launchInstallCta');
+  if (!cta) return;
+  const ready = !!installPromptEvent && !isStandaloneMode();
+  const copy = installButtonCopy();
+  cta.querySelector('.launch-install-cta-label')?.replaceChildren(document.createTextNode(copy.label));
+  cta.setAttribute('aria-label', copy.aria);
+  cta.classList.toggle('is-visible', ready);
+  cta.disabled = !ready;
+  cta.setAttribute('aria-hidden', ready ? 'false' : 'true');
+}
+function ensureInstallCta(){
+  if (document.body?.dataset?.page === 'legal') return;
+  if (document.body?.dataset?.page === 'release-check') return;
+  let cta = document.getElementById('launchInstallCta');
+  if (!cta) {
+    cta = document.createElement('button');
+    cta.id = 'launchInstallCta';
+    cta.type = 'button';
+    cta.className = 'launch-install-cta';
+    cta.innerHTML = '<span class="launch-install-cta-dot"></span><span class="launch-install-cta-label"></span>';
+    cta.addEventListener('click', async () => {
+      if (!installPromptEvent) return;
+      const deferred = installPromptEvent;
+      installPromptEvent = null;
+      syncInstallCta();
+      try {
+        deferred.prompt();
+        const choice = await deferred.userChoice;
+        trackEvent('ryoko_install_prompt_result', { outcome: choice?.outcome || 'unknown' });
+      } catch (err) {
+        trackEvent('ryoko_install_prompt_failed', { message: String(err && err.message || err) });
+      } finally {
+        syncInstallCta();
+      }
+    });
+    document.body.appendChild(cta);
+  }
+  syncInstallCta();
+}
+function registerServiceWorker(){
+  if (!('serviceWorker' in navigator)) return;
+  const swUrl = `${pathRoot}sw.js`;
+  navigator.serviceWorker.register(swUrl).then(registration => {
+    trackEvent('ryoko_sw_registered', { scope: registration.scope || '' });
+  }).catch(err => {
+    trackEvent('ryoko_sw_register_failed', { message: String(err && err.message || err) });
+  });
+}
+function initPwaSupport(){
+  if (pwaBooted) return;
+  pwaBooted = true;
+  registerServiceWorker();
+  ensureInstallCta();
+  syncInstallCta();
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    installPromptEvent = event;
+    ensureInstallCta();
+    syncInstallCta();
+    trackEvent('ryoko_install_available');
+  });
+  window.addEventListener('appinstalled', () => {
+    installPromptEvent = null;
+    syncInstallCta();
+    trackEvent('ryoko_app_installed');
   });
 }
 
@@ -4609,7 +4696,9 @@ function renderTripsSeasonalDesk(){
     document.documentElement.lang = lang;
     initAccessibilityPolish();
     initLaunchFeedback();
+    initPwaSupport();
     ensureLaunchFeedbackCta();
+    ensureInstallCta();
     if (document.body.dataset.page === 'planner') applyHomeHead();
     if (document.body.dataset.page === 'trips') applyTripsHead();
     renderMagazineLanding();
@@ -4670,6 +4759,8 @@ function renderTripsSeasonalDesk(){
       renderExpansionFrontDesk();
       initAccessibilityPolish();
       ensureLaunchFeedbackCta();
+      ensureInstallCta();
+      syncInstallCta();
       localizeLangButtonLabels();
       localizeStaticIndexSections();
     localizeExtendedStaticSections();

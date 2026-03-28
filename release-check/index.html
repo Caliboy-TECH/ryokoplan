@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#15273a">
   <link rel="canonical" href="https://ryokoplan.com/release-check/">
   <link rel="icon" href="../assets/images/brand/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../site.webmanifest">
   <link rel="stylesheet" href="../assets/css/styles.css">
   <style>
     body{background:#fcfaf6}
@@ -63,7 +64,11 @@
           </article>
           <article class="info-card">
             <strong>What to confirm</strong>
-            <span>Home, Magazine, city, sample, route result, share loop, My Trips, PDF, saved/recent data, basic mobile flow, and the latest release notes.</span>
+            <span>Home, Magazine, city, sample, route result, share loop, My Trips, PDF, saved/recent data, basic mobile flow, installability, and the latest release notes.</span>
+          </article>
+          <article class="info-card">
+            <strong>PWA basics</strong>
+            <span id="pwaSummary">Checking service worker and installability…</span>
           </article>
         </div>
         <pre id="versionDump" class="release-version-box">Loading version.json…</pre>
@@ -126,6 +131,7 @@
             <label class="release-check-item"><input type="checkbox" data-check="generate"> <div><strong>Route generate/fallback feedback works</strong><p>Button busy state, feedback panel, fallback explanation, and retry all look like product UI.</p></div></label>
             <label class="release-check-item"><input type="checkbox" data-check="share-save"> <div><strong>Share / save / My Trips loop works</strong><p>Saved and recent trips reopen, and share links look reasonable.</p></div></label>
             <label class="release-check-item"><input type="checkbox" data-check="pdf-mobile"> <div><strong>PDF / mobile / language basics pass</strong><p>Open PDF once, switch language once, and do one quick mobile-width pass.</p></div></label>
+            <label class="release-check-item"><input type="checkbox" data-check="pwa"> <div><strong>PWA install / offline basics pass</strong><p>Check service worker registration, make sure install is available on a supported browser, and open the offline fallback once if needed.</p></div></label>
           </div>
           <div class="release-actions">
             <button class="secondary-btn" id="resetChecksBtn" type="button">Reset checks</button>
@@ -135,7 +141,7 @@
     </div>
   </main>
   <script>
-    const storageKey = 'ryoko:release-check-v94';
+    const storageKey = 'ryoko:release-check-v95';
     const checkboxes = Array.from(document.querySelectorAll('[data-check]'));
     function renderOnlineStatus(){
       const el = document.getElementById('onlineStatus');
@@ -155,6 +161,27 @@
       const payload = {};
       checkboxes.forEach(box => { payload[box.dataset.check] = box.checked; });
       localStorage.setItem(storageKey, JSON.stringify(payload));
+    }
+    async function loadPwaStatus(){
+      const summary = document.getElementById('pwaSummary');
+      if (!summary) return;
+      const standalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+      if (!('serviceWorker' in navigator)) {
+        summary.textContent = 'Service worker is not supported in this browser.';
+        return;
+      }
+      try {
+        const registration = await navigator.serviceWorker.getRegistration('../sw.js') || await navigator.serviceWorker.getRegistration('/');
+        if (registration) {
+          summary.textContent = standalone
+            ? 'Service worker active · app already running in standalone mode.'
+            : 'Service worker registered · open the home page on a supported browser to test install prompt.';
+        } else {
+          summary.textContent = 'No service worker registration yet. Open the home page once after deploy, then check again.';
+        }
+      } catch (err) {
+        summary.textContent = 'Could not read service worker status: ' + String(err);
+      }
     }
     async function loadVersion(){
       const summary = document.getElementById('versionSummary');
@@ -189,6 +216,7 @@
     renderOnlineStatus();
     loadChecks();
     loadVersion();
+    loadPwaStatus();
   </script>
 </body>
 </html>
