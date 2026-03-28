@@ -1,5 +1,13 @@
 {
-  "version": "v93",
-  "codename": "launch-feedback-desk",
-  "updatedAt": "2026-03-28"
+  "release": "v94",
+  "version": "v94",
+  "channel": "beta",
+  "codename": "release-notes-and-footer-fix",
+  "updatedAt": "2026-03-28",
+  "headline": "Added a What's new page, fixed release-check build parsing, and restored dynamic footer legal links.",
+  "notes": [
+    "Added /whats-new/ as a beta-facing release notes page that reads directly from version.json.",
+    "release-check now reads either release or version so the active build is shown correctly after deploy.",
+    "Dynamic city and sample pages now have a working footer legal-link helper again, including a What's new link."
+  ]
 }

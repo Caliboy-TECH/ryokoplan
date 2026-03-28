@@ -844,6 +844,13 @@ function buildFeedbackHref(extra={}){
   });
   return `${pathRoot}contact/index.html?${params.toString()}`;
 }
+
+function buildWhatsNewHref(){
+  return `${pathRoot}whats-new/index.html`;
+}
+function legalLinksMarkup(){
+  return `<div class="footer-links"><a href="${pathRoot}privacy/index.html">Privacy</a><a href="${pathRoot}terms/index.html">Terms</a><a href="${pathRoot}contact/index.html">Contact</a><a href="${buildWhatsNewHref()}">What's new</a></div>`;
+}
 function syncFeedbackLinks(){
   const href = buildFeedbackHref();
   document.querySelectorAll('a[href$="contact/index.html"], a[href="contact/index.html"], a[href="../contact/index.html"], a[href="/contact/index.html"]').forEach(link => {

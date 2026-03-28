@@ -63,13 +63,14 @@
           </article>
           <article class="info-card">
             <strong>What to confirm</strong>
-            <span>Home, Magazine, city, sample, route result, share loop, My Trips, PDF, saved/recent data, and basic mobile flow.</span>
+            <span>Home, Magazine, city, sample, route result, share loop, My Trips, PDF, saved/recent data, basic mobile flow, and the latest release notes.</span>
           </article>
         </div>
         <pre id="versionDump" class="release-version-box">Loading version.json…</pre>
         <div class="release-actions">
           <a class="primary-btn" href="../" target="_blank" rel="noopener">Open home</a>
           <button class="secondary-btn" id="reloadVersionBtn" type="button">Reload version.json</button>
+          <a class="ghost-btn" href="../whats-new/index.html" target="_blank" rel="noopener">Open release notes</a>
           <button class="ghost-btn" id="clearLocalBtn" type="button">Clear local trip data</button>
         </div>
         <p class="release-inline-note">Tip: open this page after each upload and check that the release value matches the zip you just deployed.</p>
@@ -134,7 +135,7 @@
     </div>
   </main>
   <script>
-    const storageKey = 'ryoko:release-check-v92';
+    const storageKey = 'ryoko:release-check-v94';
     const checkboxes = Array.from(document.querySelectorAll('[data-check]'));
     function renderOnlineStatus(){
       const el = document.getElementById('onlineStatus');
@@ -162,7 +163,9 @@
         const res = await fetch('../version.json', { cache: 'no-store' });
         if (!res.ok) throw new Error('version.json request failed');
         const json = await res.json();
-        summary.innerHTML = '<code>/version.json</code> loaded — current release: <strong>' + (json.release || 'unknown') + '</strong>';
+        const currentRelease = json.release || json.version || 'unknown';
+        const currentCodename = json.codename ? ' · ' + json.codename : '';
+        summary.innerHTML = '<code>/version.json</code> loaded — current release: <strong>' + currentRelease + '</strong>' + currentCodename;
         dump.textContent = JSON.stringify(json, null, 2);
       } catch (err) {
         summary.textContent = 'Could not load /version.json. Confirm the deploy finished and the file is reachable.';
