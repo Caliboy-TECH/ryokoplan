@@ -2,6 +2,7 @@ window.RyokoApp = (() => {
   const defaultLang = 'ko';
   let lang = localStorage.getItem('ryoko_lang_v2') || defaultLang;
   const supportedLangs = ['ko','en','ja','zhHant'];
+  const releaseCandidateSlimMode = true;
 
   const pathRoot = (() => {
     const depth = location.pathname.split('/').filter(Boolean).length;
@@ -2705,6 +2706,10 @@ function getCityRouteVariations(slug){
   }
 
   function renderHomeSeasonalDesk(){
+    if (releaseCandidateSlimMode) {
+      document.getElementById('homeSeasonalRoot')?.remove();
+      return;
+    }
     if (document.body.dataset.page !== 'planner') return;
     const anchor = document.getElementById('homeCommunityRoot');
     if (!anchor) return;
@@ -2734,6 +2739,10 @@ function getCityRouteVariations(slug){
   }
 
   function renderMagazineSeasonalDesk(){
+    if (releaseCandidateSlimMode) {
+      document.getElementById('magazineSeasonalRoot')?.remove();
+      return;
+    }
     if (document.body.dataset.page !== 'magazine') return;
     const anchor = document.getElementById('magazineCommunityRoot');
     if (!anchor) return;
@@ -2930,6 +2939,10 @@ function getCityRouteVariations(slug){
   }
 
   function renderSecondaryCityStoryLayer(){
+    if (releaseCandidateSlimMode) {
+      document.getElementById('secondaryCityStoryLayerRoot')?.remove();
+      return;
+    }
     if (document.body.dataset.page !== 'home' && document.body.dataset.page !== 'magazine') return;
     const target = document.getElementById('homeStoryLayerRoot') || document.getElementById('magazinePriorityArticleRoot');
     if (!target) return;
@@ -3123,6 +3136,10 @@ function getSecondaryCityStories(){
   }
 
   function renderSecondaryCityStoryLayer(){
+    if (releaseCandidateSlimMode) {
+      document.getElementById('secondaryCityStoryLayerRoot')?.remove();
+      return;
+    }
     if (document.body.dataset.page !== 'home' && document.body.dataset.page !== 'magazine') return;
     const target = document.getElementById('homeStoryLayerRoot') || document.getElementById('magazinePriorityArticleRoot');
     if (!target) return;
@@ -3222,10 +3239,11 @@ function renderMagazinePriorityArticles(){
       anchor.parentNode.insertBefore(root, anchor.nextSibling);
     }
     const copy = getPriorityMagazineArticles()[lang] || getPriorityMagazineArticles().en;
+    const articleItems = releaseCandidateSlimMode ? copy.items.slice(0, 4) : copy.items;
     root.innerHTML = `
       <section class="section priority-article-section" id="releaseCityStories" data-section="release-stories">
         <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
-        <div class="priority-article-grid">${copy.items.map(item => `
+        <div class="priority-article-grid">${articleItems.map(item => `
           <article class="priority-article-card info-card">
             <div class="priority-article-top"><span class="collection-kicker">${item.city}</span></div>
             <h3>${item.title}</h3>
@@ -3298,6 +3316,11 @@ function renderTripsSeasonalDesk(){
   }
 
   function renderHomeCommunityDesk(){
+    if (releaseCandidateSlimMode) {
+      const root = document.getElementById('homeCommunityRoot');
+      if (root) root.innerHTML = '';
+      return;
+    }
     if (document.body.dataset.page !== 'planner') return;
     const root = document.getElementById('homeCommunityRoot');
     if (!root) return;
@@ -3318,6 +3341,11 @@ function renderTripsSeasonalDesk(){
   }
 
   function renderMagazineCommunityDesk(){
+    if (releaseCandidateSlimMode) {
+      const host = document.getElementById('magazineCommunityRoot');
+      if (host) host.innerHTML = '';
+      return;
+    }
     if (document.body.dataset.page !== 'magazine') return;
     const host = document.getElementById('magazineCommunityRoot');
     if (!host) return;
@@ -3393,7 +3421,10 @@ function renderTripsSeasonalDesk(){
         const matchesFilter = filter === 'all' || item.tags.includes(filter);
         return matchesQuery && matchesFilter;
       });
-      grid.innerHTML = filtered.map(item => `
+      const visible = releaseCandidateSlimMode
+        ? filtered.slice(0, (!query && filter === 'all') ? 6 : 9)
+        : filtered;
+      grid.innerHTML = visible.map(item => `
         <article class="discovery-card info-card">
           <div class="discovery-card-meta"><span class="collection-kicker">${item.kind === 'city' ? (lang==='ja' ? '都市ベース' : lang==='zhHant' ? '城市基底' : 'City base') : (lang==='ja' ? '編集ベース' : lang==='zhHant' ? '編輯基底' : 'Editorial base')}</span><span class="meta-inline">${item.preset.destination}</span></div>
           <h3>${item.title[lang] || item.title.en}</h3>
@@ -3401,7 +3432,16 @@ function renderTripsSeasonalDesk(){
           <div class="mini-vibe-row">${item.tags.slice(0,4).map(tag => `<span class="mini-vibe-chip">${tag}</span>`).join('')}</div>
           <div class="card-actions discovery-actions"><a class="soft-btn" href="${item.guide}" data-signal-tags="${item.tags.join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${item.title[lang] || item.title.en}" data-signal-source="seasonal-guide">${copy.guide}</a><a class="ghost-btn" href="${item.example}">${copy.sample}</a><button class="primary-btn discovery-plan-btn" data-discovery-preset='${JSON.stringify(item.preset)}'>${copy.plan}</button></div>
         </article>`).join('');
-      count.textContent = lang === 'ko' ? `${filtered.length}${copy.matches}` : `${filtered.length} ${copy.matches}`;
+      const countLabel = releaseCandidateSlimMode && visible.length < filtered.length
+        ? (lang === 'ko'
+            ? `${visible.length}/${filtered.length}${copy.matches}`
+            : lang === 'ja'
+            ? `${visible.length}/${filtered.length}${copy.matches}`
+            : lang === 'zhHant'
+            ? `${visible.length}/${filtered.length}${copy.matches}`
+            : `${visible.length}/${filtered.length} ${copy.matches}`)
+        : (lang === 'ko' ? `${filtered.length}${copy.matches}` : `${filtered.length} ${copy.matches}`);
+      count.textContent = countLabel;
       if (empty) empty.hidden = filtered.length !== 0;
       grid.querySelectorAll('[data-discovery-preset]').forEach(btn => btn.addEventListener('click', () => {
         try { window.RyokoApp.applyPlannerPreset(JSON.parse(btn.dataset.discoveryPreset || '{}')); } catch(e) {}
@@ -3531,9 +3571,9 @@ function renderTripsSeasonalDesk(){
       const copy = getExpansionFrontDeskCopy(page);
       const storyPack = getSecondaryCityStories()[lang] || getSecondaryCityStories().en;
       const itemMap = Object.fromEntries((storyPack.items || []).map(item => [String(item.city || '').toLowerCase(), item]));
-      const featured = (featuredByPage[page] || []).map(slug => cityLoopMap[slug]).filter(Boolean);
+      const featured = (featuredByPage[page] || []).map(slug => cityLoopMap[slug]).filter(Boolean).slice(0, releaseCandidateSlimMode ? 2 : 3);
       const baseLink = page === 'home' ? `${pathRoot}magazine/index.html#cityFinder` : '#cityFinder';
-      root.innerHTML = `<section class="section expansion-front-section" id="${page}ExpansionFrontDesk"><div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div><div class="expansion-front-shell"><article class="expansion-front-lead info-card"><span class="collection-kicker">${copy.quickLabel}</span><h3>${copy.leadTitle}</h3><p>${copy.leadDesc}</p><div class="expansion-front-pill-row">${featured.map(city => `<span class="expansion-front-pill">${city.name} · ${city.vibe}</span>`).join('')}</div><div class="expansion-front-fast-row">${featured.map(city => `<button class="soft-chip" data-start-city="${city.name}">${city.name}</button>`).join('')}</div><div class="card-actions"><a class="soft-btn" href="${baseLink}">${copy.more}</a><a class="ghost-btn" href="${plannerUrlForCity(featured[0]?.name || 'Osaka')}">${planLabel}</a></div><div class="expansion-front-note">${copy.note}</div></article><div class="expansion-front-column-grid">${groups.map(group => `<article class="expansion-front-column info-card"><div class="expansion-front-column-head"><span class="collection-kicker">${copy.region[group.key][0]}</span><h3>${copy.region[group.key][0]}</h3><p>${copy.region[group.key][1]}</p></div><div class="expansion-front-card-list">${group.slugs.map(slug => { const city = cityLoopMap[slug]; if (!city) return ''; const item = itemMap[slug] || { title: city.name, desc: city.vibe, cityHref: pathRoot + city.guide, sampleHref: pathRoot + city.example }; return `<article class="expansion-front-city-card"><div class="expansion-front-city-top"><strong>${city.name}</strong><span class="expansion-front-city-vibe">${city.vibe}</span></div><p>${item.desc || city.vibe}</p><div class="expansion-front-city-actions"><a class="soft-btn" href="${item.cityHref || (pathRoot + city.guide)}">${copy.city}</a><a class="ghost-btn" href="${item.sampleHref || (pathRoot + city.example)}">${copy.sample}</a><button class="ghost-btn" data-start-city="${city.name}">${copy.plan}</button></div></article>`; }).join('')}</div></article>`).join('')}</div></div></section>`;
+      root.innerHTML = `<section class="section expansion-front-section" id="${page}ExpansionFrontDesk"><div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div><div class="expansion-front-shell"><article class="expansion-front-lead info-card"><span class="collection-kicker">${copy.quickLabel}</span><h3>${copy.leadTitle}</h3><p>${copy.leadDesc}</p><div class="expansion-front-pill-row">${featured.map(city => `<span class="expansion-front-pill">${city.name} · ${city.vibe}</span>`).join('')}</div><div class="expansion-front-fast-row">${featured.map(city => `<button class="soft-chip" data-start-city="${city.name}">${city.name}</button>`).join('')}</div><div class="card-actions"><a class="soft-btn" href="${baseLink}">${copy.more}</a><a class="ghost-btn" href="${plannerUrlForCity(featured[0]?.name || 'Osaka')}">${planLabel}</a></div><div class="expansion-front-note">${copy.note}</div></article><div class="expansion-front-column-grid">${groups.map(group => `<article class="expansion-front-column info-card"><div class="expansion-front-column-head"><span class="collection-kicker">${copy.region[group.key][0]}</span><h3>${copy.region[group.key][0]}</h3><p>${copy.region[group.key][1]}</p></div><div class="expansion-front-card-list">${group.slugs.slice(0, releaseCandidateSlimMode ? 3 : group.slugs.length).map(slug => { const city = cityLoopMap[slug]; if (!city) return ''; const item = itemMap[slug] || { title: city.name, desc: city.vibe, cityHref: pathRoot + city.guide, sampleHref: pathRoot + city.example }; return `<article class="expansion-front-city-card"><div class="expansion-front-city-top"><strong>${city.name}</strong><span class="expansion-front-city-vibe">${city.vibe}</span></div><p>${item.desc || city.vibe}</p><div class="expansion-front-city-actions"><a class="soft-btn" href="${item.cityHref || (pathRoot + city.guide)}">${copy.city}</a><a class="ghost-btn" href="${item.sampleHref || (pathRoot + city.example)}">${copy.sample}</a><button class="ghost-btn" data-start-city="${city.name}">${copy.plan}</button></div></article>`; }).join('')}</div></article>`).join('')}</div></div></section>`;
       root.querySelectorAll('[data-start-city]').forEach(btn => btn.addEventListener('click', () => { location.href = plannerUrlForCity(btn.dataset.startCity || ''); }));
     });
   }
@@ -3803,6 +3843,69 @@ function renderTripsSeasonalDesk(){
   }
 
 
+  function applyUiConsistency(root=document){
+    const scope = root && (root.querySelectorAll ? root : document);
+    if (!scope) return;
+
+    scope.querySelectorAll('.card-actions,.cta-row,.hero-actions,.trip-card-actions,.public-route-actions,.operating-edit-actions,.city-collection-actions,.shared-loop-actions,.city-atlas-actions,.discovery-actions').forEach(row => {
+      row.classList.add('ui-action-row');
+      const buttons = [...row.children].filter(el => el.matches('a,button') && /(primary-btn|secondary-btn|soft-btn|ghost-btn)/.test(el.className || ''));
+      if (!buttons.length) return;
+      buttons.forEach(btn => btn.classList.remove('is-lead-action','is-sub-action'));
+      const lead = buttons.find(btn => btn.classList.contains('primary-btn')) || buttons[0];
+      lead.classList.add('is-lead-action');
+      buttons.forEach(btn => { if (btn !== lead) btn.classList.add('is-sub-action'); });
+    });
+
+    scope.querySelectorAll('.trip-chip-row,.trip-mini-chip-row,.mini-vibe-row,.hero-chip-row,.page-signal-chips,.hero-hierarchy-chip-row,.expansion-front-pill-row,.city-atlas-filter-row,.city-atlas-track-row').forEach(row => {
+      row.classList.add('ui-chip-row');
+      const chips = [...row.children].filter(el => el.matches('.trip-mini-chip,.mini-vibe-chip,.hero-chip,.page-signal-chip,.expansion-front-pill,.city-atlas-filter-chip,.city-atlas-track-chip,.trip-entry-chip,.trip-rhythm-chip,.hero-hierarchy-chip'));
+      if (!chips.length) return;
+      chips.forEach(chip => chip.classList.remove('is-chip-lead','is-chip-sub'));
+      chips[0]?.classList.add('is-chip-lead');
+      chips.slice(1).forEach(chip => chip.classList.add('is-chip-sub'));
+    });
+
+    [
+      '.hero-hierarchy-grid > *',
+      '.shared-editorial-tone-grid > *',
+      '.priority-story-row > *',
+      '.priority-article-grid > *',
+      '.route-strip-grid > *',
+      '.samples-grid > *',
+      '.city-grid > *',
+      '.expansion-front-card-list > *',
+      '.loop-grid > *',
+      '.city-atlas-grid > *',
+      '.city-neighborhood-grid > *',
+      '.city-neighborhood-grid-deep > *',
+      '.trip-grid > *',
+      '.collection-grid > *'
+    ].forEach(selector => {
+      scope.querySelectorAll(selector).forEach((card, index) => {
+        card.classList.toggle('is-ui-featured', index === 0);
+        card.classList.toggle('is-ui-support', index > 0);
+      });
+    });
+  }
+
+  let uiConsistencyObserverBound = false;
+  function initUiConsistency(){
+    applyUiConsistency(document);
+    if (uiConsistencyObserverBound || !window.MutationObserver || !document.body) return;
+    uiConsistencyObserverBound = true;
+    let rafId = 0;
+    const schedule = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => applyUiConsistency(document));
+    };
+    const observer = new MutationObserver((mutations) => {
+      if (mutations.some(m => m.addedNodes && m.addedNodes.length)) schedule();
+    });
+    observer.observe(document.body, { childList:true, subtree:true });
+  }
+
+
   function localizeLangButtonLabels(root=document){
     root.querySelectorAll('[data-lang-btn="zhHant"]').forEach(btn => { btn.textContent = '繁體'; });
     root.querySelectorAll('[data-lang-btn="ja"]').forEach(btn => { btn.textContent = 'JP'; });
@@ -4069,8 +4172,10 @@ function renderTripsSeasonalDesk(){
       localizeLangButtonLabels();
       localizeStaticIndexSections();
     localizeExtendedStaticSections();
+      applyUiConsistency(document);
     });
     initEditorialChrome();
+    initUiConsistency();
   }
   function cityCardTemplate(city){
     return `
