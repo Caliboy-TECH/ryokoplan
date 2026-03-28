@@ -1,12 +1,12 @@
 {
   "name": "Ryokoplan",
-  "release": "v91",
-  "base": "v90",
+  "release": "v92",
+  "base": "v91",
   "date": "2026-03-28",
-  "track": "launch-redirects-and-version-endpoint",
+  "track": "release-smoke-test-helper",
   "notes": [
-    "Adds server-side redirects for legacy sample slugs to canonical sample routes.",
-    "Adds version.json for deploy verification and smoke tests.",
-    "Disables caching on version.json so the deployed release can be checked immediately."
+    "Adds a noindex release-check page for deploy verification and final smoke tests.",
+    "Shows version.json, online status, key route links, and quick local-data reset actions.",
+    "Disallows crawling of the release-check path and disables caching for the checker page."
   ]
 }

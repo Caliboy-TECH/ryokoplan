@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Sitemap: https://ryokoplan.com/sitemap.xml
+Disallow: /release-check/

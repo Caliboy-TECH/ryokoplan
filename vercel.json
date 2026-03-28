@@ -49,6 +49,15 @@
           "value": "no-store, max-age=0"
         }
       ]
+    },
+    {
+      "source": "/release-check/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
     }
   ],
   "redirects": [
