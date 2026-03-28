@@ -209,12 +209,17 @@ window.RyokoPlanner = (() => {
       ? (shareMetaMap[destination] || `${destination} in a city-first flow. Read the neighborhoods, compare the route, and shape the trip.`)
       : (normalizeSummary(data) || 'Read the city. Then build the trip.');
     document.title = title;
+    const cleanUrl = location.href.split('#')[0];
+    const coverImage = 'https://ryokoplan.com/assets/images/brand/og-cover.svg';
     const entries = {
       'meta[name="description"]': desc,
       'meta[property="og:title"]': title,
       'meta[property="og:description"]': desc,
+      'meta[property="og:url"]': cleanUrl,
+      'meta[property="og:image"]': coverImage,
       'meta[name="twitter:title"]': title,
       'meta[name="twitter:description"]': desc,
+      'meta[name="twitter:image"]': coverImage,
       'meta[property="og:image:alt"]': destination ? `${destination} city-first route cover` : 'Ryokoplan city-first route cover',
       'meta[name="twitter:image:alt"]': destination ? `${destination} city-first route cover` : 'Ryokoplan city-first route cover'
     };
@@ -230,6 +235,13 @@ window.RyokoPlanner = (() => {
       }
       if (node && value) node.setAttribute('content', value);
     });
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', cleanUrl);
   }
   function refreshOptions(){
     const currentDuration = qs('duration')?.selectedIndex || 0;

@@ -9,6 +9,89 @@ window.RyokoApp = (() => {
     return depth > 1 ? '../' : depth === 1 ? (location.pathname.endsWith('/') ? '../' : '') : './';
   })();
 
+  const siteOrigin = 'https://ryokoplan.com';
+
+  function absoluteUrl(input=''){
+    const value = String(input || '').trim();
+    if (!value) return siteOrigin;
+    if (/^https?:\/\//i.test(value)) return value;
+    const normalized = value
+      .replace(/^\.\//,'')
+      .replace(/^\.\.\//,'')
+      .replace(/^\/+/, '');
+    return `${siteOrigin}/${normalized}`;
+  }
+
+  function ensureHeadTag(type, key, value=''){
+    if (!key) return null;
+    const selector = type === 'meta'
+      ? `meta[${key.includes(':') ? 'property' : 'name'}="${key}"]`
+      : `link[rel="${key}"]`;
+    let node = document.head.querySelector(selector);
+    if (!node) {
+      node = document.createElement(type);
+      if (type === 'meta') node.setAttribute(key.includes(':') ? 'property' : 'name', key);
+      if (type === 'link') node.setAttribute('rel', key);
+      document.head.appendChild(node);
+    }
+    if (value != null) node.setAttribute(type === 'meta' ? 'content' : 'href', value);
+    return node;
+  }
+
+  function updatePageHead({ title, description, image, imageAlt, url, type='website', robots='index,follow' } = {}){
+    const canonicalUrl = absoluteUrl(url || location.pathname.replace(/^\//,''));
+    const imageUrl = absoluteUrl(image || 'assets/images/brand/og-cover.svg');
+    if (title) document.title = title;
+    ensureHeadTag('meta', 'description', description || 'Read the city. Then build the trip.');
+    ensureHeadTag('meta', 'robots', robots);
+    ensureHeadTag('meta', 'theme-color', '#15273a');
+    ensureHeadTag('meta', 'og:type', type);
+    ensureHeadTag('meta', 'og:site_name', 'Ryokoplan');
+    ensureHeadTag('meta', 'og:title', title || document.title || 'Ryokoplan');
+    ensureHeadTag('meta', 'og:description', description || 'Read the city. Then build the trip.');
+    ensureHeadTag('meta', 'og:url', canonicalUrl);
+    ensureHeadTag('meta', 'og:image', imageUrl);
+    ensureHeadTag('meta', 'og:image:width', '1200');
+    ensureHeadTag('meta', 'og:image:height', '630');
+    ensureHeadTag('meta', 'og:image:alt', imageAlt || 'Ryokoplan city-first travel editorial');
+    ensureHeadTag('meta', 'twitter:card', 'summary_large_image');
+    ensureHeadTag('meta', 'twitter:title', title || document.title || 'Ryokoplan');
+    ensureHeadTag('meta', 'twitter:description', description || 'Read the city. Then build the trip.');
+    ensureHeadTag('meta', 'twitter:image', imageUrl);
+    ensureHeadTag('meta', 'twitter:image:alt', imageAlt || 'Ryokoplan city-first travel editorial');
+    ensureHeadTag('link', 'canonical', canonicalUrl);
+  }
+
+  function applyHomeHead(){
+    updatePageHead({
+      title:'Ryokoplan — City-first Travel Editorial',
+      description:'Read the city first. Then build the trip. A city-first travel editorial app for East Asia with Planner, Magazine, and My Trips.',
+      image:'assets/images/brand/og-cover.svg',
+      imageAlt:'Ryokoplan East Asia city-first travel editorial cover',
+      url:''
+    });
+  }
+
+  function applyMagazineHead(data){
+    updatePageHead({
+      title:data?.title || 'Ryokoplan — Magazine',
+      description:(data?.heroDesc || 'Read East Asia cities before you shape the route. City guides, sample routes, and a magazine-first travel flow.').replace(/<[^>]+>/g,'').trim(),
+      image:'assets/images/brand/og-cover.svg',
+      imageAlt:'Ryokoplan Magazine East Asia city desk',
+      url:'magazine/index.html'
+    });
+  }
+
+  function applyTripsHead(){
+    updatePageHead({
+      title:'Ryokoplan — My Trips',
+      description:'Keep saved routes, shared trips, and recent city reads in one editorial travel loop for East Asia.',
+      image:'assets/images/brand/og-cover.svg',
+      imageAlt:'Ryokoplan My Trips saved city routes',
+      url:'my-trips/index.html'
+    });
+  }
+
 
   const cityLoopMap = {
     tokyo: { name:'Tokyo', country:'Japan', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html', image:'assets/images/cities/tokyo.jpg', vibe:'fast city' },
@@ -1223,7 +1306,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
       </section>
       <section class="section utility-banner utility-banner-large"><div><h3>${data.bannerTitle}</h3><p>${data.bannerDesc}</p></div><div class="cta-row"><a class="primary-btn" data-nav="planner">${data.bannerPlanner}</a><a class="secondary-btn" data-nav="trips">${data.bannerTrips}</a></div></section>
     `;
-    document.title = data.title;
+    applyMagazineHead(data);
     applyTranslations(root);
     document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
     document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
@@ -1666,6 +1749,14 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
       ${(() => { const seasonal = getSeasonalCityFeature(entry.planner); return seasonal ? `<section class="section city-seasonal-bridge"><article class="info-card seasonal-bridge-card"><div class="section-head compact"><div><div class="editorial-kicker">${seasonal.label}</div><h2 class="section-title">${seasonal.title}</h2><p class="section-desc">${seasonal.desc}</p></div></div><div class="trip-chip-row seasonal-chip-row">${seasonal.chips.map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}</div></article></section>` : ''; })()}
       <section class="section footer-cta info-card city-final-cta"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${data.finalTitle}</h2><p>${data.finalDesc}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.planner)}">${lang === 'ko' ? '이 도시부터 시작' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '從這座城市開始' : 'Start with this city'}</a><a class="secondary-btn" href="../example/${entry.example}">${lang === 'ko' ? '샘플 읽기' : lang === 'ja' ? 'サンプルを読む' : lang === 'zhHant' ? '讀範例路線' : 'Read sample route'}</a><a class="ghost-btn" href="${exampleAtlasHref()}">${lang === 'ko' ? 'atlas 보기' : lang === 'ja' ? 'atlas を見る' : lang === 'zhHant' ? '看 atlas' : 'See atlas'}</a></div></section>
       <div class="footer">Ryokoplan ${guideLabel}</div>`;
+    const cityDesc = `${data.lead} ${data.bestFor}`.replace(/\s+/g,' ').trim();
+    updatePageHead({
+      title:`${entry.planner} — Ryokoplan`,
+      description:cityDesc,
+      image:entry.image,
+      imageAlt:`${entry.planner} city guide cover`,
+      url:`city/${slug}.html`
+    });
     document.title = `${entry.planner} — Ryokoplan`;
   }
 
@@ -1755,7 +1846,13 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
       <section class="section" id="example-flow"><article class="example-card info-card example-card-strong example-card-expanded"><div class="editorial-kicker">${uiText('dayByDay')}</div><h2 class="section-title">${lang === 'ko' ? '루트는 이렇게 전개됩니다' : lang === 'ja' ? 'ルートはこのテンポで展開します' : lang === 'zhHant' ? '路線會以這個節奏展開' : 'How the route unfolds'}</h2><div class="example-summary editorial-summary timeline-style">${sample.map((day, i) => `<div class="summary-line editorial-line timeline-line"><span class="timeline-index">0${i+1}</span><div><strong>${day[0]}</strong><span>${day[1]}</span></div></div>`).join('')}</div></article></section>
       <section class="section city-reading-grid city-reading-grid-rich" id="example-why"><article class="info-card editorial-panel editorial-panel-contrast"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '왜 잘 맞는지' : lang === 'ja' ? 'なぜうまくはまるのか' : lang === 'zhHant' ? '為什麼這樣更成立' : 'Why it lands'}</div><h2 class="section-title">${uiText('whyItWorks')}</h2><p class="section-desc">${lang === 'ko' ? '포인트는 많이 보는 게 아니라 도시를 일관되게 느끼게 만드는 것입니다.' : lang === 'ja' ? '大事なのは全部行くことではなく、街を一つの流れとして感じられることです。' : lang === 'zhHant' ? '重點不是把所有地方都塞進去，而是讓整座城市感覺是連成一個節奏。' : 'The point is not to do everything, but to make the city feel coherent.'}</p></div></div><ul class="editorial-bullets">${(editorialData.example[slug]?.[lang] || editorialData.example[slug]?.en || {}).whyBullets.map(item => `<li>${item}</li>`).join('')}</ul></article><article class="info-card editorial-panel editorial-panel-soft"><div class="section-head compact"><div><div class="editorial-kicker">${lang === 'ko' ? '편집 전에 조정할 점' : lang === 'ja' ? '編集前に整える点' : lang === 'zhHant' ? '正式編排前先調整' : 'Adjust before editing'}</div><h2 class="section-title">${uiText('adjustBeforeEditing')}</h2><p class="section-desc">${lang === 'ko' ? '커스텀 전에 기준으로 삼기 좋은 포인트입니다.' : lang === 'ja' ? '自分用に変える前に、先に押さえておくと良い基準です。' : lang === 'zhHant' ? '在客製之前，先拿來當基準的幾個重點。' : 'Good baseline decisions before you customize it.'}</p></div></div><ul class="editorial-bullets"><li>${(editorialData.example[slug]?.[lang] || editorialData.example[slug]?.en || {}).swapNote}</li><li>${(editorialData.example[slug]?.[lang] || editorialData.example[slug]?.en || {}).energyControl}</li><li>${cityData.keep[0]}</li></ul></article></section>
       <section class="section footer-cta info-card city-final-cta" id="example-next"><div class="editorial-kicker">${uiText('nextMove')}</div><h2>${lang === 'ko' ? '리스트보다 이 루트의 결을 가져가세요' : lang === 'ja' ? 'リストより、このルートのトーンを持ち帰ってください' : lang === 'zhHant' ? '帶走這條路線的節奏，而不只是清單' : 'Take the route logic, not just the list'}</h2><p>${lang === 'ko' ? '플래너에서 일수, 동행, 무드만 바꿔도 같은 결의 다른 여행으로 확장할 수 있습니다.' : lang === 'ja' ? 'Planner では日数、同行者、ムードを変えるだけで、同じトーンの別の旅に広げられます。' : lang === 'zhHant' ? '在 Planner 裡，只要改天數、同行者和氛圍，就能延伸成同樣調性的另一趟旅程。' : 'In Planner, keep the tone but change days, pace, companion, and mood to make it yours.'}</p><div class="cta-row cta-row-priority"><a class="primary-btn" href="${plannerUrlForCity(entry.city)}">${lang === 'ko' ? '이 도시부터 시작' : lang === 'ja' ? 'プランナーを開く' : lang === 'zhHant' ? '從這座城市開始' : 'Start with this city'}</a><a class="secondary-btn" href="../city/${cityGuideSlugFromExample(slug)}.html">${lang === 'ko' ? '도시 가이드로 돌아가기' : lang === 'ja' ? '都市ガイドへ戻る' : lang === 'zhHant' ? '回到城市指南' : 'Back to city guide'}</a><a class="ghost-btn" href="${exampleAtlasHref()}">${lang === 'ko' ? 'atlas 보기' : lang === 'ja' ? 'atlas を見る' : lang === 'zhHant' ? '看 atlas' : 'See atlas'}</a></div></section><div class="footer">Ryokoplan Magazine</div>`;
-    document.title = `${title} — Ryokoplan`;
+    updatePageHead({
+      title:`${title} — Ryokoplan`,
+      description:`${lead} ${cityData.bestFor}`.replace(/\s+/g,' ').trim(),
+      image:entry.image,
+      imageAlt:`${title} sample route cover`,
+      url:`example/${slug}.html`
+    });
   }
   function buildDiscoveryItems(){
     const guideBase = document.body.dataset.page === 'planner' ? '' : '../';
@@ -4113,6 +4210,8 @@ function renderTripsSeasonalDesk(){
 
   function initCommon(){
     document.documentElement.lang = lang;
+    if (document.body.dataset.page === 'planner') applyHomeHead();
+    if (document.body.dataset.page === 'trips') applyTripsHead();
     renderMagazineLanding();
     renderEastAsiaTaxonomy('magazine');
     renderCityAtlas('magazine');
