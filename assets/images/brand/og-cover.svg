@@ -8,7 +8,7 @@
 <text x="108" y="146" fill="#A46F45" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">CITY-FIRST TRAVEL EDITORIAL · EAST ASIA</text>
 <text x="108" y="236" fill="#15273A" font-family="Inter, Arial, sans-serif" font-size="70" font-weight="900">Read the city.</text>
 <text x="108" y="314" fill="#15273A" font-family="Inter, Arial, sans-serif" font-size="70" font-weight="900">Then build the trip.</text>
-<text x="108" y="386" fill="#6C717B" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="600">Atlas · City guide · Example · Planner · Result</text>
+<text x="108" y="386" fill="#6C717B" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="600">Atlas · City guide · Example · Route · Result</text>
 <text x="108" y="466" fill="#15273A" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800">Soft editorial tone. Mobile-first city flow.</text>
 <text x="610" y="142" fill="#FFFDF9" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800">Ryoko<tspan fill="#F07C4C">plan</tspan></text>
 <text x="610" y="196" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="900">A route should read like a city issue.</text>
@@ -18,7 +18,7 @@
 <text x="606" y="448" fill="#6B7280" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Release cities with deeper city, example, and result polish</text>
 <text x="896" y="364" fill="#9A734B" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800">LOOP</text>
 <text x="896" y="408" fill="#15273A" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900">Atlas → City guide → Example</text>
-<text x="896" y="450" fill="#15273A" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900">Planner → Result → My Trips</text>
+<text x="896" y="450" fill="#15273A" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900">Route → Result → My Trips</text>
 <defs>
 <linearGradient id="panel" x1="88" y1="42" x2="1084" y2="590" gradientUnits="userSpaceOnUse">
 <stop stop-color="#FFF8EF"/>
