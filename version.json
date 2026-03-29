@@ -1,14 +1,14 @@
 {
-  "release": "v114",
-  "version": "v114",
+  "release": "v115",
+  "version": "v115",
   "channel": "beta",
-  "codename": "campaign-entry-links",
+  "codename": "magazine-ux-repair",
   "updatedAt": "2026-03-29",
-  "headline": "Promotion-friendly campaign entry links and handoff bar.",
+  "headline": "Magazine filter reactions, dispatch tone, and click affordance are repaired.",
   "notes": [
-    "Adds campaign-aware entry links so promo traffic can open city, sample, or route starts with clearer handoff.",
-    "Planner now keeps a fresh latest route session and offers resume or use-as-base actions on return.",
-    "Release-check can reset latest route session state and now reports it alongside draft status.",
-    "Planner release tooling also fixes missing planner-draft reset handlers in release-check."
+    "Magazine city finder now filters by editorial track instead of vague mood text so fast, food, coast, and slow states actually react.",
+    "Quick suggestions now do something useful: food applies the food track, rainy and parents spotlight the matching editorial bases.",
+    "Magazine dispatch cards are rewritten in a more natural Korean editorial tone and now use clear button-style actions.",
+    "City cards and dispatch cards gain stronger click affordance and the magazine surface gets safer anchor offsets and bottom spacing on mobile."
   ]
 }

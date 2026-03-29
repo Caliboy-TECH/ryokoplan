@@ -2495,10 +2495,10 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
       const meta = data.cityMeta[key];
       const copy = data.cityCopy[key];
       const chips = (data.chipMap[key] || []).map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('');
-      const vibe = String(loop.vibe || '').split(/\s+/)[0] || 'all';
-      return `<article class="city-card info-card finder-card" data-country="${loop.country.toLowerCase()}" data-vibe="${(loop.vibe||'').replace(/ /g,' ')}" data-search="${loop.name.toLowerCase()} ${loop.country.toLowerCase()} ${(loop.vibe||'').toLowerCase()}">
+      const trackList = getCityAtlasTracks(key);
+      return `<article class="city-card info-card finder-card" data-country="${loop.country.toLowerCase()}" data-vibe="${(loop.vibe||'').replace(/ /g,' ')}" data-track="${trackList.join(' ')}" data-card-href="../${loop.guide}" data-search="${loop.name.toLowerCase()} ${loop.country.toLowerCase()} ${(loop.vibe||'').toLowerCase()} ${trackList.join(' ')} ${(data.chipMap[key] || []).join(' ').toLowerCase()}">
         <div class="card-image"><img src="../${loop.image}" alt="${loop.name}"></div>
-        <div class="card-body"><div class="meta">${meta}</div><h3 class="card-title">${loop.name}</h3><p class="card-copy">${copy}</p><div class="trip-chip-row">${chips}</div><div class="card-actions"><a class="soft-btn" href="../${loop.guide}">${data.guideBtn}</a><button class="ghost-btn" data-start-city="${loop.name}">${data.planBtn}</button></div></div>
+        <div class="card-body"><div class="meta">${meta}</div><h3 class="card-title">${loop.name}</h3><p class="card-copy">${copy}</p><div class="trip-chip-row">${chips}</div><div class="card-actions"><a class="soft-btn" href="../${loop.guide}">${data.guideBtn}</a><a class="ghost-btn" href="${plannerUrlForCity(loop.name, { entryKind:'city', entryTitle:loop.name, entryCity:loop.name, entrySource:'magazine-finder' })}">${data.planBtn}</a></div></div>
       </article>`;
     }).join('');
     root.innerHTML = `
@@ -2594,24 +2594,24 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
           <a class="soft-btn" data-nav="trips" href="${navHref('trips')}">${lang === 'ko' ? '컬렉션으로 보기' : lang === 'ja' ? 'コレクションを見る' : lang === 'zhHant' ? '看收藏架' : 'Open collections'}</a>
         </div>
         <div class="dispatch-edit-grid">
-          <article class="dispatch-edit-card feature">
-            <span class="collection-kicker">${lang === 'ko' ? '주말 데스크' : lang === 'ja' ? '週末デスク' : lang === 'zhHant' ? '週末編輯桌' : 'Weekend desk'}</span>
-            <h3>${lang === 'ko' ? 'Tokyo dense weekend, 그런데 너무 빡빡하지 않게' : lang === 'ja' ? '密度はあるけれど詰め込みすぎない東京週末ベース' : lang === 'zhHant' ? '高密度但不會過滿的東京週末基底' : 'Tokyo dense weekend, without making it feel overpacked'}</h3>
-            <p>${lang === 'ko' ? '대표 지역은 챙기되, 하루 한 구간은 숨을 쉬게 두는 2박 3일 베이스입니다.' : lang === 'ja' ? '主要エリアは押さえつつ、毎日にひとつやわらかい余白を残す2泊3日の東京ベースです。' : lang === 'zhHant' ? '保留代表區域，但每天都留一段能喘口氣的節奏，是這個東京 2晚3天基底的重點。' : 'A 2-night Tokyo base that still hits the big districts but leaves one softer pocket each day.'}</p>
+          <article class="dispatch-edit-card feature" id="magazineWeekendCard" data-card-link="../example/tokyo-3n4d-first-trip.html" tabindex="0" role="link">
+            <span class="collection-kicker">${lang === 'ko' ? '주말 베이스' : lang === 'ja' ? '週末ベース' : lang === 'zhHant' ? '週末基底' : 'Weekend desk'}</span>
+            <h3>${lang === 'ko' ? '도쿄는 빽빽하게보다, 한 구간씩 끊어 읽는 주말이 더 좋습니다' : lang === 'ja' ? '東京は詰め込むより、一段ずつ切って読む週末ベースの方がきれいです' : lang === 'zhHant' ? '東京與其塞滿，不如用一段一段的週末節奏去讀會更好' : 'Tokyo reads better as a paced weekend than an overpacked sprint'}</h3>
+            <p>${lang === 'ko' ? '대표 장면은 챙기되, 하루에 한 번은 템포를 낮추는 2박 3일 베이스입니다.' : lang === 'ja' ? '代表的な場面は押さえつつ、一日に一度テンポを落とす 2泊3日のベースです。' : lang === 'zhHant' ? '保留代表場景，但每天都留一次降速的節奏，是這條 2晚3天基底的重點。' : 'A 2-night base that keeps the iconic scenes but lowers the tempo once each day.'}</p>
             <div class="trip-mini-chip-row"><span class="trip-mini-chip">Tokyo</span><span class="trip-mini-chip">2N3D</span><span class="trip-mini-chip">${lang === 'ko' ? '주말' : lang === 'ja' ? '週末' : lang === 'zhHant' ? '週末' : 'Weekend'}</span></div>
-            <div class="cta-row"><button class="primary-btn" data-start-city="Tokyo">${lang === 'ko' ? '이 도시부터 시작' : lang === 'ja' ? 'この都市から始める' : lang === 'zhHant' ? '從這座城市開始' : 'Start from this city'}</button><a class="secondary-btn" href="../example/tokyo-3n4d-first-trip.html">${lang === 'ko' ? '샘플 보기' : lang === 'ja' ? 'サンプルを見る' : lang === 'zhHant' ? '看範例' : 'Read sample route'}</a></div>
+            <div class="cta-row"><a class="primary-btn" href="${plannerUrlForCity('Tokyo', { entryKind:'sample', entryTitle:'Tokyo weekend base', entryCity:'Tokyo', entrySource:'magazine-dispatch' })}">${lang === 'ko' ? '이 흐름으로 시작' : lang === 'ja' ? 'この流れで始める' : lang === 'zhHant' ? '用這個節奏開始' : 'Start with this route'}</a><a class="secondary-btn" href="../example/tokyo-3n4d-first-trip.html">${lang === 'ko' ? '샘플 다시 보기' : lang === 'ja' ? 'サンプルを見る' : lang === 'zhHant' ? '查看 sample' : 'Read sample route'}</a></div>
           </article>
-          <article class="dispatch-edit-card">
-            <span class="collection-kicker">${lang === 'ko' ? '우천일 노트' : lang === 'ja' ? '雨の日ノート' : lang === 'zhHant' ? '雨天筆記' : 'Rainy-day note'}</span>
-            <h3>${lang === 'ko' ? 'Seoul rainy-day fallback' : lang === 'ja' ? '雨の日でも崩れにくいソウルの代替ベース' : lang === 'zhHant' ? '下雨天也不容易失衡的首爾替代基底' : 'Seoul rainy-day fallback'}</h3>
-            <p>${lang === 'ko' ? '실내 밀도와 동네 이동을 가볍게 유지하는 서울 우천일 베이스입니다.' : lang === 'ja' ? '室内の密度を保ちながら、街区の移動を軽くつなぐソウルの雨の日ベースです。' : lang === 'zhHant' ? '這是把室內密度和街區移動都維持得更輕一些的首爾雨天基底。' : 'A Seoul fallback that stays indoor-friendly while keeping the neighborhood line intact.'}</p>
-            <div class="cta-row compact-actions"><button class="ghost-btn" data-start-city="Seoul">${lang === 'ko' ? '이 도시부터 시작' : lang === 'ja' ? 'この都市から始める' : lang === 'zhHant' ? '從這座城市開始' : 'Start from this city'}</button><a class="soft-link" href="../city/seoul.html">${lang === 'ko' ? '도시 가이드' : lang === 'ja' ? '都市ガイド' : lang === 'zhHant' ? '城市指南' : 'City guide'}</a></div>
+          <article class="dispatch-edit-card" id="magazineRainyCard" data-card-link="../city/seoul.html" tabindex="0" role="link">
+            <span class="collection-kicker">${lang === 'ko' ? '우천일 베이스' : lang === 'ja' ? '雨の日ベース' : lang === 'zhHant' ? '雨天基底' : 'Rainy-day note'}</span>
+            <h3>${lang === 'ko' ? '비 오는 날엔, 서울을 실내 밀도 중심으로 더 가볍게 읽는 편이 좋습니다' : lang === 'ja' ? '雨の日のソウルは、室内の密度を軸に軽く読む方がまとまります' : lang === 'zhHant' ? '下雨天的首爾，更適合用室內密度去讀，整體會更輕一些' : 'Seoul stays cleaner on rainy days when indoor density leads the route'}</h3>
+            <p>${lang === 'ko' ? '강한 랜드마크를 더 넣기보다, 실내 포켓과 짧은 동네 이동을 이어 붙이는 우천일 서울 베이스입니다.' : lang === 'ja' ? '強いランドマークを増やすより、室内ポケットと短い街区移動でつなぐ雨の日ソウルのベースです。' : lang === 'zhHant' ? '比起再加強地標，更適合用室內口袋與短街區移動把首爾接起來。' : 'A rainy-day Seoul base built around indoor pockets and shorter neighborhood moves.'}</p>
+            <div class="cta-row compact-actions"><a class="primary-btn" href="${plannerUrlForCity('Seoul', { entryKind:'city', entryTitle:'Rainy-day Seoul base', entryCity:'Seoul', entrySource:'magazine-rainy' })}">${lang === 'ko' ? '이 베이스로 시작' : lang === 'ja' ? 'このベースで始める' : lang === 'zhHant' ? '用這個基底開始' : 'Start from this base'}</a><a class="secondary-btn" href="../city/seoul.html">${lang === 'ko' ? '도시 가이드 열기' : lang === 'ja' ? '都市ガイドを開く' : lang === 'zhHant' ? '打開城市指南' : 'Open city guide'}</a></div>
           </article>
-          <article class="dispatch-edit-card">
+          <article class="dispatch-edit-card" id="magazineFamilyCard" data-card-link="../city/jeju.html" tabindex="0" role="link">
             <span class="collection-kicker">${lang === 'ko' ? '가족 페이스' : lang === 'ja' ? '家族ペース' : lang === 'zhHant' ? '家庭節奏' : 'Family pace'}</span>
-            <h3>${lang === 'ko' ? 'Jeju easy pace with parents' : lang === 'ja' ? '親と行く、やわらかな済州ペース' : lang === 'zhHant' ? '和父母同行的濟州輕鬆節奏' : 'Jeju easy pace with parents'}</h3>
-            <p>${lang === 'ko' ? '이동은 단순하게, 풍경과 식사는 충분히 남기는 느린 제주 베이스입니다.' : lang === 'ja' ? '移動はシンプルに、景色と食事、休憩の余白を残すゆるやかな済州ベースです。' : lang === 'zhHant' ? '移動保持簡單，把風景、用餐和休息的空間都留出來的濟州慢節奏基底。' : 'A slower Jeju base with simple movement, enough scenery, and room for meals and rest.'}</p>
-            <div class="cta-row compact-actions"><button class="ghost-btn" data-start-city="Jeju">${lang === 'ko' ? '이 도시부터 시작' : lang === 'ja' ? 'この都市から始める' : lang === 'zhHant' ? '從這座城市開始' : 'Start from this city'}</button><a class="soft-link" href="../city/jeju.html">${lang === 'ko' ? '도시 가이드' : lang === 'ja' ? '都市ガイド' : lang === 'zhHant' ? '城市指南' : 'City guide'}</a></div>
+            <h3>${lang === 'ko' ? '부모님과 함께라면, 제주는 더 천천히 읽는 편이 좋습니다' : lang === 'ja' ? '親と行くなら、済州はもっとゆっくり読む方が合います' : lang === 'zhHant' ? '如果和父母同行，濟州更適合慢一點去讀' : 'Jeju lands better with parents when the pace stays slower'}</h3>
+            <p>${lang === 'ko' ? '이동은 단순하게 두고, 풍경과 식사를 충분히 남기는 느린 제주 베이스입니다.' : lang === 'ja' ? '移動はシンプルに保ち、景色と食事の余白を十分に残すゆるやかな済州ベースです。' : lang === 'zhHant' ? '把移動保持簡單，並且把風景與用餐的空間留夠，就是這條濟州慢節奏基底。' : 'A slower Jeju base that keeps movement simple and leaves room for scenery and meals.'}</p>
+            <div class="cta-row compact-actions"><a class="primary-btn" href="${plannerUrlForCity('Jeju', { entryKind:'city', entryTitle:'Jeju family pace', entryCity:'Jeju', entrySource:'magazine-family' })}">${lang === 'ko' ? '이 흐름으로 시작' : lang === 'ja' ? 'この流れで始める' : lang === 'zhHant' ? '用這個節奏開始' : 'Start with this pace'}</a><a class="secondary-btn" href="../city/jeju.html">${lang === 'ko' ? '도시 가이드 열기' : lang === 'ja' ? '都市ガイドを開く' : lang === 'zhHant' ? '打開城市指南' : 'Open city guide'}</a></div>
           </article>
         </div>
       </section>
@@ -5045,13 +5045,31 @@ function renderTripsSeasonalDesk(){
     let vibe = 'all';
     let query = '';
 
+    function finderLabel(){
+      const activeCountry = countryTabs.find(tab => tab.classList.contains('active'))?.textContent?.trim() || '';
+      const activeVibe = vibeTabs.find(tab => tab.classList.contains('active'))?.textContent?.trim() || '';
+      const pieces = [];
+      if (activeCountry && country !== 'all') pieces.push(activeCountry);
+      if (activeVibe && vibe !== 'all') pieces.push(activeVibe);
+      if (query) pieces.push(query);
+      return pieces.join(' · ');
+    }
+
+    function spotlightMagazineCard(id=''){
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('is-spotlit');
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      window.setTimeout(() => el.classList.remove('is-spotlit'), 1800);
+    }
+
     function apply(){
       let visible = 0;
       cards.forEach(card => {
         const greaterChinaCountries = ['taiwan','hong kong','macau'];
         const matchesCountry = country === 'all' || (country === 'greater-china' ? greaterChinaCountries.includes(card.dataset.country) : card.dataset.country === country);
-        const vibeList = String(card.dataset.vibe || '').split(/\s+/).filter(Boolean);
-        const matchesVibe = vibe === 'all' || vibeList.includes(vibe);
+        const trackList = String(card.dataset.track || '').split(/\s+/).filter(Boolean);
+        const matchesVibe = vibe === 'all' || trackList.includes(vibe);
         const haystack = `${card.dataset.search || ''} ${card.textContent || ''}`.toLowerCase();
         const matchesQuery = !query || haystack.includes(query);
         const show = matchesCountry && matchesVibe && matchesQuery;
@@ -5060,7 +5078,11 @@ function renderTripsSeasonalDesk(){
       });
       if (empty) empty.hidden = visible !== 0;
       const count = document.getElementById('finderCount');
-      if (count) count.textContent = (lang === 'ko' || lang === 'ja' || lang === 'zhHant') ? `${visible}${helperCopy.count}` : `${visible} ${helperCopy.count}`;
+      if (count) {
+        const label = finderLabel();
+        const base = (lang === 'ko' || lang === 'ja' || lang === 'zhHant') ? `${visible}${helperCopy.count}` : `${visible} ${helperCopy.count}`;
+        count.textContent = label ? `${base} · ${label}` : base;
+      }
     }
 
     countryTabs.forEach(btn => btn.addEventListener('click', () => {
@@ -5078,10 +5100,63 @@ function renderTripsSeasonalDesk(){
       apply();
     });
     document.querySelectorAll('[data-finder-suggest]').forEach(btn => btn.addEventListener('click', () => {
-      query = String(btn.dataset.finderSuggest || '').toLowerCase();
+      const type = String(btn.dataset.finderSuggest || '').toLowerCase();
+      if (type === 'rainy') {
+        query = '';
+        if (searchInput) searchInput.value = '';
+        vibe = 'all';
+        country = 'all';
+        vibeTabs.forEach(tab => tab.classList.toggle('active', tab.dataset.vibeFilter === 'all'));
+        countryTabs.forEach(tab => tab.classList.toggle('active', tab.dataset.countryFilter === 'all'));
+        apply();
+        spotlightMagazineCard('magazineRainyCard');
+        return;
+      }
+      if (type === 'parents') {
+        query = '';
+        if (searchInput) searchInput.value = '';
+        vibe = 'all';
+        country = 'all';
+        vibeTabs.forEach(tab => tab.classList.toggle('active', tab.dataset.vibeFilter === 'all'));
+        countryTabs.forEach(tab => tab.classList.toggle('active', tab.dataset.countryFilter === 'all'));
+        apply();
+        spotlightMagazineCard('magazineFamilyCard');
+        return;
+      }
+      if (type === 'food') {
+        query = '';
+        if (searchInput) searchInput.value = '';
+        country = 'all';
+        vibe = 'food';
+        countryTabs.forEach(tab => tab.classList.toggle('active', tab.dataset.countryFilter === 'all'));
+        vibeTabs.forEach(tab => tab.classList.toggle('active', tab.dataset.vibeFilter === 'food'));
+        document.getElementById('cityFinder')?.scrollIntoView({ behavior:'smooth', block:'start' });
+        apply();
+        return;
+      }
+      query = type;
       if (searchInput) searchInput.value = btn.dataset.finderSuggest || '';
       apply();
+      document.getElementById('cityFinder')?.scrollIntoView({ behavior:'smooth', block:'start' });
     }));
+
+    const magazineCards = [...document.querySelectorAll('[data-card-link]')];
+    magazineCards.forEach(card => {
+      if (card.dataset.cardBound === '1') return;
+      card.dataset.cardBound = '1';
+      const open = () => { if (card.dataset.cardLink) location.href = card.dataset.cardLink; };
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('a, button, input, textarea, select')) return;
+        open();
+      });
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          open();
+        }
+      });
+    });
+
     apply();
   }
 

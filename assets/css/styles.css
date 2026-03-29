@@ -5379,3 +5379,32 @@ main:focus{outline:none}
 .campaign-entry-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 .campaign-entry-dismiss{border:none;background:transparent;color:#9a734b;font-weight:700;cursor:pointer;padding:8px 6px}
 @media (max-width: 860px){.campaign-entry-inner{grid-template-columns:1fr;align-items:flex-start}.campaign-entry-actions{justify-content:flex-start}.campaign-entry-dismiss{padding-left:0}}
+
+/* v115 magazine UX repair */
+.page[data-page="magazine"] .container{padding-bottom:calc(180px + env(safe-area-inset-bottom));}
+.finder-card[data-card-href],
+.dispatch-edit-card[data-card-link]{cursor:pointer;}
+.finder-card[data-card-href] .card-title,
+.dispatch-edit-card[data-card-link] h3{transition:color .18s ease;}
+.finder-card[data-card-href]:hover .card-title,
+.dispatch-edit-card[data-card-link]:hover h3,
+.finder-card[data-card-href]:focus-within .card-title,
+.dispatch-edit-card[data-card-link]:focus-within h3{color:#b96732;}
+.finder-card .card-actions .ghost-btn,
+.finder-card .card-actions .soft-btn,
+.dispatch-edit-card .card-actions .secondary-btn,
+.dispatch-edit-card .card-actions .primary-btn{min-height:48px;justify-content:center;}
+.dispatch-edit-card .card-actions .secondary-btn{background:#fff7ef;border-color:#e8d3bf;color:#17324f;}
+.dispatch-edit-card .card-actions .secondary-btn:hover{background:#fff0e1;}
+.finder-toolbar .tab-btn,
+.finder-helper-row .tab-btn{transition:transform .16s ease, box-shadow .16s ease, background-color .16s ease, color .16s ease;}
+.finder-toolbar .tab-btn:active,
+.finder-helper-row .tab-btn:active{transform:scale(.98);}
+.finder-count{font-weight:800;color:#7c6248;}
+.dispatch-edit-card.is-spotlit{border-color:#f0b990;box-shadow:0 22px 46px rgba(176,103,50,.16), 0 0 0 4px rgba(240,185,144,.22);}
+.finder-empty{border-style:dashed;background:linear-gradient(180deg,#fffdf9 0%,#fff8f0 100%);}
+@media (max-width: 720px){
+  .page[data-page="magazine"] .container{padding-bottom:calc(210px + env(safe-area-inset-bottom));}
+  .finder-count{width:100%;margin-top:6px;}
+}
+.page [id]{scroll-margin-top:calc(128px + env(safe-area-inset-top));}
