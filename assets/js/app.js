@@ -2492,19 +2492,19 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
     const atlasFilterCopy = getAtlasFilterCopy();
     const order = ['tokyo','seoul','taipei','kyoto','busan','hongkong','fukuoka','jeju','macau','sapporo','gyeongju','sendai','okinawa','osaka'];
     const heroDescT = lang === 'ko'
-      ? '도시의 결부터 보고, 바로 guide와 planner로 이어지는 시작점만 남겼습니다.'
+      ? '도시의 결을 먼저 읽고, guide나 planner로 바로 이어집니다.'
       : lang === 'ja'
         ? '街の質感を先に読み、そのまま guide と planner へつながる入口だけを残しました。'
         : lang === 'zhHant'
           ? '先讀城市的質感，只留下能直接接到 guide 與 planner 的入口。'
-          : 'Read the city first, then move straight into guide or planner.';
+          : 'Read the city first, then move directly into guide or planner.';
     const coverNoteT = lang === 'ko'
-      ? '첫 화면은 읽는 느낌보다, 어디로 들어갈지 더 빨리 보이도록 줄였습니다.'
+      ? '첫 화면은 읽기보다 입구가 먼저 보이게 정리했습니다.'
       : lang === 'ja'
         ? '最初の画面は、読む量よりも入口が先に見えるように整えました。'
         : lang === 'zhHant'
           ? '第一畫面先讓入口更清楚，而不是先讓你讀很多。'
-          : 'The opening now shows the entry points faster, with less reading first.';
+          : 'The opening now surfaces entry points before the reading weight.';
     const quickJumpTitleT = lang === 'ko'
       ? '처음엔 입구 하나만 정하면 됩니다'
       : lang === 'ja'
@@ -2518,14 +2518,14 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
         ? '都市、状況ベース、保存した flow のどれから入るかだけ先に決めれば十分です。'
         : lang === 'zhHant'
           ? '先決定要從城市、情境基底，還是已保存的 flow 開始就好。'
-          : 'Start from a city, a situation base, or a saved flow.';
+          : 'Start from a city, a ready-made base, or a saved flow.';
     const dispatchDescT = lang === 'ko'
-      ? '주말, 비, 부모님 동행처럼 바로 planner로 넘기기 좋은 베이스만 남겼습니다.'
+      ? '주말, 비, 부모님 동행처럼 바로 넘기기 좋은 베이스만 남겼습니다.'
       : lang === 'ja'
         ? '週末、雨、親との旅など、そのまま planner に渡しやすいベースだけを残しました。'
         : lang === 'zhHant'
           ? '只留下週末、雨天、和父母同行這些最適合直接接到 planner 的基底。'
-          : 'Only the bases that hand off cleanly into the planner stay here.';
+          : 'Only the bases that hand off cleanly stay here.';
     const finderTitleT = lang === 'ko'
       ? '먼저 고르기 쉬운 도시부터 보이게 정리했습니다'
       : lang === 'ja'
@@ -2534,12 +2534,12 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
           ? '先把最好下手選的城市排到前面'
           : 'The easiest first reads now surface first';
     const finderDescT = lang === 'ko'
-      ? '첫 줄은 시작하기 쉬운 도시, 그 아래는 확장 도시 순서로 읽히게 정리했습니다.'
+      ? '첫 줄은 바로 시작하기 쉬운 도시, 아래는 확장 도시입니다.'
       : lang === 'ja'
         ? '最初の列は入りやすい都市、その下に expansion 都市が続くように整えました。'
         : lang === 'zhHant'
           ? '第一列先放最容易開始的城市，下面再接 expansion 城市。'
-          : 'The first row is for the clearest starting cities, then the expansion layer follows.';
+          : 'The first row is for the clearest starting cities; the expansion layer follows below.';
     const shelfLeadTitle = lang === 'ko'
       ? 'Best first reads'
       : lang === 'ja'
@@ -2548,12 +2548,12 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
           ? 'Best first reads'
           : 'Best first reads';
     const shelfLeadDesc = lang === 'ko'
-      ? 'Tokyo, Seoul, Taipei, Kyoto를 첫 스캔 라인에 고정해 모바일에서 시작점이 더 빨리 보이게 했습니다.'
+      ? 'Tokyo, Seoul, Taipei, Kyoto를 첫 스캔 라인에 두어 시작점이 더 빨리 보이게 했습니다.'
       : lang === 'ja'
         ? 'Tokyo / Seoul / Taipei / Kyoto を最初のスキャンラインに固定し、モバイルで入口が早く見えるようにしました。'
         : lang === 'zhHant'
           ? '把 Tokyo、Seoul、Taipei、Kyoto 固定在第一條掃視線上，讓手機上更快看到入口。'
-          : 'Tokyo, Seoul, Taipei, and Kyoto now hold the first scan line on mobile.';
+          : 'Tokyo, Seoul, Taipei, and Kyoto now hold the first scan line.';
     const topEntryLabel = lang === 'ko' ? 'Top entry' : lang === 'ja' ? 'Top entry' : lang === 'zhHant' ? 'Top entry' : 'Top entry';
     const releaseLabel = lang === 'ko' ? 'Release city' : lang === 'ja' ? 'Release city' : lang === 'zhHant' ? 'Release city' : 'Release city';
     const cityMarkup = order.map((key, idx) => {
@@ -2606,7 +2606,8 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
           <article class="hero-side-card info-card">
             <span class="collection-kicker">${data.sideKicker}</span>
             <h3>${data.sideTitle}</h3>
-            <div class="editorial-lines compact">${data.sideLines.map(line => `<div class="editorial-line"><strong>${line[0]}</strong><span>${line[1]}</span></div>`).join('')}</div>
+            <div class="editorial-lines compact editorial-lines-tight">${data.sideLines.slice(0,2).map(line => `<div class="editorial-line"><strong>${line[0]}</strong><span>${line[1]}</span></div>`).join('')}</div>
+            <div class="hero-side-note">${lang === 'ko' ? '도시 가이드와 저장한 trip만 바로 보이게 남겼습니다.' : lang === 'ja' ? '都市ガイドと保存した trip だけがすぐ見えるように残しました。' : lang === 'zhHant' ? '只留下城市指南與已存 trip 兩個最快入口。' : 'Only the two fastest exits stay here: city guide and saved trips.'}</div>
             <div class="mini-cta-stack"><a class="soft-btn" href="#cityFinder">${data.sideButtons[0]}</a><a class="soft-btn" data-nav="trips" href="${navHref('trips')}">${data.sideButtons[1]}</a></div>
           </article>
         </div>
@@ -2642,24 +2643,24 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
 
       <section class="section hero-hierarchy-band hero-hierarchy-band-magazine">
         <div class="section-head hero-hierarchy-head">
-          <div><span class="eyebrow">${lang === 'ko' ? '시작 가이드' : lang === 'ja' ? 'スタートガイド' : lang === 'zhHant' ? '開始指南' : 'Start guide'}</span><h2 class="section-title">${lang === 'ko' ? '처음엔 세 가지만 명확하면 됩니다' : lang === 'ja' ? '最初は三つだけ明確なら十分です' : lang === 'zhHant' ? '一開始只要三件事夠清楚' : 'Only three things need to feel obvious first'}</h2><p class="section-desc">${lang === 'ko' ? '어디서 시작할지, 어떤 결로 읽을지, 그리고 planner로 어떻게 이어지는지만 바로 이해되면 됩니다.' : lang === 'ja' ? 'どこから始めるか、どんな読み方をするか、planner へどうつながるかだけすぐ伝われば十分です。' : lang === 'zhHant' ? '只要先看懂從哪裡開始、用什麼節奏讀、以及怎麼接到 planner 就夠了。' : 'Users should immediately understand where to start, how to narrow the city field, and how the handoff reaches planner.'}</p></div>
+          <div><span class="eyebrow">${lang === 'ko' ? '시작 가이드' : lang === 'ja' ? 'スタートガイド' : lang === 'zhHant' ? '開始指南' : 'Start guide'}</span><h2 class="section-title">${lang === 'ko' ? '처음엔 세 가지만 보이면 됩니다' : lang === 'ja' ? '最初は三つ見えれば十分です' : lang === 'zhHant' ? '一開始先看見三件事就夠了' : 'Only three things need to show up first'}</h2><p class="section-desc">${lang === 'ko' ? '시작점, 읽는 결, planner 연결만 먼저 보이면 됩니다.' : lang === 'ja' ? '入口、読み方、planner への接続だけ先に見えれば十分です。' : lang === 'zhHant' ? '先看見入口、閱讀節奏、和 planner 連接就夠了。' : 'Show the entry point, the reading track, and the planner handoff first.'}</p></div>
         </div>
         <div class="hero-hierarchy-grid">
           <article class="hero-hierarchy-card hero-hierarchy-card-strong">
             <span class="hero-hierarchy-kicker">${lang === 'ko' ? 'Cities' : lang === 'ja' ? 'Cities' : lang === 'zhHant' ? 'Cities' : 'Cities'}</span>
-            <strong>${lang === 'ko' ? '도시는 많아도 첫 클릭은 바로 보여야 합니다' : lang === 'ja' ? '都市が多くても最初のクリック先はすぐ見えるべきです' : lang === 'zhHant' ? '城市很多，但第一個點擊目標要一眼就看見' : 'Even with 14 cities, the first click should feel obvious'}</strong>
-            <p>${lang === 'ko' ? 'release와 expansion이 함께 있어도, 먼저 눌러볼 도시가 바로 눈에 들어오도록 shelf 위계를 다시 정리했습니다.' : lang === 'ja' ? 'release と expansion が同じ画面にあっても、最初に押したい都市がすぐ見えるよう shelf の優先順位を整えました。' : lang === 'zhHant' ? '即使 release 和 expansion 在同一頁，也重新整理成先點哪座城市會立刻明顯。' : 'Release and expansion stay together, but the first city to open now reads much more clearly.'}</p>
+            <strong>${lang === 'ko' ? '도시가 많아도 첫 클릭은 바로 보여야 합니다' : lang === 'ja' ? '都市が多くても最初のクリック先はすぐ見えるべきです' : lang === 'zhHant' ? '城市再多，第一個點擊目標也要立刻看見' : 'Even with 14 cities, the first click should feel obvious'}</strong>
+            <p>${lang === 'ko' ? 'release와 expansion이 함께 있어도, 먼저 열 도시가 바로 눈에 들어오도록 정리했습니다.' : lang === 'ja' ? 'release と expansion が同じ画面でも、最初に開く都市がすぐ見えるよう整えました。' : lang === 'zhHant' ? '即使 release 和 expansion 在同一頁，也整理成先開哪座城市會立刻明顯。' : 'Release and expansion stay together, but the first city to open now reads more clearly.'}</p>
             <div class="hero-hierarchy-chip-row"><span class="hero-hierarchy-chip">Japan</span><span class="hero-hierarchy-chip">Korea</span><span class="hero-hierarchy-chip">Greater China</span></div>
           </article>
           <article class="hero-hierarchy-card">
             <span class="hero-hierarchy-kicker">${lang === 'ko' ? 'Reads' : lang === 'ja' ? 'Reads' : lang === 'zhHant' ? 'Reads' : 'Reads'}</span>
             <strong>${lang === 'ko' ? '국가보다 trip mood를 먼저 고릅니다' : lang === 'ja' ? '国より先に trip mood を選びます' : lang === 'zhHant' ? '先選 trip mood，再選國家' : 'Pick trip mood before country'}</strong>
-            <p>${lang === 'ko' ? 'fast, food, coast, heritage, night 같은 reading track가 먼저 보이면 도시를 고르는 속도가 훨씬 빨라집니다.' : lang === 'ja' ? 'fast・food・coast・heritage・night の track が先に見えると、都市を選ぶ速度がかなり上がります。' : lang === 'zhHant' ? '當 fast、food、coast、heritage、night 這些 reading track 先出現，選城市會快很多。' : 'Showing fast, food, coast, heritage, and night first makes the city field much easier to narrow.'}</p>
+            <p>${lang === 'ko' ? 'fast, food, coast, heritage, night 같은 track가 먼저 보이면 도시를 훨씬 빨리 좁힐 수 있습니다.' : lang === 'ja' ? 'fast・food・coast・heritage・night の track が先に見えると、都市をずっと早く絞れます。' : lang === 'zhHant' ? '當 fast、food、coast、heritage、night 這些 track 先出現，選城市會快很多。' : 'Showing fast, food, coast, heritage, and night first makes the city field much easier to narrow.'}</p>
           </article>
           <article class="hero-hierarchy-card">
             <span class="hero-hierarchy-kicker">${lang === 'ko' ? 'Flow' : lang === 'ja' ? 'Flow' : lang === 'zhHant' ? 'Flow' : 'Flow'}</span>
             <strong>${lang === 'ko' ? 'Guide → sample → planner 흐름이 바로 보여야 합니다' : lang === 'ja' ? 'Guide → sample → planner の流れがすぐ見えるべきです' : lang === 'zhHant' ? 'Guide → sample → planner 的流動要立刻看懂' : 'Guide → sample → planner should read in one glance'}</strong>
-            <p>${lang === 'ko' ? '카드마다 다음 화면이 더 분명하게 보여서, 탐색이 멈추지 않고 route 쪽으로 넘어가게 정리했습니다.' : lang === 'ja' ? '各カードの次の画面をもっと明確にして、探索が止まらず route に進めるよう整えました。' : lang === 'zhHant' ? '每張卡片現在都更清楚指向下一步，讓探索不會中斷而是繼續走向 route。' : 'Each card now signals the next move more clearly, so reading keeps turning into route-making.'}</p>
+            <p>${lang === 'ko' ? '각 카드가 다음 화면을 더 또렷하게 보여줘, 탐색이 멈추지 않고 route로 이어집니다.' : lang === 'ja' ? '各カードが次の画面をより明確に示し、探索が止まらず route へ続きます。' : lang === 'zhHant' ? '每張卡片都更清楚指向下一步，讓探索不會中斷而是繼續走向 route。' : 'Each card signals the next move more clearly, so reading keeps turning into route-making.'}</p>
           </article>
         </div>
       </section>
@@ -2672,21 +2673,24 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
         <div class="dispatch-edit-grid">
           <article class="dispatch-edit-card feature" id="magazineWeekendCard" data-card-link="../example/tokyo-3n4d-first-trip.html" tabindex="0" role="link">
             <span class="collection-kicker">${lang === 'ko' ? '주말 베이스' : lang === 'ja' ? '週末ベース' : lang === 'zhHant' ? '週末基底' : 'Weekend desk'}</span>
-            <h3>${lang === 'ko' ? '도쿄는 빽빽하게보다, 한 구간씩 끊어 읽는 주말이 더 좋습니다' : lang === 'ja' ? '東京は詰め込むより、一段ずつ切って読む週末ベースの方がきれいです' : lang === 'zhHant' ? '東京與其塞滿，不如用一段一段的週末節奏去讀會更好' : 'Tokyo reads better as a paced weekend than an overpacked sprint'}</h3>
-            <p>${lang === 'ko' ? '대표 장면은 챙기되, 하루에 한 번은 템포를 낮추는 2박 3일 베이스입니다.' : lang === 'ja' ? '代表的な場面は押さえつつ、一日に一度テンポを落とす 2泊3日のベースです。' : lang === 'zhHant' ? '保留代表場景，但每天都留一次降速的節奏，是這條 2晚3天基底的重點。' : 'A 2-night base that keeps the iconic scenes but lowers the tempo once each day.'}</p>
+            <div class="dispatch-card-meta"><span class="dispatch-best-pill">${lang === 'ko' ? 'Best for weekend' : lang === 'ja' ? '週末向き' : lang === 'zhHant' ? '適合週末' : 'Best for weekend'}</span><span class="dispatch-next-pill">Guide → planner</span></div>
+            <h3>${lang === 'ko' ? '도쿄는 주말일수록 한 구간씩 끊어 읽는 편이 좋습니다' : lang === 'ja' ? '東京は週末ほど、一段ずつ切って読む方がきれいです' : lang === 'zhHant' ? '東京越是週末，越適合一段一段去讀' : 'Tokyo reads better as a paced weekend than a sprint'}</h3>
+            <p>${lang === 'ko' ? '대표 장면은 챙기되, 하루에 한 번은 템포를 낮추는 주말 베이스입니다.' : lang === 'ja' ? '代表的な場面は押さえつつ、一日に一度テンポを落とす週末ベースです。' : lang === 'zhHant' ? '保留代表場景，但每天留一次降速，就是這條週末基底的重點。' : 'Keep the iconic scenes, but lower the tempo once each day.'}</p>
             <div class="trip-mini-chip-row"><span class="trip-mini-chip">Tokyo</span><span class="trip-mini-chip">2N3D</span><span class="trip-mini-chip">${lang === 'ko' ? '주말' : lang === 'ja' ? '週末' : lang === 'zhHant' ? '週末' : 'Weekend'}</span></div>
             <div class="cta-row"><a class="primary-btn" href="${plannerUrlForCity('Tokyo', { entryKind:'sample', entryTitle:'Tokyo weekend base', entryCity:'Tokyo', entrySource:'magazine-dispatch' })}">${lang === 'ko' ? '이 흐름으로 시작' : lang === 'ja' ? 'この流れで始める' : lang === 'zhHant' ? '用這個節奏開始' : 'Start with this route'}</a><a class="secondary-btn" href="../example/tokyo-3n4d-first-trip.html">${lang === 'ko' ? '샘플 다시 보기' : lang === 'ja' ? 'サンプルを見る' : lang === 'zhHant' ? '查看 sample' : 'Read sample route'}</a></div>
           </article>
           <article class="dispatch-edit-card" id="magazineRainyCard" data-card-link="../city/seoul.html" tabindex="0" role="link">
             <span class="collection-kicker">${lang === 'ko' ? '우천일 베이스' : lang === 'ja' ? '雨の日ベース' : lang === 'zhHant' ? '雨天基底' : 'Rainy-day note'}</span>
-            <h3>${lang === 'ko' ? '비 오는 날엔, 서울을 실내 밀도 중심으로 더 가볍게 읽는 편이 좋습니다' : lang === 'ja' ? '雨の日のソウルは、室内の密度を軸に軽く読む方がまとまります' : lang === 'zhHant' ? '下雨天的首爾，更適合用室內密度去讀，整體會更輕一些' : 'Seoul stays cleaner on rainy days when indoor density leads the route'}</h3>
-            <p>${lang === 'ko' ? '강한 랜드마크를 더 넣기보다, 실내 포켓과 짧은 동네 이동을 이어 붙이는 우천일 서울 베이스입니다.' : lang === 'ja' ? '強いランドマークを増やすより、室内ポケットと短い街区移動でつなぐ雨の日ソウルのベースです。' : lang === 'zhHant' ? '比起再加強地標，更適合用室內口袋與短街區移動把首爾接起來。' : 'A rainy-day Seoul base built around indoor pockets and shorter neighborhood moves.'}</p>
+            <div class="dispatch-card-meta"><span class="dispatch-best-pill">${lang === 'ko' ? 'Rain cover' : lang === 'ja' ? '雨の日向き' : lang === 'zhHant' ? '雨天適用' : 'Rain cover'}</span><span class="dispatch-next-pill">Guide → planner</span></div>
+            <h3>${lang === 'ko' ? '비 오는 날엔 서울을 실내 밀도 중심으로 더 가볍게 읽습니다' : lang === 'ja' ? '雨の日のソウルは、室内密度を軸に軽く読む方がまとまります' : lang === 'zhHant' ? '下雨天的首爾，更適合用室內密度去讀' : 'Seoul stays cleaner on rainy days when indoor density leads'}</h3>
+            <p>${lang === 'ko' ? '강한 랜드마크보다 실내 포켓과 짧은 동네 이동으로 이어 붙이는 베이스입니다.' : lang === 'ja' ? '強いランドマークより、室内ポケットと短い街区移動でつなぐベースです。' : lang === 'zhHant' ? '比起再加強地標，更適合用室內口袋與短街區移動接起來。' : 'Build around indoor pockets and shorter neighborhood moves.'}</p>
             <div class="cta-row compact-actions"><a class="primary-btn" href="${plannerUrlForCity('Seoul', { entryKind:'city', entryTitle:'Rainy-day Seoul base', entryCity:'Seoul', entrySource:'magazine-rainy' })}">${lang === 'ko' ? '이 베이스로 시작' : lang === 'ja' ? 'このベースで始める' : lang === 'zhHant' ? '用這個基底開始' : 'Start from this base'}</a><a class="secondary-btn" href="../city/seoul.html">${lang === 'ko' ? '도시 가이드 열기' : lang === 'ja' ? '都市ガイドを開く' : lang === 'zhHant' ? '打開城市指南' : 'Open city guide'}</a></div>
           </article>
           <article class="dispatch-edit-card" id="magazineFamilyCard" data-card-link="../city/jeju.html" tabindex="0" role="link">
             <span class="collection-kicker">${lang === 'ko' ? '가족 페이스' : lang === 'ja' ? '家族ペース' : lang === 'zhHant' ? '家庭節奏' : 'Family pace'}</span>
-            <h3>${lang === 'ko' ? '부모님과 함께라면, 제주는 더 천천히 읽는 편이 좋습니다' : lang === 'ja' ? '親と行くなら、済州はもっとゆっくり読む方が合います' : lang === 'zhHant' ? '如果和父母同行，濟州更適合慢一點去讀' : 'Jeju lands better with parents when the pace stays slower'}</h3>
-            <p>${lang === 'ko' ? '이동은 단순하게 두고, 풍경과 식사를 충분히 남기는 느린 제주 베이스입니다.' : lang === 'ja' ? '移動はシンプルに保ち、景色と食事の余白を十分に残すゆるやかな済州ベースです。' : lang === 'zhHant' ? '把移動保持簡單，並且把風景與用餐的空間留夠，就是這條濟州慢節奏基底。' : 'A slower Jeju base that keeps movement simple and leaves room for scenery and meals.'}</p>
+            <div class="dispatch-card-meta"><span class="dispatch-best-pill">${lang === 'ko' ? 'With parents' : lang === 'ja' ? '親と一緒に' : lang === 'zhHant' ? '和父母同行' : 'With parents'}</span><span class="dispatch-next-pill">Guide → planner</span></div>
+            <h3>${lang === 'ko' ? '부모님과 함께라면 제주는 더 천천히 읽는 편이 좋습니다' : lang === 'ja' ? '親と行くなら、済州はもっとゆっくり読む方が合います' : lang === 'zhHant' ? '如果和父母同行，濟州更適合慢一點去讀' : 'Jeju lands better with parents when the pace stays slower'}</h3>
+            <p>${lang === 'ko' ? '이동은 단순하게 두고, 풍경과 식사를 충분히 남기는 느린 베이스입니다.' : lang === 'ja' ? '移動はシンプルに保ち、景色と食事の余白を十分に残すゆるやかなベースです。' : lang === 'zhHant' ? '把移動保持簡單，並且把風景與用餐的空間留夠。' : 'Keep movement simple and leave room for scenery and meals.'}</p>
             <div class="cta-row compact-actions"><a class="primary-btn" href="${plannerUrlForCity('Jeju', { entryKind:'city', entryTitle:'Jeju family pace', entryCity:'Jeju', entrySource:'magazine-family' })}">${lang === 'ko' ? '이 흐름으로 시작' : lang === 'ja' ? 'この流れで始める' : lang === 'zhHant' ? '用這個節奏開始' : 'Start with this pace'}</a><a class="secondary-btn" href="../city/jeju.html">${lang === 'ko' ? '도시 가이드 열기' : lang === 'ja' ? '都市ガイドを開く' : lang === 'zhHant' ? '打開城市指南' : 'Open city guide'}</a></div>
           </article>
         </div>

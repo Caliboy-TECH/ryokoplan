@@ -5822,3 +5822,182 @@ body[data-page="magazine"] .finder-card .card-actions{
     font-size:20px;
   }
 }
+
+
+/* v119 magazine opening rhythm polish */
+body[data-page="magazine"] .magazine-hero-v2{
+  gap:14px;
+}
+body[data-page="magazine"] .magazine-hero-copy{
+  gap:12px;
+}
+body[data-page="magazine"] .magazine-hero-copy p,
+body[data-page="magazine"] .hero-side-note,
+body[data-page="magazine"] .dispatch-edit-card p{
+  text-wrap:pretty;
+}
+body[data-page="magazine"] .hero-chip-row{
+  gap:7px;
+}
+body[data-page="magazine"] .hero-chip{
+  padding:7px 11px;
+  font-size:11px;
+}
+body[data-page="magazine"] .hero-feature-card,
+body[data-page="magazine"] .hero-side-card{
+  padding:16px;
+}
+body[data-page="magazine"] .hero-feature-card h3,
+body[data-page="magazine"] .hero-side-card h3{
+  font-size:22px;
+  line-height:1.12;
+}
+body[data-page="magazine"] .hero-feature-card p{
+  font-size:13.5px;
+  line-height:1.58;
+}
+body[data-page="magazine"] .editorial-lines-tight{
+  gap:9px;
+}
+body[data-page="magazine"] .editorial-lines-tight .editorial-line{
+  gap:4px;
+}
+body[data-page="magazine"] .editorial-lines-tight .editorial-line strong{
+  font-size:12px;
+}
+body[data-page="magazine"] .editorial-lines-tight .editorial-line span{
+  font-size:12.5px;
+  line-height:1.52;
+}
+body[data-page="magazine"] .hero-side-note{
+  margin-top:2px;
+  padding-top:10px;
+  border-top:1px solid rgba(216,202,183,.75);
+  color:#6c7681;
+  font-size:12.5px;
+  line-height:1.5;
+}
+body[data-page="magazine"] .hero-feature-rail{
+  margin-top:12px;
+}
+body[data-page="magazine"] .hero-hierarchy-band-magazine{
+  margin-top:8px;
+}
+body[data-page="magazine"] .hero-hierarchy-head{
+  margin-bottom:10px;
+}
+body[data-page="magazine"] .hero-hierarchy-grid{
+  gap:10px;
+}
+body[data-page="magazine"] .dispatch-edit-card{
+  padding:17px;
+}
+body[data-page="magazine"] .dispatch-edit-card h3{
+  font-size:21px;
+  line-height:1.14;
+  letter-spacing:-.035em;
+}
+body[data-page="magazine"] .dispatch-edit-card p{
+  font-size:13px;
+  line-height:1.58;
+}
+body[data-page="magazine"] .dispatch-card-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:2px 0 10px;
+}
+body[data-page="magazine"] .dispatch-best-pill,
+body[data-page="magazine"] .dispatch-next-pill{
+  display:inline-flex;
+  align-items:center;
+  min-height:24px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+body[data-page="magazine"] .dispatch-best-pill{
+  background:#fff1e2;
+  border:1px solid rgba(240,185,144,.72);
+  color:#b96732;
+}
+body[data-page="magazine"] .dispatch-next-pill{
+  background:#f6efe5;
+  border:1px solid rgba(216,202,183,.9);
+  color:#5b6672;
+}
+@media (max-width: 720px){
+  body[data-page="magazine"] .magazine-hero-v2{
+    gap:12px;
+    padding:16px;
+  }
+  body[data-page="magazine"] .magazine-hero-copy{
+    gap:10px;
+  }
+  body[data-page="magazine"] .magazine-hero-copy p{
+    font-size:14px;
+    line-height:1.6;
+  }
+  body[data-page="magazine"] .hero-chip-row,
+  body[data-page="magazine"] .cover-note-line{
+    display:none;
+  }
+  body[data-page="magazine"] .hero-feature-card,
+  body[data-page="magazine"] .hero-side-card{
+    padding:14px;
+    border-radius:20px;
+  }
+  body[data-page="magazine"] .hero-feature-card h3,
+  body[data-page="magazine"] .hero-side-card h3{
+    font-size:19px;
+  }
+  body[data-page="magazine"] .hero-feature-card p,
+  body[data-page="magazine"] .hero-side-note{
+    font-size:12.5px;
+    line-height:1.5;
+  }
+  body[data-page="magazine"] .hero-feature-rail a{
+    font-size:12px;
+  }
+  body[data-page="magazine"] .editorial-lines-tight .editorial-line span{
+    font-size:12px;
+  }
+  body[data-page="magazine"] .hero-hierarchy-head{
+    margin-bottom:8px;
+  }
+  body[data-page="magazine"] .hero-hierarchy-band-magazine .section-title{
+    font-size:24px;
+  }
+  body[data-page="magazine"] .hero-hierarchy-band-magazine .section-desc{
+    font-size:12.5px;
+    line-height:1.55;
+  }
+  body[data-page="magazine"] .hero-hierarchy-grid{
+    gap:9px;
+  }
+  body[data-page="magazine"] .dispatch-edit-card{
+    padding:15px;
+    gap:10px;
+  }
+  body[data-page="magazine"] .dispatch-edit-card h3{
+    font-size:18px;
+    line-height:1.18;
+  }
+  body[data-page="magazine"] .dispatch-edit-card p{
+    font-size:12.5px;
+    line-height:1.52;
+  }
+  body[data-page="magazine"] .dispatch-card-meta{
+    margin-bottom:8px;
+    gap:6px;
+  }
+  body[data-page="magazine"] .dispatch-best-pill,
+  body[data-page="magazine"] .dispatch-next-pill{
+    font-size:9px;
+    min-height:22px;
+    padding:4px 7px;
+  }
+}
