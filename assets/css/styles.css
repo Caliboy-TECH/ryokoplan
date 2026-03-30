@@ -6115,3 +6115,118 @@ body[data-page="trips"] .trip-firstfold-links > *{
   html[lang="zhHant"] body[data-page="planner"] .result-top-actions > *,
   html[lang="zhHant"] body[data-page="trips"] .trip-firstfold-link{font-size:12px;}
 }
+
+
+/* v123 release candidate loop QA */
+body[data-page="planner"] .result-jump-row{
+  scroll-snap-type:x proximity;
+  -webkit-overflow-scrolling:touch;
+}
+body[data-page="planner"] .result-jump-row .jump-chip{
+  scroll-snap-align:start;
+  min-height:38px;
+}
+body[data-page="planner"] .result-top-actions > *{
+  min-height:46px;
+}
+body[data-page="planner"] .result-top-helper strong,
+body[data-page="planner"] .result-top-helper span,
+body[data-page="planner"] .result-fact-card strong,
+body[data-page="planner"] .result-cover-note span,
+body[data-page="planner"] .result-cover-note strong{
+  text-wrap:pretty;
+}
+body[data-page="planner"] .result-signature-row{
+  row-gap:6px;
+}
+body[data-page="trips"] .hero-actions > *{
+  min-height:46px;
+}
+body[data-page="trips"] .trip-tight-title,
+body[data-page="trips"] .trip-continue-copy p,
+body[data-page="trips"] .trip-search-card .section-desc,
+body[data-page="trips"] .trip-side-panel .card-copy{
+  text-wrap:pretty;
+}
+body[data-page="trips"] .trip-tabs .tab-btn{
+  min-height:42px;
+}
+body[data-page="trips"] .trip-search-row{
+  align-items:stretch;
+}
+@media (max-width: 680px){
+  body[data-page="planner"] .result-top-actions{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  body[data-page="planner"] .result-top-helper{
+    padding:12px 13px;
+    border-radius:18px;
+  }
+  body[data-page="planner"] .result-jump-row .jump-chip{
+    padding-inline:12px;
+    font-size:12px;
+  }
+  body[data-page="planner"] .result-sticky-bar{
+    left:max(10px, env(safe-area-inset-left));
+    right:max(10px, env(safe-area-inset-right));
+  }
+  body[data-page="planner"] .result-sticky-actions{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  body[data-page="planner"] .result-sticky-actions > *{
+    width:100%;
+  }
+  body[data-page="planner"] .result-quickfacts{
+    grid-template-columns:1fr;
+  }
+  body[data-page="planner"] .result-fact-card{
+    padding:12px 13px;
+  }
+  body[data-page="planner"] .result-fact-card strong{
+    font-size:14px;
+    line-height:1.45;
+  }
+  body[data-page="trips"] .hero-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+  body[data-page="trips"] .trip-search-row{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+  body[data-page="trips"] .trip-search-row > :first-child{
+    grid-column:1 / -1;
+  }
+  body[data-page="trips"] .trip-sort-select,
+  body[data-page="trips"] #clearSearchBtn{
+    width:100%;
+    max-width:none;
+  }
+  body[data-page="trips"] .trip-continue-copy{
+    padding:18px;
+  }
+  body[data-page="trips"] .trip-tight-title{
+    font-size:26px;
+  }
+}
+@media (max-width: 420px){
+  body[data-page="planner"] .result-top-actions{
+    grid-template-columns:1fr;
+  }
+  body[data-page="planner"] .result-jump-row{
+    gap:6px;
+  }
+  body[data-page="trips"] .trip-search-row{
+    grid-template-columns:1fr;
+  }
+}
+@media (max-width: 760px){
+  html[lang="ja"] body[data-page="planner"] .result-jump-row .jump-chip,
+  html[lang="zh-Hant"] body[data-page="planner"] .result-jump-row .jump-chip,
+  html[lang="zhHant"] body[data-page="planner"] .result-jump-row .jump-chip,
+  html[lang="ja"] body[data-page="trips"] .trip-sort-select,
+  html[lang="zh-Hant"] body[data-page="trips"] .trip-sort-select,
+  html[lang="zhHant"] body[data-page="trips"] .trip-sort-select{
+    font-size:12px;
+  }
+}

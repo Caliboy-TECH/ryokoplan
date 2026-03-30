@@ -1,14 +1,14 @@
 {
-  "release": "v122",
-  "version": "v122",
+  "release": "v123",
+  "version": "v123",
   "channel": "beta",
-  "codename": "mobile-qa-loop-finish",
+  "codename": "release-candidate-loop-qa",
   "updatedAt": "2026-03-30",
-  "headline": "Mobile QA polish tightens result and My Trips first-fold density, action wrapping, and small-screen readability across the core loop.",
+  "headline": "Release-candidate QA pass smooths the smallest mobile breakpoints, multilingual button density, and cross-loop re-entry rhythm across result and My Trips.",
   "notes": [
-    "Result hero helper copy and button wrapping were compacted so save/share/open actions stay readable on smaller screens and denser languages.",
-    "My Trips first-fold quick links and section copy were shortened so the page reads faster and feels lighter in the opening mobile view.",
-    "Small-screen breakpoints now rebalance the saved/recent/shared stat cards to prevent cramped three-column layouts on narrow phones.",
-    "Additional mobile layout polish improves CTA centering, helper stacking, and tab scanning across result and My Trips."
+    "Result first-fold actions now rebalance into a cleaner two-column layout before collapsing fully, so save/share/My Trips actions stay readable on narrow phones.",
+    "Jump chips and sticky result controls were tightened for small screens, with better snap behavior and safer multilingual spacing.",
+    "My Trips now stacks its opening hero actions more cleanly and gives the search row a narrower-phone layout that avoids cramped select/button combinations.",
+    "This pass is aimed at release-candidate QA: fewer crowded controls, steadier first-fold scanning, and cleaner loop re-entry across mobile widths."
   ]
 }

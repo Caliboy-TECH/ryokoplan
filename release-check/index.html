@@ -164,7 +164,7 @@
               <label class="release-check-item"><input type="checkbox" data-check="city-sample"> <div><strong>City → sample flow works</strong><p>Open a city, then a sample, then continue toward a route without broken links.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="generate"> <div><strong>Route generate/fallback feedback works</strong><p>Button busy state, feedback panel, fallback explanation, and retry all look like product UI.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="share-save"> <div><strong>Share / save / My Trips loop works</strong><p>Saved and recent trips reopen, and share links look reasonable.</p></div></label>
-              <label class="release-check-item"><input type="checkbox" data-check="pdf-mobile"> <div><strong>PDF / mobile / language basics pass</strong><p>Open PDF once, switch language once, and do one quick mobile-width pass.</p></div></label>
+              <label class="release-check-item"><input type="checkbox" data-check="pdf-mobile"> <div><strong>PDF / mobile / multilingual basics pass</strong><p>Open PDF once, switch all 4 languages once, and do one quick small-screen pass on result and My Trips.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="pwa"> <div><strong>PWA install / offline basics pass</strong><p>Check service worker registration, make sure install is available on a supported browser, and open the offline fallback once if needed.</p></div></label>
             </div>
             <div class="release-actions">
@@ -230,7 +230,7 @@
     </div>
   </main>
   <script>
-    const storageKey = 'ryoko:release-check-v116';
+    const storageKey = 'ryoko:release-check-v123';
     const releaseDraftStorageKey = 'ryoko:release-report-draft:v1';
     const betaDismissKey = 'ryoko:beta-launch-dismissed:v100';
     const firstRunGuideKey = 'ryoko:first-run-guide-dismissed:v101';
