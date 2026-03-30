@@ -1,14 +1,14 @@
 {
-  "release": "v124",
-  "version": "v124",
+  "release": "v125",
+  "version": "v125",
   "channel": "beta",
-  "codename": "release-signoff-polish",
+  "codename": "release-comfort-polish",
   "updatedAt": "2026-03-30",
-  "headline": "Final sign-off polish steadies mobile filters, search rows, CTA wrapping, and focus states across Magazine, result, and My Trips before public beta sharing.",
+  "headline": "Final comfort polish adds skip links, safer small-screen tap behavior, iOS-friendly input sizing, and steadier horizontal controls across Magazine, result, and My Trips.",
   "notes": [
-    "Magazine filter rows and helper controls now behave more cleanly on narrow phones, with snap-friendly chips and steadier full-width CTA stacks.",
-    "Result and sticky route actions keep more consistent tap targets and cleaner wrapping on the smallest breakpoints.",
-    "My Trips now handles quick filters, search controls, and first-fold actions with safer small-screen density and more readable button balance.",
-    "This pass is aimed at final release sign-off: fewer tiny friction points, stronger interaction clarity, and cleaner multilingual mobile rhythm."
+    "Core pages now include skip links and main-content anchors so keyboard and assistive navigation can jump past the header cleanly.",
+    "Interactive controls use stronger touch-target behavior and reduced tap friction for cards, chips, buttons, and first-fold re-entry actions.",
+    "Small-screen inputs now keep a safer 16px size to avoid unintended mobile browser zoom during search, sharing, and planner edits.",
+    "Horizontal filter and jump rows now contain overscroll more safely, keeping Magazine, result, and My Trips calmer on narrow phones."
   ]
 }

@@ -6364,3 +6364,26 @@ body[data-page="planner"] .result-top-helper{
     font-size:11px;
   }
 }
+
+
+/* v125 release comfort polish */
+html{scroll-padding-top:calc(128px + env(safe-area-inset-top, 0px));}
+.skip-link{top:max(12px, calc(env(safe-area-inset-top, 0px) + 8px));}
+a,button,[role="button"],input,select,textarea,.tab-btn,.nav-chip,.trip-firstfold-link,.finder-card[data-card-href],.dispatch-edit-card[data-card-link]{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+body[data-page="planner"] .result-jump-row,
+body[data-page="magazine"] .finder-tabs,
+body[data-page="magazine"] .finder-filter-row,
+body[data-page="trips"] .trip-filter-chips{overscroll-behavior-x:contain;}
+@media (max-width: 767px){
+  input,select,textarea,button{font-size:16px;}
+  body[data-page="planner"] .result-top-actions,
+  body[data-page="planner"] .result-sticky-actions{gap:8px;}
+  body[data-page="magazine"] .finder-toolbar,
+  body[data-page="trips"] .trip-search-row{scroll-margin-top:calc(138px + env(safe-area-inset-top, 0px));}
+  .skip-link{left:max(12px, env(safe-area-inset-left, 0px));}
+}
+@media (max-width: 420px){
+  .skip-link{right:max(12px, env(safe-area-inset-right, 0px));width:calc(100vw - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));text-align:center;}
+  body[data-page="planner"] .result-top-actions > *,
+  body[data-page="planner"] .result-sticky-actions > *{width:100%;}
+}
