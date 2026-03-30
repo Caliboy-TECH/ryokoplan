@@ -1828,6 +1828,7 @@ function ensureLaunchFeedbackCta(){
     localStorage.setItem('ryoko_lang_v2', lang);
     document.documentElement.lang = lang;
     applyTranslations();
+    initMediaComfortPolish(document);
     updateLanguageButtonsState();
     renderMobileDock();
     window.dispatchEvent(new CustomEvent('ryoko:langchange', { detail: { lang } }));
@@ -5519,6 +5520,52 @@ function renderTripsSeasonalDesk(){
   }
 
 
+
+  function initMediaComfortPolish(root=document){
+    const scope = root && (root.querySelectorAll ? root : document);
+    if (!scope) return;
+    const fallbackSrc = `${pathRoot}assets/images/hero/planner-preview.jpg`;
+    const heroImages = new Set();
+    scope.querySelectorAll('.hero img,.hero-visual img,.shared-spotlight-media img,.trip-continue-media img').forEach(img => heroImages.add(img));
+    scope.querySelectorAll('img').forEach((img, index) => {
+      if (!img.dataset.ryokoComfort) img.dataset.ryokoComfort = 'true';
+      if (!img.hasAttribute('decoding')) img.setAttribute('decoding','async');
+      const inHero = heroImages.has(img) || index < 2;
+      if (!img.hasAttribute('loading')) img.setAttribute('loading', inHero ? 'eager' : 'lazy');
+      if (inHero && !img.hasAttribute('fetchpriority')) img.setAttribute('fetchpriority','high');
+      const markReady = () => {
+        img.classList.add('is-media-ready');
+        img.parentElement?.classList?.add('is-media-ready');
+      };
+      const markFallback = () => {
+        img.classList.add('is-media-fallback');
+        img.parentElement?.classList?.add('is-media-fallback');
+      };
+      img.removeEventListener('load', img.__ryokoOnLoad || null);
+      img.removeEventListener('error', img.__ryokoOnError || null);
+      img.__ryokoOnLoad = markReady;
+      img.__ryokoOnError = () => {
+        if (img.dataset.fallbackApplied === 'true') {
+          markFallback();
+          if (img.closest('.brand-mark')) img.closest('.brand-mark')?.classList?.add('is-logo-fallback');
+          return;
+        }
+        const src = String(img.getAttribute('src') || '');
+        if (!src || src.endsWith('planner-preview.jpg')) {
+          markFallback();
+          if (img.closest('.brand-mark')) img.closest('.brand-mark')?.classList?.add('is-logo-fallback');
+          return;
+        }
+        img.dataset.fallbackApplied = 'true';
+        img.src = fallbackSrc;
+      };
+      img.addEventListener('load', img.__ryokoOnLoad, { passive:true });
+      img.addEventListener('error', img.__ryokoOnError, { passive:true });
+      if (img.complete && img.naturalWidth > 0) markReady();
+      else img.parentElement?.classList?.add('is-media-pending');
+    });
+  }
+
   function applyUiConsistency(root=document){
     const scope = root && (root.querySelectorAll ? root : document);
     if (!scope) return;
@@ -5573,7 +5620,7 @@ function renderTripsSeasonalDesk(){
     let rafId = 0;
     const schedule = () => {
       if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => applyUiConsistency(document));
+      rafId = requestAnimationFrame(() => { initMediaComfortPolish(document); applyUiConsistency(document); });
     };
     const observer = new MutationObserver((mutations) => {
       if (mutations.some(m => m.addedNodes && m.addedNodes.length)) schedule();
@@ -5812,6 +5859,7 @@ function renderTripsSeasonalDesk(){
     localizeStaticIndexSections();
     localizeExtendedStaticSections();
     bindLanguageButtons();
+    initMediaComfortPolish(document);
     document.querySelectorAll('[data-nav="magazine"]').forEach(a => a.setAttribute('href', navHref('magazine')));
     document.querySelectorAll('[data-nav="planner"]').forEach(a => a.setAttribute('href', navHref('planner')));
     document.querySelectorAll('[data-nav="trips"]').forEach(a => a.setAttribute('href', navHref('trips')));
@@ -5871,6 +5919,7 @@ function renderTripsSeasonalDesk(){
       localizeLangButtonLabels();
       localizeStaticIndexSections();
     localizeExtendedStaticSections();
+      initMediaComfortPolish(document);
       applyUiConsistency(document);
     });
     initEditorialChrome();

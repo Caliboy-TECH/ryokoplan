@@ -6387,3 +6387,27 @@ body[data-page="trips"] .trip-filter-chips{overscroll-behavior-x:contain;}
   body[data-page="planner"] .result-top-actions > *,
   body[data-page="planner"] .result-sticky-actions > *{width:100%;}
 }
+
+
+/* v126 media comfort hotfix */
+.brand-mark.is-logo-fallback{background:linear-gradient(135deg,#fffaf4 0%,#fff2e6 100%);border-color:#ecd8c2;display:grid;place-items:center}
+.brand-mark.is-logo-fallback img{opacity:0}
+.brand-mark.is-logo-fallback::before{content:'R';position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:20px;letter-spacing:-.03em;color:#d86d3d;z-index:1}
+img[data-ryoko-comfort="true"]{opacity:.001;transition:opacity .22s ease;backface-visibility:hidden}
+img[data-ryoko-comfort="true"].is-media-ready,
+.is-media-ready > img[data-ryoko-comfort="true"]{opacity:1}
+.is-media-pending{position:relative;overflow:hidden;background:linear-gradient(90deg,#f3ede5 0%,#fbf7f2 50%,#f3ede5 100%);background-size:200% 100%;animation:ryokoMediaSheen 1.5s ease-in-out infinite}
+.is-media-ready{animation:none}
+.is-media-fallback{animation:none;background:linear-gradient(135deg,#f6efe6 0%,#efe4d7 100%)}
+img.is-media-fallback{opacity:1;filter:saturate(.94) contrast(.98)}
+@keyframes ryokoMediaSheen{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@media (prefers-reduced-motion: reduce){
+  .is-media-pending{animation:none;background:#f6efe6}
+  img[data-ryoko-comfort="true"]{transition:none}
+}
+@media (max-width: 640px){
+  .mobile-dock{backdrop-filter:blur(14px);border-radius:24px}
+  .mobile-dock-item{min-height:58px}
+  .mobile-dock-label{font-size:11px;line-height:1.12}
+  .mobile-dock-helper{letter-spacing:.01em}
+}

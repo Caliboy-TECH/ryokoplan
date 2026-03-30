@@ -1,14 +1,14 @@
 {
-  "release": "v125",
-  "version": "v125",
+  "release": "v126",
+  "version": "v126",
   "channel": "beta",
-  "codename": "release-comfort-polish",
+  "codename": "media-comfort-hotfix",
   "updatedAt": "2026-03-30",
-  "headline": "Final comfort polish adds skip links, safer small-screen tap behavior, iOS-friendly input sizing, and steadier horizontal controls across Magazine, result, and My Trips.",
+  "headline": "Final release hotfix adds safer image loading and fallback behavior, a steadier mobile dock feel on narrow phones, and release-check guidance for slow-network visual comfort.",
   "notes": [
-    "Core pages now include skip links and main-content anchors so keyboard and assistive navigation can jump past the header cleanly.",
-    "Interactive controls use stronger touch-target behavior and reduced tap friction for cards, chips, buttons, and first-fold re-entry actions.",
-    "Small-screen inputs now keep a safer 16px size to avoid unintended mobile browser zoom during search, sharing, and planner edits.",
-    "Horizontal filter and jump rows now contain overscroll more safely, keeping Magazine, result, and My Trips calmer on narrow phones."
+    "Images now get async decoding, smarter eager/lazy loading, and a safer fallback path so hero and card media recover more gracefully on slower mobile networks.",
+    "Media containers now show a soft editorial loading state instead of abrupt blanks, then fade images in once they are ready.",
+    "If the logo mark or card media fails to load, the UI now falls back more cleanly instead of leaving broken-feeling empty states.",
+    "Release check now reminds testers to verify image recovery and small-screen comfort together during final sign-off."
   ]
 }
