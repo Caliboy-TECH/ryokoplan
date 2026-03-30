@@ -1,11 +1,11 @@
 {
-  "release": "v128",
-  "version": "v128",
+  "release": "v129",
+  "version": "v129",
   "date": "2026-03-30",
-  "codename": "utility-jump-dual-state-polish",
+  "codename": "thumb-friendly-utility-hotfix",
   "notes": [
-    "Upgrades the visible jump button into a dual-state utility that switches between content jump and back-to-top.",
-    "Adds clearer visual states and safer mobile interaction across home, magazine, and My Trips.",
-    "Updates release-check guidance for the new jump utility behavior."
+    "Moves the jump utility into a thumb-friendly floating position on mobile pages and keeps desktop behavior intact.",
+    "Adds scroll-aware collapse/expand behavior so the utility stays visible but less intrusive while reading.",
+    "Updates release-check guidance for the new mobile utility placement and compact state."
   ]
 }

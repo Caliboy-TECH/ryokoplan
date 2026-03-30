@@ -1834,6 +1834,7 @@ function ensureLaunchFeedbackCta(){
     }
     if (skip) {
       const getHeaderOffset = () => Math.max((topBar?.offsetHeight || 0) + 16, 72);
+      const isMobileUtility = () => window.matchMedia('(max-width: 767px)').matches;
       const setMode = (mode = 'content') => {
         const resolved = mode === 'top' ? 'top' : 'content';
         const label = accessibilityCopy(resolved);
@@ -1843,23 +1844,43 @@ function ensureLaunchFeedbackCta(){
         skip.setAttribute('aria-label', label);
         skip.setAttribute('title', label);
       };
+      const setCollapsed = (collapsed = false) => {
+        skip.dataset.collapsed = collapsed ? 'true' : 'false';
+      };
       const syncMode = () => {
         const threshold = getHeaderOffset() + 64;
         setMode(window.scrollY > threshold ? 'top' : 'content');
       };
       syncMode();
+      setCollapsed(false);
       if (!skip.dataset.skipBound) {
         let ticking = false;
+        let lastY = window.scrollY;
         const onUtilityViewportChange = () => {
           if (ticking) return;
           ticking = true;
           window.requestAnimationFrame(() => {
+            const currentY = window.scrollY;
+            const threshold = getHeaderOffset() + 84;
+            const movingDown = currentY > lastY + 6;
+            const movingUp = currentY < lastY - 4;
             syncMode();
+            if (isMobileUtility()) {
+              const shouldCollapse = currentY > threshold && movingDown;
+              const shouldExpand = currentY <= threshold || movingUp;
+              if (shouldCollapse) setCollapsed(true);
+              else if (shouldExpand) setCollapsed(false);
+            } else {
+              setCollapsed(false);
+            }
+            lastY = currentY;
             ticking = false;
           });
         };
+        const expandUtility = () => setCollapsed(false);
         skip.addEventListener('click', (event) => {
           event.preventDefault();
+          expandUtility();
           const mode = skip.dataset.mode === 'top' ? 'top' : 'content';
           if (mode === 'top') {
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1872,6 +1893,7 @@ function ensureLaunchFeedbackCta(){
           window.scrollTo({ top, behavior: 'smooth' });
           window.requestAnimationFrame(() => target.focus({ preventScroll: true }));
         });
+        ['focus','mouseenter','touchstart'].forEach(eventName => skip.addEventListener(eventName, expandUtility, { passive: true }));
         window.addEventListener('scroll', onUtilityViewportChange, { passive: true });
         window.addEventListener('resize', onUtilityViewportChange);
         skip.dataset.skipBound = 'true';

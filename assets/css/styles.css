@@ -6422,3 +6422,38 @@ img.is-media-fallback{opacity:1;filter:saturate(.94) contrast(.98)}
   .mobile-dock-label{font-size:11px;line-height:1.12}
   .mobile-dock-helper{letter-spacing:.01em}
 }
+
+
+/* v129 thumb-friendly utility hotfix */
+.skip-link{will-change:transform,opacity,max-width;width:auto;max-width:min(calc(100vw - 28px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)), 240px)}
+.skip-link[data-collapsed="true"]{width:52px;max-width:52px;min-width:52px;padding-inline:0;gap:0;justify-content:center;font-size:0;color:transparent;overflow:hidden}
+.skip-link[data-collapsed="true"]::before{margin:0}
+.skip-link[data-collapsed="true"]:focus-visible,
+.skip-link[data-collapsed="true"]:hover{font-size:13px;color:inherit;width:auto;max-width:min(calc(100vw - 28px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)), 240px);padding-inline:15px;gap:9px}
+@media (max-width: 767px){
+  body[data-page="planner"] > .skip-link,
+  body[data-page="magazine"] > .skip-link,
+  body[data-page="trips"] > .skip-link{
+    top:auto;
+    right:max(12px, env(safe-area-inset-right, 0px) + 8px);
+    bottom:calc(102px + env(safe-area-inset-bottom, 0px));
+    min-height:48px;
+    padding:12px 16px;
+    border-radius:18px;
+    box-shadow:0 22px 40px rgba(13,24,39,.22);
+  }
+  body[data-page="planner"] > .skip-link[data-mode="content"],
+  body[data-page="magazine"] > .skip-link[data-mode="content"],
+  body[data-page="trips"] > .skip-link[data-mode="content"]{background:linear-gradient(135deg,rgba(21,39,58,.97) 0%, rgba(36,66,99,.97) 100%)}
+  body[data-page="planner"] > .skip-link[data-mode="top"],
+  body[data-page="magazine"] > .skip-link[data-mode="top"],
+  body[data-page="trips"] > .skip-link[data-mode="top"]{background:linear-gradient(135deg,#fffaf4 0%,#f9ecde 100%)}
+  body[data-page="planner"] > .skip-link[data-collapsed="true"],
+  body[data-page="magazine"] > .skip-link[data-collapsed="true"],
+  body[data-page="trips"] > .skip-link[data-collapsed="true"]{width:50px;max-width:50px;min-width:50px;border-radius:999px;padding-inline:0;bottom:calc(98px + env(safe-area-inset-bottom, 0px));}
+}
+@media (max-width: 420px){
+  body[data-page="planner"] > .skip-link,
+  body[data-page="magazine"] > .skip-link,
+  body[data-page="trips"] > .skip-link{bottom:calc(94px + env(safe-area-inset-bottom, 0px));max-width:min(calc(100vw - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)), 200px)}
+}
