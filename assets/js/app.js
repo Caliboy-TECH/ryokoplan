@@ -2491,7 +2491,72 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
     const data = editorialData.magazine[lang] || editorialData.magazine.en;
     const atlasFilterCopy = getAtlasFilterCopy();
     const order = ['tokyo','seoul','taipei','kyoto','busan','hongkong','fukuoka','jeju','macau','sapporo','gyeongju','sendai','okinawa','osaka'];
-    const cityMarkup = order.map(key => {
+    const heroDescT = lang === 'ko'
+      ? '도시의 결부터 보고, 바로 guide와 planner로 이어지는 시작점만 남겼습니다.'
+      : lang === 'ja'
+        ? '街の質感を先に読み、そのまま guide と planner へつながる入口だけを残しました。'
+        : lang === 'zhHant'
+          ? '先讀城市的質感，只留下能直接接到 guide 與 planner 的入口。'
+          : 'Read the city first, then move straight into guide or planner.';
+    const coverNoteT = lang === 'ko'
+      ? '첫 화면은 읽는 느낌보다, 어디로 들어갈지 더 빨리 보이도록 줄였습니다.'
+      : lang === 'ja'
+        ? '最初の画面は、読む量よりも入口が先に見えるように整えました。'
+        : lang === 'zhHant'
+          ? '第一畫面先讓入口更清楚，而不是先讓你讀很多。'
+          : 'The opening now shows the entry points faster, with less reading first.';
+    const quickJumpTitleT = lang === 'ko'
+      ? '처음엔 입구 하나만 정하면 됩니다'
+      : lang === 'ja'
+        ? '最初は入口を一つ決めれば十分です'
+        : lang === 'zhHant'
+          ? '一開始只要先決定一個入口'
+          : 'Pick one entry point first';
+    const quickJumpDescT = lang === 'ko'
+      ? '도시, 상황별 베이스, 저장한 흐름 중 하나만 먼저 고르면 됩니다.'
+      : lang === 'ja'
+        ? '都市、状況ベース、保存した flow のどれから入るかだけ先に決めれば十分です。'
+        : lang === 'zhHant'
+          ? '先決定要從城市、情境基底，還是已保存的 flow 開始就好。'
+          : 'Start from a city, a situation base, or a saved flow.';
+    const dispatchDescT = lang === 'ko'
+      ? '주말, 비, 부모님 동행처럼 바로 planner로 넘기기 좋은 베이스만 남겼습니다.'
+      : lang === 'ja'
+        ? '週末、雨、親との旅など、そのまま planner に渡しやすいベースだけを残しました。'
+        : lang === 'zhHant'
+          ? '只留下週末、雨天、和父母同行這些最適合直接接到 planner 的基底。'
+          : 'Only the bases that hand off cleanly into the planner stay here.';
+    const finderTitleT = lang === 'ko'
+      ? '먼저 고르기 쉬운 도시부터 보이게 정리했습니다'
+      : lang === 'ja'
+        ? 'まず選びやすい都市から見えるように整えました'
+        : lang === 'zhHant'
+          ? '先把最好下手選的城市排到前面'
+          : 'The easiest first reads now surface first';
+    const finderDescT = lang === 'ko'
+      ? '첫 줄은 시작하기 쉬운 도시, 그 아래는 확장 도시 순서로 읽히게 정리했습니다.'
+      : lang === 'ja'
+        ? '最初の列は入りやすい都市、その下に expansion 都市が続くように整えました。'
+        : lang === 'zhHant'
+          ? '第一列先放最容易開始的城市，下面再接 expansion 城市。'
+          : 'The first row is for the clearest starting cities, then the expansion layer follows.';
+    const shelfLeadTitle = lang === 'ko'
+      ? 'Best first reads'
+      : lang === 'ja'
+        ? 'Best first reads'
+        : lang === 'zhHant'
+          ? 'Best first reads'
+          : 'Best first reads';
+    const shelfLeadDesc = lang === 'ko'
+      ? 'Tokyo, Seoul, Taipei, Kyoto를 첫 스캔 라인에 고정해 모바일에서 시작점이 더 빨리 보이게 했습니다.'
+      : lang === 'ja'
+        ? 'Tokyo / Seoul / Taipei / Kyoto を最初のスキャンラインに固定し、モバイルで入口が早く見えるようにしました。'
+        : lang === 'zhHant'
+          ? '把 Tokyo、Seoul、Taipei、Kyoto 固定在第一條掃視線上，讓手機上更快看到入口。'
+          : 'Tokyo, Seoul, Taipei, and Kyoto now hold the first scan line on mobile.';
+    const topEntryLabel = lang === 'ko' ? 'Top entry' : lang === 'ja' ? 'Top entry' : lang === 'zhHant' ? 'Top entry' : 'Top entry';
+    const releaseLabel = lang === 'ko' ? 'Release city' : lang === 'ja' ? 'Release city' : lang === 'zhHant' ? 'Release city' : 'Release city';
+    const cityMarkup = order.map((key, idx) => {
       const loop = cityLoopMap[key];
       const meta = data.cityMeta[key];
       const copy = data.cityCopy[key];
@@ -2503,15 +2568,18 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
       const secondaryTrack = trackList[1] ? (atlasFilterCopy[trackList[1]] || trackList[1]) : '';
       const openLabel = 'Guide';
       const railCopy = lang === 'ko'
-        ? 'Guide를 읽고 planner로 이어집니다.'
+        ? 'Guide → planner'
         : lang === 'ja'
-          ? 'ガイドを読んだら、そのまま planner へ。'
+          ? 'Guide → planner'
           : lang === 'zhHant'
-            ? '先讀 guide，再直接接到 planner。'
-            : 'Guide first, then planner.';
-      return `<article class="city-card info-card finder-card" data-country="${loop.country.toLowerCase()}" data-vibe="${(loop.vibe||'').replace(/ /g,' ')}" data-track="${trackList.join(' ')}" data-card-href="../${loop.guide}" data-search="${loop.name.toLowerCase()} ${loop.country.toLowerCase()} ${(loop.vibe||'').toLowerCase()} ${trackList.join(' ')} ${(data.chipMap[key] || []).join(' ').toLowerCase()}" tabindex="0" role="link" aria-label="Open ${loop.name} city guide">
+            ? 'Guide → planner'
+            : 'Guide → planner';
+      const leadClass = idx < 4 ? ' is-entry-lead' : '';
+      const releaseClass = layerKey === 'release' ? ' is-release-core' : '';
+      const priorityLabel = idx < 4 ? topEntryLabel : (layerKey === 'release' ? releaseLabel : '');
+      return `<article class="city-card info-card finder-card${leadClass}${releaseClass}" data-country="${loop.country.toLowerCase()}" data-vibe="${(loop.vibe||'').replace(/ /g,' ')}" data-track="${trackList.join(' ')}" data-card-href="../${loop.guide}" data-search="${loop.name.toLowerCase()} ${loop.country.toLowerCase()} ${(loop.vibe||'').toLowerCase()} ${trackList.join(' ')} ${(data.chipMap[key] || []).join(' ').toLowerCase()}" tabindex="0" role="link" aria-label="Open ${loop.name} city guide">
         <div class="card-image"><img src="../${loop.image}" alt="${loop.name}"><span class="card-open-pill">${openLabel}</span><div class="finder-visual-meta"><span class="finder-visual-pill">${primaryTrack || meta}</span>${secondaryTrack ? `<span class="finder-visual-pill is-soft">${secondaryTrack}</span>` : `<span class="finder-visual-pill is-soft">${layerLabel}</span>`}</div></div>
-        <div class="card-body"><div class="meta">${meta}</div><h3 class="card-title">${loop.name}</h3><p class="card-copy">${copy}</p><div class="trip-chip-row">${chips}</div><div class="card-rail-note">${railCopy}</div><div class="card-actions"><a class="soft-btn" href="../${loop.guide}">${data.guideBtn}</a><a class="ghost-btn" href="${plannerUrlForCity(loop.name, { entryKind:'city', entryTitle:loop.name, entryCity:loop.name, entrySource:'magazine-finder' })}">${data.planBtn}</a></div></div>
+        <div class="card-body"><div class="meta"><span>${meta}</span>${priorityLabel ? `<span class="finder-priority-pill">${priorityLabel}</span>` : ''}</div><h3 class="card-title">${loop.name}</h3><p class="card-copy">${copy}</p><div class="trip-chip-row">${chips}</div><div class="card-rail-note">${railCopy}</div><div class="card-actions"><a class="soft-btn" href="../${loop.guide}">${data.guideBtn}</a><a class="ghost-btn" href="${plannerUrlForCity(loop.name, { entryKind:'city', entryTitle:loop.name, entryCity:loop.name, entrySource:'magazine-finder' })}">${data.planBtn}</a></div></div>
       </article>`;
     }).join('');
     root.innerHTML = `
@@ -2520,9 +2588,9 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
           <div class="cover-meta-row"><span class="cover-meta-pill">Magazine</span><span class="cover-meta-pill">East Asia city edit</span></div>
           <span class="eyebrow">${data.heroEyebrow}</span>
           <h1>${data.heroTitle}</h1>
-          <p>${data.heroDesc}</p>
+          <p>${heroDescT}</p>
           <div class="hero-chip-row">${data.heroChips.map(ch => `<span class="hero-chip">${ch}</span>`).join('')}</div>
-          <div class="cover-note-line"><strong>${uiText('coverNote')}</strong><span>${lang === 'ko' ? '홈, 매거진, 도시 가이드의 첫 장면을 같은 커버 규칙으로 맞췄습니다.' : lang === 'ja' ? 'ホーム、マガジン、都市ガイドの最初の見え方を同じカバー規則でそろえました。' : lang === 'zhHant' ? '首頁、城市誌與城市指南的第一個畫面，現在都共用同一套封面規則。' : 'Home, magazine, and city guides now open with the same cover rules.'}</span></div>
+          <div class="cover-note-line"><strong>${uiText('coverNote')}</strong><span>${coverNoteT}</span></div>
           <div class="cta-row hero-actions cover-actions-row">
             <a class="primary-btn" data-nav="planner" href="${navHref('planner')}">${data.startPlanner}</a>
             <a class="secondary-btn" href="#cityFinder">${data.browseCities}</a>
@@ -2545,28 +2613,28 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
       </section>
       <section class="section magazine-jump-section" id="magazineQuickJump">
         <div class="section-head section-head-compact">
-          <div><span class="eyebrow">${lang === 'ko' ? '빠른 시작' : lang === 'ja' ? 'クイックスタート' : lang === 'zhHant' ? '快速開始' : 'Quick start'}</span><h2 class="section-title">${lang === 'ko' ? '처음엔 시작점 하나만 고르면 됩니다' : lang === 'ja' ? '最初は入口を一つ選べば十分です' : lang === 'zhHant' ? '一開始只要先選一個入口' : 'You only need one clear entry point first'}</h2><p class="section-desc">${lang === 'ko' ? '도시로 시작할지, 상황별 베이스로 시작할지, 이미 저장한 흐름으로 돌아갈지만 먼저 정하면 됩니다.' : lang === 'ja' ? '都市から入るか、状況ベースから入るか、保存した流れに戻るかだけ先に決めれば十分です。' : lang === 'zhHant' ? '先決定要從城市、情境基底，還是已保存的 flow 開始就夠了。' : 'Just decide whether to start from a city, a ready-made base, or a saved flow.'}</p></div>
+          <div><span class="eyebrow">${lang === 'ko' ? '빠른 시작' : lang === 'ja' ? 'クイックスタート' : lang === 'zhHant' ? '快速開始' : 'Quick start'}</span><h2 class="section-title">${quickJumpTitleT}</h2><p class="section-desc">${quickJumpDescT}</p></div>
         </div>
         <div class="magazine-jump-grid">
           <a class="magazine-jump-card" href="#cityFinder">
             <span class="magazine-jump-step">01</span>
             <span class="collection-kicker">${lang === 'ko' ? 'City finder' : lang === 'ja' ? 'City finder' : lang === 'zhHant' ? 'City finder' : 'City finder'}</span>
             <strong>${lang === 'ko' ? '도시부터 고르기' : lang === 'ja' ? '都市から選ぶ' : lang === 'zhHant' ? '先選城市' : 'Start from a city'}</strong>
-            <span>${lang === 'ko' ? '14개 도시를 빠르게 훑고, guide나 planner로 바로 들어갑니다.' : lang === 'ja' ? '14都市をすばやく見て、guide か planner にそのまま入ります。' : lang === 'zhHant' ? '快速看過 14 座城市，然後直接進 guide 或 planner。' : 'Scan the 14-city shelf, then go straight into guide or planner.'}</span>
+            <span>${lang === 'ko' ? '첫 줄 도시부터 보고 바로 guide나 planner로 들어갑니다.' : lang === 'ja' ? '最初の列の都市から見て、そのまま guide か planner に入ります。' : lang === 'zhHant' ? '先看第一列城市，然後直接進 guide 或 planner。' : 'Scan the first-row cities, then enter guide or planner.'}</span>
             <em class="magazine-jump-note">${lang === 'ko' ? '도시 이름이 이미 머릿속에 있을 때' : lang === 'ja' ? '行きたい都市がもう見えているとき' : lang === 'zhHant' ? '你腦中已經有一座城市時' : 'Best when you already know the place'}</em>
           </a>
           <a class="magazine-jump-card" href="#magazineDispatchDesk">
             <span class="magazine-jump-step">02</span>
             <span class="collection-kicker">${lang === 'ko' ? 'Editorial bases' : lang === 'ja' ? 'Editorial bases' : lang === 'zhHant' ? 'Editorial bases' : 'Editorial bases'}</span>
             <strong>${lang === 'ko' ? '상황별 베이스 쓰기' : lang === 'ja' ? '状況ベースを使う' : lang === 'zhHant' ? '用情境基底開始' : 'Use a ready-made base'}</strong>
-            <span>${lang === 'ko' ? '비, 주말, 부모님 동행처럼 자주 있는 상황에서 바로 시작합니다.' : lang === 'ja' ? '雨、週末、親との旅のようなよくある状況からすぐ始めます。' : lang === 'zhHant' ? '從下雨、週末、和父母同行這些常見情境直接開始。' : 'Start from rain, weekend, or parents without building from scratch.'}</span>
+            <span>${lang === 'ko' ? '비, 주말, 부모님 동행 같은 상황에서 바로 시작합니다.' : lang === 'ja' ? '雨、週末、親との旅のような状況からそのまま始めます。' : lang === 'zhHant' ? '從下雨、週末、和父母同行這些情境直接開始。' : 'Start from rain, weekends, or parents.'}</span>
             <em class="magazine-jump-note">${lang === 'ko' ? '상황은 명확하지만 도시는 아직 넓을 때' : lang === 'ja' ? '状況は見えているけれど都市はまだ広いとき' : lang === 'zhHant' ? '情境很清楚，但城市還沒決定時' : 'Best when the situation is clearer than the city'}</em>
           </a>
           <a class="magazine-jump-card" href="#magazineLoopSection">
             <span class="magazine-jump-step">03</span>
             <span class="collection-kicker">${lang === 'ko' ? 'Continue reading' : lang === 'ja' ? 'Continue reading' : lang === 'zhHant' ? 'Continue reading' : 'Continue reading'}</span>
             <strong>${lang === 'ko' ? '저장한 흐름 이어보기' : lang === 'ja' ? '保存した流れを続ける' : lang === 'zhHant' ? '接著看你保存的 flow' : 'Resume a saved flow'}</strong>
-            <span>${lang === 'ko' ? '최근 route나 저장한 trip이 있으면 여기서 바로 다시 이어집니다.' : lang === 'ja' ? '最近の route や保存した trip があれば、ここからそのまま続けられます。' : lang === 'zhHant' ? '如果有最近 route 或已保存 trip，就從這裡直接接回去。' : 'Jump straight back into the latest route or a saved trip.'}</span>
+            <span>${lang === 'ko' ? '최근 route나 저장한 trip이 있으면 여기서 바로 복귀합니다.' : lang === 'ja' ? '最近の route や保存した trip があれば、ここからすぐ戻れます。' : lang === 'zhHant' ? '如果有最近 route 或已保存 trip，就從這裡直接回去。' : 'Return straight to the latest route or saved trip.'}</span>
             <em class="magazine-jump-note">${lang === 'ko' ? '이미 한 번 시작한 흐름이 있을 때' : lang === 'ja' ? 'すでに一度始めた流れがあるとき' : lang === 'zhHant' ? '你已經開始過一次時' : 'Best when you already started once'}</em>
           </a>
         </div>
@@ -2598,7 +2666,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
 
       <section class="section editorial-dispatch-section magazine-dispatch-section" id="magazineDispatchDesk">
         <div class="section-head">
-          <div><span class="eyebrow">${lang === 'ko' ? '에디토리얼 베이스' : lang === 'ja' ? 'エディトリアルベース' : lang === 'zhHant' ? '編輯基底' : 'Editorial bases'}</span><h2 class="section-title">${lang === 'ko' ? '바로 시작하기 좋은 도시 베이스' : lang === 'ja' ? 'すぐに始めやすい都市ベース' : lang === 'zhHant' ? '很適合直接開始的城市基底' : 'City bases that are easy to start from'}</h2><p class="section-desc">${lang === 'ko' ? '주말, 우천일, 부모님 동행처럼 실제로 자주 쓰는 상황을 기준으로, 바로 planner로 넘기기 좋은 베이스만 골랐습니다.' : lang === 'ja' ? '週末、雨の日、親との旅など、実際によくある状況を基準に、そのまま planner へ渡しやすいベースだけを選びました。' : lang === 'zhHant' ? '依照週末、雨天、和父母同行這些常見情境，只保留最適合直接接到 planner 的城市基底。' : 'These are the city bases that hand off cleanly into the planner for the situations that actually come up: weekends, rain, and parents.'}</p></div>
+          <div><span class="eyebrow">${lang === 'ko' ? '에디토리얼 베이스' : lang === 'ja' ? 'エディトリアルベース' : lang === 'zhHant' ? '編輯基底' : 'Editorial bases'}</span><h2 class="section-title">${lang === 'ko' ? '바로 시작하기 좋은 도시 베이스' : lang === 'ja' ? 'すぐに始めやすい都市ベース' : lang === 'zhHant' ? '很適合直接開始的城市基底' : 'City bases that are easy to start from'}</h2><p class="section-desc">${dispatchDescT}</p></div>
           <a class="soft-btn" data-nav="trips" href="${navHref('trips')}">${lang === 'ko' ? '컬렉션으로 보기' : lang === 'ja' ? 'コレクションを見る' : lang === 'zhHant' ? '看收藏架' : 'Open collections'}</a>
         </div>
         <div class="dispatch-edit-grid">
@@ -2629,12 +2697,13 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
         <div class="magazine-loop-grid"><article class="loop-main-card info-card" id="magazineLoopMain"></article><aside class="loop-side-card info-card" id="magazineLoopSide"></aside></div>
       </section>
       <section class="section city-finder-section" id="cityFinder">
-        <div class="section-head"><div><span class="eyebrow">${data.finderEyebrow}</span><h2 class="section-title">${data.finderTitle}</h2><p class="section-desc">${data.finderDesc}</p></div></div>
+        <div class="section-head"><div><span class="eyebrow">${data.finderEyebrow}</span><h2 class="section-title">${finderTitleT}</h2><p class="section-desc">${finderDescT}</p></div></div>
         <div class="finder-toolbar info-card">
           <input id="magazineCitySearch" class="input finder-search" placeholder="${data.finderSearchPH}">
           <div class="finder-group"> <button class="tab-btn active" data-country-filter="all">${data.countryAll}</button><button class="tab-btn" data-country-filter="japan">${data.countryJapan}</button><button class="tab-btn" data-country-filter="korea">${data.countryKorea}</button><button class="tab-btn" data-country-filter="greater-china">${data.countryGreaterChina}</button></div>
           <div class="finder-group"> <button class="tab-btn active" data-vibe-filter="all">${data.vibeAll}</button><button class="tab-btn" data-vibe-filter="fast">${data.vibeFast}</button><button class="tab-btn" data-vibe-filter="slow">${data.vibeSlow}</button><button class="tab-btn" data-vibe-filter="food">${data.vibeFood}</button><button class="tab-btn" data-vibe-filter="coast">${data.vibeCoast}</button></div>
         </div>
+        <div class="finder-shelf-note info-card"><strong>${shelfLeadTitle}</strong><span>${shelfLeadDesc}</span></div>
         <div class="magazine-grid featured-grid">${cityMarkup}</div>
         <div class="finder-empty info-card" id="finderEmptyState" hidden><h3>${data.emptyTitle}</h3><p>${data.emptyDesc}</p></div>
       </section>

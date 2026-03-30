@@ -1,14 +1,14 @@
 {
-  "release": "v117",
-  "version": "v117",
+  "release": "v118",
+  "version": "v118",
   "channel": "beta",
-  "codename": "magazine-opening-hierarchy-refine",
+  "codename": "magazine-finder-priority-polish",
   "updatedAt": "2026-03-30",
-  "headline": "Magazine opening hierarchy is cleaner, quicker to scan, and easier to enter on mobile.",
+  "headline": "Magazine now scans faster on mobile with clearer first-entry cities and lower opening text density.",
   "notes": [
-    "Magazine now brings the quick-start entry strip above the hierarchy explainer so the first mobile decision is about where to begin, not about reading a longer block.",
-    "Quick-start cards are rewritten into a clearer three-step entry system with shorter copy and explicit 'best when' guidance for city, situation, or saved-flow entry.",
-    "The opening hierarchy section is tightened so city choice, reading tracks, and guide-to-planner handoff are explained in shorter, more directional language.",
-    "City finder cards now show stronger image-layer labels through track and layer pills, plus a shorter guide-to-planner rail note that makes each card feel more editorial and more clickable."
+    "Magazine opening copy is tightened again so the hero, quick-start strip, dispatch desk, and city finder ask for less reading before entry.",
+    "City finder now carries a short shelf note that explains the first-scan logic, helping the mobile opening feel more directed instead of flat.",
+    "Top-entry cities now surface with stronger priority styling and small badges so the first row reads more intentionally as the cleanest starting layer.",
+    "Finder cards now use a shorter Guide → planner rail and better body alignment so CTA placement feels more stable across cards."
   ]
 }

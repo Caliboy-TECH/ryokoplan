@@ -5708,3 +5708,117 @@ body[data-page="magazine"] .finder-card .meta{
     font-size:10.5px;
   }
 }
+
+
+/* v118 magazine finder priority polish */
+body[data-page="magazine"] .magazine-hero-copy p,
+body[data-page="magazine"] .magazine-jump-section .section-desc,
+body[data-page="magazine"] .magazine-dispatch-section .section-desc,
+body[data-page="magazine"] .city-finder-section .section-desc{
+  max-width:56ch;
+}
+body[data-page="magazine"] .magazine-hero-copy .cover-note-line{
+  margin-top:14px;
+}
+body[data-page="magazine"] .magazine-jump-section .section-desc,
+body[data-page="magazine"] .magazine-dispatch-section .section-desc,
+body[data-page="magazine"] .city-finder-section .section-desc{
+  color:#6a7480;
+}
+body[data-page="magazine"] .city-finder-section .magazine-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+body[data-page="magazine"] .finder-shelf-note{
+  display:grid;
+  gap:6px;
+  margin:12px 0 14px;
+  padding:14px 16px;
+  border-radius:22px;
+  background:linear-gradient(180deg,#fffdf8 0%,#fff6ec 100%);
+}
+body[data-page="magazine"] .finder-shelf-note strong{
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#9a734b;
+}
+body[data-page="magazine"] .finder-shelf-note span{
+  color:#5d6773;
+  line-height:1.6;
+}
+body[data-page="magazine"] .finder-card .card-body{
+  display:grid;
+  align-content:start;
+  min-height:100%;
+}
+body[data-page="magazine"] .finder-card .meta{
+  justify-content:space-between;
+}
+body[data-page="magazine"] .finder-priority-pill{
+  display:inline-flex;
+  align-items:center;
+  min-height:24px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#fff1e2;
+  border:1px solid rgba(240,185,144,.76);
+  color:#b96732;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+body[data-page="magazine"] .finder-card.is-entry-lead{
+  border-color:#efc8a6;
+  box-shadow:0 20px 42px rgba(20,33,48,.08), 0 0 0 3px rgba(240,185,144,.15);
+}
+body[data-page="magazine"] .finder-card.is-entry-lead .card-title{
+  font-size:22px;
+}
+body[data-page="magazine"] .finder-card.is-entry-lead .card-image img{
+  aspect-ratio:5/3;
+}
+body[data-page="magazine"] .finder-card.is-release-core:not(.is-entry-lead){
+  border-color:rgba(234,217,198,.98);
+}
+body[data-page="magazine"] .finder-card .card-actions{
+  margin-top:auto;
+}
+@media (min-width: 1040px){
+  body[data-page="magazine"] .city-finder-section .magazine-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  body[data-page="magazine"] .finder-card.is-entry-lead:nth-child(1),
+  body[data-page="magazine"] .finder-card.is-entry-lead:nth-child(2){
+    grid-column:span 1;
+  }
+}
+@media (max-width: 720px){
+  body[data-page="magazine"] .city-finder-section .magazine-grid{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+  body[data-page="magazine"] .finder-shelf-note{
+    padding:13px 14px;
+    border-radius:18px;
+    margin:10px 0 12px;
+  }
+  body[data-page="magazine"] .finder-shelf-note strong{
+    font-size:12px;
+  }
+  body[data-page="magazine"] .finder-shelf-note span{
+    font-size:13px;
+    line-height:1.58;
+  }
+  body[data-page="magazine"] .finder-priority-pill{
+    font-size:9.5px;
+    min-height:22px;
+    padding:4px 7px;
+  }
+  body[data-page="magazine"] .finder-card.is-entry-lead .card-title{
+    font-size:20px;
+  }
+}
