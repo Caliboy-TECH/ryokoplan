@@ -1974,6 +1974,10 @@ function getPriorityRefinePack(city=''){
       keepLoop: uiCopy('다음 루프로','Keep the loop going','次のループへ','接著往下一個循環'),
       openRecent: uiCopy('최근 루트 열기','Open recent route','最近のルートを開く','打開最近路線'),
       openTrips: uiCopy('My Trips 열기','Open My Trips','My Trips を開く','打開 My Trips'),
+      openVault: uiCopy('저장 루프 열기','Open saved loop','保存ループを開く','打開已存循環'),
+      vaultStep: uiCopy('저장 루프','Saved loop','保存ループ','已存循環'),
+      vaultTitle: uiCopy('My Trips에 남기기', 'Keep it in My Trips', 'My Trips に残す', '存進 My Trips'),
+      vaultDesc: uiCopy('결과를 저장하고 나중에 다시 꺼내보면 같은 도시 결을 더 쉽게 이어갈 수 있습니다.', 'Save the result so the same city logic is easier to reopen later.', '結果を保存しておくと、同じ都市の流れをあとで開き直しやすくなります。', '先把結果存起來，之後會更容易接回同一座城市的脈絡。'),
       readGuide: uiCopy('도시 가이드 읽기','Read guide','ガイドを読む','閱讀指南'),
       routeNote: uiCopy('비주얼 루트 노트', 'Visual route notes', 'ビジュアルルートノート', '視覺路線筆記'),
       routeNoteDesc: uiCopy('도시 커버, 이번 루트의 분위기, 그리고 다음으로 가지를 칠 수 있는 도시까지 한 번에 보여줍니다.', 'A city cover, one route mood frame, and one next branch keep the result from reading like a plain checklist.', '都市カバー、今回のルートの空気、次に枝分かれできる都市まで、一度に読めるように見せます。', '把城市封面、這次路線的氣氛，以及下一個可延伸的城市，一次整理給你看。'),
@@ -1987,8 +1991,8 @@ function getPriorityRefinePack(city=''){
       saveTrip: uiCopy('여정 저장','Save Trip','旅程を保存','保存旅程'),
       useThisRoute: uiCopy('이 루트로 시작','Use this route','このルートを使う','使用這條路線'),
       routeLoopEyebrow: uiCopy('루트 루프','Route loop','ルートループ','路線循環'),
-      routeLoopTitle: uiCopy('atlas에서 결과까지, 이 흐름을 다시 이어가세요', 'Keep the full flow moving from atlas to result', 'atlas から結果まで、この流れをもう一度つなげましょう', '從 atlas 到結果，讓這個流程繼續接回去'),
-      routeLoopDesc: uiCopy('지금 결과를 끝으로 두지 않고, city atlas·도시 가이드·sample route·route desk를 다시 오가며 더 좋은 다음 루트를 만들 수 있게 묶었습니다.', 'Do not stop at this result. Move back through the city atlas, the city guide, the sample route, and the route desk to shape the next version with better context.', 'この結果で止まらず、city atlas・都市ガイド・sample route・route desk を行き来しながら、次のルートをもっと良い文脈で整えられるようにつなげています。', '別停在這個結果。你可以回到 city atlas、城市指南、sample route 與 route desk 之間來回閱讀，整理出下一版更有脈絡的路線。'),
+      routeLoopTitle: uiCopy('atlas에서 저장 루프까지, 흐름 전체를 다시 이어가세요', 'Keep the full flow moving from atlas to your saved loop', 'atlas から保存ループまで、この流れをもう一度つなげましょう', '從 atlas 到已存循環，讓整個流程再次接起來'),
+      routeLoopDesc: uiCopy('지금 결과를 끝으로 두지 않고, city atlas·도시 가이드·sample route·route desk·My Trips를 다시 오가며 다음 루트를 더 쉽게 남길 수 있게 묶었습니다.', 'Do not stop at this result. Move back through the city atlas, city guide, sample route, route desk, and My Trips so the next version is easier to keep and reopen.', 'この結果で止まらず、city atlas・都市ガイド・sample route・route desk・My Trips を行き来しながら、次のルートをもっと残しやすく整えられるようにつなげています。', '別停在這個結果。你可以回到 city atlas、城市指南、sample route、route desk 與 My Trips 之間來回，讓下一版更容易被保存與重開。'),
       atlas: uiCopy('atlas', 'Atlas', 'atlas', 'atlas'),
       neighborhoods: uiCopy('동네 픽', 'Neighborhood picks', '近所のピック', '鄰里精選'),
       routeResult: uiCopy('현재 결과', 'Current result', '今の結果', '目前結果'),
@@ -2491,25 +2495,27 @@ function getPriorityRefinePack(city=''){
   function sharedLoopMarkup(baseCity, signals){
     const city = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, guide:'magazine/index.html', example:'magazine/index.html', image: cityImageFor(baseCity), vibe:'' };
     const related = sortRelatedCities(baseCity, signals)[0] || city;
-    const atlasHref = window.RyokoApp.resolvePath('magazine/index.html#cityAtlas');
     const guideHref = window.RyokoApp.resolvePath(city.guide || 'magazine/index.html') + '#city-neighborhoods';
     const exampleHref = window.RyokoApp.resolvePath(city.example || city.guide || 'magazine/index.html');
+    const tripsHref = window.RyokoApp.navHref('trips');
     const plannerHref = `${location.pathname}?destination=${encodeURIComponent(baseCity)}#plannerForm`;
     return `
       <div class="shared-loop-shell">
         <div class="shared-loop-head">
-          <span class="eyebrow">${uiCopy('city-first loop','City-first loop','city-first loop','city-first loop')}</span>
-          <strong>${uiCopy('공유 링크도 같은 도시 루프로 다시 읽습니다','A shared link should reopen the same city loop, not stop at the route preview','共有リンクも同じ都市ループで読み直します','分享連結也要回到同一個城市循環')}</strong>
+          <span class="eyebrow">${uiCopy('shared → saved loop','Shared → saved loop','shared → saved loop','shared → saved loop')}</span>
+          <strong>${uiCopy('공유 링크를 미리보기에서 끝내지 말고, 저장 루프로 넘기세요','Move a shared link into the saved loop instead of stopping at the preview','共有リンクをプレビューで止めず、保存ループへ渡しましょう','不要停在分享預覽，請把它送進已存循環')}</strong>
         </div>
         <p class="card-copy">${priorityCityLoopNote(baseCity, signals, 'share') || adaptiveNudgeCopy(baseCity, signals)}</p>
-        <div class="shared-loop-grid">
-          <a class="shared-loop-card" href="${atlasHref}"><span class="mini-label">Atlas</span><strong>${city.name}</strong><p>${uiCopy('도시 커버와 우선 동네를 다시 읽기','Reopen the city cover, priority districts, and first neighborhood logic','都市カバーと最初の地区を読み直す','重新讀城市封面與優先區域')}</p></a>
-          <a class="shared-loop-card" href="${guideHref}"><span class="mini-label">City</span><strong>${uiCopy('Neighborhood picks','Neighborhood picks','近所のピック','鄰里精選')}</strong><p>${uiCopy('이 공유 루트가 기대는 동네 결을 더 읽기','Read the neighborhood logic holding this shared route together','この共有ルートが寄りかかる近所のロジックを読む','把這條分享路線依靠的鄰里邏輯再讀深一點')}</p></a>
-          <a class="shared-loop-card" href="${exampleHref}"><span class="mini-label">Example</span><strong>${city.name}</strong><p>${uiCopy('비슷한 도시 예시와 속도 차이 비교','Compare this pace against the stronger city example','同じ都市のサンプルと速度感を比べる','和同城市範例比對節奏差異')}</p></a>
-          <a class="shared-loop-card" href="${window.RyokoApp.resolvePath(related.guide || city.guide)}"><span class="mini-label">Next</span><strong>${related.name}</strong><p>${uiCopy('비슷한 결의 다음 도시 가지 열기','Open the next city branch that carries a similar editorial tone','近いトーンの次都市ブランチを開く','打開調性相近的下一座城市分支')}</p></a>
+        <div class="loop-stage-grid loop-stage-grid-compact">
+          <article class="loop-stage-card loop-stage-city"><span class="loop-stage-step">01</span><span class="mini-label">Shared</span><strong>${uiCopy('공유 루트 열기','Open shared route','共有ルートを開く','打開分享路線')}</strong><p>${uiCopy('원본 맥락을 먼저 읽습니다.','Start with the original context.','元の文脈を先に読みます。','先讀原本的脈絡。')}</p></article>
+          <a class="loop-stage-card loop-stage-planner" href="${tripsHref}"><span class="loop-stage-step">02</span><span class="mini-label">Vault</span><strong>${uiCopy('My Trips에 남기기','Keep it in My Trips','My Trips に残す','存進 My Trips')}</strong><p>${uiCopy('나중에 다시 열 수 있는 저장 루프로 넘깁니다.','Move it into a saved loop you can reopen later.','あとで開き直せる保存ループへ渡します。','把它送進之後可以再打開的已存循環。')}</p></a>
+          <a class="loop-stage-card loop-stage-city" href="${guideHref}"><span class="loop-stage-step">03</span><span class="mini-label">City</span><strong>${uiCopy('동네 결 다시 읽기','Re-read the neighborhood layer','近所の層を読み直す','重讀鄰里層次')}</strong><p>${uiCopy('이 링크가 기대는 도시 결을 더 선명하게 만듭니다.','Clarify the city logic this shared link depends on.','このリンクが寄りかかる都市のロジックをはっきりさせます。','把這條分享路線依靠的城市邏輯讀得更清楚。')}</p></a>
+          <a class="loop-stage-card loop-stage-example" href="${exampleHref}"><span class="loop-stage-step">04</span><span class="mini-label">Example</span><strong>${uiCopy('샘플과 속도 비교','Compare against the sample','サンプルと速度を比べる','和範例比較節奏')}</strong><p>${uiCopy('같은 도시의 기본 샘플과 밀도를 나란히 봅니다.','Put it beside the city sample and compare density.','同じ都市のサンプルと密度を見比べます。','和同城市 sample 並排比較密度。')}</p></a>
+          <a class="loop-stage-card loop-stage-result" href="${window.RyokoApp.resolvePath(related.guide || city.guide)}"><span class="loop-stage-step">05</span><span class="mini-label">Next</span><strong>${related.name}</strong><p>${uiCopy('비슷한 결의 다음 도시 가지를 엽니다.','Open the next city branch with a matching tone.','近いトーンの次都市ブランチを開きます。','打開調性相近的下一座城市分支。')}</p></a>
         </div>
         <div class="card-actions shared-loop-actions">
-          <a class="soft-btn" href="${plannerHref}">${uiCopy('이 루트 다듬기','Refine this route','このルートを整える','微調這條路線')}</a>
+          <a class="primary-btn" href="${tripsHref}">${uiCopy('My Trips로 넘기기','Send to My Trips','My Trips へ渡す','送進 My Trips')}</a>
+          <a class="secondary-btn" href="${plannerHref}">${uiCopy('이 루트 다듬기','Refine this route','このルートを整える','微調這條路線')}</a>
           <a class="ghost-btn" href="${guideHref}">${uiCopy('도시 가이드 읽기','Read guide','ガイドを読む','閱讀指南')}</a>
         </div>
       </div>`;
@@ -2591,13 +2597,15 @@ function getPriorityRefinePack(city=''){
     const cityGuideHref = window.RyokoApp.resolvePath((current.guide || 'magazine/index.html')) + '#city-neighborhoods';
     const exampleHref = window.RyokoApp.resolvePath(current.example || current.guide || 'magazine/index.html');
     const plannerHref = `${location.pathname}?destination=${encodeURIComponent(baseCity)}#plannerForm`;
+    const tripsHref = window.RyokoApp.navHref('trips');
     const resultHref = '#resultTop';
     const stages = [
       { step:'01', label:copy.atlas, title: uiCopy(`${current.name}를 atlas에서 다시 읽기`, `Re-read ${current.name} in the atlas`, `${current.name} を atlas で読み直す`, `回到 atlas 重讀 ${current.name}`), desc: copy.backToAtlas, href: atlasHref, cls:'atlas' },
       { step:'02', label:copy.cityGuide, title: uiCopy(`${current.name} city guide`, `${current.name} city guide`, `${current.name} 都市ガイド`, `${current.name} 城市指南`), desc: copy.sameCityGuideDesc, href: cityGuideHref, cls:'city' },
       { step:'03', label:copy.sampleRoute, title: uiCopy(`${current.name} sample route`, `${current.name} sample route`, `${current.name} サンプルルート`, `${current.name} 範例路線`), desc: copy.sameCityExampleDesc, href: exampleHref, cls:'example' },
       { step:'04', label:copy.plannerBase, title: uiCopy(`${current.name} route desk`, `${current.name} route desk`, `${current.name} route desk`, `${current.name} route desk`), desc: copy.tunePlanner, href: plannerHref, cls:'planner' },
-      { step:'05', label:copy.routeResult, title: uiCopy('지금 보고 있는 결과', 'The result you are reading now', '今読んでいる結果', '你現在正在看的結果'), desc: copy.continueResult, href: resultHref, cls:'result' }
+      { step:'05', label:copy.vaultStep, title: copy.vaultTitle, desc: copy.vaultDesc, href: tripsHref, cls:'city' },
+      { step:'06', label:copy.routeResult, title: uiCopy('지금 보고 있는 결과', 'The result you are reading now', '今読んでいる結果', '你現在正在看的結果'), desc: copy.continueResult, href: resultHref, cls:'result' }
     ];
     const stageCards = stages.map((item, idx) => {
       const body = `<span class="loop-stage-step">${item.step}</span><span class="mini-label">${escapeHtml(item.label)}</span><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.desc)}</p>`;
@@ -2624,10 +2632,14 @@ function getPriorityRefinePack(city=''){
           <span class="eyebrow">${copy.matchingEyebrow}</span>
           <h3>${copy.matchingTitle}</h3>
           <p>${copy.matchingDesc}</p><p class="section-desc">${adaptiveNudgeCopy(baseCity, signals)}</p>
+          <div class="result-vault-note">
+            <strong>${copy.vaultTitle}</strong>
+            <span>${copy.vaultDesc}</span>
+          </div>
           <div class="card-actions">
-            <a class="primary-btn" href="${cityGuideHref}">${copy.readCityLayer}</a>
-            <a class="secondary-btn" href="${exampleHref}">${copy.compareExample}</a>
-            <a class="ghost-btn" href="${atlasHref}">${copy.backToAtlas}</a>
+            <a class="primary-btn" href="${tripsHref}">${copy.openVault}</a>
+            <a class="secondary-btn" href="${cityGuideHref}">${copy.readCityLayer}</a>
+            <a class="ghost-btn" href="${exampleHref}">${copy.compareExample}</a>
           </div>
         </div>
       </article>

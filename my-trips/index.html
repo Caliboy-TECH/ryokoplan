@@ -1334,6 +1334,8 @@
         section.classList.remove('hidden');
         const city = window.RyokoApp.getCityLoopData(item.destination) || { name:item.destination || 'Trip', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
         const meta = detailMeta(item);
+        const lang = window.RyokoApp.lang;
+        const stageTitle = lang === 'ko' ? '공유 링크를 저장 루프로 넘기는 가장 빠른 흐름' : lang === 'ja' ? '共有リンクを保存ループへ渡す最短の流れ' : lang === 'zhHant' ? '把分享連結送進已存循環的最短流程' : 'The fastest path from a shared link into your saved loop';
         node.innerHTML = `
           <div class="shared-spotlight-media"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.jpg'}" alt="${item.destination || 'Trip'}"></div>
           <div class="shared-spotlight-copy">
@@ -1351,8 +1353,14 @@
             ${rhythmMarkup(item.destination, 'trip-rhythm-inline-soft')}
             ${visitEntryMarkup(item.destination, 'trip-entry-inline-soft')}
             <div class="shared-spotlight-note">
-              <strong>City-first note</strong>
+              <strong>${stageTitle}</strong>
               <span>${cityLoopBranchNote(item.destination) || (item.importedFromLink ? 'It came in through a shared link, so saving it here keeps the city loop easy to reopen later.' : 'Shared trips get stronger when you can save them, compare them, and branch into your own city-first version.')}</span>
+            </div>
+            <div class="loop-stage-grid loop-stage-grid-compact loop-stage-grid-trips">
+              <article class="loop-stage-card loop-stage-city"><span class="loop-stage-step">01</span><span class="mini-label">Shared</span><strong>${lang === 'ko' ? '공유 링크 읽기' : lang === 'ja' ? '共有リンクを読む' : lang === 'zhHant' ? '閱讀分享連結' : 'Read shared link'}</strong><p>${lang === 'ko' ? '원본 컨텍스트를 먼저 확인합니다.' : lang === 'ja' ? '元の文脈を先に確認します。' : lang === 'zhHant' ? '先確認原始脈絡。' : 'Start with the original context.'}</p></article>
+              <button class="loop-stage-card loop-stage-planner loop-stage-card-button" type="button" data-save="${item.id}"><span class="loop-stage-step">02</span><span class="mini-label">Vault</span><strong>${lang === 'ko' ? 'My Trips에 저장' : lang === 'ja' ? 'My Trips に保存' : lang === 'zhHant' ? '存進 My Trips' : 'Save to My Trips'}</strong><p>${lang === 'ko' ? '나중에 다시 열 수 있는 내 흐름으로 넘깁니다.' : lang === 'ja' ? 'あとで開き直せる自分の流れへ渡します。' : lang === 'zhHant' ? '把它送進之後可再打開的個人循環。' : 'Move it into a loop you can reopen later.'}</p></button>
+              <button class="loop-stage-card loop-stage-example loop-stage-card-button" type="button" data-my-version="${item.id}"><span class="loop-stage-step">03</span><span class="mini-label">Version</span><strong>${lang === 'ko' ? '내 버전 만들기' : lang === 'ja' ? '自分版にする' : lang === 'zhHant' ? '做成我的版本' : 'Make my version'}</strong><p>${lang === 'ko' ? '공유 루트를 내 취향의 출발점으로 바꿉니다.' : lang === 'ja' ? '共有ルートを自分の出発点へ変えます。' : lang === 'zhHant' ? '把分享路線改成你的起點版本。' : 'Turn the shared route into your own base.'}</p></button>
+              <a class="loop-stage-card loop-stage-result" href="../${city.guide}"><span class="loop-stage-step">04</span><span class="mini-label">City</span><strong>${lang === 'ko' ? `${city.name} 다시 읽기` : lang === 'ja' ? `${city.name} を読み直す` : lang === 'zhHant' ? `重讀 ${city.name}` : `Re-read ${city.name}`}</strong><p>${lang === 'ko' ? '같은 도시 결을 다시 붙여 맥락을 선명하게 만듭니다.' : lang === 'ja' ? '同じ都市の層をもう一度つなぎ、文脈をはっきりさせます。' : lang === 'zhHant' ? '重新接回同城市層次，讓脈絡更清楚。' : 'Reconnect the same city layer so the context feels clearer.'}</p></a>
             </div>
             <div class="card-actions">
               <a class="primary-btn" href="${shareUrl(item)}">Open shared trip</a>
@@ -1541,10 +1549,17 @@
         const current = window.RyokoApp.getCityLoopData(anchor.destination) || { name: anchor.destination || 'Trip', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
         const related = getLoopBranches(anchor, current);
         const summary = (anchor.planData?.summary || anchor.notes || cityLoopBranchNote(anchor.destination) || ui.branchNote).slice(0, 180);
+        const lang = window.RyokoApp.lang;
         main.innerHTML = `
           <span class="eyebrow">${ui.eyebrow}</span>
           <h3>${current.name} · ${ui.title}</h3>
           <p>${summary}</p>
+          <div class="loop-stage-grid loop-stage-grid-compact loop-stage-grid-trips">
+            <article class="loop-stage-card loop-stage-planner"><span class="loop-stage-step">01</span><span class="mini-label">Vault</span><strong>${lang === 'ko' ? '저장 루트 다시 열기' : lang === 'ja' ? '保存ルートを開き直す' : lang === 'zhHant' ? '重新打開已存路線' : 'Reopen saved route'}</strong><p>${lang === 'ko' ? '지금 보관된 흐름을 다시 기준점으로 잡습니다.' : lang === 'ja' ? '今保管している流れを基準点に戻します。' : lang === 'zhHant' ? '先回到目前保管的這條流。' : 'Use the route in your vault as the base again.'}</p></article>
+            <a class="loop-stage-card loop-stage-city" href="../${current.guide}"><span class="loop-stage-step">02</span><span class="mini-label">City</span><strong>${lang === 'ko' ? '같은 도시 더 읽기' : lang === 'ja' ? '同じ都市を深く読む' : lang === 'zhHant' ? '再讀同一座城市' : 'Read the same city deeper'}</strong><p>${lang === 'ko' ? '도시 결을 다시 붙여 맥락을 더 또렷하게 만듭니다.' : lang === 'ja' ? '都市の層をつなぎ直して文脈をはっきりさせます。' : lang === 'zhHant' ? '重新接回城市層次，讓脈絡更清楚。' : 'Reconnect the city layer so the context sharpens again.'}</p></a>
+            <a class="loop-stage-card loop-stage-example" href="../${current.example}"><span class="loop-stage-step">03</span><span class="mini-label">Example</span><strong>${lang === 'ko' ? '샘플과 밀도 비교' : lang === 'ja' ? 'サンプルと密度を比べる' : lang === 'zhHant' ? '和範例比較密度' : 'Compare with the sample'}</strong><p>${lang === 'ko' ? '같은 도시의 기본 sample과 속도를 나란히 봅니다.' : lang === 'ja' ? '同じ都市の sample と速度感を見比べます。' : lang === 'zhHant' ? '把同城市 sample 和速度並排比對。' : 'Put the city sample beside it and compare pace.'}</p></a>
+            <a class="loop-stage-card loop-stage-result" href="../?destination=${encodeURIComponent(current.name)}"><span class="loop-stage-step">04</span><span class="mini-label">Planner</span><strong>${lang === 'ko' ? '다음 버전 정리' : lang === 'ja' ? '次の版を整える' : lang === 'zhHant' ? '整理下一版' : 'Shape the next version'}</strong><p>${lang === 'ko' ? '같은 도시 결을 유지한 채 다시 route를 다듬습니다.' : lang === 'ja' ? '同じ都市トーンを保ったまま route を整えます。' : lang === 'zhHant' ? '保留同城市調性，重整下一版 route。' : 'Refine the route while keeping the same city tone.'}</p></a>
+          </div>
           <div class="trip-loop-destinations">
             <span class="trip-loop-chip">${current.name}</span>
             ${related.map(city => `<span class="trip-loop-chip">${city.name}</span>`).join('')}

@@ -6001,3 +6001,24 @@ body[data-page="magazine"] .dispatch-next-pill{
     padding:4px 7px;
   }
 }
+
+
+/* v120 result-share-trips loop polish */
+.loop-stage-grid.loop-stage-grid-compact{grid-template-columns:repeat(4,minmax(0,1fr));margin-top:12px;margin-bottom:14px}
+.loop-stage-grid.loop-stage-grid-trips{grid-template-columns:repeat(4,minmax(0,1fr))}
+.loop-stage-card-button{appearance:none;width:100%;text-align:left;font:inherit;cursor:pointer}
+.result-vault-note{display:grid;gap:4px;margin:14px 0 12px;padding:12px 14px;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08)}
+.result-vault-note strong{font-size:13px;letter-spacing:.02em;color:#fff}
+.result-vault-note span{color:rgba(255,255,255,.82);font-size:13px;line-height:1.55}
+.shared-loop-shell .loop-stage-card,.shared-spotlight-copy .loop-stage-card,.trip-loop-card .loop-stage-card{min-height:150px}
+.shared-loop-shell .loop-stage-card strong,.shared-spotlight-copy .loop-stage-card strong,.trip-loop-card .loop-stage-card strong{font-size:15px}
+.shared-loop-shell .loop-stage-card p,.shared-spotlight-copy .loop-stage-card p,.trip-loop-card .loop-stage-card p{font-size:12.5px;line-height:1.52}
+@media (max-width: 980px){
+  .loop-stage-grid.loop-stage-grid-compact,.loop-stage-grid.loop-stage-grid-trips{grid-template-columns:1fr 1fr}
+}
+@media (max-width: 560px){
+  .loop-stage-grid.loop-stage-grid-compact,.loop-stage-grid.loop-stage-grid-trips{grid-template-columns:1fr}
+  .shared-loop-shell .loop-stage-card,.shared-spotlight-copy .loop-stage-card,.trip-loop-card .loop-stage-card{min-height:unset}
+  .result-vault-note{padding:10px 12px}
+  .result-vault-note span{font-size:12.5px}
+}

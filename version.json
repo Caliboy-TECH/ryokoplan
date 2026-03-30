@@ -1,14 +1,14 @@
 {
-  "release": "v119",
-  "version": "v119",
+  "release": "v120",
+  "version": "v120",
   "channel": "beta",
-  "codename": "magazine-opening-rhythm-polish",
+  "codename": "result-share-trips-loop-polish",
   "updatedAt": "2026-03-30",
-  "headline": "Magazine opening now reads lighter on mobile, with tighter hero cards and faster dispatch scanning.",
+  "headline": "Result, shared-trip, and My Trips surfaces now make the save-and-return loop much more explicit.",
   "notes": [
-    "Magazine hero copy is tightened again so the opening asks for less reading before a user can choose a city or jump into planner.",
-    "Hero support cards are trimmed down with shorter supporting lines and a clearer utility note, making the first screen feel more editorial and less memo-like.",
-    "Dispatch cards now carry small context pills and shorter copy, so weekend, rainy-day, and with-parents bases scan faster on mobile.",
-    "Spacing, card density, and mobile typography are tuned again so the opening rhythm feels lighter before the user reaches the city finder."
+    "The result page loop now shows a fuller atlas → guide → sample → planner → My Trips → result path, so saving and returning no longer feels implicit.",
+    "Shared trip banners now emphasize moving a shared link into My Trips, with a clearer stage-based flow before branching back into city reading.",
+    "My Trips now frames saved routes more explicitly as a city-first continuation loop, not just a storage list, with faster same-city and next-city actions.",
+    "Compact loop stage cards were added for result, shared spotlight, and My Trips so the product flow reads more clearly on mobile."
   ]
 }
