@@ -67,7 +67,7 @@
               <span class="release-pill">Noindex</span>
             </div>
             <h1 class="release-check-title">Ryokoplan release sign-off</h1>
-            <p class="release-check-copy">Use this page right after deploy to confirm the active build, open the main product routes, inspect telemetry, and run the final sign-off smoke pass on the live site. This pass now also reflects the thumb-friendly floating jump utility, its compact-on-scroll mobile state, and the dual-state back-to-top behavior on key pages.</p>
+            <p class="release-check-copy">Use this page right after deploy to confirm the active build, open the main product routes, inspect telemetry, and run the final sign-off smoke pass on the live site. This pass now also reflects the thumb-friendly floating jump utility, its compact-on-scroll mobile state, the dual-state back-to-top behavior on key pages, and the new keyboard/overlap safety rules on small screens.</p>
           </div>
           <div id="onlineStatus" class="release-status"><span class="release-status-dot"></span><span>Checking connection…</span></div>
         </div>
@@ -165,7 +165,7 @@
               <label class="release-check-item"><input type="checkbox" data-check="city-sample"> <div><strong>City → sample flow works</strong><p>Open a city, then a sample, then continue toward a route without broken links.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="generate"> <div><strong>Route generate/fallback feedback works</strong><p>Button busy state, feedback panel, fallback explanation, and retry all look like product UI.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="share-save"> <div><strong>Share / save / My Trips loop works</strong><p>Saved and recent trips reopen, and share links look reasonable.</p></div></label>
-              <label class="release-check-item"><input type="checkbox" data-check="pdf-mobile"> <div><strong>PDF / multilingual / small-screen comfort pass</strong><p>Open PDF once, switch all 4 languages once, do one quick small-screen comfort pass on Magazine, result, and My Trips, and confirm the floating jump utility swaps cleanly between content and top states, collapses while reading, and stays easy to tap above the dock. Confirm hero/card images recover cleanly if the network is slow.</p></div></label>
+              <label class="release-check-item"><input type="checkbox" data-check="pdf-mobile"> <div><strong>PDF / multilingual / small-screen comfort pass</strong><p>Open PDF once, switch all 4 languages once, do one quick small-screen comfort pass on Magazine, result, and My Trips, and confirm the floating jump utility swaps cleanly between content and top states, collapses while reading, and stays easy to tap above the dock. Confirm hero/card images recover cleanly if the network is slow, and confirm the utility stays out of the way while typing or when the result sticky bar is visible.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="pwa"> <div><strong>PWA install / offline basics pass</strong><p>Check service worker registration, make sure install is available on a supported browser, and open the offline fallback once if needed.</p></div></label>
             </div>
             <div class="release-actions">
@@ -231,7 +231,7 @@
     </div>
   </main>
   <script>
-    const storageKey = 'ryoko:release-check-v129';
+    const storageKey = 'ryoko:release-check-v130';
     const releaseDraftStorageKey = 'ryoko:release-report-draft:v1';
     const betaDismissKey = 'ryoko:beta-launch-dismissed:v100';
     const firstRunGuideKey = 'ryoko:first-run-guide-dismissed:v101';

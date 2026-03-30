@@ -1,11 +1,12 @@
 {
-  "release": "v129",
-  "version": "v129",
+  "release": "v130",
+  "version": "v130",
   "date": "2026-03-30",
-  "codename": "thumb-friendly-utility-hotfix",
+  "codename": "utility-overlap-keyboard-hotfix",
   "notes": [
-    "Moves the jump utility into a thumb-friendly floating position on mobile pages and keeps desktop behavior intact.",
-    "Adds scroll-aware collapse/expand behavior so the utility stays visible but less intrusive while reading.",
-    "Updates release-check guidance for the new mobile utility placement and compact state."
-  ]
+    "Makes the floating jump utility keyboard-aware on mobile so it hides during text entry.",
+    "Adds dynamic bottom offset logic so the utility clears the dock and visible result sticky bar.",
+    "Updates release-check guidance for utility overlap and input-focus safety on small screens."
+  ],
+  "updatedAt": "2026-03-31"
 }

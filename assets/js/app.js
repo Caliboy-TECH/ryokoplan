@@ -1833,8 +1833,19 @@ function ensureLaunchFeedbackCta(){
       document.body.insertBefore(skip, document.body.firstChild);
     }
     if (skip) {
+      const body = document.body;
       const getHeaderOffset = () => Math.max((topBar?.offsetHeight || 0) + 16, 72);
       const isMobileUtility = () => window.matchMedia('(max-width: 767px)').matches;
+      const hasInputFocus = () => {
+        const ae = document.activeElement;
+        if (!ae) return false;
+        return ['INPUT','SELECT','TEXTAREA'].includes(ae.tagName) || ae.isContentEditable;
+      };
+      const getKeyboardGap = () => {
+        if (!isMobileUtility() || !window.visualViewport) return 0;
+        const gap = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop;
+        return gap > 120 ? gap : 0;
+      };
       const setMode = (mode = 'content') => {
         const resolved = mode === 'top' ? 'top' : 'content';
         const label = accessibilityCopy(resolved);
@@ -1847,11 +1858,38 @@ function ensureLaunchFeedbackCta(){
       const setCollapsed = (collapsed = false) => {
         skip.dataset.collapsed = collapsed ? 'true' : 'false';
       };
+      const setHidden = (hidden = false) => {
+        skip.dataset.hidden = hidden ? 'true' : 'false';
+      };
+      const setBottomOffset = () => {
+        if (!isMobileUtility()) {
+          body.style.removeProperty('--mobile-utility-bottom');
+          return;
+        }
+        let bottomOffset = window.matchMedia('(max-width: 420px)').matches ? 94 : 102;
+        const blockers = [
+          document.querySelector('.mobile-dock'),
+          document.querySelector('.result-sticky-bar.is-visible')
+        ].filter(Boolean);
+        blockers.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (!rect.height || rect.top >= window.innerHeight) return;
+          bottomOffset = Math.max(bottomOffset, Math.round(window.innerHeight - rect.top + 12));
+        });
+        body.style.setProperty('--mobile-utility-bottom', `calc(${bottomOffset}px + env(safe-area-inset-bottom, 0px))`);
+      };
       const syncMode = () => {
         const threshold = getHeaderOffset() + 64;
         setMode(window.scrollY > threshold ? 'top' : 'content');
       };
-      syncMode();
+      const syncUtilityViewport = () => {
+        syncMode();
+        setBottomOffset();
+        const shouldHide = isMobileUtility() && (getKeyboardGap() > 0 || hasInputFocus());
+        setHidden(shouldHide);
+        if (shouldHide) setCollapsed(false);
+      };
+      syncUtilityViewport();
       setCollapsed(false);
       if (!skip.dataset.skipBound) {
         let ticking = false;
@@ -1864,20 +1902,26 @@ function ensureLaunchFeedbackCta(){
             const threshold = getHeaderOffset() + 84;
             const movingDown = currentY > lastY + 6;
             const movingUp = currentY < lastY - 4;
-            syncMode();
-            if (isMobileUtility()) {
-              const shouldCollapse = currentY > threshold && movingDown;
-              const shouldExpand = currentY <= threshold || movingUp;
-              if (shouldCollapse) setCollapsed(true);
-              else if (shouldExpand) setCollapsed(false);
-            } else {
-              setCollapsed(false);
+            syncUtilityViewport();
+            if (skip.dataset.hidden !== 'true') {
+              if (isMobileUtility()) {
+                const shouldCollapse = currentY > threshold && movingDown;
+                const shouldExpand = currentY <= threshold || movingUp;
+                if (shouldCollapse) setCollapsed(true);
+                else if (shouldExpand) setCollapsed(false);
+              } else {
+                setCollapsed(false);
+              }
             }
             lastY = currentY;
             ticking = false;
           });
         };
-        const expandUtility = () => setCollapsed(false);
+        const expandUtility = () => {
+          setHidden(false);
+          setCollapsed(false);
+          setBottomOffset();
+        };
         skip.addEventListener('click', (event) => {
           event.preventDefault();
           expandUtility();
@@ -1896,6 +1940,12 @@ function ensureLaunchFeedbackCta(){
         ['focus','mouseenter','touchstart'].forEach(eventName => skip.addEventListener(eventName, expandUtility, { passive: true }));
         window.addEventListener('scroll', onUtilityViewportChange, { passive: true });
         window.addEventListener('resize', onUtilityViewportChange);
+        if (window.visualViewport) {
+          window.visualViewport.addEventListener('resize', onUtilityViewportChange);
+          window.visualViewport.addEventListener('scroll', onUtilityViewportChange);
+        }
+        document.addEventListener('focusin', onUtilityViewportChange);
+        document.addEventListener('focusout', () => window.setTimeout(onUtilityViewportChange, 60));
         skip.dataset.skipBound = 'true';
       }
     }
