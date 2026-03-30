@@ -1793,13 +1793,22 @@ function ensureLaunchFeedbackCta(){
     const dict = window.RYOKO_TRANSLATIONS?.[activeLang] || window.RYOKO_TRANSLATIONS?.en || window.RYOKO_TRANSLATIONS?.ko || {};
     return path.split('.').reduce((acc, key) => acc?.[key], dict) ?? '';
   }
-  function accessibilityCopy(){
-    return {
-      ko:'본문으로 이동',
-      en:'Jump to content',
-      ja:'本文へ移動',
-      zhHant:'前往內容'
-    }[lang] || 'Jump to content';
+  function accessibilityCopy(mode='content'){
+    const copy = {
+      content:{
+        ko:'본문으로 이동',
+        en:'Jump to content',
+        ja:'本文へ移動',
+        zhHant:'前往內容'
+      },
+      top:{
+        ko:'맨 위로',
+        en:'Back to top',
+        ja:'上へ戻る',
+        zhHant:'回到頂部'
+      }
+    };
+    return copy[mode]?.[lang] || copy[mode]?.en || copy.content.en;
   }
   function updateLanguageButtonsState(root=document){
     root.querySelectorAll('[data-lang-btn]').forEach(btn => {
@@ -1810,6 +1819,7 @@ function ensureLaunchFeedbackCta(){
   }
   function initAccessibilityPolish(){
     const main = document.querySelector('main');
+    const topBar = document.querySelector('.top-bar');
     if (main) {
       if (!main.id) main.id = 'main-content';
       if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
@@ -1823,16 +1833,47 @@ function ensureLaunchFeedbackCta(){
       document.body.insertBefore(skip, document.body.firstChild);
     }
     if (skip) {
-      const label = accessibilityCopy();
-      skip.textContent = label;
-      skip.setAttribute('aria-label', label);
+      const getHeaderOffset = () => Math.max((topBar?.offsetHeight || 0) + 16, 72);
+      const setMode = (mode = 'content') => {
+        const resolved = mode === 'top' ? 'top' : 'content';
+        const label = accessibilityCopy(resolved);
+        skip.dataset.mode = resolved;
+        skip.dataset.lang = lang;
+        skip.textContent = label;
+        skip.setAttribute('aria-label', label);
+        skip.setAttribute('title', label);
+      };
+      const syncMode = () => {
+        const threshold = getHeaderOffset() + 64;
+        setMode(window.scrollY > threshold ? 'top' : 'content');
+      };
+      syncMode();
       if (!skip.dataset.skipBound) {
-        skip.addEventListener('click', () => {
+        let ticking = false;
+        const onUtilityViewportChange = () => {
+          if (ticking) return;
+          ticking = true;
           window.requestAnimationFrame(() => {
-            const target = document.getElementById('main-content');
-            if (target) target.focus({ preventScroll: true });
+            syncMode();
+            ticking = false;
           });
+        };
+        skip.addEventListener('click', (event) => {
+          event.preventDefault();
+          const mode = skip.dataset.mode === 'top' ? 'top' : 'content';
+          if (mode === 'top') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+          }
+          const target = document.getElementById('main-content');
+          if (!target) return;
+          const offset = getHeaderOffset();
+          const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset + 6);
+          window.scrollTo({ top, behavior: 'smooth' });
+          window.requestAnimationFrame(() => target.focus({ preventScroll: true }));
         });
+        window.addEventListener('scroll', onUtilityViewportChange, { passive: true });
+        window.addEventListener('resize', onUtilityViewportChange);
         skip.dataset.skipBound = 'true';
       }
     }

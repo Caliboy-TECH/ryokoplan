@@ -5208,6 +5208,11 @@ body[data-page="magazine"] .hero-hierarchy-band-magazine{margin-top:10px}
 .skip-link:hover{transform:translateY(-1px);box-shadow:0 24px 42px rgba(13,24,39,.26);background:rgba(23,50,79,.96)}
 .skip-link:active{transform:translateY(0) scale(.99)}
 .skip-link:focus-visible{transform:translateY(-1px)}
+.skip-link[data-mode="content"]{background:rgba(23,50,79,.96);color:#fff;border-color:rgba(230,214,194,.9)}
+.skip-link[data-mode="content"]::before{content:'↓';background:rgba(255,255,255,.16);color:#fff}
+.skip-link[data-mode="top"]{background:rgba(255,250,244,.98);color:#17324f;border-color:rgba(230,214,194,.96);box-shadow:0 18px 36px rgba(13,24,39,.14)}
+.skip-link[data-mode="top"]::before{content:'↑';background:rgba(21,39,58,.08);color:#17324f}
+.skip-link[data-mode="top"]:hover{background:#fffaf4}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid rgba(197,106,59,.92);outline-offset:3px;box-shadow:0 0 0 4px rgba(255,245,235,.96)}
 main:focus{outline:none}
 @media (prefers-reduced-motion: reduce){
@@ -6395,6 +6400,7 @@ body[data-page="trips"] .trip-filter-chips{overscroll-behavior-x:contain;}
 /* v126 media comfort hotfix */
 
 /* v127 visible skip button polish */
+/* v128 utility jump dual-state polish */
 .brand-mark.is-logo-fallback{background:linear-gradient(135deg,#fffaf4 0%,#fff2e6 100%);border-color:#ecd8c2;display:grid;place-items:center}
 .brand-mark.is-logo-fallback img{opacity:0}
 .brand-mark.is-logo-fallback::before{content:'R';position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:20px;letter-spacing:-.03em;color:#d86d3d;z-index:1}

@@ -1,11 +1,11 @@
 {
-  "release": "v127",
-  "version": "v127",
+  "release": "v128",
+  "version": "v128",
   "date": "2026-03-30",
-  "codename": "visible-skip-button-polish",
+  "codename": "utility-jump-dual-state-polish",
   "notes": [
-    "Turns the top skip link into a visible utility button across key pages.",
-    "Adds stronger mobile-friendly affordance and safer small-screen spacing.",
-    "Keeps focus behavior intact by moving focus to main content after jump."
+    "Upgrades the visible jump button into a dual-state utility that switches between content jump and back-to-top.",
+    "Adds clearer visual states and safer mobile interaction across home, magazine, and My Trips.",
+    "Updates release-check guidance for the new jump utility behavior."
   ]
 }
