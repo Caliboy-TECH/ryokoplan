@@ -1,14 +1,14 @@
 {
-  "release": "v123",
-  "version": "v123",
+  "release": "v124",
+  "version": "v124",
   "channel": "beta",
-  "codename": "release-candidate-loop-qa",
+  "codename": "release-signoff-polish",
   "updatedAt": "2026-03-30",
-  "headline": "Release-candidate QA pass smooths the smallest mobile breakpoints, multilingual button density, and cross-loop re-entry rhythm across result and My Trips.",
+  "headline": "Final sign-off polish steadies mobile filters, search rows, CTA wrapping, and focus states across Magazine, result, and My Trips before public beta sharing.",
   "notes": [
-    "Result first-fold actions now rebalance into a cleaner two-column layout before collapsing fully, so save/share/My Trips actions stay readable on narrow phones.",
-    "Jump chips and sticky result controls were tightened for small screens, with better snap behavior and safer multilingual spacing.",
-    "My Trips now stacks its opening hero actions more cleanly and gives the search row a narrower-phone layout that avoids cramped select/button combinations.",
-    "This pass is aimed at release-candidate QA: fewer crowded controls, steadier first-fold scanning, and cleaner loop re-entry across mobile widths."
+    "Magazine filter rows and helper controls now behave more cleanly on narrow phones, with snap-friendly chips and steadier full-width CTA stacks.",
+    "Result and sticky route actions keep more consistent tap targets and cleaner wrapping on the smallest breakpoints.",
+    "My Trips now handles quick filters, search controls, and first-fold actions with safer small-screen density and more readable button balance.",
+    "This pass is aimed at final release sign-off: fewer tiny friction points, stronger interaction clarity, and cleaner multilingual mobile rhythm."
   ]
 }

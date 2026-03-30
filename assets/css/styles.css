@@ -6230,3 +6230,137 @@ body[data-page="trips"] .trip-search-row{
     font-size:12px;
   }
 }
+
+
+/* v124 release sign-off polish */
+:where(
+  a,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea,
+  .tab-btn,
+  .nav-chip,
+  .primary-btn,
+  .secondary-btn,
+  .ghost-btn,
+  .soft-btn,
+  .finder-card[data-card-href],
+  .dispatch-edit-card[data-card-link],
+  .magazine-jump-card
+):focus-visible{
+  outline:none;
+  box-shadow:0 0 0 3px rgba(240,185,144,.34), 0 0 0 6px rgba(21,39,58,.14);
+}
+body[data-page="planner"] .result-jump-row,
+body[data-page="magazine"] .finder-tabs,
+body[data-page="magazine"] .finder-filter-row,
+body[data-page="trips"] .trip-filter-chips{
+  -webkit-overflow-scrolling:touch;
+}
+body[data-page="magazine"] .finder-tabs > *,
+body[data-page="magazine"] .finder-filter-row > *,
+body[data-page="trips"] .trip-filter-chips > *{
+  scroll-snap-align:start;
+}
+body[data-page="planner"] .result-top-actions > *,
+body[data-page="planner"] .result-sticky-actions > *,
+body[data-page="magazine"] .finder-toolbar .tab-btn,
+body[data-page="magazine"] .finder-helper-row .tab-btn,
+body[data-page="trips"] .trip-firstfold-link,
+body[data-page="trips"] .trip-sort-select,
+body[data-page="trips"] #clearSearchBtn{
+  text-wrap:balance;
+}
+body[data-page="trips"] .trip-search-card,
+body[data-page="trips"] .trip-side-panel,
+body[data-page="trips"] .trip-continue-card,
+body[data-page="magazine"] .finder-helper-row,
+body[data-page="planner"] .result-top-helper{
+  overflow:hidden;
+}
+@media (max-width: 760px){
+  body[data-page="magazine"] .finder-toolbar{
+    display:grid;
+    gap:10px;
+  }
+  body[data-page="magazine"] .finder-search-wrap{
+    width:100%;
+  }
+  body[data-page="magazine"] .finder-tabs,
+  body[data-page="magazine"] .finder-filter-row,
+  body[data-page="trips"] .trip-filter-chips{
+    scroll-snap-type:x proximity;
+    padding-bottom:2px;
+  }
+  body[data-page="magazine"] .finder-helper-row{
+    display:grid;
+    gap:8px;
+  }
+  body[data-page="magazine"] .dispatch-edit-card .cta-row{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  body[data-page="magazine"] .dispatch-edit-card .cta-row > *{
+    width:100%;
+    justify-content:center;
+  }
+  body[data-page="planner"] .result-top-actions > *,
+  body[data-page="planner"] .result-sticky-actions > *{
+    min-height:48px;
+  }
+  body[data-page="trips"] .trip-filter-chip{
+    white-space:nowrap;
+  }
+}
+@media (max-width: 560px){
+  body[data-page="magazine"] .finder-toolbar .tab-btn,
+  body[data-page="magazine"] .finder-helper-row .tab-btn{
+    min-height:40px;
+    padding-inline:12px;
+    font-size:11.5px;
+  }
+  body[data-page="magazine"] .card-open-pill{
+    top:9px;
+    right:9px;
+  }
+  body[data-page="planner"] .result-top-helper,
+  body[data-page="trips"] .trip-search-card,
+  body[data-page="trips"] .trip-side-panel{
+    border-radius:20px;
+  }
+}
+@media (max-width: 420px){
+  body[data-page="magazine"] .finder-tabs,
+  body[data-page="magazine"] .finder-filter-row,
+  body[data-page="trips"] .trip-filter-chips{
+    gap:6px;
+  }
+  body[data-page="magazine"] .finder-toolbar .tab-btn,
+  body[data-page="magazine"] .finder-helper-row .tab-btn,
+  body[data-page="trips"] .trip-filter-chip{
+    font-size:11px;
+    padding-inline:11px;
+  }
+  body[data-page="planner"] .result-top-actions > *,
+  body[data-page="planner"] .result-sticky-actions > *,
+  body[data-page="trips"] .trip-firstfold-link,
+  body[data-page="trips"] #clearSearchBtn{
+    min-height:46px;
+  }
+}
+@media (max-width: 760px){
+  html[lang="ja"] body[data-page="magazine"] .finder-toolbar .tab-btn,
+  html[lang="zh-Hant"] body[data-page="magazine"] .finder-toolbar .tab-btn,
+  html[lang="zhHant"] body[data-page="magazine"] .finder-toolbar .tab-btn,
+  html[lang="ja"] body[data-page="magazine"] .finder-helper-row .tab-btn,
+  html[lang="zh-Hant"] body[data-page="magazine"] .finder-helper-row .tab-btn,
+  html[lang="zhHant"] body[data-page="magazine"] .finder-helper-row .tab-btn,
+  html[lang="ja"] body[data-page="trips"] .trip-filter-chip,
+  html[lang="zh-Hant"] body[data-page="trips"] .trip-filter-chip,
+  html[lang="zhHant"] body[data-page="trips"] .trip-filter-chip{
+    font-size:11px;
+  }
+}
