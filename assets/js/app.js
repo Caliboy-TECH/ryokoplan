@@ -1795,11 +1795,11 @@ function ensureLaunchFeedbackCta(){
   }
   function accessibilityCopy(){
     return {
-      ko:'본문으로 건너뛰기',
-      en:'Skip to content',
-      ja:'本文へスキップ',
-      zhHant:'跳至內容'
-    }[lang] || 'Skip to content';
+      ko:'본문으로 이동',
+      en:'Jump to content',
+      ja:'本文へ移動',
+      zhHant:'前往內容'
+    }[lang] || 'Jump to content';
   }
   function updateLanguageButtonsState(root=document){
     root.querySelectorAll('[data-lang-btn]').forEach(btn => {
@@ -1814,12 +1814,27 @@ function ensureLaunchFeedbackCta(){
       if (!main.id) main.id = 'main-content';
       if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
     }
-    if (main && !document.querySelector('.skip-link')) {
-      const skip = document.createElement('a');
+    let skip = document.querySelector('.skip-link');
+    if (main && !skip) {
+      skip = document.createElement('a');
       skip.className = 'skip-link';
       skip.href = '#main-content';
       skip.textContent = accessibilityCopy();
       document.body.insertBefore(skip, document.body.firstChild);
+    }
+    if (skip) {
+      const label = accessibilityCopy();
+      skip.textContent = label;
+      skip.setAttribute('aria-label', label);
+      if (!skip.dataset.skipBound) {
+        skip.addEventListener('click', () => {
+          window.requestAnimationFrame(() => {
+            const target = document.getElementById('main-content');
+            if (target) target.focus({ preventScroll: true });
+          });
+        });
+        skip.dataset.skipBound = 'true';
+      }
     }
     updateLanguageButtonsState();
   }
