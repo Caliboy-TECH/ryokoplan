@@ -1269,9 +1269,6 @@ function visitEntryMarkup(city='', extraClass=''){
         const frecent = filterItems(recent, 'recent');
         const fshared = filterItems(shared, 'shared');
 
-        $('savedCount').textContent = saved.length;
-        $('recentCount').textContent = recent.length;
-        $('sharedCount').textContent = shared.length;
 
         $('savedGrid').innerHTML = fsaved.map(x => card(x, 'saved')).join('');
         $('recentGrid').innerHTML = frecent.map(x => card(x, 'recent')).join('');
@@ -1297,6 +1294,10 @@ function visitEntryMarkup(city='', extraClass=''){
 
       $('tripSearch').addEventListener('input', render);
       $('tripSort').addEventListener('change', render);
+      $('focusSharedImportBtn')?.addEventListener('click', () => {
+        $('sharedImportInput')?.scrollIntoView({ behavior:'smooth', block:'center' });
+        $('sharedImportInput')?.focus();
+      });
       $('clearSearchBtn').addEventListener('click', () => {
         $('tripSearch').value = '';
         activeCollection = 'all';

@@ -462,6 +462,14 @@ body.is-scrolled .top-bar{background:rgba(255,253,249,.94);box-shadow:0 12px 26p
 .trip-inline-message{margin:8px 2px 0;color:var(--muted);font-size:13px;min-height:18px}
 .trip-inline-message.is-error{color:#c54b29}
 .trip-search-row{align-items:stretch}
+.trip-firstfold-utility{display:grid;gap:12px;margin-top:14px}
+.trip-firstfold-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.trip-firstfold-stat{display:grid;gap:4px;padding:12px 12px 11px;border-radius:18px;background:linear-gradient(180deg,#fffdf9 0%,#fff6ee 100%);border:1px solid rgba(229,218,203,.9)}
+.trip-firstfold-label{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#9a734b}
+.trip-firstfold-value{font-size:22px;line-height:1;color:#15273a}
+.trip-firstfold-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.trip-firstfold-link{display:flex;align-items:center;justify-content:center;min-height:44px;padding:10px 12px;border-radius:16px;border:1px solid rgba(229,218,203,.9);background:#fff;color:#17324f;font-weight:700;text-decoration:none;text-align:center;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+.trip-firstfold-link:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(20,33,48,.06);border-color:#f0c5a2}
 .trip-sort-select{max-width:180px}
 .trip-card-topline{display:flex;justify-content:space-between;gap:8px;align-items:center}
 .trip-card-date{font-size:12px;color:var(--muted);white-space:nowrap}
@@ -475,6 +483,11 @@ body.is-scrolled .top-bar{background:rgba(255,253,249,.94);box-shadow:0 12px 26p
   .trip-continue-media{max-height:220px}
   .trip-sort-select{max-width:none}
   .trip-search-row{grid-template-columns:1fr}
+  .trip-firstfold-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .trip-firstfold-links{grid-template-columns:1fr}
+  .trip-firstfold-stat{padding:11px 10px}
+  .trip-firstfold-value{font-size:20px}
+  .trip-firstfold-link{justify-content:flex-start;padding-inline:14px}
 }
 
 
@@ -516,6 +529,10 @@ body.is-scrolled .top-bar{background:rgba(255,253,249,.94);box-shadow:0 12px 26p
 
 /* Shared trip + community detail */
 .shared-trip-banner{margin-top:16px;padding:18px 18px 16px;border:1px solid rgba(25,44,79,.08);background:linear-gradient(180deg,rgba(255,247,240,.95),rgba(255,255,255,.98))}
+.result-top-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}
+.result-top-helper{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-top:12px;padding:14px 15px;background:linear-gradient(180deg,#fffdfa 0%,#fff6ee 100%)}
+.result-top-helper strong{font-size:13px;line-height:1.45;color:#17324f}
+.result-top-helper span{font-size:13px;line-height:1.6;color:#5e6c7b;max-width:58ch}
 .shared-trip-banner.hidden{display:none}
 .shared-trip-banner-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
 .shared-trip-banner-note{display:flex;justify-content:space-between;gap:12px;margin-top:10px;font-size:12px;color:#6d7688}
@@ -928,6 +945,8 @@ html,body{background:
   .result-editorial-visual{order:-1;min-height:260px}
   .result-visual-overlay strong{font-size:22px}
   .result-quickfacts{grid-template-columns:1fr}
+  .result-top-actions{grid-template-columns:1fr 1fr}
+  .result-top-helper{display:grid;gap:6px}
 }
 
 
@@ -2708,6 +2727,8 @@ img{max-width:100%}
     min-height:34px;
     padding:7px 10px;
   }
+  .result-top-actions{grid-template-columns:1fr 1fr;gap:8px}
+  .result-top-helper{padding:12px 13px;margin-top:10px}
 
   .priority-story-row,
   .priority-article-grid,
@@ -6021,4 +6042,9 @@ body[data-page="magazine"] .dispatch-next-pill{
   .shared-loop-shell .loop-stage-card,.shared-spotlight-copy .loop-stage-card,.trip-loop-card .loop-stage-card{min-height:unset}
   .result-vault-note{padding:10px 12px}
   .result-vault-note span{font-size:12.5px}
+}
+
+@media (max-width: 420px){
+  .result-top-actions{grid-template-columns:1fr}
+  .trip-firstfold-stats{grid-template-columns:1fr 1fr 1fr}
 }

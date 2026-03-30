@@ -3303,6 +3303,8 @@ function useExample(key='tokyo'){
     qs('saveTripBtn').addEventListener('click', saveCurrentTrip);
     qs('shareTripBtn').addEventListener('click', shareCurrentTrip);
     qs('pdfTripBtn').addEventListener('click', savePdf);
+    qs('resultTopSaveBtn')?.addEventListener('click', saveCurrentTrip);
+    qs('resultTopShareBtn')?.addEventListener('click', shareCurrentTrip);
     qs('stickySaveBtn')?.addEventListener('click', saveCurrentTrip);
     qs('stickyShareBtn')?.addEventListener('click', shareCurrentTrip);
     qs('stickyPdfBtn')?.addEventListener('click', savePdf);

@@ -55,6 +55,27 @@
           <a class="primary-btn" data-nav="planner" href="../index.html#planner-start" data-t="trips.openPlanner">새 여정 시작</a>
           <a class="secondary-btn" data-nav="magazine" href="../magazine/index.html" data-t="trips.browse">매거진 보기</a>
         </div>
+        <div class="trip-firstfold-utility">
+          <div class="trip-firstfold-stats" aria-label="Trip counts">
+            <article class="trip-firstfold-stat">
+              <span class="trip-firstfold-label" data-t="trips.saved">저장됨</span>
+              <strong id="savedCountHero" class="trip-firstfold-value">0</strong>
+            </article>
+            <article class="trip-firstfold-stat">
+              <span class="trip-firstfold-label" data-t="trips.recent">최근</span>
+              <strong id="recentCountHero" class="trip-firstfold-value">0</strong>
+            </article>
+            <article class="trip-firstfold-stat">
+              <span class="trip-firstfold-label" data-t="trips.shared">공유받은 일정</span>
+              <strong id="sharedCountHero" class="trip-firstfold-value">0</strong>
+            </article>
+          </div>
+          <div class="trip-firstfold-links" aria-label="Quick re-entry">
+            <a class="trip-firstfold-link" href="#continueCard" data-lang-ko="최근 흐름 이어보기" data-lang-en="Resume latest route" data-lang-ja="直近の流れを再開" data-lang-zhhant="接著看最近路線">최근 흐름 이어보기</a>
+            <a class="trip-firstfold-link" href="#savedSection" data-lang-ko="저장 루트 열기" data-lang-en="Open saved routes" data-lang-ja="保存ルートを開く" data-lang-zhhant="打開已存路線">저장 루트 열기</a>
+            <button type="button" id="focusSharedImportBtn" class="trip-firstfold-link" data-lang-ko="공유 링크 가져오기" data-lang-en="Import shared link" data-lang-ja="共有リンクを取り込む" data-lang-zhhant="匯入分享連結">공유 링크 가져오기</button>
+          </div>
+        </div>
       </section>
 
       <section class="section trip-vault-grid">
@@ -1621,6 +1642,9 @@
         $('savedCount').textContent = saved.length;
         $('recentCount').textContent = recent.length;
         $('sharedCount').textContent = shared.length;
+        if ($('savedCountHero')) $('savedCountHero').textContent = saved.length;
+        if ($('recentCountHero')) $('recentCountHero').textContent = recent.length;
+        if ($('sharedCountHero')) $('sharedCountHero').textContent = shared.length;
 
         $('savedGrid').innerHTML = fsaved.map(x => card(x, 'saved')).join('');
         $('recentGrid').innerHTML = frecent.map(x => card(x, 'recent')).join('');
@@ -1647,6 +1671,10 @@
 
       $('tripSearch').addEventListener('input', render);
       $('tripSort').addEventListener('change', render);
+      $('focusSharedImportBtn')?.addEventListener('click', () => {
+        $('sharedImportInput')?.scrollIntoView({ behavior:'smooth', block:'center' });
+        $('sharedImportInput')?.focus();
+      });
       $('clearSearchBtn').addEventListener('click', () => {
         $('tripSearch').value = '';
         activeCollection = 'all';

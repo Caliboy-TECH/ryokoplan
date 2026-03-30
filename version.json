@@ -1,14 +1,14 @@
 {
-  "release": "v120",
-  "version": "v120",
+  "release": "v121",
+  "version": "v121",
   "channel": "beta",
-  "codename": "result-share-trips-loop-polish",
+  "codename": "result-mytrips-firstfold-polish",
   "updatedAt": "2026-03-30",
-  "headline": "Result, shared-trip, and My Trips surfaces now make the save-and-return loop much more explicit.",
+  "headline": "Result and My Trips now surface save, return, and next-step actions much earlier in the first mobile screen.",
   "notes": [
-    "The result page loop now shows a fuller atlas → guide → sample → planner → My Trips → result path, so saving and returning no longer feels implicit.",
-    "Shared trip banners now emphasize moving a shared link into My Trips, with a clearer stage-based flow before branching back into city reading.",
-    "My Trips now frames saved routes more explicitly as a city-first continuation loop, not just a storage list, with faster same-city and next-city actions.",
-    "Compact loop stage cards were added for result, shared spotlight, and My Trips so the product flow reads more clearly on mobile."
+    "My Trips now includes a compact first-fold utility strip with live saved/recent/shared counts and direct re-entry actions for resume, saved routes, and shared-link import.",
+    "The result top section now exposes Save Trip, Open My Trips, and Share actions before the user scrolls, so the loop feels actionable right away on mobile.",
+    "A compact helper note was added under the result hero actions to reinforce why saving to My Trips matters for reopening the same city logic later.",
+    "Mobile spacing and button grids were tightened so both surfaces feel lighter and more legible in the first screen."
   ]
 }
