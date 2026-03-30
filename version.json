@@ -1,14 +1,14 @@
 {
-  "release": "v121",
-  "version": "v121",
+  "release": "v122",
+  "version": "v122",
   "channel": "beta",
-  "codename": "result-mytrips-firstfold-polish",
+  "codename": "mobile-qa-loop-finish",
   "updatedAt": "2026-03-30",
-  "headline": "Result and My Trips now surface save, return, and next-step actions much earlier in the first mobile screen.",
+  "headline": "Mobile QA polish tightens result and My Trips first-fold density, action wrapping, and small-screen readability across the core loop.",
   "notes": [
-    "My Trips now includes a compact first-fold utility strip with live saved/recent/shared counts and direct re-entry actions for resume, saved routes, and shared-link import.",
-    "The result top section now exposes Save Trip, Open My Trips, and Share actions before the user scrolls, so the loop feels actionable right away on mobile.",
-    "A compact helper note was added under the result hero actions to reinforce why saving to My Trips matters for reopening the same city logic later.",
-    "Mobile spacing and button grids were tightened so both surfaces feel lighter and more legible in the first screen."
+    "Result hero helper copy and button wrapping were compacted so save/share/open actions stay readable on smaller screens and denser languages.",
+    "My Trips first-fold quick links and section copy were shortened so the page reads faster and feels lighter in the opening mobile view.",
+    "Small-screen breakpoints now rebalance the saved/recent/shared stat cards to prevent cramped three-column layouts on narrow phones.",
+    "Additional mobile layout polish improves CTA centering, helper stacking, and tab scanning across result and My Trips."
   ]
 }

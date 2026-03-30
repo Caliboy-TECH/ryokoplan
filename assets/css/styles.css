@@ -6048,3 +6048,70 @@ body[data-page="magazine"] .dispatch-next-pill{
   .result-top-actions{grid-template-columns:1fr}
   .trip-firstfold-stats{grid-template-columns:1fr 1fr 1fr}
 }
+
+
+/* v122 mobile QA loop finish */
+body[data-page="planner"] .result-top-actions > *,
+body[data-page="planner"] .result-sticky-actions > *{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  text-align:center;
+}
+body[data-page="planner"] .result-top-actions .primary-btn,
+body[data-page="planner"] .result-top-actions .secondary-btn,
+body[data-page="planner"] .result-top-actions .ghost-btn,
+body[data-page="planner"] .result-top-actions .soft-btn{
+  line-height:1.28;
+  padding-inline:14px;
+}
+body[data-page="planner"] .result-top-helper{
+  display:grid;
+  grid-template-columns:minmax(0,170px) minmax(0,1fr);
+  align-items:start;
+}
+body[data-page="planner"] .result-top-helper span{
+  max-width:none;
+}
+body[data-page="trips"] .trip-firstfold-stat,
+body[data-page="trips"] .trip-firstfold-link{
+  min-width:0;
+}
+body[data-page="trips"] .trip-firstfold-link{
+  line-height:1.32;
+}
+body[data-page="trips"] .trip-firstfold-links[aria-label="Quick re-entry"]{
+  align-items:stretch;
+}
+body[data-page="trips"] .trip-firstfold-links > *{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+@media (max-width: 760px){
+  body[data-page="planner"] .result-top-actions > *{font-size:13px;}
+  body[data-page="planner"] .result-top-helper{grid-template-columns:1fr;gap:6px;}
+  body[data-page="planner"] .result-top-helper strong,
+  body[data-page="planner"] .result-top-helper span{font-size:12.5px;line-height:1.5;}
+  body[data-page="trips"] .trip-firstfold-link{font-size:13px;}
+  body[data-page="trips"] .trip-tabs{scroll-snap-type:x proximity;}
+  body[data-page="trips"] .trip-tabs > *{scroll-snap-align:start;}
+}
+@media (max-width: 560px){
+  body[data-page="trips"] .trip-firstfold-stats{grid-template-columns:repeat(2,minmax(0,1fr));}
+  body[data-page="trips"] .trip-firstfold-stat:last-child{grid-column:1 / -1;}
+}
+@media (max-width: 420px){
+  body[data-page="planner"] .result-top-actions > *{width:100%;}
+  body[data-page="trips"] .trip-firstfold-stats{grid-template-columns:1fr;}
+  body[data-page="trips"] .trip-firstfold-stat:last-child{grid-column:auto;}
+}
+@media (max-width: 760px){
+  html[lang="ja"] body[data-page="planner"] .result-top-actions > *,
+  html[lang="zh-Hant"] body[data-page="planner"] .result-top-actions > *,
+  html[lang="ja"] body[data-page="trips"] .trip-firstfold-link,
+  html[lang="zh-Hant"] body[data-page="trips"] .trip-firstfold-link,
+  html[lang="zhHant"] body[data-page="planner"] .result-top-actions > *,
+  html[lang="zhHant"] body[data-page="trips"] .trip-firstfold-link{font-size:12px;}
+}
