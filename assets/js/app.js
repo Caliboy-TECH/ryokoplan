@@ -928,12 +928,12 @@ function initPwaSupport(){
 
 function feedbackButtonCopy(){
   return lang === 'ko'
-    ? { label:'베타 피드백', short:'피드백', aria:'현재 페이지 피드백 보내기' }
+    ? { label:'페이지 피드백', short:'피드백', aria:'현재 페이지 피드백 보내기' }
     : lang === 'ja'
-      ? { label:'ベータフィードバック', short:'フィードバック', aria:'このページのフィードバックを送る' }
+      ? { label:'ページのフィードバック', short:'フィードバック', aria:'このページのフィードバックを送る' }
       : lang === 'zhHant'
-        ? { label:'Beta 回饋', short:'回饋', aria:'針對目前頁面送出回饋' }
-        : { label:'Beta feedback', short:'Feedback', aria:'Send feedback about this page' };
+        ? { label:'頁面回饋', short:'回饋', aria:'針對目前頁面送出回饋' }
+        : { label:'Page feedback', short:'Feedback', aria:'Send feedback about this page' };
 }
 function currentFeedbackCity(){
   const params = new URLSearchParams(location.search);
@@ -998,12 +998,12 @@ function entryAssistPriority(){
 }
 function betaLaunchCopy(){
   return lang === 'ko'
-    ? { eyebrow:'Public beta', title:'Ryokoplan is now open in beta.', desc:'Routes, city notes, and saved flows are live. If anything feels off, send quick feedback from the page you are on.', primary:"What\'s new", secondary:'Send feedback', dismiss:'Hide' }
+    ? { eyebrow:'Public beta', title:'베타 공개 중입니다. 도시를 읽고, 흐름이 거칠어지는 지점을 알려주세요.', desc:'Guide, sample route, My Trips 흐름은 열려 있습니다. 지금 보고 있는 페이지 기준으로 바로 피드백을 남길 수 있습니다.', primary:"What\'s new", secondary:'페이지 피드백', dismiss:'숨기기' }
     : lang === 'ja'
-      ? { eyebrow:'Public beta', title:'Ryokoplan はベータ公開中です。', desc:'都市ノート、ルート、保存フローは使えます。気になる点があれば、今見ているページからそのまま共有してください。', primary:"What\'s new", secondary:'フィードバック', dismiss:'閉じる' }
+      ? { eyebrow:'Public beta', title:'ベータ公開中です。都市を読み、流れが粗くなる場所を教えてください。', desc:'guide、sample route、My Trips の流れは使えます。今見ているページからそのままフィードバックを送れます。', primary:"What\'s new", secondary:'ページのフィードバック', dismiss:'閉じる' }
       : lang === 'zhHant'
-        ? { eyebrow:'Public beta', title:'Ryokoplan 目前以 beta 形式公開。', desc:'城市筆記、路線與已存流程都可使用；如果哪裡不順，請直接從目前頁面送出回饋。', primary:"What\'s new", secondary:'送出回饋', dismiss:'隱藏' }
-        : { eyebrow:'Public beta', title:'Ryokoplan is now open in beta.', desc:'City notes, routes, and saved flows are live. If anything feels off, send quick feedback from the page you are on.', primary:"What\'s new", secondary:'Send feedback', dismiss:'Hide' };
+        ? { eyebrow:'Public beta', title:'目前為 beta 公開中。請告訴我們流程在哪裡還不夠順。', desc:'guide、sample route、My Trips 都可以使用；你可以直接從目前頁面送出回饋。', primary:"What\'s new", secondary:'頁面回饋', dismiss:'隱藏' }
+        : { eyebrow:'Public beta', title:'Beta is open. Read a city, then tell us where the flow still feels rough.', desc:'Guides, sample routes, and My Trips are live. Send page feedback directly from wherever the handoff feels off.', primary:"What\'s new", secondary:'Page feedback', dismiss:'Hide' };
 }
 function shouldShowBetaLaunchBar(){
   const page = document.body?.dataset?.page || '';

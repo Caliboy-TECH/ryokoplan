@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>What's New — Ryokoplan</title>
-  <meta name="description" content="Recent Ryokoplan release notes for beta testers and launch QA.">
+  <meta name="description" content="Recent Ryokoplan release notes for beta testers, launch QA, and current build verification.">
   <meta name="robots" content="noindex,follow">
   <meta name="theme-color" content="#15273a">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Ryokoplan">
   <meta property="og:title" content="What's New — Ryokoplan">
-  <meta property="og:description" content="Recent Ryokoplan release notes for beta testers and launch QA.">
+  <meta property="og:description" content="Recent Ryokoplan release notes for beta testers, launch QA, and current build verification.">
   <meta property="og:url" content="https://ryokoplan.com/whats-new/">
   <meta property="og:image" content="https://ryokoplan.com/assets/images/brand/og-cover.png">
   <meta property="og:image:type" content="image/png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="What's New — Ryokoplan">
-  <meta name="twitter:description" content="Recent Ryokoplan release notes for beta testers and launch QA.">
+  <meta name="twitter:description" content="Recent Ryokoplan release notes for beta testers, launch QA, and current build verification.">
   <meta name="twitter:image" content="https://ryokoplan.com/assets/images/brand/og-cover.png">
   <link rel="canonical" href="https://ryokoplan.com/whats-new/">
   <link rel="icon" href="../assets/images/brand/favicon.svg" type="image/svg+xml">
@@ -25,8 +25,8 @@
   <link rel="stylesheet" href="../assets/css/styles.css">
   <style>
     body{background:#fcfaf6}
-    .whats-new-shell{max-width:980px;margin:0 auto;padding:28px 0 56px}
-    .whats-new-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+    .whats-new-shell{max-width:1020px;margin:0 auto;padding:28px 0 56px}
+    .whats-new-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
     .whats-new-meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
     .whats-new-note-list{display:grid;gap:10px;margin-top:12px}
     .whats-new-note{padding:14px 16px;border-radius:18px;background:#fcfaf6;border:1px solid #ede6db;color:#556578;line-height:1.6}
@@ -36,7 +36,14 @@
     .whats-new-kicker{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:#fff4ea;color:#b96732;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
     .whats-new-inline{margin:12px 0 0;color:#667085;line-height:1.65}
     .whats-new-code{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.5;background:#0f1a2b;color:#e7eef7;border-radius:18px;padding:16px;overflow:auto;margin-top:14px}
-    @media (max-width:860px){.whats-new-grid,.whats-new-meta-grid{grid-template-columns:1fr}}
+    .launch-path-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+    .launch-path-card{display:grid;gap:8px;align-content:start;padding:16px;border-radius:20px;border:1px solid #e8dfd2;background:linear-gradient(180deg,#fffdf9 0%,#fff7ef 100%)}
+    .launch-path-card strong{color:#15273a}
+    .release-check-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+    .release-check-card{padding:16px;border-radius:20px;border:1px solid #e8dfd2;background:#fffdf9}
+    .release-check-card strong{display:block;color:#15273a;margin-bottom:6px}
+    .release-status-badge{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;background:rgba(21,39,58,.06);color:#17324f;font-size:13px;font-weight:700}
+    @media (max-width:960px){.whats-new-grid,.whats-new-meta-grid,.launch-path-grid,.release-check-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body data-page="legal">
@@ -62,7 +69,7 @@
       <section class="section info-card">
         <span class="whats-new-kicker">Beta release notes</span>
         <h1 class="section-title" style="margin-top:10px">What's new in the current Ryokoplan build</h1>
-        <p class="section-desc">Use this page during beta and launch QA to confirm what changed, which build is live, and what to check next. It is designed for testers, teammates, and launch reviews.</p>
+        <p class="section-desc">Use this page during beta and launch QA to confirm what changed, which build is live, and what is worth testing first after deploy.</p>
         <div class="whats-new-meta-grid" style="margin-top:16px">
           <article class="info-card"><strong>Current release</strong><p id="releaseVersionText">Loading version.json…</p></article>
           <article class="info-card"><strong>Build note</strong><p id="releaseHeadlineText">Loading release headline…</p></article>
@@ -70,7 +77,21 @@
         <div class="cta-row cta-row-priority" style="margin-top:16px">
           <a class="primary-btn" href="../release-check/index.html">Open release check</a>
           <a class="secondary-btn" href="../contact/index.html">Open feedback desk</a>
+          <button class="ghost-btn" id="copyReleaseVersionBtn" type="button">Copy release</button>
           <button class="ghost-btn" id="reloadReleaseNotesBtn" type="button">Reload build info</button>
+        </div>
+        <div style="margin-top:14px"><span class="release-status-badge" id="releaseStatusBadge">Reading current build…</span></div>
+      </section>
+
+      <section class="section info-card" style="margin-top:18px">
+        <span class="eyebrow">Tester quick paths</span>
+        <h2 class="section-title" style="margin-top:8px">Best places to check right after deploy</h2>
+        <p class="section-desc">These shortcuts are here so a tester can move through the core editorial loop quickly instead of guessing where to start.</p>
+        <div class="launch-path-grid">
+          <article class="launch-path-card"><strong>Start from Home</strong><p>Check the cover tone, first-run handoff, city shelf, and whether the product still feels magazine-first.</p><a class="soft-btn" href="../">Open Home</a></article>
+          <article class="launch-path-card"><strong>Read Magazine</strong><p>Check finder filters, dispatch cards, card hierarchy, and whether city → guide entry feels obvious on mobile.</p><a class="soft-btn" href="../magazine/index.html">Open Magazine</a></article>
+          <article class="launch-path-card"><strong>Run the loop</strong><p>Use a guide or sample route, then move into result, share, and My Trips to confirm the handoff still feels connected.</p><a class="soft-btn" href="../my-trips/index.html">Open My Trips</a></article>
+          <article class="launch-path-card"><strong>Log the rough edge</strong><p>If anything feels off, use the feedback desk so page, language, and build details are already attached.</p><a class="soft-btn" href="../contact/index.html">Open feedback desk</a></article>
         </div>
       </section>
 
@@ -86,19 +107,24 @@
         </section>
 
         <section class="section info-card">
-          <span class="eyebrow">Launch focus</span>
-          <h2 class="section-title" style="margin-top:8px">What to check after deploy</h2>
+          <span class="eyebrow">Release focus</span>
+          <h2 class="section-title" style="margin-top:8px">What to verify in this pass</h2>
           <div class="whats-new-timeline">
             <article class="whats-new-timeline-item"><strong>1. Confirm the build</strong><p>Open <code>/version.json</code> or the release check page and verify that the release value matches the latest upload.</p></article>
-            <article class="whats-new-timeline-item"><strong>2. Run the core loop once</strong><p>Home → Magazine → city → sample → route result → share → My Trips should still feel like one connected editorial loop.</p></article>
-            <article class="whats-new-timeline-item"><strong>3. Log anything unclear</strong><p>Use the feedback desk from the current page so the source path, language, city, and build version are captured together.</p></article>
+            <article class="whats-new-timeline-item"><strong>2. Run one clean editorial loop</strong><p>Home → Magazine → city → sample → route result → share → My Trips should still feel like one connected city-first flow.</p></article>
+            <article class="whats-new-timeline-item"><strong>3. Send page-specific feedback</strong><p>If anything feels rough, open the feedback desk from that page so the path, language, and build version stay attached together.</p></article>
+          </div>
+          <div class="release-check-grid" id="recommendedChecksGrid">
+            <article class="release-check-card"><strong>Core loop</strong><p>Check one city all the way through to result, share, and My Trips.</p></article>
+            <article class="release-check-card"><strong>Mobile feel</strong><p>Check the first fold, CTA density, sticky behavior, and quick-entry rows on a narrow screen.</p></article>
+            <article class="release-check-card"><strong>Launch handoff</strong><p>Check that build notes, feedback capture, and release-check still work together cleanly.</p></article>
           </div>
         </section>
       </div>
 
       <section class="section footer-cta info-card" style="margin-top:18px">
         <h2>Use this with release check, not instead of it</h2>
-        <p>This page explains what changed. The release check page is still the fastest place to verify the live build, clear local state, run the final smoke test, and confirm the new media-loading comfort pass.</p>
+        <p>This page explains what changed and where to look first. The release check page is still the fastest place to verify the live build, clear local state, run the smoke pass, and confirm the final handoff polish.</p>
         <div class="cta-row cta-row-priority"><a class="primary-btn" href="../release-check/index.html">Open release check</a><a class="secondary-btn" href="../contact/index.html">Open feedback desk</a><a class="ghost-btn" href="../">Back to home</a></div>
       </section>
 
@@ -111,26 +137,51 @@
     const headlineText = document.getElementById('releaseHeadlineText');
     const notesList = document.getElementById('releaseNotesList');
     const dumpNode = document.getElementById('releaseNotesDump');
+    const releaseStatusBadge = document.getElementById('releaseStatusBadge');
+    const recommendedChecksGrid = document.getElementById('recommendedChecksGrid');
+    let currentRelease = 'unknown';
+
+    function renderChecks(notes){
+      const cards = [
+        { title:'Core loop', body:'Check one city all the way through to result, share, and My Trips so the editorial loop still reads as one product.' },
+        { title:'Feedback handoff', body:'Open the feedback desk from the exact page that feels rough so build, path, language, and issue type stay together.' },
+        { title:'Build visibility', body:'Verify that version.json, What\'s new, and release check all point to the same live build.' }
+      ];
+      const extra = Array.isArray(notes) ? notes.slice(0, 2).map(note => ({ title:'Current pass', body:String(note) })) : [];
+      recommendedChecksGrid.innerHTML = cards.concat(extra).map(card => `<article class="release-check-card"><strong>${card.title}</strong><p>${card.body}</p></article>`).join('');
+    }
+
     async function loadReleaseNotes(){
       try {
         const res = await fetch('../version.json', { cache:'no-store' });
         if (!res.ok) throw new Error('version.json request failed');
         const json = await res.json();
-        const release = json.release || json.version || 'unknown';
+        currentRelease = json.release || json.version || 'unknown';
         const codename = json.codename ? ' · ' + json.codename : '';
-        versionText.textContent = `${release}${codename}${json.updatedAt ? ' · ' + json.updatedAt : ''}`;
+        versionText.textContent = `${currentRelease}${codename}${json.updatedAt ? ' · ' + json.updatedAt : ''}`;
         headlineText.textContent = json.headline || 'Current build metadata is live.';
+        releaseStatusBadge.textContent = `Live build: ${currentRelease}${json.codename ? ' · ' + json.codename : ''}`;
         const notes = Array.isArray(json.notes) && json.notes.length ? json.notes : ['No release notes were attached to this build.'];
         notesList.innerHTML = notes.map(note => `<div class="whats-new-note">${String(note)}</div>`).join('');
         dumpNode.textContent = JSON.stringify(json, null, 2);
+        renderChecks(notes);
       } catch (err) {
+        currentRelease = 'unknown';
         versionText.textContent = 'Could not load version.json';
         headlineText.textContent = 'Check the deploy or verify that version.json is reachable.';
+        releaseStatusBadge.textContent = 'Build metadata could not be read';
         notesList.innerHTML = '<div class="whats-new-note">Release notes could not be loaded.</div>';
         dumpNode.textContent = String(err);
+        renderChecks([]);
       }
     }
     document.getElementById('reloadReleaseNotesBtn').addEventListener('click', loadReleaseNotes);
+    document.getElementById('copyReleaseVersionBtn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(currentRelease);
+        document.getElementById('copyReleaseVersionBtn').textContent = 'Copied';
+      } catch {}
+    });
     loadReleaseNotes();
   </script>
 </body>

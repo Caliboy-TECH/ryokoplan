@@ -4,21 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — Ryokoplan</title>
-  <meta name="description" content="Contact Ryokoplan for launch feedback, broken links, or route issues.">
+  <meta name="description" content="Contact Ryokoplan for beta feedback, broken links, route issues, or launch QA handoff.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://ryokoplan.com/contact/index.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Contact — Ryokoplan">
-  <meta property="og:description" content="Contact Ryokoplan for launch feedback, broken links, or route issues.">
+  <meta property="og:description" content="Contact Ryokoplan for beta feedback, broken links, route issues, or launch QA handoff.">
   <meta property="og:url" content="https://ryokoplan.com/contact/index.html">
   <meta property="og:image" content="https://ryokoplan.com/assets/images/brand/og-cover.png">
   <meta property="og:image:type" content="image/png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Contact — Ryokoplan">
-  <meta name="twitter:description" content="Contact Ryokoplan for launch feedback, broken links, or route issues.">
+  <meta name="twitter:description" content="Contact Ryokoplan for beta feedback, broken links, route issues, or launch QA handoff.">
   <meta name="twitter:image" content="https://ryokoplan.com/assets/images/brand/og-cover.png">
   <link rel="icon" href="../assets/images/brand/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/css/styles.css">
+  <style>
+    .feedback-shell{display:grid;gap:18px}
+    .feedback-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start}
+    .feedback-type-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+    .feedback-type-chip{display:grid;gap:6px;align-content:start;min-height:112px;padding:16px;border-radius:20px;border:1px solid rgba(229,218,203,.92);background:linear-gradient(180deg,#fffdf9 0%,#fff7ef 100%);text-align:left;color:#17324f;cursor:pointer;transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .14s ease}
+    .feedback-type-chip:hover{transform:translateY(-1px);box-shadow:0 16px 28px rgba(21,39,58,.08);border-color:rgba(240,124,76,.3)}
+    .feedback-type-chip.is-active{background:linear-gradient(180deg,#fff2e5 0%,#fffaf4 100%);border-color:rgba(240,124,76,.46);box-shadow:0 18px 34px rgba(240,124,76,.12)}
+    .feedback-type-chip strong{font-size:15px;line-height:1.35}
+    .feedback-type-chip span{font-size:13px;line-height:1.55;color:#5a6b7f}
+    .feedback-fast-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .feedback-fast-card{padding:16px;border-radius:20px;border:1px solid rgba(229,218,203,.92);background:#fffdf9}
+    .feedback-fast-card strong{display:block;color:#17324f;margin-bottom:6px}
+    .feedback-inline-note{margin-top:10px;color:#667085;line-height:1.65}
+    .feedback-template-wrap{display:grid;gap:14px}
+    .feedback-template-wrap textarea{width:100%;min-height:280px;border-radius:22px;border:1px solid var(--line,#e7dfd3);padding:18px;background:#fffdf9;color:#15273a;font:inherit;line-height:1.58}
+    .feedback-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .feedback-mini-card{padding:16px;border-radius:20px;border:1px solid rgba(229,218,203,.92);background:#fcfaf6}
+    .feedback-mini-card strong{display:block;color:#17324f;margin-bottom:6px}
+    .feedback-context-accent{color:#b96732;font-weight:700}
+    @media (max-width: 960px){
+      .feedback-hero-grid,.feedback-type-grid,.feedback-fast-grid,.feedback-mini-grid{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body data-page="legal">
   <a class="skip-link" href="#main-content" data-lang-ko="본문으로 이동" data-lang-en="Jump to content" data-lang-ja="本文へ移動" data-lang-zhhant="前往內容" aria-label="Jump to content">본문으로 이동</a>
@@ -38,13 +61,29 @@
     </div>
   </header>
   <main id="main-content" class="page" tabindex="-1">
-    <div class="container legal-page-shell">
+    <div class="container legal-page-shell feedback-shell">
       <section class="info-card">
-        <span class="eyebrow">Contact</span>
-        <h1 class="section-title">Launch feedback desk</h1>
-        <p class="section-desc">Use this page to report broken links, unclear copy, route issues, or anything that felt off during the beta launch.</p>
+        <div class="feedback-hero-grid">
+          <div>
+            <span class="eyebrow">Beta feedback desk</span>
+            <h1 class="section-title">Send sharper launch feedback with page context already attached</h1>
+            <p class="section-desc">Use this desk for broken links, off-tone copy, route output issues, save/share bugs, or anything that interrupts the city → sample → trip flow.</p>
+            <p class="feedback-inline-note">The current page, language, city, and build version are captured here automatically, so you can send a cleaner report without rewriting the whole situation by hand.</p>
+          </div>
+          <div class="info-card" style="padding:18px">
+            <span class="eyebrow">Fast handoff</span>
+            <h2 class="section-title" style="margin-top:8px;font-size:1.2rem">Best for quick launch QA</h2>
+            <p class="section-desc">Pick an issue type first. The report block below will reframe itself for that problem so testers know what detail helps most.</p>
+            <div class="cta-row cta-row-priority" style="margin-top:14px">
+              <a class="primary-btn" href="../release-check/index.html">Open release check</a>
+              <a class="secondary-btn" href="../whats-new/index.html">What's new</a>
+            </div>
+          </div>
+        </div>
       </section>
+
       <section class="section info-card" id="feedbackContextCard">
+        <div class="section-head compact"><div><span class="eyebrow">Captured context</span><h2 class="section-title">Current page snapshot</h2><p class="section-desc">Open this desk from any Ryokoplan page and that surface is carried in automatically.</p></div></div>
         <div class="legal-copy">
           <div><h3>Current context</h3><p id="feedbackContextSummary">Open this page from anywhere in Ryokoplan and we will carry that page context here automatically.</p></div>
           <div><h3>Captured page</h3><p id="feedbackContextPath">Waiting for page context…</p></div>
@@ -52,27 +91,57 @@
           <div><h3>Build version</h3><p id="feedbackContextVersion">Checking version…</p></div>
         </div>
       </section>
+
       <section class="section info-card" id="releaseDraftCard">
         <div class="section-head compact"><div><span class="eyebrow">Release-check handoff</span><h2 class="section-title">Carry QA context into feedback</h2><p class="section-desc" id="releaseDraftSummary">No release-check draft detected on this browser yet.</p></div></div>
       </section>
+
       <section class="section info-card">
-        <div class="legal-copy">
-          <div><h3>What to include</h3><p>Tell us what page you were on, what you expected, what happened instead, and what felt broken, unclear, or off-tone.</p></div>
-          <div><h3>Best for</h3><p>Broken links, unclear wording, route issues, language mismatches, share problems, save/reopen issues, and launch feedback.</p></div>
-          <div><h3>Fast path</h3><p>Copy the report block below and paste it into email, DM, or your internal bug tracker.</p></div>
-          <div><h3>Response note</h3><p>Ryokoplan is still in an early release phase, so fixes may land in batches.</p></div>
+        <div class="section-head compact"><div><span class="eyebrow">Issue focus</span><h2 class="section-title">What kind of thing felt off?</h2><p class="section-desc">Pick the closest issue type. It changes the report template below so the handoff is more specific.</p></div></div>
+        <div class="feedback-type-grid" id="issueTypeGrid">
+          <button class="feedback-type-chip" type="button" data-issue-type="general"><strong>General flow note</strong><span>Use when the page felt rough, unclear, or off-tone but nothing was fully broken.</span></button>
+          <button class="feedback-type-chip" type="button" data-issue-type="broken-link"><strong>Broken link or dead end</strong><span>Use for clicks that go nowhere, wrong pages, or a loop that stalls.</span></button>
+          <button class="feedback-type-chip" type="button" data-issue-type="copy-tone"><strong>Copy / tone issue</strong><span>Use when wording sounds internal, too technical, too long, or not editorial enough.</span></button>
+          <button class="feedback-type-chip" type="button" data-issue-type="layout-ui"><strong>Layout / mobile UI</strong><span>Use for cramped rows, misaligned cards, sticky overlap, or small-screen friction.</span></button>
+          <button class="feedback-type-chip" type="button" data-issue-type="save-share"><strong>Save / share / reopen</strong><span>Use for My Trips, shared links, copied URLs, or resume flow problems.</span></button>
+          <button class="feedback-type-chip" type="button" data-issue-type="route-output"><strong>Route output issue</strong><span>Use when the guide → sample → trip handoff feels wrong or the result quality misses the brief.</span></button>
+        </div>
+        <p class="feedback-inline-note">Active issue focus: <span class="feedback-context-accent" id="issueTypeSummary">General flow note</span> · <span id="issueTypeHint">Use when the page felt rough, unclear, or off-tone but nothing was fully broken.</span></p>
+      </section>
+
+      <section class="section info-card">
+        <div class="section-head compact"><div><span class="eyebrow">What helps most</span><h2 class="section-title">Best details to attach</h2><p class="section-desc">Short reports are fine. These are just the details that make fixes faster.</p></div></div>
+        <div class="feedback-fast-grid">
+          <article class="feedback-fast-card"><strong>Where it happened</strong><p>Name the page or city, and tell us whether it was a guide, sample route, result, share surface, or My Trips moment.</p></article>
+          <article class="feedback-fast-card"><strong>What you expected</strong><p>One clean sentence is enough: where you thought the click, scroll, save, or route handoff should have gone instead.</p></article>
+          <article class="feedback-fast-card"><strong>Why it felt off</strong><p>Say whether it felt broken, unclear, too dense, too memo-like, off-brand, or simply harder to use than expected.</p></article>
         </div>
       </section>
+
       <section class="section info-card">
-        <div class="section-head compact"><div><span class="eyebrow">Report block</span><h2 class="section-title">Copy this launch report</h2><p class="section-desc">It includes page, path, language, build version, and room for your own note.</p></div></div>
-        <div class="info-card" style="padding:0;border:none;box-shadow:none;background:transparent">
-          <textarea id="feedbackTemplate" readonly style="width:100%;min-height:220px;border-radius:22px;border:1px solid var(--line,#e7dfd3);padding:18px;background:#fffdf9;color:#15273a;font:inherit;line-height:1.55"></textarea>
-          <div class="cta-row cta-row-priority" style="margin-top:14px"><button class="primary-btn" id="copyFeedbackTemplateBtn" type="button">Copy report</button><button class="secondary-btn" id="copyFeedbackUrlBtn" type="button">Copy page URL</button><button class="ghost-btn" id="clearReleaseDraftBtn" type="button">Clear release draft</button><a class="ghost-btn" href="../release-check/index.html">Open release check</a><a class="ghost-btn" href="../whats-new/index.html">What's new</a></div>
+        <div class="section-head compact"><div><span class="eyebrow">Report block</span><h2 class="section-title">Copy this feedback handoff</h2><p class="section-desc">It includes issue type, source page, path, language, build version, and room for your note.</p></div></div>
+        <div class="feedback-template-wrap">
+          <textarea id="feedbackTemplate" readonly></textarea>
+          <div class="cta-row cta-row-priority">
+            <button class="primary-btn" id="copyFeedbackTemplateBtn" type="button">Copy report</button>
+            <button class="secondary-btn" id="copyFeedbackUrlBtn" type="button">Copy page URL</button>
+            <button class="ghost-btn" id="clearReleaseDraftBtn" type="button">Clear release draft</button>
+            <a class="ghost-btn" href="../release-check/index.html">Open release check</a>
+            <a class="ghost-btn" href="../whats-new/index.html">What's new</a>
+          </div>
         </div>
       </section>
+
+      <section class="section info-card">
+        <div class="feedback-mini-grid">
+          <article class="feedback-mini-card"><strong>Best for beta testers</strong><p>Open this desk from the exact page that felt wrong so path, language, and city are already attached when you copy the block.</p></article>
+          <article class="feedback-mini-card"><strong>Best for internal QA</strong><p>Run release check first, then clear or attach that draft here so deploy checks and page-specific feedback stay together.</p></article>
+        </div>
+      </section>
+
       <section class="section footer-cta info-card">
         <h2 class="section-title">Read the city. Then build the trip.</h2>
-        <p class="section-desc">Go back to the city desk, pick a route, and keep the whole flow in one place.</p>
+        <p class="section-desc">Go back to the city desk, pick a route, and keep the whole editorial loop in one place.</p>
         <div class="cta-row cta-row-priority"><a class="primary-btn" href="../index.html">Start from home</a><a class="secondary-btn" href="../magazine/index.html">Read Magazine</a><a class="ghost-btn" href="../my-trips/index.html">Open My Trips</a></div>
       </section>
       <div class="footer">Ryokoplan</div>
@@ -94,15 +163,51 @@
       const versionNode = document.getElementById('feedbackContextVersion');
       const templateNode = document.getElementById('feedbackTemplate');
       const releaseDraftSummary = document.getElementById('releaseDraftSummary');
+      const issueTypeSummary = document.getElementById('issueTypeSummary');
+      const issueTypeHint = document.getElementById('issueTypeHint');
+      const issueButtons = Array.from(document.querySelectorAll('[data-issue-type]'));
+      let currentVersion = 'checking…';
+      let currentIssueType = params.get('issue') || 'general';
+
+      const issueMap = {
+        general: {
+          label: 'General flow note',
+          hint: 'Use when the page felt rough, unclear, or off-tone but nothing was fully broken.',
+          checklist: ['What page or surface this happened on', 'What felt unclear, off-tone, or harder than expected', 'One sentence on what should have happened instead']
+        },
+        'broken-link': {
+          label: 'Broken link or dead end',
+          hint: 'Best for wrong destinations, blank screens, dead clicks, or loops that stop.',
+          checklist: ['Exactly what you clicked', 'Where it sent you instead', 'Whether this blocked the city → sample → trip loop completely']
+        },
+        'copy-tone': {
+          label: 'Copy / tone issue',
+          hint: 'Best for wording that feels memo-like, too long, too technical, or not editorial enough.',
+          checklist: ['The exact line or section that felt off', 'What tone you expected instead', 'Whether the issue was clarity, density, or brand feel']
+        },
+        'layout-ui': {
+          label: 'Layout / mobile UI',
+          hint: 'Best for cramped rows, sticky overlap, spacing issues, button wrap, or small-screen friction.',
+          checklist: ['Screen size or device if known', 'Which row, card, or sticky element felt cramped', 'Whether it blocked tapping, reading, or scrolling']
+        },
+        'save-share': {
+          label: 'Save / share / reopen',
+          hint: 'Best for My Trips, shared links, copied URLs, save state, or resume flow issues.',
+          checklist: ['Whether you were saving, sharing, reopening, or importing', 'What was expected after the action', 'Whether the issue affected My Trips or a shared-trip path']
+        },
+        'route-output': {
+          label: 'Route output issue',
+          hint: 'Best for weak trip results, odd handoff from guide/sample, or route quality that missed the brief.',
+          checklist: ['Which city or sample you started from', 'What traveler context or mood you expected', 'How the result diverged from that brief']
+        }
+      };
 
       function readReleaseDraft(){
         try { return localStorage.getItem(releaseDraftStorageKey) || ''; } catch { return ''; }
       }
-
       function clearReleaseDraft(){
         try { localStorage.removeItem(releaseDraftStorageKey); } catch {}
       }
-
       function summarizeReleaseDraft(text){
         if (!text) return 'No release-check draft detected on this browser yet.';
         try {
@@ -116,30 +221,52 @@
           return 'Imported release-check draft from this browser.';
         }
       }
-
+      function issueConfig(type){
+        return issueMap[type] || issueMap.general;
+      }
       function templateBase(version='unknown', draftText=''){
-        return `[Ryokoplan beta feedback]\nSource page: ${sourcePage}\nCity: ${city || '-'}\nLanguage: ${lang}\nVersion: ${version}\nURL: ${pageUrl}\n\nWhat I expected:\n- \n\nWhat happened instead:\n- \n\nWhy it felt off / unclear:\n- \n\nScreenshot or extra note:\n- ` + (draftText ? `\n\n[Attached release-check draft]\n${draftText}` : '');
+        const issue = issueConfig(currentIssueType);
+        const checklist = issue.checklist.map(item => `- ${item}`).join('\n');
+        return `[Ryokoplan beta feedback]\nIssue type: ${issue.label}\nSource page: ${sourcePage}\nCity: ${city || '-'}\nLanguage: ${lang}\nVersion: ${version}\nURL: ${pageUrl}\n\nWhat I expected:\n- \n\nWhat happened instead:\n- \n\nWhy it felt off / unclear:\n- \n\nBest detail to include:\n${checklist}\n\nScreenshot or extra note:\n- ` + (draftText ? `\n\n[Attached release-check draft]\n${draftText}` : '');
       }
 
-      const summaryBits = [sourcePage, city ? 'city: ' + city : '', lang ? 'lang: ' + lang : ''].filter(Boolean).join(' · ');
-      if (contextSummary) contextSummary.textContent = summaryBits || 'Open this page from anywhere in Ryokoplan and we will carry that page context here automatically.';
+      function syncIssueType(){
+        const issue = issueConfig(currentIssueType);
+        issueTypeSummary.textContent = issue.label;
+        issueTypeHint.textContent = issue.hint;
+        issueButtons.forEach(button => button.classList.toggle('is-active', button.dataset.issueType === currentIssueType));
+        const next = new URLSearchParams(location.search);
+        next.set('issue', currentIssueType);
+        history.replaceState({}, '', `${location.pathname}?${next.toString()}`);
+        const summaryBits = [sourcePage, city ? 'city: ' + city : '', lang ? 'lang: ' + lang : '', 'issue: ' + issue.label].filter(Boolean).join(' · ');
+        if (contextSummary) contextSummary.textContent = summaryBits || 'Open this page from anywhere in Ryokoplan and we will carry that page context here automatically.';
+        templateNode.value = templateBase(currentVersion, readReleaseDraft());
+      }
+
       if (pathNode) pathNode.textContent = pageUrl;
       if (langNode) langNode.textContent = lang;
       const draftText = readReleaseDraft();
       if (releaseDraftSummary) releaseDraftSummary.textContent = summarizeReleaseDraft(draftText);
-      templateNode.value = templateBase('checking…', draftText);
+      templateNode.value = templateBase(currentVersion, draftText);
+      syncIssueType();
 
       fetch('/version.json', { cache:'no-store' })
         .then(r => r.ok ? r.json() : Promise.reject(new Error('version unavailable')))
         .then(data => {
-          const version = data.release || data.version || 'unknown';
-          if (versionNode) versionNode.textContent = version + (data.codename ? ' · ' + data.codename : '');
-          templateNode.value = templateBase(version, draftText);
+          currentVersion = data.release || data.version || 'unknown';
+          if (versionNode) versionNode.textContent = currentVersion + (data.codename ? ' · ' + data.codename : '');
+          templateNode.value = templateBase(currentVersion, draftText);
         })
         .catch(() => {
+          currentVersion = 'unknown';
           if (versionNode) versionNode.textContent = 'unknown';
-          templateNode.value = templateBase('unknown', draftText);
+          templateNode.value = templateBase(currentVersion, draftText);
         });
+
+      issueButtons.forEach(button => button.addEventListener('click', () => {
+        currentIssueType = button.dataset.issueType || 'general';
+        syncIssueType();
+      }));
 
       document.getElementById('copyFeedbackTemplateBtn')?.addEventListener('click', async () => {
         try {
@@ -147,20 +274,16 @@
           document.getElementById('copyFeedbackTemplateBtn').textContent = 'Copied';
         } catch {}
       });
-
       document.getElementById('copyFeedbackUrlBtn')?.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(pageUrl);
           document.getElementById('copyFeedbackUrlBtn').textContent = 'Copied';
         } catch {}
       });
-
       document.getElementById('clearReleaseDraftBtn')?.addEventListener('click', () => {
         clearReleaseDraft();
         if (releaseDraftSummary) releaseDraftSummary.textContent = 'Release-check draft cleared on this browser.';
-        const marker = '\n\n[Attached release-check draft]';
-        const index = templateNode.value.indexOf(marker);
-        if (index >= 0) templateNode.value = templateNode.value.slice(0, index);
+        templateNode.value = templateBase(currentVersion, '');
       });
     })();
   </script>

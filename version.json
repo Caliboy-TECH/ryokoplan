@@ -1,12 +1,13 @@
 {
-  "release": "v132",
-  "version": "v132",
+  "release": "v133",
+  "version": "v133",
   "date": "2026-03-31",
-  "codename": "motion-anchor-comfort-hotfix",
+  "codename": "beta-feedback-release-handoff",
+  "headline": "Launch-facing feedback and release handoff are sharper in this build.",
   "notes": [
-    "Makes the floating utility respect reduced-motion settings by removing smooth-scroll animation and extra transition movement when the user prefers less motion.",
-    "Adds a live main-content anchor offset so header-aware jumps and hash-link landings stay aligned below the top bar across resize and orientation changes.",
-    "Updates release-check guidance for reduced-motion and anchor-offset verification in the final release-ready pass."
+    "Rebuilds the feedback desk into a cleaner beta handoff surface with issue-type presets for broken links, tone issues, layout friction, save/share bugs, and route-output problems.",
+    "Upgrades What's New into a faster tester-facing release hub with quick paths, current-build visibility, and recommended checks pulled from the live version metadata.",
+    "Polishes feedback and beta-launch wording so launch-facing surfaces feel less like internal QA notes and more like a real public beta product layer."
   ],
   "updatedAt": "2026-03-31"
 }
