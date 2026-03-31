@@ -104,6 +104,22 @@
           <button class="ghost-btn" id="resetEntryAssistTopBtn" type="button">Reset entry assist state</button>
         </div>
         <p class="release-inline-note">Tip: open this page after each upload and make sure the release value matches the zip you just deployed before sharing the build.</p>
+        <div class="release-verdict-band">
+          <div class="release-verdict-grid">
+            <div>
+              <span class="release-verdict-badge warn" id="releaseVerdictBadge">Needs checks</span>
+              <h2 class="section-title" style="margin-top:10px">Current launch verdict</h2>
+              <p class="release-check-copy" id="releaseVerdictCopy">Run diagnostics, smoke, and the checkbox pass to turn this into a copy-ready launch verdict.</p>
+              <div class="release-actions">
+                <button class="secondary-btn" id="copyLaunchVerdictBtn" type="button">Copy launch verdict</button>
+                <button class="ghost-btn" id="copySupportPacketBtn" type="button">Copy support packet</button>
+              </div>
+            </div>
+            <div>
+              <pre id="launchVerdictBox" class="release-verdict-box">Launch verdict will appear here after version metadata is loaded.</pre>
+            </div>
+          </div>
+        </div>
       </section>
 
       <div class="release-check-grid" style="margin-top:18px;">
@@ -781,10 +797,79 @@
       };
     }
 
+    function buildLaunchVerdict(){
+      const versionRaw = document.getElementById('versionDump')?.textContent || '{}';
+      const version = safeParseJson(versionRaw) || {};
+      const release = version.release || version.version || 'unknown';
+      const codename = version.codename ? ` · ${version.codename}` : '';
+      const totalChecks = checkboxes.length;
+      const checkedCount = checkboxes.filter(box => box.checked).length;
+      const diagFail = lastDiagnostics.filter(item => item.status === 'fail').length;
+      const diagWarn = lastDiagnostics.filter(item => item.status === 'warn').length;
+      const smokeFail = lastSmoke.filter(item => item.status === 'fail').length;
+      const smokeWarn = lastSmoke.filter(item => item.status === 'warn').length;
+      let level = 'warn';
+      let title = 'Needs checks before wider sharing';
+      if (diagFail || smokeFail) {
+        level = 'fail';
+        title = 'Fix blocking issues before sharing';
+      } else if (checkedCount === totalChecks && totalChecks > 0 && lastDiagnostics.length && lastSmoke.length && !diagWarn && !smokeWarn) {
+        level = 'pass';
+        title = 'Ready for a cleaner launch handoff';
+      } else if (checkedCount >= Math.max(4, totalChecks - 2) && !diagFail && !smokeFail) {
+        level = 'warn';
+        title = 'Close — run the last checks and review warnings';
+      }
+      const summary = [
+        `Ryokoplan launch verdict`,
+        `Build: ${release}${codename}`,
+        `Verdict: ${title}`,
+        `Checklist: ${checkedCount}/${totalChecks} complete`,
+        `Diagnostics: ${lastDiagnostics.length ? `${diagFail} fail / ${diagWarn} warn / ${lastDiagnostics.length - diagFail - diagWarn} pass` : 'not run yet'}`,
+        `Smoke: ${lastSmoke.length ? `${smokeFail} fail / ${smokeWarn} warn / ${lastSmoke.length - smokeFail - smokeWarn} pass` : 'not run yet'}`,
+        '',
+        `Next step: ${diagFail || smokeFail ? 'Resolve failing checks first.' : checkedCount < totalChecks ? 'Finish the remaining manual checks, then copy the release report.' : 'Share the build notes and page desk links with this version.'}`
+      ].join('\n');
+      return { level, title, summary };
+    }
+
+    function updateLaunchVerdict(){
+      const badge = document.getElementById('releaseVerdictBadge');
+      const copy = document.getElementById('releaseVerdictCopy');
+      const box = document.getElementById('launchVerdictBox');
+      if (!badge || !copy || !box) return;
+      const verdict = buildLaunchVerdict();
+      badge.className = 'release-verdict-badge ' + verdict.level;
+      badge.textContent = verdict.level === 'pass' ? 'Ready' : verdict.level === 'fail' ? 'Fix before share' : 'Needs review';
+      copy.textContent = verdict.title;
+      box.textContent = verdict.summary;
+    }
+
     function updateReleaseReportPreview(){
       const node = document.getElementById('releaseReportPreview');
       if (!node) return;
       node.textContent = JSON.stringify(buildReleaseReport(), null, 2);
+      updateLaunchVerdict();
+    }
+
+    async function copyLaunchVerdict(){
+      const payload = buildLaunchVerdict().summary;
+      try {
+        await navigator.clipboard.writeText(payload);
+        alert('Launch verdict copied.');
+      } catch {
+        alert('Could not copy launch verdict in this browser.');
+      }
+    }
+
+    async function copySupportPacket(){
+      const payload = ['Ryokoplan support packet','- Build notes: https://ryokoplan.com/whats-new/','- Release check: https://ryokoplan.com/release-check/','- Page desk: https://ryokoplan.com/contact/','',buildLaunchVerdict().summary].join('\n');
+      try {
+        await navigator.clipboard.writeText(payload);
+        alert('Support packet copied.');
+      } catch {
+        alert('Could not copy support packet in this browser.');
+      }
     }
 
     async function copyReleaseReport(){
@@ -826,6 +911,8 @@
     document.getElementById('copySmokeBtn').addEventListener('click', copySmoke);
     document.getElementById('copyReleaseReportBtn').addEventListener('click', copyReleaseReport);
     document.getElementById('copyReleaseReportTopBtn').addEventListener('click', copyReleaseReport);
+    document.getElementById('copyLaunchVerdictBtn').addEventListener('click', copyLaunchVerdict);
+    document.getElementById('copySupportPacketBtn').addEventListener('click', copySupportPacket);
     document.getElementById('openFeedbackDeskBtn').addEventListener('click', openFeedbackDesk);
     document.getElementById('openFeedbackDeskTopBtn').addEventListener('click', openFeedbackDesk);
     document.getElementById('resetBetaNoticeTopBtn').addEventListener('click', resetBetaNotice);

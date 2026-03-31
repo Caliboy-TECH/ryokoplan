@@ -1,13 +1,13 @@
 {
-  "release": "v134",
-  "version": "v134",
+  "release": "v135",
+  "version": "v135",
   "date": "2026-03-31",
-  "codename": "launch-copy-public-facing-polish",
-  "headline": "Launch-facing copy is softer, clearer, and less internal across public support surfaces.",
+  "codename": "launch-packet-handoff-polish",
+  "headline": "Build notes and release-check now produce cleaner launch packets and copy-ready support handoff summaries.",
   "notes": [
-    "Reworks the launch bar so it reads like a live preview layer instead of a raw internal beta notice, while keeping build notes and page feedback one tap away.",
-    "Polishes the feedback desk into a more public-facing page note surface with clearer handoff language and softer build-context framing.",
-    "Refines Build Notes wording so release helpers feel product-facing on Home, Magazine, My Trips, and support surfaces without losing operational clarity."
+    "Adds a launch handoff block to Build notes so the current version, release headline, and support links can be copied as one clean packet after deploy.",
+    "Introduces a live launch verdict band on release-check that turns checklist, diagnostics, and smoke results into a clearer share/no-share summary.",
+    "Tightens the public support handoff so release confirmation and page note links are easier to pass along without internal-feeling wording."
   ],
   "updatedAt": "2026-03-31"
 }
