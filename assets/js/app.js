@@ -1717,11 +1717,55 @@ function ensureFirstRunGuide(){
   syncFirstRunGuide();
 }
 
+const versionMetaState = { promise:null, value:null };
 function buildWhatsNewHref(){
   return `${pathRoot}whats-new/index.html`;
 }
+function buildNotesLabel(){
+  return lang === 'ko' ? 'Build notes' : lang === 'ja' ? 'Build notes' : lang === 'zhHant' ? 'Build notes' : 'Build notes';
+}
+function footerBuildCopy(){
+  return lang === 'ko'
+    ? { loading:'현재 빌드 확인 중…', fallback:'현재 build live', note:'문제가 보이면 바로 page note로 보낼 수 있습니다.', page:'Page note' }
+    : lang === 'ja'
+    ? { loading:'現在の build を確認中…', fallback:'Current build live', note:'気になる点はそのまま page note に送れます。', page:'Page note' }
+    : lang === 'zhHant'
+    ? { loading:'正在確認目前 build…', fallback:'Current build live', note:'如果哪裡不順，可以直接送出 page note。', page:'Page note' }
+    : { loading:'Checking current build…', fallback:'Current build live', note:'If something still feels rough, send a page note from here.', page:'Page note' };
+}
+function loadVersionMeta(){
+  if (versionMetaState.value) return Promise.resolve(versionMetaState.value);
+  if (!versionMetaState.promise) {
+    versionMetaState.promise = fetch(`${pathRoot}version.json`, { cache:'no-store' })
+      .then(res => res.ok ? res.json() : null)
+      .catch(() => null)
+      .then(json => { versionMetaState.value = json; return json; });
+  }
+  return versionMetaState.promise;
+}
+function ensureFooterBuildRail(){
+  const rails = document.querySelectorAll('.footer-links');
+  if (!rails.length) return;
+  const copy = footerBuildCopy();
+  rails.forEach((links, idx) => {
+    const notesLink = links.querySelector(`a[href$="whats-new/index.html"], a[href="whats-new/index.html"], a[href="../whats-new/index.html"], a[href="/whats-new/index.html"]`);
+    if (notesLink) notesLink.textContent = buildNotesLabel();
+    let rail = links.nextElementSibling;
+    if (!rail || !rail.classList || !rail.classList.contains('footer-build-rail')) {
+      rail = document.createElement('div');
+      rail.className = 'footer-build-rail';
+      rail.setAttribute('data-footer-build-rail', String(idx));
+      links.insertAdjacentElement('afterend', rail);
+    }
+    rail.innerHTML = `<span class="footer-build-pill">${copy.loading}</span><a href="${buildWhatsNewHref()}">${buildNotesLabel()}</a><a href="${buildFeedbackHref()}">${copy.page}</a><span class="footer-build-note">${copy.note}</span>`;
+  });
+  loadVersionMeta().then(json => {
+    const label = json?.release ? `${lang === 'ko' ? '현재 빌드' : lang === 'ja' ? '現在の build' : lang === 'zhHant' ? '目前 build' : 'Current build'} · ${json.release}` : copy.fallback;
+    document.querySelectorAll('.footer-build-rail .footer-build-pill').forEach(pill => { pill.textContent = label; });
+  });
+}
 function legalLinksMarkup(){
-  return `<div class="footer-links"><a href="${pathRoot}privacy/index.html">Privacy</a><a href="${pathRoot}terms/index.html">Terms</a><a href="${pathRoot}contact/index.html">Contact</a><a href="${buildWhatsNewHref()}">What's new</a></div>`;
+  return `<div class="footer-links"><a href="${pathRoot}privacy/index.html">Privacy</a><a href="${pathRoot}terms/index.html">Terms</a><a href="${pathRoot}contact/index.html">Contact</a><a href="${buildWhatsNewHref()}">${buildNotesLabel()}</a></div>`;
 }
 function syncFeedbackLinks(){
   const href = buildFeedbackHref();
@@ -6000,6 +6044,7 @@ function renderTripsSeasonalDesk(){
     ensureStartPathRecallBar();
     ensureLaunchFeedbackCta();
     ensureInstallCta();
+    ensureFooterBuildRail();
     if (document.body.dataset.page === 'planner') applyHomeHead();
     if (document.body.dataset.page === 'trips') applyTripsHead();
     renderMagazineLanding();
@@ -6068,6 +6113,7 @@ function renderTripsSeasonalDesk(){
       ensureStartPathRecallBar();
       ensureLaunchFeedbackCta();
       ensureInstallCta();
+      ensureFooterBuildRail();
       syncInstallCta();
       localizeLangButtonLabels();
       localizeStaticIndexSections();

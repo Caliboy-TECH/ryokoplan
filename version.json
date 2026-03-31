@@ -1,13 +1,13 @@
 {
-  "release": "v135",
-  "version": "v135",
+  "release": "v136",
+  "version": "v136",
   "date": "2026-03-31",
-  "codename": "launch-packet-handoff-polish",
-  "headline": "Build notes and release-check now produce cleaner launch packets and copy-ready support handoff summaries.",
+  "codename": "footer-build-rail-handoff",
+  "headline": "Main surfaces now carry a lighter footer build rail so the current build, notes, and page note path stay visible without feeling internal.",
   "notes": [
-    "Adds a launch handoff block to Build notes so the current version, release headline, and support links can be copied as one clean packet after deploy.",
-    "Introduces a live launch verdict band on release-check that turns checklist, diagnostics, and smoke results into a clearer share/no-share summary.",
-    "Tightens the public support handoff so release confirmation and page note links are easier to pass along without internal-feeling wording."
+    "Adds a subtle footer build rail to the main reading and planning surfaces so the current release stays visible with one-tap access to Build notes and Page feedback.",
+    "Replaces the heavier 'What's new' footer wording with a cleaner public-facing Build notes label across the main app chrome.",
+    "Keeps release handoff visible after deploy without turning the product chrome into a QA dashboard."
   ],
   "updatedAt": "2026-03-31"
 }
