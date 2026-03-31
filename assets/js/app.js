@@ -958,7 +958,7 @@ function isPrimaryEntrySurface(){
 }
 
 const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
-const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v141';
+const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v143';
 const firstRunGuideDismissKey = 'ryoko:first-run-guide-dismissed:v101';
 const startPathMemoryKey = 'ryoko:start-path-memory:v102';
 const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
@@ -1811,14 +1811,27 @@ function buildWhatsNewHref(){
 function buildNotesLabel(){
   return lang === 'ko' ? 'Build notes' : lang === 'ja' ? 'Build notes' : lang === 'zhHant' ? 'Build notes' : 'Build notes';
 }
+function footerBuildStatusLabel(release=''){
+  const clean = String(release || '').trim();
+  if (!clean) {
+    return lang === 'ko' ? 'Build live' : lang === 'ja' ? 'Build live' : lang === 'zhHant' ? 'Build live' : 'Build live';
+  }
+  return lang === 'ko'
+    ? `Build · ${clean}`
+    : lang === 'ja'
+      ? `Build · ${clean}`
+      : lang === 'zhHant'
+        ? `Build · ${clean}`
+        : `Build · ${clean}`;
+}
 function footerBuildCopy(){
   return lang === 'ko'
-    ? { loading:'현재 빌드 확인 중…', fallback:'현재 build live', note:'build 맥락이나 지원이 필요할 때만 열어보세요.', page:'노트 보내기', toggle:'지원', toggleOpen:'닫기' }
+    ? { loading:'Build 확인 중…', fallback:'Build live', note:'build와 노트 경로는 여기에서 열립니다.', page:'노트 보내기', toggle:'지원', toggleOpen:'닫기' }
     : lang === 'ja'
-    ? { loading:'現在の build を確認中…', fallback:'Current build live', note:'build の文脈やサポートが必要なときだけ開いてください。', page:'ノートを送る', toggle:'サポート', toggleOpen:'閉じる' }
+    ? { loading:'Build を確認中…', fallback:'Build live', note:'build とノートの導線はここにまとまっています。', page:'ノートを送る', toggle:'サポート', toggleOpen:'閉じる' }
     : lang === 'zhHant'
-    ? { loading:'正在確認目前 build…', fallback:'Current build live', note:'只在需要 build 脈絡或支援時再打開即可。', page:'送出備註', toggle:'支援', toggleOpen:'關閉' }
-    : { loading:'Checking current build…', fallback:'Current build live', note:'Open this only when you want build context or a support path.', page:'Send note', toggle:'Support', toggleOpen:'Close' };
+    ? { loading:'正在確認 Build…', fallback:'Build live', note:'build 與備註入口會集中在這裡。', page:'送出備註', toggle:'支援', toggleOpen:'關閉' }
+    : { loading:'Checking build…', fallback:'Build live', note:'Build and note links live here.', page:'Send note', toggle:'Support', toggleOpen:'Close' };
 }
 function loadVersionMeta(){
   if (versionMetaState.value) return Promise.resolve(versionMetaState.value);
@@ -1866,7 +1879,7 @@ function ensureFooterBuildRail(){
   wireFooterSupportDismiss();
   observeFooterSupportRails();
   loadVersionMeta().then(json => {
-    const label = json?.release ? `${lang === 'ko' ? '현재 빌드' : lang === 'ja' ? '現在の build' : lang === 'zhHant' ? '目前 build' : 'Current build'} · ${json.release}` : copy.fallback;
+    const label = json?.release ? footerBuildStatusLabel(json.release) : copy.fallback;
     document.querySelectorAll('.footer-build-rail .footer-build-pill').forEach(pill => { pill.textContent = label; });
   });
 }
@@ -1924,15 +1937,23 @@ function wireFooterSupportDismiss(){
 function syncLaunchFeedbackCtaVisibility(){
   const cta = document.getElementById('launchFeedbackCta');
   if (!cta) return;
+  const page = document.body?.dataset?.page || '';
+  const primaryEntry = isPrimaryEntrySurface() && (page === 'planner' || page === 'magazine');
   const scrollable = Math.max(0, Math.max(document.documentElement.scrollHeight || 0, document.body.scrollHeight || 0) - window.innerHeight);
-  const nearTop = window.scrollY < Math.min(320, Math.round(window.innerHeight * 0.38));
-  const deepEnough = window.scrollY > Math.max(420, Math.round(window.innerHeight * 0.52));
-  const shortPage = scrollable < 360;
+  const nearTop = window.scrollY < (primaryEntry
+    ? Math.min(420, Math.round(window.innerHeight * 0.46))
+    : Math.min(320, Math.round(window.innerHeight * 0.38)));
+  const deepEnough = window.scrollY > (primaryEntry
+    ? Math.max(820, Math.round(window.innerHeight * 1.02))
+    : Math.max(520, Math.round(window.innerHeight * 0.64)));
+  const shortPage = scrollable < (primaryEntry ? 520 : 360);
   const footerSupportInView = document.body.dataset.footerSupportInView === 'true';
   const supportExpanded = !!document.querySelector('.footer-build-rail[data-expanded="true"]');
   const launchBar = document.getElementById('betaLaunchBar');
   const launchBarActive = !!launchBar && !launchBar.classList.contains('is-hidden') && !launchBar.classList.contains('is-calm');
-  const shouldHide = nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive;
+  const launchSurfaceReady = !primaryEntry || launchSurfaceSettled() || window.scrollY > Math.max(760, Math.round(window.innerHeight * 0.92));
+  const revealDelay = primaryEntry ? 1180 : 760;
+  const shouldHide = nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive || !launchSurfaceReady;
   if (shouldHide) {
     window.clearTimeout(launchFeedbackVisibilityState.showTimer);
     launchFeedbackVisibilityState.showTimer = 0;
@@ -1944,13 +1965,15 @@ function syncLaunchFeedbackCtaVisibility(){
         launchFeedbackVisibilityState.showTimer = 0;
         launchFeedbackVisibilityState.ready = true;
         syncLaunchFeedbackCtaVisibility();
-      }, 420);
+      }, revealDelay);
     }
     cta.classList.add('is-hidden');
   } else {
     cta.classList.remove('is-hidden');
   }
-  cta.classList.toggle('is-compact', !cta.classList.contains('is-hidden') && window.scrollY > Math.max(560, Math.round(window.innerHeight * 0.82)));
+  cta.classList.toggle('is-compact', !cta.classList.contains('is-hidden') && window.scrollY > (primaryEntry
+    ? Math.max(980, Math.round(window.innerHeight * 1.18))
+    : Math.max(560, Math.round(window.innerHeight * 0.82))));
 }
 function wireLaunchFeedbackCtaVisibility(){
   if (launchFeedbackVisibilityState.wired) return;

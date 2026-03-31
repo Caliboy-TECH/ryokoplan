@@ -1,13 +1,13 @@
 {
-  "release": "v141",
-  "version": "v141",
-  "date": "2026-03-31",
-  "codename": "entry-surface-settle-polish",
-  "headline": "Launch surfaces now settle down faster after the first real interaction, while support prompts wait until the reading flow is deeper.",
+  "release": "v143",
+  "version": "v143",
+  "date": "2026-04-01",
+  "codename": "quiet-support-presence",
+  "headline": "Support surfaces now sit further back: launch calm states shrink a bit more, footer support feels lighter, and floating notes wait longer on primary entry pages.",
   "notes": [
-    "Lets the top launch surface calm down after a short dwell or the user’s first meaningful interaction, so the opening screens feel quieter without removing build context.",
-    "Delays the floating Send note action until the user is deeper into the page, reducing support-layer overlap during the first reading moment.",
-    "Keeps the existing support and build paths intact while making the initial product surface feel more editorial and less operational."
+    "Pushes the floating Send note entry further down the reading flow on planner and magazine entry surfaces so the opening moment stays focused on the product itself.",
+    "Softens footer support rail density with lighter spacing, shorter note copy, and a calmer default presence that still keeps build and note paths reachable.",
+    "Reduces the calm-state launch bar footprint a bit further so support context stays available without competing with the first editorial read."
   ],
-  "updatedAt": "2026-03-31"
+  "updatedAt": "2026-04-01"
 }
