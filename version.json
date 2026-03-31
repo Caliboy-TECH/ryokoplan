@@ -1,13 +1,13 @@
 {
-  "release": "v139",
-  "version": "v139",
+  "release": "v141",
+  "version": "v141",
   "date": "2026-03-31",
-  "codename": "calm-support-surface-polish",
-  "headline": "Support surfaces now stay calmer on main pages by revealing note actions later and hiding them when footer support is already in view.",
+  "codename": "entry-surface-settle-polish",
+  "headline": "Launch surfaces now settle down faster after the first real interaction, while support prompts wait until the reading flow is deeper.",
   "notes": [
-    "Keeps the floating Send note action out of the first fold, then reveals it only after a meaningful scroll so the opening screens stay quieter.",
-    "Auto-hides the floating note action whenever the footer support rail is visible or expanded, avoiding duplicate support prompts in the same viewport.",
-    "Adds softer support-rail contrast plus click-outside and Escape-to-close behavior so the public-facing support layer feels lighter and more product-like."
+    "Lets the top launch surface calm down after a short dwell or the user’s first meaningful interaction, so the opening screens feel quieter without removing build context.",
+    "Delays the floating Send note action until the user is deeper into the page, reducing support-layer overlap during the first reading moment.",
+    "Keeps the existing support and build paths intact while making the initial product surface feel more editorial and less operational."
   ],
   "updatedAt": "2026-03-31"
 }

@@ -958,6 +958,7 @@ function isPrimaryEntrySurface(){
 }
 
 const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
+const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v141';
 const firstRunGuideDismissKey = 'ryoko:first-run-guide-dismissed:v101';
 const startPathMemoryKey = 'ryoko:start-path-memory:v102';
 const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
@@ -998,12 +999,12 @@ function entryAssistPriority(){
 }
 function betaLaunchCopy(){
   return lang === 'ko'
-    ? { eyebrow:'Read the city', title:'도시를 먼저 읽고, 그다음 루트를 이어가세요.', desc:'Guide, sample route, My Trips는 모두 열려 있습니다. build 맥락이나 지원이 필요할 때만 조용히 꺼내볼 수 있습니다.', primary:'Build notes', secondary:'노트 보내기', dismiss:'숨기기' }
+    ? { eyebrow:'Read the city', title:'도시를 먼저 읽고, 그다음 루트를 이어가세요.', desc:'Guide, sample route, My Trips는 바로 이어집니다. build 맥락과 지원은 필요할 때만 조용히 열립니다.', primary:'Build notes', secondary:'노트 보내기', dismiss:'숨기기' }
     : lang === 'ja'
-      ? { eyebrow:'Read the city', title:'まず街を読み、その流れのままルートへ進んでください。', desc:'guide、sample route、My Trips はそのまま使えます。build の文脈やサポートが必要なときだけ静かに開けます。', primary:'Build notes', secondary:'ノートを送る', dismiss:'閉じる' }
+      ? { eyebrow:'Read the city', title:'まず街を読み、その流れのままルートへ進んでください。', desc:'guide、sample route、My Trips はそのままつながっています。build の文脈やサポートは必要なときだけ静かに開きます。', primary:'Build notes', secondary:'ノートを送る', dismiss:'閉じる' }
       : lang === 'zhHant'
-        ? { eyebrow:'Read the city', title:'先讀城市，再順著那個節奏把路線接下去。', desc:'guide、sample route、My Trips 都可以直接使用；只有在需要 build 脈絡或支援時再把它打開就好。', primary:'Build notes', secondary:'送出備註', dismiss:'隱藏' }
-        : { eyebrow:'Read the city', title:'Start with the city, then carry that rhythm into the route.', desc:'Guides, sample routes, and My Trips are live. Keep build context and support close, but only open them when you need them.', primary:'Build notes', secondary:'Send note', dismiss:'Hide' };
+        ? { eyebrow:'Read the city', title:'先讀城市，再順著那個節奏把路線接下去。', desc:'guide、sample route、My Trips 會直接接上；build 脈絡與支援只會在需要時安靜地展開。', primary:'Build notes', secondary:'送出備註', dismiss:'隱藏' }
+        : { eyebrow:'Read the city', title:'Start with the city, then carry that rhythm into the route.', desc:'Guides, sample routes, and My Trips stay connected. Build context and support only open when you need them.', primary:'Build notes', secondary:'Send note', dismiss:'Hide' };
 }
 function shouldShowBetaLaunchBar(){
   const page = document.body?.dataset?.page || '';
@@ -1027,6 +1028,89 @@ function syncBetaLaunchBar(){
   if (primary) { primary.textContent = copy.primary; primary.setAttribute('href', buildWhatsNewHref()); }
   if (secondary) { secondary.textContent = copy.secondary; secondary.setAttribute('href', buildFeedbackHref({ source: 'beta-launch-bar' })); }
   if (dismiss) dismiss.textContent = copy.dismiss;
+}
+
+function launchSurfaceSettled(){
+  return launchSurfaceState.settled || document.body?.dataset?.launchSurfaceSettled === 'true';
+}
+function setLaunchSurfaceSettled(value=true, persist=true){
+  launchSurfaceState.settled = !!value;
+  if (document.body) document.body.dataset.launchSurfaceSettled = value ? 'true' : 'false';
+  if (persist) {
+    try { sessionStorage.setItem(launchSurfaceSettledKey, value ? '1' : '0'); } catch {}
+  }
+}
+function hydrateLaunchSurfaceSettled(){
+  if (launchSurfaceState.settled) return;
+  try {
+    if (sessionStorage.getItem(launchSurfaceSettledKey) === '1') setLaunchSurfaceSettled(true, false);
+  } catch {}
+}
+function scheduleLaunchSurfaceSettle(){
+  window.clearTimeout(launchSurfaceState.settleTimer);
+  const bar = document.getElementById('betaLaunchBar');
+  if (!bar || bar.classList.contains('is-hidden') || launchSurfaceSettled()) return;
+  if (window.scrollY > Math.max(18, Math.round((window.innerHeight || 0) * 0.06))) return;
+  launchSurfaceState.settleTimer = window.setTimeout(() => {
+    const stillNearTop = window.scrollY <= Math.max(18, Math.round((window.innerHeight || 0) * 0.08));
+    const supportExpanded = !!document.querySelector('.footer-build-rail[data-expanded="true"]');
+    if (stillNearTop && !supportExpanded) {
+      setLaunchSurfaceSettled(true, true);
+      syncLaunchSurfaceCalmness();
+      syncLaunchFeedbackCtaVisibility();
+    }
+  }, 2200);
+}
+function syncLaunchSurfaceCalmness(){
+  const bar = document.getElementById('betaLaunchBar');
+  if (!bar || bar.classList.contains('is-hidden')) return;
+  const viewport = window.innerHeight || 0;
+  const compactThreshold = Math.max(96, Math.round(viewport * 0.14));
+  const scrolled = window.scrollY > compactThreshold;
+  const supportExpanded = !!document.querySelector('.footer-build-rail[data-expanded="true"]');
+  const footerSupportInView = document.body.dataset.footerSupportInView === 'true';
+  const shouldCalm = scrolled || supportExpanded || footerSupportInView || launchSurfaceSettled();
+  bar.classList.toggle('is-calm', shouldCalm);
+}
+function wireLaunchSurfaceCalmness(){
+  if (launchSurfaceState.wired) return;
+  launchSurfaceState.wired = true;
+  hydrateLaunchSurfaceSettled();
+  let ticking = false;
+  const update = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(() => {
+      syncLaunchSurfaceCalmness();
+      syncLaunchFeedbackCtaVisibility();
+      scheduleLaunchSurfaceSettle();
+      ticking = false;
+    });
+  };
+  const settleFromInteraction = event => {
+    const target = event?.target;
+    if (!(target instanceof Element)) return;
+    if (target.closest('.beta-launch-bar') || target.closest('.footer-build-rail') || target.closest('#launchFeedbackCta')) return;
+    if (!target.closest('main, .hero-card, .city-card, .finder-card, .dispatch-card, .trip-card, .result-main, .trip-shell, .planner-shell, .magazine-hero, .mobile-dock, a, button, input, select, textarea')) return;
+    setLaunchSurfaceSettled(true, true);
+    window.setTimeout(update, 24);
+  };
+  window.addEventListener('scroll', update, { passive:true });
+  window.addEventListener('resize', update);
+  window.addEventListener('orientationchange', () => window.setTimeout(update, 40));
+  document.addEventListener('pointerdown', settleFromInteraction, { passive:true });
+  document.addEventListener('focusin', settleFromInteraction);
+  document.addEventListener('click', event => {
+    if (event.target.closest('.footer-build-rail')) window.setTimeout(update, 30);
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') window.setTimeout(update, 30);
+    if ((event.key === 'Tab' || event.key === 'Enter') && !event.target?.closest?.('.beta-launch-bar')) {
+      setLaunchSurfaceSettled(true, true);
+      window.setTimeout(update, 24);
+    }
+  });
+  scheduleLaunchSurfaceSettle();
 }
 function ensureBetaLaunchBar(){
   if (!document.body) return;
@@ -1719,7 +1803,8 @@ function ensureFirstRunGuide(){
 
 const versionMetaState = { promise:null, value:null };
 const footerSupportState = { observer:null, wired:false };
-const launchFeedbackVisibilityState = { wired:false };
+const launchFeedbackVisibilityState = { wired:false, showTimer:0, ready:false };
+const launchSurfaceState = { wired:false, settleTimer:0, settled:false };
 function buildWhatsNewHref(){
   return `${pathRoot}whats-new/index.html`;
 }
@@ -1728,12 +1813,12 @@ function buildNotesLabel(){
 }
 function footerBuildCopy(){
   return lang === 'ko'
-    ? { loading:'현재 빌드 확인 중…', fallback:'현재 build live', note:'빌드 정보나 지원 경로가 필요할 때만 여기서 열어보세요.', page:'노트 보내기', toggle:'지원 열기', toggleOpen:'지원 닫기' }
+    ? { loading:'현재 빌드 확인 중…', fallback:'현재 build live', note:'build 맥락이나 지원이 필요할 때만 열어보세요.', page:'노트 보내기', toggle:'지원', toggleOpen:'닫기' }
     : lang === 'ja'
-    ? { loading:'現在の build を確認中…', fallback:'Current build live', note:'build 情報やサポート導線が必要なときだけ、ここから開けます。', page:'ノートを送る', toggle:'サポートを開く', toggleOpen:'サポートを閉じる' }
+    ? { loading:'現在の build を確認中…', fallback:'Current build live', note:'build の文脈やサポートが必要なときだけ開いてください。', page:'ノートを送る', toggle:'サポート', toggleOpen:'閉じる' }
     : lang === 'zhHant'
-    ? { loading:'正在確認目前 build…', fallback:'Current build live', note:'只有在需要 build 資訊或支援路徑時，再從這裡展開即可。', page:'送出備註', toggle:'展開支援', toggleOpen:'收起支援' }
-    : { loading:'Checking current build…', fallback:'Current build live', note:'Open this only when you want build context or a quick support path.', page:'Send note', toggle:'Open support', toggleOpen:'Close support' };
+    ? { loading:'正在確認目前 build…', fallback:'Current build live', note:'只在需要 build 脈絡或支援時再打開即可。', page:'送出備註', toggle:'支援', toggleOpen:'關閉' }
+    : { loading:'Checking current build…', fallback:'Current build live', note:'Open this only when you want build context or a support path.', page:'Send note', toggle:'Support', toggleOpen:'Close' };
 }
 function loadVersionMeta(){
   if (versionMetaState.value) return Promise.resolve(versionMetaState.value);
@@ -1841,12 +1926,31 @@ function syncLaunchFeedbackCtaVisibility(){
   if (!cta) return;
   const scrollable = Math.max(0, Math.max(document.documentElement.scrollHeight || 0, document.body.scrollHeight || 0) - window.innerHeight);
   const nearTop = window.scrollY < Math.min(320, Math.round(window.innerHeight * 0.38));
+  const deepEnough = window.scrollY > Math.max(420, Math.round(window.innerHeight * 0.52));
   const shortPage = scrollable < 360;
   const footerSupportInView = document.body.dataset.footerSupportInView === 'true';
   const supportExpanded = !!document.querySelector('.footer-build-rail[data-expanded="true"]');
-  const shouldHide = nearTop || shortPage || footerSupportInView || supportExpanded;
-  cta.classList.toggle('is-hidden', shouldHide);
-  cta.classList.toggle('is-compact', !shouldHide && window.scrollY > Math.max(560, Math.round(window.innerHeight * 0.82)));
+  const launchBar = document.getElementById('betaLaunchBar');
+  const launchBarActive = !!launchBar && !launchBar.classList.contains('is-hidden') && !launchBar.classList.contains('is-calm');
+  const shouldHide = nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive;
+  if (shouldHide) {
+    window.clearTimeout(launchFeedbackVisibilityState.showTimer);
+    launchFeedbackVisibilityState.showTimer = 0;
+    launchFeedbackVisibilityState.ready = false;
+    cta.classList.add('is-hidden');
+  } else if (!launchFeedbackVisibilityState.ready) {
+    if (!launchFeedbackVisibilityState.showTimer) {
+      launchFeedbackVisibilityState.showTimer = window.setTimeout(() => {
+        launchFeedbackVisibilityState.showTimer = 0;
+        launchFeedbackVisibilityState.ready = true;
+        syncLaunchFeedbackCtaVisibility();
+      }, 420);
+    }
+    cta.classList.add('is-hidden');
+  } else {
+    cta.classList.remove('is-hidden');
+  }
+  cta.classList.toggle('is-compact', !cta.classList.contains('is-hidden') && window.scrollY > Math.max(560, Math.round(window.innerHeight * 0.82)));
 }
 function wireLaunchFeedbackCtaVisibility(){
   if (launchFeedbackVisibilityState.wired) return;
@@ -1900,7 +2004,9 @@ function ensureLaunchFeedbackCta(){
   }
   syncFeedbackLinks();
   wireLaunchFeedbackCtaVisibility();
+  wireLaunchSurfaceCalmness();
   syncLaunchFeedbackCtaVisibility();
+  syncLaunchSurfaceCalmness();
 }
 
   function getSignalRecommendations(context={}){
