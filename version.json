@@ -1,13 +1,13 @@
 {
-  "release": "v143",
-  "version": "v143",
+  "release": "v144",
+  "version": "v144",
   "date": "2026-04-01",
-  "codename": "quiet-support-presence",
-  "headline": "Support surfaces now sit further back: launch calm states shrink a bit more, footer support feels lighter, and floating notes wait longer on primary entry pages.",
+  "codename": "quiet-rest-surface-polish",
+  "headline": "Support surfaces now recede one step further: My Trips gets the same quieter entry treatment, the launch bar can settle into a softer rest state, and note prompts wait longer before appearing.",
   "notes": [
-    "Pushes the floating Send note entry further down the reading flow on planner and magazine entry surfaces so the opening moment stays focused on the product itself.",
-    "Softens footer support rail density with lighter spacing, shorter note copy, and a calmer default presence that still keeps build and note paths reachable.",
-    "Reduces the calm-state launch bar footprint a bit further so support context stays available without competing with the first editorial read."
+    "Treats My Trips like a primary entry surface so support prompts wait longer and the opening read stays focused on saved routes first.",
+    "Adds a softer launch-bar rest state after the first settle so build context remains reachable without feeling like a persistent top layer.",
+    "Shortens and lightens the footer support rail copy and density another step while keeping Build notes and Send note reachable."
   ],
   "updatedAt": "2026-04-01"
 }

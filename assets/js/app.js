@@ -954,11 +954,11 @@ function buildFeedbackHref(extra={}){
 }
 function isPrimaryEntrySurface(){
   const path = location.pathname || '/';
-  return path === '/' || path.endsWith('/index.html') && !path.includes('/city/') && !path.includes('/example/') && !path.includes('/my-trips/') && !path.includes('/privacy/') && !path.includes('/terms/') && !path.includes('/contact/') && !path.includes('/whats-new/') && !path.includes('/release-check/') || path.endsWith('/magazine/') || path.endsWith('/magazine/index.html');
+  return path === '/' || path.endsWith('/index.html') && !path.includes('/city/') && !path.includes('/example/') && !path.includes('/my-trips/') && !path.includes('/privacy/') && !path.includes('/terms/') && !path.includes('/contact/') && !path.includes('/whats-new/') && !path.includes('/release-check/') || path.endsWith('/magazine/') || path.endsWith('/magazine/index.html') || path.endsWith('/my-trips/') || path.endsWith('/my-trips/index.html');
 }
 
 const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
-const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v143';
+const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v144';
 const firstRunGuideDismissKey = 'ryoko:first-run-guide-dismissed:v101';
 const startPathMemoryKey = 'ryoko:start-path-memory:v102';
 const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
@@ -1059,18 +1059,21 @@ function scheduleLaunchSurfaceSettle(){
       syncLaunchSurfaceCalmness();
       syncLaunchFeedbackCtaVisibility();
     }
-  }, 2200);
+  }, 1450);
 }
 function syncLaunchSurfaceCalmness(){
   const bar = document.getElementById('betaLaunchBar');
   if (!bar || bar.classList.contains('is-hidden')) return;
   const viewport = window.innerHeight || 0;
-  const compactThreshold = Math.max(96, Math.round(viewport * 0.14));
+  const compactThreshold = Math.max(72, Math.round(viewport * 0.1));
   const scrolled = window.scrollY > compactThreshold;
   const supportExpanded = !!document.querySelector('.footer-build-rail[data-expanded="true"]');
   const footerSupportInView = document.body.dataset.footerSupportInView === 'true';
-  const shouldCalm = scrolled || supportExpanded || footerSupportInView || launchSurfaceSettled();
+  const settled = launchSurfaceSettled();
+  const shouldCalm = scrolled || supportExpanded || footerSupportInView || settled;
+  const shouldRest = settled && !scrolled && !supportExpanded && !footerSupportInView;
   bar.classList.toggle('is-calm', shouldCalm);
+  bar.classList.toggle('is-rest', shouldRest);
 }
 function wireLaunchSurfaceCalmness(){
   if (launchSurfaceState.wired) return;
@@ -1826,12 +1829,12 @@ function footerBuildStatusLabel(release=''){
 }
 function footerBuildCopy(){
   return lang === 'ko'
-    ? { loading:'Build 확인 중…', fallback:'Build live', note:'build와 노트 경로는 여기에서 열립니다.', page:'노트 보내기', toggle:'지원', toggleOpen:'닫기' }
+    ? { loading:'Build 확인 중…', fallback:'Build live', note:'build와 note 링크는 여기 있습니다.', page:'노트 보내기', toggle:'지원', toggleOpen:'닫기' }
     : lang === 'ja'
-    ? { loading:'Build を確認中…', fallback:'Build live', note:'build とノートの導線はここにまとまっています。', page:'ノートを送る', toggle:'サポート', toggleOpen:'閉じる' }
+    ? { loading:'Build を確認中…', fallback:'Build live', note:'build と note のリンクはここにあります。', page:'ノートを送る', toggle:'サポート', toggleOpen:'閉じる' }
     : lang === 'zhHant'
-    ? { loading:'正在確認 Build…', fallback:'Build live', note:'build 與備註入口會集中在這裡。', page:'送出備註', toggle:'支援', toggleOpen:'關閉' }
-    : { loading:'Checking build…', fallback:'Build live', note:'Build and note links live here.', page:'Send note', toggle:'Support', toggleOpen:'Close' };
+    ? { loading:'正在確認 Build…', fallback:'Build live', note:'build 與 note 連結會放在這裡。', page:'送出備註', toggle:'支援', toggleOpen:'關閉' }
+    : { loading:'Checking build…', fallback:'Build live', note:'Build + note links live here.', page:'Send note', toggle:'Support', toggleOpen:'Close' };
 }
 function loadVersionMeta(){
   if (versionMetaState.value) return Promise.resolve(versionMetaState.value);
@@ -1938,13 +1941,13 @@ function syncLaunchFeedbackCtaVisibility(){
   const cta = document.getElementById('launchFeedbackCta');
   if (!cta) return;
   const page = document.body?.dataset?.page || '';
-  const primaryEntry = isPrimaryEntrySurface() && (page === 'planner' || page === 'magazine');
+  const primaryEntry = isPrimaryEntrySurface() && (page === 'planner' || page === 'magazine' || page === 'my-trips');
   const scrollable = Math.max(0, Math.max(document.documentElement.scrollHeight || 0, document.body.scrollHeight || 0) - window.innerHeight);
   const nearTop = window.scrollY < (primaryEntry
     ? Math.min(420, Math.round(window.innerHeight * 0.46))
     : Math.min(320, Math.round(window.innerHeight * 0.38)));
   const deepEnough = window.scrollY > (primaryEntry
-    ? Math.max(820, Math.round(window.innerHeight * 1.02))
+    ? Math.max(980, Math.round(window.innerHeight * 1.16))
     : Math.max(520, Math.round(window.innerHeight * 0.64)));
   const shortPage = scrollable < (primaryEntry ? 520 : 360);
   const footerSupportInView = document.body.dataset.footerSupportInView === 'true';
@@ -1952,7 +1955,7 @@ function syncLaunchFeedbackCtaVisibility(){
   const launchBar = document.getElementById('betaLaunchBar');
   const launchBarActive = !!launchBar && !launchBar.classList.contains('is-hidden') && !launchBar.classList.contains('is-calm');
   const launchSurfaceReady = !primaryEntry || launchSurfaceSettled() || window.scrollY > Math.max(760, Math.round(window.innerHeight * 0.92));
-  const revealDelay = primaryEntry ? 1180 : 760;
+  const revealDelay = primaryEntry ? 1560 : 760;
   const shouldHide = nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive || !launchSurfaceReady;
   if (shouldHide) {
     window.clearTimeout(launchFeedbackVisibilityState.showTimer);
