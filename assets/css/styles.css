@@ -3470,3 +3470,12 @@ img.is-media-fallback{opacity:1;filter:saturate(.94) contrast(.98)}
   .skip-link[data-hidden="true"]{transform:none !important;opacity:0}
   .media-ready,.media-loading{transition:none !important;animation:none !important}
 }
+
+
+/* v147 final note CTA quietening */
+.launch-feedback-cta.is-compact{padding:10px 11px;gap:7px;background:rgba(255,250,244,.9);border-color:rgba(240,124,76,.2);box-shadow:0 10px 24px rgba(19,40,63,.1)}
+.launch-feedback-cta.is-compact .launch-feedback-cta-dot{box-shadow:0 0 0 5px rgba(240,124,76,.1)}
+@media (max-width: 767px){
+  .launch-feedback-cta{padding:10px 12px;border-color:rgba(240,124,76,.2);box-shadow:0 10px 24px rgba(19,40,63,.11)}
+  .launch-feedback-cta.is-compact{padding:10px 10px;gap:0}
+}

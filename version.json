@@ -1,13 +1,13 @@
 {
-  "release": "v146",
-  "version": "v146",
+  "release": "v147",
+  "version": "v147",
   "date": "2026-04-01",
-  "codename": "quiet-surface-release-trim",
-  "headline": "Primary entry screens now stay quieter for longer: the launch bar settles into a thinner rest state sooner, note prompts wait until much deeper reading on entry surfaces, and the footer support rail trims down to a lighter background presence that closes itself after you move away.",
+  "codename": "launch-note-pause-polish",
+  "headline": "Primary entry surfaces now stay quieter during active reading: note prompts wait until scrolling actually pauses, the floating note button defaults to a more compact presence on entry screens and mobile, and the overall support layer feels calmer while still staying available when needed.",
   "notes": [
-    "Settles the launch bar faster and trims the rest state one more step so the opening surface stays more editorial and less operational.",
-    "Pushes note prompts deeper on Home, Magazine, and My Trips and adds a longer reveal delay so support surfaces do not crowd the first read.",
-    "Shortens footer support copy, lightens the rail styling, and auto-closes expanded support links after the user scrolls away."
+    "Waits for a short scroll pause before showing the floating note prompt so it does not pop in mid-read on home, magazine, and My Trips.",
+    "Keeps the note CTA compact by default on entry surfaces and small screens so support stays available without taking over the reading rhythm.",
+    "Preserves the deeper-reading thresholds and quieter launch/support surface while making the last public-facing layer feel steadier."
   ],
   "updatedAt": "2026-04-01"
 }

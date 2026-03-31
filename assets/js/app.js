@@ -958,7 +958,7 @@ function isPrimaryEntrySurface(){
 }
 
 const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
-const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v146';
+const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v147';
 const firstRunGuideDismissKey = 'ryoko:first-run-guide-dismissed:v101';
 const startPathMemoryKey = 'ryoko:start-path-memory:v102';
 const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
@@ -1806,7 +1806,7 @@ function ensureFirstRunGuide(){
 
 const versionMetaState = { promise:null, value:null };
 const footerSupportState = { observer:null, wired:false };
-const launchFeedbackVisibilityState = { wired:false, showTimer:0, ready:false };
+const launchFeedbackVisibilityState = { wired:false, showTimer:0, ready:false, lastScrollAt:0, pauseTimer:0 };
 const launchSurfaceState = { wired:false, settleTimer:0, settled:false };
 function buildWhatsNewHref(){
   return `${pathRoot}whats-new/index.html`;
@@ -1982,11 +1982,15 @@ function syncLaunchFeedbackCtaVisibility(){
   const launchBarActive = !!launchBar && !launchBar.classList.contains('is-hidden') && !launchBar.classList.contains('is-calm');
   const launchSurfaceReady = !primaryEntry || (launchSurfaceSettled() && (!launchBar || launchBar.classList.contains('is-rest') || window.scrollY > Math.max(980, Math.round(window.innerHeight * 1.04))));
   const revealDelay = primaryEntry ? 3200 : 760;
-  const shouldHide = nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive || !launchSurfaceReady;
+  const pauseDelay = primaryEntry ? 340 : 220;
+  const pausedEnough = !launchFeedbackVisibilityState.lastScrollAt || (Date.now() - launchFeedbackVisibilityState.lastScrollAt) >= pauseDelay;
+  const shouldHide = nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive || !launchSurfaceReady || !pausedEnough;
   if (shouldHide) {
-    window.clearTimeout(launchFeedbackVisibilityState.showTimer);
-    launchFeedbackVisibilityState.showTimer = 0;
-    launchFeedbackVisibilityState.ready = false;
+    if (nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive || !launchSurfaceReady) {
+      window.clearTimeout(launchFeedbackVisibilityState.showTimer);
+      launchFeedbackVisibilityState.showTimer = 0;
+      launchFeedbackVisibilityState.ready = false;
+    }
     cta.classList.add('is-hidden');
   } else if (!launchFeedbackVisibilityState.ready) {
     if (!launchFeedbackVisibilityState.showTimer) {
@@ -2000,15 +2004,27 @@ function syncLaunchFeedbackCtaVisibility(){
   } else {
     cta.classList.remove('is-hidden');
   }
-  cta.classList.toggle('is-compact', !cta.classList.contains('is-hidden') && window.scrollY > (primaryEntry
+  const compactThreshold = primaryEntry
     ? Math.max(980, Math.round(window.innerHeight * 1.18))
-    : Math.max(560, Math.round(window.innerHeight * 0.82))));
+    : Math.max(560, Math.round(window.innerHeight * 0.82));
+  const preferCompact = primaryEntry || window.innerWidth < 768;
+  cta.classList.toggle('is-compact', !cta.classList.contains('is-hidden') && (preferCompact || window.scrollY > compactThreshold));
 }
 function wireLaunchFeedbackCtaVisibility(){
   if (launchFeedbackVisibilityState.wired) return;
   launchFeedbackVisibilityState.wired = true;
   let ticking = false;
-  const onViewportChange = () => {
+  const schedulePauseCheck = () => {
+    window.clearTimeout(launchFeedbackVisibilityState.pauseTimer);
+    launchFeedbackVisibilityState.pauseTimer = window.setTimeout(() => {
+      syncLaunchFeedbackCtaVisibility();
+    }, 380);
+  };
+  const onViewportChange = (event) => {
+    if (event?.type === 'scroll') {
+      launchFeedbackVisibilityState.lastScrollAt = Date.now();
+      schedulePauseCheck();
+    }
     if (ticking) return;
     ticking = true;
     window.requestAnimationFrame(() => {
