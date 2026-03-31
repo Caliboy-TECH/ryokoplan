@@ -958,7 +958,7 @@ function isPrimaryEntrySurface(){
 }
 
 const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
-const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v144';
+const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v145';
 const firstRunGuideDismissKey = 'ryoko:first-run-guide-dismissed:v101';
 const startPathMemoryKey = 'ryoko:start-path-memory:v102';
 const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
@@ -1059,7 +1059,7 @@ function scheduleLaunchSurfaceSettle(){
       syncLaunchSurfaceCalmness();
       syncLaunchFeedbackCtaVisibility();
     }
-  }, 1450);
+  }, 1120);
 }
 function syncLaunchSurfaceCalmness(){
   const bar = document.getElementById('betaLaunchBar');
@@ -1944,18 +1944,18 @@ function syncLaunchFeedbackCtaVisibility(){
   const primaryEntry = isPrimaryEntrySurface() && (page === 'planner' || page === 'magazine' || page === 'my-trips');
   const scrollable = Math.max(0, Math.max(document.documentElement.scrollHeight || 0, document.body.scrollHeight || 0) - window.innerHeight);
   const nearTop = window.scrollY < (primaryEntry
-    ? Math.min(420, Math.round(window.innerHeight * 0.46))
+    ? Math.min(500, Math.round(window.innerHeight * 0.54))
     : Math.min(320, Math.round(window.innerHeight * 0.38)));
   const deepEnough = window.scrollY > (primaryEntry
-    ? Math.max(980, Math.round(window.innerHeight * 1.16))
+    ? Math.max(1180, Math.round(window.innerHeight * 1.34))
     : Math.max(520, Math.round(window.innerHeight * 0.64)));
-  const shortPage = scrollable < (primaryEntry ? 520 : 360);
+  const shortPage = scrollable < (primaryEntry ? 640 : 360);
   const footerSupportInView = document.body.dataset.footerSupportInView === 'true';
   const supportExpanded = !!document.querySelector('.footer-build-rail[data-expanded="true"]');
   const launchBar = document.getElementById('betaLaunchBar');
   const launchBarActive = !!launchBar && !launchBar.classList.contains('is-hidden') && !launchBar.classList.contains('is-calm');
-  const launchSurfaceReady = !primaryEntry || launchSurfaceSettled() || window.scrollY > Math.max(760, Math.round(window.innerHeight * 0.92));
-  const revealDelay = primaryEntry ? 1560 : 760;
+  const launchSurfaceReady = !primaryEntry || (launchSurfaceSettled() && (!launchBar || launchBar.classList.contains('is-rest') || window.scrollY > Math.max(980, Math.round(window.innerHeight * 1.04))));
+  const revealDelay = primaryEntry ? 2320 : 760;
   const shouldHide = nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive || !launchSurfaceReady;
   if (shouldHide) {
     window.clearTimeout(launchFeedbackVisibilityState.showTimer);

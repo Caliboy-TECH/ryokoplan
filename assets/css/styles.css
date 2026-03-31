@@ -2208,20 +2208,22 @@ body[data-page="planner"] .top-bar{z-index:62}
 .beta-launch-bar.is-calm .beta-launch-actions .soft-btn{min-height:31px;padding:7px 10px;font-size:11px;background:rgba(23,50,79,.045);border-color:rgba(23,50,79,.07);color:#17324f}
 .beta-launch-bar.is-calm .beta-launch-actions .ghost-btn{opacity:0;max-width:0;overflow:hidden;padding-inline:0;margin:0;border-width:0;pointer-events:none}
 .beta-launch-bar.is-calm .beta-launch-dismiss{opacity:0;max-width:0;overflow:hidden;padding-inline:0;margin:0}
-.beta-launch-bar.is-rest{background:linear-gradient(180deg,rgba(255,251,246,.76),rgba(255,252,248,.78));border-bottom-color:rgba(218,193,165,.1);box-shadow:0 3px 10px rgba(20,33,48,.018)}
-.beta-launch-bar.is-rest .beta-launch-inner{padding:6px 0;gap:8px}
+.beta-launch-bar.is-rest{background:linear-gradient(180deg,rgba(255,252,248,.68),rgba(255,252,249,.72));border-bottom-color:rgba(218,193,165,.08);box-shadow:0 2px 8px rgba(20,33,48,.014)}
+.beta-launch-bar.is-rest .beta-launch-inner{padding:5px 0;gap:7px}
+.beta-launch-bar.is-rest .beta-launch-copy{gap:2px}
 .beta-launch-bar.is-rest .beta-launch-eyebrow{opacity:0;transform:translateY(-4px);max-height:0;padding-top:0;padding-bottom:0;margin:0;overflow:hidden}
-.beta-launch-bar.is-rest .beta-launch-title{font-size:12px;opacity:.88}
+.beta-launch-bar.is-rest .beta-launch-title{font-size:11px;opacity:.8;letter-spacing:.01em}
 .beta-launch-bar.is-rest .beta-launch-desc{opacity:0;max-height:0;overflow:hidden;transform:translateY(-4px);margin:0}
 .beta-launch-bar.is-rest .beta-launch-actions{gap:4px}
-.beta-launch-bar.is-rest .beta-launch-actions .soft-btn{min-height:28px;padding:6px 9px;font-size:10px;background:rgba(23,50,79,.032);border-color:rgba(23,50,79,.05);color:#17324f}
+.beta-launch-bar.is-rest .beta-launch-actions .soft-btn{min-height:26px;padding:5px 8px;font-size:10px;background:rgba(23,50,79,.018);border-color:rgba(23,50,79,.04);color:#17324f;box-shadow:none}
 .beta-launch-bar.is-rest .beta-launch-actions .ghost-btn{opacity:0;max-width:0;overflow:hidden;padding-inline:0;margin:0;border-width:0;pointer-events:none}
 .beta-launch-bar.is-rest .beta-launch-dismiss{opacity:0;max-width:0;overflow:hidden;padding-inline:0;margin:0}
-.footer-build-rail{opacity:.5;border-color:rgba(230,214,194,.42);box-shadow:0 3px 10px rgba(20,33,48,.018)}
-.footer-build-rail[data-expanded="true"]{opacity:1}
-.footer-build-pill{background:rgba(23,50,79,.026);font-weight:800;letter-spacing:.01em}
-.footer-build-toggle,.footer-build-rail a{background:rgba(23,50,79,.018);border-color:rgba(23,50,79,.05)}
-.footer-build-toggle:hover,.footer-build-rail a:hover{background:rgba(23,50,79,.034)}
+.footer-build-rail{opacity:.42;border-color:rgba(230,214,194,.34);box-shadow:0 2px 8px rgba(20,33,48,.014)}
+.footer-build-rail[data-expanded="true"]{opacity:.96}
+.footer-build-pill{background:rgba(23,50,79,.02);font-weight:800;letter-spacing:.01em}
+.footer-build-toggle,.footer-build-rail a{background:rgba(23,50,79,.014);border-color:rgba(23,50,79,.042)}
+.footer-build-toggle:hover,.footer-build-rail a:hover{background:rgba(23,50,79,.026)}
+.footer-build-note{opacity:.72}
 
 @media (max-width: 767px){
   .beta-launch-bar{padding:0 16px}
@@ -2237,10 +2239,10 @@ body[data-page="planner"] .top-bar{z-index:62}
   .beta-launch-bar.is-calm .beta-launch-actions .soft-btn{min-height:32px;padding:7px 11px;font-size:11px}
   .beta-launch-bar.is-calm .beta-launch-actions .ghost-btn{display:none}
 
-  .beta-launch-bar.is-rest .beta-launch-inner{padding:6px 0;gap:8px}
-  .beta-launch-bar.is-rest .beta-launch-title{font-size:11px}
+  .beta-launch-bar.is-rest .beta-launch-inner{padding:5px 0;gap:7px}
+  .beta-launch-bar.is-rest .beta-launch-title{font-size:10px}
   .beta-launch-bar.is-rest .beta-launch-actions{justify-content:flex-start}
-  .beta-launch-bar.is-rest .beta-launch-actions .soft-btn{min-height:30px;padding:6px 10px;font-size:10px}
+  .beta-launch-bar.is-rest .beta-launch-actions .soft-btn{min-height:28px;padding:5px 9px;font-size:10px}
   .beta-launch-bar.is-rest .beta-launch-actions .ghost-btn{display:none}
 }
 

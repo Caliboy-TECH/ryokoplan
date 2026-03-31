@@ -1,13 +1,13 @@
 {
-  "release": "v144",
-  "version": "v144",
+  "release": "v145",
+  "version": "v145",
   "date": "2026-04-01",
-  "codename": "quiet-rest-surface-polish",
-  "headline": "Support surfaces now recede one step further: My Trips gets the same quieter entry treatment, the launch bar can settle into a softer rest state, and note prompts wait longer before appearing.",
+  "codename": "entry-calmness-final-pass",
+  "headline": "Entry-facing support surfaces now settle faster and sit further back: the launch bar reaches a quieter rest state sooner, note prompts wait longer on primary entry screens, and the support rail fades further into the background.",
   "notes": [
-    "Treats My Trips like a primary entry surface so support prompts wait longer and the opening read stays focused on saved routes first.",
-    "Adds a softer launch-bar rest state after the first settle so build context remains reachable without feeling like a persistent top layer.",
-    "Shortens and lightens the footer support rail copy and density another step while keeping Build notes and Send note reachable."
+    "Settles the launch bar faster near the top and softens the rest state so the opening read feels calmer on home, Magazine, and My Trips.",
+    "Pushes note prompts deeper on primary entry screens and waits for the launch surface to feel truly quiet before revealing them.",
+    "Lightens the support rail one more step with subtler contrast, shorter rest-state controls, and lower visual weight by default."
   ],
   "updatedAt": "2026-04-01"
 }
