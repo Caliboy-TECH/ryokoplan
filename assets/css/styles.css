@@ -6458,3 +6458,36 @@ img.is-media-fallback{opacity:1;filter:saturate(.94) contrast(.98)}
   body[data-page="magazine"] > .skip-link,
   body[data-page="trips"] > .skip-link{bottom:var(--mobile-utility-bottom, calc(94px + env(safe-area-inset-bottom, 0px)));max-width:min(calc(100vw - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)), 200px)}
 }
+
+
+/* v131 smart utility visibility hotfix */
+.skip-link[data-hidden="true"][data-mode="content"]{transform:translateY(8px) scale(.96);}
+@media (max-width: 900px) and (orientation: landscape){
+  body[data-page="planner"] > .skip-link,
+  body[data-page="magazine"] > .skip-link,
+  body[data-page="trips"] > .skip-link{
+    right:max(12px, env(safe-area-inset-right, 0px) + 8px);
+    bottom:max(14px, calc(env(safe-area-inset-bottom, 0px) + 12px));
+    min-height:42px;
+    padding-block:10px;
+    max-width:min(calc(100vw - 20px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)), 180px);
+  }
+  body[data-page="planner"] > .skip-link[data-collapsed="true"],
+  body[data-page="magazine"] > .skip-link[data-collapsed="true"],
+  body[data-page="trips"] > .skip-link[data-collapsed="true"]{
+    width:46px;
+    max-width:46px;
+    min-width:46px;
+    bottom:max(14px, calc(env(safe-area-inset-bottom, 0px) + 12px));
+  }
+}
+
+
+/* v132 motion and anchor comfort hotfix */
+.skip-link{scroll-margin-top:calc(88px + env(safe-area-inset-top, 0px));}
+@media (prefers-reduced-motion: reduce){
+  html:focus-within{scroll-behavior:auto}
+  .skip-link{transition:none;transform:none !important}
+  .skip-link[data-hidden="true"]{transform:none !important;opacity:0}
+  .media-ready,.media-loading{transition:none !important;animation:none !important}
+}

@@ -1,12 +1,12 @@
 {
-  "release": "v130",
-  "version": "v130",
-  "date": "2026-03-30",
-  "codename": "utility-overlap-keyboard-hotfix",
+  "release": "v132",
+  "version": "v132",
+  "date": "2026-03-31",
+  "codename": "motion-anchor-comfort-hotfix",
   "notes": [
-    "Makes the floating jump utility keyboard-aware on mobile so it hides during text entry.",
-    "Adds dynamic bottom offset logic so the utility clears the dock and visible result sticky bar.",
-    "Updates release-check guidance for utility overlap and input-focus safety on small screens."
+    "Makes the floating utility respect reduced-motion settings by removing smooth-scroll animation and extra transition movement when the user prefers less motion.",
+    "Adds a live main-content anchor offset so header-aware jumps and hash-link landings stay aligned below the top bar across resize and orientation changes.",
+    "Updates release-check guidance for reduced-motion and anchor-offset verification in the final release-ready pass."
   ],
   "updatedAt": "2026-03-31"
 }

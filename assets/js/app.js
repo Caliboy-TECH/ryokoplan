@@ -1835,6 +1835,12 @@ function ensureLaunchFeedbackCta(){
     if (skip) {
       const body = document.body;
       const getHeaderOffset = () => Math.max((topBar?.offsetHeight || 0) + 16, 72);
+      const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const getScrollBehavior = () => prefersReducedMotion() ? 'auto' : 'smooth';
+      const setMainAnchorOffset = () => {
+        if (!main) return;
+        main.style.scrollMarginTop = `${getHeaderOffset()}px`;
+      };
       const isMobileUtility = () => window.matchMedia('(max-width: 767px)').matches;
       const hasInputFocus = () => {
         const ae = document.activeElement;
@@ -1878,14 +1884,25 @@ function ensureLaunchFeedbackCta(){
         });
         body.style.setProperty('--mobile-utility-bottom', `calc(${bottomOffset}px + env(safe-area-inset-bottom, 0px))`);
       };
+      const hasMeaningfulContentJump = () => {
+        if (!main) return false;
+        const docHeight = Math.max(document.documentElement.scrollHeight || 0, document.body.scrollHeight || 0);
+        const scrollable = Math.max(0, docHeight - window.innerHeight);
+        if (scrollable < 180) return false;
+        const mainTop = main.getBoundingClientRect().top + window.scrollY;
+        const revealLine = window.scrollY + getHeaderOffset() + 34;
+        return mainTop > revealLine;
+      };
       const syncMode = () => {
         const threshold = getHeaderOffset() + 64;
         setMode(window.scrollY > threshold ? 'top' : 'content');
       };
       const syncUtilityViewport = () => {
+        setMainAnchorOffset();
         syncMode();
         setBottomOffset();
-        const shouldHide = isMobileUtility() && (getKeyboardGap() > 0 || hasInputFocus());
+        let shouldHide = isMobileUtility() && (getKeyboardGap() > 0 || hasInputFocus());
+        if (!shouldHide && skip.dataset.mode === 'content' && !hasMeaningfulContentJump()) shouldHide = true;
         setHidden(shouldHide);
         if (shouldHide) setCollapsed(false);
       };
@@ -1927,19 +1944,27 @@ function ensureLaunchFeedbackCta(){
           expandUtility();
           const mode = skip.dataset.mode === 'top' ? 'top' : 'content';
           if (mode === 'top') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: getScrollBehavior() });
             return;
           }
           const target = document.getElementById('main-content');
           if (!target) return;
           const offset = getHeaderOffset();
           const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset + 6);
-          window.scrollTo({ top, behavior: 'smooth' });
+          window.scrollTo({ top, behavior: getScrollBehavior() });
           window.requestAnimationFrame(() => target.focus({ preventScroll: true }));
         });
         ['focus','mouseenter','touchstart'].forEach(eventName => skip.addEventListener(eventName, expandUtility, { passive: true }));
+        const onHashSync = () => {
+          if (window.location.hash !== '#main-content') return;
+          setMainAnchorOffset();
+          window.requestAnimationFrame(() => main?.focus({ preventScroll: true }));
+        };
         window.addEventListener('scroll', onUtilityViewportChange, { passive: true });
         window.addEventListener('resize', onUtilityViewportChange);
+        window.addEventListener('orientationchange', () => window.setTimeout(onUtilityViewportChange, 40));
+        window.addEventListener('hashchange', onHashSync);
+        window.addEventListener('pageshow', onUtilityViewportChange);
         if (window.visualViewport) {
           window.visualViewport.addEventListener('resize', onUtilityViewportChange);
           window.visualViewport.addEventListener('scroll', onUtilityViewportChange);
