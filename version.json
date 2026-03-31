@@ -1,13 +1,13 @@
 {
-  "release": "v138",
-  "version": "v138",
+  "release": "v139",
+  "version": "v139",
   "date": "2026-03-31",
-  "codename": "support-rail-soften-polish",
-  "headline": "The footer build layer now stays quieter by default and opens only when support context is actually needed.",
+  "codename": "calm-support-surface-polish",
+  "headline": "Support surfaces now stay calmer on main pages by revealing note actions later and hiding them when footer support is already in view.",
   "notes": [
-    "Turns the footer build rail into a compact support rail that stays collapsed by default and opens only when the user wants build context or note links.",
-    "Keeps build notes and send-note actions close to the product without making the main pages feel like internal tooling surfaces.",
-    "Retunes the launch copy so the main entry layer feels more editorial and city-first, with support phrasing staying available but less foregrounded."
+    "Keeps the floating Send note action out of the first fold, then reveals it only after a meaningful scroll so the opening screens stay quieter.",
+    "Auto-hides the floating note action whenever the footer support rail is visible or expanded, avoiding duplicate support prompts in the same viewport.",
+    "Adds softer support-rail contrast plus click-outside and Escape-to-close behavior so the public-facing support layer feels lighter and more product-like."
   ],
   "updatedAt": "2026-03-31"
 }

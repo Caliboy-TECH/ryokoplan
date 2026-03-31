@@ -1718,6 +1718,8 @@ function ensureFirstRunGuide(){
 }
 
 const versionMetaState = { promise:null, value:null };
+const footerSupportState = { observer:null, wired:false };
+const launchFeedbackVisibilityState = { wired:false };
 function buildWhatsNewHref(){
   return `${pathRoot}whats-new/index.html`;
 }
@@ -1769,16 +1771,102 @@ function ensureFooterBuildRail(){
         toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
         toggle.textContent = expanded ? copy.toggleOpen : copy.toggle;
         panel.hidden = !expanded;
+        if (expanded) closeFooterSupportPanels(rail);
+        syncLaunchFeedbackCtaVisibility();
       };
       syncToggle(false);
       toggle.addEventListener('click', () => syncToggle(toggle.getAttribute('aria-expanded') !== 'true'));
     }
   });
+  wireFooterSupportDismiss();
+  observeFooterSupportRails();
   loadVersionMeta().then(json => {
     const label = json?.release ? `${lang === 'ko' ? '현재 빌드' : lang === 'ja' ? '現在の build' : lang === 'zhHant' ? '目前 build' : 'Current build'} · ${json.release}` : copy.fallback;
     document.querySelectorAll('.footer-build-rail .footer-build-pill').forEach(pill => { pill.textContent = label; });
   });
 }
+
+function closeFooterSupportPanels(exceptRail=null){
+  document.querySelectorAll('.footer-build-rail[data-expanded="true"]').forEach(rail => {
+    if (exceptRail && rail === exceptRail) return;
+    const toggle = rail.querySelector('.footer-build-toggle');
+    const panel = rail.querySelector('.footer-build-panel');
+    const copy = footerBuildCopy();
+    rail.dataset.expanded = 'false';
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.textContent = copy.toggle;
+    }
+    if (panel) panel.hidden = true;
+  });
+}
+function observeFooterSupportRails(){
+  if (!('IntersectionObserver' in window)) return;
+  if (footerSupportState.observer) footerSupportState.observer.disconnect();
+  let activeCount = 0;
+  footerSupportState.observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const wasVisible = entry.target.dataset.supportVisible === 'true';
+      const nowVisible = entry.isIntersecting && entry.intersectionRatio >= 0.2;
+      if (wasVisible === nowVisible) return;
+      entry.target.dataset.supportVisible = nowVisible ? 'true' : 'false';
+      activeCount += nowVisible ? 1 : -1;
+    });
+    document.body.dataset.footerSupportInView = activeCount > 0 ? 'true' : 'false';
+    syncLaunchFeedbackCtaVisibility();
+  }, { threshold:[0,0.2,0.45] });
+  activeCount = 0;
+  document.querySelectorAll('.footer-build-rail').forEach(rail => {
+    rail.dataset.supportVisible = 'false';
+    footerSupportState.observer.observe(rail);
+  });
+  document.body.dataset.footerSupportInView = 'false';
+}
+function wireFooterSupportDismiss(){
+  if (footerSupportState.wired) return;
+  footerSupportState.wired = true;
+  document.addEventListener('click', event => {
+    if (event.target.closest('.footer-build-rail')) return;
+    closeFooterSupportPanels();
+    syncLaunchFeedbackCtaVisibility();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    closeFooterSupportPanels();
+    syncLaunchFeedbackCtaVisibility();
+  });
+}
+function syncLaunchFeedbackCtaVisibility(){
+  const cta = document.getElementById('launchFeedbackCta');
+  if (!cta) return;
+  const scrollable = Math.max(0, Math.max(document.documentElement.scrollHeight || 0, document.body.scrollHeight || 0) - window.innerHeight);
+  const nearTop = window.scrollY < Math.min(320, Math.round(window.innerHeight * 0.38));
+  const shortPage = scrollable < 360;
+  const footerSupportInView = document.body.dataset.footerSupportInView === 'true';
+  const supportExpanded = !!document.querySelector('.footer-build-rail[data-expanded="true"]');
+  const shouldHide = nearTop || shortPage || footerSupportInView || supportExpanded;
+  cta.classList.toggle('is-hidden', shouldHide);
+  cta.classList.toggle('is-compact', !shouldHide && window.scrollY > Math.max(560, Math.round(window.innerHeight * 0.82)));
+}
+function wireLaunchFeedbackCtaVisibility(){
+  if (launchFeedbackVisibilityState.wired) return;
+  launchFeedbackVisibilityState.wired = true;
+  let ticking = false;
+  const onViewportChange = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(() => {
+      syncLaunchFeedbackCtaVisibility();
+      ticking = false;
+    });
+  };
+  window.addEventListener('scroll', onViewportChange, { passive:true });
+  window.addEventListener('resize', onViewportChange);
+  window.addEventListener('orientationchange', () => window.setTimeout(onViewportChange, 40));
+  document.addEventListener('focusin', onViewportChange);
+  document.addEventListener('focusout', () => window.setTimeout(onViewportChange, 50));
+}
+
 function legalLinksMarkup(){
   return `<div class="footer-links"><a href="${pathRoot}privacy/index.html">Privacy</a><a href="${pathRoot}terms/index.html">Terms</a><a href="${pathRoot}contact/index.html">Contact</a><a href="${buildWhatsNewHref()}">${buildNotesLabel()}</a></div>`;
 }
@@ -1811,6 +1899,8 @@ function ensureLaunchFeedbackCta(){
     }));
   }
   syncFeedbackLinks();
+  wireLaunchFeedbackCtaVisibility();
+  syncLaunchFeedbackCtaVisibility();
 }
 
   function getSignalRecommendations(context={}){

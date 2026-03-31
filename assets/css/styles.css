@@ -5193,7 +5193,9 @@ body[data-page="magazine"] .hero-hierarchy-band-magazine{margin-top:10px}
 .footer-links{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:center;margin:10px 0 0;color:#6d7b8c;font-size:13px}
 .footer-links a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(109,123,140,.35);padding-bottom:1px}
 .footer-links a:hover{color:#17324f;border-color:rgba(23,50,79,.45)}
-.footer-build-rail{display:grid;gap:8px;justify-items:center;align-items:center;margin:12px auto 0;padding:8px 10px;max-width:560px;border-radius:999px;border:1px solid rgba(230,214,194,.72);background:linear-gradient(180deg,rgba(255,253,249,.94) 0%,rgba(255,247,239,.94) 100%);box-shadow:0 10px 22px rgba(20,33,48,.05);color:#516170;font-size:12px;line-height:1.45}
+.footer-build-rail{display:grid;gap:8px;justify-items:center;align-items:center;margin:12px auto 0;padding:8px 10px;max-width:560px;border-radius:999px;border:1px solid rgba(230,214,194,.66);background:linear-gradient(180deg,rgba(255,253,249,.9) 0%,rgba(255,247,239,.9) 100%);box-shadow:0 8px 18px rgba(20,33,48,.04);color:#516170;font-size:12px;line-height:1.45;opacity:.82;transform:translateY(0);transition:opacity .18s ease,box-shadow .18s ease,border-color .18s ease,transform .18s ease}
+.footer-build-rail:hover,.footer-build-rail:focus-within,.footer-build-rail[data-expanded="true"]{opacity:1;box-shadow:0 12px 24px rgba(20,33,48,.07);border-color:rgba(214,193,170,.76)}
+.footer-build-rail[data-expanded="true"]{transform:translateY(-1px)}
 .footer-build-core{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center;width:100%}
 .footer-build-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(23,50,79,.06);color:#17324f;font-weight:700;letter-spacing:-.01em}
 .footer-build-pill::before{content:'';width:7px;height:7px;border-radius:999px;background:#d48a52;box-shadow:0 0 0 4px rgba(212,138,82,.14)}
@@ -5260,10 +5262,13 @@ main:focus{outline:none}
 .beta-launch-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px}
 .beta-launch-dismiss{border:none;background:transparent;color:#5b6675;font-weight:700;font-size:12px;padding:8px 6px;cursor:pointer}
 .beta-launch-dismiss:hover{color:#17324f}
-.launch-feedback-cta{position:fixed;right:18px;bottom:86px;z-index:45;display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:999px;background:rgba(255,250,244,.94);border:1px solid rgba(240,124,76,.26);box-shadow:0 14px 32px rgba(19,40,63,.14);backdrop-filter:blur(10px);color:#17324f;font-weight:700;font-size:13px;letter-spacing:.01em;text-decoration:none}
+.launch-feedback-cta{position:fixed;right:18px;bottom:86px;z-index:45;display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:999px;background:rgba(255,250,244,.94);border:1px solid rgba(240,124,76,.26);box-shadow:0 14px 32px rgba(19,40,63,.14);backdrop-filter:blur(10px);color:#17324f;font-weight:700;font-size:13px;letter-spacing:.01em;text-decoration:none;transition:opacity .18s ease,transform .18s ease,box-shadow .18s ease,background .18s ease}
 .launch-feedback-cta:hover{transform:translateY(-1px);box-shadow:0 18px 36px rgba(19,40,63,.18)}
-.launch-feedback-cta-dot{width:8px;height:8px;border-radius:999px;background:#f07c4c;box-shadow:0 0 0 6px rgba(240,124,76,.12)}
-.launch-feedback-cta-label{white-space:nowrap}
+.launch-feedback-cta.is-hidden{opacity:0;pointer-events:none;transform:translateY(8px) scale(.98)}
+.launch-feedback-cta.is-compact{padding:11px 12px;gap:8px}
+.launch-feedback-cta-dot{width:8px;height:8px;border-radius:999px;background:#f07c4c;box-shadow:0 0 0 6px rgba(240,124,76,.12);flex:0 0 auto}
+.launch-feedback-cta-label{white-space:nowrap;max-width:120px;overflow:hidden;transition:max-width .18s ease,opacity .18s ease,transform .18s ease}
+.launch-feedback-cta.is-compact .launch-feedback-cta-label{max-width:0;opacity:0;transform:translateX(4px)}
 .launch-install-cta{position:fixed;right:18px;bottom:138px;z-index:46;display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:999px;background:rgba(23,50,79,.96);border:1px solid rgba(255,255,255,.12);box-shadow:0 16px 34px rgba(14,26,43,.2);backdrop-filter:blur(10px);color:#fcfaf6;font-weight:700;font-size:13px;letter-spacing:.01em;opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease,box-shadow .18s ease}
 .launch-install-cta.is-visible{opacity:1;pointer-events:auto;transform:translateY(0)}
 .launch-install-cta:hover{box-shadow:0 20px 38px rgba(14,26,43,.24)}
