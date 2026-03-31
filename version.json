@@ -1,13 +1,13 @@
 {
-  "release": "v137",
-  "version": "v137",
+  "release": "v138",
+  "version": "v138",
   "date": "2026-03-31",
-  "codename": "public-support-wording-polish",
-  "headline": "Support surfaces now read more like public product help than internal QA, while keeping build notes and note-taking paths close at hand.",
+  "codename": "support-rail-soften-polish",
+  "headline": "The footer build layer now stays quieter by default and opens only when support context is actually needed.",
   "notes": [
-    "Unifies leftover \"What's new\" wording into Build notes across static footers and release-facing pages.",
-    "Renames page-note and feedback-desk language into a lighter public-facing notes flow so support actions feel product-like rather than internal.",
-    "Keeps build notes, release checks, and context-aware notes linked together without making the app chrome feel like a QA dashboard."
+    "Turns the footer build rail into a compact support rail that stays collapsed by default and opens only when the user wants build context or note links.",
+    "Keeps build notes and send-note actions close to the product without making the main pages feel like internal tooling surfaces.",
+    "Retunes the launch copy so the main entry layer feels more editorial and city-first, with support phrasing staying available but less foregrounded."
   ],
   "updatedAt": "2026-03-31"
 }

@@ -998,12 +998,12 @@ function entryAssistPriority(){
 }
 function betaLaunchCopy(){
   return lang === 'ko'
-    ? { eyebrow:'Now open', title:'지금 바로 읽고 써볼 수 있습니다. 흐름이 거칠어지는 지점을 알려주세요.', desc:'Guide, sample route, My Trips는 모두 열려 있습니다. 지금 보고 있는 페이지 기준으로 바로 피드백을 남길 수 있습니다.', primary:'Build notes', secondary:'노트 보내기', dismiss:'숨기기' }
+    ? { eyebrow:'Read the city', title:'도시를 먼저 읽고, 그다음 루트를 이어가세요.', desc:'Guide, sample route, My Trips는 모두 열려 있습니다. build 맥락이나 지원이 필요할 때만 조용히 꺼내볼 수 있습니다.', primary:'Build notes', secondary:'노트 보내기', dismiss:'숨기기' }
     : lang === 'ja'
-      ? { eyebrow:'Now open', title:'今すぐ読み始められます。流れが粗くなる場所を教えてください。', desc:'guide、sample route、My Trips はそのまま使えます。今見ているページからすぐフィードバックを送れます。', primary:'Build notes', secondary:'ノートを送る', dismiss:'閉じる' }
+      ? { eyebrow:'Read the city', title:'まず街を読み、その流れのままルートへ進んでください。', desc:'guide、sample route、My Trips はそのまま使えます。build の文脈やサポートが必要なときだけ静かに開けます。', primary:'Build notes', secondary:'ノートを送る', dismiss:'閉じる' }
       : lang === 'zhHant'
-        ? { eyebrow:'Now open', title:'現在就可以開始閱讀與使用。請告訴我們流程哪裡還不夠順。', desc:'guide、sample route、My Trips 都可以直接使用；你也可以從目前頁面立刻送出回饋。', primary:'Build notes', secondary:'送出備註', dismiss:'隱藏' }
-        : { eyebrow:'Now open', title:'The preview is open. Read a city, then tell us where the flow still feels rough.', desc:'Guides, sample routes, and My Trips are live. Send a note directly from wherever the handoff feels off.', primary:'Build notes', secondary:'Send note', dismiss:'Hide' };
+        ? { eyebrow:'Read the city', title:'先讀城市，再順著那個節奏把路線接下去。', desc:'guide、sample route、My Trips 都可以直接使用；只有在需要 build 脈絡或支援時再把它打開就好。', primary:'Build notes', secondary:'送出備註', dismiss:'隱藏' }
+        : { eyebrow:'Read the city', title:'Start with the city, then carry that rhythm into the route.', desc:'Guides, sample routes, and My Trips are live. Keep build context and support close, but only open them when you need them.', primary:'Build notes', secondary:'Send note', dismiss:'Hide' };
 }
 function shouldShowBetaLaunchBar(){
   const page = document.body?.dataset?.page || '';
@@ -1726,12 +1726,12 @@ function buildNotesLabel(){
 }
 function footerBuildCopy(){
   return lang === 'ko'
-    ? { loading:'현재 빌드 확인 중…', fallback:'현재 build live', note:'거친 부분이 보이면 여기서 바로 노트를 보낼 수 있습니다.', page:'노트 보내기' }
+    ? { loading:'현재 빌드 확인 중…', fallback:'현재 build live', note:'빌드 정보나 지원 경로가 필요할 때만 여기서 열어보세요.', page:'노트 보내기', toggle:'지원 열기', toggleOpen:'지원 닫기' }
     : lang === 'ja'
-    ? { loading:'現在の build を確認中…', fallback:'Current build live', note:'気になる点があればここからそのままノートを送れます。', page:'ノートを送る' }
+    ? { loading:'現在の build を確認中…', fallback:'Current build live', note:'build 情報やサポート導線が必要なときだけ、ここから開けます。', page:'ノートを送る', toggle:'サポートを開く', toggleOpen:'サポートを閉じる' }
     : lang === 'zhHant'
-    ? { loading:'正在確認目前 build…', fallback:'Current build live', note:'如果哪裡還不夠順，可以直接從這裡送出備註。', page:'送出備註' }
-    : { loading:'Checking current build…', fallback:'Current build live', note:'If something still feels rough, send a note from here.', page:'Send note' };
+    ? { loading:'正在確認目前 build…', fallback:'Current build live', note:'只有在需要 build 資訊或支援路徑時，再從這裡展開即可。', page:'送出備註', toggle:'展開支援', toggleOpen:'收起支援' }
+    : { loading:'Checking current build…', fallback:'Current build live', note:'Open this only when you want build context or a quick support path.', page:'Send note', toggle:'Open support', toggleOpen:'Close support' };
 }
 function loadVersionMeta(){
   if (versionMetaState.value) return Promise.resolve(versionMetaState.value);
@@ -1744,6 +1744,8 @@ function loadVersionMeta(){
   return versionMetaState.promise;
 }
 function ensureFooterBuildRail(){
+  const page = document.body?.dataset?.page || '';
+  if (page === 'legal') return;
   const rails = document.querySelectorAll('.footer-links');
   if (!rails.length) return;
   const copy = footerBuildCopy();
@@ -1757,7 +1759,20 @@ function ensureFooterBuildRail(){
       rail.setAttribute('data-footer-build-rail', String(idx));
       links.insertAdjacentElement('afterend', rail);
     }
-    rail.innerHTML = `<span class="footer-build-pill">${copy.loading}</span><a href="${buildWhatsNewHref()}">${buildNotesLabel()}</a><a href="${buildFeedbackHref()}">${copy.page}</a><span class="footer-build-note">${copy.note}</span>`;
+    const panelId = `footerBuildRailPanel${idx}`;
+    rail.innerHTML = `<div class="footer-build-core"><span class="footer-build-pill">${copy.loading}</span><button class="footer-build-toggle" type="button" aria-expanded="false" aria-controls="${panelId}">${copy.toggle}</button></div><div class="footer-build-panel" id="${panelId}" hidden><a href="${buildWhatsNewHref()}">${buildNotesLabel()}</a><a href="${buildFeedbackHref()}">${copy.page}</a><span class="footer-build-note">${copy.note}</span></div>`;
+    const toggle = rail.querySelector('.footer-build-toggle');
+    const panel = rail.querySelector('.footer-build-panel');
+    if (toggle && panel) {
+      const syncToggle = expanded => {
+        rail.dataset.expanded = expanded ? 'true' : 'false';
+        toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        toggle.textContent = expanded ? copy.toggleOpen : copy.toggle;
+        panel.hidden = !expanded;
+      };
+      syncToggle(false);
+      toggle.addEventListener('click', () => syncToggle(toggle.getAttribute('aria-expanded') !== 'true'));
+    }
   });
   loadVersionMeta().then(json => {
     const label = json?.release ? `${lang === 'ko' ? '현재 빌드' : lang === 'ja' ? '現在の build' : lang === 'zhHant' ? '目前 build' : 'Current build'} · ${json.release}` : copy.fallback;
