@@ -958,7 +958,7 @@ function isPrimaryEntrySurface(){
 }
 
 const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
-const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v145';
+const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v146';
 const firstRunGuideDismissKey = 'ryoko:first-run-guide-dismissed:v101';
 const startPathMemoryKey = 'ryoko:start-path-memory:v102';
 const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
@@ -1059,7 +1059,7 @@ function scheduleLaunchSurfaceSettle(){
       syncLaunchSurfaceCalmness();
       syncLaunchFeedbackCtaVisibility();
     }
-  }, 1120);
+  }, 760);
 }
 function syncLaunchSurfaceCalmness(){
   const bar = document.getElementById('betaLaunchBar');
@@ -1829,12 +1829,12 @@ function footerBuildStatusLabel(release=''){
 }
 function footerBuildCopy(){
   return lang === 'ko'
-    ? { loading:'Build 확인 중…', fallback:'Build live', note:'build와 note 링크는 여기 있습니다.', page:'노트 보내기', toggle:'지원', toggleOpen:'닫기' }
+    ? { loading:'Build 확인 중…', fallback:'Build live', note:'링크는 여기 있습니다.', page:'노트 보내기', toggle:'링크', toggleOpen:'닫기' }
     : lang === 'ja'
-    ? { loading:'Build を確認中…', fallback:'Build live', note:'build と note のリンクはここにあります。', page:'ノートを送る', toggle:'サポート', toggleOpen:'閉じる' }
+    ? { loading:'Build を確認中…', fallback:'Build live', note:'リンクはここにあります。', page:'ノートを送る', toggle:'リンク', toggleOpen:'閉じる' }
     : lang === 'zhHant'
-    ? { loading:'正在確認 Build…', fallback:'Build live', note:'build 與 note 連結會放在這裡。', page:'送出備註', toggle:'支援', toggleOpen:'關閉' }
-    : { loading:'Checking build…', fallback:'Build live', note:'Build + note links live here.', page:'Send note', toggle:'Support', toggleOpen:'Close' };
+    ? { loading:'正在確認 Build…', fallback:'Build live', note:'連結都在這裡。', page:'送出備註', toggle:'連結', toggleOpen:'關閉' }
+    : { loading:'Checking build…', fallback:'Build live', note:'Links live here.', page:'Send note', toggle:'Links', toggleOpen:'Close' };
 }
 function loadVersionMeta(){
   if (versionMetaState.value) return Promise.resolve(versionMetaState.value);
@@ -1869,6 +1869,7 @@ function ensureFooterBuildRail(){
     if (toggle && panel) {
       const syncToggle = expanded => {
         rail.dataset.expanded = expanded ? 'true' : 'false';
+        rail.dataset.openScrollY = expanded ? String(window.scrollY || 0) : '';
         toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
         toggle.textContent = expanded ? copy.toggleOpen : copy.toggle;
         panel.hidden = !expanded;
@@ -1936,6 +1937,31 @@ function wireFooterSupportDismiss(){
     closeFooterSupportPanels();
     syncLaunchFeedbackCtaVisibility();
   });
+  let scrollTicking = false;
+  window.addEventListener('scroll', () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    window.requestAnimationFrame(() => {
+      scrollTicking = false;
+      let changed = false;
+      document.querySelectorAll('.footer-build-rail[data-expanded="true"]').forEach(rail => {
+        const openedAt = Number(rail.dataset.openScrollY || '0');
+        if (Number.isFinite(openedAt) && Math.abs(window.scrollY - openedAt) > 180) {
+          changed = true;
+          const toggle = rail.querySelector('.footer-build-toggle');
+          const panel = rail.querySelector('.footer-build-panel');
+          const copy = footerBuildCopy();
+          rail.dataset.expanded = 'false';
+          if (toggle) {
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.textContent = copy.toggle;
+          }
+          if (panel) panel.hidden = true;
+        }
+      });
+      if (changed) syncLaunchFeedbackCtaVisibility();
+    });
+  }, { passive:true });
 }
 function syncLaunchFeedbackCtaVisibility(){
   const cta = document.getElementById('launchFeedbackCta');
@@ -1944,10 +1970,10 @@ function syncLaunchFeedbackCtaVisibility(){
   const primaryEntry = isPrimaryEntrySurface() && (page === 'planner' || page === 'magazine' || page === 'my-trips');
   const scrollable = Math.max(0, Math.max(document.documentElement.scrollHeight || 0, document.body.scrollHeight || 0) - window.innerHeight);
   const nearTop = window.scrollY < (primaryEntry
-    ? Math.min(500, Math.round(window.innerHeight * 0.54))
+    ? Math.min(620, Math.round(window.innerHeight * 0.66))
     : Math.min(320, Math.round(window.innerHeight * 0.38)));
   const deepEnough = window.scrollY > (primaryEntry
-    ? Math.max(1180, Math.round(window.innerHeight * 1.34))
+    ? Math.max(1520, Math.round(window.innerHeight * 1.72))
     : Math.max(520, Math.round(window.innerHeight * 0.64)));
   const shortPage = scrollable < (primaryEntry ? 640 : 360);
   const footerSupportInView = document.body.dataset.footerSupportInView === 'true';
@@ -1955,7 +1981,7 @@ function syncLaunchFeedbackCtaVisibility(){
   const launchBar = document.getElementById('betaLaunchBar');
   const launchBarActive = !!launchBar && !launchBar.classList.contains('is-hidden') && !launchBar.classList.contains('is-calm');
   const launchSurfaceReady = !primaryEntry || (launchSurfaceSettled() && (!launchBar || launchBar.classList.contains('is-rest') || window.scrollY > Math.max(980, Math.round(window.innerHeight * 1.04))));
-  const revealDelay = primaryEntry ? 2320 : 760;
+  const revealDelay = primaryEntry ? 3200 : 760;
   const shouldHide = nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive || !launchSurfaceReady;
   if (shouldHide) {
     window.clearTimeout(launchFeedbackVisibilityState.showTimer);
