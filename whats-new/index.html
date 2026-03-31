@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>What's New — Ryokoplan</title>
-  <meta name="description" content="Recent Ryokoplan release notes for beta testers, launch QA, and current build verification.">
+  <meta name="description" content="Current Ryokoplan build notes, recent fixes, and the quickest paths worth checking first.">
   <meta name="robots" content="noindex,follow">
   <meta name="theme-color" content="#15273a">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Ryokoplan">
   <meta property="og:title" content="What's New — Ryokoplan">
-  <meta property="og:description" content="Recent Ryokoplan release notes for beta testers, launch QA, and current build verification.">
+  <meta property="og:description" content="Current Ryokoplan build notes, recent fixes, and the quickest paths worth checking first.">
   <meta property="og:url" content="https://ryokoplan.com/whats-new/">
   <meta property="og:image" content="https://ryokoplan.com/assets/images/brand/og-cover.png">
   <meta property="og:image:type" content="image/png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="What's New — Ryokoplan">
-  <meta name="twitter:description" content="Recent Ryokoplan release notes for beta testers, launch QA, and current build verification.">
+  <meta name="twitter:description" content="Current Ryokoplan build notes, recent fixes, and the quickest paths worth checking first.">
   <meta name="twitter:image" content="https://ryokoplan.com/assets/images/brand/og-cover.png">
   <link rel="canonical" href="https://ryokoplan.com/whats-new/">
   <link rel="icon" href="../assets/images/brand/favicon.svg" type="image/svg+xml">
@@ -67,16 +67,16 @@
   <main id="main-content" class="page" tabindex="-1">
     <div class="container legal-page-shell whats-new-shell">
       <section class="section info-card">
-        <span class="whats-new-kicker">Beta release notes</span>
-        <h1 class="section-title" style="margin-top:10px">What's new in the current Ryokoplan build</h1>
-        <p class="section-desc">Use this page during beta and launch QA to confirm what changed, which build is live, and what is worth testing first after deploy.</p>
+        <span class="whats-new-kicker">Current build notes</span>
+        <h1 class="section-title" style="margin-top:10px">Build notes for the current Ryokoplan release</h1>
+        <p class="section-desc">Use this page to see what changed, which build is live, and which paths are worth checking first after deploy.</p>
         <div class="whats-new-meta-grid" style="margin-top:16px">
           <article class="info-card"><strong>Current release</strong><p id="releaseVersionText">Loading version.json…</p></article>
           <article class="info-card"><strong>Build note</strong><p id="releaseHeadlineText">Loading release headline…</p></article>
         </div>
         <div class="cta-row cta-row-priority" style="margin-top:16px">
           <a class="primary-btn" href="../release-check/index.html">Open release check</a>
-          <a class="secondary-btn" href="../contact/index.html">Open feedback desk</a>
+          <a class="secondary-btn" href="../contact/index.html">Open page desk</a>
           <button class="ghost-btn" id="copyReleaseVersionBtn" type="button">Copy release</button>
           <button class="ghost-btn" id="reloadReleaseNotesBtn" type="button">Reload build info</button>
         </div>
@@ -84,14 +84,14 @@
       </section>
 
       <section class="section info-card" style="margin-top:18px">
-        <span class="eyebrow">Tester quick paths</span>
-        <h2 class="section-title" style="margin-top:8px">Best places to check right after deploy</h2>
-        <p class="section-desc">These shortcuts are here so a tester can move through the core editorial loop quickly instead of guessing where to start.</p>
+        <span class="eyebrow">Quick paths</span>
+        <h2 class="section-title" style="margin-top:8px">Best places to open right after deploy</h2>
+        <p class="section-desc">These shortcuts help you move through the core editorial loop quickly instead of guessing where to start.</p>
         <div class="launch-path-grid">
           <article class="launch-path-card"><strong>Start from Home</strong><p>Check the cover tone, first-run handoff, city shelf, and whether the product still feels magazine-first.</p><a class="soft-btn" href="../">Open Home</a></article>
           <article class="launch-path-card"><strong>Read Magazine</strong><p>Check finder filters, dispatch cards, card hierarchy, and whether city → guide entry feels obvious on mobile.</p><a class="soft-btn" href="../magazine/index.html">Open Magazine</a></article>
           <article class="launch-path-card"><strong>Run the loop</strong><p>Use a guide or sample route, then move into result, share, and My Trips to confirm the handoff still feels connected.</p><a class="soft-btn" href="../my-trips/index.html">Open My Trips</a></article>
-          <article class="launch-path-card"><strong>Log the rough edge</strong><p>If anything feels off, use the feedback desk so page, language, and build details are already attached.</p><a class="soft-btn" href="../contact/index.html">Open feedback desk</a></article>
+          <article class="launch-path-card"><strong>Send a page note</strong><p>If anything feels off, use the page desk so page, language, and build details are already attached.</p><a class="soft-btn" href="../contact/index.html">Open page desk</a></article>
         </div>
       </section>
 
@@ -107,25 +107,25 @@
         </section>
 
         <section class="section info-card">
-          <span class="eyebrow">Release focus</span>
-          <h2 class="section-title" style="margin-top:8px">What to verify in this pass</h2>
+          <span class="eyebrow">This pass</span>
+          <h2 class="section-title" style="margin-top:8px">What to glance at in this pass</h2>
           <div class="whats-new-timeline">
             <article class="whats-new-timeline-item"><strong>1. Confirm the build</strong><p>Open <code>/version.json</code> or the release check page and verify that the release value matches the latest upload.</p></article>
             <article class="whats-new-timeline-item"><strong>2. Run one clean editorial loop</strong><p>Home → Magazine → city → sample → route result → share → My Trips should still feel like one connected city-first flow.</p></article>
-            <article class="whats-new-timeline-item"><strong>3. Send page-specific feedback</strong><p>If anything feels rough, open the feedback desk from that page so the path, language, and build version stay attached together.</p></article>
+            <article class="whats-new-timeline-item"><strong>3. Send one clean page note</strong><p>If anything feels rough, open the page desk from that page so the path, language, and build version stay attached together.</p></article>
           </div>
           <div class="release-check-grid" id="recommendedChecksGrid">
             <article class="release-check-card"><strong>Core loop</strong><p>Check one city all the way through to result, share, and My Trips.</p></article>
             <article class="release-check-card"><strong>Mobile feel</strong><p>Check the first fold, CTA density, sticky behavior, and quick-entry rows on a narrow screen.</p></article>
-            <article class="release-check-card"><strong>Launch handoff</strong><p>Check that build notes, feedback capture, and release-check still work together cleanly.</p></article>
+            <article class="release-check-card"><strong>Build handoff</strong><p>Check that build notes, page feedback capture, and release check still work together cleanly.</p></article>
           </div>
         </section>
       </div>
 
       <section class="section footer-cta info-card" style="margin-top:18px">
-        <h2>Use this with release check, not instead of it</h2>
-        <p>This page explains what changed and where to look first. The release check page is still the fastest place to verify the live build, clear local state, run the smoke pass, and confirm the final handoff polish.</p>
-        <div class="cta-row cta-row-priority"><a class="primary-btn" href="../release-check/index.html">Open release check</a><a class="secondary-btn" href="../contact/index.html">Open feedback desk</a><a class="ghost-btn" href="../">Back to home</a></div>
+        <h2>Use this with release check when you need a cleaner sign-off</h2>
+        <p>This page explains what changed and where to look first. The release check page is still the fastest place to verify the live build, clear local state, run the smoke pass, and confirm the final handoff polish when you need a full sign-off pass.</p>
+        <div class="cta-row cta-row-priority"><a class="primary-btn" href="../release-check/index.html">Open release check</a><a class="secondary-btn" href="../contact/index.html">Open page desk</a><a class="ghost-btn" href="../">Back to home</a></div>
       </section>
 
       <div class="footer">Ryokoplan</div>
@@ -144,7 +144,7 @@
     function renderChecks(notes){
       const cards = [
         { title:'Core loop', body:'Check one city all the way through to result, share, and My Trips so the editorial loop still reads as one product.' },
-        { title:'Feedback handoff', body:'Open the feedback desk from the exact page that feels rough so build, path, language, and issue type stay together.' },
+        { title:'Page desk', body:'Open the page desk from the exact page that feels rough so build, path, language, and issue type stay together.' },
         { title:'Build visibility', body:'Verify that version.json, What\'s new, and release check all point to the same live build.' }
       ];
       const extra = Array.isArray(notes) ? notes.slice(0, 2).map(note => ({ title:'Current pass', body:String(note) })) : [];

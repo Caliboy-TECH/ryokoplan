@@ -1,13 +1,13 @@
 {
-  "release": "v133",
-  "version": "v133",
+  "release": "v134",
+  "version": "v134",
   "date": "2026-03-31",
-  "codename": "beta-feedback-release-handoff",
-  "headline": "Launch-facing feedback and release handoff are sharper in this build.",
+  "codename": "launch-copy-public-facing-polish",
+  "headline": "Launch-facing copy is softer, clearer, and less internal across public support surfaces.",
   "notes": [
-    "Rebuilds the feedback desk into a cleaner beta handoff surface with issue-type presets for broken links, tone issues, layout friction, save/share bugs, and route-output problems.",
-    "Upgrades What's New into a faster tester-facing release hub with quick paths, current-build visibility, and recommended checks pulled from the live version metadata.",
-    "Polishes feedback and beta-launch wording so launch-facing surfaces feel less like internal QA notes and more like a real public beta product layer."
+    "Reworks the launch bar so it reads like a live preview layer instead of a raw internal beta notice, while keeping build notes and page feedback one tap away.",
+    "Polishes the feedback desk into a more public-facing page note surface with clearer handoff language and softer build-context framing.",
+    "Refines Build Notes wording so release helpers feel product-facing on Home, Magazine, My Trips, and support surfaces without losing operational clarity."
   ],
   "updatedAt": "2026-03-31"
 }

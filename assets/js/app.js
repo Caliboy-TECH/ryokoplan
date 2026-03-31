@@ -998,12 +998,12 @@ function entryAssistPriority(){
 }
 function betaLaunchCopy(){
   return lang === 'ko'
-    ? { eyebrow:'Public beta', title:'베타 공개 중입니다. 도시를 읽고, 흐름이 거칠어지는 지점을 알려주세요.', desc:'Guide, sample route, My Trips 흐름은 열려 있습니다. 지금 보고 있는 페이지 기준으로 바로 피드백을 남길 수 있습니다.', primary:"What\'s new", secondary:'페이지 피드백', dismiss:'숨기기' }
+    ? { eyebrow:'Now open', title:'지금 바로 읽고 써볼 수 있습니다. 흐름이 거칠어지는 지점을 알려주세요.', desc:'Guide, sample route, My Trips는 모두 열려 있습니다. 지금 보고 있는 페이지 기준으로 바로 피드백을 남길 수 있습니다.', primary:'Build notes', secondary:'페이지 피드백', dismiss:'숨기기' }
     : lang === 'ja'
-      ? { eyebrow:'Public beta', title:'ベータ公開中です。都市を読み、流れが粗くなる場所を教えてください。', desc:'guide、sample route、My Trips の流れは使えます。今見ているページからそのままフィードバックを送れます。', primary:"What\'s new", secondary:'ページのフィードバック', dismiss:'閉じる' }
+      ? { eyebrow:'Now open', title:'今すぐ読み始められます。流れが粗くなる場所を教えてください。', desc:'guide、sample route、My Trips はそのまま使えます。今見ているページからすぐフィードバックを送れます。', primary:'Build notes', secondary:'ページのフィードバック', dismiss:'閉じる' }
       : lang === 'zhHant'
-        ? { eyebrow:'Public beta', title:'目前為 beta 公開中。請告訴我們流程在哪裡還不夠順。', desc:'guide、sample route、My Trips 都可以使用；你可以直接從目前頁面送出回饋。', primary:"What\'s new", secondary:'頁面回饋', dismiss:'隱藏' }
-        : { eyebrow:'Public beta', title:'Beta is open. Read a city, then tell us where the flow still feels rough.', desc:'Guides, sample routes, and My Trips are live. Send page feedback directly from wherever the handoff feels off.', primary:"What\'s new", secondary:'Page feedback', dismiss:'Hide' };
+        ? { eyebrow:'Now open', title:'現在就可以開始閱讀與使用。請告訴我們流程哪裡還不夠順。', desc:'guide、sample route、My Trips 都可以直接使用；你也可以從目前頁面立刻送出回饋。', primary:'Build notes', secondary:'頁面回饋', dismiss:'隱藏' }
+        : { eyebrow:'Now open', title:'The preview is open. Read a city, then tell us where the flow still feels rough.', desc:'Guides, sample routes, and My Trips are live. Send page feedback directly from wherever the handoff feels off.', primary:'Build notes', secondary:'Page feedback', dismiss:'Hide' };
 }
 function shouldShowBetaLaunchBar(){
   const page = document.body?.dataset?.page || '';
@@ -1036,7 +1036,7 @@ function ensureBetaLaunchBar(){
     bar.id = 'betaLaunchBar';
     bar.className = 'beta-launch-bar';
     bar.setAttribute('role', 'region');
-    bar.setAttribute('aria-label', 'Beta launch note');
+    bar.setAttribute('aria-label', 'Launch note');
     bar.innerHTML = '<div class="beta-launch-inner"><div class="beta-launch-copy"><span class="beta-launch-eyebrow" data-beta-eyebrow></span><strong class="beta-launch-title" data-beta-title></strong><p class="beta-launch-desc" data-beta-desc></p></div><div class="beta-launch-actions"><a class="soft-btn" data-beta-primary></a><a class="ghost-btn" data-beta-secondary></a><button class="beta-launch-dismiss" type="button" data-beta-dismiss></button></div></div>';
     const header = document.querySelector('.top-bar');
     if (header && header.parentNode) header.insertAdjacentElement('afterend', bar);
@@ -1592,7 +1592,7 @@ function firstRunGuideCopy(){
       ko: {
         eyebrow:'처음이라면 여기서',
         title:'Ryokoplan 시작 흐름은 세 가지면 충분합니다.',
-        desc:'도시를 읽고, 샘플 하나를 보고, 바로 route를 열어보세요. 첫 공개 베타에선 이 흐름이 가장 이해하기 쉽습니다.',
+        desc:'도시를 읽고, 샘플 하나를 보고, 바로 route를 열어보세요. 처음엔 이 흐름이 가장 이해하기 쉽습니다.',
         steps:[['1. Magazine','도시를 먼저 읽습니다.'],['2. Sample','좋은 흐름 하나를 먼저 봅니다.'],['3. Route','바로 내 route로 이어갑니다.']],
         actions:[['매거진 열기', navHref('magazine'),'magazine'],['샘플 보기', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['루트 시작', navHref('planner'),'route']],
         dismiss:'닫기'
@@ -1600,7 +1600,7 @@ function firstRunGuideCopy(){
       en: {
         eyebrow:'Start here',
         title:'Three simple ways into Ryokoplan.',
-        desc:'Read one city, open one sample, then move straight into a route. For the public beta, this is still the clearest way to enter the product.',
+        desc:'Read one city, open one sample, then move straight into a route. This is still the clearest way to enter the product.',
         steps:[['1. Magazine','Read the city first.'],['2. Sample','See one strong route rhythm.'],['3. Route','Start your own route from there.']],
         actions:[['Open Magazine', navHref('magazine'),'magazine'],['Read sample', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['Open route start', navHref('planner'),'route']],
         dismiss:'Hide'
@@ -1608,7 +1608,7 @@ function firstRunGuideCopy(){
       ja: {
         eyebrow:'最初はここから',
         title:'Ryokoplan への入り方は三つで十分です。',
-        desc:'都市を読み、サンプルを一つ見て、そのまま route へ入ってください。ベータ公開中はいちばんわかりやすい入口です。',
+        desc:'都市を読み、サンプルを一つ見て、そのまま route へ入ってください。いちばんわかりやすい入口です。',
         steps:[['1. Magazine','まず都市を読みます。'],['2. Sample','良い流れを一つ見ます。'],['3. Route','そのまま自分の route へつなげます。']],
         actions:[['Magazine を開く', navHref('magazine'),'magazine'],['sample を見る', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['route を始める', navHref('planner'),'route']],
         dismiss:'閉じる'
@@ -1616,7 +1616,7 @@ function firstRunGuideCopy(){
       zhHant: {
         eyebrow:'先從這裡開始',
         title:'進入 Ryokoplan，其實只要三步。',
-        desc:'先讀一座城市，看一條 sample，再直接打開 route。對目前的 public beta 來說，這還是最清楚的入口。',
+        desc:'先讀一座城市，看一條 sample，再直接打開 route。這仍然是最清楚的入口。',
         steps:[['1. Magazine','先讀城市。'],['2. Sample','先看一條好的節奏。'],['3. Route','再接到你的 route。']],
         actions:[['打開 Magazine', navHref('magazine'),'magazine'],['看 sample', resolvePath('example/tokyo-3n4d-first-trip.html'),'sample'],['開始 route', navHref('planner'),'route']],
         dismiss:'隱藏'
