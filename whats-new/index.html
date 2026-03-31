@@ -83,7 +83,7 @@
         </div>
         <div class="cta-row cta-row-priority" style="margin-top:16px">
           <a class="primary-btn" href="../release-check/index.html">Open release check</a>
-          <a class="secondary-btn" href="../contact/index.html">Open page desk</a>
+          <a class="secondary-btn" href="../contact/index.html">Open notes page</a>
           <button class="ghost-btn" id="copyReleaseVersionBtn" type="button">Copy release</button>
           <button class="ghost-btn" id="reloadReleaseNotesBtn" type="button">Reload build info</button>
         </div>
@@ -99,7 +99,7 @@
             <div class="launch-summary-meta">
               <article class="launch-summary-card"><strong>Live build</strong><p id="launchSummaryVersion">Reading version.json…</p></article>
               <article class="launch-summary-card"><strong>Release tone</strong><p id="launchSummaryHeadline">Loading build headline…</p></article>
-              <article class="launch-summary-card"><strong>Best next step</strong><p>Confirm the build, run one clean loop, then send a page note only if something still feels rough.</p></article>
+              <article class="launch-summary-card"><strong>Best next step</strong><p>Confirm the build, run one clean loop, then send a note only if something still feels rough.</p></article>
             </div>
             <article class="launch-summary-card">
               <strong>Best short explanation for this build</strong>
@@ -125,7 +125,7 @@
           <article class="launch-path-card"><strong>Start from Home</strong><p>Check the cover tone, first-run handoff, city shelf, and whether the product still feels magazine-first.</p><a class="soft-btn" href="../">Open Home</a></article>
           <article class="launch-path-card"><strong>Read Magazine</strong><p>Check finder filters, dispatch cards, card hierarchy, and whether city → guide entry feels obvious on mobile.</p><a class="soft-btn" href="../magazine/index.html">Open Magazine</a></article>
           <article class="launch-path-card"><strong>Run the loop</strong><p>Use a guide or sample route, then move into result, share, and My Trips to confirm the handoff still feels connected.</p><a class="soft-btn" href="../my-trips/index.html">Open My Trips</a></article>
-          <article class="launch-path-card"><strong>Send a page note</strong><p>If anything feels off, use the page desk so page, language, and build details are already attached.</p><a class="soft-btn" href="../contact/index.html">Open page desk</a></article>
+          <article class="launch-path-card"><strong>Send a note</strong><p>If anything feels off, use the notes page so page, language, and build details are already attached.</p><a class="soft-btn" href="../contact/index.html">Open notes page</a></article>
         </div>
       </section>
 
@@ -135,7 +135,7 @@
           <h2 class="section-title" style="margin-top:8px">Highlights in this release</h2>
           <p class="whats-new-inline">This panel reads directly from <code>/version.json</code>, so it is the fastest way to confirm that the deployed site matches the zip you just uploaded.</p>
           <div id="releaseNotesList" class="whats-new-note-list">
-            <div class="whats-new-note">Loading release notes…</div>
+            <div class="whats-new-note">Loading build notes…</div>
           </div>
           <pre id="releaseNotesDump" class="whats-new-code">Loading version.json…</pre>
         </section>
@@ -146,12 +146,12 @@
           <div class="whats-new-timeline">
             <article class="whats-new-timeline-item"><strong>1. Confirm the build</strong><p>Open <code>/version.json</code> or the release check page and verify that the release value matches the latest upload.</p></article>
             <article class="whats-new-timeline-item"><strong>2. Run one clean editorial loop</strong><p>Home → Magazine → city → sample → route result → share → My Trips should still feel like one connected city-first flow.</p></article>
-            <article class="whats-new-timeline-item"><strong>3. Send one clean page note</strong><p>If anything feels rough, open the page desk from that page so the path, language, and build version stay attached together.</p></article>
+            <article class="whats-new-timeline-item"><strong>3. Send one clean note</strong><p>If anything feels rough, open the notes page from that page so the path, language, and build version stay attached together.</p></article>
           </div>
           <div class="release-check-grid" id="recommendedChecksGrid">
             <article class="release-check-card"><strong>Core loop</strong><p>Check one city all the way through to result, share, and My Trips.</p></article>
             <article class="release-check-card"><strong>Mobile feel</strong><p>Check the first fold, CTA density, sticky behavior, and quick-entry rows on a narrow screen.</p></article>
-            <article class="release-check-card"><strong>Build handoff</strong><p>Check that build notes, page feedback capture, and release check still work together cleanly.</p></article>
+            <article class="release-check-card"><strong>Build handoff</strong><p>Check that build notes, note capture, and release check still work together cleanly.</p></article>
           </div>
         </section>
       </div>
@@ -159,11 +159,11 @@
       <section class="section footer-cta info-card" style="margin-top:18px">
         <h2>Use this with release check when you need a cleaner sign-off</h2>
         <p>This page explains what changed and where to look first. The release check page is still the fastest place to verify the live build, clear local state, run the smoke pass, and confirm the final handoff polish when you need a full sign-off pass.</p>
-        <div class="cta-row cta-row-priority"><a class="primary-btn" href="../release-check/index.html">Open release check</a><a class="secondary-btn" href="../contact/index.html">Open page desk</a><a class="ghost-btn" href="../">Back to home</a></div>
+        <div class="cta-row cta-row-priority"><a class="primary-btn" href="../release-check/index.html">Open release check</a><a class="secondary-btn" href="../contact/index.html">Open notes page</a><a class="ghost-btn" href="../">Back to home</a></div>
       </section>
 
       <div class="footer">Ryokoplan</div>
-      <div class="footer-links"><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../contact/index.html">Contact</a><a href="../whats-new/index.html">What's new</a></div>
+      <div class="footer-links"><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../contact/index.html">Contact</a><a href="../whats-new/index.html">Build notes</a></div>
     </div>
   </main>
   <script>
@@ -183,7 +183,7 @@
     function renderChecks(notes){
       const cards = [
         { title:'Core loop', body:'Check one city all the way through to result, share, and My Trips so the editorial loop still reads as one product.' },
-        { title:'Page desk', body:'Open the page desk from the exact page that feels rough so build, path, language, and issue type stay together.' },
+        { title:'Notes page', body:'Open the notes page from the exact page that feels rough so build, path, language, and issue type stay together.' },
         { title:'Build visibility', body:'Verify that version.json, What\'s new, and release check all point to the same live build.' }
       ];
       const extra = Array.isArray(notes) ? notes.slice(0, 2).map(note => ({ title:'Current pass', body:String(note) })) : [];
@@ -204,17 +204,17 @@
         `Headline: ${currentVersionData.headline || 'Current build is live.'}`,
         '',
         `What changed:`,
-        shortNotes || '- No release notes were attached to this build.',
+        shortNotes || '- No build notes were attached to this build.',
         '',
         `Best checks:`,
         '- Home → Magazine → city → sample → result → share → My Trips',
         '- Release check for version, diagnostics, and smoke',
-        '- Page desk for page-aware issue notes',
+        '- Notes page for page-aware issue notes',
         '',
         `Support links:`,
         '- Build notes: https://ryokoplan.com/whats-new/',
         '- Release check: https://ryokoplan.com/release-check/',
-        '- Page desk: https://ryokoplan.com/contact/'
+        '- Notes page: https://ryokoplan.com/contact/'
       ].join('\n');
     }
 
@@ -229,7 +229,7 @@
         versionText.textContent = `${currentRelease}${codename}${json.updatedAt ? ' · ' + json.updatedAt : ''}`;
         headlineText.textContent = json.headline || 'Current build metadata is live.';
         releaseStatusBadge.textContent = `Live build: ${currentRelease}${json.codename ? ' · ' + json.codename : ''}`;
-        const notes = Array.isArray(json.notes) && json.notes.length ? json.notes : ['No release notes were attached to this build.'];
+        const notes = Array.isArray(json.notes) && json.notes.length ? json.notes : ['No build notes were attached to this build.'];
         notesList.innerHTML = notes.map(note => `<div class="whats-new-note">${String(note)}</div>`).join('');
         dumpNode.textContent = JSON.stringify(json, null, 2);
         if (launchSummaryVersion) launchSummaryVersion.textContent = `${currentRelease}${codename}${json.updatedAt ? ' · ' + json.updatedAt : ''}`;
@@ -243,7 +243,7 @@
         versionText.textContent = 'Could not load version.json';
         headlineText.textContent = 'Check the deploy or verify that version.json is reachable.';
         releaseStatusBadge.textContent = 'Build metadata could not be read';
-        notesList.innerHTML = '<div class="whats-new-note">Release notes could not be loaded.</div>';
+        notesList.innerHTML = '<div class="whats-new-note">Build notes could not be loaded.</div>';
         dumpNode.textContent = String(err);
         if (launchSummaryVersion) launchSummaryVersion.textContent = 'Version metadata could not be read';
         if (launchSummaryHeadline) launchSummaryHeadline.textContent = 'Deploy or path check needed';
@@ -260,7 +260,7 @@
       } catch {}
     });
     document.getElementById('copySupportLinksBtn').addEventListener('click', async () => {
-      const payload = ['Ryokoplan support links','- Build notes: https://ryokoplan.com/whats-new/','- Release check: https://ryokoplan.com/release-check/','- Page desk: https://ryokoplan.com/contact/'].join('\n');
+      const payload = ['Ryokoplan launch links','- Build notes: https://ryokoplan.com/whats-new/','- Release check: https://ryokoplan.com/release-check/','- Notes page: https://ryokoplan.com/contact/'].join('\n');
       try {
         await navigator.clipboard.writeText(payload);
         document.getElementById('copySupportLinksBtn').textContent = 'Copied';

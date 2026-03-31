@@ -78,7 +78,7 @@
           </article>
           <article class="info-card">
             <strong>What to confirm</strong>
-            <span>Home, Magazine, city, sample, route result, share loop, My Trips, PDF, saved/recent data, installability, trust pages, and release notes.</span>
+            <span>Home, Magazine, city, sample, route result, share loop, My Trips, PDF, saved/recent data, installability, trust pages, and build notes.</span>
           </article>
           <article class="info-card">
             <strong>PWA basics</strong>
@@ -89,10 +89,10 @@
         <div class="release-actions">
           <a class="primary-btn" href="../" target="_blank" rel="noopener">Open home</a>
           <button class="secondary-btn" id="reloadVersionBtn" type="button">Reload version.json</button>
-          <a class="ghost-btn" href="../whats-new/index.html" target="_blank" rel="noopener">Open release notes</a>
+          <a class="ghost-btn" href="../whats-new/index.html" target="_blank" rel="noopener">Open Build notes</a>
           <button class="ghost-btn" id="clearLocalBtn" type="button">Clear local trip data</button>
           <button class="ghost-btn" id="copyReleaseReportTopBtn" type="button">Copy release report</button>
-          <button class="ghost-btn" id="openFeedbackDeskTopBtn" type="button">Send to feedback desk</button>
+          <button class="ghost-btn" id="openFeedbackDeskTopBtn" type="button">Send note</button>
           <button class="ghost-btn" id="resetBetaNoticeTopBtn" type="button">Reset beta notice</button>
           <button class="ghost-btn" id="resetFirstRunGuideTopBtn" type="button">Reset first-run guide</button>
           <button class="ghost-btn" id="resetStartPathTopBtn" type="button">Reset start-path memory</button>
@@ -160,12 +160,12 @@
               </div>
             </div>
             <div class="release-route-item">
-              <div class="release-route-copy"><strong>Trust pages</strong><p>Open privacy, terms, contact, and What’s new to confirm legal footer links and no broken styles.</p></div>
+              <div class="release-route-copy"><strong>Trust pages</strong><p>Open privacy, terms, contact, and Build notes to confirm legal footer links and no broken styles.</p></div>
               <div class="release-actions" style="margin-top:0;">
                 <a class="ghost-btn" href="../privacy/" target="_blank" rel="noopener">Privacy</a>
                 <a class="ghost-btn" href="../terms/" target="_blank" rel="noopener">Terms</a>
                 <a class="ghost-btn" href="../contact/" target="_blank" rel="noopener">Contact</a>
-                <a class="ghost-btn" href="../whats-new/" target="_blank" rel="noopener">What’s new</a>
+                <a class="ghost-btn" href="../whats-new/" target="_blank" rel="noopener">Build notes</a>
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@
               <button class="ghost-btn" id="resetPlannerDraftBtn" type="button">Reset planner draft</button>
               <button class="ghost-btn" id="resetLatestRouteBtn" type="button">Reset latest route</button>
               <button class="ghost-btn" id="resetPlannerResumeBtn" type="button">Reset planner resume state</button>
-              <button class="ghost-btn" id="openFeedbackDeskBtn" type="button">Send to feedback desk</button>
+              <button class="ghost-btn" id="openFeedbackDeskBtn" type="button">Send note</button>
             </div>
           </section>
 
@@ -576,7 +576,7 @@
             const results = await Promise.all(urls.map(url => fetch(url, { cache:'no-store' }).then(res => res.ok)));
             const ok = results.every(Boolean);
             return ok
-              ? { status:'pass', detail:'Privacy, terms, contact, and What’s new all returned 200-level responses.' }
+              ? { status:'pass', detail:'Privacy, terms, contact, and Build notes all returned 200-level responses.' }
               : { status:'fail', detail:'One or more trust pages did not return a successful response.' };
           }
         },
@@ -687,8 +687,8 @@
           name: 'Trust and notes pages',
           run: async () => {
             const targets = [
-              ['../contact/','launch feedback desk'],
-              ['../whats-new/','release notes'],
+              ['../contact/','notes page'],
+              ['../whats-new/','build notes'],
               ['../offline.html','offline'],
             ];
             const results = await Promise.all(targets.map(async ([url, marker]) => {
@@ -696,7 +696,7 @@
               return text.toLowerCase().includes(marker);
             }));
             return results.every(Boolean)
-              ? { status:'pass', detail:'Contact, What’s new, and offline shell all returned the expected markers.' }
+              ? { status:'pass', detail:'Contact, Build notes, and offline shell all returned the expected markers.' }
               : { status:'warn', detail:'One of contact / what’s new / offline loaded without the expected content marker.' };
           }
         }
@@ -828,7 +828,7 @@
         `Diagnostics: ${lastDiagnostics.length ? `${diagFail} fail / ${diagWarn} warn / ${lastDiagnostics.length - diagFail - diagWarn} pass` : 'not run yet'}`,
         `Smoke: ${lastSmoke.length ? `${smokeFail} fail / ${smokeWarn} warn / ${lastSmoke.length - smokeFail - smokeWarn} pass` : 'not run yet'}`,
         '',
-        `Next step: ${diagFail || smokeFail ? 'Resolve failing checks first.' : checkedCount < totalChecks ? 'Finish the remaining manual checks, then copy the release report.' : 'Share the build notes and page desk links with this version.'}`
+        `Next step: ${diagFail || smokeFail ? 'Resolve failing checks first.' : checkedCount < totalChecks ? 'Finish the remaining manual checks, then copy the release report.' : 'Share the build notes and notes page links with this version.'}`
       ].join('\n');
       return { level, title, summary };
     }
@@ -863,7 +863,7 @@
     }
 
     async function copySupportPacket(){
-      const payload = ['Ryokoplan support packet','- Build notes: https://ryokoplan.com/whats-new/','- Release check: https://ryokoplan.com/release-check/','- Page desk: https://ryokoplan.com/contact/','',buildLaunchVerdict().summary].join('\n');
+      const payload = ['Ryokoplan support packet','- Build notes: https://ryokoplan.com/whats-new/','- Release check: https://ryokoplan.com/release-check/','- Notes page: https://ryokoplan.com/contact/','',buildLaunchVerdict().summary].join('\n');
       try {
         await navigator.clipboard.writeText(payload);
         alert('Support packet copied.');

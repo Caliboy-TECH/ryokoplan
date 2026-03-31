@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — Ryokoplan</title>
-  <meta name="description" content="Contact Ryokoplan for page feedback, broken links, route issues, and build-aware issue handoff.">
+  <meta name="description" content="Contact Ryokoplan for support notes, broken links, route issues, and build-aware issue handoff.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://ryokoplan.com/contact/index.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Contact — Ryokoplan">
-  <meta property="og:description" content="Contact Ryokoplan for page feedback, broken links, route issues, and build-aware issue handoff.">
+  <meta property="og:description" content="Contact Ryokoplan for support notes, broken links, route issues, and build-aware issue handoff.">
   <meta property="og:url" content="https://ryokoplan.com/contact/index.html">
   <meta property="og:image" content="https://ryokoplan.com/assets/images/brand/og-cover.png">
   <meta property="og:image:type" content="image/png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Contact — Ryokoplan">
-  <meta name="twitter:description" content="Contact Ryokoplan for page feedback, broken links, route issues, and build-aware issue handoff.">
+  <meta name="twitter:description" content="Contact Ryokoplan for support notes, broken links, route issues, and build-aware issue handoff.">
   <meta name="twitter:image" content="https://ryokoplan.com/assets/images/brand/og-cover.png">
   <link rel="icon" href="../assets/images/brand/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/css/styles.css">
@@ -65,15 +65,15 @@
       <section class="info-card">
         <div class="feedback-hero-grid">
           <div>
-            <span class="eyebrow">Page feedback desk</span>
-            <h1 class="section-title">Send a clearer page note with page context already attached</h1>
-            <p class="section-desc">Use this desk for broken links, off-tone copy, route output issues, save/share bugs, or anything that interrupts the city → sample → trip flow.</p>
+            <span class="eyebrow">Support notes</span>
+            <h1 class="section-title">Send a clear note with page context already attached</h1>
+            <p class="section-desc">Use this page to report broken links, off-tone copy, route output issues, save/share bugs, or anything that interrupts the city → sample → trip flow.</p>
             <p class="feedback-inline-note">The current page, language, city, and build version are captured here automatically, so you can send a cleaner report without rewriting the whole situation by hand.</p>
           </div>
           <div class="info-card" style="padding:18px">
             <span class="eyebrow">Quick handoff</span>
             <h2 class="section-title" style="margin-top:8px;font-size:1.2rem">Best for quick issue reports</h2>
-            <p class="section-desc">Pick an issue type first. The report block below will reframe itself for that problem so testers know what detail helps most.</p>
+            <p class="section-desc">Pick an issue type first. The report block below will reshape itself around that problem so the most useful detail is already prompted.</p>
             <div class="cta-row cta-row-priority" style="margin-top:14px">
               <a class="primary-btn" href="../release-check/index.html">Open release check</a>
               <a class="secondary-btn" href="../whats-new/index.html">Build notes</a>
@@ -145,7 +145,7 @@
         <div class="cta-row cta-row-priority"><a class="primary-btn" href="../index.html">Start from home</a><a class="secondary-btn" href="../magazine/index.html">Read Magazine</a><a class="ghost-btn" href="../my-trips/index.html">Open My Trips</a></div>
       </section>
       <div class="footer">Ryokoplan</div>
-      <div class="footer-links"><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../contact/index.html">Contact</a><a href="../whats-new/index.html">What's new</a></div>
+      <div class="footer-links"><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../contact/index.html">Contact</a><a href="../whats-new/index.html">Build notes</a></div>
     </div>
   </main>
   <script>
@@ -227,7 +227,7 @@
       function templateBase(version='unknown', draftText=''){
         const issue = issueConfig(currentIssueType);
         const checklist = issue.checklist.map(item => `- ${item}`).join('\n');
-        return `[Ryokoplan page note]\nIssue type: ${issue.label}\nSource page: ${sourcePage}\nCity: ${city || '-'}\nLanguage: ${lang}\nVersion: ${version}\nURL: ${pageUrl}\n\nWhat I expected:\n- \n\nWhat happened instead:\n- \n\nWhy it felt off / unclear:\n- \n\nBest detail to include:\n${checklist}\n\nScreenshot or extra note:\n- ` + (draftText ? `\n\n[Attached release-check draft]\n${draftText}` : '');
+        return `[Ryokoplan support note]\nIssue type: ${issue.label}\nSource page: ${sourcePage}\nCity: ${city || '-'}\nLanguage: ${lang}\nVersion: ${version}\nURL: ${pageUrl}\n\nWhat I expected:\n- \n\nWhat happened instead:\n- \n\nWhy it felt off / unclear:\n- \n\nBest detail to include:\n${checklist}\n\nScreenshot or extra note:\n- ` + (draftText ? `\n\n[Attached release-check draft]\n${draftText}` : '');
       }
 
       function syncIssueType(){

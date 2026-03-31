@@ -1,13 +1,13 @@
 {
-  "release": "v136",
-  "version": "v136",
+  "release": "v137",
+  "version": "v137",
   "date": "2026-03-31",
-  "codename": "footer-build-rail-handoff",
-  "headline": "Main surfaces now carry a lighter footer build rail so the current build, notes, and page note path stay visible without feeling internal.",
+  "codename": "public-support-wording-polish",
+  "headline": "Support surfaces now read more like public product help than internal QA, while keeping build notes and note-taking paths close at hand.",
   "notes": [
-    "Adds a subtle footer build rail to the main reading and planning surfaces so the current release stays visible with one-tap access to Build notes and Page feedback.",
-    "Replaces the heavier 'What's new' footer wording with a cleaner public-facing Build notes label across the main app chrome.",
-    "Keeps release handoff visible after deploy without turning the product chrome into a QA dashboard."
+    "Unifies leftover \"What's new\" wording into Build notes across static footers and release-facing pages.",
+    "Renames page-note and feedback-desk language into a lighter public-facing notes flow so support actions feel product-like rather than internal.",
+    "Keeps build notes, release checks, and context-aware notes linked together without making the app chrome feel like a QA dashboard."
   ],
   "updatedAt": "2026-03-31"
 }
