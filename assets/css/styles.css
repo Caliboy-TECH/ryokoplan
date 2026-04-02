@@ -3479,3 +3479,138 @@ img.is-media-fallback{opacity:1;filter:saturate(.94) contrast(.98)}
   .launch-feedback-cta{padding:10px 12px;border-color:rgba(240,124,76,.2);box-shadow:0 10px 24px rgba(19,40,63,.11)}
   .launch-feedback-cta.is-compact{padding:10px 10px;gap:0}
 }
+
+
+/* v149 production UI polish pass */
+:root{
+  --control-h-xs:36px;
+  --control-h-sm:40px;
+  --control-h-md:46px;
+  --control-h-lg:52px;
+  --card-radius-lg:30px;
+  --card-radius-md:24px;
+  --card-radius-sm:18px;
+  --panel-shadow:0 18px 46px rgba(19,33,49,.06);
+  --panel-shadow-hover:0 22px 54px rgba(19,33,49,.10);
+}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+body{letter-spacing:-.008em}
+.top-bar-inner{min-height:74px;align-items:center}
+.top-actions,.lang-switch,.hero-actions,.cta-row,.mini-cta-stack,.card-actions,.hero-feature-rail,.trip-chip-row,.finder-group,.finder-tabs,.finder-filter-row,.result-top-actions,.result-sticky-actions{align-items:center}
+.lang-btn,.nav-chip,.soft-btn,.ghost-btn,.action-btn,.chip,.tab-btn,.finder-tab,.mini-filter,.jump-chip,.hero-feature-rail a,.footer-build-toggle,.footer-build-rail a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:var(--control-h-sm);
+  padding:0 15px;
+  border-radius:999px;
+  line-height:1.1;
+  font-size:13px;
+  letter-spacing:-.01em;
+}
+.primary-btn,.secondary-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:var(--control-h-md);
+  padding:0 18px;
+  border-radius:18px;
+  font-size:14px;
+  letter-spacing:-.015em;
+}
+.primary-btn{font-weight:850}
+.secondary-btn{font-weight:800}
+.hero-actions > a,.hero-actions > button,.cta-row > a,.cta-row > button,.result-top-actions > a,.result-top-actions > button{justify-content:center}
+.result-top-actions .primary-btn,.result-top-actions .secondary-btn,.result-top-actions .ghost-btn,.result-top-actions .soft-btn{min-height:48px;border-radius:18px}
+.input,select,textarea{
+  min-height:52px;
+  border-radius:18px;
+  padding:14px 16px;
+  border-color:rgba(218,205,189,.96);
+  background:rgba(255,255,255,.94);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75), 0 8px 20px rgba(19,33,49,.035);
+}
+textarea{min-height:108px}
+.input:focus,select:focus,textarea:focus{
+  border-color:rgba(240,138,88,.65);
+  box-shadow:0 0 0 4px rgba(240,138,88,.12), inset 0 1px 0 rgba(255,255,255,.7), 0 14px 28px rgba(19,33,49,.05);
+}
+.option-chip,.toggle-card,.summary-line,.editorial-line,.collection-line,.trip-loop-list article,.trip-detail-day,.trip-detail-branch,.trip-detail-stats div,.result-fact-card,.micro-brief-card{border-radius:20px}
+.hero-card,.panel,.city-card,.sample-card,.tip-card,.trip-card,.editorial-card,.planner-shell,.empty-state,.info-card,.collection-card,.stat-card,.trip-search-card,.dispatch-card,.mini-editorial-card,.cover-story-card,.shared-trip-banner,.trip-detail-sheet,.utility-banner,.trip-loop-panel,.loop-card,.trip-loop-card,.trip-loop-side,.meta-card,.day-card,.result-top-helper{border-radius:var(--card-radius-lg);box-shadow:var(--panel-shadow)}
+.route-strip-card,.district-card,.finder-card,.focus-tile,.cover-story-line,.hero-hierarchy-card,.top-story-card{border-radius:var(--card-radius-md)}
+.card-body,.planner-shell,.collection-card,.stat-card,.trip-search-card,.dispatch-card,.mini-editorial-card,.utility-banner,.shared-trip-banner{padding:20px}
+.cover-story-body{padding:30px 28px}
+.cover-story-body.compact{padding:22px 20px}
+.section{margin-top:26px}
+.section-head{margin-bottom:18px}
+.section-desc,.hero p,.card-copy,.collection-card p,.mini-editorial-card p,.dispatch-lines span,.cover-story-body p,.result-top-helper span{max-width:64ch}
+.section-title{line-height:1.04}
+.hero-copy,.city-detail-copy{padding:30px 28px}
+.hero-stat-row,.result-quickfacts,.trip-stat-grid,.hero-stat-grid,.quick-start-grid,.bento-grid,.cover-story-grid,.mini-editorial-grid,.home-editorial-grid,.route-strip-grid,.city-grid,.samples-grid,.tips-grid,.trips-grid,.story-grid,.loop-grid,.trip-loop-grid{gap:14px}
+.card-title,.route-strip-card h3,.trip-card h3,.city-card h3,.finder-card h3{line-height:1.12}
+.card-copy,.section-desc,.dispatch-lines span,.collection-line span,.trip-detail-day p,.trip-detail-list,.trip-detail-branch span{font-size:14px;line-height:1.68}
+.hero-card,.cover-story-card,.mini-editorial-card,.dispatch-card,.trip-card,.city-card,.finder-card,.route-strip-card,.editorial-panel,.info-card,.planner-shell,.loop-card,.trip-loop-card,.trip-loop-side,.collection-card,.stat-card,.trip-search-card,.shared-trip-banner{transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+@media (hover:hover) and (pointer:fine){
+  .hero-card:hover,.cover-story-card:hover,.mini-editorial-card:hover,.dispatch-card:hover,.trip-card:hover,.city-card:hover,.finder-card:hover,.route-strip-card:hover,.editorial-panel:hover,.info-card:hover,.loop-card:hover,.trip-loop-card:hover,.trip-loop-side:hover,.collection-card:hover,.stat-card:hover,.trip-search-card:hover,.shared-trip-banner:hover{box-shadow:var(--panel-shadow-hover)}
+}
+.mobile-dock{left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));padding:10px;border-radius:26px}
+.mobile-dock-item{min-height:60px;border-radius:18px}
+.mobile-dock-icon{width:36px;height:36px;border-radius:13px}
+.result-sticky-bar{border-radius:22px}
+.footer-build-rail{border-radius:18px}
+.footer-build-toggle,.footer-build-rail a{min-height:34px}
+.hero-visual-main,.hero-visual-sub,.cover-story-media,.result-editorial-visual,.visual-story-card{border-radius:26px}
+.hero-visual-magazine,.hero-visual-grid{gap:14px}
+.hero-visual-main{min-height:440px}
+.hero-visual-sub{min-height:440px}
+.hero-stat-card{padding:18px 16px}
+.trip-search-card .search-row .secondary-btn{min-height:52px;border-radius:18px}
+.result-top-helper{padding:16px 18px}
+.result-top-helper strong{font-size:14px}
+.trip-detail-close{width:42px;height:42px}
+@media (min-width:1024px){
+  .container{width:min(calc(100% - 48px),var(--max))}
+  .cover-desk-grid{gap:22px}
+  .cover-story-card-large{min-height:460px}
+  .cover-story-card-compact{min-height:220px}
+  .dispatch-card{padding:22px 20px}
+  .hero{gap:20px}
+  .magazine-hero-v2{padding:24px}
+}
+@media (max-width:759px){
+  .container{width:min(calc(100% - 24px),var(--max))}
+  .top-bar-inner{min-height:unset;padding:10px 0 12px;align-items:flex-start}
+  .brand-mark{width:38px;height:38px;border-radius:12px}
+  .brand-title{font-size:21px}
+  .brand-sub{font-size:11px}
+  .top-actions{gap:8px}
+  .lang-switch{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%}
+  .lang-btn{width:100%;min-width:0}
+  .nav-chip{flex:1 1 calc(50% - 4px);justify-content:center}
+  .hero-copy,.city-detail-copy,.planner-shell,.collection-card,.stat-card,.trip-search-card,.utility-banner,.shared-trip-banner{padding:18px}
+  .card-body{padding:16px}
+  .hero-actions,.cta-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .card-actions > *{flex:1 1 calc(50% - 5px)}
+  .primary-btn,.secondary-btn{min-height:48px;border-radius:16px;padding:0 16px}
+  .lang-btn,.nav-chip,.soft-btn,.ghost-btn,.action-btn,.chip,.tab-btn,.finder-tab,.mini-filter,.jump-chip,.hero-feature-rail a,.footer-build-toggle,.footer-build-rail a{min-height:38px;padding:0 13px}
+  .section{margin-top:22px}
+  .section-head{margin-bottom:14px}
+  .section-title{font-size:clamp(24px,6.2vw,30px);padding-left:12px}
+  .cover-story-body{padding:20px 18px}
+  .cover-story-card,.hero-card,.mini-editorial-card,.dispatch-card,.trip-card,.city-card,.finder-card,.route-strip-card,.editorial-panel,.info-card,.planner-shell,.utility-banner,.shared-trip-banner,.trip-detail-sheet,.result-top-helper{border-radius:24px}
+  .hero-visual-main{min-height:280px}
+  .hero-visual-sub{min-height:190px}
+  .result-top-actions{grid-template-columns:1fr 1fr;gap:10px}
+  .result-top-actions .primary-btn,.result-top-actions .secondary-btn,.result-top-actions .ghost-btn,.result-top-actions .soft-btn{min-height:46px}
+  .result-sticky-actions{grid-template-columns:1fr 1fr}
+  .mobile-dock{left:12px;right:12px}
+}
+@media (max-width:479px){
+  .hero-actions,.cta-row,.result-top-actions{grid-template-columns:1fr}
+  .card-actions > *{flex:1 1 100%}
+  .top-actions{width:100%}
+  .nav-chip{flex:1 1 100%}
+  .hero-copy,.city-detail-copy{padding:16px}
+  .hero-stat-row,.result-quickfacts,.trip-stat-grid{gap:10px}
+  .mobile-dock-item{min-height:58px}
+}

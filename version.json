@@ -1,13 +1,13 @@
 {
-  "release": "v148",
-  "version": "v148",
-  "date": "2026-04-01",
-  "codename": "pause-aware-note-and-support-idle-cleanup",
-  "headline": "The final public-facing support layer is quieter in use: the floating note prompt now waits for a real reading pause instead of appearing while people are still moving downward, and the footer support rail closes itself again after a short idle window so it does not linger on the page.",
+  "release": "v149",
+  "version": "v149",
+  "date": "2026-04-02",
+  "codename": "production-ui-polish-pass",
+  "headline": "This build shifts Ryokoplan away from a rough prototype feel and toward a more finished product surface by unifying control sizing, tightening card proportions, calming section spacing, and improving mobile and desktop visual balance across the main loops.",
   "notes": [
-    "Makes the floating note CTA on primary entry screens wait for a pause plus a more intentional reading moment, rather than showing mid-scroll while the user is still moving downward.",
-    "Keeps compact note behavior on entry surfaces while making the reveal feel more like an after-reading prompt than an interruption.",
-    "Adds idle-aware auto-close behavior to the footer support rail so build/support links stay available without remaining expanded for too long."
+    "Standardizes button, chip, and control sizing so navigation, actions, filters, and sticky tools feel like one coherent product system.",
+    "Refines cards, cover modules, and section spacing so homepage, Magazine, My Trips, and result surfaces feel less like stacked prototypes and more like a consistent editorial product.",
+    "Improves mobile rhythm with cleaner top-bar spacing, better action sizing, stronger input fields, and more balanced first-fold layouts on small screens while keeping desktop proportions tighter too."
   ],
-  "updatedAt": "2026-04-01"
+  "updatedAt": "2026-04-02"
 }
