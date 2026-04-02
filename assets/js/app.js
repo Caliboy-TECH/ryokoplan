@@ -958,7 +958,7 @@ function isPrimaryEntrySurface(){
 }
 
 const betaLaunchDismissKey = 'ryoko:beta-launch-dismissed:v100';
-const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v147';
+const launchSurfaceSettledKey = 'ryoko:launch-surface-settled:v148';
 const firstRunGuideDismissKey = 'ryoko:first-run-guide-dismissed:v101';
 const startPathMemoryKey = 'ryoko:start-path-memory:v102';
 const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
@@ -1805,8 +1805,8 @@ function ensureFirstRunGuide(){
 }
 
 const versionMetaState = { promise:null, value:null };
-const footerSupportState = { observer:null, wired:false };
-const launchFeedbackVisibilityState = { wired:false, showTimer:0, ready:false, lastScrollAt:0, pauseTimer:0 };
+const footerSupportState = { observer:null, wired:false, autoCloseTimer:0 };
+const launchFeedbackVisibilityState = { wired:false, showTimer:0, ready:false, lastScrollAt:0, pauseTimer:0, lastScrollY:0, direction:'down', recentUpwardTravel:0 };
 const launchSurfaceState = { wired:false, settleTimer:0, settled:false };
 function buildWhatsNewHref(){
   return `${pathRoot}whats-new/index.html`;
@@ -1873,11 +1873,24 @@ function ensureFooterBuildRail(){
         toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
         toggle.textContent = expanded ? copy.toggleOpen : copy.toggle;
         panel.hidden = !expanded;
-        if (expanded) closeFooterSupportPanels(rail);
+        if (expanded) {
+          closeFooterSupportPanels(rail);
+          scheduleFooterSupportAutoClose(rail, 9600);
+        } else {
+          clearFooterSupportAutoClose();
+        }
         syncLaunchFeedbackCtaVisibility();
       };
       syncToggle(false);
       toggle.addEventListener('click', () => syncToggle(toggle.getAttribute('aria-expanded') !== 'true'));
+      rail.addEventListener('mouseenter', clearFooterSupportAutoClose);
+      rail.addEventListener('mouseleave', () => { if (rail.dataset.expanded === 'true') scheduleFooterSupportAutoClose(rail, 9600); });
+      rail.addEventListener('focusin', clearFooterSupportAutoClose);
+      rail.addEventListener('focusout', () => window.setTimeout(() => {
+        if (rail.dataset.expanded !== 'true') return;
+        if (rail.contains(document.activeElement)) return;
+        scheduleFooterSupportAutoClose(rail, 9600);
+      }, 24));
     }
   });
   wireFooterSupportDismiss();
@@ -1888,19 +1901,39 @@ function ensureFooterBuildRail(){
   });
 }
 
+function clearFooterSupportAutoClose(){
+  window.clearTimeout(footerSupportState.autoCloseTimer);
+  footerSupportState.autoCloseTimer = 0;
+}
+function scheduleFooterSupportAutoClose(activeRail=null, delay=9600){
+  clearFooterSupportAutoClose();
+  const rail = activeRail || document.querySelector('.footer-build-rail[data-expanded="true"]');
+  if (!rail) return;
+  footerSupportState.autoCloseTimer = window.setTimeout(() => {
+    closeFooterSupportPanels();
+    syncLaunchFeedbackCtaVisibility();
+  }, delay);
+}
 function closeFooterSupportPanels(exceptRail=null){
+  let hasExpandedRail = false;
   document.querySelectorAll('.footer-build-rail[data-expanded="true"]').forEach(rail => {
-    if (exceptRail && rail === exceptRail) return;
+    if (exceptRail && rail === exceptRail) {
+      hasExpandedRail = true;
+      return;
+    }
     const toggle = rail.querySelector('.footer-build-toggle');
     const panel = rail.querySelector('.footer-build-panel');
     const copy = footerBuildCopy();
     rail.dataset.expanded = 'false';
+    rail.dataset.openScrollY = '';
     if (toggle) {
       toggle.setAttribute('aria-expanded', 'false');
       toggle.textContent = copy.toggle;
     }
     if (panel) panel.hidden = true;
   });
+  if (hasExpandedRail) scheduleFooterSupportAutoClose(exceptRail, 9600);
+  else clearFooterSupportAutoClose();
 }
 function observeFooterSupportRails(){
   if (!('IntersectionObserver' in window)) return;
@@ -1952,6 +1985,7 @@ function wireFooterSupportDismiss(){
           const panel = rail.querySelector('.footer-build-panel');
           const copy = footerBuildCopy();
           rail.dataset.expanded = 'false';
+          rail.dataset.openScrollY = '';
           if (toggle) {
             toggle.setAttribute('aria-expanded', 'false');
             toggle.textContent = copy.toggle;
@@ -1959,7 +1993,10 @@ function wireFooterSupportDismiss(){
           if (panel) panel.hidden = true;
         }
       });
-      if (changed) syncLaunchFeedbackCtaVisibility();
+      if (changed) {
+        clearFooterSupportAutoClose();
+        syncLaunchFeedbackCtaVisibility();
+      }
     });
   }, { passive:true });
 }
@@ -1982,9 +2019,10 @@ function syncLaunchFeedbackCtaVisibility(){
   const launchBarActive = !!launchBar && !launchBar.classList.contains('is-hidden') && !launchBar.classList.contains('is-calm');
   const launchSurfaceReady = !primaryEntry || (launchSurfaceSettled() && (!launchBar || launchBar.classList.contains('is-rest') || window.scrollY > Math.max(980, Math.round(window.innerHeight * 1.04))));
   const revealDelay = primaryEntry ? 3200 : 760;
-  const pauseDelay = primaryEntry ? 340 : 220;
+  const pauseDelay = primaryEntry ? 420 : 220;
   const pausedEnough = !launchFeedbackVisibilityState.lastScrollAt || (Date.now() - launchFeedbackVisibilityState.lastScrollAt) >= pauseDelay;
-  const shouldHide = nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive || !launchSurfaceReady || !pausedEnough;
+  const downReadingFlow = primaryEntry && launchFeedbackVisibilityState.direction === 'down' && launchFeedbackVisibilityState.recentUpwardTravel < Math.max(64, Math.round(window.innerHeight * 0.08)) && window.scrollY < Math.max(2320, Math.round(window.innerHeight * 2.5));
+  const shouldHide = nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive || !launchSurfaceReady || !pausedEnough || downReadingFlow;
   if (shouldHide) {
     if (nearTop || !deepEnough || shortPage || footerSupportInView || supportExpanded || launchBarActive || !launchSurfaceReady) {
       window.clearTimeout(launchFeedbackVisibilityState.showTimer);
@@ -2022,6 +2060,19 @@ function wireLaunchFeedbackCtaVisibility(){
   };
   const onViewportChange = (event) => {
     if (event?.type === 'scroll') {
+      const currentY = window.scrollY || 0;
+      const previousY = launchFeedbackVisibilityState.lastScrollY || 0;
+      const delta = currentY - previousY;
+      if (Math.abs(delta) > 2) {
+        if (delta > 0) {
+          launchFeedbackVisibilityState.direction = 'down';
+          launchFeedbackVisibilityState.recentUpwardTravel = 0;
+        } else {
+          launchFeedbackVisibilityState.direction = 'up';
+          launchFeedbackVisibilityState.recentUpwardTravel = Math.min(480, launchFeedbackVisibilityState.recentUpwardTravel + Math.abs(delta));
+        }
+        launchFeedbackVisibilityState.lastScrollY = currentY;
+      }
       launchFeedbackVisibilityState.lastScrollAt = Date.now();
       schedulePauseCheck();
     }
@@ -2033,8 +2084,15 @@ function wireLaunchFeedbackCtaVisibility(){
     });
   };
   window.addEventListener('scroll', onViewportChange, { passive:true });
-  window.addEventListener('resize', onViewportChange);
-  window.addEventListener('orientationchange', () => window.setTimeout(onViewportChange, 40));
+  window.addEventListener('resize', event => {
+    launchFeedbackVisibilityState.lastScrollY = window.scrollY || 0;
+    onViewportChange(event);
+  });
+  window.addEventListener('orientationchange', () => window.setTimeout(() => {
+    launchFeedbackVisibilityState.lastScrollY = window.scrollY || 0;
+    onViewportChange();
+  }, 40));
+  launchFeedbackVisibilityState.lastScrollY = window.scrollY || 0;
   document.addEventListener('focusin', onViewportChange);
   document.addEventListener('focusout', () => window.setTimeout(onViewportChange, 50));
 }

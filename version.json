@@ -1,13 +1,13 @@
 {
-  "release": "v147",
-  "version": "v147",
+  "release": "v148",
+  "version": "v148",
   "date": "2026-04-01",
-  "codename": "launch-note-pause-polish",
-  "headline": "Primary entry surfaces now stay quieter during active reading: note prompts wait until scrolling actually pauses, the floating note button defaults to a more compact presence on entry screens and mobile, and the overall support layer feels calmer while still staying available when needed.",
+  "codename": "pause-aware-note-and-support-idle-cleanup",
+  "headline": "The final public-facing support layer is quieter in use: the floating note prompt now waits for a real reading pause instead of appearing while people are still moving downward, and the footer support rail closes itself again after a short idle window so it does not linger on the page.",
   "notes": [
-    "Waits for a short scroll pause before showing the floating note prompt so it does not pop in mid-read on home, magazine, and My Trips.",
-    "Keeps the note CTA compact by default on entry surfaces and small screens so support stays available without taking over the reading rhythm.",
-    "Preserves the deeper-reading thresholds and quieter launch/support surface while making the last public-facing layer feel steadier."
+    "Makes the floating note CTA on primary entry screens wait for a pause plus a more intentional reading moment, rather than showing mid-scroll while the user is still moving downward.",
+    "Keeps compact note behavior on entry surfaces while making the reveal feel more like an after-reading prompt than an interruption.",
+    "Adds idle-aware auto-close behavior to the footer support rail so build/support links stay available without remaining expanded for too long."
   ],
   "updatedAt": "2026-04-01"
 }
