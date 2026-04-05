@@ -3073,7 +3073,7 @@ function useExample(key='tokyo'){
   h1{margin:14px 0 10px;font-size:30px;line-height:1.08}
   .summary{margin:0;color:var(--muted);font-size:15px}
   .signature{margin-top:10px;font-weight:700;color:#9a734b}
-  .hero-visual{min-height:280px;border-radius:24px;background-size:cover;background-position:center;position:relative;overflow:hidden}
+  .hero-visual{min-height:0;aspect-ratio:16/11;border-radius:24px;background-size:cover;background-position:center;position:relative;overflow:hidden}
   .hero-note{position:absolute;left:16px;right:16px;bottom:16px;padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.7)}
   .hero-note .meta-label{margin-bottom:4px}
   .meta-grid,.facts-grid,.story-grid{display:grid;gap:12px}
@@ -3087,8 +3087,8 @@ function useExample(key='tokyo'){
   .section h2{margin:0 0 12px;font-size:20px}
   .section.dark h2,.section.dark p,.section.dark .story-kicker{color:#f8fafc}
   .story-grid{grid-template-columns:repeat(3,1fr)}
-  .story-card{border-radius:22px;overflow:hidden;background:#fff;border:1px solid var(--line)}
-  .story-image{height:160px;background-size:cover;background-position:center}
+  .story-card{border-radius:22px;overflow:hidden;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column}
+  .story-image{aspect-ratio:16/11;height:auto;background-size:cover;background-position:center;position:relative}
   .story-body{padding:14px}
   .story-body h3{margin:0 0 6px;font-size:18px;line-height:1.22}
   .story-body p{margin:0;color:var(--muted);font-size:13px}
@@ -3113,6 +3113,7 @@ function useExample(key='tokyo'){
   .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   .footer-note{margin-top:18px;color:var(--muted);font-size:12px;text-align:right}
   @page{size:A4;margin:12mm}
+  @media (max-width:900px){.page{padding:18px}.cover-grid{grid-template-columns:1fr}.hero-visual{aspect-ratio:16/11;min-height:0}.story-grid{grid-template-columns:1fr}.story-image{aspect-ratio:16/11;height:auto;min-height:0}}
   @media print{.page{padding:0}.section,.cover,.story-card,.day-block{break-inside:avoid}.story-grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
