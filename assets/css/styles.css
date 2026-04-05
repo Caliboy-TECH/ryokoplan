@@ -4734,3 +4734,130 @@ textarea{min-height:108px}
   .mobile-dock{padding:6px;border-radius:18px}
   .mobile-dock-item{min-height:48px}
 }
+
+
+/* v155 dock + utility realism polish */
+@media (max-width: 767px){
+  .page{padding-bottom:112px;}
+  .mobile-dock{
+    left:0;
+    right:0;
+    bottom:0;
+    max-width:none;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));
+    border-radius:22px 22px 0 0;
+    border-left:none;
+    border-right:none;
+    border-bottom:none;
+    background:rgba(255,251,246,.98);
+    box-shadow:0 -6px 24px rgba(20,33,48,.06);
+    backdrop-filter:blur(14px);
+    gap:6px;
+  }
+  .mobile-dock-item{
+    min-height:48px;
+    padding:7px 8px 8px;
+    border-radius:14px;
+    gap:3px;
+    color:#76644f;
+    background:transparent;
+    box-shadow:none;
+    transform:none !important;
+  }
+  .mobile-dock-item.active{
+    background:rgba(231,214,194,.42);
+    color:#193047;
+    box-shadow:none;
+  }
+  .mobile-dock-icon{
+    width:auto;
+    height:auto;
+    border:none;
+    background:transparent;
+    border-radius:0;
+    font-size:11px;
+    font-weight:900;
+    color:#9d7a59;
+    letter-spacing:.08em;
+  }
+  .mobile-dock-item.active .mobile-dock-icon{
+    background:transparent;
+    border:none;
+    color:#d0673b;
+  }
+  .mobile-dock-label{
+    font-size:11px;
+    line-height:1.06;
+    font-weight:800;
+    letter-spacing:-.01em;
+  }
+  .mobile-dock-helper{display:none !important;}
+
+  body[data-page="planner"] > .skip-link,
+  body[data-page="magazine"] > .skip-link,
+  body[data-page="trips"] > .skip-link{
+    left:max(12px, calc(env(safe-area-inset-left, 0px) + 8px));
+    right:auto;
+    bottom:var(--mobile-utility-bottom, calc(72px + env(safe-area-inset-bottom, 0px)));
+    width:42px;
+    min-width:42px;
+    max-width:42px;
+    min-height:42px;
+    padding:0;
+    border-radius:14px;
+    border:1px solid rgba(223,213,198,.9);
+    background:rgba(255,251,246,.94) !important;
+    box-shadow:0 10px 22px rgba(20,33,48,.10);
+    backdrop-filter:blur(12px);
+    color:transparent !important;
+    font-size:0 !important;
+    gap:0;
+    justify-content:center;
+  }
+  body[data-page="planner"] > .skip-link::before,
+  body[data-page="magazine"] > .skip-link::before,
+  body[data-page="trips"] > .skip-link::before{
+    content:'↓';
+    display:grid;
+    place-items:center;
+    width:100%;
+    height:100%;
+    font-size:15px;
+    line-height:1;
+    font-weight:800;
+    color:#183047;
+  }
+  body[data-page="planner"] > .skip-link[data-mode="top"]::before,
+  body[data-page="magazine"] > .skip-link[data-mode="top"]::before,
+  body[data-page="trips"] > .skip-link[data-mode="top"]::before{content:'↑'; color:#8c6542;}
+  body[data-page="planner"] > .skip-link[data-collapsed="true"],
+  body[data-page="magazine"] > .skip-link[data-collapsed="true"],
+  body[data-page="trips"] > .skip-link[data-collapsed="true"]{
+    width:42px;
+    min-width:42px;
+    max-width:42px;
+    padding:0;
+    border-radius:14px;
+    bottom:var(--mobile-utility-bottom, calc(72px + env(safe-area-inset-bottom, 0px)));
+  }
+  body[data-page="planner"] > .skip-link[data-collapsed="true"]:hover,
+  body[data-page="planner"] > .skip-link[data-collapsed="true"]:focus-visible,
+  body[data-page="magazine"] > .skip-link[data-collapsed="true"]:hover,
+  body[data-page="magazine"] > .skip-link[data-collapsed="true"]:focus-visible,
+  body[data-page="trips"] > .skip-link[data-collapsed="true"]:hover,
+  body[data-page="trips"] > .skip-link[data-collapsed="true"]:focus-visible{
+    width:42px;
+    min-width:42px;
+    max-width:42px;
+    padding:0;
+    font-size:0 !important;
+    color:transparent !important;
+    gap:0;
+  }
+  .skip-link[data-hidden="true"]{transform:translateY(8px) scale(.96);}
+}
+@media (max-width: 479px){
+  .mobile-dock{padding-inline:10px;}
+  .mobile-dock-item{min-height:46px;}
+  .mobile-dock-label{font-size:10.5px;}
+}

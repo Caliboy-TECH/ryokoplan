@@ -2411,21 +2411,25 @@ function ensureLaunchFeedbackCta(){
     }
     const page = document.body.dataset.page || 'planner';
     const dockLang = supportedLangs.includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
-    const helperCopy = {
+    const shortCopy = {
       planner: { ko:'계획', en:'Plan', ja:'計画', zhHant:'規劃' },
-      magazine: { ko:'탐색', en:'Read', ja:'探索', zhHant:'探索' },
-      trips: { ko:'보관', en:'Keep', ja:'保存', zhHant:'保存' }
+      magazine: { ko:'매거진', en:'Magazine', ja:'雑誌', zhHant:'雜誌' },
+      trips: { ko:'보관', en:'Saved', ja:'保存', zhHant:'保存' }
+    };
+    const fullCopy = {
+      planner: t('nav.planner') || 'Planner',
+      magazine: t('nav.magazine') || 'Magazine',
+      trips: t('nav.trips') || 'My Trips'
     };
     const dockCopy = {
-      planner: { icon: 'P', helper: helperCopy.planner[lang] || helperCopy.planner.en, label: t('nav.planner') || 'Planner' },
-      magazine: { icon: 'M', helper: helperCopy.magazine[lang] || helperCopy.magazine.en, label: t('nav.magazine') || 'Magazine' },
-      trips: { icon: 'T', helper: helperCopy.trips[lang] || helperCopy.trips.en, label: t('nav.trips') || 'My Trips' }
+      planner: { icon: 'P', label: shortCopy.planner[lang] || shortCopy.planner.en, aria: fullCopy.planner },
+      magazine: { icon: 'M', label: shortCopy.magazine[lang] || shortCopy.magazine.en, aria: fullCopy.magazine },
+      trips: { icon: 'T', label: shortCopy.trips[lang] || shortCopy.trips.en, aria: fullCopy.trips }
     };
     dock.innerHTML = ['planner','magazine','trips'].map((key) => `
-      <a class="mobile-dock-item ${page === key ? 'active' : ''}" href="${navHref(key)}" aria-current="${page === key ? 'page' : 'false'}">
-        <span class="mobile-dock-icon">${dockCopy[key].icon}</span>
+      <a class="mobile-dock-item ${page === key ? 'active' : ''}" href="${navHref(key)}" aria-current="${page === key ? 'page' : 'false'}" aria-label="${dockCopy[key].aria}" title="${dockCopy[key].aria}">
+        <span class="mobile-dock-icon" aria-hidden="true">${dockCopy[key].icon}</span>
         <span class="mobile-dock-label">${dockCopy[key].label}</span>
-        <span class="mobile-dock-helper">${dockCopy[key].helper}</span>
       </a>`).join('');
   }
 

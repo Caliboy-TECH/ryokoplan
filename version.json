@@ -1,13 +1,5 @@
 {
-  "release": "v154",
-  "version": "v154",
-  "date": "2026-04-05",
-  "codename": "practical-product-fit-pass",
-  "headline": "This build pushes Ryokoplan further out of prototype territory by tightening top-bar rhythm, hero spacing, card media ratios, control sizing, toolbars, sticky actions, and the mobile dock into a calmer, more practical product surface across mobile and web.",
-  "notes": [
-    "Refines the visible control system again so language switches, navigation chips, buttons, tabs, sticky actions, and support links read more like one production interface instead of separate prototype-era control sets.",
-    "Rebalances hero copy, section headers, cover notes, card image framing, card body cadence, and toolbar surfaces so home, magazine, city, result, and My Trips feel more editorial but also more commercially finished.",
-    "Softens the mobile dock, sticky result actions, and support rail while keeping the existing product flow intact, giving the interface a more practical real-product feel on small screens and desktop."
-  ],
+  "version": "v155",
+  "codename": "mobile-dock-and-utility-realism",
   "updatedAt": "2026-04-05"
 }
