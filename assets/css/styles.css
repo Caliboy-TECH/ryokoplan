@@ -4251,3 +4251,237 @@ textarea{min-height:118px}
   .mobile-dock-item{min-height:50px;border-radius:14px}
   .mobile-dock-icon{width:28px;height:28px}
 }
+
+
+/* v153 mature product surface pass */
+:root{
+  --shadow:0 14px 34px rgba(24,37,52,.062);
+  --radius:26px;
+  --radius-sm:17px;
+}
+html{scroll-behavior:smooth}
+.top-bar{
+  background:rgba(248,244,238,.88);
+  border-bottom:1px solid rgba(221,211,195,.72);
+  box-shadow:0 8px 18px rgba(20,33,48,.028);
+}
+.top-bar-inner{
+  padding:10px 0 11px;
+  gap:12px 16px;
+}
+.brand{gap:11px}
+.brand-mark{
+  width:38px;
+  height:38px;
+  border-radius:13px;
+  box-shadow:0 8px 18px rgba(20,33,48,.045);
+}
+.brand-title{font-size:20px;letter-spacing:-.045em}
+.brand-sub{font-size:11px;letter-spacing:.015em}
+.lang-switch{
+  gap:6px;
+  padding:4px;
+  border-radius:16px;
+  background:rgba(255,252,247,.78);
+  border:1px solid rgba(221,211,195,.78);
+}
+.lang-btn,.nav-chip,.soft-btn,.ghost-btn,.action-btn,.chip,.tab-btn,.finder-tab,.mini-filter,.jump-chip{
+  min-height:42px;
+  padding:0 14px;
+  border-radius:15px;
+  font-size:13px;
+  letter-spacing:-.01em;
+  transition:background .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+.lang-btn{min-width:50px;height:42px;padding:0 12px;border-radius:13px;font-size:13px}
+.nav-chip,.soft-btn,.ghost-btn,.action-btn,.chip,.tab-btn,.finder-tab,.mini-filter,.jump-chip{
+  box-shadow:0 1px 0 rgba(255,255,255,.75) inset;
+}
+.primary-btn,.secondary-btn{
+  min-height:46px;
+  padding:0 18px;
+  font-size:14px;
+  letter-spacing:-.01em;
+  border-radius:16px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+}
+.primary-btn{box-shadow:0 12px 24px rgba(214,106,69,.18)}
+.primary-btn:hover,.secondary-btn:hover,.soft-btn:hover,.ghost-btn:hover,.tab-btn:hover,.finder-tab:hover,.mini-filter:hover,.jump-chip:hover,.nav-chip:hover{
+  transform:translateY(-1px);
+}
+.hero,.magazine-hero-v2,.city-detail-hero{gap:18px}
+.hero-copy,.magazine-hero-copy,.city-detail-copy,.result-editorial-copy{
+  padding:24px 22px 22px;
+}
+.hero h1,.magazine-hero-v2 h1,.city-detail-copy h1{
+  letter-spacing:-.055em;
+}
+.hero p,.magazine-hero-v2 p,.city-detail-lead{font-size:16px;line-height:1.64}
+.hero-actions{gap:9px}
+.section{margin-top:22px}
+.section-head{
+  margin-bottom:12px;
+  gap:10px 14px;
+}
+.section-title{font-size:23px;letter-spacing:-.045em}
+.section-desc{font-size:14px;line-height:1.62;max-width:58ch}
+.hero-card,.info-card,.editorial-panel,.city-card,.trip-card,.route-strip-card,.finder-card,.district-card,.example-card,.collection-card,.stat-card,.trip-search-card,.utility-banner,.meta-card,.day-card,.cover-story-card{
+  border-color:rgba(227,216,201,.88);
+  box-shadow:0 12px 30px rgba(20,33,48,.055);
+}
+.hero-card:hover,.info-card:hover,.route-strip-card:hover,.finder-card:hover,.district-card:hover,.example-card:hover,.collection-card:hover,.trip-card:hover,.city-card:hover,.sample-card:hover{
+  box-shadow:0 16px 34px rgba(20,33,48,.072);
+}
+.city-card,.finder-card,.sample-card,.example-card,.route-strip-card,.trip-card{
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.city-card:hover,.finder-card:hover,.sample-card:hover,.example-card:hover,.route-strip-card:hover,.trip-card:hover{
+  transform:translateY(-1.5px);
+  border-color:#ead1b9;
+}
+.card-image{
+  aspect-ratio:1.08/1;
+  background:#e8dfd3;
+}
+.card-body{
+  padding:16px 16px 17px;
+}
+.city-card .card-body,
+.finder-card .card-body,
+.sample-card .card-body,
+.trip-card .card-body,
+.example-card .card-body{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+.city-card .meta,.finder-card .meta,.sample-card .meta,.trip-card .meta,.editorial-card .meta{
+  margin-bottom:0;
+  font-size:11px;
+  letter-spacing:.08em;
+}
+.card-title{margin:0;font-size:19px;line-height:1.14;letter-spacing:-.035em}
+.card-copy{font-size:14px;line-height:1.62}
+.city-card .card-copy,
+.finder-card .card-copy,
+.sample-card .card-copy,
+.trip-card .card-copy,
+.example-card .card-copy{flex:1 1 auto}
+.card-actions{margin-top:2px;gap:7px}
+.finder-toolbar,
+.trip-search-card,
+.city-finder-section .finder-toolbar,
+.search-row,
+.trip-search-row{
+  align-items:stretch;
+}
+.finder-toolbar,
+.trip-search-card,
+.city-finder-section .finder-toolbar{
+  background:linear-gradient(180deg,rgba(255,252,248,.96),rgba(248,242,233,.92));
+  border:1px solid rgba(227,216,201,.9);
+  box-shadow:0 10px 24px rgba(20,33,48,.045);
+}
+.search-row,
+.trip-search-row{
+  gap:10px;
+}
+.input,select,textarea,.finder-search,.trip-sort-select{
+  min-height:48px;
+  border-radius:15px;
+  border-color:rgba(220,212,201,.95);
+  box-shadow:0 1px 0 rgba(255,255,255,.72) inset;
+}
+textarea{min-height:110px}
+.result-sticky-bar{
+  border-radius:18px;
+  padding:10px 12px;
+  box-shadow:0 18px 34px rgba(20,33,48,.10);
+}
+.result-sticky-actions .ghost-btn,.result-sticky-actions .secondary-btn,.result-sticky-actions .primary-btn{
+  min-height:40px;
+  border-radius:13px;
+}
+.mobile-dock{
+  left:12px;
+  right:12px;
+  bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  padding:8px;
+  border-radius:24px;
+  gap:6px;
+  background:rgba(255,252,247,.88);
+  border:1px solid rgba(224,214,199,.86);
+  box-shadow:0 16px 30px rgba(20,33,48,.10);
+}
+.mobile-dock-item{
+  min-height:52px;
+  padding:7px 6px 6px;
+  border-radius:16px;
+}
+.mobile-dock-icon{
+  width:30px;
+  height:30px;
+  border-radius:10px;
+  border-color:rgba(224,214,199,.86);
+}
+.mobile-dock-label{font-size:11px;letter-spacing:-.015em}
+.mobile-dock-helper{font-size:8.5px;letter-spacing:.01em}
+.page-signal-card{
+  border-radius:16px;
+  padding:11px 12px;
+  box-shadow:0 8px 20px rgba(22,34,48,.035);
+}
+.footer-build-rail{
+  padding:8px 9px;
+  border-radius:15px;
+  box-shadow:0 10px 22px rgba(20,33,48,.055);
+}
+.footer-build-toggle,
+.footer-build-rail a{min-height:34px;border-radius:12px}
+@media (min-width:760px){
+  .container{width:min(calc(100% - 44px),1188px)}
+  .top-bar-inner{padding:12px 0}
+  .hero,.magazine-hero-v2,.city-detail-hero{gap:20px}
+  .hero-copy,.magazine-hero-copy,.city-detail-copy,.result-editorial-copy{padding:28px 26px 26px}
+  .section{margin-top:28px}
+  .section-head{margin-bottom:14px}
+  .cover-story-card-large{min-height:400px}
+  .cover-story-card-compact{min-height:196px}
+  .cover-story-body{padding:22px 22px 21px}
+  .cover-story-body h3{font-size:28px}
+  .finder-toolbar,.trip-search-card,.city-finder-section .finder-toolbar{padding:17px 18px;border-radius:24px}
+}
+@media (max-width:759px){
+  .top-bar-inner{padding:8px 0 9px;gap:9px}
+  .brand-mark{width:34px;height:34px;border-radius:11px}
+  .brand-title{font-size:18px}
+  .brand-sub{font-size:10px}
+  .lang-switch{padding:3px;gap:5px}
+  .lang-btn,.nav-chip,.soft-btn,.ghost-btn,.action-btn,.chip,.tab-btn,.finder-tab,.mini-filter,.jump-chip{min-height:38px;padding:0 12px;border-radius:13px;font-size:12.5px}
+  .lang-btn{height:38px;padding:0 10px}
+  .hero,.magazine-hero-v2,.city-detail-hero{gap:14px}
+  .hero-copy,.magazine-hero-copy,.city-detail-copy,.result-editorial-copy,.planner-shell,.collection-card,.stat-card,.trip-search-card,.utility-banner,.shared-trip-banner,.editorial-panel,.info-card{padding:17px}
+  .hero h1,.magazine-hero-v2 h1{font-size:clamp(32px,9vw,40px);line-height:1}
+  .hero p,.magazine-hero-v2 p,.city-detail-lead{font-size:15px;line-height:1.62}
+  .section{margin-top:22px}
+  .section-head .section-title{font-size:clamp(22px,6.2vw,28px)}
+  .section-desc{font-size:13.5px}
+  .card-image{aspect-ratio:1.15/1}
+  .card-body{padding:15px 15px 16px}
+  .card-title{font-size:18px}
+  .finder-toolbar,.trip-search-card,.city-finder-section .finder-toolbar{padding:15px;border-radius:20px}
+  .result-sticky-bar{left:12px;right:12px;bottom:84px;padding:9px 10px;border-radius:16px}
+  .mobile-dock{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:7px;border-radius:20px}
+}
+@media (max-width:479px){
+  .container{width:min(calc(100% - 26px),var(--max))}
+  .hero-copy,.magazine-hero-copy,.city-detail-copy,.result-editorial-copy,.planner-shell,.collection-card,.stat-card,.trip-search-card,.utility-banner,.shared-trip-banner,.editorial-panel,.info-card{padding:15px}
+  .section{margin-top:20px}
+  .card-image{aspect-ratio:1.2/1}
+  .finder-toolbar,.trip-search-card,.city-finder-section .finder-toolbar{padding:14px;border-radius:18px}
+  .mobile-dock-item{min-height:48px;border-radius:14px}
+  .mobile-dock-icon{width:28px;height:28px}
+}
