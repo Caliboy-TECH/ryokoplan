@@ -5369,3 +5369,107 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
     aspect-ratio:var(--mobile-media-ratio-tight) !important;
   }
 }
+
+
+/* v160 mobile media system finish */
+:root{
+  --mobile-media-hero: 16 / 10;
+  --mobile-media-hero-sub: 4 / 3;
+  --mobile-media-panel: 16 / 10;
+  --mobile-media-card-city: 4 / 3;
+  --mobile-media-card-trip: 16 / 11;
+  --mobile-media-card-tight: 6 / 5;
+}
+@media (max-width: 767px){
+  .hero-visual-grid{height:auto;grid-auto-rows:1fr;align-items:stretch}
+  .hero-visual-main,
+  .result-editorial-visual,
+  .result-visual-card,
+  .visual-story-card,
+  .city-detail-visual,
+  .city-atlas-media,
+  .public-route-media,
+  .operating-edit-media,
+  .city-collection-cover,
+  .shared-spotlight-media,
+  .trip-detail-media,
+  .trip-continue-media,
+  .cover-story-card-large .cover-story-media,
+  .cover-story-card-compact .cover-story-media{
+    aspect-ratio:var(--mobile-media-panel) !important;
+    min-height:0 !important;
+  }
+  .hero-visual-sub{
+    aspect-ratio:var(--mobile-media-hero-sub) !important;
+    min-height:0 !important;
+  }
+  .finder-card .card-image,
+  .city-card .card-image,
+  .city-collection-card .card-image{
+    aspect-ratio:var(--mobile-media-card-city) !important;
+    min-height:0 !important;
+  }
+  .trip-card .card-image,
+  .sample-card .card-image,
+  .example-card .card-image,
+  .public-route-card .card-image,
+  .operating-edit-card .card-image{
+    aspect-ratio:var(--mobile-media-card-trip) !important;
+    min-height:0 !important;
+  }
+  .card-image{
+    aspect-ratio:var(--mobile-media-card-tight) !important;
+    min-height:0 !important;
+  }
+  :where(.hero-visual-main,.hero-visual-sub,.result-editorial-visual,.result-visual-card,.visual-story-card,.city-detail-visual,.city-atlas-media,.public-route-media,.operating-edit-media,.city-collection-cover,.shared-spotlight-media,.trip-detail-media,.trip-continue-media,.cover-story-media,.card-image){
+    overflow:hidden;
+    line-height:0;
+  }
+  :where(.hero-visual-main,.hero-visual-sub,.city-detail-visual,.city-atlas-media,.public-route-media,.operating-edit-media,.city-collection-cover,.shared-spotlight-media,.trip-detail-media,.trip-continue-media,.cover-story-media,.card-image) > img,
+  :where(.hero-visual-main,.hero-visual-sub,.city-detail-visual,.city-atlas-media,.public-route-media,.operating-edit-media,.city-collection-cover,.shared-spotlight-media,.trip-detail-media,.trip-continue-media,.cover-story-media,.card-image) img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
+    display:block;
+  }
+  .result-editorial-visual,
+  .result-visual-card,
+  .visual-story-card{background-position:center center;background-size:cover}
+  .hero-visual-main .image-caption,
+  .hero-visual-sub .image-caption,
+  .city-detail-visual .glass-note,
+  .result-editorial-visual .result-visual-overlay{
+    line-height:1.45;
+  }
+}
+@media (max-width: 420px){
+  .hero-visual-main,
+  .result-editorial-visual,
+  .result-visual-card,
+  .visual-story-card,
+  .city-detail-visual,
+  .city-atlas-media,
+  .public-route-media,
+  .operating-edit-media,
+  .city-collection-cover,
+  .shared-spotlight-media,
+  .trip-detail-media,
+  .trip-continue-media,
+  .cover-story-card-large .cover-story-media,
+  .cover-story-card-compact .cover-story-media{
+    aspect-ratio:16 / 11 !important;
+  }
+  .hero-visual-sub,
+  .finder-card .card-image,
+  .city-card .card-image{
+    aspect-ratio:6 / 5 !important;
+  }
+  .trip-card .card-image,
+  .sample-card .card-image,
+  .example-card .card-image{
+    aspect-ratio:1.24 / 1 !important;
+  }
+}
