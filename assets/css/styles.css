@@ -4485,3 +4485,252 @@ textarea{min-height:110px}
   .mobile-dock-item{min-height:48px;border-radius:14px}
   .mobile-dock-icon{width:28px;height:28px}
 }
+
+
+/* v154 practical product fit pass */
+:root{
+  --control-h-sm:40px;
+  --control-h-md:47px;
+  --control-h-lg:52px;
+  --card-radius-lg:24px;
+  --card-radius-md:19px;
+  --card-radius-sm:14px;
+  --panel-shadow:0 12px 26px rgba(19,34,52,.048);
+  --panel-shadow-hover:0 16px 34px rgba(19,34,52,.072);
+}
+body{
+  background:linear-gradient(180deg,#f7f2ea 0%,#f3ede4 58%,#f1ebe1 100%);
+}
+.container{width:min(calc(100% - 34px),1196px)}
+.top-bar{
+  background:rgba(248,244,238,.92);
+  border-bottom:1px solid rgba(223,213,197,.74);
+  box-shadow:0 6px 16px rgba(20,33,48,.024);
+}
+.top-bar-inner{
+  min-height:68px;
+  padding:9px 0 10px;
+  gap:12px 16px;
+}
+.brand{gap:10px}
+.brand-mark{
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  box-shadow:0 6px 14px rgba(19,34,52,.04);
+}
+.brand-title{font-size:19px;letter-spacing:-.04em}
+.brand-sub{font-size:10.5px;letter-spacing:.02em;color:#6b7784}
+.top-actions{gap:8px 10px}
+.lang-switch{
+  padding:3px;
+  border-radius:15px;
+  background:rgba(255,252,247,.76);
+  border:1px solid rgba(223,213,197,.74);
+}
+.lang-btn{
+  min-width:48px;
+  height:40px;
+  padding:0 11px;
+  border-radius:12px;
+}
+.lang-btn,.nav-chip,.soft-btn,.ghost-btn,.action-btn,.chip,.tab-btn,.finder-tab,.mini-filter,.jump-chip,.hero-feature-rail a,.footer-build-toggle,.footer-build-rail a{
+  min-height:40px;
+  font-size:12.75px;
+}
+.nav-chip,.soft-btn,.ghost-btn,.action-btn,.chip,.tab-btn,.finder-tab,.mini-filter,.jump-chip,.hero-feature-rail a,.footer-build-toggle,.footer-build-rail a{
+  padding:0 14px;
+  border-radius:14px;
+}
+.primary-btn,.secondary-btn{
+  min-height:48px;
+  padding:0 18px;
+  border-radius:15px;
+  font-size:13.5px;
+}
+.primary-btn{box-shadow:0 10px 20px rgba(214,106,69,.16)}
+.secondary-btn{box-shadow:0 1px 0 rgba(255,255,255,.72) inset}
+.hero,.magazine-hero-v2,.city-detail-hero{gap:16px}
+.hero-copy,.magazine-hero-copy,.city-detail-copy,.result-editorial-copy{
+  padding:22px 21px 21px;
+}
+.hero-title-split{gap:.02em;letter-spacing:-.05em}
+.hero h1,.magazine-hero-v2 h1,.city-detail-copy h1{margin:12px 0 10px;line-height:.96}
+.hero p,.magazine-hero-v2 p,.city-detail-lead{font-size:15.5px;line-height:1.62}
+.cover-meta-row{gap:7px;margin-bottom:10px}
+.cover-meta-pill,.hero-stat-label,.meta-label,.page-signal-chip{
+  font-size:10px;
+  letter-spacing:.07em;
+}
+.cover-note-line{
+  padding:14px 15px;
+  background:linear-gradient(180deg,rgba(255,251,246,.92),rgba(246,238,229,.92));
+  border:1px solid rgba(226,214,198,.88);
+  box-shadow:0 8px 20px rgba(20,33,48,.03);
+}
+.cover-note-line strong{font-size:10.5px;letter-spacing:.09em}
+.cover-note-line span{font-size:13.5px;line-height:1.6}
+.section{margin-top:24px}
+.section-head{
+  margin-bottom:12px;
+  gap:10px 14px;
+}
+.section-head > div{max-width:min(100%,700px)}
+.section-head .section-title{
+  font-size:clamp(25px,2.4vw,34px);
+  line-height:1.04;
+}
+.section-desc{
+  max-width:56ch;
+  font-size:14px;
+  line-height:1.62;
+}
+.hero-card,.panel,.city-card,.sample-card,.tip-card,.trip-card,.editorial-card,.planner-shell,.empty-state,.info-card,.collection-card,.stat-card,.trip-search-card,.dispatch-card,.mini-editorial-card,.cover-story-card,.shared-trip-banner,.trip-detail-sheet,.utility-banner,.trip-loop-panel,.loop-card,.trip-loop-card,.trip-loop-side,.meta-card,.day-card,.result-top-helper,.finder-card,.route-strip-card{
+  border-radius:var(--card-radius-lg);
+  box-shadow:var(--panel-shadow);
+  border-color:rgba(228,217,202,.86);
+}
+.hero-card:hover,.cover-story-card:hover,.mini-editorial-card:hover,.dispatch-card:hover,.trip-card:hover,.city-card:hover,.finder-card:hover,.route-strip-card:hover,.editorial-panel:hover,.info-card:hover,.loop-card:hover,.trip-loop-card:hover,.trip-loop-side:hover,.collection-card:hover,.stat-card:hover,.trip-search-card:hover,.shared-trip-banner:hover{
+  box-shadow:var(--panel-shadow-hover);
+}
+.hero-feature-card,.hero-side-card,.hero-stat-card,.result-fact-card,.meta-card,.dispatch-card,.glass-note,.visual-stack-card{
+  border-color:rgba(220,206,188,.9);
+  box-shadow:0 10px 22px rgba(18,31,44,.05);
+}
+.hero-feature-card{
+  min-height:226px;
+  padding:18px;
+}
+.hero-feature-card h3,.hero-side-card h3{font-size:22px;line-height:1.12}
+.hero-feature-card p,.hero-side-card p{font-size:13.5px;line-height:1.62}
+.hero-visual-grid{gap:12px}
+.hero-visual-main,.hero-visual-sub,.cover-story-media,.result-editorial-visual,.visual-story-card{
+  border-radius:22px;
+}
+.cover-system-shell-home .hero-visual-main{min-height:430px}
+.cover-system-shell-home .hero-visual-sub{min-height:208px}
+.hero-visual-main .image-caption,.hero-visual-sub .image-caption{
+  left:14px;
+  right:14px;
+  bottom:14px;
+  padding:13px 14px;
+  border-radius:18px;
+}
+.hero-visual-main .image-caption strong{font-size:24px}
+.hero-visual-sub .image-caption strong{font-size:16px}
+.card-image{aspect-ratio:1.12/1}
+.finder-card .card-image,.city-card .card-image{aspect-ratio:1.14/1}
+.trip-card .card-image,.sample-card .card-image,.example-card .card-image{aspect-ratio:1.2/1}
+.card-body{padding:17px 17px 18px}
+.card-title{font-size:18px;line-height:1.16}
+.card-copy{font-size:13.5px;line-height:1.6}
+.card-actions{gap:7px;margin-top:4px}
+.finder-toolbar,.trip-search-card,.city-finder-section .finder-toolbar{
+  padding:18px;
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(255,252,248,.98),rgba(247,241,232,.96));
+  box-shadow:0 8px 22px rgba(20,33,48,.04);
+}
+.finder-head,.finder-tools{gap:12px}
+.search-row,.trip-search-row{
+  gap:9px;
+  align-items:stretch;
+}
+.input,select,textarea,.finder-search,.trip-sort-select,
+.trip-search-row .input,.search-row .input{
+  min-height:47px;
+  border-radius:14px;
+  background:linear-gradient(180deg,#fffefc 0%,#fffaf4 100%);
+  border-color:rgba(220,212,201,.92);
+}
+textarea{min-height:108px}
+.search-row .secondary-btn,.trip-search-row .secondary-btn{min-width:108px}
+.result-top-actions{gap:9px}
+.result-top-actions > *{
+  min-height:47px;
+  border-radius:15px;
+  box-shadow:0 6px 16px rgba(20,33,48,.03);
+}
+.result-sticky-bar{
+  padding:10px 11px;
+  border-radius:17px;
+  background:rgba(255,252,248,.94);
+  box-shadow:0 14px 28px rgba(20,33,48,.085);
+}
+.result-sticky-copy strong{font-size:12.25px}
+.result-sticky-copy span{font-size:11px}
+.result-sticky-actions .ghost-btn,.result-sticky-actions .secondary-btn,.result-sticky-actions .primary-btn{
+  min-height:38px;
+  border-radius:12px;
+}
+.mobile-dock{
+  max-width:min(404px,calc(100vw - 22px));
+  padding:7px;
+  border-radius:20px;
+  box-shadow:0 14px 26px rgba(20,33,48,.09);
+}
+.mobile-dock-item{
+  min-height:50px;
+  padding:6px 6px 5px;
+  border-radius:14px;
+}
+.mobile-dock-icon{width:28px;height:28px;border-radius:9px}
+.mobile-dock-label{font-size:10.75px}
+.mobile-dock-helper{font-size:8px}
+.page-signal-card{
+  padding:10px 11px;
+  border-radius:15px;
+  box-shadow:0 6px 16px rgba(22,34,48,.026);
+}
+.footer-build-rail{
+  padding:8px;
+  border-radius:14px;
+  box-shadow:0 8px 18px rgba(20,33,48,.046);
+}
+.footer-build-toggle,.footer-build-rail a{min-height:32px;border-radius:11px}
+@media (min-width:760px){
+  .container{width:min(calc(100% - 48px),1200px)}
+  .top-bar-inner{padding:10px 0}
+  .hero,.magazine-hero-v2,.city-detail-hero{gap:18px}
+  .hero-copy,.magazine-hero-copy,.city-detail-copy,.result-editorial-copy{padding:25px 24px 24px}
+  .section{margin-top:26px}
+  .cover-story-grid,.mini-editorial-grid,.route-strip-grid,.city-grid,.samples-grid,.tips-grid,.trips-grid,.story-grid,.loop-grid,.trip-loop-grid,.public-route-grid,.operating-edit-grid,.city-collections-grid{gap:16px}
+}
+@media (max-width:759px){
+  .container{width:min(calc(100% - 28px),var(--max))}
+  .top-bar-inner{padding:8px 0 9px;gap:9px 10px}
+  .brand-mark{width:34px;height:34px}
+  .brand-title{font-size:18px}
+  .top-actions{width:100%;justify-content:space-between;gap:8px}
+  .lang-switch{padding:3px;gap:4px}
+  .lang-btn{height:38px;padding:0 10px;border-radius:11px}
+  .nav-chip,.soft-btn,.ghost-btn,.action-btn,.chip,.tab-btn,.finder-tab,.mini-filter,.jump-chip{min-height:38px;padding:0 12px;border-radius:13px}
+  .hero-copy,.magazine-hero-copy,.city-detail-copy,.result-editorial-copy,.planner-shell,.collection-card,.stat-card,.trip-search-card,.utility-banner,.shared-trip-banner,.editorial-panel,.info-card{padding:17px}
+  .hero h1,.magazine-hero-v2 h1{font-size:clamp(31px,8.8vw,39px)}
+  .hero p,.magazine-hero-v2 p,.city-detail-lead{font-size:14.5px}
+  .cover-note-line{padding:13px 14px}
+  .section{margin-top:22px}
+  .section-head .section-title{font-size:clamp(23px,6.2vw,29px)}
+  .card-image{aspect-ratio:1.08/1}
+  .finder-card .card-image,.city-card .card-image{aspect-ratio:1.1/1}
+  .trip-card .card-image,.sample-card .card-image,.example-card .card-image{aspect-ratio:1.16/1}
+  .card-body{padding:15px 15px 16px}
+  .finder-toolbar,.trip-search-card,.city-finder-section .finder-toolbar{padding:16px;border-radius:20px}
+  .search-row,.trip-search-row{grid-template-columns:1fr;gap:8px}
+  .search-row .secondary-btn,.trip-search-row .secondary-btn,.trip-sort-select{width:100%;min-width:0}
+  .mobile-dock{left:10px;right:10px;max-width:none;bottom:calc(10px + env(safe-area-inset-bottom,0px));}
+}
+@media (max-width:479px){
+  .container{width:min(calc(100% - 24px),var(--max))}
+  .top-bar-inner{gap:8px}
+  .brand-mark{width:32px;height:32px;border-radius:10px}
+  .brand-title{font-size:17px}
+  .hero-copy,.magazine-hero-copy,.city-detail-copy,.result-editorial-copy,.planner-shell,.collection-card,.stat-card,.trip-search-card,.utility-banner,.shared-trip-banner,.editorial-panel,.info-card{padding:15px}
+  .hero h1,.magazine-hero-v2 h1{font-size:clamp(29px,9.1vw,35px)}
+  .hero p,.magazine-hero-v2 p,.city-detail-lead{font-size:14px;line-height:1.58}
+  .section{margin-top:20px}
+  .section-desc{font-size:13.5px}
+  .finder-toolbar,.trip-search-card,.city-finder-section .finder-toolbar{padding:14px;border-radius:18px}
+  .mobile-dock{padding:6px;border-radius:18px}
+  .mobile-dock-item{min-height:48px}
+}

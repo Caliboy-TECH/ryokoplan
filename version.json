@@ -1,13 +1,13 @@
 {
-  "release": "v153",
-  "version": "v153",
+  "release": "v154",
+  "version": "v154",
   "date": "2026-04-05",
-  "codename": "mature-product-surface-pass",
-  "headline": "This build pushes Ryokoplan further toward a real product surface by tightening top-bar chrome, control heights, button scale, card media ratios, search and filter rows, sticky actions, and the mobile dock into a more mature, production-grade editorial UI across web and mobile.",
+  "codename": "practical-product-fit-pass",
+  "headline": "This build pushes Ryokoplan further out of prototype territory by tightening top-bar rhythm, hero spacing, card media ratios, control sizing, toolbars, sticky actions, and the mobile dock into a calmer, more practical product surface across mobile and web.",
   "notes": [
-    "Refines the visual system behind top-bar chrome, language controls, chips, buttons, and section headers so the interface reads less like a prototype with mixed control sizes and more like one coherent editorial product.",
-    "Rebalances hero spacing, card image ratios, card body cadence, search and filter toolbars, and form inputs so key surfaces feel calmer, denser in the right places, and more intentional on both mobile and desktop.",
-    "Softens sticky and dock surfaces while keeping current launch/support behavior intact, reducing visual noise and making everyday interactions feel closer to a production release."
+    "Refines the visible control system again so language switches, navigation chips, buttons, tabs, sticky actions, and support links read more like one production interface instead of separate prototype-era control sets.",
+    "Rebalances hero copy, section headers, cover notes, card image framing, card body cadence, and toolbar surfaces so home, magazine, city, result, and My Trips feel more editorial but also more commercially finished.",
+    "Softens the mobile dock, sticky result actions, and support rail while keeping the existing product flow intact, giving the interface a more practical real-product feel on small screens and desktop."
   ],
   "updatedAt": "2026-04-05"
 }
