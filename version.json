@@ -1,13 +1,13 @@
 {
-  "release": "v151",
-  "version": "v151",
+  "release": "v152",
+  "version": "v152",
   "date": "2026-04-05",
-  "codename": "component-finish-production-pass",
-  "headline": "This build focuses on the remaining component-level signs of a prototype—tightening top-bar chrome, section headers, cards, search and filter rows, sticky actions, and the mobile dock so Ryokoplan reads more like a finished product across web and mobile.",
+  "codename": "production-component-cadence-pass",
+  "headline": "This build pushes Ryokoplan further away from an early prototype by tightening chrome, control sizing, card rhythm, media ratios, search and filter surfaces, sticky actions, and the mobile dock into a calmer, more product-grade visual system across web and mobile.",
   "notes": [
-    "Unifies control sizing and spacing across language switches, nav chips, pills, buttons, search inputs, sticky actions, and filter rows so the UI behaves like one mature product system.",
-    "Refines section headers, hero spacing, card proportions, media ratios, and body rhythm to reduce early-prototype feel and make Home, Magazine, and My Trips read more editorial and intentional.",
-    "Improves real-world usability on mobile with calmer dock sizing, cleaner sticky action density, better search-row wrapping, and more believable first-fold spacing on smaller screens."
+    "Refines top-bar chrome, language controls, nav chips, hero spacing, section headers, and card radii so the product reads as one mature editorial interface instead of a set of loosely matched prototype parts.",
+    "Rebuilds media and control cadence across finder cards, trip cards, search and filter rows, sticky CTA surfaces, and form fields so button sizes, image framing, and panel density feel more intentional on both mobile and desktop.",
+    "Softens the mobile dock, support rail controls, and sticky action bars while preserving the current launch/support behavior, reducing visual noise and making the UI feel closer to a production release."
   ],
   "updatedAt": "2026-04-05"
 }

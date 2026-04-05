@@ -3896,3 +3896,358 @@ textarea{min-height:112px}
   .mobile-dock-item{min-height:52px}
   .mobile-dock-label{font-size:11px}
 }
+
+/* v152 component cadence & production finish pass */
+:root{
+  --control-h:48px;
+  --control-h-sm:39px;
+  --control-h-md:48px;
+  --control-h-lg:54px;
+  --card-radius-lg:26px;
+  --card-radius-md:22px;
+  --card-radius-sm:16px;
+  --panel-shadow:0 14px 32px rgba(19,34,52,.055);
+  --panel-shadow-hover:0 18px 40px rgba(19,34,52,.082);
+}
+body{
+  background:linear-gradient(180deg,#f7f2ea 0%,#f4eee4 54%,#f2ece2 100%);
+}
+.top-bar{
+  background:rgba(248,243,236,.88);
+  border-bottom:1px solid rgba(224,214,198,.78);
+  box-shadow:0 8px 20px rgba(24,37,52,.035);
+}
+.top-bar-inner{
+  min-height:72px;
+  padding:10px 0;
+  gap:12px;
+}
+.brand{gap:11px}
+.brand-mark{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+  border-color:rgba(224,214,198,.92);
+  box-shadow:0 10px 22px rgba(19,34,52,.06);
+}
+.brand-title{font-size:21px;letter-spacing:-.045em}
+.brand-sub{font-size:11px;letter-spacing:.01em}
+.top-actions{gap:10px}
+.lang-switch{
+  padding:4px;
+  border-radius:18px;
+  background:rgba(255,252,247,.82);
+  border:1px solid rgba(226,215,198,.88);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72);
+}
+.lang-btn{
+  min-width:50px;
+  height:42px;
+  padding:0 13px;
+  border-radius:14px;
+  border-color:transparent;
+  background:transparent;
+  box-shadow:none;
+}
+.lang-btn.active{
+  background:#fff;
+  border-color:rgba(223,214,199,.92);
+  box-shadow:0 8px 16px rgba(19,34,52,.055);
+}
+.nav-chip,
+.soft-btn,
+.ghost-btn,
+.action-btn,
+.chip,
+.tab-btn,
+.finder-tab,
+.mini-filter,
+.jump-chip,
+.hero-feature-rail a,
+.footer-build-toggle,
+.footer-build-rail a{
+  min-height:42px;
+  padding:0 15px;
+  border-radius:15px;
+}
+.nav-chip{
+  min-width:110px;
+  justify-content:center;
+  background:rgba(255,253,249,.94);
+}
+.nav-chip.magazine{
+  background:linear-gradient(135deg,#f8ede3 0%,#f2c9af 100%);
+  border-color:#e7c3a7;
+  color:#5a3625;
+}
+.nav-chip.trips{
+  background:linear-gradient(180deg,#f4f7fa 0%,#edf3f7 100%);
+  border-color:#d8e2e9;
+}
+.hero.hero-magazine,
+.magazine-hero-v2,
+.city-detail-hero,
+.result-hero-card{
+  border-radius:30px;
+}
+.hero-copy-magazine,
+.magazine-hero-copy,
+.city-detail-copy,
+.result-editorial-copy,
+.hero-copy,
+.planner-shell,
+.collection-card,
+.stat-card,
+.trip-search-card,
+.utility-banner,
+.shared-trip-banner,
+.editorial-panel,
+.info-card{
+  padding:24px;
+}
+.cover-meta-row{gap:8px;margin-bottom:12px}
+.cover-meta-pill{
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:10.5px;
+  letter-spacing:.05em;
+}
+.cover-kicker,
+.eyebrow,
+.collection-kicker,
+.collection-label,
+.page-signal-chip{
+  letter-spacing:.03em;
+}
+.section{margin-top:28px}
+.section-head{
+  gap:10px;
+  margin-bottom:16px;
+  align-items:end;
+}
+.section-head > div{max-width:min(100%,740px)}
+.section-head .section-title{
+  font-size:clamp(27px,2.8vw,36px);
+  line-height:1.03;
+}
+.section-desc{
+  max-width:60ch;
+  line-height:1.68;
+}
+.card-image{
+  aspect-ratio:1.34;
+  background:linear-gradient(180deg,#efe6da 0%,#e8dccd 100%);
+}
+.finder-card .card-image,
+.city-card .card-image{aspect-ratio:1.3}
+.trip-card .card-image,
+.example-card .card-image,
+.sample-card .card-image{aspect-ratio:1.48}
+.card-image::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0 0;
+  height:1px;
+  background:rgba(231,219,205,.95);
+}
+.card-body{
+  padding:18px 18px 19px;
+  gap:9px;
+}
+.card-title{
+  font-size:19px;
+  line-height:1.16;
+}
+.card-copy{
+  line-height:1.62;
+  color:#596575;
+}
+.city-card .meta,
+.finder-card .meta,
+.sample-card .meta{
+  font-size:10.5px;
+  letter-spacing:.09em;
+}
+.finder-toolbar,
+.trip-search-card{
+  padding:20px;
+  border-radius:26px;
+}
+.finder-head,
+.finder-tools{gap:13px}
+.finder-group,
+.finder-tabs,
+.finder-filter-row,
+.trip-filter-chips,
+.trip-collection-chips{gap:9px}
+.finder-search,
+.trip-search-row .input,
+.search-row .input,
+.trip-sort-select,
+.input,
+select,
+textarea{
+  min-height:48px;
+  border-radius:16px;
+  border-color:rgba(220,209,194,.94);
+  background:linear-gradient(180deg,#fffefd 0%,#fffaf5 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75), 0 1px 0 rgba(255,255,255,.28);
+}
+textarea{min-height:118px}
+.search-row,
+.trip-search-row{
+  grid-template-columns:minmax(0,1fr) minmax(150px,184px) auto;
+  gap:10px;
+}
+.search-row .secondary-btn,
+.trip-search-row .secondary-btn{
+  min-width:116px;
+}
+.result-top-actions{
+  gap:10px;
+}
+.result-top-actions > *{
+  min-height:48px;
+  border-radius:16px;
+  box-shadow:0 7px 18px rgba(20,33,48,.035);
+}
+.result-sticky-bar{
+  padding:11px 13px;
+  border-radius:20px;
+  background:rgba(255,252,248,.92);
+  border-color:rgba(224,214,199,.9);
+  box-shadow:0 16px 30px rgba(20,33,48,.1);
+}
+.result-sticky-copy strong{font-size:12.5px;letter-spacing:-.01em}
+.result-sticky-copy span{font-size:11.5px}
+.result-sticky-actions .ghost-btn,
+.result-sticky-actions .secondary-btn,
+.result-sticky-actions .primary-btn{
+  min-height:39px;
+  border-radius:13px;
+}
+.mobile-dock{
+  max-width:min(392px,calc(100vw - 20px));
+  padding:7px;
+  border-radius:22px;
+  background:rgba(255,250,244,.9);
+  border-color:rgba(224,213,198,.88);
+  box-shadow:0 16px 28px rgba(20,33,48,.115);
+}
+.mobile-dock-item{
+  min-height:54px;
+  padding:7px 6px 6px;
+  border-radius:15px;
+  gap:3px;
+}
+.mobile-dock-icon{
+  width:30px;
+  height:30px;
+  border-radius:10px;
+}
+.mobile-dock-label{font-size:11px;letter-spacing:-.01em}
+.mobile-dock-helper{font-size:8.5px}
+.footer-build-rail{
+  padding:9px 10px;
+  gap:8px;
+  border-radius:16px;
+}
+.footer-build-toggle,
+.footer-build-rail a{
+  min-height:36px;
+  padding:0 12px;
+  font-size:12px;
+}
+.launch-feedback-cta{
+  box-shadow:0 12px 24px rgba(19,40,63,.085);
+}
+@media (min-width:760px){
+  .top-bar-inner{padding:11px 0}
+  .section-head{grid-template-columns:minmax(0,1fr) auto}
+  .hero.hero-magazine,
+  .magazine-hero-v2,
+  .city-detail-hero,
+  .result-hero-card{border-radius:32px}
+  .cover-story-grid,
+  .mini-editorial-grid,
+  .route-strip-grid,
+  .city-grid,
+  .samples-grid,
+  .tips-grid,
+  .trips-grid,
+  .story-grid,
+  .loop-grid,
+  .trip-loop-grid,
+  .public-route-grid,
+  .operating-edit-grid,
+  .city-collections-grid{gap:18px}
+}
+@media (max-width:759px){
+  .top-bar{background:rgba(248,243,236,.92)}
+  .top-bar-inner{min-height:auto;padding:8px 0 10px;gap:10px}
+  .top-actions{width:100%;gap:8px}
+  .lang-switch{padding:3px;border-radius:16px}
+  .lang-btn{height:40px;min-width:0;padding:0 10px;border-radius:13px}
+  .nav-chip,
+  .soft-btn,
+  .ghost-btn,
+  .action-btn,
+  .chip,
+  .tab-btn,
+  .finder-tab,
+  .mini-filter,
+  .jump-chip{min-height:39px;padding:0 13px;border-radius:14px;min-width:0}
+  .hero-copy-magazine,
+  .magazine-hero-copy,
+  .city-detail-copy,
+  .result-editorial-copy,
+  .hero-copy,
+  .planner-shell,
+  .collection-card,
+  .stat-card,
+  .trip-search-card,
+  .utility-banner,
+  .shared-trip-banner,
+  .editorial-panel,
+  .info-card{padding:18px}
+  .section{margin-top:24px}
+  .section-head{margin-bottom:14px}
+  .section-head .section-title{font-size:clamp(24px,6.5vw,30px)}
+  .section-desc{font-size:14px;line-height:1.64}
+  .card-body{padding:16px 16px 17px}
+  .card-title{font-size:18px}
+  .finder-toolbar,
+  .trip-search-card{padding:16px;border-radius:22px}
+  .search-row,
+  .trip-search-row{grid-template-columns:1fr;gap:8px}
+  .search-row .secondary-btn,
+  .trip-search-row .secondary-btn,
+  .trip-sort-select{width:100%;min-width:0}
+  .result-sticky-bar{left:12px;right:12px;padding:10px 11px;border-radius:16px}
+  .result-sticky-actions{gap:7px}
+  .mobile-dock{left:10px;right:10px;max-width:none;bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+  .footer-build-rail{padding:8px 9px}
+}
+@media (max-width:479px){
+  .brand-title{font-size:18px}
+  .brand-sub{font-size:10px}
+  .hero-copy-magazine,
+  .magazine-hero-copy,
+  .city-detail-copy,
+  .result-editorial-copy,
+  .hero-copy,
+  .planner-shell,
+  .collection-card,
+  .stat-card,
+  .trip-search-card,
+  .utility-banner,
+  .shared-trip-banner,
+  .editorial-panel,
+  .info-card{padding:15px}
+  .card-body{padding:15px 15px 16px}
+  .finder-toolbar,
+  .trip-search-card{padding:15px;border-radius:20px}
+  .mobile-dock{padding:6px;border-radius:20px}
+  .mobile-dock-item{min-height:50px;border-radius:14px}
+  .mobile-dock-icon{width:28px;height:28px}
+}
