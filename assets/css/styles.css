@@ -3614,3 +3614,147 @@ textarea{min-height:108px}
   .hero-stat-row,.result-quickfacts,.trip-stat-grid{gap:10px}
   .mobile-dock-item{min-height:58px}
 }
+
+
+/* v150 real product surface polish */
+:root{
+  --max:1248px;
+  --control-h-sm:42px;
+  --control-h-md:48px;
+  --control-h-lg:54px;
+  --card-radius-lg:26px;
+  --card-radius-md:20px;
+  --card-radius-sm:15px;
+  --panel-shadow:0 12px 34px rgba(18,31,47,.055);
+  --panel-shadow-hover:0 18px 42px rgba(18,31,47,.09);
+}
+body{letter-spacing:-.01em}
+.container{width:min(calc(100% - 40px),var(--max))}
+.page{padding-top:8px;padding-bottom:132px}
+.top-bar{background:rgba(255,252,247,.82);border-bottom:1px solid rgba(223,214,199,.62)}
+body.is-scrolled .top-bar{background:rgba(255,252,247,.93);box-shadow:0 10px 24px rgba(17,31,46,.055)}
+.top-bar-inner{min-height:70px;gap:12px;padding:11px 0}
+.brand{gap:11px}
+.brand-mark{width:40px;height:40px;border-radius:13px;box-shadow:0 7px 18px rgba(23,39,58,.08)}
+.brand-title{font-size:21px}
+.brand-sub{font-size:11px;opacity:.82}
+.page-signal{margin-top:10px}
+.page-signal-card{padding:10px 12px;border-radius:16px;background:linear-gradient(180deg, rgba(255,250,244,.72), rgba(255,252,248,.88));box-shadow:0 8px 20px rgba(22,34,48,.03)}
+.page-signal-copy strong{font-size:11px}
+.page-signal-copy span{font-size:13px}
+.lang-btn,.nav-chip,.soft-btn,.ghost-btn,.action-btn,.chip,.tab-btn,.finder-tab,.mini-filter,.jump-chip,.hero-feature-rail a,.footer-build-toggle,.footer-build-rail a{
+  min-height:var(--control-h-sm);
+  padding:0 14px;
+  border-radius:999px;
+  font-size:12.5px;
+  border-color:rgba(220,208,191,.96);
+}
+.lang-btn,.nav-chip,.soft-btn,.ghost-btn,.tab-btn,.finder-tab,.mini-filter,.jump-chip,.hero-feature-rail a,.footer-build-toggle,.footer-build-rail a{
+  background:linear-gradient(180deg,#fffdfa 0%,#fff8ef 100%);
+}
+.soft-btn:hover,.ghost-btn:hover,.nav-chip:hover,.tab-btn:hover,.finder-tab:hover,.mini-filter:hover,.jump-chip:hover,.hero-feature-rail a:hover,.footer-build-toggle:hover,.footer-build-rail a:hover{
+  border-color:#efc8a8;
+  background:linear-gradient(180deg,#fffdfb 0%,#fff4e9 100%);
+}
+.primary-btn,.secondary-btn{
+  min-height:var(--control-h-md);
+  border-radius:16px;
+  padding:0 18px;
+  font-size:14px;
+}
+.primary-btn{box-shadow:0 10px 24px rgba(214,106,69,.20)}
+.secondary-btn{background:linear-gradient(180deg,#fffdfb 0%,#fff8ef 100%);border-color:rgba(220,208,191,.96)}
+.secondary-btn:hover{border-color:#efc8a8;background:linear-gradient(180deg,#fffdfb 0%,#fff4e9 100%)}
+.hero h1{font-size:clamp(42px,6.1vw,68px);line-height:.92;max-width:11ch}
+.hero p,.magazine-hero-copy p,.editorial-copy p,.section-desc{font-size:15px;line-height:1.72}
+.section{margin-top:30px}
+.section-head{margin-bottom:16px;align-items:flex-start}
+.section-title{font-size:clamp(26px,3.2vw,34px);font-weight:820;letter-spacing:-.055em;line-height:1.02}
+.hero-card,.panel,.city-card,.sample-card,.tip-card,.trip-card,.editorial-card,.planner-shell,.empty-state,.info-card,.collection-card,.stat-card,.trip-search-card,.dispatch-card,.mini-editorial-card,.cover-story-card,.shared-trip-banner,.trip-detail-sheet,.utility-banner,.trip-loop-panel,.loop-card,.trip-loop-card,.trip-loop-side,.meta-card,.day-card,.result-top-helper,
+.route-strip-card,.district-card,.finder-card,.focus-tile,.cover-story-line,.hero-hierarchy-card,.top-story-card{
+  border-width:1px;
+  border-style:solid;
+  border-color:rgba(227,216,201,.88);
+  box-shadow:var(--panel-shadow);
+}
+.hero-card:hover,.cover-story-card:hover,.mini-editorial-card:hover,.dispatch-card:hover,.trip-card:hover,.city-card:hover,.finder-card:hover,.route-strip-card:hover,.editorial-panel:hover,.info-card:hover,.loop-card:hover,.trip-loop-card:hover,.trip-loop-side:hover,.collection-card:hover,.stat-card:hover,.trip-search-card:hover,.shared-trip-banner:hover{
+  box-shadow:var(--panel-shadow-hover);
+}
+.card-body,.planner-shell,.collection-card,.stat-card,.trip-search-card,.dispatch-card,.mini-editorial-card,.utility-banner,.shared-trip-banner{padding:18px}
+.hero-copy,.city-detail-copy{padding:28px 26px}
+.cover-story-body{padding:26px 24px}
+.cover-story-body.compact{padding:20px 18px}
+.cover-story-body h3,.hero-feature-card h3{letter-spacing:-.05em}
+.hero-feature-card{min-height:234px;padding:20px}
+.hero-feature-card p{font-size:14px;line-height:1.65}
+.hero-stat-card,.collection-line,.editorial-line,.summary-line,.meta-card,.loop-card,.trip-loop-card,.trip-loop-side,.trip-firstfold-stat{border-radius:18px}
+.city-card,.finder-card,.sample-card,.trip-card,.route-strip-card,.cover-story-card,.dispatch-card,.mini-editorial-card,.collection-card,.loop-card,.trip-loop-card,.trip-loop-side{display:flex;flex-direction:column}
+.city-card .card-body,.finder-card .card-body,.sample-card .card-body,.trip-card .card-body{display:grid;gap:10px;align-content:start;grid-auto-rows:min-content;flex:1}
+.card-actions{margin-top:auto;padding-top:4px}
+.card-image{background:linear-gradient(180deg,#ece3d7 0%,#e3d8ca 100%)}
+body[data-page="planner"] .city-card .card-image,
+body[data-page="planner"] .sample-card .card-image,
+body[data-page="magazine"] .finder-card .card-image,
+body[data-page="trips"] .trip-card .card-image{aspect-ratio:1.22/1}
+body[data-page="magazine"] .finder-card .card-image,
+body[data-page="planner"] .city-card .card-image,
+body[data-page="planner"] .sample-card .card-image{border-bottom:1px solid rgba(227,216,201,.72)}
+body[data-page="magazine"] .finder-card .card-body{padding:18px}
+body[data-page="magazine"] .finder-card .card-title{font-size:20px}
+body[data-page="magazine"] .finder-card .card-copy{font-size:14px;line-height:1.66}
+.finder-head{gap:14px}
+.finder-tools{gap:10px}
+.finder-search-wrap,.trip-search-card{position:relative}
+.finder-search,
+.trip-search-row .input,
+.search-row .input{min-height:50px;background:linear-gradient(180deg,#fffefd 0%,#fffaf4 100%)}
+.search-row,.trip-search-row{gap:10px;align-items:stretch}
+.search-row .secondary-btn,.trip-search-row .secondary-btn{min-width:128px}
+.result-top-actions{gap:10px}
+.result-top-actions > *{box-shadow:0 8px 20px rgba(18,31,47,.04)}
+.result-sticky-bar{border-radius:18px;box-shadow:0 18px 36px rgba(20,33,48,.11)}
+.result-sticky-actions .ghost-btn,.result-sticky-actions .secondary-btn,.result-sticky-actions .primary-btn{min-height:42px;border-radius:14px}
+.mobile-dock{max-width:min(420px,calc(100vw - 24px));margin:0 auto;padding:9px;border-radius:24px;background:rgba(255,251,246,.94);box-shadow:0 18px 34px rgba(20,33,48,.13)}
+.mobile-dock-item{min-height:58px;border-radius:16px;padding:9px 6px 8px}
+.mobile-dock-icon{width:34px;height:34px;border-radius:12px}
+.mobile-dock-helper{font-size:9px}
+.beta-launch-bar.is-rest{background:linear-gradient(180deg,rgba(255,252,249,.5),rgba(255,252,249,.6));box-shadow:none}
+.footer-build-rail{opacity:.22;border-color:rgba(230,214,194,.22)}
+.footer-build-rail[data-expanded="true"]{opacity:.84}
+.launch-feedback-cta{box-shadow:0 12px 24px rgba(19,40,63,.10)}
+@media (min-width:1024px){
+  .container{width:min(calc(100% - 64px),1248px)}
+  .hero{gap:22px}
+  .hero-copy,.city-detail-copy{padding:32px 30px}
+  .cover-story-card-large{min-height:500px}
+  .cover-story-card-compact{min-height:236px}
+  .cover-story-media{min-height:100%}
+  .cover-story-grid,.mini-editorial-grid,.route-strip-grid,.city-grid,.samples-grid,.tips-grid,.trips-grid,.story-grid,.loop-grid,.trip-loop-grid{gap:16px}
+  .magazine-hero-v2{padding:26px;gap:18px}
+  .hero-stat-grid{gap:14px}
+}
+@media (max-width:759px){
+  .container{width:min(calc(100% - 22px),var(--max))}
+  .page{padding-top:4px;padding-bottom:126px}
+  .top-bar-inner{padding:9px 0 11px;gap:10px}
+  .brand-mark{width:36px;height:36px;border-radius:11px}
+  .brand-title{font-size:20px}
+  .page-signal-card{padding:11px 12px;border-radius:15px}
+  .hero-copy,.city-detail-copy,.planner-shell,.collection-card,.stat-card,.trip-search-card,.utility-banner,.shared-trip-banner{padding:17px}
+  .hero-actions,.cta-row{gap:9px}
+  .section{margin-top:24px}
+  .section-title{font-size:clamp(24px,6vw,29px)}
+  .hero p,.magazine-hero-copy p,.editorial-copy p,.section-desc,.card-copy{font-size:14px;line-height:1.66}
+  .hero h1{font-size:clamp(34px,10vw,48px);max-width:10ch}
+  .hero-feature-card{min-height:auto;padding:18px}
+  .cover-story-body{padding:18px 16px}
+  body[data-page="magazine"] .finder-card .card-title{font-size:18px}
+  .result-sticky-bar{left:12px;right:12px;border-radius:16px}
+}
+@media (max-width:479px){
+  .container{width:min(calc(100% - 18px),var(--max))}
+  .lang-btn,.nav-chip,.soft-btn,.ghost-btn,.action-btn,.chip,.tab-btn,.finder-tab,.mini-filter,.jump-chip,.hero-feature-rail a,.footer-build-toggle,.footer-build-rail a{font-size:12px}
+  .page-signal-copy span{font-size:12.5px}
+  .result-sticky-actions .ghost-btn,.result-sticky-actions .secondary-btn,.result-sticky-actions .primary-btn{min-height:40px}
+  .mobile-dock{left:10px;right:10px;max-width:none}
+}

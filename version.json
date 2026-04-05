@@ -1,13 +1,13 @@
 {
-  "release": "v149",
-  "version": "v149",
+  "release": "v150",
+  "version": "v150",
   "date": "2026-04-02",
-  "codename": "production-ui-polish-pass",
-  "headline": "This build shifts Ryokoplan away from a rough prototype feel and toward a more finished product surface by unifying control sizing, tightening card proportions, calming section spacing, and improving mobile and desktop visual balance across the main loops.",
+  "codename": "real-product-surface-polish",
+  "headline": "This build pushes Ryokoplan further away from an early prototype feel by tightening the visual system itself—more mature control sizing, calmer shadows and radii, cleaner search and filter bars, stronger card hierarchy, and more believable mobile and desktop proportions across the core surfaces.",
   "notes": [
-    "Standardizes button, chip, and control sizing so navigation, actions, filters, and sticky tools feel like one coherent product system.",
-    "Refines cards, cover modules, and section spacing so homepage, Magazine, My Trips, and result surfaces feel less like stacked prototypes and more like a consistent editorial product.",
-    "Improves mobile rhythm with cleaner top-bar spacing, better action sizing, stronger input fields, and more balanced first-fold layouts on small screens while keeping desktop proportions tighter too."
+    "Refines the core visual system so buttons, chips, tabs, search rows, sticky tools, and support surfaces feel more like one finished product rather than assembled prototypes.",
+    "Tightens card proportions, shadows, borders, body padding, image framing, and section rhythm so Home, Magazine, My Trips, and result surfaces read as cleaner editorial product UI.",
+    "Improves practical feel on both mobile and desktop with calmer top-bar chrome, better dock and sticky-bar sizing, more realistic first-fold spacing, and more restrained launch/support surface presence."
   ],
   "updatedAt": "2026-04-02"
 }
