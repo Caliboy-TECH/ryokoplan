@@ -5473,3 +5473,91 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
     aspect-ratio:1.24 / 1 !important;
   }
 }
+
+
+/* v161 mobile media final lock */
+:root{
+  --mobile-media-panel-v161: 16 / 11;
+  --mobile-media-city-v161: 6 / 5;
+  --mobile-media-trip-v161: 5 / 4;
+  --mobile-media-base-v161: 1.18 / 1;
+}
+@media (max-width: 767px){
+  .cover-story-card-large .cover-story-media,
+  .cover-story-card-compact .cover-story-media,
+  .hero-visual-main,
+  .hero-visual-sub,
+  .result-editorial-visual,
+  .result-visual-card,
+  .visual-story-card,
+  .city-detail-visual,
+  .city-atlas-media,
+  .public-route-media,
+  .operating-edit-media,
+  .city-collection-cover,
+  .shared-spotlight-media,
+  .trip-detail-media,
+  .trip-continue-media{
+    aspect-ratio:var(--mobile-media-panel-v161) !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+
+  .finder-card .card-image,
+  .city-card .card-image,
+  .city-collection-card .card-image,
+  .public-route-card .card-image,
+  .operating-edit-card .card-image{
+    aspect-ratio:var(--mobile-media-city-v161) !important;
+  }
+
+  .trip-card .card-image,
+  .sample-card .card-image,
+  .example-card .card-image,
+  .trip-archive-card .card-image{
+    aspect-ratio:var(--mobile-media-trip-v161) !important;
+  }
+
+  .card-image{
+    aspect-ratio:var(--mobile-media-base-v161) !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+
+  :where(.cover-story-media,.hero-visual-main,.hero-visual-sub,.result-editorial-visual,.result-visual-card,.visual-story-card,.city-detail-visual,.city-atlas-media,.public-route-media,.operating-edit-media,.city-collection-cover,.shared-spotlight-media,.trip-detail-media,.trip-continue-media,.card-image){
+    overflow:hidden !important;
+    border-radius:20px;
+    isolation:isolate;
+  }
+
+  :where(.cover-story-media,.hero-visual-main,.hero-visual-sub,.city-detail-visual,.city-atlas-media,.public-route-media,.operating-edit-media,.city-collection-cover,.shared-spotlight-media,.trip-detail-media,.trip-continue-media,.card-image) > img,
+  :where(.cover-story-media,.hero-visual-main,.hero-visual-sub,.city-detail-visual,.city-atlas-media,.public-route-media,.operating-edit-media,.city-collection-cover,.shared-spotlight-media,.trip-detail-media,.trip-continue-media,.card-image) img{
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center center !important;
+    display:block !important;
+  }
+
+  .cover-story-body,
+  .finder-card .card-body,
+  .city-card .card-body,
+  .trip-card .card-body,
+  .sample-card .card-body,
+  .example-card .card-body{
+    padding-top:14px;
+  }
+}
+@media (max-width: 420px){
+  :root{
+    --mobile-media-panel-v161: 1.28 / 1;
+    --mobile-media-city-v161: 1.14 / 1;
+    --mobile-media-trip-v161: 1.18 / 1;
+    --mobile-media-base-v161: 1.12 / 1;
+  }
+  :where(.cover-story-media,.hero-visual-main,.hero-visual-sub,.result-editorial-visual,.result-visual-card,.visual-story-card,.city-detail-visual,.city-atlas-media,.public-route-media,.operating-edit-media,.city-collection-cover,.shared-spotlight-media,.trip-detail-media,.trip-continue-media,.card-image){
+    border-radius:18px;
+  }
+}
