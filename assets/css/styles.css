@@ -5561,3 +5561,45 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
     border-radius:18px;
   }
 }
+
+
+/* v162 mobile surface cadence polish */
+:root{
+  --mobile-card-pad-v162:16px;
+  --mobile-card-gap-v162:9px;
+  --mobile-section-gap-v162:20px;
+  --mobile-surface-radius-v162:22px;
+}
+@media (max-width: 767px){
+  .section{margin-top:var(--mobile-section-gap-v162) !important;}
+  .section-head{margin-bottom:12px !important;gap:10px !important;align-items:flex-start !important;}
+  .section-head .section-title{font-size:clamp(23px,5.8vw,29px) !important;line-height:1.04 !important;}
+  .section-desc,.card-copy,.dispatch-lines span,.cover-story-body p,.result-top-helper span{font-size:13.5px !important;line-height:1.62 !important;}
+  .hero-copy,.city-detail-copy,.planner-shell,.collection-card,.stat-card,.trip-search-card,.utility-banner,.shared-trip-banner,.editorial-panel,.info-card{padding:17px !important;}
+  .card-body,.cover-story-body,.dispatch-card,.mini-editorial-card,.result-top-helper{padding:15px 15px 16px !important;}
+  .city-card .card-body,.finder-card .card-body,.trip-card .card-body,.sample-card .card-body,.example-card .card-body,.trip-archive-card .card-body{gap:var(--mobile-card-gap-v162) !important;}
+  .city-card,.finder-card,.trip-card,.sample-card,.example-card,.route-strip-card,.editorial-panel,.info-card,.collection-card,.stat-card,.trip-search-card,.dispatch-card,.mini-editorial-card,.cover-story-card,.shared-trip-banner,.result-top-helper{border-radius:var(--mobile-surface-radius-v162) !important;}
+  .hero-visual-main,.hero-visual-sub,.cover-story-media,.result-editorial-visual,.result-visual-card,.visual-story-card,.city-detail-visual,.city-atlas-media,.public-route-media,.operating-edit-media,.city-collection-cover,.shared-spotlight-media,.trip-detail-media,.trip-continue-media,.card-image{border-radius:18px !important;}
+  .cover-story-card-large,.cover-story-card-compact{min-height:auto !important;}
+  .cover-story-line{padding:12px !important;border-radius:16px !important;gap:10px !important;}
+  .page-signal-card,.finder-toolbar,.trip-search-card{border-radius:18px !important;}
+  .finder-toolbar,.trip-search-card,.trip-archive-card{padding:14px !important;}
+  .search-row,.trip-search-row{gap:9px !important;}
+  .search-row .secondary-btn,.trip-search-row .secondary-btn{min-width:0 !important;}
+  .mobile-dock{padding:8px !important;border-radius:20px !important;box-shadow:0 14px 28px rgba(20,33,48,.11) !important;}
+  .mobile-dock-item{min-height:56px !important;border-radius:14px !important;padding:8px 6px 7px !important;}
+  .mobile-dock-icon{width:32px !important;height:32px !important;border-radius:11px !important;}
+}
+@media (max-width: 420px){
+  :root{
+    --mobile-card-pad-v162:15px;
+    --mobile-card-gap-v162:8px;
+    --mobile-section-gap-v162:18px;
+    --mobile-surface-radius-v162:20px;
+  }
+  .hero-copy,.city-detail-copy,.planner-shell,.collection-card,.stat-card,.trip-search-card,.utility-banner,.shared-trip-banner,.editorial-panel,.info-card{padding:15px !important;}
+  .card-body,.cover-story-body,.dispatch-card,.mini-editorial-card,.result-top-helper{padding:14px 14px 15px !important;}
+  .section-head .section-title{font-size:clamp(22px,6vw,27px) !important;}
+  .section-desc,.card-copy,.dispatch-lines span,.cover-story-body p,.result-top-helper span{font-size:13px !important;line-height:1.58 !important;}
+  .mobile-dock{left:9px !important;right:9px !important;}
+}
