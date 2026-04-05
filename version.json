@@ -1,13 +1,13 @@
 {
-  "release": "v150",
-  "version": "v150",
-  "date": "2026-04-02",
-  "codename": "real-product-surface-polish",
-  "headline": "This build pushes Ryokoplan further away from an early prototype feel by tightening the visual system itself—more mature control sizing, calmer shadows and radii, cleaner search and filter bars, stronger card hierarchy, and more believable mobile and desktop proportions across the core surfaces.",
+  "release": "v151",
+  "version": "v151",
+  "date": "2026-04-05",
+  "codename": "component-finish-production-pass",
+  "headline": "This build focuses on the remaining component-level signs of a prototype—tightening top-bar chrome, section headers, cards, search and filter rows, sticky actions, and the mobile dock so Ryokoplan reads more like a finished product across web and mobile.",
   "notes": [
-    "Refines the core visual system so buttons, chips, tabs, search rows, sticky tools, and support surfaces feel more like one finished product rather than assembled prototypes.",
-    "Tightens card proportions, shadows, borders, body padding, image framing, and section rhythm so Home, Magazine, My Trips, and result surfaces read as cleaner editorial product UI.",
-    "Improves practical feel on both mobile and desktop with calmer top-bar chrome, better dock and sticky-bar sizing, more realistic first-fold spacing, and more restrained launch/support surface presence."
+    "Unifies control sizing and spacing across language switches, nav chips, pills, buttons, search inputs, sticky actions, and filter rows so the UI behaves like one mature product system.",
+    "Refines section headers, hero spacing, card proportions, media ratios, and body rhythm to reduce early-prototype feel and make Home, Magazine, and My Trips read more editorial and intentional.",
+    "Improves real-world usability on mobile with calmer dock sizing, cleaner sticky action density, better search-row wrapping, and more believable first-fold spacing on smaller screens."
   ],
-  "updatedAt": "2026-04-02"
+  "updatedAt": "2026-04-05"
 }
