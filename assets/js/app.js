@@ -2251,9 +2251,16 @@ function ensureLaunchFeedbackCta(){
       const setBottomOffset = () => {
         if (!isMobileUtility()) {
           body.style.removeProperty('--mobile-utility-bottom');
+          body.style.removeProperty('--mobile-browser-offset');
           return;
         }
-        let bottomOffset = window.matchMedia('(max-width: 420px)').matches ? 94 : 102;
+        let browserOffset = 0;
+        if (window.visualViewport) {
+          const chromeGap = Math.max(0, Math.round(window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop));
+          browserOffset = chromeGap > 12 ? Math.min(chromeGap, 64) : 0;
+        }
+        body.style.setProperty('--mobile-browser-offset', `${browserOffset}px`);
+        let bottomOffset = window.matchMedia('(max-width: 420px)').matches ? 70 : 76;
         const blockers = [
           document.querySelector('.mobile-dock'),
           document.querySelector('.result-sticky-bar.is-visible')
@@ -2261,9 +2268,9 @@ function ensureLaunchFeedbackCta(){
         blockers.forEach(el => {
           const rect = el.getBoundingClientRect();
           if (!rect.height || rect.top >= window.innerHeight) return;
-          bottomOffset = Math.max(bottomOffset, Math.round(window.innerHeight - rect.top + 12));
+          bottomOffset = Math.max(bottomOffset, Math.round(window.innerHeight - rect.top + 10));
         });
-        body.style.setProperty('--mobile-utility-bottom', `calc(${bottomOffset}px + env(safe-area-inset-bottom, 0px))`);
+        body.style.setProperty('--mobile-utility-bottom', `calc(${bottomOffset}px + env(safe-area-inset-bottom, 0px) + ${browserOffset}px)`);
       };
       const hasMeaningfulContentJump = () => {
         if (!main) return false;
