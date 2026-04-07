@@ -2290,6 +2290,7 @@ function ensureLaunchFeedbackCta(){
         syncMode();
         setBottomOffset();
         let shouldHide = isMobileUtility() && (getKeyboardGap() > 0 || hasInputFocus());
+        if (!shouldHide && isMobileUtility() && skip.dataset.mode === 'content') shouldHide = true;
         if (!shouldHide && skip.dataset.mode === 'content' && !hasMeaningfulContentJump()) shouldHide = true;
         setHidden(shouldHide);
         if (shouldHide) setCollapsed(false);
