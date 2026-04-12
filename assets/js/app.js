@@ -899,8 +899,8 @@ function ensureInstallCta(){
 }
 function registerServiceWorker(){
   if (!('serviceWorker' in navigator)) return;
-  const swUrl = `${pathRoot}sw.js`;
-  navigator.serviceWorker.register(swUrl).then(registration => {
+  const swUrl = `${pathRoot}sw.js?v=172`;
+  navigator.serviceWorker.register(swUrl, { updateViaCache: 'none' }).then(registration => {
     trackEvent('ryoko_sw_registered', { scope: registration.scope || '' });
   }).catch(err => {
     trackEvent('ryoko_sw_register_failed', { message: String(err && err.message || err) });

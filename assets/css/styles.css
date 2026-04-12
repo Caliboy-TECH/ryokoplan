@@ -6662,3 +6662,12 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
   body[data-page="trips"] > .skip-link[data-mode="top"][data-hidden="false"]{display:grid !important;width:40px !important;height:40px !important;min-width:40px !important;max-width:40px !important;padding:0 !important;overflow:hidden !important;font-size:0 !important;color:transparent !important;}
   .mobile-dock{left:0 !important;right:0 !important;bottom:0 !important;width:100% !important;max-width:none !important;margin:0 !important;border-radius:18px 18px 0 0 !important;transform:none !important;}
 }
+
+
+/* v172 actual mobile skip/dock cache-bust fix */
+@media (max-width: 767px){
+  .skip-link{display:none !important;font-size:0 !important;color:transparent !important;padding:0 !important;background:transparent !important;border:0 !important;box-shadow:none !important;}
+  .skip-link[data-mode="top"][data-hidden="false"]{display:grid !important;position:fixed !important;right:12px !important;left:auto !important;top:auto !important;bottom:calc(78px + env(safe-area-inset-bottom,0px) + var(--mobile-browser-offset,0px)) !important;width:40px !important;height:40px !important;min-width:40px !important;max-width:40px !important;border-radius:999px !important;padding:0 !important;place-items:center !important;background:rgba(255,251,246,.96) !important;border:1px solid rgba(216,202,184,.96) !important;box-shadow:0 8px 20px rgba(20,33,48,.10) !important;overflow:hidden !important;}
+  .skip-link[data-mode="top"][data-hidden="false"]::before{content:'↑' !important;font-size:16px !important;line-height:1 !important;color:#7f6145 !important;margin:0 !important;}
+  .mobile-dock{left:0 !important;right:0 !important;bottom:0 !important;width:100% !important;max-width:none !important;margin:0 !important;border-radius:18px 18px 0 0 !important;box-shadow:0 -4px 16px rgba(20,33,48,.045) !important;padding:8px 14px calc(14px + env(safe-area-inset-bottom,0px) + var(--mobile-browser-offset,0px)) !important;background:rgba(250,246,240,.985) !important;border-top:1px solid rgba(224,214,199,.94) !important;border-left:none !important;border-right:none !important;border-bottom:none !important;transform:none !important;}
+}
