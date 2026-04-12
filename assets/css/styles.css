@@ -6649,3 +6649,16 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
     letter-spacing:-.02em !important;
   }
 }
+
+
+/* v171 hard screenshot fixes */
+@media (max-width: 767px){
+  .page{padding-bottom:var(--page-dock-padding, calc(92px + env(safe-area-inset-bottom, 0px))) !important;}
+  body[data-page="planner"] > .skip-link,
+  body[data-page="magazine"] > .skip-link,
+  body[data-page="trips"] > .skip-link{display:none !important;opacity:0 !important;pointer-events:none !important;font-size:0 !important;color:transparent !important;padding:0 !important;border:0 !important;background:transparent !important;box-shadow:none !important;}
+  body[data-page="planner"] > .skip-link[data-mode="top"][data-hidden="false"],
+  body[data-page="magazine"] > .skip-link[data-mode="top"][data-hidden="false"],
+  body[data-page="trips"] > .skip-link[data-mode="top"][data-hidden="false"]{display:grid !important;width:40px !important;height:40px !important;min-width:40px !important;max-width:40px !important;padding:0 !important;overflow:hidden !important;font-size:0 !important;color:transparent !important;}
+  .mobile-dock{left:0 !important;right:0 !important;bottom:0 !important;width:100% !important;max-width:none !important;margin:0 !important;border-radius:18px 18px 0 0 !important;transform:none !important;}
+}

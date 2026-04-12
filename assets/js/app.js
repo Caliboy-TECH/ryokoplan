@@ -2238,7 +2238,8 @@ function ensureLaunchFeedbackCta(){
         const label = accessibilityCopy(resolved);
         skip.dataset.mode = resolved;
         skip.dataset.lang = lang;
-        skip.textContent = label;
+        const mobile = isMobileUtility();
+        skip.textContent = mobile && resolved !== 'top' ? '' : label;
         skip.setAttribute('aria-label', label);
         skip.setAttribute('title', label);
       };
@@ -2246,7 +2247,23 @@ function ensureLaunchFeedbackCta(){
         skip.dataset.collapsed = collapsed ? 'true' : 'false';
       };
       const setHidden = (hidden = false) => {
-        skip.dataset.hidden = hidden ? 'true' : 'false';
+        const isHidden = hidden ? 'true' : 'false';
+        skip.dataset.hidden = isHidden;
+        if (isMobileUtility()) {
+          const topModeVisible = skip.dataset.mode === 'top' && isHidden === 'false';
+          skip.style.display = topModeVisible ? 'grid' : 'none';
+          if (!topModeVisible) {
+            skip.style.opacity = '0';
+            skip.style.pointerEvents = 'none';
+          } else {
+            skip.style.opacity = '';
+            skip.style.pointerEvents = '';
+          }
+        } else {
+          skip.style.display = '';
+          skip.style.opacity = '';
+          skip.style.pointerEvents = '';
+        }
       };
       const setBottomOffset = () => {
         if (!isMobileUtility()) {
@@ -2417,6 +2434,37 @@ function ensureLaunchFeedbackCta(){
       dock.setAttribute('aria-label', 'Primary');
       document.body.appendChild(dock);
     }
+    const applyHardMobileDockStyles = () => {
+      const mobile = window.matchMedia('(max-width: 767px)').matches;
+      if (!mobile) {
+        dock.style.cssText = '';
+        document.body.style.removeProperty('--page-dock-padding');
+        return;
+      }
+      const vv = window.visualViewport;
+      const browserOffset = vv ? Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) : 0;
+      const bottomInset = 'env(safe-area-inset-bottom, 0px)';
+      dock.style.position = 'fixed';
+      dock.style.left = '0';
+      dock.style.right = '0';
+      dock.style.width = '100%';
+      dock.style.maxWidth = 'none';
+      dock.style.bottom = '0';
+      dock.style.margin = '0';
+      dock.style.padding = `8px 12px calc(8px + ${bottomInset} + ${browserOffset}px)`;
+      dock.style.borderRadius = '18px 18px 0 0';
+      dock.style.borderTop = '1px solid rgba(224,214,199,.96)';
+      dock.style.borderLeft = '0';
+      dock.style.borderRight = '0';
+      dock.style.borderBottom = '0';
+      dock.style.boxShadow = '0 -4px 16px rgba(20,33,48,.05)';
+      dock.style.background = 'rgba(250,246,240,.985)';
+      dock.style.backdropFilter = 'blur(12px) saturate(1.02)';
+      dock.style.webkitBackdropFilter = 'blur(12px) saturate(1.02)';
+      dock.style.transform = 'none';
+      dock.style.zIndex = '70';
+      document.body.style.setProperty('--page-dock-padding', `calc(92px + ${bottomInset} + ${browserOffset}px)`);
+    };
     const page = document.body.dataset.page || 'planner';
     const dockLang = supportedLangs.includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
     const shortCopy = {
@@ -2439,6 +2487,17 @@ function ensureLaunchFeedbackCta(){
         <span class="mobile-dock-icon" aria-hidden="true">${dockCopy[key].icon}</span>
         <span class="mobile-dock-label">${dockCopy[key].label}</span>
       </a>`).join('');
+    applyHardMobileDockStyles();
+    if (!dock.dataset.mobileDockBound) {
+      const refreshDock = () => applyHardMobileDockStyles();
+      window.addEventListener('resize', refreshDock);
+      window.addEventListener('orientationchange', refreshDock);
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', refreshDock);
+        window.visualViewport.addEventListener('scroll', refreshDock);
+      }
+      dock.dataset.mobileDockBound = 'true';
+    }
   }
 
 
