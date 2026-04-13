@@ -899,8 +899,8 @@ function ensureInstallCta(){
 }
 function registerServiceWorker(){
   if (!('serviceWorker' in navigator)) return;
-  const swUrl = `${pathRoot}sw.js?v=172`;
-  navigator.serviceWorker.register(swUrl, { updateViaCache: 'none' }).then(registration => {
+  const swUrl = `${pathRoot}sw.js`;
+  navigator.serviceWorker.register(swUrl).then(registration => {
     trackEvent('ryoko_sw_registered', { scope: registration.scope || '' });
   }).catch(err => {
     trackEvent('ryoko_sw_register_failed', { message: String(err && err.message || err) });
@@ -2205,7 +2205,11 @@ function ensureLaunchFeedbackCta(){
       if (!main.id) main.id = 'main-content';
       if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
     }
+    const body = document.body;
+    const skipSuppressedOnMobile = window.matchMedia('(max-width: 767px)').matches && ['planner','magazine','trips'].includes(body.dataset.page || '');
     let skip = document.querySelector('.skip-link');
+    if (skipSuppressedOnMobile && skip) { skip.remove(); skip = null; }
+    if (skipSuppressedOnMobile) return;
     if (main && !skip) {
       skip = document.createElement('a');
       skip.className = 'skip-link';
@@ -2214,7 +2218,6 @@ function ensureLaunchFeedbackCta(){
       document.body.insertBefore(skip, document.body.firstChild);
     }
     if (skip) {
-      const body = document.body;
       const getHeaderOffset = () => Math.max((topBar?.offsetHeight || 0) + 16, 72);
       const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const getScrollBehavior = () => prefersReducedMotion() ? 'auto' : 'smooth';
@@ -2451,19 +2454,19 @@ function ensureLaunchFeedbackCta(){
       dock.style.maxWidth = 'none';
       dock.style.bottom = '0';
       dock.style.margin = '0';
-      dock.style.padding = `8px 12px calc(8px + ${bottomInset} + ${browserOffset}px)`;
-      dock.style.borderRadius = '18px 18px 0 0';
-      dock.style.borderTop = '1px solid rgba(224,214,199,.96)';
+      dock.style.padding = `10px 14px calc(12px + ${bottomInset} + ${browserOffset}px)`;
+      dock.style.borderRadius = '22px 22px 0 0';
+      dock.style.borderTop = '1px solid rgba(221,211,196,.98)';
       dock.style.borderLeft = '0';
       dock.style.borderRight = '0';
       dock.style.borderBottom = '0';
-      dock.style.boxShadow = '0 -4px 16px rgba(20,33,48,.05)';
-      dock.style.background = 'rgba(250,246,240,.985)';
-      dock.style.backdropFilter = 'blur(12px) saturate(1.02)';
-      dock.style.webkitBackdropFilter = 'blur(12px) saturate(1.02)';
+      dock.style.boxShadow = '0 -8px 24px rgba(20,33,48,.07)';
+      dock.style.background = 'rgba(251,247,241,.992)';
+      dock.style.backdropFilter = 'blur(18px) saturate(1.02)';
+      dock.style.webkitBackdropFilter = 'blur(18px) saturate(1.02)';
       dock.style.transform = 'none';
       dock.style.zIndex = '70';
-      document.body.style.setProperty('--page-dock-padding', `calc(92px + ${bottomInset} + ${browserOffset}px)`);
+      document.body.style.setProperty('--page-dock-padding', `calc(104px + ${bottomInset} + ${browserOffset}px)`);
     };
     const page = document.body.dataset.page || 'planner';
     const dockLang = supportedLangs.includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
@@ -2705,7 +2708,7 @@ function ensureLaunchFeedbackCta(){
         ],
         sideButtons: ['도시 가이드', '저장한 여정'],
         loopEyebrow: 'Recommendation loop',
-        loopTitle: '읽은 뒤 바로 루트로 이어지게',
+        loopTitle: '읽고 나면 바로 다음 흐름이 보여야 해요',
         loopDesc: '최근 본 여행이나 저장한 일정이 있으면 다음 도시를 제안하고, 없으면 강한 첫 진입점을 보여줍니다.',
         finderEyebrow: 'City finder',
         finderTitle: '나라보다 무드로 먼저 도시를 고르세요',
@@ -3249,24 +3252,24 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
 
       <section class="section hero-hierarchy-band hero-hierarchy-band-magazine">
         <div class="section-head hero-hierarchy-head">
-          <div><span class="eyebrow">${lang === 'ko' ? '시작 가이드' : lang === 'ja' ? 'スタートガイド' : lang === 'zhHant' ? '開始指南' : 'Start guide'}</span><h2 class="section-title">${lang === 'ko' ? '처음엔 세 가지만 보이면 됩니다' : lang === 'ja' ? '最初は三つ見えれば十分です' : lang === 'zhHant' ? '一開始先看見三件事就夠了' : 'Only three things need to show up first'}</h2><p class="section-desc">${lang === 'ko' ? '시작점, 읽는 결, planner 연결만 먼저 보이면 됩니다.' : lang === 'ja' ? '入口、読み方、planner への接続だけ先に見えれば十分です。' : lang === 'zhHant' ? '先看見入口、閱讀節奏、和 planner 連接就夠了。' : 'Show the entry point, the reading track, and the planner handoff first.'}</p></div>
+          <div><span class="eyebrow">${lang === 'ko' ? '시작 가이드' : lang === 'ja' ? 'スタートガイド' : lang === 'zhHant' ? '開始指南' : 'Start guide'}</span><h2 class="section-title">${lang === 'ko' ? '처음엔 이 세 가지만 보이면 충분해요' : lang === 'ja' ? '最初は三つ見えれば十分です' : lang === 'zhHant' ? '一開始先看見三件事就夠了' : 'Only three things need to show up first'}</h2><p class="section-desc">${lang === 'ko' ? '어디서 시작할지, 어떤 결로 읽을지, 플래너로 어떻게 이어질지만 먼저 보이면 충분해요.' : lang === 'ja' ? '入口、読み方、planner への接続だけ先に見えれば十分です。' : lang === 'zhHant' ? '先看見入口、閱讀節奏、和 planner 連接就夠了。' : 'Show the entry point, the reading track, and the planner handoff first.'}</p></div>
         </div>
         <div class="hero-hierarchy-grid">
           <article class="hero-hierarchy-card hero-hierarchy-card-strong">
             <span class="hero-hierarchy-kicker">${lang === 'ko' ? 'Cities' : lang === 'ja' ? 'Cities' : lang === 'zhHant' ? 'Cities' : 'Cities'}</span>
-            <strong>${lang === 'ko' ? '도시가 많아도 첫 클릭은 바로 보여야 합니다' : lang === 'ja' ? '都市が多くても最初のクリック先はすぐ見えるべきです' : lang === 'zhHant' ? '城市再多，第一個點擊目標也要立刻看見' : 'Even with 14 cities, the first click should feel obvious'}</strong>
-            <p>${lang === 'ko' ? 'release와 expansion이 함께 있어도, 먼저 열 도시가 바로 눈에 들어오도록 정리했습니다.' : lang === 'ja' ? 'release と expansion が同じ画面でも、最初に開く都市がすぐ見えるよう整えました。' : lang === 'zhHant' ? '即使 release 和 expansion 在同一頁，也整理成先開哪座城市會立刻明顯。' : 'Release and expansion stay together, but the first city to open now reads more clearly.'}</p>
+            <strong>${lang === 'ko' ? '도시가 많아도 어디부터 볼지 바로 보여야 해요' : lang === 'ja' ? '都市が多くても最初のクリック先はすぐ見えるべきです' : lang === 'zhHant' ? '城市再多，第一個點擊目標也要立刻看見' : 'Even with 14 cities, the first click should feel obvious'}</strong>
+            <p>${lang === 'ko' ? 'release와 expansion이 함께 있어도, 먼저 열 도시가 바로 눈에 들어오게 정리했어요.' : lang === 'ja' ? 'release と expansion が同じ画面でも、最初に開く都市がすぐ見えるよう整えました。' : lang === 'zhHant' ? '即使 release 和 expansion 在同一頁，也整理成先開哪座城市會立刻明顯。' : 'Release and expansion stay together, but the first city to open now reads more clearly.'}</p>
             <div class="hero-hierarchy-chip-row"><span class="hero-hierarchy-chip">Japan</span><span class="hero-hierarchy-chip">Korea</span><span class="hero-hierarchy-chip">Greater China</span></div>
           </article>
           <article class="hero-hierarchy-card">
             <span class="hero-hierarchy-kicker">${lang === 'ko' ? 'Reads' : lang === 'ja' ? 'Reads' : lang === 'zhHant' ? 'Reads' : 'Reads'}</span>
-            <strong>${lang === 'ko' ? '국가보다 trip mood를 먼저 고릅니다' : lang === 'ja' ? '国より先に trip mood を選びます' : lang === 'zhHant' ? '先選 trip mood，再選國家' : 'Pick trip mood before country'}</strong>
-            <p>${lang === 'ko' ? 'fast, food, coast, heritage, night 같은 track가 먼저 보이면 도시를 훨씬 빨리 좁힐 수 있습니다.' : lang === 'ja' ? 'fast・food・coast・heritage・night の track が先に見えると、都市をずっと早く絞れます。' : lang === 'zhHant' ? '當 fast、food、coast、heritage、night 這些 track 先出現，選城市會快很多。' : 'Showing fast, food, coast, heritage, and night first makes the city field much easier to narrow.'}</p>
+            <strong>${lang === 'ko' ? '나라보다 여행 무드를 먼저 고릅니다' : lang === 'ja' ? '国より先に trip mood を選びます' : lang === 'zhHant' ? '先選 trip mood，再選國家' : 'Pick trip mood before country'}</strong>
+            <p>${lang === 'ko' ? 'fast, food, coast, heritage, night 같은 결이 먼저 보이면 도시를 훨씬 빨리 좁힐 수 있어요.' : lang === 'ja' ? 'fast・food・coast・heritage・night の track が先に見えると、都市をずっと早く絞れます。' : lang === 'zhHant' ? '當 fast、food、coast、heritage、night 這些 track 先出現，選城市會快很多。' : 'Showing fast, food, coast, heritage, and night first makes the city field much easier to narrow.'}</p>
           </article>
           <article class="hero-hierarchy-card">
             <span class="hero-hierarchy-kicker">${lang === 'ko' ? 'Flow' : lang === 'ja' ? 'Flow' : lang === 'zhHant' ? 'Flow' : 'Flow'}</span>
-            <strong>${lang === 'ko' ? 'Guide → sample → planner 흐름이 바로 보여야 합니다' : lang === 'ja' ? 'Guide → sample → planner の流れがすぐ見えるべきです' : lang === 'zhHant' ? 'Guide → sample → planner 的流動要立刻看懂' : 'Guide → sample → planner should read in one glance'}</strong>
-            <p>${lang === 'ko' ? '각 카드가 다음 화면을 더 또렷하게 보여줘, 탐색이 멈추지 않고 route로 이어집니다.' : lang === 'ja' ? '各カードが次の画面をより明確に示し、探索が止まらず route へ続きます。' : lang === 'zhHant' ? '每張卡片都更清楚指向下一步，讓探索不會中斷而是繼續走向 route。' : 'Each card signals the next move more clearly, so reading keeps turning into route-making.'}</p>
+            <strong>${lang === 'ko' ? '가이드 → 샘플 → 플래너 흐름이 한눈에 보여야 해요' : lang === 'ja' ? 'Guide → sample → planner の流れがすぐ見えるべきです' : lang === 'zhHant' ? 'Guide → sample → planner 的流動要立刻看懂' : 'Guide → sample → planner should read in one glance'}</strong>
+            <p>${lang === 'ko' ? '각 카드가 다음 화면을 또렷하게 보여줘서, 탐색이 끊기지 않고 자연스럽게 루트로 이어집니다.' : lang === 'ja' ? '各カードが次の画面をより明確に示し、探索が止まらず route へ続きます。' : lang === 'zhHant' ? '每張卡片都更清楚指向下一步，讓探索不會中斷而是繼續走向 route。' : 'Each card signals the next move more clearly, so reading keeps turning into route-making.'}</p>
           </article>
         </div>
       </section>
@@ -3351,7 +3354,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
     }
     const city = getCityLoopData(base.destination || '') || getCityLoopData('Tokyo');
     const related = getRelatedCities(base.destination || city.name).slice(0,3);
-    main.innerHTML = `<span class="eyebrow">${base.destination || city.name}</span><h3>${lang === 'ko' ? '최근 본 도시에서 다음 흐름으로' : lang === 'ja' ? '最近見た都市から次の流れへ' : lang === 'zhHant' ? '從最近看過的城市，接到下一個節奏' : 'From your recent trip into the next branch'}</h3><p>${lang === 'ko' ? `최근 여정 ${base.title || base.destination}을 기준으로, 연결감 좋은 다음 도시를 보여드립니다.` : `Using ${base.title || base.destination} as context, here are smoother next branches.`}</p><div class="card-actions"><a class="primary-btn" href="../${city.guide}">${lang === 'ko' ? '도시 가이드 다시 보기' : lang === 'ja' ? '都市ガイドをもう一度開く' : lang === 'zhHant' ? '重新打開城市指南' : 'Reopen city guide'}</a><a class="secondary-btn" href="${plannerUrlForCity(city.name)}">${lang === 'ko' ? '같은 도시 다시 짜기' : lang === 'ja' ? '同じ都市でもう一度組む' : lang === 'zhHant' ? '重新規劃同一座城市' : 'Plan the same city'}</a></div>`;
+    main.innerHTML = `<span class="eyebrow">${base.destination || city.name}</span><h3>${lang === 'ko' ? '방금 본 도시에서 다음 흐름으로' : lang === 'ja' ? '最近見た都市から次の流れへ' : lang === 'zhHant' ? '從最近看過的城市，接到下一個節奏' : 'From your recent trip into the next branch'}</h3><p>${lang === 'ko' ? `최근 여정 ${base.title || base.destination}을 기준으로, 연결감 좋은 다음 도시를 보여드립니다.` : `Using ${base.title || base.destination} as context, here are smoother next branches.`}</p><div class="card-actions"><a class="primary-btn" href="../${city.guide}">${lang === 'ko' ? '도시 가이드 다시 보기' : lang === 'ja' ? '都市ガイドをもう一度開く' : lang === 'zhHant' ? '重新打開城市指南' : 'Reopen city guide'}</a><a class="secondary-btn" href="${plannerUrlForCity(city.name)}">${lang === 'ko' ? '같은 도시 다시 짜기' : lang === 'ja' ? '同じ都市でもう一度組む' : lang === 'zhHant' ? '重新規劃同一座城市' : 'Plan the same city'}</a></div>`;
     side.innerHTML = `<h3>${lang === 'ko' ? '다음으로 잘 이어지는 도시' : lang === 'ja' ? '次につながりやすい都市' : lang === 'zhHant' ? '下一站很順的城市' : 'Cities that connect well next'}</h3><div class="trip-loop-list">${related.map(item => `<a class="trip-loop-item" href="../${item.guide}"><strong>${item.name}</strong><span>${item.vibe}</span></a>`).join('')}</div>`;
   }
 
@@ -4097,13 +4100,13 @@ function getSeasonalEditorialCollections(){
   function getEastAsiaTaxonomyCopy(page='home'){
     const map = {
       home:{
-        ko:{eyebrow:'East Asia map', title:'동아시아 도시장을 하나의 editorial field로 읽기', desc:'이제 Ryokoplan은 일본/한국 추천 리스트가 아니라, 14개 도시를 region, maturity layer, reading track로 읽는 city-first map으로 보이게 정리합니다.', metrics:[['14 cities','release + expansion'],['3 regional edits','Japan / Korea / Greater China'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'제품 레이어', releaseTitle:'Release layer', releaseDesc:'지금 가장 깊게 완성된 7개 도시입니다.', expansionTitle:'Expansion layer', expansionDesc:'다음으로 자연스럽게 이어질 7개 도시입니다.', regionTitle:'Regional desks', region:{japan:['Japan edit','7 cities'],korea:['Korea edit','4 cities'],greater:['Greater China edit','3 cities']}, openAtlas:'이 트랙으로 atlas 열기', openRelease:'Release만 보기', openExpansion:'Expansion만 보기'},
+        ko:{eyebrow:'East Asia map', title:'동아시아 도시를 하나의 에디토리얼 지도처럼 읽기', desc:'이제 Ryokoplan은 일본·한국 추천 리스트가 아니라, 14개 도시를 region, maturity layer, reading track으로 읽는 city-first map처럼 보이게 정리합니다.', metrics:[['14 cities','release + expansion'],['3 regional edits','Japan / Korea / Greater China'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'제품 레이어', releaseTitle:'Release layer', releaseDesc:'지금 가장 깊게 완성된 7개 도시입니다.', expansionTitle:'Expansion layer', expansionDesc:'다음으로 자연스럽게 이어질 7개 도시입니다.', regionTitle:'Regional desks', region:{japan:['Japan edit','7 cities'],korea:['Korea edit','4 cities'],greater:['Greater China edit','3 cities']}, openAtlas:'이 트랙으로 atlas 열기', openRelease:'Release만 보기', openExpansion:'Expansion만 보기'},
         en:{eyebrow:'East Asia map', title:'Read the East Asia city field as one editorial map', desc:'Ryokoplan should now read less like a Japan/Korea recommendation list and more like a 14-city field shaped by region, maturity layer, and reading track.', metrics:[['14 cities','release + expansion'],['3 regional edits','Japan / Korea / Greater China'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Product layers', releaseTitle:'Release layer', releaseDesc:'The seven cities with the deepest completion right now.', expansionTitle:'Expansion layer', expansionDesc:'The next seven cities that now branch naturally from the core layer.', regionTitle:'Regional desks', region:{japan:['Japan edit','7 cities'],korea:['Korea edit','4 cities'],greater:['Greater China edit','3 cities']}, openAtlas:'Open atlas with this track', openRelease:'View release only', openExpansion:'View expansion only'},
         ja:{eyebrow:'East Asia map', title:'東アジアの都市場を一つの editorial map として読む', desc:'Ryokoplan を、日本／韓国のおすすめ一覧ではなく、14都市を region・maturity layer・reading track で読む city-first map として見せます。', metrics:[['14 cities','release + expansion'],['3 regional edits','Japan / Korea / Greater China'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'プロダクトレイヤー', releaseTitle:'Release layer', releaseDesc:'いま最も深く完成している7都市です。', expansionTitle:'Expansion layer', expansionDesc:'次に自然につながる7都市です。', regionTitle:'Regional desks', region:{japan:['Japan edit','7 cities'],korea:['Korea edit','4 cities'],greater:['Greater China edit','3 cities']}, openAtlas:'このトラックで atlas を開く', openRelease:'Release だけ見る', openExpansion:'Expansion だけ見る'},
         zhHant:{eyebrow:'East Asia map', title:'把東亞城市場讀成一張 editorial map', desc:'Ryokoplan 現在不該只像日本／韓國推薦列表，而是要更像一個用 region、maturity layer、reading track 去閱讀的 14 城市地圖。', metrics:[['14 cities','release + expansion'],['3 regional edits','Japan / Korea / Greater China'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'產品層級', releaseTitle:'Release layer', releaseDesc:'目前完成度最高的 7 座城市。', expansionTitle:'Expansion layer', expansionDesc:'下一層自然延伸出去的 7 座城市。', regionTitle:'Regional desks', region:{japan:['Japan edit','7 cities'],korea:['Korea edit','4 cities'],greater:['Greater China edit','3 cities']}, openAtlas:'用這個 track 打開 atlas', openRelease:'只看 Release', openExpansion:'只看 Expansion'}
       },
       magazine:{
-        ko:{eyebrow:'Magazine taxonomy', title:'Magazine를 14-city East Asia desk로 보이게 만드는 분류 체계', desc:'release 도시를 읽고 끝나는 shelf가 아니라, next layer까지 포함한 동아시아 city editorial taxonomy가 먼저 보이게 정리합니다.', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'도시 완성도가 가장 높은 중심 도시층입니다.', expansionTitle:'Next city shelf', expansionDesc:'다음 클릭으로 이어지게 만든 확장 도시층입니다.', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'atlas에서 이 트랙 열기', openRelease:'release shelf만 보기', openExpansion:'next shelf만 보기'},
+        ko:{eyebrow:'Magazine taxonomy', title:'Magazine를 14개 도시 East Asia desk처럼 읽히게 만드는 분류 체계', desc:'release 도시만 훑고 끝나는 shelf가 아니라, next layer까지 함께 보이는 동아시아 city taxonomy로 정리했습니다.', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'도시 완성도가 가장 높은 중심 도시층입니다.', expansionTitle:'Next city shelf', expansionDesc:'다음 클릭으로 이어지게 만든 확장 도시층입니다.', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'atlas에서 이 트랙 열기', openRelease:'release shelf만 보기', openExpansion:'next shelf만 보기'},
         en:{eyebrow:'Magazine taxonomy', title:'A taxonomy that makes Magazine read like a 14-city East Asia desk', desc:'Magazine should not stop at the release shelf. The East Asia taxonomy for the next layer should be visible first.', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'The most complete editorial city layer right now.', expansionTitle:'Next city shelf', expansionDesc:'The expansion layer shaped to catch the next click naturally.', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'Open this track in the atlas', openRelease:'View the release shelf', openExpansion:'View the next shelf'},
         ja:{eyebrow:'Magazine taxonomy', title:'Magazine を 14-city East Asia desk として見せる分類システム', desc:'release 都市の棚で止まらず、その次のレイヤーまで含む東アジアの taxonomy を先に見せるように整えます。', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'いま最も完成度が高い中心都市層です。', expansionTitle:'Next city shelf', expansionDesc:'次のクリックを自然につなぐ拡張都市層です。', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'atlas でこのトラックを開く', openRelease:'release shelf だけ見る', openExpansion:'next shelf だけ見る'},
         zhHant:{eyebrow:'Magazine taxonomy', title:'讓 Magazine 看起來像 14-city East Asia desk 的分類系統', desc:'Magazine 不該只停在 release 城市書架，而要先讓人看到連 next layer 都一起整理好的東亞 taxonomy。', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'目前完成度最高的核心城市層。', expansionTitle:'Next city shelf', expansionDesc:'為了接住下一次點擊而整理好的擴張城市層。', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'在 atlas 打開這個 track', openRelease:'只看 release shelf', openExpansion:'只看 next shelf'}
@@ -4168,7 +4171,7 @@ function getSeasonalEditorialCollections(){
         zhHant:{eyebrow:'城市 atlas', title:'把主要城市從封面一路讀到範例路線', desc:'每座城市都把第一印象、閱讀切口、街區重點、鄰里精選和範例路線接在同一段閱讀流程裡。', region:{japan:'日本 edit', korea:'韓國 edit', greater:'華語城市 edit'}, districts:'街區重點', picks:'鄰里精選', sample:'範例路線', guide:'讀城市指南', plan:'從這座城市開始'}
       },
       magazine: {
-        ko:{eyebrow:'City atlas', title:'도시별 cover, district, sample route를 한 셸프에서', desc:'Magazine 안에서 바로 도시별 editorial intro와 district highlights, neighborhood picks, sample rhythm까지 이어서 읽을 수 있게 확장했습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Start with this city'},
+        ko:{eyebrow:'City atlas', title:'도시별 커버, 동네 포인트, 샘플 루트를 한 화면에서', desc:'Magazine 안에서 도시 소개, 동네 포인트, neighborhood picks, sample rhythm까지 한 흐름으로 읽을 수 있게 정리했습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Start with this city'},
         en:{eyebrow:'City atlas', title:'City cover, district focus, and sample route in one shelf', desc:'Magazine now expands each major city into a tighter editorial block with intro, district highlights, neighborhood picks, and route rhythm together.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Start with this city'},
         ja:{eyebrow:'シティアトラス', title:'都市ごとのカバー、注目エリア、サンプルルートを一つの棚で', desc:'Magazine の中で、主要都市ごとの導入、街区の焦点、近所のピック、参考ルートまでを続けて読めるように整えました。', region:{japan:'日本 edit', korea:'韓国 edit', greater:'華語圏 edit'}, districts:'注目エリア', picks:'近所のピック', sample:'サンプルルート', guide:'ガイドを見る', plan:'この都市から始める'},
         zhHant:{eyebrow:'城市 atlas', title:'把城市封面、街區焦點與範例路線收進同一個書架', desc:'Magazine 現在把主要城市的導語、街區重點、鄰里精選和路線節奏接成同一個閱讀段落。', region:{japan:'日本 edit', korea:'韓國 edit', greater:'華語城市 edit'}, districts:'街區重點', picks:'鄰里精選', sample:'範例路線', guide:'讀城市指南', plan:'從這座城市開始'}

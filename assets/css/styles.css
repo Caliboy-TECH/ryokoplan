@@ -6664,10 +6664,117 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
 }
 
 
-/* v172 actual mobile skip/dock cache-bust fix */
+/* v172 real mobile polish + korean copy cleanup */
 @media (max-width: 767px){
-  .skip-link{display:none !important;font-size:0 !important;color:transparent !important;padding:0 !important;background:transparent !important;border:0 !important;box-shadow:none !important;}
-  .skip-link[data-mode="top"][data-hidden="false"]{display:grid !important;position:fixed !important;right:12px !important;left:auto !important;top:auto !important;bottom:calc(78px + env(safe-area-inset-bottom,0px) + var(--mobile-browser-offset,0px)) !important;width:40px !important;height:40px !important;min-width:40px !important;max-width:40px !important;border-radius:999px !important;padding:0 !important;place-items:center !important;background:rgba(255,251,246,.96) !important;border:1px solid rgba(216,202,184,.96) !important;box-shadow:0 8px 20px rgba(20,33,48,.10) !important;overflow:hidden !important;}
-  .skip-link[data-mode="top"][data-hidden="false"]::before{content:'↑' !important;font-size:16px !important;line-height:1 !important;color:#7f6145 !important;margin:0 !important;}
-  .mobile-dock{left:0 !important;right:0 !important;bottom:0 !important;width:100% !important;max-width:none !important;margin:0 !important;border-radius:18px 18px 0 0 !important;box-shadow:0 -4px 16px rgba(20,33,48,.045) !important;padding:8px 14px calc(14px + env(safe-area-inset-bottom,0px) + var(--mobile-browser-offset,0px)) !important;background:rgba(250,246,240,.985) !important;border-top:1px solid rgba(224,214,199,.94) !important;border-left:none !important;border-right:none !important;border-bottom:none !important;transform:none !important;}
+  body[data-page="planner"] > .skip-link,
+  body[data-page="magazine"] > .skip-link,
+  body[data-page="trips"] > .skip-link{display:none !important;opacity:0 !important;pointer-events:none !important;visibility:hidden !important;}
+
+  .mobile-dock{
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+    width:100% !important;
+    max-width:none !important;
+    margin:0 !important;
+    padding:10px 14px calc(12px + env(safe-area-inset-bottom,0px)) !important;
+    border-radius:22px 22px 0 0 !important;
+    border-top:1px solid rgba(221,211,196,.98) !important;
+    border-left:0 !important;
+    border-right:0 !important;
+    border-bottom:0 !important;
+    background:rgba(251,247,241,.992) !important;
+    box-shadow:0 -8px 24px rgba(20,33,48,.07) !important;
+    backdrop-filter:blur(18px) saturate(1.02) !important;
+    -webkit-backdrop-filter:blur(18px) saturate(1.02) !important;
+    transform:none !important;
+  }
+  .mobile-dock-item{
+    padding:8px 6px 6px !important;
+    border-radius:16px !important;
+    font-size:11px !important;
+    gap:4px !important;
+  }
+  .mobile-dock-item.active{
+    transform:none !important;
+    box-shadow:none !important;
+    background:linear-gradient(180deg,#fffaf4 0%,#fff2e7 100%) !important;
+  }
+  .mobile-dock-icon{
+    width:30px !important;
+    height:30px !important;
+    border-radius:11px !important;
+    font-size:12px !important;
+  }
+  .mobile-dock-label{font-size:10px !important;line-height:1.15 !important;}
+  .mobile-dock-helper{display:none !important;}
+
+  body[data-page="planner"],
+  body[data-page="magazine"],
+  body[data-page="trips"]{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px)) !important;}
+
+  .primary-btn,.secondary-btn,.ghost-btn,.soft-btn{
+    min-height:52px !important;
+    border-radius:18px !important;
+    font-weight:800 !important;
+    letter-spacing:-.02em !important;
+  }
+
+  body[data-page="magazine"] .city-atlas-overlay{display:none !important;}
+  body[data-page="magazine"] .city-atlas-media::after{display:none !important;}
+  body[data-page="magazine"] .city-atlas-card{overflow:hidden !important;}
+  body[data-page="magazine"] .city-atlas-body{position:relative !important; z-index:2 !important; padding-top:16px !important;}
+  body[data-page="magazine"] .city-atlas-topline,
+  body[data-page="magazine"] .city-atlas-pick-row,
+  body[data-page="magazine"] .city-atlas-rhythm-row,
+  body[data-page="magazine"] .east-asia-city-chip-row,
+  body[data-page="magazine"] .hero-hierarchy-chip-row{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    gap:8px !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    white-space:nowrap !important;
+    -webkit-overflow-scrolling:touch !important;
+    scrollbar-width:none !important;
+  }
+  body[data-page="magazine"] .city-atlas-topline::-webkit-scrollbar,
+  body[data-page="magazine"] .city-atlas-pick-row::-webkit-scrollbar,
+  body[data-page="magazine"] .city-atlas-rhythm-row::-webkit-scrollbar,
+  body[data-page="magazine"] .east-asia-city-chip-row::-webkit-scrollbar,
+  body[data-page="magazine"] .hero-hierarchy-chip-row::-webkit-scrollbar{display:none !important;}
+  body[data-page="magazine"] .city-atlas-topline > *,
+  body[data-page="magazine"] .city-atlas-pick-row > *,
+  body[data-page="magazine"] .city-atlas-rhythm-row > *,
+  body[data-page="magazine"] .east-asia-city-chip-row > *,
+  body[data-page="magazine"] .hero-hierarchy-chip-row > *{flex:0 0 auto !important;}
+  body[data-page="magazine"] .city-atlas-cover-label,
+  body[data-page="magazine"] .meta-inline,
+  body[data-page="magazine"] .city-atlas-rhythm-chip,
+  body[data-page="magazine"] .city-atlas-pick,
+  body[data-page="magazine"] .hero-hierarchy-chip{
+    font-size:11px !important;
+    line-height:1 !important;
+    padding:8px 11px !important;
+  }
+  body[data-page="magazine"] .city-atlas-card .section-title,
+  body[data-page="magazine"] .city-atlas-title,
+  body[data-page="magazine"] .city-atlas-body h3{font-size:17px !important; line-height:1.24 !important; word-break:keep-all !important; overflow-wrap:anywhere !important;}
+  body[data-page="magazine"] .city-atlas-lead,
+  body[data-page="magazine"] .city-atlas-body p,
+  body[data-page="magazine"] .city-atlas-district small{font-size:13px !important; line-height:1.58 !important; word-break:keep-all !important; overflow-wrap:anywhere !important;}
+  body[data-page="magazine"] .city-atlas-toolbar .finder-group,
+  body[data-page="trips"] .trip-chip-row{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    overflow-x:auto !important;
+    gap:8px !important;
+    scrollbar-width:none !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+  body[data-page="magazine"] .city-atlas-toolbar .finder-group::-webkit-scrollbar,
+  body[data-page="trips"] .trip-chip-row::-webkit-scrollbar{display:none !important;}
+  body[data-page="magazine"] .city-atlas-toolbar .finder-group > *,
+  body[data-page="trips"] .trip-chip-row > *{flex:0 0 auto !important;}
+  body[data-page="trips"] .trip-chip-row{padding-bottom:2px !important;}
 }

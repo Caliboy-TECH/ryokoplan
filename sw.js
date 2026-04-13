@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ryokoplan-shell-v172';
+const CACHE_NAME = 'ryokoplan-shell-v95';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -8,11 +8,11 @@ const CORE_ASSETS = [
   '/404.html',
   '/site.webmanifest',
   '/version.json',
-  '/assets/css/styles.css?v=172',
-  '/assets/js/app.js?v=172',
-  '/assets/js/planner.js?v=172',
-  '/assets/js/i18n.js?v=172',
-  '/assets/js/storage.js?v=172',
+  '/assets/css/styles.css',
+  '/assets/js/app.js',
+  '/assets/js/planner.js',
+  '/assets/js/i18n.js',
+  '/assets/js/storage.js',
   '/assets/images/brand/logo-mark.svg',
   '/assets/images/brand/favicon.svg',
   '/assets/images/brand/favicon-32.png',
