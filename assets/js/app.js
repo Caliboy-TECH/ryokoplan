@@ -4089,7 +4089,7 @@ function getSeasonalEditorialCollections(){
 
   function getAtlasFilterCopy(){
     const map = {
-      ko:{layerLabel:'Layer', layerAll:'전체 도시', layerRelease:'Release 7', layerExpansion:'Expansion 7', trackLabel:'Reading tracks', trackAll:'전체 트랙', fast:'Fast capitals', food:'Food compact', coast:'Coast & island', heritage:'Heritage & slow', night:'Night contrast', count:(n) => `${n}개 도시`, toolbarNote:'region과 layer, reading track를 같이 보면서 도시를 고르세요.'},
+      ko:{layerLabel:'구성', layerAll:'전체 도시', layerRelease:'출시 도시 7', layerExpansion:'확장 도시 7', trackLabel:'리듬별 보기', trackAll:'전체 리듬', fast:'빠른 도시', food:'먹는 도시', coast:'바다·섬', heritage:'유산·느린 결', night:'밤의 대비', count:(n) => `${n}개 도시`, toolbarNote:'지역과 단계, 여행 리듬을 같이 보면서 도시를 골라보세요.'},
       en:{layerLabel:'Layer', layerAll:'All cities', layerRelease:'Release 7', layerExpansion:'Expansion 7', trackLabel:'Reading tracks', trackAll:'All tracks', fast:'Fast capitals', food:'Food compact', coast:'Coast & island', heritage:'Heritage & slow', night:'Night contrast', count:(n) => `${n} cities`, toolbarNote:'Use region, layer, and reading tracks together to narrow the city field.'},
       ja:{layerLabel:'Layer', layerAll:'すべての都市', layerRelease:'Release 7', layerExpansion:'Expansion 7', trackLabel:'Reading tracks', trackAll:'すべてのトラック', fast:'高速都市', food:'食 중심 compact', coast:'海・島', heritage:'遺産・slow', night:'夜コントラスト', count:(n) => `${n}都市`, toolbarNote:'region・layer・reading track を一緒に見ながら都市を絞ってください。'},
       zhHant:{layerLabel:'Layer', layerAll:'全部城市', layerRelease:'Release 7', layerExpansion:'Expansion 7', trackLabel:'Reading tracks', trackAll:'全部分類', fast:'高速城市', food:'美食 compact', coast:'海岸與島', heritage:'遺產與慢節奏', night:'夜間對比', count:(n) => `${n} 座城市`, toolbarNote:'把 region、layer 和 reading track 一起看，會更容易把城市縮小。'}
@@ -4106,7 +4106,7 @@ function getSeasonalEditorialCollections(){
         zhHant:{eyebrow:'East Asia map', title:'把東亞城市場讀成一張 editorial map', desc:'Ryokoplan 現在不該只像日本／韓國推薦列表，而是要更像一個用 region、maturity layer、reading track 去閱讀的 14 城市地圖。', metrics:[['14 cities','release + expansion'],['3 regional edits','Japan / Korea / Greater China'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'產品層級', releaseTitle:'Release layer', releaseDesc:'目前完成度最高的 7 座城市。', expansionTitle:'Expansion layer', expansionDesc:'下一層自然延伸出去的 7 座城市。', regionTitle:'Regional desks', region:{japan:['Japan edit','7 cities'],korea:['Korea edit','4 cities'],greater:['Greater China edit','3 cities']}, openAtlas:'用這個 track 打開 atlas', openRelease:'只看 Release', openExpansion:'只看 Expansion'}
       },
       magazine:{
-        ko:{eyebrow:'Magazine taxonomy', title:'Magazine를 14개 도시 East Asia desk처럼 읽히게 만드는 분류 체계', desc:'release 도시만 훑고 끝나는 shelf가 아니라, next layer까지 함께 보이는 동아시아 city taxonomy로 정리했습니다.', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'도시 완성도가 가장 높은 중심 도시층입니다.', expansionTitle:'Next city shelf', expansionDesc:'다음 클릭으로 이어지게 만든 확장 도시층입니다.', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'atlas에서 이 트랙 열기', openRelease:'release shelf만 보기', openExpansion:'next shelf만 보기'},
+        ko:{eyebrow:'Magazine map', title:'매거진을 14개 도시가 이어지는 동아시아 편집 지도처럼 보여줍니다', desc:'출시 도시만 훑고 끝나는 진열장이 아니라, 다음에 읽을 도시까지 자연스럽게 이어지는 구조로 다시 정리했습니다.', metrics:[['14개 도시','커버 → 도시 → 샘플 → 결과'],['2개 레이어','출시 / 확장'],['5개 리듬','빠른 도시, 먹는 도시, 바다, 유산, 밤']], layerTitle:'매거진 레이어', releaseTitle:'지금 바로 보기 좋은 도시', releaseDesc:'완성도가 가장 높은 중심 도시들입니다.', expansionTitle:'다음으로 이어질 도시', expansionDesc:'다음 클릭을 자연스럽게 받쳐주는 확장 도시들입니다.', regionTitle:'지역별 보기', region:{japan:['Japan','Tokyo · Osaka · Kyoto · Fukuoka · Sapporo · Sendai · Okinawa'],korea:['Korea','Seoul · Busan · Jeju · Gyeongju'],greater:['Greater China','Taipei · Hong Kong · Macau']}, openAtlas:'이 흐름으로 도시 보기', openRelease:'출시 도시만 보기', openExpansion:'확장 도시만 보기'},
         en:{eyebrow:'Magazine taxonomy', title:'A taxonomy that makes Magazine read like a 14-city East Asia desk', desc:'Magazine should not stop at the release shelf. The East Asia taxonomy for the next layer should be visible first.', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'The most complete editorial city layer right now.', expansionTitle:'Next city shelf', expansionDesc:'The expansion layer shaped to catch the next click naturally.', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'Open this track in the atlas', openRelease:'View the release shelf', openExpansion:'View the next shelf'},
         ja:{eyebrow:'Magazine taxonomy', title:'Magazine を 14-city East Asia desk として見せる分類システム', desc:'release 都市の棚で止まらず、その次のレイヤーまで含む東アジアの taxonomy を先に見せるように整えます。', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'いま最も完成度が高い中心都市層です。', expansionTitle:'Next city shelf', expansionDesc:'次のクリックを自然につなぐ拡張都市層です。', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'atlas でこのトラックを開く', openRelease:'release shelf だけ見る', openExpansion:'next shelf だけ見る'},
         zhHant:{eyebrow:'Magazine taxonomy', title:'讓 Magazine 看起來像 14-city East Asia desk 的分類系統', desc:'Magazine 不該只停在 release 城市書架，而要先讓人看到連 next layer 都一起整理好的東亞 taxonomy。', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'目前完成度最高的核心城市層。', expansionTitle:'Next city shelf', expansionDesc:'為了接住下一次點擊而整理好的擴張城市層。', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'在 atlas 打開這個 track', openRelease:'只看 release shelf', openExpansion:'只看 next shelf'}
@@ -4127,6 +4127,16 @@ function getSeasonalEditorialCollections(){
     }
     const copy = getEastAsiaTaxonomyCopy(page);
     const regionCounts = { japan:7, korea:4, greater:3 };
+    const regionCityMap = { japan:['tokyo','osaka','kyoto','fukuoka','sapporo','sendai','okinawa'], korea:['seoul','busan','jeju','gyeongju'], greater:['taipei','hongkong','macau'] };
+    const regionTabMarkup = Object.entries(copy.region).map(([key, item], idx) => `
+      <button class="east-asia-region-tab ${idx === 0 ? 'active' : ''}" type="button" data-region-tab="${key}">${item[0]}</button>`).join('');
+    const regionPanelMarkup = Object.entries(copy.region).map(([key, item], idx) => `
+      <div class="east-asia-region-panel" data-region-panel="${key}" ${idx === 0 ? '' : 'hidden'}>
+        <strong>${item[0]}</strong>
+        <p>${item[1]}</p>
+        <div class="east-asia-city-chip-row">${(regionCityMap[key] || []).map(slug => `<button class="east-asia-city-chip" type="button" data-atlas-open="${page}" data-atlas-layer="all" data-atlas-track="all" data-atlas-region="${key}">${cityLoopMap[slug]?.name || slug}</button>`).join('')}</div>
+        <div class="card-actions"><button class="soft-btn" type="button" data-atlas-open="${page}" data-atlas-layer="all" data-atlas-track="all" data-atlas-region="${key}">${lang === 'ko' ? '이 지역 도시 보기' : lang === 'ja' ? 'この地域の都市を見る' : lang === 'zhHant' ? '看這一區的城市' : 'Open this region'}</button></div>
+      </div>`).join('');
     const trackKeys = ['fast','food','coast','heritage','night'];
     const trackMarkup = trackKeys.map(key => {
       const trackCopy = eastAsiaTaxonomyTrackMap[key]?.[lang] || eastAsiaTaxonomyTrackMap[key]?.en || {};
@@ -4142,9 +4152,14 @@ function getSeasonalEditorialCollections(){
             <p class="section-desc">${copy.desc}</p>
             <div class="east-asia-metric-grid">${copy.metrics.map(item => `<div class="east-asia-metric-card"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</div>
             <div class="east-asia-layer-row">
-              <article class="east-asia-layer-card"><span class="collection-kicker">${copy.releaseTitle}</span><strong>${cityAtlasLayerMap.release.length}</strong><p>${copy.releaseDesc}</p><a class="soft-btn" href="#cityAtlas" data-atlas-open="${page}" data-atlas-layer="release" data-atlas-track="all">${copy.openRelease}</a></article>
-              <article class="east-asia-layer-card"><span class="collection-kicker">${copy.expansionTitle}</span><strong>${cityAtlasLayerMap.expansion.length}</strong><p>${copy.expansionDesc}</p><a class="soft-btn" href="#cityAtlas" data-atlas-open="${page}" data-atlas-layer="expansion" data-atlas-track="all">${copy.openExpansion}</a></article>
+              <article class="east-asia-layer-card"><span class="collection-kicker">${copy.releaseTitle}</span><strong>${cityAtlasLayerMap.release.length}</strong><p>${copy.releaseDesc}</p><button class="soft-btn" type="button" data-atlas-open="${page}" data-atlas-layer="release" data-atlas-track="all" data-atlas-region="all">${copy.openRelease}</button></article>
+              <article class="east-asia-layer-card"><span class="collection-kicker">${copy.expansionTitle}</span><strong>${cityAtlasLayerMap.expansion.length}</strong><p>${copy.expansionDesc}</p><button class="soft-btn" type="button" data-atlas-open="${page}" data-atlas-layer="expansion" data-atlas-track="all" data-atlas-region="all">${copy.openExpansion}</button></article>
             </div>
+            <article class="east-asia-field-card info-card">
+              <span class="collection-kicker">${lang === 'ko' ? '지역별 보기' : lang === 'ja' ? '地域で見る' : lang === 'zhHant' ? '按區域看' : 'Browse by region'}</span>
+              <div class="east-asia-region-tab-row">${regionTabMarkup}</div>
+              <div class="east-asia-region-panel-wrap">${regionPanelMarkup}</div>
+            </article>
           </article>
           <div class="east-asia-track-grid">${trackMarkup}</div>
         </div>
@@ -4158,8 +4173,19 @@ function getSeasonalEditorialCollections(){
       const atlasSection = document.querySelector(`.city-atlas-section-${targetPage}`) || document.getElementById('cityAtlas');
       if (atlasSection) atlasSection.scrollIntoView({ behavior:'smooth', block:'start' });
       const setFilters = window.RyokoApp?.setAtlasFilters;
-      if (typeof setFilters === 'function') setFilters(targetPage, el.dataset.atlasLayer || 'all', el.dataset.atlasTrack || 'all');
+      if (typeof setFilters === 'function') setFilters(targetPage, el.dataset.atlasLayer || 'all', el.dataset.atlasTrack || 'all', el.dataset.atlasRegion || 'all');
     }));
+    const regionTabs = [...root.querySelectorAll('[data-region-tab]')];
+    const regionPanels = [...root.querySelectorAll('[data-region-panel]')];
+    const syncRegionPanels = (next = 'japan') => {
+      regionTabs.forEach(btn => btn.classList.toggle('active', btn.dataset.regionTab === next));
+      regionPanels.forEach(panel => { panel.hidden = panel.dataset.regionPanel !== next; });
+    };
+    if (regionTabs.length && regionPanels.length) {
+      const initial = regionTabs[0]?.dataset.regionTab || 'japan';
+      syncRegionPanels(initial);
+      regionTabs.forEach(btn => btn.addEventListener('click', () => syncRegionPanels(btn.dataset.regionTab || initial)));
+    }
   }
 
   function getAtlasText(page='home'){
@@ -4171,7 +4197,7 @@ function getSeasonalEditorialCollections(){
         zhHant:{eyebrow:'城市 atlas', title:'把主要城市從封面一路讀到範例路線', desc:'每座城市都把第一印象、閱讀切口、街區重點、鄰里精選和範例路線接在同一段閱讀流程裡。', region:{japan:'日本 edit', korea:'韓國 edit', greater:'華語城市 edit'}, districts:'街區重點', picks:'鄰里精選', sample:'範例路線', guide:'讀城市指南', plan:'從這座城市開始'}
       },
       magazine: {
-        ko:{eyebrow:'City atlas', title:'도시별 커버, 동네 포인트, 샘플 루트를 한 화면에서', desc:'Magazine 안에서 도시 소개, 동네 포인트, neighborhood picks, sample rhythm까지 한 흐름으로 읽을 수 있게 정리했습니다.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Start with this city'},
+        ko:{eyebrow:'City atlas', title:'도시 분위기부터 샘플 루트까지 한 화면에서 읽기', desc:'도시 소개, 동네 포인트, 샘플 루트를 한 흐름으로 읽고 바로 다음 단계로 이어지게 정리했습니다.', region:{japan:'Japan', korea:'Korea', greater:'Greater China'}, districts:'동네 포인트', picks:'먼저 보면 좋은 곳', sample:'샘플 루트', guide:'도시 가이드', plan:'이 도시로 시작하기'},
         en:{eyebrow:'City atlas', title:'City cover, district focus, and sample route in one shelf', desc:'Magazine now expands each major city into a tighter editorial block with intro, district highlights, neighborhood picks, and route rhythm together.', region:{japan:'Japan edit', korea:'Korea edit', greater:'Greater China edit'}, districts:'District highlights', picks:'Neighborhood picks', sample:'Sample', guide:'Read guide', plan:'Start with this city'},
         ja:{eyebrow:'シティアトラス', title:'都市ごとのカバー、注目エリア、サンプルルートを一つの棚で', desc:'Magazine の中で、主要都市ごとの導入、街区の焦点、近所のピック、参考ルートまでを続けて読めるように整えました。', region:{japan:'日本 edit', korea:'韓国 edit', greater:'華語圏 edit'}, districts:'注目エリア', picks:'近所のピック', sample:'サンプルルート', guide:'ガイドを見る', plan:'この都市から始める'},
         zhHant:{eyebrow:'城市 atlas', title:'把城市封面、街區焦點與範例路線收進同一個書架', desc:'Magazine 現在把主要城市的導語、街區重點、鄰里精選和路線節奏接成同一個閱讀段落。', region:{japan:'日本 edit', korea:'韓國 edit', greater:'華語城市 edit'}, districts:'街區重點', picks:'鄰里精選', sample:'範例路線', guide:'讀城市指南', plan:'從這座城市開始'}
@@ -4696,6 +4722,13 @@ function getCityRouteVariations(slug){
     return String(example || '').replace(/\.html$/,'').trim();
   }
 
+  function getAtlasRegionKey(slug=''){
+    const key = String(slug || '').toLowerCase();
+    if (['tokyo','osaka','kyoto','fukuoka','sapporo','sendai','okinawa'].includes(key)) return 'japan';
+    if (['seoul','busan','jeju','gyeongju'].includes(key)) return 'korea';
+    return 'greater';
+  }
+
   function cityAtlasCardMarkup(slug, regionLabel, copy, page='home', index=0){
     const city = editorialData.city[slug];
     if (!city) return '';
@@ -4713,12 +4746,13 @@ function getCityRouteVariations(slug){
     const visual = cityAtlasVisualPriorityMap[slug] || {};
     const visualLabel = visual?.label?.[lang] || visual?.label?.en || city.country;
     const featured = index === 0;
-    const coverNoteLabel = lang === 'ko' ? 'Cover note' : lang === 'ja' ? 'カバーノート' : lang === 'zhHant' ? '封面註記' : 'Cover note';
-    const picksLead = lang === 'ko' ? '이 도시를 읽기 시작하기 좋은 첫 동네들입니다.' : lang === 'ja' ? 'この街を読み始める入口として相性がいい近所です。' : lang === 'zhHant' ? '這些近所最適合當成讀這座城市的第一個入口。' : 'These are the neighborhoods that open the city most naturally.';
+    const coverNoteLabel = lang === 'ko' ? '도시 메모' : lang === 'ja' ? 'カバーノート' : lang === 'zhHant' ? '封面註記' : 'Cover note';
+    const picksLead = lang === 'ko' ? '처음 펼쳐보기 좋은 동네만 먼저 골라두었어요.' : lang === 'ja' ? 'この街を読み始める入口として相性がいい近所です。' : lang === 'zhHant' ? '這些近所最適合當成讀這座城市的第一個入口。' : 'These are the neighborhoods that open the city most naturally.';
     const layer = getCityAtlasLayer(slug);
     const tracks = getCityAtlasTracks(slug);
+    const regionKey = getAtlasRegionKey(slug);
     return `
-      <article class="city-atlas-card info-card city-atlas-card--${slug} ${featured ? 'city-atlas-card-featured' : ''}" data-atlas-card="${page}" data-atlas-layer="${layer}" data-atlas-track="${tracks.join(' ')}">
+      <article class="city-atlas-card info-card city-atlas-card--${slug} ${featured ? 'city-atlas-card-featured' : ''}" data-atlas-card="${page}" data-atlas-layer="${layer}" data-atlas-track="${tracks.join(' ')}" data-atlas-region="${regionKey}">
         <div class="city-atlas-media">
           <img src="${resolvePath(city.image)}" alt="${city.planner}" style="object-position:${visual.position || 'center center'}">
           <div class="city-atlas-overlay">
@@ -4749,7 +4783,7 @@ function getCityRouteVariations(slug){
             <p>${sampleShape}</p>
             <small>${sampleLead}</small>
           </div>
-          ${rhythmSignals.length ? `<div class="city-atlas-block city-atlas-rhythm-thin"><strong>${lang === 'ko' ? 'Day rhythm' : lang === 'ja' ? '一日のリズム' : lang === 'zhHant' ? '一日節奏' : 'Day rhythm'}</strong><div class="city-atlas-rhythm-row">${rhythmSignals.map(item => `<span class="city-atlas-rhythm-chip">${item}</span>`).join('')}</div></div>` : ''}
+          ${rhythmSignals.length ? `<div class="city-atlas-block city-atlas-rhythm-thin"><strong>${lang === 'ko' ? '하루 리듬' : lang === 'ja' ? '一日のリズム' : lang === 'zhHant' ? '一日節奏' : 'Day rhythm'}</strong><div class="city-atlas-rhythm-row">${rhythmSignals.map(item => `<span class="city-atlas-rhythm-chip">${item}</span>`).join('')}</div></div>` : ''}
           <div class="card-actions city-atlas-actions">
             <a class="soft-btn" href="${resolvePath(city.guide || ('city/' + slug + '.html'))}">${copy.guide}</a>
             <a class="ghost-btn" href="${resolvePath('example/' + city.example)}">${copy.sample}</a>
@@ -4765,16 +4799,19 @@ function getCityRouteVariations(slug){
     const filterCopy = getAtlasFilterCopy();
     let currentLayer = section.dataset.currentLayer || 'all';
     let currentTrack = section.dataset.currentTrack || 'all';
+    let currentRegion = section.dataset.currentRegion || 'all';
     const apply = () => {
       section.dataset.currentLayer = currentLayer;
       section.dataset.currentTrack = currentTrack;
+      section.dataset.currentRegion = currentRegion;
       const cards = [...section.querySelectorAll(`[data-atlas-card="${page}"]`)];
       let visibleCount = 0;
       cards.forEach(card => {
         const layerOk = currentLayer === 'all' || card.dataset.atlasLayer === currentLayer;
         const tracks = String(card.dataset.atlasTrack || '').split(/\s+/).filter(Boolean);
         const trackOk = currentTrack === 'all' || tracks.includes(currentTrack);
-        const show = layerOk && trackOk;
+        const regionOk = currentRegion === 'all' || card.dataset.atlasRegion === currentRegion;
+        const show = layerOk && trackOk && regionOk;
         card.hidden = !show;
         if (show) visibleCount += 1;
       });
@@ -4786,21 +4823,26 @@ function getCityRouteVariations(slug){
       if (countNode) countNode.textContent = filterCopy.count(visibleCount);
       section.querySelectorAll('[data-atlas-layer-filter]').forEach(btn => btn.classList.toggle('active', btn.dataset.atlasLayerFilter === currentLayer));
       section.querySelectorAll('[data-atlas-track-filter]').forEach(btn => btn.classList.toggle('active', btn.dataset.atlasTrackFilter === currentTrack));
+      section.querySelectorAll('[data-region-tab]').forEach(btn => btn.classList.toggle('active', btn.dataset.regionTab === currentRegion));
+      section.querySelectorAll('[data-region-panel]').forEach(panel => panel.hidden = panel.dataset.regionPanel !== currentRegion && currentRegion !== 'all');
     };
     section.querySelectorAll('[data-atlas-layer-filter]').forEach(btn => btn.addEventListener('click', () => { currentLayer = btn.dataset.atlasLayerFilter || 'all'; apply(); }));
     section.querySelectorAll('[data-atlas-track-filter]').forEach(btn => btn.addEventListener('click', () => { currentTrack = btn.dataset.atlasTrackFilter || 'all'; apply(); }));
+    section.querySelectorAll('[data-region-tab]').forEach(btn => btn.addEventListener('click', () => { currentRegion = btn.dataset.regionTab || 'all'; apply(); }));
     section.__atlasApply = () => {
       currentLayer = section.dataset.currentLayer || 'all';
       currentTrack = section.dataset.currentTrack || 'all';
+      currentRegion = section.dataset.currentRegion || 'all';
       apply();
     };
     apply();
     window.RyokoApp = window.RyokoApp || {};
-    window.RyokoApp.setAtlasFilters = (targetPage='home', layer='all', track='all') => {
+    window.RyokoApp.setAtlasFilters = (targetPage='home', layer='all', track='all', region='all') => {
       const targetSection = document.querySelector(`.city-atlas-section-${targetPage}`);
       if (!targetSection) return;
       targetSection.dataset.currentLayer = layer;
       targetSection.dataset.currentTrack = track;
+      targetSection.dataset.currentRegion = region;
       if (typeof targetSection.__atlasApply === 'function') targetSection.__atlasApply();
     };
   }
