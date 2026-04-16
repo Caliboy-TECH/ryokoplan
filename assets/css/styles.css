@@ -6917,3 +6917,127 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
   body[data-page="magazine"] .city-atlas-actions .ghost-btn,
   body[data-page="magazine"] .city-atlas-actions .primary-btn{min-height:42px !important;border-radius:14px !important;}
 }
+
+
+
+/* v175 mobile region/city readability + planner hero/dock cleanup */
+@media (max-width: 760px){
+  body[data-page="magazine"] .east-asia-field-card,
+  body[data-page="magazine"] .city-atlas-toolbar{
+    padding:14px !important;
+    border-radius:20px !important;
+  }
+  body[data-page="magazine"] .east-asia-region-tab-row,
+  body[data-page="magazine"] .east-asia-city-chip-row,
+  body[data-page="magazine"] .city-atlas-region-city-row{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    gap:8px !important;
+    padding:2px 0 4px !important;
+    scroll-snap-type:x proximity;
+    -webkit-overflow-scrolling:touch;
+    white-space:nowrap !important;
+  }
+  body[data-page="magazine"] .east-asia-region-tab-row > *,
+  body[data-page="magazine"] .east-asia-city-chip-row > *,
+  body[data-page="magazine"] .city-atlas-region-city-row > *{
+    flex:0 0 auto !important;
+    min-width:max-content !important;
+    white-space:nowrap !important;
+    scroll-snap-align:start;
+  }
+  body[data-page="magazine"] .east-asia-region-tab,
+  body[data-page="magazine"] .east-asia-city-chip,
+  body[data-page="magazine"] .city-atlas-region-city-row .east-asia-city-chip{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-height:38px !important;
+    padding:9px 14px !important;
+    font-size:13px !important;
+    line-height:1 !important;
+    border-radius:999px !important;
+  }
+  body[data-page="magazine"] .east-asia-field-card{
+    background:#183a5d !important;
+    border-color:rgba(26,55,88,.96) !important;
+    box-shadow:none !important;
+  }
+  body[data-page="magazine"] .east-asia-field-card .collection-kicker,
+  body[data-page="magazine"] .east-asia-field-card strong,
+  body[data-page="magazine"] .east-asia-field-card h3,
+  body[data-page="magazine"] .east-asia-field-card p,
+  body[data-page="magazine"] .east-asia-field-card span,
+  body[data-page="magazine"] .east-asia-region-panel strong,
+  body[data-page="magazine"] .east-asia-region-panel p{
+    color:#f7efe5 !important;
+  }
+  body[data-page="magazine"] .east-asia-field-card .collection-kicker{
+    color:#f2d7b8 !important;
+    border-color:rgba(242,215,184,.32) !important;
+    background:rgba(255,255,255,.08) !important;
+  }
+  body[data-page="magazine"] .east-asia-region-tab{background:rgba(255,255,255,.12) !important;border-color:rgba(255,255,255,.16) !important;color:#f7efe5 !important;}
+  body[data-page="magazine"] .east-asia-region-tab.active{background:#fff7ee !important;color:#1b3046 !important;border-color:#fff7ee !important;}
+  body[data-page="magazine"] .east-asia-city-chip{background:rgba(255,255,255,.1) !important;border-color:rgba(255,255,255,.18) !important;color:#fff7ee !important;}
+  body[data-page="magazine"] .east-asia-field-card .soft-btn{background:#fff7ee !important;color:#1b3046 !important;border-color:#fff7ee !important;}
+
+  body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home,
+  body[data-page="planner"] .hero.hero-magazine,
+  body[data-page="planner"] .hero.cover-system-shell-home{
+    margin-inline:auto !important;
+    justify-items:center !important;
+    align-items:center !important;
+  }
+  body[data-page="planner"] .hero.hero-magazine .cover-copy-column,
+  body[data-page="planner"] .hero.hero-magazine .cover-visual-column{
+    width:100% !important;
+    margin-inline:auto !important;
+  }
+  body[data-page="planner"] .hero-visual-main,
+  body[data-page="planner"] .hero-visual-sub{
+    overflow:visible !important;
+  }
+  body[data-page="planner"] .hero-visual-main .image-caption,
+  body[data-page="planner"] .hero-visual-sub .image-caption{
+    position:static !important;
+    margin:10px 0 0 !important;
+    background:#fffaf4 !important;
+    border:1px solid rgba(221,211,196,.92) !important;
+    color:#1b3046 !important;
+    text-shadow:none !important;
+    box-shadow:none !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+  body[data-page="planner"] .hero-visual-main .image-caption strong,
+  body[data-page="planner"] .hero-visual-main .image-caption span,
+  body[data-page="planner"] .hero-visual-sub .image-caption strong,
+  body[data-page="planner"] .hero-visual-sub .image-caption span{
+    color:#1b3046 !important;
+  }
+  body[data-page="planner"] .hero-visual-main .caption-kicker,
+  body[data-page="planner"] .hero-visual-sub .caption-kicker{
+    color:#9b6f4d !important;
+  }
+  body[data-page="planner"] .route-card.editorial-badge{display:none !important;}
+
+  .mobile-dock{
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+    width:100% !important;
+    max-width:none !important;
+    border-radius:14px 14px 0 0 !important;
+    padding:6px 10px calc(7px + env(safe-area-inset-bottom,0px)) !important;
+    background:#faf6f0 !important;
+    border-top:1px solid rgba(221,211,196,.98) !important;
+    box-shadow:none !important;
+  }
+  .mobile-dock-item{min-height:42px !important;padding:5px 4px 6px !important;border-radius:10px !important;}
+  .mobile-dock-item.active{background:rgba(236,223,206,.38) !important;box-shadow:none !important;transform:none !important;}
+  .mobile-dock-icon{width:22px !important;height:22px !important;border-radius:7px !important;background:rgba(255,255,255,.86) !important;}
+  .mobile-dock-label{font-size:9.5px !important;line-height:1.05 !important;}
+}
