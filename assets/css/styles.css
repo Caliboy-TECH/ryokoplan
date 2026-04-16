@@ -7041,3 +7041,145 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
   .mobile-dock-icon{width:22px !important;height:22px !important;border-radius:7px !important;background:rgba(255,255,255,.86) !important;}
   .mobile-dock-label{font-size:9.5px !important;line-height:1.05 !important;}
 }
+
+
+/* v176 mobile usability hard fixes */
+@media (max-width: 760px){
+  /* Planner home image captions should read below images, not on top */
+  body[data-page="planner"] .hero-visual-main .image-caption,
+  body[data-page="planner"] .hero-visual-sub .image-caption,
+  body[data-page="planner"] .route-card.editorial-badge{
+    display:none !important;
+  }
+
+  /* Hide atlas image overlays on mobile across pages and rely on body copy */
+  .city-atlas-overlay,
+  .city-atlas-overlay-top,
+  .city-atlas-overlay-copy,
+  .city-atlas-overlay-foot{
+    display:none !important;
+  }
+
+  /* Region tabs and city chips must scroll horizontally without collapsing */
+  .east-asia-region-tab-row,
+  .city-atlas-region-city-row,
+  .east-asia-city-chip-row{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    gap:8px !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    scrollbar-width:none !important;
+    padding-bottom:2px !important;
+    white-space:nowrap !important;
+  }
+  .east-asia-region-tab-row::-webkit-scrollbar,
+  .city-atlas-region-city-row::-webkit-scrollbar,
+  .east-asia-city-chip-row::-webkit-scrollbar{
+    display:none !important;
+  }
+  .east-asia-region-tab-row > *,
+  .city-atlas-region-city-row > *,
+  .east-asia-city-chip-row > *,
+  .east-asia-region-tab,
+  .east-asia-city-chip{
+    flex:0 0 auto !important;
+    min-width:max-content !important;
+    white-space:nowrap !important;
+  }
+  .east-asia-region-tab,
+  .east-asia-city-chip,
+  .city-atlas-region-city-row .east-asia-city-chip{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-height:36px !important;
+    padding:8px 14px !important;
+    border-radius:999px !important;
+    font-size:13px !important;
+    line-height:1 !important;
+  }
+
+  /* Atlas cards need clean media/body separation */
+  .city-atlas-card{
+    overflow:hidden !important;
+  }
+  .city-atlas-media{
+    aspect-ratio:16/10 !important;
+    min-height:0 !important;
+  }
+  .city-atlas-media img{
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    transform:none !important;
+  }
+  .city-atlas-body{
+    padding-top:14px !important;
+  }
+  .city-atlas-topline{
+    gap:8px !important;
+    flex-wrap:wrap !important;
+  }
+
+  /* Mobile dock should sit as a full-width footer rail, not a floating card */
+  .mobile-dock{
+    position:fixed !important;
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+    width:100% !important;
+    max-width:none !important;
+    margin:0 !important;
+    padding:6px 10px calc(6px + env(safe-area-inset-bottom,0px)) !important;
+    border-radius:16px 16px 0 0 !important;
+    border:0 !important;
+    border-top:1px solid rgba(221,211,196,.95) !important;
+    background:rgba(250,246,240,.985) !important;
+    box-shadow:0 -10px 24px rgba(20,33,48,.08) !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    gap:4px !important;
+    transform:none !important;
+  }
+  .mobile-dock-item{
+    min-height:42px !important;
+    border-radius:10px !important;
+    padding:5px 4px 6px !important;
+    gap:2px !important;
+  }
+  .mobile-dock-item.active{
+    background:rgba(236,223,206,.34) !important;
+    box-shadow:none !important;
+    transform:none !important;
+  }
+  .mobile-dock-icon{
+    width:22px !important;
+    height:22px !important;
+    border-radius:7px !important;
+    font-size:10px !important;
+  }
+  .mobile-dock-label{
+    font-size:10px !important;
+    line-height:1.05 !important;
+  }
+  .mobile-dock-helper{display:none !important;}
+
+  /* Ensure content is not covered by dock */
+  body[data-page] .page,
+  body[data-page] main.page,
+  body[data-page] #main-content.page{
+    padding-bottom:92px !important;
+  }
+
+  /* Header width should remain centered */
+  body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home,
+  body[data-page="planner"] .hero-card.hero-copy,
+  body[data-page="planner"] .hero-card.hero-visual,
+  body[data-page="planner"] .container{
+    margin-inline:auto !important;
+  }
+}
