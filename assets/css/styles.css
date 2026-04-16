@@ -6863,3 +6863,57 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
   .east-asia-track-card h3{font-size:16px!important;line-height:1.34!important}
   .east-asia-track-card p,.east-asia-region-panel p{font-size:13.5px!important;line-height:1.6!important}
 }
+
+
+/* v174 targeted mobile fixes */
+@media (max-width: 767px){
+  .chip-row{overflow-x:auto;flex-wrap:nowrap;padding-inline:4px 0;scroll-snap-type:x proximity}
+  .chip-row > .chip{flex:0 0 auto !important;white-space:nowrap;scroll-snap-align:start}
+  body[data-page="planner"] .hero.cover-system-shell-home{max-width:100%;margin-inline:auto !important;justify-content:center !important;}
+  body[data-page="planner"] .cover-copy-column,
+  body[data-page="planner"] .cover-visual-column{margin-inline:auto !important;}
+  body[data-page="planner"] .hero-visual-grid{grid-template-columns:1fr !important;gap:10px !important;}
+  body[data-page="planner"] .image-caption{position:static !important;margin:10px 0 0 !important;border-radius:18px !important;background:rgba(255,251,246,.96) !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;box-shadow:none !important;border:1px solid rgba(221,211,196,.88) !important;color:#1b3046 !important;}
+  body[data-page="planner"] .hero-visual-main .image-caption strong,
+  body[data-page="planner"] .hero-visual-sub .image-caption strong,
+  body[data-page="planner"] .image-caption span{color:inherit !important;text-shadow:none !important;}
+  body[data-page="planner"] .hero-visual-main .image-caption .caption-kicker,
+  body[data-page="planner"] .hero-visual-sub .image-caption .caption-kicker{color:#9b6f4d !important;}
+
+  .mobile-dock{left:0 !important;right:0 !important;bottom:0 !important;max-width:none !important;width:100% !important;padding:7px 10px calc(8px + env(safe-area-inset-bottom,0px)) !important;border-radius:16px 16px 0 0 !important;box-shadow:none !important;background:rgba(250,246,240,.995) !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;border-top:1px solid rgba(221,211,196,.98) !important;}
+  .mobile-dock-item{min-height:42px !important;padding:5px 4px 6px !important;border-radius:10px !important;gap:2px !important}
+  .mobile-dock-item.active{background:rgba(236,223,206,.42) !important;box-shadow:none !important}
+  .mobile-dock-icon{width:22px !important;height:22px !important;border-radius:7px !important;font-size:10px !important}
+  .mobile-dock-label{font-size:9.5px !important;line-height:1.05 !important}
+
+  body[data-page="magazine"] .city-atlas-section .section-head{margin-bottom:12px !important;}
+  body[data-page="magazine"] .city-atlas-toolbar{padding:14px !important;border-radius:22px !important;gap:12px !important;}
+  body[data-page="magazine"] .city-atlas-toolbar-group{gap:8px !important}
+  body[data-page="magazine"] .city-atlas-toolbar-label{font-size:11px !important;letter-spacing:.04em !important;color:#8b6b4f !important;}
+  body[data-page="magazine"] .east-asia-region-tab-row,
+  body[data-page="magazine"] .city-atlas-region-city-row{display:flex !important;flex-wrap:nowrap !important;overflow-x:auto !important;gap:8px !important;scrollbar-width:none !important;-webkit-overflow-scrolling:touch;}
+  body[data-page="magazine"] .east-asia-region-tab-row::-webkit-scrollbar,
+  body[data-page="magazine"] .city-atlas-region-city-row::-webkit-scrollbar{display:none !important}
+  body[data-page="magazine"] .east-asia-region-tab,
+  body[data-page="magazine"] .east-asia-city-chip{flex:0 0 auto !important;white-space:nowrap !important;}
+  body[data-page="magazine"] .east-asia-region-tab{padding:10px 14px !important;border-radius:999px !important;font-size:13px !important;}
+  body[data-page="magazine"] .east-asia-city-chip{padding:8px 12px !important;border-radius:999px !important;font-size:12.5px !important;background:#fff !important;color:#5d4734 !important;border:1px solid rgba(221,211,195,.95) !important;}
+  body[data-page="magazine"] .city-atlas-group-head{display:none !important}
+  body[data-page="magazine"] .city-atlas-grid{gap:14px !important}
+  body[data-page="magazine"] .city-atlas-card{border-radius:24px !important;overflow:hidden !important;}
+  body[data-page="magazine"] .city-atlas-media{aspect-ratio:16 / 10 !important;}
+  body[data-page="magazine"] .city-atlas-overlay,
+  body[data-page="magazine"] .city-atlas-overlay-top,
+  body[data-page="magazine"] .city-atlas-overlay-copy,
+  body[data-page="magazine"] .city-atlas-overlay-foot{display:none !important}
+  body[data-page="magazine"] .city-atlas-body{padding:16px !important;}
+  body[data-page="magazine"] .city-atlas-topline{margin-bottom:8px !important;}
+  body[data-page="magazine"] .city-atlas-topline .meta-inline{display:none !important;}
+  body[data-page="magazine"] .city-atlas-body h3{font-size:22px !important;line-height:1.18 !important;margin:0 0 8px !important;}
+  body[data-page="magazine"] .city-atlas-lead{font-size:14px !important;line-height:1.62 !important;margin-bottom:12px !important;color:#536577 !important;}
+  body[data-page="magazine"] .city-atlas-block{margin-top:12px !important;padding-top:12px !important;}
+  body[data-page="magazine"] .city-atlas-actions{gap:8px !important;}
+  body[data-page="magazine"] .city-atlas-actions .soft-btn,
+  body[data-page="magazine"] .city-atlas-actions .ghost-btn,
+  body[data-page="magazine"] .city-atlas-actions .primary-btn{min-height:42px !important;border-radius:14px !important;}
+}

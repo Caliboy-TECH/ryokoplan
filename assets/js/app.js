@@ -2454,19 +2454,19 @@ function ensureLaunchFeedbackCta(){
       dock.style.maxWidth = 'none';
       dock.style.bottom = '0';
       dock.style.margin = '0';
-      dock.style.padding = `10px 14px calc(12px + ${bottomInset} + ${browserOffset}px)`;
-      dock.style.borderRadius = '22px 22px 0 0';
+      dock.style.padding = `7px 10px calc(8px + ${bottomInset} + ${browserOffset}px)`;
+      dock.style.borderRadius = '16px 16px 0 0';
       dock.style.borderTop = '1px solid rgba(221,211,196,.98)';
       dock.style.borderLeft = '0';
       dock.style.borderRight = '0';
       dock.style.borderBottom = '0';
-      dock.style.boxShadow = '0 -8px 24px rgba(20,33,48,.07)';
-      dock.style.background = 'rgba(251,247,241,.992)';
-      dock.style.backdropFilter = 'blur(18px) saturate(1.02)';
-      dock.style.webkitBackdropFilter = 'blur(18px) saturate(1.02)';
+      dock.style.boxShadow = 'none';
+      dock.style.background = 'rgba(250,246,240,.995)';
+      dock.style.backdropFilter = 'none';
+      dock.style.webkitBackdropFilter = 'none';
       dock.style.transform = 'none';
       dock.style.zIndex = '70';
-      document.body.style.setProperty('--page-dock-padding', `calc(104px + ${bottomInset} + ${browserOffset}px)`);
+      document.body.style.setProperty('--page-dock-padding', `calc(84px + ${bottomInset} + ${browserOffset}px)`);
     };
     const page = document.body.dataset.page || 'planner';
     const dockLang = supportedLangs.includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
@@ -4817,7 +4817,8 @@ function getCityRouteVariations(slug){
       });
       section.querySelectorAll('.city-atlas-group').forEach(group => {
         const groupVisible = [...group.querySelectorAll('.city-atlas-card')].some(card => !card.hidden);
-        group.hidden = !groupVisible;
+        const regionVisible = currentRegion === 'all' ? groupVisible : (group.dataset.atlasGroup === currentRegion && groupVisible);
+        group.hidden = !regionVisible;
       });
       const countNode = section.querySelector('.city-atlas-count');
       if (countNode) countNode.textContent = filterCopy.count(visibleCount);
@@ -4825,6 +4826,25 @@ function getCityRouteVariations(slug){
       section.querySelectorAll('[data-atlas-track-filter]').forEach(btn => btn.classList.toggle('active', btn.dataset.atlasTrackFilter === currentTrack));
       section.querySelectorAll('[data-region-tab]').forEach(btn => btn.classList.toggle('active', btn.dataset.regionTab === currentRegion));
       section.querySelectorAll('[data-region-panel]').forEach(panel => panel.hidden = panel.dataset.regionPanel !== currentRegion && currentRegion !== 'all');
+      const regionCities = section.querySelector('.city-atlas-region-city-row');
+      if (regionCities) {
+        if (currentRegion === 'all') {
+          regionCities.innerHTML = '';
+          regionCities.hidden = true;
+        } else {
+          const visibleRegionCards = cards.filter(card => !card.hidden && card.dataset.atlasRegion === currentRegion);
+          regionCities.innerHTML = visibleRegionCards.map(card => {
+            const city = card.querySelector('h3')?.textContent?.trim() || '';
+            return `<button class="east-asia-city-chip" type="button" data-scroll-card="${currentRegion}:${city}">${city}</button>`;
+          }).join('');
+          regionCities.hidden = visibleRegionCards.length < 2;
+          regionCities.querySelectorAll('[data-scroll-card]').forEach(btn => btn.addEventListener('click', () => {
+            const [, city] = String(btn.dataset.scrollCard || '').split(':');
+            const target = [...cards].find(card => !card.hidden && card.dataset.atlasRegion === currentRegion && (card.querySelector('h3')?.textContent?.trim() || '') === city);
+            if (target) target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+          }));
+        }
+      }
     };
     section.querySelectorAll('[data-atlas-layer-filter]').forEach(btn => btn.addEventListener('click', () => { currentLayer = btn.dataset.atlasLayerFilter || 'all'; apply(); }));
     section.querySelectorAll('[data-atlas-track-filter]').forEach(btn => btn.addEventListener('click', () => { currentTrack = btn.dataset.atlasTrackFilter || 'all'; apply(); }));
@@ -4862,10 +4882,12 @@ function getCityRouteVariations(slug){
         <div class="city-atlas-group-head"><span class="eyebrow">${group.label}</span></div>
         <div class="city-atlas-grid">${group.cities.map((slug, index) => cityAtlasCardMarkup(slug, group.label, copy, page, index)).join('')}</div>
       </section>`).join('');
+    const regionTabs = groups.map((group, idx) => `<button class="east-asia-region-tab ${idx === 0 ? 'active' : ''}" type="button" data-region-tab="${group.key}">${group.label}</button>`).join('');
     root.innerHTML = `
-      <section class="section city-atlas-section city-atlas-section-${page}" id="cityAtlas" data-current-layer="all" data-current-track="all">
+      <section class="section city-atlas-section city-atlas-section-${page}" id="cityAtlas" data-current-layer="all" data-current-track="all" data-current-region="japan">
         <div class="section-head"><div><span class="eyebrow">${copy.eyebrow}</span><h2 class="section-title">${copy.title}</h2><p class="section-desc">${copy.desc}</p></div></div>
         <div class="city-atlas-toolbar info-card">
+          <div class="city-atlas-toolbar-group city-atlas-toolbar-region"><span class="city-atlas-toolbar-label">${lang === 'ko' ? '나라 선택' : lang === 'ja' ? '地域' : lang === 'zhHant' ? '地區' : 'Region'}</span><div class="east-asia-region-tab-row">${regionTabs}</div><div class="east-asia-city-chip-row city-atlas-region-city-row" hidden></div></div>
           <div class="city-atlas-toolbar-group"><span class="city-atlas-toolbar-label">${filterCopy.layerLabel}</span><div class="finder-group"><button class="tab-btn active" data-atlas-layer-filter="all">${filterCopy.layerAll}</button><button class="tab-btn" data-atlas-layer-filter="release">${filterCopy.layerRelease}</button><button class="tab-btn" data-atlas-layer-filter="expansion">${filterCopy.layerExpansion}</button></div></div>
           <div class="city-atlas-toolbar-group"><span class="city-atlas-toolbar-label">${filterCopy.trackLabel}</span><div class="finder-group"><button class="tab-btn active" data-atlas-track-filter="all">${filterCopy.trackAll}</button><button class="tab-btn" data-atlas-track-filter="fast">${filterCopy.fast}</button><button class="tab-btn" data-atlas-track-filter="food">${filterCopy.food}</button><button class="tab-btn" data-atlas-track-filter="coast">${filterCopy.coast}</button><button class="tab-btn" data-atlas-track-filter="heritage">${filterCopy.heritage}</button><button class="tab-btn" data-atlas-track-filter="night">${filterCopy.night}</button></div></div>
           <div class="city-atlas-toolbar-meta"><strong class="city-atlas-count">${filterCopy.count(14)}</strong><span>${filterCopy.toolbarNote}</span></div>
