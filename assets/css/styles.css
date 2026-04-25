@@ -7517,3 +7517,21 @@ body[data-page="trips"] .trip-library-actions > *{
     justify-content:center;
   }
 }
+
+
+/* v182 city hook / share-search entry polish */
+.city-growth-hook-band{margin-top:18px;}
+.city-growth-hook-card{padding:24px;background:linear-gradient(135deg,rgba(255,252,247,.98),rgba(245,238,228,.92));border:1px solid rgba(222,207,188,.86);}
+.city-growth-hook-lead{font-family:var(--display-font, Georgia, serif);font-size:clamp(24px,4.8vw,42px);line-height:1.04;letter-spacing:-.04em;color:#17283b;max-width:780px;margin:6px 0 18px;}
+.city-growth-hook-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.city-growth-hook-grid>div{border:1px solid rgba(225,212,194,.88);background:rgba(255,255,255,.72);border-radius:20px;padding:15px 16px;min-width:0;}
+.city-growth-hook-grid span{display:block;font-size:11px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;color:#9b7651;margin-bottom:8px;}
+.city-growth-hook-grid p{margin:0;color:#33465b;font-size:14px;line-height:1.55;}
+.city-share-hook{margin:0;color:#82634a;font-size:13px;line-height:1.5;border-left:2px solid rgba(200,157,112,.45);padding-left:10px;}
+@media (max-width: 760px){
+  .city-growth-hook-card{padding:18px;border-radius:24px;}
+  .city-growth-hook-lead{font-size:28px;line-height:1.06;margin-bottom:14px;}
+  .city-growth-hook-grid{grid-template-columns:1fr;gap:10px;}
+  .city-growth-hook-grid>div{padding:13px 14px;border-radius:18px;}
+  .city-share-hook{font-size:12.5px;line-height:1.48;}
+}
