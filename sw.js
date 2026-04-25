@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ryokoplan-v187';
+const CACHE_NAME = 'ryokoplan-v188';
 const CORE_ASSETS = [
   '/',
   '/index.html',
