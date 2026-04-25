@@ -98,7 +98,7 @@ window.RyokoApp = (() => {
         '@id':`${siteOrigin}#website`,
         url:siteOrigin,
         name:'Ryokoplan',
-        description:'Read the city. Then build the trip.',
+        description:'Read East Asia cities first, then build planner-ready routes worth saving.',
         inLanguage:['ko','en','ja','zh-Hant'],
         publisher:{'@id':`${siteOrigin}#organization`}
       }
@@ -384,7 +384,7 @@ window.RyokoApp = (() => {
     const key = slugifyCity(slug || entry.planner || '');
     const base = cityGrowthHookMap[key];
     if (!base) return 'Read the city first, then move into districts, neighborhood picks, and a route that fits the city rhythm.';
-    return `${base.search} ${base.save}`.replace(/\s+/g,' ').trim();
+    return `${base.search} ${base.share} ${base.save}`.replace(/\s+/g,' ').trim();
   }
   const cityVoiceMap = {
     tokyo: {
