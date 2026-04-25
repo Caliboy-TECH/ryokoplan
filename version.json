@@ -1,15 +1,15 @@
 {
-  "version": "v195",
-  "codename": "launch-readiness-qa-handoff",
-  "headline": "Launch readiness handoff: live QA path, acceptance checks, and final deployment notes are now easier to run on mobile.",
-  "focus": "Do not add a new product surface. Make the deployed build easier to verify before launch by tightening the release-check page, build notes, and operator handoff language.",
-  "source": "ryokoplan_v194_mobile_chrome_density_polish_github_web_under100.zip",
+  "version": "v196",
+  "codename": "public-copy-readiness",
+  "headline": "Public copy cleanup: homepage and magazine entry copy now read like a travel editorial product, not an internal build log.",
+  "focus": "Remove internal improvement language from public-facing pages while keeping the existing structure stable.",
+  "source": "ryokoplan_v195_launch_readiness_handoff_github_web_under100.zip",
   "uploadProfile": "github-web-under-100-files",
-  "updatedAt": "2026-04-25",
+  "updatedAt": "2026-04-26",
   "notes": [
-    "Added a clearer live QA acceptance path for the final mobile click-through after Vercel deploy.",
-    "Updated release-check copy so the next action is not more feature work, but a focused deploy verification loop.",
-    "Added launch handoff notes for checking Home, Magazine, City, Sample, Planner, Result, Share, and My Trips in one pass.",
-    "Kept the GitHub web upload package under 100 files."
-  ]
+    "Replaced internal phrases such as “we adjusted” and build-handoff language on the homepage with reader-facing travel editorial copy.",
+    "Cleaned the Magazine opener so it describes the city desk as a product experience, not a construction note.",
+    "Updated release-check and whats-new labels to v196 public copy readiness."
+  ],
+  "release": "v196"
 }
