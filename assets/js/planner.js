@@ -2739,14 +2739,50 @@ function getPriorityRefinePack(city=''){
         ${entryPack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.visit}</span></div><div class="summary-line editorial-line"><strong>${entryPack.first[0]}</strong><span>${entryPack.first[1]} — ${entryPack.first[2]}</span></div><div class="summary-line editorial-line"><strong>${entryPack.second[0]}</strong><span>${entryPack.second[1]} — ${entryPack.second[2]}</span></div></article>` : ''}
         ${entryPack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.entry}</span></div>${entryPack.entries.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>` : ''}
       </div>
-      ${editorialPack ? `<div class="result-editorial-memo-grid">
-        <article class="result-editorial-memo-card info-card"><span>${editorialPack.title}</span><p>${editorialPack.why}</p></article>
-        <article class="result-editorial-memo-card info-card"><span>${window.RyokoApp?.lang === 'ko' ? 'Best for' : window.RyokoApp?.lang === 'ja' ? 'Best for' : window.RyokoApp?.lang === 'zhHant' ? 'Best for' : 'Best for'}</span><p>${editorialPack.bestFor}</p></article>
-        <article class="result-editorial-memo-card info-card"><span>${window.RyokoApp?.lang === 'ko' ? 'If it rains' : window.RyokoApp?.lang === 'ja' ? 'If it rains' : window.RyokoApp?.lang === 'zhHant' ? 'If it rains' : 'If it rains'}</span><p>${editorialPack.rainy}</p></article>
-        <article class="result-editorial-memo-card info-card"><span>${window.RyokoApp?.lang === 'ko' ? 'If you want it slower' : window.RyokoApp?.lang === 'ja' ? 'If you want it slower' : window.RyokoApp?.lang === 'zhHant' ? 'If you want it slower' : 'If you want it slower'}</span><p>${editorialPack.slower}</p></article>
-        <article class="result-editorial-memo-card info-card result-editorial-memo-card-wide"><span>${window.RyokoApp?.lang === 'ko' ? 'One thing to swap' : window.RyokoApp?.lang === 'ja' ? 'One thing to swap' : window.RyokoApp?.lang === 'zhHant' ? 'One thing to swap' : 'One thing to swap'}</span><p>${editorialPack.swap}</p></article>
-        ${(() => { const branchKey = String(textValue(data.destination, readForm().destination || '')).trim().toLowerCase(); const branchMap = priorityResultBranchMap[branchKey]; const branchLines = branchMap ? (branchMap[window.RyokoApp?.lang || 'ko'] || branchMap.en || []) : []; return branchLines.length ? `<article class="result-editorial-memo-card info-card result-editorial-memo-card-wide result-editorial-continue-card"><span>${window.RyokoApp?.lang === 'ko' ? 'Continue with' : window.RyokoApp?.lang === 'ja' ? 'Continue with' : window.RyokoApp?.lang === 'zhHant' ? 'Continue with' : 'Continue with'}</span><div class="result-editorial-continue-list">${branchLines.map(line => `<p>${line}</p>`).join('')}</div></article>` : ''; })()}
-      </div>` : ''}`;
+      ${editorialPack ? (() => {
+        const insightLabels = {
+          why: uiCopy('Why this route works', 'Why this route works', 'このルートが効く理由', '這條路線成立的理由'),
+          best: uiCopy('Best for', 'Best for', '向いている旅', '最適合'),
+          rain: uiCopy('If it rains', 'If it rains', '雨の日なら', '如果下雨'),
+          slow: uiCopy('If you want a slower day', 'If you want a slower day', 'ゆっくり回るなら', '如果想慢一點'),
+          swap: uiCopy('One thing to swap', 'One thing to swap', 'ひとつ替えるなら', '可以替換的一件事'),
+          keep: uiCopy('Keep this note', 'Keep this note', 'このメモを残す', '保存這則筆記'),
+          adapt: uiCopy('Weather pivot', 'Weather pivot', '天気で切り替え', '天氣替代'),
+          edit: uiCopy('Route edit', 'Route edit', 'ルート編集', '路線編輯'),
+          continue: uiCopy('Continue with', 'Continue with', '続けて読む', '延伸閱讀')
+        };
+        const insightCards = [
+          { cls:'is-lead', step:'01', tag: insightLabels.why, micro: insightLabels.keep, title: editorialPack.title, text: editorialPack.why },
+          { cls:'', step:'02', tag: insightLabels.best, micro: insightLabels.keep, title: insightLabels.best, text: editorialPack.bestFor },
+          { cls:'', step:'03', tag: insightLabels.rain, micro: insightLabels.adapt, title: insightLabels.rain, text: editorialPack.rainy },
+          { cls:'', step:'04', tag: insightLabels.slow, micro: insightLabels.edit, title: insightLabels.slow, text: editorialPack.slower },
+          { cls:'is-wide', step:'05', tag: insightLabels.swap, micro: insightLabels.edit, title: insightLabels.swap, text: editorialPack.swap }
+        ];
+        const branchKey = String(textValue(data.destination, readForm().destination || '')).trim().toLowerCase();
+        const branchMap = priorityResultBranchMap[branchKey];
+        const branchLines = branchMap ? (branchMap[window.RyokoApp?.lang || 'ko'] || branchMap.en || []) : [];
+        const branchCard = branchLines.length ? `<article class="result-editorial-memo-card info-card result-editorial-memo-card-wide result-editorial-continue-card">
+          <div class="result-memo-top"><span class="result-memo-step">06</span><span class="result-memo-tag">${insightLabels.continue}</span></div>
+          <h4>${insightLabels.continue}</h4>
+          <div class="result-editorial-continue-list">${branchLines.map(line => `<p>${line}</p>`).join('')}</div>
+        </article>` : '';
+        return `<div class="result-insight-pack">
+          <div class="result-insight-pack-head">
+            <span class="eyebrow">${uiCopy('저장용 루트 메모', 'Route notes worth saving', '保存したいルートメモ', '值得保存的路線筆記')}</span>
+            <h3>${uiCopy('이 결과를 다시 볼 이유를 먼저 정리했습니다', 'The reasons to keep this route are now easier to scan', 'この結果を見返す理由を先に整理しました', '先整理好這份結果值得回看的理由')}</h3>
+            <p>${uiCopy('비 오는 날, 느린 하루, 교체할 한 지점까지 한 화면에서 읽히도록 정리했습니다.', 'Rain, slower pace, and the one smart swap are framed as a compact editorial card set.', '雨の日、ゆっくりした日、替えるべき一点まで一画面で読めるように整理しました。', '把雨天、慢節奏與一個替換點整理成一組 editorial card。')}</p>
+          </div>
+          <div class="result-editorial-memo-grid">
+            ${insightCards.map(card => `<article class="result-editorial-memo-card info-card ${card.cls}">
+              <div class="result-memo-top"><span class="result-memo-step">${card.step}</span><span class="result-memo-tag">${card.tag}</span></div>
+              <h4>${card.title}</h4>
+              <p>${card.text}</p>
+              <small>${card.micro}</small>
+            </article>`).join('')}
+            ${branchCard}
+          </div>
+        </div>`;
+      })() : ''}`;
   }
 
   function renderLoopSection(data){
