@@ -2459,11 +2459,17 @@ function ensureLaunchFeedbackCta(){
     });
   }
   function bindLanguageButtons(root=document){
+    const languageLabels = { ko:'한국어', en:'English', ja:'日本語', zhHant:'繁體中文' };
     root.querySelectorAll('[data-lang-btn]').forEach(btn => {
-      btn.addEventListener('click', () => setLanguage(btn.dataset.langBtn));
+      if (!btn.dataset.langBound) {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.langBtn));
+        btn.dataset.langBound = 'true';
+      }
       const active = btn.dataset.langBtn === lang;
       btn.classList.toggle('active', active);
       btn.setAttribute('aria-pressed', String(active));
+      btn.setAttribute('aria-label', languageLabels[btn.dataset.langBtn] || btn.textContent.trim());
+      btn.toggleAttribute('data-current-language', active);
     });
   }
   function navHref(target){
