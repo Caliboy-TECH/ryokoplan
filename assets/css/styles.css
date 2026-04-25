@@ -7633,3 +7633,14 @@ body[data-page="trips"] .trip-library-actions > *{
 .release-depth-actions{margin-top:18px}
 @media (max-width:980px){.release-depth-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.release-depth-mini{min-height:150px}}
 @media (max-width:640px){.release-city-deep-dive{margin-top:28px}.release-depth-grid{grid-template-columns:1fr;gap:10px}.release-depth-mini{min-height:unset;border-radius:18px;padding:15px}.release-depth-mini p{font-size:.92rem}.release-depth-actions{display:grid;grid-template-columns:1fr;gap:10px}.release-depth-actions a{width:100%;justify-content:center}}
+
+
+
+/* v189 expansion city deepening */
+.expansion-city-deep-dive{margin-top:clamp(26px,5vw,54px)}
+.expansion-depth-card{position:relative;overflow:hidden;border:1px solid rgba(44,61,72,.12);background:linear-gradient(135deg,rgba(248,251,252,.98),rgba(239,244,241,.88))}
+.expansion-depth-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 92% 0%,rgba(95,128,132,.13),transparent 34%);pointer-events:none}
+.expansion-depth-card>*{position:relative;z-index:1}
+.expansion-depth-mini{background:rgba(255,255,255,.75);border-color:rgba(51,68,77,.12)}
+.expansion-depth-mini p{color:rgba(43,55,61,.78)}
+@media (max-width:640px){.expansion-city-deep-dive{margin-top:26px}}
