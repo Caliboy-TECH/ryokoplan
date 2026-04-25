@@ -1,7 +1,15 @@
 {
-  "version": "v194",
-  "codename": "mobile-chrome-density-polish",
-  "focus": "Make the mobile header, language switcher, and bottom dock lighter so the editorial city cards feel less crowded on phone screens.",
-  "source": "ryokoplan_v193_clean_magazine_image_cards_github_web_under100.zip",
-  "uploadProfile": "github-web-under-100-files"
+  "version": "v195",
+  "codename": "launch-readiness-qa-handoff",
+  "headline": "Launch readiness handoff: live QA path, acceptance checks, and final deployment notes are now easier to run on mobile.",
+  "focus": "Do not add a new product surface. Make the deployed build easier to verify before launch by tightening the release-check page, build notes, and operator handoff language.",
+  "source": "ryokoplan_v194_mobile_chrome_density_polish_github_web_under100.zip",
+  "uploadProfile": "github-web-under-100-files",
+  "updatedAt": "2026-04-25",
+  "notes": [
+    "Added a clearer live QA acceptance path for the final mobile click-through after Vercel deploy.",
+    "Updated release-check copy so the next action is not more feature work, but a focused deploy verification loop.",
+    "Added launch handoff notes for checking Home, Magazine, City, Sample, Planner, Result, Share, and My Trips in one pass.",
+    "Kept the GitHub web upload package under 100 files."
+  ]
 }

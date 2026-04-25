@@ -51,7 +51,13 @@
     .smoke-summary{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .report-box{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.5;background:#f8f3eb;color:#5f4a30;border-radius:18px;padding:14px;overflow:auto;margin-top:14px;border:1px solid #ede6db}
     .diagnostic-pill{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:#f8f3eb;color:#7a5d3f;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
-    @media (max-width: 860px){.release-check-grid,.release-kv{grid-template-columns:1fr}}
+
+    .launch-acceptance-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+    .launch-acceptance-card{padding:16px;border-radius:20px;background:linear-gradient(180deg,#fffdf9 0%,#fff7ef 100%);border:1px solid #e8dfd2}
+    .launch-acceptance-card strong{display:block;color:#15273a;margin-bottom:6px;font-size:14px}
+    .launch-acceptance-card p{margin:0;color:#667085;font-size:13px;line-height:1.55}
+    .launch-acceptance-card .mini-step{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:999px;background:#fff4ea;color:#b96732;font-weight:800;font-size:12px;margin-bottom:10px}
+    @media (max-width: 860px){.release-check-grid,.release-kv,.launch-acceptance-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -67,7 +73,7 @@
               <span class="release-pill">Noindex</span>
             </div>
             <h1 class="release-check-title">Ryokoplan release sign-off</h1>
-            <p class="release-check-copy">Use this page right after deploy to confirm the active build, open the main product routes, inspect telemetry, and run the final sign-off smoke pass on the live site. This pass now reflects the v192 final launch QA layer: extension-safe core loop links, clearer language/mobile comfort checks, share/save loop verification, and GitHub web upload safety before the build is handed to Vercel.</p>
+            <p class="release-check-copy">Use this page right after deploy to confirm the active build, open the main product routes, inspect telemetry, and run the final sign-off smoke pass on the live site. This pass now reflects the v195 launch readiness handoff: one focused mobile click-through, version confirmation, language comfort, share/save loop verification, and a clear decision on whether the build is ready to share.</p>
           </div>
           <div id="onlineStatus" class="release-status"><span class="release-status-dot"></span><span>Checking connection…</span></div>
         </div>
@@ -104,6 +110,23 @@
           <button class="ghost-btn" id="resetEntryAssistTopBtn" type="button">Reset entry assist state</button>
         </div>
         <p class="release-inline-note">Tip: open this page after each upload and make sure the release value matches the zip you just deployed before sharing the build.</p>
+        <section class="release-check-card" style="margin-top:18px">
+          <span class="release-pill">v195 handoff</span>
+          <h2 class="section-title" style="margin-top:10px">Run this once on the live phone build</h2>
+          <p class="release-check-copy">The next step is not more feature work. Open the deployed site on iPhone, confirm the version, then run one clean loop from reading a city to saving a trip.</p>
+          <div class="launch-acceptance-grid">
+            <article class="launch-acceptance-card"><span class="mini-step">01</span><strong>Confirm build</strong><p><code>/version.json</code> should show v195 before judging any screen.</p></article>
+            <article class="launch-acceptance-card"><span class="mini-step">02</span><strong>Read a city</strong><p>Home → Magazine → Kyoto or Tokyo should feel like editorial travel reading, not a dashboard.</p></article>
+            <article class="launch-acceptance-card"><span class="mini-step">03</span><strong>Build a route</strong><p>Sample → Planner → Result should create a route card that feels worth saving.</p></article>
+            <article class="launch-acceptance-card"><span class="mini-step">04</span><strong>Save and return</strong><p>Save → My Trips should reopen as a stored editorial package, not a plain list.</p></article>
+          </div>
+          <div class="release-actions">
+            <a class="primary-btn" href="../magazine/index.html" target="_blank" rel="noopener">Start live QA at Magazine</a>
+            <a class="secondary-btn" href="../example/kyoto-2n3d-slow-trip.html" target="_blank" rel="noopener">Open Kyoto sample</a>
+            <a class="ghost-btn" href="../my-trips/index.html" target="_blank" rel="noopener">Open My Trips</a>
+          </div>
+        </section>
+
         <div class="release-verdict-band">
           <div class="release-verdict-grid">
             <div>
