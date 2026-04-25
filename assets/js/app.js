@@ -1,7 +1,10 @@
 window.RyokoApp = (() => {
   const defaultLang = 'ko';
-  let lang = localStorage.getItem('ryoko_lang_v2') || defaultLang;
   const supportedLangs = ['ko','en','ja','zhHant'];
+  let lang = localStorage.getItem('ryoko_lang_v2') || defaultLang;
+  if (!supportedLangs.includes(lang)) lang = defaultLang;
+  const htmlLangMap = { ko:'ko', en:'en', ja:'ja', zhHant:'zh-Hant' };
+  function htmlLangFor(next=lang){ return htmlLangMap[next] || htmlLangMap[defaultLang]; }
   const releaseCandidateSlimMode = true;
 
   const pathRoot = (() => {
@@ -2388,7 +2391,8 @@ function ensureLaunchFeedbackCta(){
   function setLanguage(next){
     lang = supportedLangs.includes(next) ? next : 'en';
     localStorage.setItem('ryoko_lang_v2', lang);
-    document.documentElement.lang = lang;
+    document.documentElement.lang = htmlLangFor(lang);
+    document.documentElement.dataset.ryokoLang = lang;
     applyTranslations();
     initMediaComfortPolish(document);
     updateLanguageButtonsState();
@@ -2469,7 +2473,6 @@ function ensureLaunchFeedbackCta(){
       document.body.style.setProperty('--page-dock-padding', `calc(84px + ${bottomInset} + ${browserOffset}px)`);
     };
     const page = document.body.dataset.page || 'planner';
-    const dockLang = supportedLangs.includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
     const shortCopy = {
       planner: { ko:'계획', en:'Plan', ja:'計画', zhHant:'規劃' },
       magazine: { ko:'매거진', en:'Magazine', ja:'雑誌', zhHant:'雜誌' },
@@ -6507,7 +6510,8 @@ function renderTripsSeasonalDesk(){
 
 
   function initCommon(){
-    document.documentElement.lang = lang;
+    document.documentElement.lang = htmlLangFor(lang);
+    document.documentElement.dataset.ryokoLang = lang;
     initAccessibilityPolish();
     initLaunchFeedback();
     initPwaSupport();
