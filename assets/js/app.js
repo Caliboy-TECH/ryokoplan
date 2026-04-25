@@ -6132,6 +6132,8 @@ function renderTripsSeasonalDesk(){
     document.querySelectorAll('[data-plan-preset]').forEach(btn => btn.addEventListener('click', () => {
       let preset = {};
       try { preset = JSON.parse(btn.dataset.planPreset || '{}'); } catch {}
+      document.querySelectorAll('[data-plan-preset].is-selected').forEach(active => active.classList.remove('is-selected'));
+      btn.classList.add('is-selected');
       applyPlannerPreset(preset);
       document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
       document.getElementById('destination')?.focus({ preventScroll:true });

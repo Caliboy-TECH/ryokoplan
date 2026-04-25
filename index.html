@@ -485,11 +485,41 @@ This line now anchors the homepage, magazine, city guides, and trip result in on
 
       <section class="section planner-grid">
         <div class="planner-shell" id="planner-start">
+          <div class="planner-route-desk" aria-label="Route desk">
+            <div class="route-desk-copy">
+              <span class="eyebrow" data-lang-ko="Route desk" data-lang-en="Route desk" data-lang-ja="Route desk" data-lang-zhhant="Route desk">Route desk</span>
+              <h2 data-lang-ko="빈칸을 채우기보다, 도시 리듬 하나를 먼저 고르세요" data-lang-en="Start from a city rhythm, not a blank form" data-lang-ja="空欄からではなく、まず街のリズムを選ぶ" data-lang-zhhant="不要從空白表單開始，先選一個城市節奏">빈칸을 채우기보다, 도시 리듬 하나를 먼저 고르세요</h2>
+              <p data-lang-ko="좋은 일정은 입력값이 많아서가 아니라, 도시를 어떤 속도로 읽을지 먼저 정할 때 더 자연스럽게 만들어집니다." data-lang-en="A better trip does not start with more fields. It starts by deciding how the city should feel and move." data-lang-ja="良い旅程は入力項目の多さではなく、街をどんな速度で読むかを先に決めることで自然に整います。" data-lang-zhhant="好的行程不是靠更多欄位開始，而是先決定要用什麼速度讀這座城市。">좋은 일정은 입력값이 많아서가 아니라, 도시를 어떤 속도로 읽을지 먼저 정할 때 더 자연스럽게 만들어집니다.</p>
+              <div class="route-desk-flow">
+                <span data-lang-ko="01 도시 감각" data-lang-en="01 City mood" data-lang-ja="01 街のムード" data-lang-zhhant="01 城市氛圍">01 도시 감각</span>
+                <span data-lang-ko="02 이동 밀도" data-lang-en="02 Movement density" data-lang-ja="02 移動密度" data-lang-zhhant="02 移動密度">02 이동 밀도</span>
+                <span data-lang-ko="03 저장할 여정" data-lang-en="03 Route to keep" data-lang-ja="03 保存したい旅程" data-lang-zhhant="03 值得保存的路線">03 저장할 여정</span>
+              </div>
+            </div>
+            <div class="route-desk-card-grid">
+              <button class="route-desk-card" data-plan-preset='{"destination":"Tokyo","duration":"3n4d","companion":"couple","style":"balanced first trip + local pockets","notes":"Keep the first Tokyo route layered, but leave one calm neighborhood pocket each day.","tripMood":"editorial","dayDensity":"balanced","budgetMode":"balanced"}'>
+                <img src="assets/images/cities/tokyo.jpg" alt="Tokyo street mood">
+                <span class="route-desk-card-body"><small>Tokyo · layered first trip</small><strong>Dense, but still readable</strong><em>Use this base</em></span>
+              </button>
+              <button class="route-desk-card" data-plan-preset='{"destination":"Kyoto","duration":"2n3d","companion":"solo","style":"slow + quiet","notes":"Prioritize temple districts, alleys, softer walks, and fewer transfers.","tripMood":"soft","dayDensity":"light","budgetMode":"smart"}'>
+                <img src="assets/images/cities/kyoto.jpg" alt="Kyoto quiet street">
+                <span class="route-desk-card-body"><small>Kyoto · slow reset</small><strong>Quiet streets first</strong><em>Use this base</em></span>
+              </button>
+              <button class="route-desk-card" data-plan-preset='{"destination":"Fukuoka","duration":"2n3d","companion":"friends","style":"food + local neighborhoods","notes":"Build the day around compact food stops, riverside walks, and easy late-night movement.","tripMood":"vivid","dayDensity":"balanced","budgetMode":"treat"}'>
+                <img src="assets/images/cities/fukuoka.jpg" alt="Fukuoka city food trip">
+                <span class="route-desk-card-body"><small>Fukuoka · food-led</small><strong>Compact and delicious</strong><em>Use this base</em></span>
+              </button>
+              <button class="route-desk-card" data-plan-preset='{"destination":"Jeju","duration":"3n4d","companion":"family","style":"scenic + easy pace","notes":"Keep transfers simple and leave room for views, meals, and rest.","tripMood":"soft","dayDensity":"light","budgetMode":"balanced"}'>
+                <img src="assets/images/cities/jeju.jpg" alt="Jeju scenic coast">
+                <span class="route-desk-card-body"><small>Jeju · easy pace</small><strong>Scenic, slower, simple</strong><em>Use this base</em></span>
+              </button>
+            </div>
+          </div>
           <div class="planner-onboarding-bar">
             <div>
               <span class="eyebrow">City rhythm</span>
               <h2 class="form-title" data-t="planner.formTitle">당신에게 맞는 도시 리듬을 잡아볼게요</h2>
-                          </div>
+            </div>
             <div class="trip-recipe-card" id="tripRecipeCard">
               <span class="trip-recipe-kicker">City rhythm ready</span>
               <strong id="tripRecipeTitle" data-lang-ko="도쿄 · 3박 4일 · 커플" data-lang-en="Tokyo · 3N4D · Couple" data-lang-ja="東京・3泊4日・カップル" data-lang-zhhant="東京・3晚4天・情侶">도쿄 · 3박 4일 · 커플</strong>
