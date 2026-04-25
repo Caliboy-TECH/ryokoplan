@@ -1469,63 +1469,98 @@
             </div>
           </div>`;
       }
+      function detailUiCopy(){
+        const lang = window.RyokoApp.lang;
+        if (lang === 'ko') return {
+          open:'저장한 여행 카드 열기', save:'내 여행으로 저장', duplicate:'내 버전 만들기', read:'도시 읽기', snapshot:'보관 카드 요약', days:'일수', tips:'팁', checklist:'체크', updated:'업데이트',
+          insight:'저장할 이유', why:'Why this route works', rain:'If it rains', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'다음 읽기 가지',
+          emptyDay:'아직 day preview가 없습니다.', emptyTip:'아직 저장된 local tip이 없습니다.', sample:'Sample route', compare:'샘플과 밀도 차이를 비교해 보세요.', imported:'공유받은 여행이 이제 내 보관함 안에서 다시 열립니다.', vaulted:'이 여행은 My Trips 안에 저장되어 다시 열고, 다듬고, 공유할 수 있습니다.',
+          package:'Saved editorial package', packageDesc:'이 카드는 단순 일정표가 아니라 다시 읽고 수정하고 공유할 수 있는 도시별 여행 베이스입니다.', next:'Next action'
+        };
+        if (lang === 'ja') return {
+          open:'保存した旅カードを開く', save:'自分の旅に保存', duplicate:'自分版を作る', read:'都市を読む', snapshot:'保存カードの要約', days:'日数', tips:'ヒント', checklist:'チェック', updated:'更新',
+          insight:'保存する理由', why:'Why this route works', rain:'If it rains', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'次に読む枝',
+          emptyDay:'まだ day preview はありません。', emptyTip:'まだ local tip は保存されていません。', sample:'Sample route', compare:'サンプルと密度の差を比べてください。', imported:'共有された旅程を自分の保存棚で開き直せます。', vaulted:'この旅は My Trips に保存され、開き直し・調整・共有ができます。',
+          package:'Saved editorial package', packageDesc:'このカードは単なる旅程表ではなく、読み直し、調整し、共有できる都市別の旅ベースです。', next:'Next action'
+        };
+        if (lang === 'zhHant') return {
+          open:'打開已存旅行卡', save:'存成我的旅程', duplicate:'建立我的版本', read:'讀城市', snapshot:'保存卡摘要', days:'天數', tips:'提示', checklist:'清單', updated:'更新',
+          insight:'值得保存的理由', why:'Why this route works', rain:'If it rains', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'下一個閱讀分支',
+          emptyDay:'目前還沒有 day preview。', emptyTip:'目前還沒有保存 local tip。', sample:'Sample route', compare:'把它和 sample 的節奏密度比較看看。', imported:'收到的分享旅程現在可以在你的保存庫重新打開。', vaulted:'這趟旅程已在 My Trips 裡，可重新打開、微調與分享。',
+          package:'Saved editorial package', packageDesc:'這張卡不是單純行程表，而是可以重讀、修改、分享的城市旅行底稿。', next:'Next action'
+        };
+        return {
+          open:'Open saved trip card', save:'Save to My Trips', duplicate:'Make my version', read:'Read the city', snapshot:'Saved card snapshot', days:'Days', tips:'Tips', checklist:'Checklist', updated:'Updated',
+          insight:'Why it is worth saving', why:'Why this route works', rain:'If it rains', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'Next reading branches',
+          emptyDay:'No day preview available yet.', emptyTip:'No extra local tips stored on this trip yet.', sample:'Sample route', compare:'Use the sample to compare pace against this saved trip.', imported:'This shared itinerary can now reopen inside your own trip vault.', vaulted:'This trip already lives inside My Trips, so it is easy to reopen, tune, or share.',
+          package:'Saved editorial package', packageDesc:'This card is not just an itinerary. It is a reusable city base you can reread, tune, and share.', next:'Next action'
+        };
+      }
+      function storedInsightCards(item){
+        const ui = detailUiCopy();
+        const data = item.planData || {};
+        const routeNote = cityLoopBranchNote(item.destination) || getMetaSummary(item) || ui.packageDesc;
+        const rain = data.rainNote || data.ifRain || data.rainyDay || data.weatherNote || '';
+        const slow = data.slowerDay || data.slowNote || data.paceNote || '';
+        const swap = data.swap || data.oneThingToSwap || data.swapNote || '';
+        const rows = [
+          ['01', ui.why, routeNote],
+          ['02', ui.rain, rain || routeNote],
+          ['03', ui.slow, slow || (data.pace ? data.pace + ' · ' + routeNote : routeNote)],
+          ['04', ui.swap, swap || (data.bestFor || data.vibe || routeNote)]
+        ];
+        return '<div class="stored-insight-grid">' + rows.map(row => '<article class="stored-insight-card"><span>' + row[0] + '</span><strong>' + row[1] + '</strong><p>' + row[2] + '</p></article>').join('') + '</div>';
+      }
+      function storedDayPreview(days){
+        const ui = detailUiCopy();
+        if (!days.length) return '<p class="card-copy">' + ui.emptyDay + '</p>';
+        return days.slice(0,4).map((day, index) => {
+          const blocks = [day.morning, day.midday, day.afternoon, day.evening].filter(Boolean).slice(0,3);
+          return '<article class="trip-detail-day stored-day-card"><span>Day ' + (day.day || index + 1) + '</span><strong>' + (day.title || ('Day ' + (day.day || index + 1))) + '</strong><p>' + (day.intro || day.summary || '') + '</p>' + (blocks.length ? '<div class="trip-chip-row">' + blocks.map(block => '<em>' + String(block).slice(0,46) + '</em>').join('') + '</div>' : '') + '</article>';
+        }).join('');
+      }
+      function storedChecklist(data){
+        const ui = detailUiCopy();
+        const raw = Array.isArray(data.checklist) ? data.checklist.slice(0,5) : [];
+        if (!raw.length) return '';
+        return '<div class="stored-checklist"><strong>' + ui.next + '</strong>' + raw.map(entry => '<span>' + entry + '</span>').join('') + '</div>';
+      }
       function openDetailModal(item, mode){
         const modal = $('tripDetailModal');
         const content = $('tripDetailContent');
         if (!modal || !content || !item) return;
+        const ui = detailUiCopy();
         const data = item.planData || {};
         const city = window.RyokoApp.getCityLoopData(item.destination) || { name:item.destination || 'Trip', guide:'city/tokyo.html', example:'example/tokyo-3n4d-first-trip.html' };
         const related = window.RyokoApp.getRelatedCities(item.destination).slice(0,3);
         const days = Array.isArray(data.days) ? data.days : [];
-        const dayPreview = days.slice(0,3).map(day => `<article class="trip-detail-day"><strong>${day.title || ('Day ' + day.day)}</strong><p>${(day.intro || '').slice(0,120)}</p></article>`).join('');
-        const tips = (Array.isArray(data.localTips) ? data.localTips : []).slice(0,3).map(t => `<li>${t}</li>`).join('');
-        const summary = getMetaSummary(item) || cityLoopBranchNote(item.destination) || 'A trip you can reopen, save, or turn into a new plan.';
+        const tips = (Array.isArray(data.localTips) ? data.localTips : []).slice(0,4).map(t => '<li>' + t + '</li>').join('');
+        const summary = getMetaSummary(item) || cityLoopBranchNote(item.destination) || ui.packageDesc;
+        const statRows = [[ui.days, days.length || '—'], [ui.tips, (data.localTips || []).length || '—'], [ui.checklist, (data.checklist || []).length || '—'], [ui.updated, formatDate(getTimestamp(item)) || '—']];
         content.innerHTML = `
-          <div class="trip-detail-hero">
-            <div class="trip-detail-media"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.jpg'}" alt="${item.destination || 'Trip'}"></div>
-            <div class="trip-detail-copy">
-              <div class="meta">${tripModeLabel(mode)}</div>
+          <div class="stored-trip-cover">
+            <div class="stored-trip-cover-media"><img src="${imgMap[item.destination] || '../assets/images/hero/planner-preview.jpg'}" alt="${item.destination || 'Trip'}"></div>
+            <div class="stored-trip-cover-copy">
+              <div class="trip-card-topline"><div class="meta">${ui.package}</div><div class="trip-card-date">${tripModeLabel(mode)}</div></div>
               <h2>${item.title || item.destination || 'Trip'}</h2>
               <p>${summary}</p>
-              <div class="trip-chip-row">
-                ${[item.destination, item.duration, item.companion, data.vibe, data.pace, data.bestFor].filter(Boolean).slice(0,6).map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}
-              </div>
-              <div class="card-actions">
-                <a class="primary-btn" href="${shareUrl(item)}">Open trip</a>
-                ${mode !== 'saved' ? `<button class="secondary-btn" data-save="${item.id}">${langCopy().saveAsMine}</button><button class="ghost-btn" data-my-version="${item.id}">${langCopy().makeMyVersion}</button>` : `<button class="secondary-btn" data-duplicate="${item.id}">${window.RyokoApp.t('trips.tripDuplicate')}</button>`}
-                <a class="soft-btn" href="../${city.guide}">Read ${city.name}</a>
+              <div class="trip-chip-row">${[item.destination, item.duration, item.companion, data.vibe, data.pace, data.bestFor].filter(Boolean).slice(0,6).map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}</div>
+              <div class="stored-trip-actions card-actions">
+                <a class="primary-btn" href="${shareUrl(item)}">${ui.open}</a>
+                ${mode !== 'saved' ? `<button class="secondary-btn" data-save="${item.id}">${ui.save}</button><button class="ghost-btn" data-my-version="${item.id}">${ui.duplicate}</button>` : `<button class="secondary-btn" data-duplicate="${item.id}">${ui.duplicate}</button>`}
+                <a class="soft-btn" href="../${city.guide}">${ui.read}</a>
               </div>
             </div>
           </div>
-          <div class="trip-detail-grid">
-            <article class="info-card trip-detail-panel">
-              <h3>Trip snapshot</h3>
-              <div class="trip-detail-stats">
-                <div><span>Days</span><strong>${days.length || '—'}</strong></div>
-                <div><span>Tips</span><strong>${(data.localTips || []).length || '—'}</strong></div>
-                <div><span>Checklist</span><strong>${(data.checklist || []).length || '—'}</strong></div>
-                <div><span>Updated</span><strong>${formatDate(getTimestamp(item)) || '—'}</strong></div>
-              </div>
-              <p class="card-copy">${cityLoopBranchNote(item.destination) || (item.importedFromLink ? 'This one was imported from a shared Ryokoplan link and can now live inside your own trip vault.' : 'This trip is already inside your vault, so it is easy to reopen or branch from here.')}</p>
-            </article>
-            <article class="info-card trip-detail-panel">
-              <h3>${rhythmLabel()} preview</h3>
-              <div class="trip-detail-day-list">${dayPreview || '<p class="card-copy">No day preview available yet.</p>'}</div>
-            </article>
-            <article class="info-card trip-detail-panel">
-              <h3>Local tips preview</h3>
-              ${tips ? `<ul class="trip-detail-list">${tips}</ul>` : '<p class="card-copy">No extra local tips stored on this trip yet.</p>'}
-            </article>
-            <article class="info-card trip-detail-panel">
-              <h3>${langVariant('City-first 가지','City / sample / article','City-first の分岐','City-first 分支')}</h3>
-              <div class="trip-detail-branch-list">
-                <a class="trip-detail-branch" href="../${city.example}">
-                  <strong>${city.name} sample</strong>
-                  <span>Use the sample to compare pace against this saved trip.</span>
-                </a>
-                ${related.map(rel => `<a class="trip-detail-branch" href="../${rel.guide}"><strong>${rel.name}</strong><span>${rel.vibe} is a strong next read after ${city.name}.</span></a>`).join('')}
-              </div>
-            </article>
+          <section class="stored-trip-summary info-card">
+            <div><span class="eyebrow">${ui.snapshot}</span><h3>${ui.packageDesc}</h3><p>${item.importedFromLink ? ui.imported : ui.vaulted}</p></div>
+            <div class="trip-detail-stats stored-trip-stats">${statRows.map(row => `<div><span>${row[0]}</span><strong>${row[1]}</strong></div>`).join('')}</div>
+          </section>
+          <section class="stored-detail-section"><div class="stored-detail-head"><span class="eyebrow">${ui.insight}</span><h3>${ui.insight}</h3></div>${storedInsightCards(item)}</section>
+          <div class="trip-detail-grid stored-trip-grid">
+            <article class="info-card trip-detail-panel stored-trip-panel wide"><h3>${ui.preview}</h3><div class="trip-detail-day-list">${storedDayPreview(days)}</div>${storedChecklist(data)}</article>
+            <article class="info-card trip-detail-panel stored-trip-panel"><h3>${ui.local}</h3>${tips ? `<ul class="trip-detail-list">${tips}</ul>` : `<p class="card-copy">${ui.emptyTip}</p>`}</article>
+            <article class="info-card trip-detail-panel stored-trip-panel"><h3>${ui.branch}</h3><div class="trip-detail-branch-list"><a class="trip-detail-branch" href="../${city.example || city.guide}"><strong>${city.name} · ${ui.sample}</strong><span>${ui.compare}</span></a>${related.map(rel => `<a class="trip-detail-branch" href="../${rel.guide}"><strong>${rel.name}</strong><span>${rel.vibe} · ${cityLoopBranchNote(rel.name) || 'A fitting next city read.'}</span></a>`).join('')}</div></article>
           </div>`;
         modal.classList.remove('hidden');
         modal.setAttribute('aria-hidden', 'false');
