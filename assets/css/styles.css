@@ -7251,3 +7251,87 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
     outline-offset:2px !important;
   }
 }
+
+/* v179 magazine-to-planner handoff
+   Makes the Magazine → City → Sample → Planner flow visible without changing the core IA. */
+.city-flow-actions{
+  display:grid !important;
+  grid-template-columns:1fr 1fr 1fr !important;
+  gap:8px !important;
+}
+.city-flow-actions .soft-btn,
+.city-flow-actions .ghost-btn{
+  min-width:0 !important;
+  padding-inline:10px !important;
+  text-align:center !important;
+}
+.city-route-handoff{margin-top:18px !important;}
+.city-route-handoff-card{
+  background:linear-gradient(135deg, rgba(255,255,255,.94), rgba(244,238,228,.96)) !important;
+  border:1px solid rgba(38,54,74,.10) !important;
+  box-shadow:0 18px 46px rgba(33,43,58,.08) !important;
+}
+.city-route-handoff-steps{
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:10px !important;
+  margin-top:18px !important;
+}
+.city-route-step{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:8px !important;
+  min-height:150px !important;
+  padding:16px !important;
+  border-radius:22px !important;
+  text-decoration:none !important;
+  color:inherit !important;
+  background:rgba(255,255,255,.72) !important;
+  border:1px solid rgba(38,54,74,.09) !important;
+}
+.city-route-step span{
+  font-size:11px !important;
+  text-transform:uppercase !important;
+  letter-spacing:.08em !important;
+  color:rgba(21,39,58,.58) !important;
+}
+.city-route-step strong{
+  font-size:16px !important;
+  line-height:1.25 !important;
+  color:#17263a !important;
+}
+.city-route-step p{
+  margin:0 !important;
+  font-size:13px !important;
+  line-height:1.55 !important;
+  color:rgba(28,40,58,.68) !important;
+}
+.city-route-step.is-current{background:rgba(248,244,237,.86) !important;}
+.city-route-step.is-strong{
+  background:#17263a !important;
+  color:#fff !important;
+  border-color:#17263a !important;
+}
+.city-route-step.is-strong span,
+.city-route-step.is-strong strong,
+.city-route-step.is-strong p{color:#fff !important;}
+.city-route-handoff-actions{
+  margin-top:16px !important;
+  justify-content:flex-end !important;
+}
+@media (max-width: 767px){
+  .city-flow-actions{
+    grid-template-columns:1fr !important;
+  }
+  .city-route-handoff-steps{
+    grid-template-columns:1fr !important;
+  }
+  .city-route-step{
+    min-height:auto !important;
+    padding:15px !important;
+  }
+  .city-route-handoff-actions{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+  }
+}
