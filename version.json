@@ -1,7 +1,7 @@
 {
-  "version": "v193",
-  "codename": "clean-magazine-image-cards",
-  "focus": "Remove heavy image split overlays from magazine/city cards and move visual labels below the photo for a calmer mobile editorial scan.",
-  "source": "ryokoplan_v192_final_launch_qa_pass_github_web_under100.zip",
+  "version": "v194",
+  "codename": "mobile-chrome-density-polish",
+  "focus": "Make the mobile header, language switcher, and bottom dock lighter so the editorial city cards feel less crowded on phone screens.",
+  "source": "ryokoplan_v193_clean_magazine_image_cards_github_web_under100.zip",
   "uploadProfile": "github-web-under-100-files"
 }
