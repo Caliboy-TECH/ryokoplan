@@ -1,7 +1,7 @@
 {
-  "version": "v192",
-  "codename": "final-launch-qa-pass",
-  "focus": "Final launch QA pass for core loop links, language/mobile comfort, release check links, and GitHub web upload safety.",
-  "source": "ryokoplan_v191_launch_growth_polish_github_web_under100.zip",
+  "version": "v193",
+  "codename": "clean-magazine-image-cards",
+  "focus": "Remove heavy image split overlays from magazine/city cards and move visual labels below the photo for a calmer mobile editorial scan.",
+  "source": "ryokoplan_v192_final_launch_qa_pass_github_web_under100.zip",
   "uploadProfile": "github-web-under-100-files"
 }

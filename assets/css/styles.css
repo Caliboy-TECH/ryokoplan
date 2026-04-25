@@ -7744,3 +7744,75 @@ html[lang="zh-Hant"] :where(.soft-btn,.ghost-btn,.action-btn,.nav-chip,.jump-chi
     justify-content: center;
   }
 }
+
+
+
+/* v193 clean magazine image card pass */
+/* Remove the heavy split/blur treatment on city cards. Photos should read as one clean editorial image, not divided panels. */
+body[data-page="magazine"] .finder-card .card-image::before,
+body[data-page="magazine"] .finder-card .card-image::after,
+body[data-page="planner"] .city-card .card-image::before,
+body[data-page="planner"] .city-card .card-image::after,
+body[data-page="planner"] .sample-card .card-image::before,
+body[data-page="planner"] .sample-card .card-image::after,
+.city-card .card-image::before,
+.city-card .card-image::after,
+.finder-card .card-image::before,
+.finder-card .card-image::after {
+  display:none !important;
+  content:none !important;
+  background:none !important;
+}
+body[data-page="magazine"] .finder-card .card-image img,
+body[data-page="planner"] .city-card .card-image img,
+.city-card .card-image img,
+.finder-card .card-image img {
+  filter:saturate(1.02) contrast(1.02) !important;
+  transform:none !important;
+}
+body[data-page="magazine"] .finder-visual-meta {
+  display:none !important;
+}
+.finder-visual-meta-inline {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:2px;
+}
+.finder-visual-meta-inline .finder-visual-pill {
+  position:static;
+  display:inline-flex;
+  align-items:center;
+  min-height:30px;
+  padding:7px 11px;
+  border-radius:999px;
+  background:#fff7ef;
+  border:1px solid #f1d6bf;
+  color:#8f5f39;
+  font-size:12px;
+  line-height:1;
+  font-weight:800;
+  letter-spacing:.01em;
+}
+.finder-visual-meta-inline .finder-visual-pill.is-soft {
+  background:#f8f1e8;
+  color:#516276;
+  border-color:#eadfce;
+}
+.card-open-pill {
+  background:rgba(255,253,249,.92);
+  backdrop-filter:none;
+}
+@media (max-width: 767px) {
+  body[data-page="magazine"] .finder-card .card-image,
+  body[data-page="planner"] .city-card .card-image,
+  body[data-page="planner"] .sample-card .card-image {
+    aspect-ratio:4 / 3 !important;
+  }
+  .finder-visual-meta-inline { gap:7px; }
+  .finder-visual-meta-inline .finder-visual-pill {
+    min-height:28px;
+    padding:6px 10px;
+    font-size:11.5px;
+  }
+}
