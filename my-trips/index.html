@@ -124,6 +124,18 @@
         <article class="stat-card info-card"><span class="stat-label" data-t="trips.shared">공유받은 일정</span><span id="sharedCount" class="stat-value">0</span><span class="stat-copy" data-t="trips.statSharedDesc">다른 사람이 보낸 링크도 다시 모아볼 수 있어요.</span></article>
       </section>
 
+      <section class="section trip-library-shelf info-card" aria-labelledby="tripLibraryShelfTitle">
+        <div class="trip-library-head">
+          <div>
+            <span class="eyebrow" data-lang-ko="여행 보관함" data-lang-en="Trip library" data-lang-ja="旅のライブラリー" data-lang-zhhant="旅行資料庫">여행 보관함</span>
+            <h2 id="tripLibraryShelfTitle" class="section-title" data-lang-ko="저장·최근·공유 여정을 한눈에 다시 열기" data-lang-en="Reopen saved, recent, and shared trips at a glance" data-lang-ja="保存・最近・共有の旅程を一目で開き直す" data-lang-zhhant="一眼重開已存、最近與分享行程">저장·최근·공유 여정을 한눈에 다시 열기</h2>
+            <p class="section-desc" data-lang-ko="My Trips의 첫 화면을 단순 목록이 아니라, 다시 꺼내 읽는 여행 매거진 shelf처럼 정리합니다." data-lang-en="My Trips now behaves less like a list and more like a magazine shelf you can reopen." data-lang-ja="My Trips をただのリストではなく、開き直せる旅マガジンの shelf のように整えます。" data-lang-zhhant="My Trips 不只是清單，而是可以重新打開閱讀的旅行雜誌 shelf。">My Trips의 첫 화면을 단순 목록이 아니라, 다시 꺼내 읽는 여행 매거진 shelf처럼 정리합니다.</p>
+          </div>
+          <a class="soft-btn trip-library-planner" href="../index.html#planner-start" data-nav="planner" data-lang-ko="새 베이스 만들기" data-lang-en="Build a new base" data-lang-ja="新しいベースを作る" data-lang-zhhant="建立新底稿">새 베이스 만들기</a>
+        </div>
+        <div id="tripLibraryShelf" class="trip-library-grid"></div>
+      </section>
+
       <section class="section trip-archive-grid">
         <article class="collection-card info-card trip-archive-card">
           <span class="collection-kicker" data-lang-ko="저장한 장소" data-lang-en="Saved places" data-lang-ja="保存した場所" data-lang-zhhant="已存地點">저장한 장소</span>
@@ -1044,6 +1056,70 @@
           </article>`).join('');
       }
 
+      function libraryShelfCopy(){
+        const lang = window.RyokoApp.lang;
+        if (lang === 'ko') return {
+          saved:['저장한 여정','다시 열 가치가 있는 내 루트','저장한 루트 열기','새 루트 만들기','아직 저장한 여정이 없습니다','Result에서 저장하면 여기에 가장 먼저 보입니다.'],
+          recent:['최근 본 흐름','방금 만든 계획으로 빠르게 복귀','최근 루트 열기','Planner로 돌아가기','아직 최근 흐름이 없습니다','도시를 고르고 첫 루트를 만들면 여기에 이어보기 카드가 생깁니다.'],
+          shared:['공유받은 여정','받은 링크를 내 여행 베이스로 보관','공유 루트 열기','링크 가져오기','아직 공유받은 여정이 없습니다','공유 링크를 붙여넣으면 나중에 다시 꺼내볼 수 있습니다.'],
+          updated:'마지막 업데이트', emptyCity:'Ryokoplan', viewGuide:'도시 읽기', sample:'샘플 보기'
+        };
+        if (lang === 'ja') return {
+          saved:['保存した旅程','また開く価値のある自分のルート','保存ルートを開く','新しいルートを作る','まだ保存した旅程がありません','Result で保存すると、ここに最初に表示されます。'],
+          recent:['最近見た流れ','作ったばかりの計画へすぐ戻る','最近のルートを開く','Plannerへ戻る','まだ最近の流れがありません','都市を選んで最初のルートを作ると、ここに続きのカードが生まれます。'],
+          shared:['共有された旅程','受け取ったリンクを自分の旅ベースとして保管','共有ルートを開く','リンクを取り込む','まだ共有された旅程がありません','共有リンクを貼り付けると、あとでまた開けます。'],
+          updated:'最終更新', emptyCity:'Ryokoplan', viewGuide:'都市を読む', sample:'サンプルを見る'
+        };
+        if (lang === 'zhHant') return {
+          saved:['已存行程','值得重新打開的我的路線','打開已存路線','建立新路線','還沒有已存行程','在 Result 頁存下後，會先出現在這裡。'],
+          recent:['最近瀏覽','快速回到剛建立的計畫','打開最近路線','回到 Planner','還沒有最近流程','選一座城市並建立第一條路線後，這裡會出現接續卡片。'],
+          shared:['分享行程','把收到的連結保存成自己的旅行底稿','打開分享路線','匯入連結','還沒有分享行程','貼上分享連結後，之後可以在這裡重新打開。'],
+          updated:'最後更新', emptyCity:'Ryokoplan', viewGuide:'讀城市', sample:'看範例'
+        };
+        return {
+          saved:['Saved trips','Your routes worth reopening','Open saved route','Build new route','No saved trip yet','Save a Result and it will appear here first.'],
+          recent:['Recent flow','Return quickly to the plan you just shaped','Open recent route','Back to Planner','No recent flow yet','Choose a city and create your first route to build a resume card here.'],
+          shared:['Shared trips','Keep received links as your own travel bases','Open shared route','Import link','No shared trip yet','Paste a shared link and you can reopen it here later.'],
+          updated:'Last updated', emptyCity:'Ryokoplan', viewGuide:'Read city', sample:'Sample route'
+        };
+      }
+      function renderLibraryShelf(saved, recent, shared){
+        const target = $('tripLibraryShelf');
+        if (!target) return;
+        const copy = libraryShelfCopy();
+        const rows = [
+          { key:'saved', items:saved, href:'../index.html#planner-start', actionAnchor:'#savedSection' },
+          { key:'recent', items:recent, href:'../index.html#planner-start', actionAnchor:'#recentSection' },
+          { key:'shared', items:shared, href:'#sharedImportInput', actionAnchor:'#sharedSection' }
+        ];
+        target.innerHTML = rows.map(row => {
+          const text = copy[row.key];
+          const item = sortItems(row.items || [])[0];
+          const city = item?.destination || copy.emptyCity;
+          const loop = item ? (window.RyokoApp.getCityLoopData(city) || {}) : {};
+          const image = item ? (imgMap[city] || '../assets/images/hero/planner-preview.jpg') : '../assets/images/brand/og-cover.png';
+          const title = item?.title || text[4];
+          const desc = item ? (getMetaSummary(item) || text[1]) : text[5];
+          const primaryHref = item ? shareUrl(item) : row.href;
+          const date = item ? formatDate(item.savedAt || item.viewedAt || item.sharedViewedAt || item.createdAt) : '';
+          const cityKey = String(city || '').toLowerCase().replace(/\s+/g,'');
+          return `<article class="trip-library-card trip-library-${row.key}">
+            <div class="trip-library-media"><img src="${image}" alt="${city}"><span>${text[0]}</span></div>
+            <div class="trip-library-body">
+              <div class="trip-card-topline"><div class="meta">${city}</div><div class="trip-card-date">${row.items.length}</div></div>
+              <h3>${title}</h3>
+              <p>${desc}</p>
+              ${date ? `<small>${copy.updated} · ${date}</small>` : `<small>${text[1]}</small>`}
+              <div class="trip-library-actions">
+                <a class="primary-btn" href="${primaryHref}">${item ? text[2] : text[3]}</a>
+                ${item ? `<a class="soft-btn" href="../${loop.guide || `city/${cityKey}.html`}">${copy.viewGuide}</a>` : `<a class="soft-btn" href="${row.actionAnchor}">${text[0]}</a>`}
+                ${item && loop.example ? `<a class="ghost-btn" href="../${loop.example}">${copy.sample}</a>` : ''}
+              </div>
+            </div>
+          </article>`;
+        }).join('');
+      }
+
       function renderSavedPlacesArchive(){
         const target = $('savedPlacesCollections');
         if (!target) return;
@@ -1656,6 +1732,7 @@
 
         renderContinueCard(saved, recent, shared);
         renderCollections(saved, recent, shared);
+        renderLibraryShelf(saved, recent, shared);
         renderSavedPlacesArchive();
         renderSavedRouteArchive(saved, recent, shared);
         renderPublicRouteDesk();
