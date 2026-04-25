@@ -7183,3 +7183,31 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
     margin-inline:auto !important;
   }
 }
+
+
+/* v177 language + mobile atlas cleanup */
+@media (max-width: 767px){
+  body[data-page="magazine"] .city-atlas-card .city-atlas-cover-head,
+  body[data-page="magazine"] .city-atlas-card .city-atlas-cover-note,
+  body[data-page="magazine"] .city-atlas-card .city-atlas-cover-title,
+  body[data-page="magazine"] .city-atlas-card .city-atlas-cover-desc,
+  body[data-page="magazine"] .city-atlas-card .city-atlas-overlay,
+  body[data-page="magazine"] .city-atlas-card .city-atlas-media-overlay,
+  body[data-page="magazine"] .city-atlas-card .city-atlas-media-copy{display:none !important;}
+  body[data-page="magazine"] .east-asia-region-tab-row,
+  body[data-page="magazine"] .east-asia-city-chip-row,
+  body[data-page="magazine"] .city-atlas-region-city-row{display:flex !important;gap:8px !important;overflow-x:auto !important;overflow-y:hidden !important;-webkit-overflow-scrolling:touch !important;scrollbar-width:none !important;padding-bottom:2px !important;white-space:nowrap !important;flex-wrap:nowrap !important;}
+  body[data-page="magazine"] .east-asia-region-tab-row::-webkit-scrollbar,
+  body[data-page="magazine"] .east-asia-city-chip-row::-webkit-scrollbar,
+  body[data-page="magazine"] .city-atlas-region-city-row::-webkit-scrollbar{display:none !important;}
+  body[data-page="magazine"] .east-asia-region-tab-row > *,
+  body[data-page="magazine"] .east-asia-city-chip-row > *,
+  body[data-page="magazine"] .city-atlas-region-city-row > *{flex:0 0 auto !important;min-width:max-content !important;white-space:nowrap !important;}
+  .planner-shell,.home-hero,.hero-shell,.hero-card,.cover-story-card-large,.cover-story-card-compact{margin-inline:auto !important;}
+  .planner-shell{max-width:min(100%, 720px) !important;}
+  .mobile-dock{left:0 !important;right:0 !important;bottom:0 !important;width:100% !important;max-width:none !important;border-radius:18px 18px 0 0 !important;box-shadow:0 -10px 24px rgba(26,36,54,.06) !important;background:rgba(248,244,237,.985) !important;}
+  .mobile-dock-item{min-height:54px !important;padding:8px 6px 10px !important;}
+  .mobile-dock-label{font-size:11px !important;letter-spacing:-.01em !important;}
+  .mobile-dock-icon{width:34px !important;height:34px !important;font-size:14px !important;}
+  .soft-btn,.ghost-btn,.primary-btn{min-height:52px !important;border-radius:20px !important;}
+}
