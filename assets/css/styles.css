@@ -7335,3 +7335,30 @@ body[data-page="magazine"] .hero.hero-magazine .hero-stat-card{
     grid-template-columns:1fr !important;
   }
 }
+
+/* v180 result save/share editorial package */
+.result-save-share-pack{margin-top:14px;padding:18px;border-radius:28px;border:1px solid rgba(226,211,193,.95);background:linear-gradient(180deg,#fffdf9 0%,#f8f1e8 100%);box-shadow:0 18px 42px rgba(23,50,79,.07)}
+.result-save-share-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:flex-start;margin-bottom:14px}
+.result-save-share-head h3{margin:0 0 5px;font-size:20px;line-height:1.25;color:#15273a}
+.result-save-share-head p{margin:0;color:#667085;font-size:13.5px;line-height:1.55;max-width:68ch}
+.result-action-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.result-action-card{display:flex;flex-direction:column;gap:9px;padding:16px;border-radius:22px;background:rgba(255,255,255,.9);border:1px solid rgba(229,218,203,.95);min-width:0;box-shadow:0 12px 30px rgba(23,50,79,.045)}
+.result-action-card-primary{background:linear-gradient(180deg,#fff8f0 0%,#fffdf9 100%);border-color:rgba(240,199,168,.95)}
+.result-action-step{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#b96732}
+.result-action-card strong{font-size:16px;line-height:1.32;color:#17324f}
+.result-action-card p{margin:0;color:#667085;font-size:13px;line-height:1.55;min-height:62px}
+.result-action-card .secondary-btn,.result-action-card .ghost-btn,.result-action-card .soft-btn{width:100%;justify-content:center;margin-top:auto;min-height:44px;border-radius:16px}
+body[data-page="planner"] .result-top-actions .is-saved,
+body[data-page="planner"] .result-sticky-actions .is-saved,
+body[data-page="planner"] .result-save-share-pack .is-saved{background:#17324f;color:#fff;border-color:#17324f;box-shadow:0 12px 26px rgba(23,50,79,.18)}
+@media (max-width: 860px){
+  .result-save-share-head{grid-template-columns:1fr;gap:9px}
+  .result-action-card-grid{grid-template-columns:1fr}
+  .result-action-card{padding:15px}
+  .result-action-card p{min-height:0}
+}
+@media (max-width: 420px){
+  .result-save-share-pack{padding:14px;border-radius:24px}
+  .result-save-share-head h3{font-size:18px}
+  .result-save-share-head p,.result-action-card p{font-size:12.8px}
+}

@@ -2805,7 +2805,70 @@ function getPriorityRefinePack(city=''){
     const checklist = (data.checklist || []).length ? data.checklist : samplePlans.tokyo.checklist;
     qs('checklistList').innerHTML = checklist.map(item => `<div class="check-item"><span class="check-icon">✓</span><div class="check-text">${item}</div></div>`).join('');
   }
+  function setText(id, value){
+    const node = qs(id);
+    if (node) node.textContent = value;
+  }
+  function resultActionCopy(data){
+    const destination = textValue(data?.destination, readForm().destination || 'this city');
+    return {
+      eyebrow: uiCopy('저장 / 공유 패키지','Save / Share package','保存 / 共有パッケージ','保存 / 分享套組'),
+      title: uiCopy('이 결과를 여행 카드처럼 남기세요','Turn this route into a trip card','この結果を旅カードとして残す','把這個結果留下成旅行卡片'),
+      desc: uiCopy(
+        `${destination} 루트를 저장하고, 링크로 보내고, PDF처럼 조용히 읽을 수 있게 묶었습니다.`,
+        `Save ${destination}, send a clean link, or open a calmer PDF-style copy for travel day.`,
+        `${destination} のルートを保存し、リンクで送り、PDF のように落ち着いて読める形にまとめます。`,
+        `把 ${destination} 路線保存、分享成乾淨連結，或打開成適合旅行當天閱讀的 PDF 版。`
+      ),
+      saveStep: uiCopy('01 · 저장','01 · Save','01 · 保存','01 · 保存'),
+      saveTitle: uiCopy('My Trips에 보관','Keep it in My Trips','My Trips に保存','存進 My Trips'),
+      saveDesc: uiCopy('같은 도시 결을 나중에 다시 열고, 다음 버전으로 이어가기 쉽게 남깁니다.','Reopen this same city rhythm later instead of starting again from a blank planner.','同じ都市の流れをあとで開き直し、空白のプランナーから始め直さずに済みます。','之後可重開同一座城市的節奏，不用再從空白規劃器開始。'),
+      saveBtn: uiCopy('이 루트 저장','Save this route','このルートを保存','保存這條路線'),
+      savedBtn: uiCopy('저장됨','Saved','保存済み','已保存'),
+      shareStep: uiCopy('02 · 공유','02 · Share','02 · 共有','02 · 分享'),
+      shareTitle: uiCopy('읽기 좋은 링크로 보내기','Send it as a readable link','読みやすいリンクで送る','以易讀連結分享'),
+      shareDesc: uiCopy('커버, 루트 리듬, 하루별 흐름이 같이 남는 공유 링크로 전달합니다.','The shared link keeps the cover, route rhythm, and day-by-day logic together.','共有リンクにはカバー、ルートの流れ、日ごとの構成が一緒に残ります。','分享連結會保留封面、路線節奏與每日邏輯。'),
+      shareBtn: uiCopy('링크 공유','Copy / share link','リンクを共有','複製 / 分享連結'),
+      pdfStep: uiCopy('03 · PDF','03 · Export','03 · PDF','03 · 匯出'),
+      pdfTitle: uiCopy('여행 당일용으로 열기','Make it print-ready','印刷用に開く','打開列印版'),
+      pdfDesc: uiCopy('이동 중 보기 편한 에디토리얼 PDF 화면으로 다시 엽니다.','Open a PDF-style page when you want a calmer itinerary view for travel day.','旅行当日に見やすい PDF 風の画面で開きます。','旅行當天需要更安靜的行程視圖時，可打開 PDF 版。'),
+      pdfBtn: uiCopy('PDF 보기','Open PDF view','PDF を開く','打開 PDF'),
+      stickyMeta: uiCopy('저장 · 공유 · PDF로 남기기','Save · share · PDF-ready','保存 · 共有 · PDF','保存 · 分享 · PDF')
+    };
+  }
+  function renderResultActionPack(data){
+    const copy = resultActionCopy(data);
+    setText('resultActionEyebrow', copy.eyebrow);
+    setText('resultActionTitle', copy.title);
+    setText('resultActionDesc', copy.desc);
+    setText('resultSaveStep', copy.saveStep);
+    setText('resultSaveTitle', copy.saveTitle);
+    setText('resultSaveDesc', copy.saveDesc);
+    setText('resultPackSaveBtn', copy.saveBtn);
+    setText('resultShareStep', copy.shareStep);
+    setText('resultShareTitle', copy.shareTitle);
+    setText('resultShareDesc', copy.shareDesc);
+    setText('resultPackShareBtn', copy.shareBtn);
+    setText('resultPdfStep', copy.pdfStep);
+    setText('resultPdfTitle', copy.pdfTitle);
+    setText('resultPdfDesc', copy.pdfDesc);
+    setText('resultPackPdfBtn', copy.pdfBtn);
+    const pack = qs('resultActionPack');
+    if (pack) pack.dataset.destination = textValue(data?.destination, '');
+  }
+  function markResultSaved(saved){
+    const data = window.currentTripPayload?.planData || window.__RYOKO_LAST_RESULT__ || {};
+    const copy = resultActionCopy(data);
+    ['resultTopSaveBtn','stickySaveBtn','resultPackSaveBtn'].forEach(id => {
+      const btn = qs(id);
+      if (!btn) return;
+      btn.classList.toggle('is-saved', !!saved);
+      btn.setAttribute('aria-pressed', String(!!saved));
+      if (saved) btn.textContent = copy.savedBtn;
+    });
+  }
   function renderPlan(data){
+
     data = applyPriorityResultDayPolish(data);
     window.__RYOKO_LAST_RESULT__ = data;
     qs('resultTitle').textContent = data.title || `${data.destination} editorial route`;
@@ -2819,6 +2882,7 @@ function getPriorityRefinePack(city=''){
     renderTips(data);
     renderBudget(data);
     renderChecklist(data);
+    renderResultActionPack(data);
     renderSharedTripBanner(window.sharedTripSource || null);
     renderJourneyLoop(data);
     renderSignalShelf(data);
@@ -2922,6 +2986,7 @@ function useExample(key='tokyo'){
     if (!window.currentTripPayload) return showToast(uiCopy('먼저 여정을 만들어 주세요.','Generate a trip first.'), 'warn');
     const saved = window.RyokoStorage.saveTrip(window.currentTripPayload);
     window.RyokoApp?.trackEvent?.('ryoko_trip_saved', { destination: saved.destination || '', title: saved.title || '' });
+    markResultSaved(true);
     showToast(uiCopy(`${saved.title || saved.destination} 저장 완료`,`Saved ${saved.title || saved.destination}`), 'success');
   }
   async function shareCurrentTrip(){
@@ -3306,6 +3371,9 @@ function useExample(key='tokyo'){
     qs('pdfTripBtn').addEventListener('click', savePdf);
     qs('resultTopSaveBtn')?.addEventListener('click', saveCurrentTrip);
     qs('resultTopShareBtn')?.addEventListener('click', shareCurrentTrip);
+    qs('resultPackSaveBtn')?.addEventListener('click', saveCurrentTrip);
+    qs('resultPackShareBtn')?.addEventListener('click', shareCurrentTrip);
+    qs('resultPackPdfBtn')?.addEventListener('click', savePdf);
     qs('stickySaveBtn')?.addEventListener('click', saveCurrentTrip);
     qs('stickyShareBtn')?.addEventListener('click', shareCurrentTrip);
     qs('stickyPdfBtn')?.addEventListener('click', savePdf);
