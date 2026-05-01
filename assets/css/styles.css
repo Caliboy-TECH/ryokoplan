@@ -7869,3 +7869,25 @@ body[data-page="magazine"] .finder-visual-meta {
   .east-asia-region-grid{display:none!important}
   .mobile-dock{background:rgba(251,247,241,.97)!important}
 }
+
+
+/* v199 public surface cleanup */
+@media (max-width: 767px){
+  .release-check-copy,
+  .whats-new-copy,
+  .release-check-card p,
+  .launch-acceptance-card p{
+    font-size:13px!important;
+    line-height:1.58!important;
+  }
+  .release-pill,
+  .mini-step{
+    letter-spacing:.04em!important;
+  }
+}
+
+/* Keep utility/QA pages visually quiet; product pages remain editorial-first. */
+body[data-page="release-check"] .mobile-dock,
+body[data-page="whats-new"] .mobile-dock{
+  display:none!important;
+}

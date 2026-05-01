@@ -1,15 +1,15 @@
 {
-  "version": "v198",
-  "codename": "first-run-sheet-removal-mobile-cleanup",
-  "headline": "Removed the intrusive first-run popup and cleaned the mobile city-field section for a calmer editorial flow.",
-  "focus": "Remove the onboarding popup sheet and bundle the pending home/mobile readability fixes into one calmer release.",
-  "source": "ryokoplan_v196_public_copy_readiness_github_web_under100.zip",
+  "version": "v199",
+  "codename": "public-surface-cleanup",
+  "headline": "Cleaned remaining public-facing internal language and kept utility pages quieter for launch QA.",
+  "focus": "Remove residual build/implementation wording from public product surfaces without adding new features.",
+  "source": "ryokoplan_v198_first_run_sheet_removal_mobile_cleanup_REBUILT.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-04-26",
   "notes": [
-    "Removed the planner/magazine first-run popup sheet so entry pages feel calmer and more editorial.",
-    "Rewrote the Korean city-field copy to feel like public travel editorial copy instead of internal taxonomy language.",
-    "Tightened the mobile East Asia field section and increased dock-safe padding to reduce footer overlap on iPhone."
+    "Cleaned remaining Korean mixed-language/internal implementation phrases around release/expansion city layers.",
+    "Softened utility page language so release-check and whats-new do not read like public product copy.",
+    "Kept the first-run popup disabled and preserved the v198 mobile/dock cleanup."
   ],
-  "release": "v198"
+  "release": "v199"
 }
