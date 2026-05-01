@@ -7841,3 +7841,31 @@ body[data-page="magazine"] .finder-visual-meta {
   .brand-mark { width: 40px !important; height: 40px !important; }
   .lang-btn { height: 36px !important; font-size: 12px !important; }
 }
+
+
+/* v198 first-run sheet removal + home atlas mobile cleanup */
+.first-run-guide-sheet{display:none !important;}
+@media (max-width: 767px){
+  body[data-page="planner"],
+  body[data-page="magazine"],
+  body[data-page="trips"]{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))!important}
+  .east-asia-taxonomy-section{scroll-margin-top:88px}
+  .east-asia-taxonomy-shell,.east-asia-region-grid{gap:12px!important}
+  .east-asia-taxonomy-lead{padding:16px!important;border-radius:22px!important}
+  .east-asia-taxonomy-lead .section-title{font-size:15px!important;line-height:1.38!important;letter-spacing:-.02em!important}
+  .east-asia-taxonomy-lead .section-desc{font-size:13px!important;line-height:1.58!important;margin-top:8px!important}
+  .east-asia-metric-grid{display:flex!important;overflow:auto!important;gap:8px!important;margin-top:12px!important;padding-bottom:2px!important;scroll-snap-type:x proximity}
+  .east-asia-metric-card{flex:0 0 168px!important;padding:10px 12px!important;border-radius:16px!important;scroll-snap-align:start}
+  .east-asia-metric-card strong{font-size:13px!important}
+  .east-asia-metric-card span{font-size:11.5px!important;line-height:1.45!important}
+  .east-asia-layer-row{grid-template-columns:1fr!important;gap:8px!important;margin-top:12px!important}
+  .east-asia-layer-card{padding:14px!important;border-radius:22px!important}
+  .east-asia-layer-card .collection-kicker{display:inline-flex!important;padding:0!important;border:0!important;background:none!important;color:#a27044!important;font-size:12px!important;letter-spacing:.04em!important}
+  .east-asia-layer-card strong{display:block!important;font-size:26px!important;line-height:1!important;margin-top:4px!important}
+  .east-asia-layer-card p{font-size:13px!important;line-height:1.56!important;margin:8px 0 12px!important}
+  .east-asia-layer-card .soft-btn{min-height:42px!important;padding:0 14px!important;font-size:13px!important;white-space:nowrap!important}
+  .east-asia-field-card{padding:14px!important;margin-top:12px!important;border-radius:22px!important}
+  .east-asia-region-tab{padding:9px 12px!important;font-size:12px!important}
+  .east-asia-region-grid{display:none!important}
+  .mobile-dock{background:rgba(251,247,241,.97)!important}
+}

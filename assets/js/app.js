@@ -1789,12 +1789,7 @@ function firstRunGuideCopy(){
   return copies[pageKey][lang] || copies[pageKey].en;
 }
 function shouldShowFirstRunGuide(){
-  const page = document.body?.dataset?.page || '';
-  if (!(page === 'planner' || page === 'magazine')) return false;
-  if (!isPrimaryEntrySurface()) return false;
-  if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
-  try { if (localStorage.getItem(firstRunGuideDismissKey) === '1') return false; } catch {}
-  return true;
+  return false;
 }
 function syncFirstRunGuide(){
   const sheet = document.getElementById('firstRunGuideSheet');
@@ -1814,7 +1809,7 @@ function syncFirstRunGuide(){
 }
 function ensureFirstRunGuide(){
   let sheet = document.getElementById('firstRunGuideSheet');
-  if (!shouldShowFirstRunGuide()) { if (sheet) sheet.classList.add('is-hidden'); return; }
+  if (!shouldShowFirstRunGuide()) { if (sheet) { sheet.classList.add('is-hidden'); sheet.remove(); } return; }
   if (!sheet) {
     sheet = document.createElement('aside');
     sheet.id = 'firstRunGuideSheet';
@@ -2515,7 +2510,7 @@ function ensureLaunchFeedbackCta(){
       dock.style.webkitBackdropFilter = 'none';
       dock.style.transform = 'none';
       dock.style.zIndex = '70';
-      document.body.style.setProperty('--page-dock-padding', `calc(84px + ${bottomInset} + ${browserOffset}px)`);
+      document.body.style.setProperty('--page-dock-padding', `calc(112px + ${bottomInset} + ${browserOffset}px)`);
     };
     const page = document.body.dataset.page || 'planner';
     const shortCopy = {
@@ -4236,13 +4231,13 @@ function getSeasonalEditorialCollections(){
   function getEastAsiaTaxonomyCopy(page='home'){
     const map = {
       home:{
-        ko:{eyebrow:'East Asia map', title:'동아시아 도시장을 하나의 에디토리얼 지도처럼 읽기', desc:'Ryokoplan은 일본·한국 추천 리스트가 아니라, 14개 도시를 지역·완성도·읽는 결로 나눠 읽는 city-first map으로 보이게 정리합니다.', metrics:[['14 cities','release + expansion'],['3 regional edits','Japan / Korea / Greater China'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'제품 레이어', releaseTitle:'Release layer', releaseDesc:'지금 가장 깊게 완성된 7개 도시입니다.', expansionTitle:'Expansion layer', expansionDesc:'다음으로 자연스럽게 이어질 7개 도시입니다.', regionTitle:'Regional desks', region:{japan:['Japan edit','7 cities'],korea:['Korea edit','4 cities'],greater:['Greater China edit','3 cities']}, openAtlas:'이 트랙으로 atlas 열기', openRelease:'Release만 보기', openExpansion:'Expansion만 보기'},
+        ko:{eyebrow:'City field', title:'동아시아 14개 도시를 한 번에 읽기', desc:'Ryokoplan은 나라별 추천 리스트보다, 지금 읽기 좋은 도시와 다음에 이어 볼 도시를 한 화면에서 고를 수 있게 정리한 city-first map입니다.', metrics:[['14개 도시','출시 7 · 확장 7'],['3개 지역','Japan · Korea · Greater China'],['5개 리듬','빠른 도시 · 먹는 도시 · 바다 · 유산 · 밤']], layerTitle:'도시 레이어', releaseTitle:'지금 바로 보기 좋은 7개 도시', releaseDesc:'완성도가 가장 높은 중심 도시부터 읽어보세요.', expansionTitle:'다음으로 이어질 7개 도시', expansionDesc:'다음 여행이나 다음 클릭으로 자연스럽게 이어질 도시들입니다.', regionTitle:'지역별 보기', region:{japan:['Japan','7개 도시'],korea:['Korea','4개 도시'],greater:['Greater China','3개 도시']}, openAtlas:'이 흐름으로 도시 보기', openRelease:'이 7개 도시 보기', openExpansion:'다음 7개 도시 보기'},
         en:{eyebrow:'East Asia map', title:'Read the East Asia city field as one editorial map', desc:'Ryokoplan should now read less like a Japan/Korea recommendation list and more like a 14-city field shaped by region, maturity layer, and reading track.', metrics:[['14 cities','release + expansion'],['3 regional edits','Japan / Korea / Greater China'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Product layers', releaseTitle:'Release layer', releaseDesc:'The seven cities with the deepest completion right now.', expansionTitle:'Expansion layer', expansionDesc:'The next seven cities that now branch naturally from the core layer.', regionTitle:'Regional desks', region:{japan:['Japan edit','7 cities'],korea:['Korea edit','4 cities'],greater:['Greater China edit','3 cities']}, openAtlas:'Open atlas with this track', openRelease:'View release only', openExpansion:'View expansion only'},
         ja:{eyebrow:'East Asia map', title:'東アジアの都市場を一つの editorial map として読む', desc:'Ryokoplan を、日本／韓国のおすすめ一覧ではなく、14都市を region・maturity layer・reading track で読む city-first map として見せます。', metrics:[['14 cities','release + expansion'],['3 regional edits','Japan / Korea / Greater China'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'プロダクトレイヤー', releaseTitle:'Release layer', releaseDesc:'いま最も深く完成している7都市です。', expansionTitle:'Expansion layer', expansionDesc:'次に自然につながる7都市です。', regionTitle:'Regional desks', region:{japan:['Japan edit','7 cities'],korea:['Korea edit','4 cities'],greater:['Greater China edit','3 cities']}, openAtlas:'このトラックで atlas を開く', openRelease:'Release だけ見る', openExpansion:'Expansion だけ見る'},
         zhHant:{eyebrow:'East Asia map', title:'把東亞城市場讀成一張 editorial map', desc:'Ryokoplan 現在不該只像日本／韓國推薦列表，而是要更像一個用 region、maturity layer、reading track 去閱讀的 14 城市地圖。', metrics:[['14 cities','release + expansion'],['3 regional edits','Japan / Korea / Greater China'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'產品層級', releaseTitle:'Release layer', releaseDesc:'目前完成度最高的 7 座城市。', expansionTitle:'Expansion layer', expansionDesc:'下一層自然延伸出去的 7 座城市。', regionTitle:'Regional desks', region:{japan:['Japan edit','7 cities'],korea:['Korea edit','4 cities'],greater:['Greater China edit','3 cities']}, openAtlas:'用這個 track 打開 atlas', openRelease:'只看 Release', openExpansion:'只看 Expansion'}
       },
       magazine:{
-        ko:{eyebrow:'Magazine map', title:'동아시아 도시장을 하나의 에디토리얼 필드처럼 읽게 만듭니다', desc:'출시 도시만 훑고 끝나는 진열장이 아니라, 어느 나라에서 시작하고 다음에 어떤 도시로 이어질지부터 더 먼저 보이게 정리했습니다.', metrics:[['14개 도시','커버 → 도시 → 샘플 → 결과'],['2개 레이어','출시 / 확장'],['5개 리듬','빠른 도시, 먹는 도시, 바다, 유산, 밤']], layerTitle:'매거진 레이어', releaseTitle:'지금 바로 보기 좋은 도시', releaseDesc:'완성도가 가장 높은 중심 도시들입니다.', expansionTitle:'다음으로 이어질 도시', expansionDesc:'다음 클릭을 자연스럽게 받쳐주는 확장 도시들입니다.', regionTitle:'지역별 보기', region:{japan:['Japan','도쿄 · 오사카 · 교토 · 후쿠오카 · 삿포로 · 센다이 · 오키나와'],korea:['Korea','서울 · 부산 · 제주 · 경주'],greater:['Greater China','타이베이 · 홍콩 · 마카오']}, openAtlas:'이 흐름으로 도시 보기', openRelease:'출시 도시만 보기', openExpansion:'확장 도시만 보기'},
+        ko:{eyebrow:'City map', title:'지금 읽을 도시와 다음에 이어 볼 도시를 한 번에 보기', desc:'매거진은 도시를 읽고, 샘플을 보고, 바로 플랜으로 이어지게 구성했습니다. 지금 읽기 좋은 도시와 다음으로 이어질 도시를 한 화면에서 정리합니다.', metrics:[['14개 도시','도시 가이드 → 샘플 → 플랜'],['2개 레이어','출시 / 확장'],['5개 리듬','빠른 도시 · 먹는 도시 · 바다 · 유산 · 밤']], layerTitle:'도시 레이어', releaseTitle:'지금 읽기 좋은 도시', releaseDesc:'완성도가 가장 높은 중심 도시부터 보세요.', expansionTitle:'다음으로 넓어지는 도시', expansionDesc:'다음 클릭을 자연스럽게 이어주는 확장 도시입니다.', regionTitle:'지역별 보기', region:{japan:['Japan','도쿄 · 오사카 · 교토 · 후쿠오카 · 삿포로 · 센다이 · 오키나와'],korea:['Korea','서울 · 부산 · 제주 · 경주'],greater:['Greater China','타이베이 · 홍콩 · 마카오']}, openAtlas:'이 흐름으로 도시 보기', openRelease:'출시 도시 보기', openExpansion:'확장 도시 보기'},
         en:{eyebrow:'Magazine taxonomy', title:'A taxonomy that makes Magazine read like a 14-city East Asia desk', desc:'Magazine should not stop at the release shelf. The East Asia taxonomy for the next layer should be visible first.', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'The most complete editorial city layer right now.', expansionTitle:'Next city shelf', expansionDesc:'The expansion layer shaped to catch the next click naturally.', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'Open this track in the atlas', openRelease:'View the release shelf', openExpansion:'View the next shelf'},
         ja:{eyebrow:'Magazine taxonomy', title:'Magazine を 14-city East Asia desk として見せる分類システム', desc:'release 都市の棚で止まらず、その次のレイヤーまで含む東アジアの taxonomy を先に見せるように整えます。', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'いま最も完成度が高い中心都市層です。', expansionTitle:'Next city shelf', expansionDesc:'次のクリックを自然につなぐ拡張都市層です。', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'atlas でこのトラックを開く', openRelease:'release shelf だけ見る', openExpansion:'next shelf だけ見る'},
         zhHant:{eyebrow:'Magazine taxonomy', title:'讓 Magazine 看起來像 14-city East Asia desk 的分類系統', desc:'Magazine 不該只停在 release 城市書架，而要先讓人看到連 next layer 都一起整理好的東亞 taxonomy。', metrics:[['14 cities','cover → city → sample → result'],['2 maturity layers','release / expansion'],['5 reading tracks','fast, food, coast, heritage, night']], layerTitle:'Magazine layers', releaseTitle:'Core release shelf', releaseDesc:'目前完成度最高的核心城市層。', expansionTitle:'Next city shelf', expansionDesc:'為了接住下一次點擊而整理好的擴張城市層。', regionTitle:'Regional desks', region:{japan:['Japan edit','Tokyo → Okinawa'],korea:['Korea edit','Seoul → Gyeongju'],greater:['Greater China edit','Taipei / Hong Kong / Macau']}, openAtlas:'在 atlas 打開這個 track', openRelease:'只看 release shelf', openExpansion:'只看 next shelf'}

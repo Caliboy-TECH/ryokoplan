@@ -1,15 +1,15 @@
 {
-  "version": "v196",
-  "codename": "public-copy-readiness",
-  "headline": "Public copy cleanup: homepage and magazine entry copy now read like a travel editorial product, not an internal build log.",
-  "focus": "Remove internal improvement language from public-facing pages while keeping the existing structure stable.",
-  "source": "ryokoplan_v195_launch_readiness_handoff_github_web_under100.zip",
+  "version": "v198",
+  "codename": "first-run-sheet-removal-mobile-cleanup",
+  "headline": "Removed the intrusive first-run popup and cleaned the mobile city-field section for a calmer editorial flow.",
+  "focus": "Remove the onboarding popup sheet and bundle the pending home/mobile readability fixes into one calmer release.",
+  "source": "ryokoplan_v196_public_copy_readiness_github_web_under100.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-04-26",
   "notes": [
-    "Replaced internal phrases such as “we adjusted” and build-handoff language on the homepage with reader-facing travel editorial copy.",
-    "Cleaned the Magazine opener so it describes the city desk as a product experience, not a construction note.",
-    "Updated release-check and whats-new labels to v196 public copy readiness."
+    "Removed the planner/magazine first-run popup sheet so entry pages feel calmer and more editorial.",
+    "Rewrote the Korean city-field copy to feel like public travel editorial copy instead of internal taxonomy language.",
+    "Tightened the mobile East Asia field section and increased dock-safe padding to reduce footer overlap on iPhone."
   ],
-  "release": "v196"
+  "release": "v198"
 }
