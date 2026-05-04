@@ -7891,3 +7891,18 @@ body[data-page="release-check"] .mobile-dock,
 body[data-page="whats-new"] .mobile-dock{
   display:none!important;
 }
+
+
+/* v202 final actual: generation, dock alignment, region symmetry */
+@media (max-width: 767px){
+  .mobile-dock,.bottom-dock,.app-dock,nav[aria-label*="bottom"],nav[aria-label*="하단"]{
+    left:50%!important;right:auto!important;transform:translateX(-50%)!important;width:min(92vw, 420px)!important;max-width:420px!important;display:grid!important;grid-template-columns:repeat(3, 1fr)!important;align-items:center!important;justify-items:center!important;gap:0!important;padding-left:12px!important;padding-right:12px!important;box-sizing:border-box!important;
+  }
+  .mobile-dock a,.mobile-dock button,.bottom-dock a,.bottom-dock button,.app-dock a,.app-dock button{width:100%!important;min-width:0!important;justify-content:center!important;text-align:center!important;align-items:center!important;margin:0!important;}
+  .mobile-dock .is-active,.bottom-dock .is-active,.app-dock .is-active{width:100%!important;border-radius:22px!important;}
+  .east-asia-region-tabs,.region-tabs,[data-region-tabs]{display:grid!important;grid-template-columns:repeat(3, minmax(0, 1fr))!important;gap:8px!important;width:100%!important;overflow:visible!important;}
+  .east-asia-region-tab,.region-tab,[data-region-tab]{width:100%!important;min-width:0!important;justify-content:center!important;text-align:center!important;white-space:nowrap!important;padding-left:8px!important;padding-right:8px!important;box-sizing:border-box!important;}
+  .east-asia-city-chip-row,.city-chip-row,.city-finder-chip-row,[data-city-chips]{display:flex!important;flex-wrap:wrap!important;gap:8px!important;overflow:visible!important;padding-right:0!important;}
+  .east-asia-city-chip-row a,.east-asia-city-chip-row button,.city-chip-row a,.city-chip-row button,.city-finder-chip-row a,.city-finder-chip-row button{flex:1 1 calc(33.333% - 8px)!important;min-width:92px!important;max-width:100%!important;text-align:center!important;justify-content:center!important;}
+  body{padding-bottom:calc(144px + env(safe-area-inset-bottom,0px))!important;}
+}

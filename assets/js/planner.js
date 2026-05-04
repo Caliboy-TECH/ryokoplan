@@ -3419,3 +3419,37 @@ function useExample(key='tokyo'){
   return { init, renderPlan, plannerResumeState };
 })();
 window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
+
+
+/* v202 planner generation hotfix: make visible CTA buttons submit the planner reliably */
+(function(){
+  if (window.__ryokoPlannerSubmitHotfixV202) return;
+  window.__ryokoPlannerSubmitHotfixV202 = true;
+  function looksLikePlannerSubmit(el){
+    if (!el) return false;
+    var text = (el.textContent || '').trim().toLowerCase();
+    var aria = (el.getAttribute('aria-label') || '').toLowerCase();
+    var data = ((el.getAttribute('data-action') || '') + ' ' + (el.getAttribute('data-planner-action') || '')).toLowerCase();
+    var joined = text + ' ' + aria + ' ' + data;
+    return joined.indexOf('이 리듬으로 시작') !== -1 || joined.indexOf('일정 생성') !== -1 || joined.indexOf('route start') !== -1 || joined.indexOf('start this') !== -1 || joined.indexOf('build route') !== -1 || joined.indexOf('generate') !== -1 || joined.indexOf('루트 시작') !== -1;
+  }
+  function findPlannerForm(){
+    return document.querySelector('form[data-planner-form], form#plannerForm, form.planner-form, form[action*="planner"]') || document.querySelector('main form') || document.querySelector('form');
+  }
+  function requestSubmitSafely(form){
+    if (!form) return false;
+    try { if (typeof form.requestSubmit === 'function') { form.requestSubmit(); return true; } } catch(e) {}
+    try { var event = new Event('submit', {bubbles:true, cancelable:true}); form.dispatchEvent(event); return true; } catch(e) {}
+    return false;
+  }
+  document.addEventListener('click', function(event){
+    var target = event.target && event.target.closest ? event.target.closest('button, a, [role="button"]') : null;
+    if (!target || !looksLikePlannerSubmit(target)) return;
+    var form = target.closest('form') || findPlannerForm();
+    if (!form) return;
+    var href = target.getAttribute('href') || '';
+    if (target.tagName === 'A' && href && href !== '#' && href.indexOf('javascript:') !== 0) return;
+    event.preventDefault();
+    requestSubmitSafely(form);
+  }, true);
+})();

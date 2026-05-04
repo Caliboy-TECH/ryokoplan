@@ -1,15 +1,16 @@
 {
-  "version": "v199",
-  "codename": "public-surface-cleanup",
-  "headline": "Cleaned remaining public-facing internal language and kept utility pages quieter for launch QA.",
-  "focus": "Remove residual build/implementation wording from public product surfaces without adding new features.",
-  "source": "ryokoplan_v198_first_run_sheet_removal_mobile_cleanup_REBUILT.zip",
+  "version": "v202",
+  "codename": "final-actual-core-hotfix",
+  "headline": "Core hotfix: itinerary generation reliability, mobile alignment, and clearer public copy.",
+  "focus": "Fix itinerary generation, balance mobile navigation and region tabs, and simplify public/search copy.",
+  "source": "ryokoplan_v199_public_surface_cleanup_github_web_under100.zip",
   "uploadProfile": "github-web-under-100-files",
-  "updatedAt": "2026-04-26",
+  "updatedAt": "2026-05-04",
   "notes": [
-    "Cleaned remaining Korean mixed-language/internal implementation phrases around release/expansion city layers.",
-    "Softened utility page language so release-check and whats-new do not read like public product copy.",
-    "Kept the first-run popup disabled and preserved the v198 mobile/dock cleanup."
+    "Added planner submit fallback for mobile route generation.",
+    "Balanced bottom dock and region/city chip layout.",
+    "Simplified public/search copy around understanding the city first, then building the trip."
   ],
-  "release": "v199"
+  "release": "v202",
+  "status": "core-hotfix-final"
 }
