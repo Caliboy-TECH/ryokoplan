@@ -1,16 +1,17 @@
 {
-  "version": "v202",
-  "codename": "final-actual-core-hotfix",
-  "headline": "Core hotfix: itinerary generation reliability, mobile alignment, and clearer public copy.",
-  "focus": "Fix itinerary generation, balance mobile navigation and region tabs, and simplify public/search copy.",
-  "source": "ryokoplan_v199_public_surface_cleanup_github_web_under100.zip",
+  "version": "v203",
+  "codename": "search-copy-lock",
+  "headline": "Search and public-copy lock: simpler promise, crawl files, and stable mobile polish.",
+  "focus": "Make Ryokoplan’s public promise clearer in search snippets and keep the v202 hotfix stable.",
+  "source": "ryokoplan_v202_FINAL_ACTUAL.zip",
   "uploadProfile": "github-web-under-100-files",
-  "updatedAt": "2026-05-04",
+  "updatedAt": "2026-05-02",
   "notes": [
-    "Added planner submit fallback for mobile route generation.",
-    "Balanced bottom dock and region/city chip layout.",
-    "Simplified public/search copy around understanding the city first, then building the trip."
+    "Locked the public promise around understanding the city first, then building the trip.",
+    "Cleaned remaining confusing search/meta phrases such as city-first map and release/expansion language.",
+    "Added robots.txt and sitemap.xml for cleaner launch crawl readiness.",
+    "Preserved the v202 itinerary CTA and mobile alignment hotfix."
   ],
-  "release": "v202",
-  "status": "core-hotfix-final"
+  "release": "v203",
+  "status": "search-copy-lock"
 }

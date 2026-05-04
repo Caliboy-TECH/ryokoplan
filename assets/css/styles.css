@@ -7906,3 +7906,16 @@ body[data-page="whats-new"] .mobile-dock{
   .east-asia-city-chip-row a,.east-asia-city-chip-row button,.city-chip-row a,.city-chip-row button,.city-finder-chip-row a,.city-finder-chip-row button{flex:1 1 calc(33.333% - 8px)!important;min-width:92px!important;max-width:100%!important;text-align:center!important;justify-content:center!important;}
   body{padding-bottom:calc(144px + env(safe-area-inset-bottom,0px))!important;}
 }
+
+/* v203 search/copy lock + final mobile balance */
+@media (max-width: 767px){
+  .mobile-dock{
+    margin-left:auto!important;
+    margin-right:auto!important;
+    border-radius:26px!important;
+  }
+  .mobile-dock a,
+  .mobile-dock button{
+    line-height:1.2!important;
+  }
+}
