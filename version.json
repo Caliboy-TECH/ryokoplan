@@ -1,16 +1,16 @@
 {
-  "version": "v210",
-  "codename": "section-overlap-cleanup",
-  "headline": "Fixed mobile section overlap so image grids and following guide cards stack cleanly.",
-  "focus": "Stop guide/explainer sections from overlapping photo grids on mobile.",
-  "source": "ryokoplan_v209_soft_hero_copy.zip",
-  "uploadProfile": "github-web-under-100-files",
+  "version": "v211",
+  "codename": "mobile-entry-reset-overlap-fix",
+  "headline": "Hard mobile reset for overlapping entry sections by hiding deck-like explainers after the photo grid.",
+  "focus": "Resolve persistent mobile overlap by removing problematic explainer sections from the public mobile entry.",
+  "source": "ryokoplan_v178_language_state_mobile_dock_qa.zip",
   "updatedAt": "2026-05-02",
+  "release": "v211",
+  "status": "mobile-entry-hardfix",
   "notes": [
-    "Cleaned up photo-grid and following-section stacking on mobile.",
-    "Removed overlap pressure from headings and guide cards appearing after image grids.",
-    "Kept previous hero, loading, and generated-route behavior intact."
-  ],
-  "release": "v210",
-  "status": "mobile-overlap-hotfix"
+    "Hard-hidden guide/entry/rhythm explainer blocks on mobile because they continued overlapping the photo grid.",
+    "Kept hero, planner form, magazine cards, city cards, and generated result cards visible.",
+    "Limited first-entry photo grids to a safer mobile height.",
+    "This is a stronger structural hotfix rather than another light spacing patch."
+  ]
 }

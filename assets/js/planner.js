@@ -574,10 +574,10 @@ window.RyokoPlanner = (() => {
         zhHant:{ eyebrow:'開始脈絡', title:`直接從 ${cityName} city guide 接著開始。`, desc:`把剛剛讀到的城市節奏直接帶進 ${cityName} 的 route。`, chip:'City guide' }
       },
       sample: {
-        ko:{ eyebrow:'시작 컨텍스트', title:`${title} sample을 바탕으로 route를 엽니다.`, desc:'샘플의 리듬을 그대로 들고 와서 출발점으로 삼을 수 있게 정리했습니다.', chip:'샘플 보기 route' },
-        en:{ eyebrow:'Start context', title:`Opening the route from the ${title} sample.`, desc:'This carries the sample rhythm forward so the route starts with a clearer shape.', chip:'샘플 보기 route' },
-        ja:{ eyebrow:'開始コンテキスト', title:`${title} sample を土台に route を開きます。`, desc:'sample のリズムをそのまま持ち込めるように整えています。', chip:'샘플 보기 route' },
-        zhHant:{ eyebrow:'開始脈絡', title:`以 ${title} sample 為基底打開 route。`, desc:'把 sample 的節奏直接帶進來，讓 route 一開始就更有形狀。', chip:'샘플 보기 route' }
+        ko:{ eyebrow:'시작 컨텍스트', title:`${title} sample을 바탕으로 route를 엽니다.`, desc:'샘플의 리듬을 그대로 들고 와서 출발점으로 삼을 수 있게 정리했습니다.', chip:'Sample route' },
+        en:{ eyebrow:'Start context', title:`Opening the route from the ${title} sample.`, desc:'This carries the sample rhythm forward so the route starts with a clearer shape.', chip:'Sample route' },
+        ja:{ eyebrow:'開始コンテキスト', title:`${title} sample を土台に route を開きます。`, desc:'sample のリズムをそのまま持ち込めるように整えています。', chip:'Sample route' },
+        zhHant:{ eyebrow:'開始脈絡', title:`以 ${title} sample 為基底打開 route。`, desc:'把 sample 的節奏直接帶進來，讓 route 一開始就更有形狀。', chip:'Sample route' }
       },
       route: {
         ko:{ eyebrow:'시작 컨텍스트', title:`${title} route를 바탕으로 다시 시작합니다.`, desc:'방금 보던 route를 기준점으로 삼아 더 빠르게 다시 다듬을 수 있습니다.', chip:'Route base' },
@@ -605,20 +605,20 @@ window.RyokoPlanner = (() => {
     const lang = window.RyokoApp?.lang || 'ko';
     const t = {
       reopenGuide: lang === 'ko' ? '도시 가이드 다시 보기' : lang === 'ja' ? '都市ガイドをもう一度開く' : lang === 'zhHant' ? '重新打開城市指南' : 'Reopen city guide',
-      reopen샘플 보기: lang === 'ko' ? '샘플 다시 읽기' : lang === 'ja' ? 'サンプルをもう一度読む' : lang === 'zhHant' ? '重新讀範例' : 'Reopen sample',
+      reopenSample: lang === 'ko' ? '샘플 다시 읽기' : lang === 'ja' ? 'サンプルをもう一度読む' : lang === 'zhHant' ? '重新讀範例' : 'Reopen sample',
       recentResult: lang === 'ko' ? '최근 result 열기' : lang === 'ja' ? '最近の result を開く' : lang === 'zhHant' ? '打開最近 result' : 'Open recent result',
       routeStart: lang === 'ko' ? '이 route로 바로 시작' : lang === 'ja' ? 'この route から始める' : lang === 'zhHant' ? '從這條 route 開始' : 'Start from this route'
     };
     if (entry?.entryKind === 'city') {
       return [
         guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'secondary-btn' } : null,
-        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopen샘플 보기, style: 'ghost-btn' } : null,
+        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopenSample, style: 'ghost-btn' } : null,
         latestHref ? { href: latestHref, label: t.recentResult, style: 'ghost-btn' } : null
       ].filter(Boolean);
     }
     if (entry?.entryKind === 'sample') {
       return [
-        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopen샘플 보기, style: 'secondary-btn' } : null,
+        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopenSample, style: 'secondary-btn' } : null,
         guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'ghost-btn' } : null,
         latestHref ? { href: latestHref, label: t.recentResult, style: 'ghost-btn' } : null
       ].filter(Boolean);
@@ -627,12 +627,12 @@ window.RyokoPlanner = (() => {
       return [
         latestHref ? { href: latestHref, label: t.recentResult, style: 'secondary-btn' } : null,
         guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'ghost-btn' } : null,
-        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopen샘플 보기, style: 'ghost-btn' } : null
+        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopenSample, style: 'ghost-btn' } : null
       ].filter(Boolean);
     }
     return [
       guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'secondary-btn' } : null,
-      sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopen샘플 보기, style: 'ghost-btn' } : null,
+      sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopenSample, style: 'ghost-btn' } : null,
       latestHref ? { href: latestHref, label: t.recentResult, style: 'ghost-btn' } : null
     ].filter(Boolean);
   }
@@ -1716,7 +1716,7 @@ function clearPlannerFeedback(){
       "coverText": "This cover reads Sapporo through cold air and warm pockets rather than as a snow-spot list.",
       "routeTitle": "Cold lines and warm pockets",
       "routeText": "The wider outdoor axis is balanced by indoor links and one warm meal pocket.",
-      "packageTitle": "왜 이 흐름이 좋아요 in winter",
+      "packageTitle": "Why this route works in winter",
       "packageText": "In a winter city, recovery windows matter more than one extra stop. This route is built around that spacing.",
       "branchTitle": "Continue into Sendai or Tokyo",
       "branchText": "Move into Sendai for a softer northern read, or Tokyo if you want the density contrast to sharpen."
@@ -1967,7 +1967,7 @@ function getPriorityRefinePack(city=''){
       signalDesc: uiCopy('비, 부모님 동행, 늦은 밤, 푸드 중심 같은 신호를 기준으로 다음 베이스를 다시 고를 수 있게 묶었습니다.', 'Grouped around signals like rain, parents, late nights, or food-led pacing so the next base feels more intentional.', '雨・親との同行・深夜の流れ・食重視などの条件から、次のベースを選び直しやすくまとめました。', '以雨天、與父母同行、夜晚節奏、以美食為主等訊號重新整理，讓下一個 base 更好選。'),
       signalEyebrow: uiCopy('Signal-aware picks','Signal-aware picks','Signal-aware picks','Signal-aware picks'),
       cityGuide: uiCopy('도시 가이드','City guide','城市ガイド','城市指南'),
-      sampleRoute: uiCopy('샘플 루트','샘플 보기 route','範例路線','示範路線'),
+      sampleRoute: uiCopy('샘플 루트','Sample route','範例路線','示範路線'),
       nextLoopEyebrow: uiCopy('다음 액션 루프','Next step loop','次のアクションループ','下一步循環'),
       nextLoopTitle: uiCopy('한 번의 결과에서 끝내지 마세요', 'Keep the route moving after this result', 'この結果で止めずに、次へつなげましょう', '別停在這一次的結果，讓路線繼續往下走'),
       nextLoopDesc: uiCopy('연결된 도시를 더 읽고, 저장한 루트를 다시 열고, 샘플 루트까지 이어서 볼 수 있게 정리했습니다.', 'Read a related city, reopen a saved route, or move into a sample route to keep the Ryokoplan flow going.', 'つながる都市を読み、保存したルートを開き直し、サンプルルートへ続けられるように整えています。', '你可以繼續讀相關城市、重新打開已存路線，或接著看示範路線，讓 Ryokoplan 的流動不中斷。'),
@@ -1978,7 +1978,7 @@ function getPriorityRefinePack(city=''){
       vaultStep: uiCopy('저장 루프','Saved loop','保存ループ','已存循環'),
       vaultTitle: uiCopy('My Trips에 남기기', 'Keep it in My Trips', 'My Trips に残す', '存進 My Trips'),
       vaultDesc: uiCopy('결과를 저장하고 나중에 다시 꺼내보면 같은 도시 결을 더 쉽게 이어갈 수 있습니다.', 'Save the result so the same city logic is easier to reopen later.', '結果を保存しておくと、同じ都市の流れをあとで開き直しやすくなります。', '先把結果存起來，之後會更容易接回同一座城市的脈絡。'),
-      readGuide: uiCopy('도시 가이드 읽기','도시 읽기','ガイドを読む','閱讀指南'),
+      readGuide: uiCopy('도시 가이드 읽기','Read guide','ガイドを読む','閱讀指南'),
       routeNote: uiCopy('비주얼 루트 노트', 'Visual route notes', 'ビジュアルルートノート', '視覺路線筆記'),
       routeNoteDesc: uiCopy('도시 커버, 이번 루트의 분위기, 그리고 다음으로 가지를 칠 수 있는 도시까지 한 번에 보여줍니다.', 'A city cover, one route mood frame, and one next branch keep the result from reading like a plain checklist.', '都市カバー、今回のルートの空気、次に枝分かれできる都市まで、一度に読めるように見せます。', '把城市封面、這次路線的氣氛，以及下一個可延伸的城市，一次整理給你看。'),
       sampleRead: uiCopy('샘플 보기', 'Read sample route', 'サンプルを見る', '查看範例'),
@@ -1987,7 +1987,7 @@ function getPriorityRefinePack(city=''){
       sharedKicker: uiCopy('공유받은 일정','Shared trip','共有ルート','分享行程'),
       sharedTitle: uiCopy('공유된 루트에서 바로 시작했어요', 'You started from a shared route', '共有ルートからこの旅を始めました', '你是從分享路線開始這段旅程的'),
       sharedDesc: uiCopy('공유 링크로 들어온 일정입니다. 그대로 저장하거나, 내 취향에 맞게 다시 다듬을 수 있어요.', 'This route came in through a shared link. Keep it, save it, or reshape it into your own version.', '共有リンクから開いたルートです。このまま保存しても、自分の旅に合わせて整え直しても大丈夫です。', '這條路線是從分享連結打開的。你可以直接保存，也可以依自己的節奏重新整理。'),
-      openGuide: uiCopy('도시 가이드 보기','도시 읽기','ガイドを見る','查看指南'),
+      openGuide: uiCopy('도시 가이드 보기','Read guide','ガイドを見る','查看指南'),
       saveTrip: uiCopy('여정 저장','Save Trip','旅程を保存','保存旅程'),
       useThisRoute: uiCopy('이 루트로 시작','Use this route','このルートを使う','使用這條路線'),
       routeLoopEyebrow: uiCopy('루트 루프','Route loop','ルートループ','路線循環'),
@@ -2315,7 +2315,7 @@ function getPriorityRefinePack(city=''){
           </div>
         </article>`;
     }).join('');
-    qs('resultDays').innerHTML = days || '<div class="summary-line">샘플 보기 trip ready</div>';
+    qs('resultDays').innerHTML = days || '<div class="summary-line">Sample trip ready</div>';
     bindDayInteractions();
     updateActiveDayRail();
   }
@@ -2516,7 +2516,7 @@ function getPriorityRefinePack(city=''){
         <div class="card-actions shared-loop-actions">
           <a class="primary-btn" href="${tripsHref}">${uiCopy('My Trips로 넘기기','Send to My Trips','My Trips へ渡す','送進 My Trips')}</a>
           <a class="secondary-btn" href="${plannerHref}">${uiCopy('이 루트 다듬기','Refine this route','このルートを整える','微調這條路線')}</a>
-          <a class="ghost-btn" href="${guideHref}">${uiCopy('도시 가이드 읽기','도시 읽기','ガイドを読む','閱讀指南')}</a>
+          <a class="ghost-btn" href="${guideHref}">${uiCopy('도시 가이드 읽기','Read guide','ガイドを読む','閱讀指南')}</a>
         </div>
       </div>`;
   }
@@ -2739,50 +2739,14 @@ function getPriorityRefinePack(city=''){
         ${entryPack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.visit}</span></div><div class="summary-line editorial-line"><strong>${entryPack.first[0]}</strong><span>${entryPack.first[1]} — ${entryPack.first[2]}</span></div><div class="summary-line editorial-line"><strong>${entryPack.second[0]}</strong><span>${entryPack.second[1]} — ${entryPack.second[2]}</span></div></article>` : ''}
         ${entryPack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.entry}</span></div>${entryPack.entries.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>` : ''}
       </div>
-      ${editorialPack ? (() => {
-        const insightLabels = {
-          why: uiCopy('왜 이 흐름이 좋아요', '왜 이 흐름이 좋아요', 'このルートが効く理由', '這條路線成立的理由'),
-          best: uiCopy('Best for', 'Best for', '向いている旅', '最適合'),
-          rain: uiCopy('비가 오면', '비가 오면', '雨の日なら', '如果下雨'),
-          slow: uiCopy('If you want a slower day', 'If you want a slower day', 'ゆっくり回るなら', '如果想慢一點'),
-          swap: uiCopy('One thing to swap', 'One thing to swap', 'ひとつ替えるなら', '可以替換的一件事'),
-          keep: uiCopy('Keep this note', 'Keep this note', 'このメモを残す', '保存這則筆記'),
-          adapt: uiCopy('Weather pivot', 'Weather pivot', '天気で切り替え', '天氣替代'),
-          edit: uiCopy('Route edit', 'Route edit', 'ルート編集', '路線編輯'),
-          continue: uiCopy('Continue with', 'Continue with', '続けて読む', '延伸閱讀')
-        };
-        const insightCards = [
-          { cls:'is-lead', step:'01', tag: insightLabels.why, micro: insightLabels.keep, title: editorialPack.title, text: editorialPack.why },
-          { cls:'', step:'02', tag: insightLabels.best, micro: insightLabels.keep, title: insightLabels.best, text: editorialPack.bestFor },
-          { cls:'', step:'03', tag: insightLabels.rain, micro: insightLabels.adapt, title: insightLabels.rain, text: editorialPack.rainy },
-          { cls:'', step:'04', tag: insightLabels.slow, micro: insightLabels.edit, title: insightLabels.slow, text: editorialPack.slower },
-          { cls:'is-wide', step:'05', tag: insightLabels.swap, micro: insightLabels.edit, title: insightLabels.swap, text: editorialPack.swap }
-        ];
-        const branchKey = String(textValue(data.destination, readForm().destination || '')).trim().toLowerCase();
-        const branchMap = priorityResultBranchMap[branchKey];
-        const branchLines = branchMap ? (branchMap[window.RyokoApp?.lang || 'ko'] || branchMap.en || []) : [];
-        const branchCard = branchLines.length ? `<article class="result-editorial-memo-card info-card result-editorial-memo-card-wide result-editorial-continue-card">
-          <div class="result-memo-top"><span class="result-memo-step">06</span><span class="result-memo-tag">${insightLabels.continue}</span></div>
-          <h4>${insightLabels.continue}</h4>
-          <div class="result-editorial-continue-list">${branchLines.map(line => `<p>${line}</p>`).join('')}</div>
-        </article>` : '';
-        return `<div class="result-insight-pack">
-          <div class="result-insight-pack-head">
-            <span class="eyebrow">${uiCopy('저장용 루트 메모', 'Route notes worth saving', '保存したいルートメモ', '值得保存的路線筆記')}</span>
-            <h3>${uiCopy('이 결과를 다시 볼 이유를 먼저 정리했습니다', 'The reasons to keep this route are now easier to scan', 'この結果を見返す理由を先に整理しました', '先整理好這份結果值得回看的理由')}</h3>
-            <p>${uiCopy('비 오는 날, 느린 하루, 교체할 한 지점까지 한 화면에서 읽히도록 정리했습니다.', 'Rain, slower pace, and the one smart swap are framed as a compact editorial card set.', '雨の日、ゆっくりした日、替えるべき一点まで一画面で読めるように整理しました。', '把雨天、慢節奏與一個替換點整理成一組 editorial card。')}</p>
-          </div>
-          <div class="result-editorial-memo-grid">
-            ${insightCards.map(card => `<article class="result-editorial-memo-card info-card ${card.cls}">
-              <div class="result-memo-top"><span class="result-memo-step">${card.step}</span><span class="result-memo-tag">${card.tag}</span></div>
-              <h4>${card.title}</h4>
-              <p>${card.text}</p>
-              <small>${card.micro}</small>
-            </article>`).join('')}
-            ${branchCard}
-          </div>
-        </div>`;
-      })() : ''}`;
+      ${editorialPack ? `<div class="result-editorial-memo-grid">
+        <article class="result-editorial-memo-card info-card"><span>${editorialPack.title}</span><p>${editorialPack.why}</p></article>
+        <article class="result-editorial-memo-card info-card"><span>${window.RyokoApp?.lang === 'ko' ? 'Best for' : window.RyokoApp?.lang === 'ja' ? 'Best for' : window.RyokoApp?.lang === 'zhHant' ? 'Best for' : 'Best for'}</span><p>${editorialPack.bestFor}</p></article>
+        <article class="result-editorial-memo-card info-card"><span>${window.RyokoApp?.lang === 'ko' ? 'If it rains' : window.RyokoApp?.lang === 'ja' ? 'If it rains' : window.RyokoApp?.lang === 'zhHant' ? 'If it rains' : 'If it rains'}</span><p>${editorialPack.rainy}</p></article>
+        <article class="result-editorial-memo-card info-card"><span>${window.RyokoApp?.lang === 'ko' ? 'If you want it slower' : window.RyokoApp?.lang === 'ja' ? 'If you want it slower' : window.RyokoApp?.lang === 'zhHant' ? 'If you want it slower' : 'If you want it slower'}</span><p>${editorialPack.slower}</p></article>
+        <article class="result-editorial-memo-card info-card result-editorial-memo-card-wide"><span>${window.RyokoApp?.lang === 'ko' ? 'One thing to swap' : window.RyokoApp?.lang === 'ja' ? 'One thing to swap' : window.RyokoApp?.lang === 'zhHant' ? 'One thing to swap' : 'One thing to swap'}</span><p>${editorialPack.swap}</p></article>
+        ${(() => { const branchKey = String(textValue(data.destination, readForm().destination || '')).trim().toLowerCase(); const branchMap = priorityResultBranchMap[branchKey]; const branchLines = branchMap ? (branchMap[window.RyokoApp?.lang || 'ko'] || branchMap.en || []) : []; return branchLines.length ? `<article class="result-editorial-memo-card info-card result-editorial-memo-card-wide result-editorial-continue-card"><span>${window.RyokoApp?.lang === 'ko' ? 'Continue with' : window.RyokoApp?.lang === 'ja' ? 'Continue with' : window.RyokoApp?.lang === 'zhHant' ? 'Continue with' : 'Continue with'}</span><div class="result-editorial-continue-list">${branchLines.map(line => `<p>${line}</p>`).join('')}</div></article>` : ''; })()}
+      </div>` : ''}`;
   }
 
   function renderLoopSection(data){
@@ -2841,70 +2805,7 @@ function getPriorityRefinePack(city=''){
     const checklist = (data.checklist || []).length ? data.checklist : samplePlans.tokyo.checklist;
     qs('checklistList').innerHTML = checklist.map(item => `<div class="check-item"><span class="check-icon">✓</span><div class="check-text">${item}</div></div>`).join('');
   }
-  function setText(id, value){
-    const node = qs(id);
-    if (node) node.textContent = value;
-  }
-  function resultActionCopy(data){
-    const destination = textValue(data?.destination, readForm().destination || 'this city');
-    return {
-      eyebrow: uiCopy('저장 / 공유 패키지','Save / Share package','保存 / 共有パッケージ','保存 / 分享套組'),
-      title: uiCopy('이 결과를 여행 카드처럼 남기세요','Turn this route into a trip card','この結果を旅カードとして残す','把這個結果留下成旅行卡片'),
-      desc: uiCopy(
-        `${destination} 루트를 저장하고, 링크로 보내고, PDF처럼 조용히 읽을 수 있게 묶었습니다.`,
-        `Save ${destination}, send a clean link, or open a calmer PDF-style copy for travel day.`,
-        `${destination} のルートを保存し、リンクで送り、PDF のように落ち着いて読める形にまとめます。`,
-        `把 ${destination} 路線保存、分享成乾淨連結，或打開成適合旅行當天閱讀的 PDF 版。`
-      ),
-      saveStep: uiCopy('01 · 저장','01 · Save','01 · 保存','01 · 保存'),
-      saveTitle: uiCopy('My Trips에 보관','Keep it in My Trips','My Trips に保存','存進 My Trips'),
-      saveDesc: uiCopy('같은 도시 결을 나중에 다시 열고, 다음 버전으로 이어가기 쉽게 남깁니다.','Reopen this same city rhythm later instead of starting again from a blank planner.','同じ都市の流れをあとで開き直し、空白のプランナーから始め直さずに済みます。','之後可重開同一座城市的節奏，不用再從空白規劃器開始。'),
-      saveBtn: uiCopy('이 루트 저장','Save this route','このルートを保存','保存這條路線'),
-      savedBtn: uiCopy('저장됨','Saved','保存済み','已保存'),
-      shareStep: uiCopy('02 · 공유','02 · Share','02 · 共有','02 · 分享'),
-      shareTitle: uiCopy('읽기 좋은 링크로 보내기','Send it as a readable link','読みやすいリンクで送る','以易讀連結分享'),
-      shareDesc: uiCopy('커버, 루트 리듬, 하루별 흐름이 같이 남는 공유 링크로 전달합니다.','The shared link keeps the cover, route rhythm, and day-by-day logic together.','共有リンクにはカバー、ルートの流れ、日ごとの構成が一緒に残ります。','分享連結會保留封面、路線節奏與每日邏輯。'),
-      shareBtn: uiCopy('링크 공유','Copy / share link','リンクを共有','複製 / 分享連結'),
-      pdfStep: uiCopy('03 · PDF','03 · Export','03 · PDF','03 · 匯出'),
-      pdfTitle: uiCopy('여행 당일용으로 열기','Make it print-ready','印刷用に開く','打開列印版'),
-      pdfDesc: uiCopy('이동 중 보기 편한 에디토리얼 PDF 화면으로 다시 엽니다.','Open a PDF-style page when you want a calmer itinerary view for travel day.','旅行当日に見やすい PDF 風の画面で開きます。','旅行當天需要更安靜的行程視圖時，可打開 PDF 版。'),
-      pdfBtn: uiCopy('PDF 보기','Open PDF view','PDF を開く','打開 PDF'),
-      stickyMeta: uiCopy('저장 · 공유 · PDF로 남기기','Save · share · PDF-ready','保存 · 共有 · PDF','保存 · 分享 · PDF')
-    };
-  }
-  function renderResultActionPack(data){
-    const copy = resultActionCopy(data);
-    setText('resultActionEyebrow', copy.eyebrow);
-    setText('resultActionTitle', copy.title);
-    setText('resultActionDesc', copy.desc);
-    setText('resultSaveStep', copy.saveStep);
-    setText('resultSaveTitle', copy.saveTitle);
-    setText('resultSaveDesc', copy.saveDesc);
-    setText('resultPackSaveBtn', copy.saveBtn);
-    setText('resultShareStep', copy.shareStep);
-    setText('resultShareTitle', copy.shareTitle);
-    setText('resultShareDesc', copy.shareDesc);
-    setText('resultPackShareBtn', copy.shareBtn);
-    setText('resultPdfStep', copy.pdfStep);
-    setText('resultPdfTitle', copy.pdfTitle);
-    setText('resultPdfDesc', copy.pdfDesc);
-    setText('resultPackPdfBtn', copy.pdfBtn);
-    const pack = qs('resultActionPack');
-    if (pack) pack.dataset.destination = textValue(data?.destination, '');
-  }
-  function markResultSaved(saved){
-    const data = window.currentTripPayload?.planData || window.__RYOKO_LAST_RESULT__ || {};
-    const copy = resultActionCopy(data);
-    ['resultTopSaveBtn','stickySaveBtn','resultPackSaveBtn'].forEach(id => {
-      const btn = qs(id);
-      if (!btn) return;
-      btn.classList.toggle('is-saved', !!saved);
-      btn.setAttribute('aria-pressed', String(!!saved));
-      if (saved) btn.textContent = copy.savedBtn;
-    });
-  }
   function renderPlan(data){
-
     data = applyPriorityResultDayPolish(data);
     window.__RYOKO_LAST_RESULT__ = data;
     qs('resultTitle').textContent = data.title || `${data.destination} editorial route`;
@@ -2918,7 +2819,6 @@ function getPriorityRefinePack(city=''){
     renderTips(data);
     renderBudget(data);
     renderChecklist(data);
-    renderResultActionPack(data);
     renderSharedTripBanner(window.sharedTripSource || null);
     renderJourneyLoop(data);
     renderSignalShelf(data);
@@ -2989,7 +2889,7 @@ function useExample(key='tokyo'){
     renderPlan(plan);
     saveLatestRouteSession('sample_button');
     revealResult();
-    showToast(uiCopy('샘플 루트를 불러왔어요.','샘플 보기 route loaded.'), 'info');
+    showToast(uiCopy('샘플 루트를 불러왔어요.','Sample route loaded.'), 'info');
   }
   function startFromCurrentResult(){
     const current = window.currentTripPayload?.planData || window.__RYOKO_LAST_RESULT__;
@@ -3022,7 +2922,6 @@ function useExample(key='tokyo'){
     if (!window.currentTripPayload) return showToast(uiCopy('먼저 여정을 만들어 주세요.','Generate a trip first.'), 'warn');
     const saved = window.RyokoStorage.saveTrip(window.currentTripPayload);
     window.RyokoApp?.trackEvent?.('ryoko_trip_saved', { destination: saved.destination || '', title: saved.title || '' });
-    markResultSaved(true);
     showToast(uiCopy(`${saved.title || saved.destination} 저장 완료`,`Saved ${saved.title || saved.destination}`), 'success');
   }
   async function shareCurrentTrip(){
@@ -3407,9 +3306,6 @@ function useExample(key='tokyo'){
     qs('pdfTripBtn').addEventListener('click', savePdf);
     qs('resultTopSaveBtn')?.addEventListener('click', saveCurrentTrip);
     qs('resultTopShareBtn')?.addEventListener('click', shareCurrentTrip);
-    qs('resultPackSaveBtn')?.addEventListener('click', saveCurrentTrip);
-    qs('resultPackShareBtn')?.addEventListener('click', shareCurrentTrip);
-    qs('resultPackPdfBtn')?.addEventListener('click', savePdf);
     qs('stickySaveBtn')?.addEventListener('click', saveCurrentTrip);
     qs('stickyShareBtn')?.addEventListener('click', shareCurrentTrip);
     qs('stickyPdfBtn')?.addEventListener('click', savePdf);
@@ -3419,363 +3315,3 @@ function useExample(key='tokyo'){
   return { init, renderPlan, plannerResumeState };
 })();
 window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
-
-
-/* v202 planner generation hotfix: make visible CTA buttons submit the planner reliably */
-(function(){
-  if (window.__ryokoPlannerSubmitHotfixV202) return;
-  window.__ryokoPlannerSubmitHotfixV202 = true;
-  function looksLikePlannerSubmit(el){
-    if (!el) return false;
-    var text = (el.textContent || '').trim().toLowerCase();
-    var aria = (el.getAttribute('aria-label') || '').toLowerCase();
-    var data = ((el.getAttribute('data-action') || '') + ' ' + (el.getAttribute('data-planner-action') || '')).toLowerCase();
-    var joined = text + ' ' + aria + ' ' + data;
-    return joined.indexOf('이 리듬으로 시작') !== -1 || joined.indexOf('일정 생성') !== -1 || joined.indexOf('route start') !== -1 || joined.indexOf('start this') !== -1 || joined.indexOf('build route') !== -1 || joined.indexOf('generate') !== -1 || joined.indexOf('루트 시작') !== -1;
-  }
-  function findPlannerForm(){
-    return document.querySelector('form[data-planner-form], form#plannerForm, form.planner-form, form[action*="planner"]') || document.querySelector('main form') || document.querySelector('form');
-  }
-  function requestSubmitSafely(form){
-    if (!form) return false;
-    try { if (typeof form.requestSubmit === 'function') { form.requestSubmit(); return true; } } catch(e) {}
-    try { var event = new Event('submit', {bubbles:true, cancelable:true}); form.dispatchEvent(event); return true; } catch(e) {}
-    return false;
-  }
-  document.addEventListener('click', function(event){
-    var target = event.target && event.target.closest ? event.target.closest('button, a, [role="button"]') : null;
-    if (!target || !looksLikePlannerSubmit(target)) return;
-    var form = target.closest('form') || findPlannerForm();
-    if (!form) return;
-    var href = target.getAttribute('href') || '';
-    if (target.tagName === 'A' && href && href !== '#' && href.indexOf('javascript:') !== 0) return;
-    event.preventDefault();
-    requestSubmitSafely(form);
-  }, true);
-})();
-
-
-/* v204 planner generation fail-safe: stronger mobile route creation recovery */
-(function(){
-  if (window.__ryokoPlannerGenerationFailsafeV204) return;
-  window.__ryokoPlannerGenerationFailsafeV204 = true;
-
-  function textOf(el){
-    return ((el && (el.textContent || el.getAttribute('aria-label') || el.value)) || '').trim().toLowerCase();
-  }
-
-  function isPlannerCTA(el){
-    if (!el) return false;
-    var txt = textOf(el);
-    var data = ((el.getAttribute('data-action') || '') + ' ' + (el.getAttribute('data-planner-action') || '') + ' ' + (el.id || '') + ' ' + (el.className || '')).toLowerCase();
-    var joined = txt + ' ' + data;
-    return (
-      joined.indexOf('이 리듬으로 시작') !== -1 ||
-      joined.indexOf('이 도시부터 시작') !== -1 ||
-      joined.indexOf('루트 시작') !== -1 ||
-      joined.indexOf('일정 생성') !== -1 ||
-      joined.indexOf('여행 만들') !== -1 ||
-      (joined.indexOf('route') !== -1 && (joined.indexOf('start') !== -1 || joined.indexOf('build') !== -1 || joined.indexOf('generate') !== -1))
-    );
-  }
-
-  function findPlannerForm(){
-    return document.querySelector('form[data-planner-form], form#plannerForm, form.planner-form, form[action*="planner"]') ||
-           document.querySelector('[data-planner-root] form') ||
-           document.querySelector('.planner form') ||
-           document.querySelector('main form') ||
-           document.querySelector('form');
-  }
-
-  function findNativeGeneratorButton(clicked){
-    var selectors = [
-      '[data-action="generate"]',
-      '[data-planner-action="generate"]',
-      '[data-action="build-route"]',
-      '[data-planner-action="build-route"]',
-      '#generateRoute',
-      '#generateItinerary',
-      '.generate-route',
-      '.planner-submit'
-    ];
-    for (var i = 0; i < selectors.length; i++){
-      var found = document.querySelector(selectors[i]);
-      if (found && found !== clicked) return found;
-    }
-    return null;
-  }
-
-  function emitSubmit(form){
-    if (!form) return false;
-    try {
-      if (typeof form.requestSubmit === 'function') {
-        form.requestSubmit();
-        return true;
-      }
-    } catch(e){}
-    try {
-      var event = new Event('submit', { bubbles:true, cancelable:true });
-      form.dispatchEvent(event);
-      return true;
-    } catch(e){}
-    return false;
-  }
-
-  function callKnownGenerators(){
-    var names = ['generateItinerary','generateRoute','buildRoute','createRoute','renderResult','renderPlannerResult'];
-    for (var i = 0; i < names.length; i++){
-      try {
-        if (typeof window[names[i]] === 'function') {
-          window[names[i]]();
-          return true;
-        }
-      } catch(e){}
-    }
-    return false;
-  }
-
-  function nudgeResultArea(){
-    var result = document.querySelector('#result, #results, [data-result], [data-planner-result], .planner-result, .result-card, .route-result');
-    if (result) {
-      try { result.scrollIntoView({ behavior:'smooth', block:'start' }); } catch(e) { result.scrollIntoView(); }
-      return true;
-    }
-    return false;
-  }
-
-  function showSoftStatus(){
-    var host = document.querySelector('[data-planner-root], .planner, main') || document.body;
-    if (!host || document.querySelector('[data-v204-planner-status]')) return;
-    var note = document.createElement('div');
-    note.setAttribute('data-v204-planner-status', 'true');
-    note.style.cssText = 'margin:12px auto;padding:12px 14px;border:1px solid rgba(210,111,69,.25);border-radius:18px;background:rgba(255,248,241,.92);color:#18314a;font-weight:700;font-size:14px;line-height:1.45;max-width:720px;';
-    note.textContent = '루트를 준비하고 있어요. 결과가 바로 보이지 않으면 입력값을 확인한 뒤 한 번 더 눌러주세요.';
-    try { host.appendChild(note); } catch(e){}
-    setTimeout(function(){ try { note.remove(); } catch(e){} }, 4200);
-  }
-
-  document.addEventListener('click', function(event){
-    var clicked = event.target && event.target.closest ? event.target.closest('button, a, [role="button"], input[type="button"], input[type="submit"]') : null;
-    if (!clicked || !isPlannerCTA(clicked)) return;
-
-    var beforeResult = document.querySelector('#result, #results, [data-result], [data-planner-result], .planner-result, .result-card, .route-result');
-
-    var nativeBtn = findNativeGeneratorButton(clicked);
-    if (nativeBtn) {
-      try { nativeBtn.click(); setTimeout(nudgeResultArea, 250); return; } catch(e){}
-    }
-
-    var called = callKnownGenerators();
-    if (called) {
-      setTimeout(nudgeResultArea, 250);
-      return;
-    }
-
-    var form = clicked.closest('form') || findPlannerForm();
-    if (form) {
-      event.preventDefault();
-      emitSubmit(form);
-      setTimeout(function(){
-        if (!nudgeResultArea() && !beforeResult) showSoftStatus();
-      }, 350);
-    }
-  }, true);
-})();
-
-
-/* v206 real planner response: loading overlay + fallback result generation */
-(function(){
-  if (window.__ryokoV206PlannerRealResponse) return;
-  window.__ryokoV206PlannerRealResponse = true;
-
-  var loadingLines = [
-    '당신을 위해 골목골목 뒤져보는 중이에요.',
-    '도시의 온도와 동선을 맞춰보고 있어요.',
-    '너무 빡빡하지 않게 하루 흐름을 고르는 중이에요.',
-    '비 오는 날에도 이어질 수 있는 선택지를 확인하고 있어요.'
-  ];
-
-  function qs(sel, root){ return (root || document).querySelector(sel); }
-
-  function readValue(selectors, fallback){
-    for (var i=0;i<selectors.length;i++){
-      var el = qs(selectors[i]);
-      if (!el) continue;
-      var value = '';
-      if ('value' in el) value = el.value;
-      else value = el.textContent || '';
-      value = (value || '').trim();
-      if (value) return value;
-    }
-    return fallback || '';
-  }
-
-  function getSelectedText(groupHints, fallback){
-    var activeSelectors = ['.is-active','.active','[aria-pressed="true"]','[data-selected="true"]','input:checked + label','input:checked'];
-    for (var h=0; h<groupHints.length; h++){
-      var root = qs(groupHints[h]);
-      if (!root) continue;
-      for (var i=0; i<activeSelectors.length; i++){
-        var el = qs(activeSelectors[i], root);
-        if (el) {
-          var text = (el.textContent || el.value || '').trim();
-          if (text) return text;
-        }
-      }
-    }
-    return fallback || '';
-  }
-
-  function collectPlannerInput(){
-    var city = readValue(['[name="city"]','#city','#planner-city','[data-planner-city]','[data-city-input]'], '');
-    if (!city) {
-      var activeCity = qs('[data-city].is-active, [data-city][aria-pressed="true"], .city-chip.is-active, .city-card.is-active');
-      if (activeCity) city = (activeCity.getAttribute('data-city') || activeCity.textContent || '').trim();
-    }
-    var mood = getSelectedText(['[data-mood-group]', '.mood-options', '.planner-mood', '.route-desk'], '균형형');
-    var density = getSelectedText(['[data-density-group]', '.density-options', '.planner-density'], '균형형');
-    var budget = getSelectedText(['[data-budget-group]', '.budget-options', '.planner-budget'], '밸런스');
-    if (!city || city.length > 40) city = 'Tokyo';
-    return { city: city, mood: mood, density: density, budget: budget };
-  }
-
-  function ensureOverlay(){
-    var overlay = qs('[data-v206-loading-overlay]');
-    if (overlay) return overlay;
-    overlay = document.createElement('div');
-    overlay.setAttribute('data-v206-loading-overlay', 'true');
-    overlay.innerHTML =
-      '<div class="v206-loading-card" role="status" aria-live="polite">' +
-      '<div class="v206-loading-dot"></div>' +
-      '<strong>루트를 만들고 있어요</strong>' +
-      '<p data-v206-loading-line>당신을 위해 골목골목 뒤져보는 중이에요.</p>' +
-      '</div>';
-    document.body.appendChild(overlay);
-    return overlay;
-  }
-
-  function showLoading(){
-    var overlay = ensureOverlay();
-    overlay.classList.add('is-visible');
-    var line = qs('[data-v206-loading-line]', overlay);
-    var idx = 0;
-    if (line) line.textContent = loadingLines[0];
-    clearInterval(window.__ryokoV206LoadingTimer);
-    window.__ryokoV206LoadingTimer = setInterval(function(){
-      idx = (idx + 1) % loadingLines.length;
-      if (line) line.textContent = loadingLines[idx];
-    }, 900);
-  }
-
-  function hideLoading(){
-    clearInterval(window.__ryokoV206LoadingTimer);
-    var overlay = qs('[data-v206-loading-overlay]');
-    if (overlay) overlay.classList.remove('is-visible');
-  }
-
-  function cityKoreanName(city){
-    var map = {tokyo:'도쿄',seoul:'서울',kyoto:'교토',taipei:'타이베이',hongkong:'홍콩','hong kong':'홍콩',busan:'부산',fukuoka:'후쿠오카',osaka:'오사카',sapporo:'삿포로',sendai:'센다이',okinawa:'오키나와',jeju:'제주',gyeongju:'경주',macau:'마카오'};
-    var key = String(city || '').trim().toLowerCase();
-    return map[key] || city || 'Tokyo';
-  }
-
-  function makeFallbackResult(data){
-    var cityKo = cityKoreanName(data.city);
-    var mood = data.mood || '균형형';
-    var density = data.density || '균형형';
-    var budget = data.budget || '밸런스';
-
-    return '<section class="v207-result-card" data-v206-generated-result data-v207-generated-result>' +
-      '<div class="v207-result-cover">' +
-      '  <span>Ryokoplan route</span>' +
-      '  <strong>' + cityKo + '의 하루 흐름</strong>' +
-      '  <p>도시를 먼저 읽고, 이동이 자연스럽게 이어지는 순서로 정리했어요.</p>' +
-      '</div>' +
-      '<div class="v207-result-meta">' +
-      '  <span>' + mood + '</span>' +
-      '  <span>' + density + '</span>' +
-      '  <span>' + budget + '</span>' +
-      '</div>' +
-      '<div class="v207-day-list">' +
-      '  <article><span>Morning</span><strong>첫 인상을 잡는 시작</strong><p>역이나 중심 거리에서 너무 멀리 가지 않고, 도시의 분위기가 바로 느껴지는 구간으로 시작합니다.</p></article>' +
-      '  <article><span>Midday</span><strong>가장 걷기 좋은 축</strong><p>대표 명소만 찍는 대신, 식사와 산책이 자연스럽게 이어지는 동선을 중심에 둡니다.</p></article>' +
-      '  <article><span>Afternoon</span><strong>조금 더 깊은 동네</strong><p>오후에는 사람이 몰리는 곳에서 살짝 벗어나, 생활감이 보이는 골목이나 조용한 장소를 넣습니다.</p></article>' +
-      '  <article><span>Evening</span><strong>무리하지 않는 마무리</strong><p>저녁은 숙소 복귀와 식사 동선이 끊기지 않도록 가까운 축에서 닫습니다.</p></article>' +
-      '</div>' +
-      '<div class="v207-insight-grid">' +
-      '  <section><b>왜 이 흐름이 좋아요</b><p>첫날부터 많이 넣기보다, 도시의 온도와 방향을 먼저 읽을 수 있습니다.</p></section>' +
-      '  <section><b>비가 오면</b><p>야외 이동을 줄이고 카페, 시장, 실내 전망 포인트 중심으로 바꿔도 흐름이 유지됩니다.</p></section>' +
-      '  <section><b>더 천천히 가려면</b><p>오후 구간 하나를 빼고 한 동네에 오래 머무르면 더 편안합니다.</p></section>' +
-      '</div>' +
-      '<div class="v207-result-actions">' +
-      '  <button type="button" class="primary-btn" data-v207-save-result>이 루트 보관하기</button>' +
-      '  <button type="button" class="secondary-btn" onclick="window.scrollTo({top:0,behavior:\'smooth\'})">다시 조정하기</button>' +
-      '</div>' +
-      '</section>';
-  }
-  function findResultHost(){
-    return qs('#result') || qs('#results') || qs('[data-planner-result]') || qs('[data-result]') || qs('.planner-result') || qs('main');
-  }
-
-  function renderFallbackResult(){
-    var data = collectPlannerInput();
-    var host = findResultHost() || document.body;
-    var existing = qs('[data-v206-generated-result]');
-    if (existing) existing.remove();
-    var wrap = document.createElement('div');
-    wrap.innerHTML = makeFallbackResult(data);
-    var node = wrap.firstElementChild;
-    host.appendChild(node);
-    try { node.scrollIntoView({behavior:'smooth', block:'start'}); } catch(e){ node.scrollIntoView(); }
-  }
-
-  function hasResultAppeared(){
-    return !!qs('[data-v206-generated-result], .result-card, .route-result, [data-generated-result], [data-planner-result] .day-card, .itinerary-card');
-  }
-
-  function isCTA(el){
-    if (!el) return false;
-    var text = ((el.textContent || el.value || el.getAttribute('aria-label') || '') + ' ' + (el.id || '') + ' ' + (el.className || '') + ' ' + (el.getAttribute('data-action') || '') + ' ' + (el.getAttribute('data-planner-action') || '')).toLowerCase();
-    return text.indexOf('이 리듬으로 시작') !== -1 ||
-           text.indexOf('이 도시부터 시작') !== -1 ||
-           text.indexOf('루트 시작') !== -1 ||
-           text.indexOf('일정 생성') !== -1 ||
-           text.indexOf('start with') !== -1 ||
-           text.indexOf('generate') !== -1 ||
-           text.indexOf('build route') !== -1;
-  }
-
-  document.addEventListener('click', function(e){
-    var target = e.target && e.target.closest ? e.target.closest('button, a, input[type="button"], input[type="submit"], [role="button"]') : null;
-    if (!target || !isCTA(target)) return;
-    showLoading();
-    setTimeout(function(){
-      if (!hasResultAppeared()) {
-        try {
-          var form = target.closest('form') || qs('form[data-planner-form], form#plannerForm, form.planner-form, main form, form');
-          if (form && typeof form.requestSubmit === 'function') form.requestSubmit();
-        } catch(err){}
-      }
-    }, 80);
-    setTimeout(function(){
-      if (!hasResultAppeared()) renderFallbackResult();
-      hideLoading();
-    }, 1650);
-  }, true);
-})();
-
-
-/* v207 generated result save feedback */
-(function(){
-  if (window.__ryokoV207GeneratedSaveFeedback) return;
-  window.__ryokoV207GeneratedSaveFeedback = true;
-  document.addEventListener('click', function(e){
-    var btn = e.target && e.target.closest ? e.target.closest('[data-v207-save-result]') : null;
-    if (!btn) return;
-    e.preventDefault();
-    var original = btn.textContent;
-    btn.textContent = '보관함에 담아둘게요';
-    btn.setAttribute('aria-live', 'polite');
-    setTimeout(function(){ btn.textContent = original; }, 2200);
-  });
-})();
