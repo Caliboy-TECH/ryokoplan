@@ -84,7 +84,7 @@
           </article>
           <article class="info-card">
             <strong>What to confirm</strong>
-            <span>Home → Magazine → City → Sample → 플래너 → Result → Share → 보관함, plus KR / EN / JP / 繁體 language switching, mobile dock spacing, saved/recent data, installability, trust pages, and build notes.</span>
+            <span>Home → Magazine → City → 샘플 보기 → 플래너 → Result → Share → 보관함, plus KR / EN / JP / 繁體 language switching, mobile dock spacing, saved/recent data, installability, trust pages, and build notes.</span>
           </article>
           <article class="info-card">
             <strong>PWA basics</strong>
@@ -117,7 +117,7 @@
           <div class="launch-acceptance-grid">
             <article class="launch-acceptance-card"><span class="mini-step">01</span><strong>Confirm build</strong><p><code>/version.json</code> should show v199 before judging any screen.</p></article>
             <article class="launch-acceptance-card"><span class="mini-step">02</span><strong>Read a city</strong><p>Home → Magazine → Kyoto or Tokyo should feel like editorial travel reading, not a dashboard.</p></article>
-            <article class="launch-acceptance-card"><span class="mini-step">03</span><strong>Build a route</strong><p>Sample → 플래너 → Result should create a route card that feels worth saving.</p></article>
+            <article class="launch-acceptance-card"><span class="mini-step">03</span><strong>Build a route</strong><p>샘플 보기 → 플래너 → Result should create a route card that feels worth saving.</p></article>
             <article class="launch-acceptance-card"><span class="mini-step">04</span><strong>Save and return</strong><p>Save → 보관함 should reopen as a stored 저장하기 좋은 여행 흐름, not a plain list.</p></article>
           </div>
           <div class="release-actions">
@@ -163,7 +163,7 @@
               <a class="soft-btn" href="../city/tokyo.html" target="_blank" rel="noopener">Open</a>
             </div>
             <div class="release-route-item">
-              <div class="release-route-copy"><strong>Sample route</strong><p>Open one canonical sample and confirm the opener band plus route-start CTA.</p></div>
+              <div class="release-route-copy"><strong>샘플 보기 route</strong><p>Open one canonical sample and confirm the opener band plus route-start CTA.</p></div>
               <a class="soft-btn" href="../example/tokyo-3n4d-first-trip.html" target="_blank" rel="noopener">Open</a>
             </div>
             <div class="release-route-item">
@@ -712,11 +712,11 @@
           }
         },
         {
-          name: 'Sample shell',
+          name: '샘플 보기 shell',
           run: async () => {
             const text = await fetchText('../example/tokyo-3n4d-first-trip.html');
             const ok = /data-example-slug="tokyo-3n4d-first-trip"/i.test(text) && /id="examplePageRoot"/i.test(text);
-            return ok ? { status:'pass', detail:'Canonical sample shell and example root are present through the explicit .html route.' } : { status:'fail', detail:'Sample shell loaded, but expected example markers were not found.' };
+            return ok ? { status:'pass', detail:'Canonical sample shell and example root are present through the explicit .html route.' } : { status:'fail', detail:'샘플 보기 shell loaded, but expected example markers were not found.' };
           }
         },
         {

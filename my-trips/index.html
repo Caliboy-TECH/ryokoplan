@@ -408,7 +408,7 @@
           collectionPlaces: 'saved places',
           collectionOpen: 'Open latest',
           collectionGuide: 'City guide',
-          collectionExample: 'Sample route',
+          collectionExample: '샘플 보기 route',
           collectionMixed: 'A mixed archive of saved, recent, and shared routes',
           collectionSavedOnly: 'Mostly built from your saved routes',
           collectionSharedHeavy: 'A city with a stronger shared-trip mix',
@@ -418,9 +418,9 @@
           publicDeskLabel: 'Public route desk',
           publicDeskPick: 'Editor pick',
           publicDeskSave: 'Save to 보관함',
-          publicDeskOpen: 'Sample',
+          publicDeskOpen: '샘플 보기',
           publicDeskPlan: 'Continue this route',
-          publicDeskSaved: 'Sample route saved to 보관함.',
+          publicDeskSaved: '샘플 보기 route saved to 보관함.',
           publicDeskIntro: 'A curated hub where public samples can become your next trip base.',
           publicDeskWeekend: 'Weekend base',
           publicDeskSlow: 'Slow mood',
@@ -428,7 +428,7 @@
           publicDeskFood: 'Food-led',
           editSave: 'Save base',
           editOpen: 'Open route',
-          editGuide: 'Read guide',
+          editGuide: '도시 읽기',
           editSaved: 'Editorial base saved to 보관함.',
           routeClubTitle: 'Trending route club',
           routeClubLabel: 'A shape people keep saving now',
@@ -444,8 +444,8 @@
           loopGoodStart: 'Good starting points',
           loopTokyoGuide: 'Tokyo guide',
           loopTokyoGuideDesc: 'Fast city, strong first route, and lots of branching options.',
-          loopBusanSample: 'Busan sample',
-          loopBusanSampleDesc: 'Good for scenic pacing and mixed-age travel.',
+          loopBusan샘플 보기: 'Busan sample',
+          loopBusan샘플 보기Desc: 'Good for scenic pacing and mixed-age travel.',
           loopVaultEyebrow: 'From your vault',
           loopVaultTitle: 'can lead the next step too'
         },
@@ -521,8 +521,8 @@
           loopGoodStart: '最初の入り口に向くもの',
           loopTokyoGuide: 'Tokyo ガイド',
           loopTokyoGuideDesc: '速い都市で、最初のルートが作りやすく、次の分岐も多いです。',
-          loopBusanSample: 'Busan サンプル',
-          loopBusanSampleDesc: '景色のペースと幅広い年齢の旅に向いています。',
+          loopBusan샘플 보기: 'Busan サンプル',
+          loopBusan샘플 보기Desc: '景色のペースと幅広い年齢の旅に向いています。',
           loopVaultEyebrow: 'あなたの保管庫から',
           loopVaultTitle: 'から次の一歩へつなげられます'
         },
@@ -898,7 +898,7 @@
             <div class="hero-actions">
               <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
               <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'City guide layer'}</a>
-              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).example || (window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionExample || 'Sample route'}</a>
+              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).example || (window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionExample || '샘플 보기 route'}</a>
               <a class="ghost-btn" href="${articleHrefForCity(latest.destination)}">${articleLabel()}</a>
               <button class="secondary-btn" data-copy="${latest.id}">${window.RyokoApp.t('trips.tripShare')}</button>
             </div>
@@ -1080,7 +1080,7 @@
           saved:['Saved trips','Your routes worth reopening','Open saved route','Build new route','No saved trip yet','Save a Result and it will appear here first.'],
           recent:['Recent flow','Return quickly to the plan you just shaped','Open recent route','Back to 플래너','No recent flow yet','Choose a city and create your first route to build a resume card here.'],
           shared:['Shared trips','Keep received links as your own travel bases','Open shared route','Import link','No shared trip yet','Paste a shared link and you can reopen it here later.'],
-          updated:'Last updated', emptyCity:'Ryokoplan', viewGuide:'Read city', sample:'Sample route'
+          updated:'Last updated', emptyCity:'Ryokoplan', viewGuide:'Read city', sample:'샘플 보기 route'
         };
       }
       function renderLibraryShelf(saved, recent, shared){
@@ -1163,7 +1163,7 @@
               </div>
               <p class="trip-archive-copy">${getMetaSummary(latest) || 'A reusable route base for this city.'}</p>
               <div class="trip-chip-row">${items.slice(0,4).map(item => `<span class="trip-mini-chip">${item.title || label}</span>`).join('')}</div>
-              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">Open latest</a><a class="ghost-btn" href="../${loop.guide || `city/${city.toLowerCase()}.html`}">City guide</a><a class="ghost-btn" href="../${loop.example || loop.guide || `city/${city.toLowerCase()}.html`}">Sample</a></div>
+              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">Open latest</a><a class="ghost-btn" href="../${loop.guide || `city/${city.toLowerCase()}.html`}">City guide</a><a class="ghost-btn" href="../${loop.example || loop.guide || `city/${city.toLowerCase()}.html`}">샘플 보기</a></div>
             </article>`;
         }).join('');
       }
@@ -1473,26 +1473,26 @@
         const lang = window.RyokoApp.lang;
         if (lang === 'ko') return {
           open:'저장한 여행 카드 열기', save:'내 여행으로 저장', duplicate:'내 버전 만들기', read:'도시 읽기', snapshot:'보관 카드 요약', days:'일수', tips:'팁', checklist:'체크', updated:'업데이트',
-          insight:'저장할 이유', why:'Why this route works', rain:'If it rains', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'다음 읽기 가지',
-          emptyDay:'아직 day preview가 없습니다.', emptyTip:'아직 저장된 local tip이 없습니다.', sample:'Sample route', compare:'샘플과 밀도 차이를 비교해 보세요.', imported:'공유받은 여행이 이제 내 보관함 안에서 다시 열립니다.', vaulted:'이 여행은 보관함 안에 저장되어 다시 열고, 다듬고, 공유할 수 있습니다.',
+          insight:'저장할 이유', why:'왜 이 흐름이 좋아요', rain:'비가 오면', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'다음 읽기 가지',
+          emptyDay:'아직 day preview가 없습니다.', emptyTip:'아직 저장된 local tip이 없습니다.', sample:'샘플 보기 route', compare:'샘플과 밀도 차이를 비교해 보세요.', imported:'공유받은 여행이 이제 내 보관함 안에서 다시 열립니다.', vaulted:'이 여행은 보관함 안에 저장되어 다시 열고, 다듬고, 공유할 수 있습니다.',
           package:'Saved 저장하기 좋은 여행 흐름', packageDesc:'이 카드는 단순 일정표가 아니라 다시 읽고 수정하고 공유할 수 있는 도시별 여행 베이스입니다.', next:'Next action'
         };
         if (lang === 'ja') return {
           open:'保存した旅カードを開く', save:'自分の旅に保存', duplicate:'自分版を作る', read:'都市を読む', snapshot:'保存カードの要約', days:'日数', tips:'ヒント', checklist:'チェック', updated:'更新',
-          insight:'保存する理由', why:'Why this route works', rain:'If it rains', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'次に読む枝',
-          emptyDay:'まだ day preview はありません。', emptyTip:'まだ local tip は保存されていません。', sample:'Sample route', compare:'サンプルと密度の差を比べてください。', imported:'共有された旅程を自分の保存棚で開き直せます。', vaulted:'この旅は 보관함 に保存され、開き直し・調整・共有ができます。',
+          insight:'保存する理由', why:'왜 이 흐름이 좋아요', rain:'비가 오면', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'次に読む枝',
+          emptyDay:'まだ day preview はありません。', emptyTip:'まだ local tip は保存されていません。', sample:'샘플 보기 route', compare:'サンプルと密度の差を比べてください。', imported:'共有された旅程を自分の保存棚で開き直せます。', vaulted:'この旅は 보관함 に保存され、開き直し・調整・共有ができます。',
           package:'Saved 저장하기 좋은 여행 흐름', packageDesc:'このカードは単なる旅程表ではなく、読み直し、調整し、共有できる都市別の旅ベースです。', next:'Next action'
         };
         if (lang === 'zhHant') return {
           open:'打開已存旅行卡', save:'存成我的旅程', duplicate:'建立我的版本', read:'讀城市', snapshot:'保存卡摘要', days:'天數', tips:'提示', checklist:'清單', updated:'更新',
-          insight:'值得保存的理由', why:'Why this route works', rain:'If it rains', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'下一個閱讀分支',
-          emptyDay:'目前還沒有 day preview。', emptyTip:'目前還沒有保存 local tip。', sample:'Sample route', compare:'把它和 sample 的節奏密度比較看看。', imported:'收到的分享旅程現在可以在你的保存庫重新打開。', vaulted:'這趟旅程已在 보관함 裡，可重新打開、微調與分享。',
+          insight:'值得保存的理由', why:'왜 이 흐름이 좋아요', rain:'비가 오면', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'下一個閱讀分支',
+          emptyDay:'目前還沒有 day preview。', emptyTip:'目前還沒有保存 local tip。', sample:'샘플 보기 route', compare:'把它和 sample 的節奏密度比較看看。', imported:'收到的分享旅程現在可以在你的保存庫重新打開。', vaulted:'這趟旅程已在 보관함 裡，可重新打開、微調與分享。',
           package:'Saved 저장하기 좋은 여행 흐름', packageDesc:'這張卡不是單純行程表，而是可以重讀、修改、分享的城市旅行底稿。', next:'Next action'
         };
         return {
           open:'Open saved trip card', save:'Save to 보관함', duplicate:'Make my version', read:'Read the city', snapshot:'Saved card snapshot', days:'Days', tips:'Tips', checklist:'Checklist', updated:'Updated',
-          insight:'Why it is worth saving', why:'Why this route works', rain:'If it rains', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'Next reading branches',
-          emptyDay:'No day preview available yet.', emptyTip:'No extra local tips stored on this trip yet.', sample:'Sample route', compare:'Use the sample to compare pace against this saved trip.', imported:'This shared itinerary can now reopen inside your own trip vault.', vaulted:'This trip already lives inside 보관함, so it is easy to reopen, tune, or share.',
+          insight:'Why it is worth saving', why:'왜 이 흐름이 좋아요', rain:'비가 오면', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'Next reading branches',
+          emptyDay:'No day preview available yet.', emptyTip:'No extra local tips stored on this trip yet.', sample:'샘플 보기 route', compare:'Use the sample to compare pace against this saved trip.', imported:'This shared itinerary can now reopen inside your own trip vault.', vaulted:'This trip already lives inside 보관함, so it is easy to reopen, tune, or share.',
           package:'Saved 저장하기 좋은 여행 흐름', packageDesc:'This card is not just an itinerary. It is a reusable city base you can reread, tune, and share.', next:'Next action'
         };
       }
@@ -1674,7 +1674,7 @@
             <h3>${langCopy().loopGoodStart || "Good starting points"}</h3>
             <div class="trip-loop-list">
               <article><h4>${langCopy().loopTokyoGuide || "Tokyo guide"}</h4><p>${langCopy().loopTokyoGuideDesc || "Fast city, strong first route, and lots of branching options."}</p></article>
-              <article><h4>${langCopy().loopBusanSample || "Busan sample"}</h4><p>${langCopy().loopBusanSampleDesc || "Good for scenic pacing and mixed-age travel."}</p></article>
+              <article><h4>${langCopy().loopBusan샘플 보기 || "Busan sample"}</h4><p>${langCopy().loopBusan샘플 보기Desc || "Good for scenic pacing and mixed-age travel."}</p></article>
             </div>`;
           return;
         }

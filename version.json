@@ -1,17 +1,17 @@
 {
-  "version": "v206",
-  "codename": "real-generation-loading-copy-hotfix",
-  "headline": "Fix clipped mobile hero, soften awkward launch copy, and show a real route-generation loading state.",
-  "focus": "Resolve the visible mobile issues: clipped hero area, unnatural translated copy, and dead-feeling itinerary generation.",
-  "source": "ryokoplan_v204_REUPLOAD_planner_generation_failsafe.zip",
+  "version": "v207",
+  "codename": "generated-result-editorial-polish",
+  "headline": "Generated result polish: fallback routes now feel like Ryokoplan editorial cards, not temporary output.",
+  "focus": "Make the generated fallback result visually credible and reduce mixed-language labels.",
+  "source": "ryokoplan_v206_real_generation_loading_copy_hotfix.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Reduced mobile hero/title pressure and prevented the top of cards from being clipped under the language row.",
-    "Rewrote awkward product/translation-style phrases into softer travel-service copy.",
-    "Added a visible route-generation loading overlay with friendly Korean messages.",
-    "Added a fallback generated route card so the CTA gives visible feedback even if the original generator does not respond."
+    "Reworked the generated fallback result into a more editorial route card.",
+    "Replaced mixed English labels with softer Korean labels where visible.",
+    "Added result-card bottom spacing so the mobile dock does not cover the generated route.",
+    "Kept the v206 loading overlay and fallback generation behavior."
   ],
-  "release": "v206",
-  "status": "mobile-generation-hotfix"
+  "release": "v207",
+  "status": "generated-result-polish"
 }
