@@ -1,16 +1,16 @@
 {
-  "version": "v204",
-  "codename": "planner-generation-failsafe",
-  "headline": "Planner generation fail-safe: stronger mobile route creation recovery and final public copy refinement.",
-  "focus": "Make route generation more reliable on mobile while preserving the search/copy lock.",
-  "source": "ryokoplan_v203_search_copy_lock_github_web_under100.zip",
+  "version": "v205",
+  "codename": "mobile-hero-compact-no-ad-feel",
+  "headline": "Mobile hero compact pass: reduce oversized first-screen card, remove build/update bar, and keep planner failsafe.",
+  "focus": "Make the first mobile screen feel like a travel editorial app, not a popup advertisement.",
+  "source": "ryokoplan_v204_REUPLOAD_planner_generation_failsafe.zip",
   "uploadProfile": "github-web-under-100-files",
-  "updatedAt": "2026-05-02",
+  "updatedAt": "2026-05-05",
   "notes": [
-    "Added a stronger planner generation fail-safe.",
-    "Tightened the public promise around understanding the city and building a route.",
-    "Slightly refined mobile dock balance."
+    "Reduced the mobile hero title/card density so it no longer dominates the screen like an ad popup.",
+    "Hid the Build notes/beta launch bar from public entry surfaces.",
+    "Preserved v204 planner generation fail-safe and mobile dock fixes."
   ],
-  "release": "v204",
-  "status": "planner-hotfix"
+  "release": "v205",
+  "status": "mobile-ux-hotfix"
 }

@@ -1049,12 +1049,7 @@ function betaLaunchCopy(){
         : { eyebrow:'Read the city', title:'Start with the city, then carry that rhythm into the route.', desc:'Guides, sample routes, and My Trips stay connected. Build context and support only open when you need them.', primary:'Build notes', secondary:'Send note', dismiss:'Hide' };
 }
 function shouldShowBetaLaunchBar(){
-  const page = document.body?.dataset?.page || '';
-  if (!document.body) return false;
-  if (page === 'legal' || page === 'release-check') return false;
-  if (location.pathname.includes('/release-check/') || location.pathname.endsWith('/offline.html')) return false;
-  try { if (localStorage.getItem(betaLaunchDismissKey) === '1') return false; } catch {}
-  return true;
+  return false;
 }
 function syncBetaLaunchBar(){
   const bar = document.getElementById('betaLaunchBar');
@@ -1849,7 +1844,7 @@ function buildWhatsNewHref(){
   return `${pathRoot}whats-new/index.html`;
 }
 function buildNotesLabel(){
-  return lang === 'ko' ? 'Build notes' : lang === 'ja' ? 'Build notes' : lang === 'zhHant' ? 'Build notes' : 'Build notes';
+  return lang === 'ko' ? '업데이트' : lang === 'ja' ? '更新' : lang === 'zhHant' ? '更新' : 'Updates';
 }
 function footerBuildStatusLabel(release=''){
   const clean = String(release || '').trim();
@@ -2732,9 +2727,9 @@ function ensureLaunchFeedbackCta(){
       ko: {
         title: 'Ryokoplan — Magazine',
         heroEyebrow: 'Ryokoplan Magazine',
-        heroTitle: '도시를 먼저 읽고, 그다음 여행을 만드세요',
+        heroTitle: '도시를 이해하고 여행을 시작하세요',
         heroDesc: '지금 필요한 건 정보 더미보다 도시의 결, 이동 리듬, 그리고 바로 여행 흐름으로 이어지는 입구입니다. 매거진을 플래너 앞의 에디토리얼 첫 장처럼 다시 정리했습니다.',
-        heroChips: ['East Asia city edit', 'Japan · Korea · Greater China', 'planner-ready routes'],
+        heroChips: ['City rhythm', 'Japan · Korea · Greater China', 'planner-ready routes'],
         startPlanner: '이 도시부터 시작',
         browseCities: '도시 둘러보기',
         featureKicker: 'Editor\'s note',
@@ -2793,7 +2788,7 @@ function ensureLaunchFeedbackCta(){
         heroEyebrow: 'Ryokoplan Magazine',
         heroTitle: 'Read the city first. Then build the trip.',
         heroDesc: 'What matters here is not more information, but a clearer read on city mood, movement, and where the trip should begin. Magazine now works as the editorial front door to your next route.',
-        heroChips: ['East Asia city edit', 'Japan · Korea · Greater China', 'planner-ready routes'],
+        heroChips: ['City rhythm', 'Japan · Korea · Greater China', 'planner-ready routes'],
         startPlanner: 'Start with this city',
         browseCities: 'Browse cities',
         featureKicker: 'Editor\'s note',
@@ -3112,7 +3107,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
 
   function uiText(key){
     const labels = {
-      coverNote: { ko:'커버 노트', en:'Cover note', ja:'カバーノート', zhHant:'封面筆記' },
+      coverNote: { ko:'도시 노트', en:'Cover note', ja:'カバーノート', zhHant:'封面筆記' },
       frontPageEdit: { ko:'프론트 페이지 에디트', en:'Front page edit', ja:'フロントページ編集', zhHant:'首頁編輯' },
       cityGuide: { ko:'도시 가이드', en:'City guide', ja:'都市ガイド', zhHant:'城市指南' },
       readFirst: { ko:'먼저 읽기', en:'Read first', ja:'先に読む', zhHant:'先讀這裡' },
@@ -3237,7 +3232,7 @@ editorialData.example['macau-2n3d-night-lanes'] = { titleKo:'Macau 2박 3일 nig
     root.innerHTML = `
       <section class="magazine-hero-v2 hero-card magazine-led-hero cover-system-shell cover-system-shell-magazine">
         <div class="magazine-hero-copy cover-copy-column">
-          <div class="cover-meta-row"><span class="cover-meta-pill">Magazine</span><span class="cover-meta-pill">East Asia city edit</span></div>
+          <div class="cover-meta-row"><span class="cover-meta-pill">Magazine</span><span class="cover-meta-pill">City rhythm</span></div>
           <span class="eyebrow">${data.heroEyebrow}</span>
           <h1>${data.heroTitle}</h1>
           <p>${heroDescT}</p>
@@ -6244,12 +6239,12 @@ function renderTripsSeasonalDesk(){
     const page = document.body.dataset.page || 'planner';
     const labels = {
       ko: {
-        planner: { kicker: 'City note', title: '도시 무드를 먼저 읽고, 그 결이 살아 있는 여정으로 잇습니다.', chips: ['East Asia city edit', 'Magazine-led routes', 'Save / Share / PDF'] },
+        planner: { kicker: 'City note', title: '도시 무드를 먼저 읽고, 그 결이 살아 있는 여정으로 잇습니다.', chips: ['City rhythm', 'Magazine-led routes', 'Save / Share / PDF'] },
         magazine: { kicker: 'Magazine note', title: '도시를 읽는 흐름이 좋아야 플랜도 더 자연스럽게 짜입니다.', chips: ['City guides', 'Samples', 'Local rhythm'] },
         trips: { kicker: 'My Trips note', title: '저장한 일정과 공유받은 일정을 한 흐름 안에서 다시 꺼내봅니다.', chips: ['Saved trips', 'Recent plans', 'Shared links'] }
       },
       en: {
-        planner: { kicker: 'City note', title: 'Read the city mood first, then shape a route worth keeping.', chips: ['East Asia city edit', 'Magazine-led routes', 'Save / Share / PDF'] },
+        planner: { kicker: 'City note', title: 'Read the city mood first, then shape a route worth keeping.', chips: ['City rhythm', 'Magazine-led routes', 'Save / Share / PDF'] },
         magazine: { kicker: 'Magazine note', title: 'The better the city reads, the more natural the plan feels.', chips: ['City guides', 'Samples', 'Local rhythm'] },
         trips: { kicker: 'My Trips note', title: 'Reopen saved and shared itineraries without losing the story around them.', chips: ['Saved trips', 'Recent plans', 'Shared links'] }
       },
