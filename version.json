@@ -1,17 +1,16 @@
 {
-  "version": "v209",
-  "codename": "soft-hero-copy",
-  "headline": "Softened the main hero from rigid reading copy to a warmer travel-entry line.",
-  "focus": "Change the oversized four-line hero into a softer, shorter mobile-first travel phrase.",
-  "source": "ryokoplan_v208_home_public_simplification.zip",
+  "version": "v210",
+  "codename": "section-overlap-cleanup",
+  "headline": "Fixed mobile section overlap so image grids and following guide cards stack cleanly.",
+  "focus": "Stop guide/explainer sections from overlapping photo grids on mobile.",
+  "source": "ryokoplan_v209_soft_hero_copy.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Changed the main Korean hero direction toward '도시를 느끼고, 여행을 시작하세요.'",
-    "Reduced mobile hero headline size and vertical pressure.",
-    "Limited forced line breaks so the title no longer feels like a large popup ad.",
-    "Preserved generated route and loading behavior."
+    "Cleaned up photo-grid and following-section stacking on mobile.",
+    "Removed overlap pressure from headings and guide cards appearing after image grids.",
+    "Kept previous hero, loading, and generated-route behavior intact."
   ],
-  "release": "v209",
-  "status": "hero-copy-hotfix"
+  "release": "v210",
+  "status": "mobile-overlap-hotfix"
 }

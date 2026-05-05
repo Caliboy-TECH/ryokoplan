@@ -8278,3 +8278,128 @@ body[data-page="whats-new"] .mobile-dock{
     border-radius:20px!important;
   }
 }
+
+/* v210: section overlap cleanup under photo grids and guide blocks */
+@media (max-width: 767px){
+  /* Grid/photo blocks should sit in normal flow and not overlap later sections */
+  .city-cover-grid,
+  .magazine-photo-grid,
+  .cover-grid,
+  .photo-grid,
+  .city-grid,
+  .home-photo-grid,
+  .sample-photo-grid,
+  .editorial-photo-grid{
+    position:relative!important;
+    z-index:0!important;
+    margin-top:0!important;
+    margin-bottom:28px!important;
+    transform:none!important;
+    clear:both!important;
+  }
+
+  .city-cover-grid *,
+  .magazine-photo-grid *,
+  .cover-grid *,
+  .photo-grid *{
+    position:relative!important;
+  }
+
+  /* Any section right after image grids must restart cleanly below */
+  .city-cover-grid + *,
+  .magazine-photo-grid + *,
+  .cover-grid + *,
+  .photo-grid + *,
+  .city-grid + *{
+    position:relative!important;
+    z-index:1!important;
+    margin-top:0!important;
+    clear:both!important;
+  }
+
+  /* Core explainer / guide cards should never ride upward onto previous blocks */
+  .home-explainer,
+  .planner-explainer,
+  .sample-explainer,
+  .how-it-works,
+  [data-how-it-works],
+  .guide-card,
+  .entry-card,
+  .rhythm-card,
+  .editorial-card,
+  .city-guide-card,
+  .route-guide-card,
+  .section-card{
+    position:relative!important;
+    z-index:1!important;
+    margin-top:24px!important;
+    top:auto!important;
+    transform:none!important;
+    clear:both!important;
+    overflow:hidden!important;
+  }
+
+  /* Big section headings after images: remove pull-up / overlap pressure */
+  .home-explainer h2,
+  .planner-explainer h2,
+  .sample-explainer h2,
+  .how-it-works h2,
+  [data-how-it-works] h2,
+  .guide-card h2,
+  .entry-card h2,
+  .rhythm-card h2,
+  .editorial-card h2,
+  .section-title{
+    position:relative!important;
+    z-index:1!important;
+    margin-top:0!important;
+    margin-bottom:12px!important;
+    top:auto!important;
+    transform:none!important;
+    word-break:keep-all!important;
+  }
+
+  /* Sub copy should also stay inside the section, not float over prior grid */
+  .home-explainer p,
+  .planner-explainer p,
+  .sample-explainer p,
+  .how-it-works p,
+  [data-how-it-works] p,
+  .guide-card p,
+  .entry-card p,
+  .rhythm-card p,
+  .editorial-card p{
+    position:relative!important;
+    z-index:1!important;
+    margin-top:0!important;
+  }
+
+  /* If wrappers use negative margins from earlier layout experiments, neutralize them */
+  .home-explainer,
+  .planner-explainer,
+  .sample-explainer,
+  .how-it-works,
+  [data-how-it-works],
+  .guide-card,
+  .entry-card,
+  .rhythm-card,
+  .editorial-card,
+  .city-guide-card,
+  .route-guide-card,
+  .section-card,
+  .city-cover-grid,
+  .magazine-photo-grid,
+  .cover-grid,
+  .photo-grid{
+    margin-left:0!important;
+    margin-right:0!important;
+  }
+
+  /* Add a stable content rhythm for stacked sections */
+  main > section,
+  main > article,
+  .page-section,
+  .content-section{
+    scroll-margin-top:88px;
+  }
+}
