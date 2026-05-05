@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ryokoplan Release Sign-off Check</title>
-  <meta name="description" content="Internal release check page for Ryokoplan deploy verification and smoke tests.">
+  <title>Ryokoplan — Feel the city. Then start the trip.</title>
+  <meta name="description" content="Ryokoplan은 도시의 분위기와 동선을 먼저 이해하고, 나에게 맞는 여행 루트로 이어주는 서비스입니다.">
   <meta name="robots" content="noindex,nofollow">
   <meta name="theme-color" content="#15273a">
   <link rel="canonical" href="https://ryokoplan.com/release-check/">
@@ -51,7 +51,13 @@
     .smoke-summary{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .report-box{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.5;background:#f8f3eb;color:#5f4a30;border-radius:18px;padding:14px;overflow:auto;margin-top:14px;border:1px solid #ede6db}
     .diagnostic-pill{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:#f8f3eb;color:#7a5d3f;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
-    @media (max-width: 860px){.release-check-grid,.release-kv{grid-template-columns:1fr}}
+
+    .launch-acceptance-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+    .launch-acceptance-card{padding:16px;border-radius:20px;background:linear-gradient(180deg,#fffdf9 0%,#fff7ef 100%);border:1px solid #e8dfd2}
+    .launch-acceptance-card strong{display:block;color:#15273a;margin-bottom:6px;font-size:14px}
+    .launch-acceptance-card p{margin:0;color:#667085;font-size:13px;line-height:1.55}
+    .launch-acceptance-card .mini-step{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:999px;background:#fff4ea;color:#b96732;font-weight:800;font-size:12px;margin-bottom:10px}
+    @media (max-width: 860px){.release-check-grid,.release-kv,.launch-acceptance-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -67,7 +73,7 @@
               <span class="release-pill">Noindex</span>
             </div>
             <h1 class="release-check-title">Ryokoplan release sign-off</h1>
-            <p class="release-check-copy">Use this page right after deploy to confirm the active build, open the main product routes, inspect telemetry, and run the final sign-off smoke pass on the live site. This pass now also reflects the thumb-friendly floating jump utility, its compact-on-scroll mobile state, the dual-state back-to-top behavior on key pages, the keyboard/overlap safety rules on small screens, the smart visibility logic that hides the button when a content jump would not meaningfully help, and the new reduced-motion plus anchor-offset comfort pass for cleaner main-content jumps.</p>
+            <p class="release-check-copy">Use this page after deploy to confirm the active build and quickly open the main product routes. This pass now reflects the v199 public surface cleanup: one focused mobile click-through, version confirmation, language comfort, share/save loop verification, and a clear decision on whether the build is ready to share.</p>
           </div>
           <div id="onlineStatus" class="release-status"><span class="release-status-dot"></span><span>Checking connection…</span></div>
         </div>
@@ -78,7 +84,7 @@
           </article>
           <article class="info-card">
             <strong>What to confirm</strong>
-            <span>Home, Magazine, city, sample, route result, share loop, My Trips, PDF, saved/recent data, installability, trust pages, and build notes.</span>
+            <span>Home → Magazine → City → 샘플 보기 → 플래너 → Result → Share → 보관함, plus KR / EN / JP / 繁體 language switching, mobile dock spacing, saved/recent data, installability, trust pages, and build notes.</span>
           </article>
           <article class="info-card">
             <strong>PWA basics</strong>
@@ -97,13 +103,30 @@
           <button class="ghost-btn" id="resetFirstRunGuideTopBtn" type="button">Reset first-run guide</button>
           <button class="ghost-btn" id="resetStartPathTopBtn" type="button">Reset start-path memory</button>
           <button class="ghost-btn" id="resetReadingHistoryTopBtn" type="button">Reset reading history</button>
-          <button class="ghost-btn" id="resetPlannerDraftTopBtn" type="button">Reset planner draft</button>
+          <button class="ghost-btn" id="reset플래너DraftTopBtn" type="button">Reset planner draft</button>
           <button class="ghost-btn" id="resetLatestRouteTopBtn" type="button">Reset latest route</button>
-          <button class="ghost-btn" id="resetPlannerResumeTopBtn" type="button">Reset planner resume state</button>
+          <button class="ghost-btn" id="reset플래너ResumeTopBtn" type="button">Reset planner resume state</button>
           <button class="ghost-btn" id="resetQuickResumeTopBtn" type="button">Reset quick resume</button>
           <button class="ghost-btn" id="resetEntryAssistTopBtn" type="button">Reset entry assist state</button>
         </div>
         <p class="release-inline-note">Tip: open this page after each upload and make sure the release value matches the zip you just deployed before sharing the build.</p>
+        <section class="release-check-card" style="margin-top:18px">
+          <span class="release-pill">v199 surface QA</span>
+          <h2 class="section-title" style="margin-top:10px">Run this once on the live phone build</h2>
+          <p class="release-check-copy">This pass checks that the public pages read like a travel editorial product, not a build log. Confirm the version, then scan the homepage and magazine opening copy before running one save loop.</p>
+          <div class="launch-acceptance-grid">
+            <article class="launch-acceptance-card"><span class="mini-step">01</span><strong>Confirm build</strong><p><code>/version.json</code> should show v199 before judging any screen.</p></article>
+            <article class="launch-acceptance-card"><span class="mini-step">02</span><strong>Read a city</strong><p>Home → Magazine → Kyoto or Tokyo should feel like editorial travel reading, not a dashboard.</p></article>
+            <article class="launch-acceptance-card"><span class="mini-step">03</span><strong>Build a route</strong><p>샘플 보기 → 플래너 → Result should create a route card that feels worth saving.</p></article>
+            <article class="launch-acceptance-card"><span class="mini-step">04</span><strong>Save and return</strong><p>Save → 보관함 should reopen as a stored 저장하기 좋은 여행 흐름, not a plain list.</p></article>
+          </div>
+          <div class="release-actions">
+            <a class="primary-btn" href="../magazine/index.html" target="_blank" rel="noopener">Start live QA at Magazine</a>
+            <a class="secondary-btn" href="../example/kyoto-2n3d-slow-trip.html" target="_blank" rel="noopener">Open Kyoto sample</a>
+            <a class="ghost-btn" href="../my-trips/index.html" target="_blank" rel="noopener">Open 보관함</a>
+          </div>
+        </section>
+
         <div class="release-verdict-band">
           <div class="release-verdict-grid">
             <div>
@@ -137,18 +160,18 @@
             </div>
             <div class="release-route-item">
               <div class="release-route-copy"><strong>City guide</strong><p>Use Tokyo as the baseline guide and verify the tone band, quicknav, and route handoff.</p></div>
-              <a class="soft-btn" href="../city/tokyo" target="_blank" rel="noopener">Open</a>
+              <a class="soft-btn" href="../city/tokyo.html" target="_blank" rel="noopener">Open</a>
             </div>
             <div class="release-route-item">
-              <div class="release-route-copy"><strong>Sample route</strong><p>Open one canonical sample and confirm the opener band plus route-start CTA.</p></div>
-              <a class="soft-btn" href="../example/tokyo-3n4d-first-trip" target="_blank" rel="noopener">Open</a>
+              <div class="release-route-copy"><strong>샘플 보기 route</strong><p>Open one canonical sample and confirm the opener band plus route-start CTA.</p></div>
+              <a class="soft-btn" href="../example/tokyo-3n4d-first-trip.html" target="_blank" rel="noopener">Open</a>
             </div>
             <div class="release-route-item">
               <div class="release-route-copy"><strong>Route start</strong><p>Jump directly into the route builder and confirm the core form loads with no missing helper errors.</p></div>
               <a class="soft-btn" href="../#planner-start" target="_blank" rel="noopener">Open</a>
             </div>
             <div class="release-route-item">
-              <div class="release-route-copy"><strong>My Trips</strong><p>Verify saved/recent/shared shelves, expansion desk, route reopen actions, and that the floating utility stays out of the way until scrolling warrants it.</p></div>
+              <div class="release-route-copy"><strong>보관함</strong><p>Verify saved/recent/shared shelves, expansion desk, route reopen actions, and that the floating utility stays out of the way until scrolling warrants it.</p></div>
               <a class="soft-btn" href="../my-trips/" target="_blank" rel="noopener">Open</a>
             </div>
             <div class="release-route-item">
@@ -180,8 +203,8 @@
               <label class="release-check-item"><input type="checkbox" data-check="magazine"> <div><strong>Magazine reads correctly</strong><p>Taxonomy, article cards, and atlas filters feel intact on desktop and mobile.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="city-sample"> <div><strong>City → sample flow works</strong><p>Open a city, then a sample, then continue toward a route without broken links.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="generate"> <div><strong>Route generate/fallback feedback works</strong><p>Button busy state, feedback panel, fallback explanation, and retry all look like product UI.</p></div></label>
-              <label class="release-check-item"><input type="checkbox" data-check="share-save"> <div><strong>Share / save / My Trips loop works</strong><p>Saved and recent trips reopen, and share links look reasonable.</p></div></label>
-              <label class="release-check-item"><input type="checkbox" data-check="pdf-mobile"> <div><strong>PDF / multilingual / small-screen comfort pass</strong><p>Open PDF once, switch all 4 languages once, do one quick small-screen comfort pass on Magazine, result, and My Trips, and confirm the floating jump utility swaps cleanly between content and top states, collapses while reading, and stays easy to tap above the dock. Confirm hero/card images recover cleanly if the network is slow, confirm the utility stays out of the way while typing or when the result sticky bar is visible, and confirm main-content jumps still land cleanly under the header in reduced-motion or hash-link cases.</p></div></label>
+              <label class="release-check-item"><input type="checkbox" data-check="share-save"> <div><strong>Share / save / 보관함 loop works</strong><p>Saved and recent trips reopen, and share links look reasonable.</p></div></label>
+              <label class="release-check-item"><input type="checkbox" data-check="pdf-mobile"> <div><strong>PDF / multilingual / small-screen comfort pass</strong><p>Open PDF once, switch KR / EN / JP / 繁體 once, then do one small-screen pass on Magazine, City, Result, Share, and 보관함. Confirm CTA buttons remain tappable, long labels wrap cleanly, and bottom dock spacing does not cover content.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="pwa"> <div><strong>PWA install / offline basics pass</strong><p>Check service worker registration, make sure install is available on a supported browser, and open the offline fallback once if needed.</p></div></label>
             </div>
             <div class="release-actions">
@@ -213,9 +236,9 @@
               <button class="secondary-btn" id="runSmokeBtn" type="button">Run smoke runner</button>
               <button class="ghost-btn" id="copySmokeBtn" type="button">Copy smoke results</button>
               <button class="ghost-btn" id="copyReleaseReportBtn" type="button">Copy release report</button>
-              <button class="ghost-btn" id="resetPlannerDraftBtn" type="button">Reset planner draft</button>
+              <button class="ghost-btn" id="reset플래너DraftBtn" type="button">Reset planner draft</button>
               <button class="ghost-btn" id="resetLatestRouteBtn" type="button">Reset latest route</button>
-              <button class="ghost-btn" id="resetPlannerResumeBtn" type="button">Reset planner resume state</button>
+              <button class="ghost-btn" id="reset플래너ResumeBtn" type="button">Reset planner resume state</button>
               <button class="ghost-btn" id="openFeedbackDeskBtn" type="button">Send note</button>
             </div>
           </section>
@@ -319,12 +342,12 @@
       updateReleaseReportPreview();
     }
 
-    function resetPlannerDraft(){
+    function reset플래너Draft(){
       try {
         localStorage.removeItem(plannerDraftKey);
         localStorage.removeItem(plannerDraftDismissKey);
       } catch {}
-      alert('Planner draft reset for this browser.');
+      alert('플래너 draft reset for this browser.');
       updateReleaseReportPreview();
     }
 
@@ -337,14 +360,14 @@
       updateReleaseReportPreview();
     }
 
-    function resetPlannerResume(){
+    function reset플래너Resume(){
       try {
         localStorage.removeItem(plannerDraftKey);
         localStorage.removeItem(plannerDraftDismissKey);
         localStorage.removeItem(latestRouteSessionKey);
         localStorage.removeItem(latestRouteDismissKey);
       } catch {}
-      alert('Planner resume state reset for this browser.');
+      alert('플래너 resume state reset for this browser.');
       updateReleaseReportPreview();
     }
 
@@ -569,6 +592,27 @@
               : { status:'warn', detail:'Home loaded, but canonical or PNG social preview marker looked incomplete.' };
           }
         },
+
+        {
+          name: 'language switch markers',
+          run: async () => {
+            const text = await fetchText('../index.html');
+            const ok = /data-lang-ko/i.test(text) && /data-lang-en/i.test(text) && /data-lang-ja/i.test(text) && /data-lang-zhhant/i.test(text);
+            return ok
+              ? { status:'pass', detail:'Home shell exposes all four language marker families.' }
+              : { status:'warn', detail:'One or more KR / EN / JP / 繁體 language markers looked incomplete on home.' };
+          }
+        },
+        {
+          name: 'core loop extension-safe links',
+          run: async () => {
+            const city = await fetch('../city/tokyo.html', { cache:'no-store' });
+            const sample = await fetch('../example/tokyo-3n4d-first-trip.html', { cache:'no-store' });
+            return city.ok && sample.ok
+              ? { status:'pass', detail:'Canonical city and sample HTML routes resolve with explicit .html paths.' }
+              : { status:'fail', detail:'Canonical city or sample explicit HTML path did not resolve cleanly.' };
+          }
+        },
         {
           name: 'trust pages',
           run: async () => {
@@ -662,25 +706,25 @@
         {
           name: 'City guide shell',
           run: async () => {
-            const text = await fetchText('../city/tokyo');
+            const text = await fetchText('../city/tokyo.html');
             const ok = /data-city-slug="tokyo"/i.test(text) && /id="cityPageRoot"/i.test(text);
-            return ok ? { status:'pass', detail:'Tokyo city guide shell and cityPageRoot are present.' } : { status:'fail', detail:'Tokyo city guide did not expose the expected city root markers.' };
+            return ok ? { status:'pass', detail:'Tokyo city guide shell and cityPageRoot are present through the explicit .html route.' } : { status:'fail', detail:'Tokyo city guide did not expose the expected city root markers.' };
           }
         },
         {
-          name: 'Sample shell',
+          name: '샘플 보기 shell',
           run: async () => {
-            const text = await fetchText('../example/tokyo-3n4d-first-trip');
+            const text = await fetchText('../example/tokyo-3n4d-first-trip.html');
             const ok = /data-example-slug="tokyo-3n4d-first-trip"/i.test(text) && /id="examplePageRoot"/i.test(text);
-            return ok ? { status:'pass', detail:'Canonical sample shell and example root are present.' } : { status:'fail', detail:'Sample shell loaded, but expected example markers were not found.' };
+            return ok ? { status:'pass', detail:'Canonical sample shell and example root are present through the explicit .html route.' } : { status:'fail', detail:'샘플 보기 shell loaded, but expected example markers were not found.' };
           }
         },
         {
-          name: 'My Trips shell',
+          name: '보관함 shell',
           run: async () => {
             const text = await fetchText('../my-trips/');
             const ok = /id="savedGrid"/i.test(text) && /id="recentGrid"/i.test(text) && /id="sharedGrid"/i.test(text);
-            return ok ? { status:'pass', detail:'My Trips loaded with saved/recent/shared roots.' } : { status:'fail', detail:'My Trips shell loaded, but one or more archive roots were missing.' };
+            return ok ? { status:'pass', detail:'보관함 loaded with saved/recent/shared roots.' } : { status:'fail', detail:'보관함 shell loaded, but one or more archive roots were missing.' };
           }
         },
         {
@@ -916,12 +960,12 @@
     document.getElementById('openFeedbackDeskBtn').addEventListener('click', openFeedbackDesk);
     document.getElementById('openFeedbackDeskTopBtn').addEventListener('click', openFeedbackDesk);
     document.getElementById('resetBetaNoticeTopBtn').addEventListener('click', resetBetaNotice);
-    document.getElementById('resetPlannerDraftTopBtn').addEventListener('click', resetPlannerDraft);
-    document.getElementById('resetPlannerDraftBtn').addEventListener('click', resetPlannerDraft);
+    document.getElementById('reset플래너DraftTopBtn').addEventListener('click', reset플래너Draft);
+    document.getElementById('reset플래너DraftBtn').addEventListener('click', reset플래너Draft);
     document.getElementById('resetLatestRouteTopBtn').addEventListener('click', resetLatestRoute);
     document.getElementById('resetLatestRouteBtn').addEventListener('click', resetLatestRoute);
-    document.getElementById('resetPlannerResumeTopBtn').addEventListener('click', resetPlannerResume);
-    document.getElementById('resetPlannerResumeBtn').addEventListener('click', resetPlannerResume);
+    document.getElementById('reset플래너ResumeTopBtn').addEventListener('click', reset플래너Resume);
+    document.getElementById('reset플래너ResumeBtn').addEventListener('click', reset플래너Resume);
     document.getElementById('resetFirstRunGuideTopBtn').addEventListener('click', resetFirstRunGuide);
     document.getElementById('resetStartPathTopBtn').addEventListener('click', resetStartPathMemory);
     document.getElementById('resetReadingHistoryTopBtn').addEventListener('click', resetReadingHistory);
