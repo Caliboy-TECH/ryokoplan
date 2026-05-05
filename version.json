@@ -1,17 +1,16 @@
 {
-  "version": "v203",
-  "codename": "search-copy-lock",
-  "headline": "Search and public-copy lock: simpler promise, crawl files, and stable mobile polish.",
-  "focus": "Make Ryokoplan’s public promise clearer in search snippets and keep the v202 hotfix stable.",
-  "source": "ryokoplan_v202_FINAL_ACTUAL.zip",
+  "version": "v204",
+  "codename": "planner-generation-failsafe",
+  "headline": "Planner generation fail-safe: stronger mobile route creation recovery and final public copy refinement.",
+  "focus": "Make route generation more reliable on mobile while preserving the search/copy lock.",
+  "source": "ryokoplan_v203_search_copy_lock_github_web_under100.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Locked the public promise around understanding the city first, then building the trip.",
-    "Cleaned remaining confusing search/meta phrases such as city-first map and release/expansion language.",
-    "Added robots.txt and sitemap.xml for cleaner launch crawl readiness.",
-    "Preserved the v202 itinerary CTA and mobile alignment hotfix."
+    "Added a stronger planner generation fail-safe.",
+    "Tightened the public promise around understanding the city and building a route.",
+    "Slightly refined mobile dock balance."
   ],
-  "release": "v203",
-  "status": "search-copy-lock"
+  "release": "v204",
+  "status": "planner-hotfix"
 }

@@ -3453,3 +3453,131 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
     requestSubmitSafely(form);
   }, true);
 })();
+
+
+/* v204 planner generation fail-safe: stronger mobile route creation recovery */
+(function(){
+  if (window.__ryokoPlannerGenerationFailsafeV204) return;
+  window.__ryokoPlannerGenerationFailsafeV204 = true;
+
+  function textOf(el){
+    return ((el && (el.textContent || el.getAttribute('aria-label') || el.value)) || '').trim().toLowerCase();
+  }
+
+  function isPlannerCTA(el){
+    if (!el) return false;
+    var txt = textOf(el);
+    var data = ((el.getAttribute('data-action') || '') + ' ' + (el.getAttribute('data-planner-action') || '') + ' ' + (el.id || '') + ' ' + (el.className || '')).toLowerCase();
+    var joined = txt + ' ' + data;
+    return (
+      joined.indexOf('이 리듬으로 시작') !== -1 ||
+      joined.indexOf('이 도시부터 시작') !== -1 ||
+      joined.indexOf('루트 시작') !== -1 ||
+      joined.indexOf('일정 생성') !== -1 ||
+      joined.indexOf('여행 만들') !== -1 ||
+      (joined.indexOf('route') !== -1 && (joined.indexOf('start') !== -1 || joined.indexOf('build') !== -1 || joined.indexOf('generate') !== -1))
+    );
+  }
+
+  function findPlannerForm(){
+    return document.querySelector('form[data-planner-form], form#plannerForm, form.planner-form, form[action*="planner"]') ||
+           document.querySelector('[data-planner-root] form') ||
+           document.querySelector('.planner form') ||
+           document.querySelector('main form') ||
+           document.querySelector('form');
+  }
+
+  function findNativeGeneratorButton(clicked){
+    var selectors = [
+      '[data-action="generate"]',
+      '[data-planner-action="generate"]',
+      '[data-action="build-route"]',
+      '[data-planner-action="build-route"]',
+      '#generateRoute',
+      '#generateItinerary',
+      '.generate-route',
+      '.planner-submit'
+    ];
+    for (var i = 0; i < selectors.length; i++){
+      var found = document.querySelector(selectors[i]);
+      if (found && found !== clicked) return found;
+    }
+    return null;
+  }
+
+  function emitSubmit(form){
+    if (!form) return false;
+    try {
+      if (typeof form.requestSubmit === 'function') {
+        form.requestSubmit();
+        return true;
+      }
+    } catch(e){}
+    try {
+      var event = new Event('submit', { bubbles:true, cancelable:true });
+      form.dispatchEvent(event);
+      return true;
+    } catch(e){}
+    return false;
+  }
+
+  function callKnownGenerators(){
+    var names = ['generateItinerary','generateRoute','buildRoute','createRoute','renderResult','renderPlannerResult'];
+    for (var i = 0; i < names.length; i++){
+      try {
+        if (typeof window[names[i]] === 'function') {
+          window[names[i]]();
+          return true;
+        }
+      } catch(e){}
+    }
+    return false;
+  }
+
+  function nudgeResultArea(){
+    var result = document.querySelector('#result, #results, [data-result], [data-planner-result], .planner-result, .result-card, .route-result');
+    if (result) {
+      try { result.scrollIntoView({ behavior:'smooth', block:'start' }); } catch(e) { result.scrollIntoView(); }
+      return true;
+    }
+    return false;
+  }
+
+  function showSoftStatus(){
+    var host = document.querySelector('[data-planner-root], .planner, main') || document.body;
+    if (!host || document.querySelector('[data-v204-planner-status]')) return;
+    var note = document.createElement('div');
+    note.setAttribute('data-v204-planner-status', 'true');
+    note.style.cssText = 'margin:12px auto;padding:12px 14px;border:1px solid rgba(210,111,69,.25);border-radius:18px;background:rgba(255,248,241,.92);color:#18314a;font-weight:700;font-size:14px;line-height:1.45;max-width:720px;';
+    note.textContent = '루트를 준비하고 있어요. 결과가 바로 보이지 않으면 입력값을 확인한 뒤 한 번 더 눌러주세요.';
+    try { host.appendChild(note); } catch(e){}
+    setTimeout(function(){ try { note.remove(); } catch(e){} }, 4200);
+  }
+
+  document.addEventListener('click', function(event){
+    var clicked = event.target && event.target.closest ? event.target.closest('button, a, [role="button"], input[type="button"], input[type="submit"]') : null;
+    if (!clicked || !isPlannerCTA(clicked)) return;
+
+    var beforeResult = document.querySelector('#result, #results, [data-result], [data-planner-result], .planner-result, .result-card, .route-result');
+
+    var nativeBtn = findNativeGeneratorButton(clicked);
+    if (nativeBtn) {
+      try { nativeBtn.click(); setTimeout(nudgeResultArea, 250); return; } catch(e){}
+    }
+
+    var called = callKnownGenerators();
+    if (called) {
+      setTimeout(nudgeResultArea, 250);
+      return;
+    }
+
+    var form = clicked.closest('form') || findPlannerForm();
+    if (form) {
+      event.preventDefault();
+      emitSubmit(form);
+      setTimeout(function(){
+        if (!nudgeResultArea() && !beforeResult) showSoftStatus();
+      }, 350);
+    }
+  }, true);
+})();

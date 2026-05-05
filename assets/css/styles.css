@@ -7919,3 +7919,29 @@ body[data-page="whats-new"] .mobile-dock{
     line-height:1.2!important;
   }
 }
+
+
+/* v204 planner fail-safe + mobile balance */
+@media (max-width: 767px){
+  .mobile-dock{
+    width:min(90vw, 404px)!important;
+    left:50%!important;
+    transform:translateX(-50%)!important;
+  }
+  .mobile-dock a,
+  .mobile-dock button{
+    min-width:0!important;
+    text-align:center!important;
+  }
+  [data-v204-planner-status]{
+    box-shadow:0 14px 34px rgba(24,49,74,.10);
+  }
+  #result,
+  #results,
+  [data-result],
+  [data-planner-result],
+  .planner-result,
+  .route-result{
+    scroll-margin-top:96px;
+  }
+}
