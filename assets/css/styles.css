@@ -7947,85 +7947,70 @@ body[data-page="whats-new"] .mobile-dock{
 }
 
 
-/* v205 mobile hero compact: remove popup/ad feeling on first screen */
-.beta-launch-bar,
-#betaLaunchBar,
-.footer-build-rail[data-expanded="false"]{
-  display:none!important;
-}
+/* v206: clipped hero fix, softer copy sections, real loading state */
 @media (max-width: 767px){
-  .hero.hero-magazine.cover-system-shell-home{
-    margin-top:0!important;
-    border-radius:0 0 26px 26px!important;
-    box-shadow:0 10px 28px rgba(20,33,48,.045)!important;
+  .hero,.planner-hero,.magazine-hero,.city-hero,.cover-hero,[class*="hero"]{overflow:visible!important;}
+  .hero-card,.planner-hero-card,.magazine-hero-card,.cover-card,.editorial-hero,[class*="hero-card"]{
+    margin-top:18px!important;padding-top:22px!important;overflow:visible!important;
   }
-  .hero.hero-magazine .hero-copy-magazine,
-  .cover-system-shell-home .cover-copy-column{
-    padding:20px 18px 18px!important;
-    min-height:auto!important;
-    gap:10px!important;
-  }
-  .cover-system-shell-home .cover-meta-row,
-  .cover-system-shell-home .cover-kicker,
-  .cover-system-shell-home .cover-note-line,
-  .cover-system-shell-home .hero-stat-row{
-    display:none!important;
-  }
-  .hero.hero-magazine h1,
-  .hero.hero-magazine .hero-title-split,
-  .hero-copy-magazine h1{
-    font-size:clamp(32px, 10.2vw, 42px)!important;
-    line-height:1.04!important;
+  .hero-title,.planner-hero-title,.magazine-hero-title,.section-title,h1{
+    font-size:clamp(30px, 9vw, 42px)!important;
+    line-height:1.08!important;
     letter-spacing:-.055em!important;
-    max-width:8.8em!important;
-    margin:8px 0 8px!important;
+    word-break:keep-all!important;
   }
-  .hero-title-split span{
-    display:block!important;
-    white-space:nowrap!important;
+  .section-title br,.hero-title br{display:none!important;}
+  .eyebrow,.kicker,.section-kicker,.collection-kicker{max-width:100%!important;white-space:normal!important;transform:none!important;}
+  .launch-paths,.growth-polish,.launch-card,.editorial-card{overflow:hidden!important;}
+  .launch-paths h2,.growth-polish h2,.editorial-card h2{
+    font-size:clamp(25px, 7vw, 34px)!important;
+    line-height:1.16!important;
+    letter-spacing:-.04em!important;
+    word-break:keep-all!important;
   }
-  .hero.hero-magazine p,
-  .hero-copy-magazine .hero-desc,
-  .hero-copy-magazine p{
-    font-size:14px!important;
-    line-height:1.55!important;
-    max-width:26ch!important;
-    margin-bottom:4px!important;
+  .launch-paths p,.growth-polish p,.editorial-card p{
+    font-size:15px!important;line-height:1.62!important;word-break:keep-all!important;
   }
-  .hero.hero-magazine .eyebrow,
-  .cover-copy-column .eyebrow{
-    display:inline-flex!important;
-    width:max-content!important;
-    padding:6px 10px!important;
-    font-size:11px!important;
-    letter-spacing:.05em!important;
-  }
-  .hero.hero-magazine .hero-actions,
-  .cover-actions-row{
-    margin-top:12px!important;
-    display:grid!important;
-    grid-template-columns:1fr!important;
-    gap:10px!important;
-  }
-  .hero.hero-magazine .primary-btn,
-  .hero.hero-magazine .secondary-btn{
-    min-height:48px!important;
-    border-radius:18px!important;
-    font-size:14px!important;
-    padding:0 16px!important;
-  }
-  .hero.hero-magazine .hero-visual-magazine{
-    margin-top:10px!important;
-    border-radius:22px!important;
-    min-height:220px!important;
-  }
-  .hero-visual-grid{
-    min-height:220px!important;
-  }
-  .hero-visual-main,
-  .hero-visual-sub{
-    min-height:108px!important;
-  }
-  .image-caption{display:none!important;}
-  body{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))!important;}
+}
+[data-v206-loading-overlay]{
+  position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:rgba(250,246,239,.62);backdrop-filter:blur(12px);
+  opacity:0;pointer-events:none;transition:opacity .18s ease;
+}
+[data-v206-loading-overlay].is-visible{opacity:1;pointer-events:auto;}
+.v206-loading-card{
+  width:min(86vw, 360px);border:1px solid rgba(210,111,69,.22);border-radius:28px;
+  background:rgba(255,252,246,.96);box-shadow:0 24px 80px rgba(24,49,74,.18);
+  padding:24px 22px;text-align:center;color:#18314a;
+}
+.v206-loading-card strong{display:block;font-size:20px;letter-spacing:-.03em;margin:10px 0 8px;}
+.v206-loading-card p{margin:0;color:#6d7483;font-size:14px;line-height:1.55;}
+.v206-loading-dot{
+  width:16px;height:16px;margin:0 auto;border-radius:999px;background:#ff7448;
+  box-shadow:0 0 0 0 rgba(255,116,72,.36);animation:v206Pulse 1.15s infinite;
+}
+@keyframes v206Pulse{
+  0%{transform:scale(.92);box-shadow:0 0 0 0 rgba(255,116,72,.38)}
+  70%{transform:scale(1);box-shadow:0 0 0 18px rgba(255,116,72,0)}
+  100%{transform:scale(.92);box-shadow:0 0 0 0 rgba(255,116,72,0)}
+}
+.v206-result-card{
+  margin:24px auto 140px;max-width:760px;border:1px solid rgba(210,111,69,.20);
+  border-radius:30px;background:#fffaf3;padding:24px;box-shadow:0 20px 60px rgba(24,49,74,.10);color:#18314a;
+}
+.v206-result-eyebrow{
+  display:inline-flex;padding:8px 12px;border-radius:999px;border:1px solid rgba(210,111,69,.25);
+  color:#a46d48;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:12px;
+}
+.v206-result-card h2{font-size:clamp(26px, 7vw, 42px);line-height:1.12;letter-spacing:-.045em;margin:14px 0 8px;}
+.v206-result-intro{color:#6d7483;line-height:1.6;margin:0 0 18px;}
+.v206-day-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.v206-day-grid article,.v206-note-grid p{border:1px solid rgba(24,49,74,.10);border-radius:22px;background:white;padding:16px;}
+.v206-day-grid span{display:block;color:#a46d48;font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.v206-day-grid strong{display:block;font-size:17px;margin-bottom:6px;}
+.v206-day-grid p,.v206-note-grid p{color:#6d7483;line-height:1.55;margin:0;}
+.v206-note-grid{display:grid;gap:10px;margin-top:12px;}
+@media (max-width: 767px){
+  .v206-day-grid{grid-template-columns:1fr}
+  .v206-result-card{margin-left:16px;margin-right:16px;padding:20px;border-radius:26px}
 }

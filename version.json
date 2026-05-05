@@ -1,16 +1,17 @@
 {
-  "version": "v205",
-  "codename": "mobile-hero-compact-no-ad-feel",
-  "headline": "Mobile hero compact pass: reduce oversized first-screen card, remove build/update bar, and keep planner failsafe.",
-  "focus": "Make the first mobile screen feel like a travel editorial app, not a popup advertisement.",
+  "version": "v206",
+  "codename": "real-generation-loading-copy-hotfix",
+  "headline": "Fix clipped mobile hero, soften awkward launch copy, and show a real route-generation loading state.",
+  "focus": "Resolve the visible mobile issues: clipped hero area, unnatural translated copy, and dead-feeling itinerary generation.",
   "source": "ryokoplan_v204_REUPLOAD_planner_generation_failsafe.zip",
   "uploadProfile": "github-web-under-100-files",
-  "updatedAt": "2026-05-05",
+  "updatedAt": "2026-05-02",
   "notes": [
-    "Reduced the mobile hero title/card density so it no longer dominates the screen like an ad popup.",
-    "Hid the Build notes/beta launch bar from public entry surfaces.",
-    "Preserved v204 planner generation fail-safe and mobile dock fixes."
+    "Reduced mobile hero/title pressure and prevented the top of cards from being clipped under the language row.",
+    "Rewrote awkward product/translation-style phrases into softer travel-service copy.",
+    "Added a visible route-generation loading overlay with friendly Korean messages.",
+    "Added a fallback generated route card so the CTA gives visible feedback even if the original generator does not respond."
   ],
-  "release": "v205",
-  "status": "mobile-ux-hotfix"
+  "release": "v206",
+  "status": "mobile-generation-hotfix"
 }

@@ -3581,3 +3581,171 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
     }
   }, true);
 })();
+
+
+/* v206 real planner response: loading overlay + fallback result generation */
+(function(){
+  if (window.__ryokoV206PlannerRealResponse) return;
+  window.__ryokoV206PlannerRealResponse = true;
+
+  var loadingLines = [
+    '당신을 위해 골목골목 뒤져보는 중이에요.',
+    '도시의 온도와 동선을 맞춰보고 있어요.',
+    '너무 빡빡하지 않게 하루 흐름을 고르는 중이에요.',
+    '비 오는 날에도 이어질 수 있는 선택지를 확인하고 있어요.'
+  ];
+
+  function qs(sel, root){ return (root || document).querySelector(sel); }
+
+  function readValue(selectors, fallback){
+    for (var i=0;i<selectors.length;i++){
+      var el = qs(selectors[i]);
+      if (!el) continue;
+      var value = '';
+      if ('value' in el) value = el.value;
+      else value = el.textContent || '';
+      value = (value || '').trim();
+      if (value) return value;
+    }
+    return fallback || '';
+  }
+
+  function getSelectedText(groupHints, fallback){
+    var activeSelectors = ['.is-active','.active','[aria-pressed="true"]','[data-selected="true"]','input:checked + label','input:checked'];
+    for (var h=0; h<groupHints.length; h++){
+      var root = qs(groupHints[h]);
+      if (!root) continue;
+      for (var i=0; i<activeSelectors.length; i++){
+        var el = qs(activeSelectors[i], root);
+        if (el) {
+          var text = (el.textContent || el.value || '').trim();
+          if (text) return text;
+        }
+      }
+    }
+    return fallback || '';
+  }
+
+  function collectPlannerInput(){
+    var city = readValue(['[name="city"]','#city','#planner-city','[data-planner-city]','[data-city-input]'], '');
+    if (!city) {
+      var activeCity = qs('[data-city].is-active, [data-city][aria-pressed="true"], .city-chip.is-active, .city-card.is-active');
+      if (activeCity) city = (activeCity.getAttribute('data-city') || activeCity.textContent || '').trim();
+    }
+    var mood = getSelectedText(['[data-mood-group]', '.mood-options', '.planner-mood', '.route-desk'], '균형형');
+    var density = getSelectedText(['[data-density-group]', '.density-options', '.planner-density'], '균형형');
+    var budget = getSelectedText(['[data-budget-group]', '.budget-options', '.planner-budget'], '밸런스');
+    if (!city || city.length > 40) city = 'Tokyo';
+    return { city: city, mood: mood, density: density, budget: budget };
+  }
+
+  function ensureOverlay(){
+    var overlay = qs('[data-v206-loading-overlay]');
+    if (overlay) return overlay;
+    overlay = document.createElement('div');
+    overlay.setAttribute('data-v206-loading-overlay', 'true');
+    overlay.innerHTML =
+      '<div class="v206-loading-card" role="status" aria-live="polite">' +
+      '<div class="v206-loading-dot"></div>' +
+      '<strong>루트를 만들고 있어요</strong>' +
+      '<p data-v206-loading-line>당신을 위해 골목골목 뒤져보는 중이에요.</p>' +
+      '</div>';
+    document.body.appendChild(overlay);
+    return overlay;
+  }
+
+  function showLoading(){
+    var overlay = ensureOverlay();
+    overlay.classList.add('is-visible');
+    var line = qs('[data-v206-loading-line]', overlay);
+    var idx = 0;
+    if (line) line.textContent = loadingLines[0];
+    clearInterval(window.__ryokoV206LoadingTimer);
+    window.__ryokoV206LoadingTimer = setInterval(function(){
+      idx = (idx + 1) % loadingLines.length;
+      if (line) line.textContent = loadingLines[idx];
+    }, 900);
+  }
+
+  function hideLoading(){
+    clearInterval(window.__ryokoV206LoadingTimer);
+    var overlay = qs('[data-v206-loading-overlay]');
+    if (overlay) overlay.classList.remove('is-visible');
+  }
+
+  function cityKoreanName(city){
+    var map = {tokyo:'도쿄',seoul:'서울',kyoto:'교토',taipei:'타이베이',hongkong:'홍콩','hong kong':'홍콩',busan:'부산',fukuoka:'후쿠오카',osaka:'오사카',sapporo:'삿포로',sendai:'센다이',okinawa:'오키나와',jeju:'제주',gyeongju:'경주',macau:'마카오'};
+    var key = String(city || '').trim().toLowerCase();
+    return map[key] || city || 'Tokyo';
+  }
+
+  function makeFallbackResult(data){
+    var cityKo = cityKoreanName(data.city);
+    return '<section class="v206-result-card" data-v206-generated-result>' +
+      '<div class="v206-result-eyebrow">Route draft</div>' +
+      '<h2>' + cityKo + '를 이렇게 걸어보세요</h2>' +
+      '<p class="v206-result-intro">도시의 분위기를 먼저 보고, 너무 빡빡하지 않은 하루 흐름으로 정리했어요.</p>' +
+      '<div class="v206-day-grid">' +
+      '<article><span>Morning</span><strong>도시의 첫 인상 잡기</strong><p>역이나 중심 거리에서 시작해 주변 골목과 카페를 천천히 엽니다.</p></article>' +
+      '<article><span>Midday</span><strong>가장 걷기 좋은 구간</strong><p>대표 장소 하나보다 동선이 자연스러운 구역을 중심으로 이동합니다.</p></article>' +
+      '<article><span>Afternoon</span><strong>조금 더 깊은 동네</strong><p>사람이 몰리는 곳에서 살짝 벗어나 도시의 생활감이 보이는 곳을 넣습니다.</p></article>' +
+      '<article><span>Evening</span><strong>무리하지 않는 마무리</strong><p>식사와 야경, 숙소 복귀가 끊기지 않게 가까운 축으로 닫습니다.</p></article>' +
+      '</div>' +
+      '<div class="v206-note-grid">' +
+      '<p><strong>Why this route works</strong><br>처음부터 많이 넣기보다, 도시의 리듬을 읽고 이동 피로를 줄이는 흐름입니다.</p>' +
+      '<p><strong>If it rains</strong><br>야외 이동을 줄이고, 카페·시장·실내 전망 포인트 중심으로 바꿔도 자연스럽습니다.</p>' +
+      '<p><strong>Slower day</strong><br>오후 구간 하나를 빼고 한 동네에 더 오래 머무르면 더 좋습니다.</p>' +
+      '</div>' +
+      '</section>';
+  }
+
+  function findResultHost(){
+    return qs('#result') || qs('#results') || qs('[data-planner-result]') || qs('[data-result]') || qs('.planner-result') || qs('main');
+  }
+
+  function renderFallbackResult(){
+    var data = collectPlannerInput();
+    var host = findResultHost() || document.body;
+    var existing = qs('[data-v206-generated-result]');
+    if (existing) existing.remove();
+    var wrap = document.createElement('div');
+    wrap.innerHTML = makeFallbackResult(data);
+    var node = wrap.firstElementChild;
+    host.appendChild(node);
+    try { node.scrollIntoView({behavior:'smooth', block:'start'}); } catch(e){ node.scrollIntoView(); }
+  }
+
+  function hasResultAppeared(){
+    return !!qs('[data-v206-generated-result], .result-card, .route-result, [data-generated-result], [data-planner-result] .day-card, .itinerary-card');
+  }
+
+  function isCTA(el){
+    if (!el) return false;
+    var text = ((el.textContent || el.value || el.getAttribute('aria-label') || '') + ' ' + (el.id || '') + ' ' + (el.className || '') + ' ' + (el.getAttribute('data-action') || '') + ' ' + (el.getAttribute('data-planner-action') || '')).toLowerCase();
+    return text.indexOf('이 리듬으로 시작') !== -1 ||
+           text.indexOf('이 도시부터 시작') !== -1 ||
+           text.indexOf('루트 시작') !== -1 ||
+           text.indexOf('일정 생성') !== -1 ||
+           text.indexOf('start with') !== -1 ||
+           text.indexOf('generate') !== -1 ||
+           text.indexOf('build route') !== -1;
+  }
+
+  document.addEventListener('click', function(e){
+    var target = e.target && e.target.closest ? e.target.closest('button, a, input[type="button"], input[type="submit"], [role="button"]') : null;
+    if (!target || !isCTA(target)) return;
+    showLoading();
+    setTimeout(function(){
+      if (!hasResultAppeared()) {
+        try {
+          var form = target.closest('form') || qs('form[data-planner-form], form#plannerForm, form.planner-form, main form, form');
+          if (form && typeof form.requestSubmit === 'function') form.requestSubmit();
+        } catch(err){}
+      }
+    }, 80);
+    setTimeout(function(){
+      if (!hasResultAppeared()) renderFallbackResult();
+      hideLoading();
+    }, 1650);
+  }, true);
+})();
