@@ -1,17 +1,17 @@
 {
-  "version": "v207",
-  "codename": "generated-result-editorial-polish",
-  "headline": "Generated result polish: fallback routes now feel like Ryokoplan editorial cards, not temporary output.",
-  "focus": "Make the generated fallback result visually credible and reduce mixed-language labels.",
-  "source": "ryokoplan_v206_real_generation_loading_copy_hotfix.zip",
+  "version": "v208",
+  "codename": "home-public-simplification",
+  "headline": "Simplified public mobile entry by reducing planning-deck style sections and keeping the route flow focused.",
+  "focus": "Make the home/planner entry feel less like an internal pitch deck and more like a direct travel editorial app.",
+  "source": "ryokoplan_v207_generated_result_editorial_polish.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Reworked the generated fallback result into a more editorial route card.",
-    "Replaced mixed English labels with softer Korean labels where visible.",
-    "Added result-card bottom spacing so the mobile dock does not cover the generated route.",
-    "Kept the v206 loading overlay and fallback generation behavior."
+    "Softened remaining internal labels such as Launch paths and Issue into public-facing travel copy.",
+    "Hid or compacted planning-style growth explainer sections on mobile entry surfaces.",
+    "Reduced oversized hero pressure while preserving the v207 loading and generated-result flow.",
+    "Added extra spacing around photo grids so the bottom dock feels less intrusive."
   ],
-  "release": "v207",
-  "status": "generated-result-polish"
+  "release": "v208",
+  "status": "public-entry-polish"
 }

@@ -8148,3 +8148,64 @@ body[data-page="whats-new"] .mobile-dock{
     grid-template-columns:1fr;
   }
 }
+
+/* v208: public home simplification, remove planning-deck feeling on mobile */
+@media (max-width: 767px){
+  .launch-paths,
+  .growth-polish,
+  .launch-acceptance,
+  .launch-acceptance-card,
+  .growth-card,
+  .public-growth-card,
+  [data-growth-polish],
+  [data-launch-paths]{
+    display:none!important;
+  }
+
+  .home-explainer,
+  .planner-explainer,
+  .sample-explainer,
+  .how-it-works,
+  [data-how-it-works]{
+    margin-top:18px!important;
+    padding:18px!important;
+    border-radius:24px!important;
+  }
+
+  .home-explainer h2,
+  .planner-explainer h2,
+  .sample-explainer h2,
+  .how-it-works h2,
+  [data-how-it-works] h2{
+    font-size:clamp(24px, 7vw, 32px)!important;
+    line-height:1.15!important;
+    letter-spacing:-.04em!important;
+  }
+
+  .hero-card,
+  .planner-hero-card,
+  .magazine-hero-card,
+  .cover-card,
+  .editorial-hero,
+  [class*="hero-card"]{
+    margin-top:14px!important;
+    padding:20px!important;
+    border-radius:28px!important;
+  }
+
+  .hero-title,
+  .planner-hero-title,
+  .magazine-hero-title,
+  h1{
+    font-size:clamp(28px, 8.2vw, 38px)!important;
+    line-height:1.1!important;
+    letter-spacing:-.052em!important;
+  }
+
+  .city-cover-grid,
+  .magazine-photo-grid,
+  .cover-grid,
+  .photo-grid{
+    margin-bottom:112px!important;
+  }
+}

@@ -97,7 +97,7 @@
       </section>
 
       <section class="section info-card">
-        <div class="section-head compact"><div><span class="eyebrow">Issue focus</span><h2 class="section-title">What kind of thing felt off?</h2><p class="section-desc">Pick the closest issue type. It changes the report template below so the handoff is more specific.</p></div></div>
+        <div class="section-head compact"><div><span class="eyebrow">Guide focus</span><h2 class="section-title">What kind of thing felt off?</h2><p class="section-desc">Pick the closest issue type. It changes the report template below so the handoff is more specific.</p></div></div>
         <div class="feedback-type-grid" id="issueTypeGrid">
           <button class="feedback-type-chip" type="button" data-issue-type="general"><strong>General flow note</strong><span>Use when the page felt rough, unclear, or off-tone but nothing was fully broken.</span></button>
           <button class="feedback-type-chip" type="button" data-issue-type="broken-link"><strong>Broken link or dead end</strong><span>Use for clicks that go nowhere, wrong pages, or a loop that stalls.</span></button>
@@ -167,7 +167,7 @@
       const issueTypeHint = document.getElementById('issueTypeHint');
       const issueButtons = Array.from(document.querySelectorAll('[data-issue-type]'));
       let currentVersion = 'checking…';
-      let currentIssueType = params.get('issue') || 'general';
+      let currentGuideType = params.get('issue') || 'general';
 
       const issueMap = {
         general: {
@@ -225,18 +225,18 @@
         return issueMap[type] || issueMap.general;
       }
       function templateBase(version='unknown', draftText=''){
-        const issue = issueConfig(currentIssueType);
+        const issue = issueConfig(currentGuideType);
         const checklist = issue.checklist.map(item => `- ${item}`).join('\n');
-        return `[Ryokoplan support note]\nIssue type: ${issue.label}\nSource page: ${sourcePage}\nCity: ${city || '-'}\nLanguage: ${lang}\nVersion: ${version}\nURL: ${pageUrl}\n\nWhat I expected:\n- \n\nWhat happened instead:\n- \n\nWhy it felt off / unclear:\n- \n\nBest detail to include:\n${checklist}\n\nScreenshot or extra note:\n- ` + (draftText ? `\n\n[Attached release-check draft]\n${draftText}` : '');
+        return `[Ryokoplan support note]\nGuide type: ${issue.label}\nSource page: ${sourcePage}\nCity: ${city || '-'}\nLanguage: ${lang}\nVersion: ${version}\nURL: ${pageUrl}\n\nWhat I expected:\n- \n\nWhat happened instead:\n- \n\nWhy it felt off / unclear:\n- \n\nBest detail to include:\n${checklist}\n\nScreenshot or extra note:\n- ` + (draftText ? `\n\n[Attached release-check draft]\n${draftText}` : '');
       }
 
-      function syncIssueType(){
-        const issue = issueConfig(currentIssueType);
+      function syncGuideType(){
+        const issue = issueConfig(currentGuideType);
         issueTypeSummary.textContent = issue.label;
         issueTypeHint.textContent = issue.hint;
-        issueButtons.forEach(button => button.classList.toggle('is-active', button.dataset.issueType === currentIssueType));
+        issueButtons.forEach(button => button.classList.toggle('is-active', button.dataset.issueType === currentGuideType));
         const next = new URLSearchParams(location.search);
-        next.set('issue', currentIssueType);
+        next.set('issue', currentGuideType);
         history.replaceState({}, '', `${location.pathname}?${next.toString()}`);
         const summaryBits = [sourcePage, city ? 'city: ' + city : '', lang ? 'lang: ' + lang : '', 'issue: ' + issue.label].filter(Boolean).join(' · ');
         if (contextSummary) contextSummary.textContent = summaryBits || 'Open this page from anywhere in Ryokoplan and we will carry that page context here automatically.';
@@ -248,7 +248,7 @@
       const draftText = readReleaseDraft();
       if (releaseDraftSummary) releaseDraftSummary.textContent = summarizeReleaseDraft(draftText);
       templateNode.value = templateBase(currentVersion, draftText);
-      syncIssueType();
+      syncGuideType();
 
       fetch('/version.json', { cache:'no-store' })
         .then(r => r.ok ? r.json() : Promise.reject(new Error('version unavailable')))
@@ -264,8 +264,8 @@
         });
 
       issueButtons.forEach(button => button.addEventListener('click', () => {
-        currentIssueType = button.dataset.issueType || 'general';
-        syncIssueType();
+        currentGuideType = button.dataset.issueType || 'general';
+        syncGuideType();
       }));
 
       document.getElementById('copyFeedbackTemplateBtn')?.addEventListener('click', async () => {
