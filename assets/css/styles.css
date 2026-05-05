@@ -8209,3 +8209,72 @@ body[data-page="whats-new"] .mobile-dock{
     margin-bottom:112px!important;
   }
 }
+
+/* v209 soft hero copy: reduce 4-line mobile headline pressure */
+@media (max-width: 767px){
+  .hero-card,
+  .planner-hero-card,
+  .magazine-hero-card,
+  .cover-card,
+  .editorial-hero,
+  [class*="hero-card"]{
+    padding:18px!important;
+    border-radius:26px!important;
+  }
+
+  .hero-title,
+  .planner-hero-title,
+  .magazine-hero-title,
+  .cover-title,
+  .editorial-hero h1,
+  h1{
+    font-size:clamp(28px, 7.4vw, 36px)!important;
+    line-height:1.13!important;
+    letter-spacing:-.05em!important;
+    max-width:92%!important;
+    word-break:keep-all!important;
+    text-wrap:balance;
+  }
+
+  .hero-title br:nth-of-type(n+2),
+  .planner-hero-title br:nth-of-type(n+2),
+  .magazine-hero-title br:nth-of-type(n+2),
+  .cover-title br:nth-of-type(n+2){
+    display:none!important;
+  }
+
+  .hero-subtitle,
+  .planner-hero-subtitle,
+  .magazine-hero-subtitle,
+  .cover-subtitle,
+  .editorial-hero p{
+    font-size:15px!important;
+    line-height:1.55!important;
+    max-width:86%!important;
+  }
+
+  .hero-card .kicker,
+  .hero-card .eyebrow,
+  .planner-hero-card .kicker,
+  .planner-hero-card .eyebrow,
+  .magazine-hero-card .kicker,
+  .magazine-hero-card .eyebrow,
+  .cover-card .kicker,
+  .cover-card .eyebrow,
+  .collection-kicker{
+    font-size:11px!important;
+    padding:7px 10px!important;
+    letter-spacing:.08em!important;
+  }
+
+  .hero-card .primary-btn,
+  .hero-card .secondary-btn,
+  .planner-hero-card .primary-btn,
+  .planner-hero-card .secondary-btn,
+  .magazine-hero-card .primary-btn,
+  .magazine-hero-card .secondary-btn{
+    min-height:52px!important;
+    font-size:15px!important;
+    border-radius:20px!important;
+  }
+}

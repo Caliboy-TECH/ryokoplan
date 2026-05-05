@@ -1,17 +1,17 @@
 {
-  "version": "v208",
-  "codename": "home-public-simplification",
-  "headline": "Simplified public mobile entry by reducing planning-deck style sections and keeping the route flow focused.",
-  "focus": "Make the home/planner entry feel less like an internal pitch deck and more like a direct travel editorial app.",
-  "source": "ryokoplan_v207_generated_result_editorial_polish.zip",
+  "version": "v209",
+  "codename": "soft-hero-copy",
+  "headline": "Softened the main hero from rigid reading copy to a warmer travel-entry line.",
+  "focus": "Change the oversized four-line hero into a softer, shorter mobile-first travel phrase.",
+  "source": "ryokoplan_v208_home_public_simplification.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Softened remaining internal labels such as Launch paths and Issue into public-facing travel copy.",
-    "Hid or compacted planning-style growth explainer sections on mobile entry surfaces.",
-    "Reduced oversized hero pressure while preserving the v207 loading and generated-result flow.",
-    "Added extra spacing around photo grids so the bottom dock feels less intrusive."
+    "Changed the main Korean hero direction toward '도시를 느끼고, 여행을 시작하세요.'",
+    "Reduced mobile hero headline size and vertical pressure.",
+    "Limited forced line breaks so the title no longer feels like a large popup ad.",
+    "Preserved generated route and loading behavior."
   ],
-  "release": "v208",
-  "status": "public-entry-polish"
+  "release": "v209",
+  "status": "hero-copy-hotfix"
 }
