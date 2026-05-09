@@ -1809,7 +1809,7 @@ function syncFirstRunGuide(){
 }
 function ensureFirstRunGuide(){
   let sheet = document.getElementById('firstRunGuideSheet');
-  if (!shouldShowFirstRunGuide()) { if (sheet) { sheet.classList.add('is-hidden'); try { sheet.remove(); } catch(e){} } return; }
+  if (!shouldShowFirstRunGuide()) { if (sheet) { sheet.classList.add('is-hidden'); sheet.remove(); } return; }
   if (!sheet) {
     sheet = document.createElement('aside');
     sheet.id = 'firstRunGuideSheet';
@@ -6751,42 +6751,3 @@ function renderTripsSeasonalDesk(){
   return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, getCityVoice, slugifyCity, resolvePath, apply플래너Preset, getSignalRecommendations, detectSignalTags, recordSignalInteraction, getTopSignalTags, trackEvent, readReadingHistory, saveReadingHistory: writeReadingHistory, clearReadingHistory, buildRouteResultHrefFromTrip, get lang(){return lang;}, pathRoot, navHref };
 })();
 window.addEventListener('DOMContentLoaded', () => { window.RyokoApp.initCommon(); window.RyokoApp.initMagazine(); });
-
-
-/* v210 remove first-run popup permanently */
-(function(){
-  if (window.__ryokoV210NoFirstRunPopup) return;
-  window.__ryokoV210NoFirstRunPopup = true;
-
-  function removePopup(){
-    document.querySelectorAll('#firstRunGuideSheet, .first-run-guide-sheet').forEach(function(node){
-      try { node.remove(); } catch(e) { if (node.parentNode) node.parentNode.removeChild(node); }
-    });
-    document.documentElement.classList.remove('has-first-run-guide');
-    document.body && document.body.classList.remove('has-first-run-guide');
-  }
-
-  try { localStorage.setItem('ryoko:first-run-guide:dismissed', '1'); } catch(e){}
-
-  var originalEnsure = window.ensureFirstRunGuide;
-  window.ensureFirstRunGuide = function(){
-    removePopup();
-    return null;
-  };
-
-  var originalShould = window.shouldShowFirstRunGuide;
-  window.shouldShowFirstRunGuide = function(){
-    return false;
-  };
-
-  document.addEventListener('DOMContentLoaded', removePopup);
-  window.addEventListener('load', removePopup);
-
-  var mo = new MutationObserver(function(){
-    removePopup();
-  });
-  mo.observe(document.documentElement || document.body, {childList:true, subtree:true});
-  setTimeout(removePopup, 50);
-  setTimeout(removePopup, 300);
-  setTimeout(removePopup, 1200);
-})();

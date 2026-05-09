@@ -8279,12 +8279,82 @@ body[data-page="whats-new"] .mobile-dock{
   }
 }
 
-/* v210 kill first-run onboarding popup */
-#firstRunGuideSheet,
-.first-run-guide-sheet,
-.first-run-guide-sheet.is-hidden{
-  display:none !important;
-  opacity:0 !important;
-  visibility:hidden !important;
-  pointer-events:none !important;
+/* v211 mobile overlap fix: separate photo grid from text sections */
+@media (max-width: 767px){
+  .city-cover-grid,
+  .magazine-photo-grid,
+  .cover-grid,
+  .photo-grid,
+  .home-photo-grid,
+  .editorial-photo-grid,
+  [class*="photo-grid"],
+  [class*="cover-grid"]{
+    position:relative!important;
+    z-index:1!important;
+    transform:none!important;
+    margin-top:18px!important;
+    margin-bottom:28px!important;
+    overflow:hidden!important;
+  }
+
+  .city-cover-grid + *,
+  .magazine-photo-grid + *,
+  .cover-grid + *,
+  .photo-grid + *,
+  .home-photo-grid + *,
+  .editorial-photo-grid + *,
+  [class*="photo-grid"] + *,
+  [class*="cover-grid"] + *{
+    position:relative!important;
+    z-index:4!important;
+    margin-top:28px!important;
+    clear:both!important;
+    background:rgba(255,250,243,.98)!important;
+  }
+
+  .how-it-works,
+  .home-explainer,
+  .planner-explainer,
+  .sample-explainer,
+  .editorial-card,
+  .guide-card,
+  .entry-card,
+  [data-how-it-works]{
+    position:relative!important;
+    z-index:5!important;
+    transform:none!important;
+    margin-top:28px!important;
+    background:rgba(255,250,243,.98)!important;
+  }
+
+  .start-section,
+  .start-guide,
+  .route-start-section,
+  .how-start-section,
+  [class*="start-section"],
+  [class*="start-guide"]{
+    position:relative!important;
+    z-index:6!important;
+    margin-top:30px!important;
+    transform:none!important;
+    clear:both!important;
+    background:rgba(255,250,243,.98)!important;
+  }
+
+  .issue-card,
+  .guide-summary-card,
+  .launch-card,
+  .route-entry-card{
+    transform:none!important;
+    margin-top:18px!important;
+  }
+
+  section{overflow:visible!important;}
+  section h2, section h3{
+    max-width:100%!important;
+    overflow-wrap:break-word!important;
+    word-break:keep-all!important;
+  }
+
+  body{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))!important;}
 }
