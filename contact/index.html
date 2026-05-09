@@ -67,7 +67,7 @@
           <div>
             <span class="eyebrow">Support notes</span>
             <h1 class="section-title">Send a clear note with page context already attached</h1>
-            <p class="section-desc">Use this page to report broken links, off-tone copy, route output issues, save/share bugs, or anything that interrupts the city → sample → trip flow.</p>
+            <p class="section-desc">Use this page to report broken links, off-tone copy, 루트 output issues, save/share bugs, or anything that interrupts the city → 샘플 → trip flow.</p>
             <p class="feedback-inline-note">The current page, language, city, and build version are captured here automatically, so you can send a cleaner report without rewriting the whole situation by hand.</p>
           </div>
           <div class="info-card" style="padding:18px">
@@ -83,7 +83,7 @@
       </section>
 
       <section class="section info-card" id="feedbackContextCard">
-        <div class="section-head compact"><div><span class="eyebrow">Captured context</span><h2 class="section-title">Current page snapshot</h2><p class="section-desc">Open this desk from any Ryokoplan page and that surface is carried in automatically.</p></div></div>
+        <div class="section-head compact"><div><span class="eyebrow">Captured context</span><h2 class="section-title">Current page snapshot</h2><p class="section-desc">Open this 데스크 from any Ryokoplan page and that surface is carried in automatically.</p></div></div>
         <div class="legal-copy">
           <div><h3>Current context</h3><p id="feedbackContextSummary">Open this page from anywhere in Ryokoplan and we will carry that page context here automatically.</p></div>
           <div><h3>Captured page</h3><p id="feedbackContextPath">Waiting for page context…</p></div>
@@ -104,7 +104,7 @@
           <button class="feedback-type-chip" type="button" data-issue-type="copy-tone"><strong>Copy / tone issue</strong><span>Use when wording sounds internal, too technical, too long, or not editorial enough.</span></button>
           <button class="feedback-type-chip" type="button" data-issue-type="layout-ui"><strong>Layout / mobile UI</strong><span>Use for cramped rows, misaligned cards, sticky overlap, or small-screen friction.</span></button>
           <button class="feedback-type-chip" type="button" data-issue-type="save-share"><strong>Save / share / reopen</strong><span>Use for 보관함, shared links, copied URLs, or resume flow problems.</span></button>
-          <button class="feedback-type-chip" type="button" data-issue-type="route-output"><strong>Route output issue</strong><span>Use when the guide → sample → trip handoff feels wrong or the result quality misses the brief.</span></button>
+          <button class="feedback-type-chip" type="button" data-issue-type="루트-output"><strong>루트 output issue</strong><span>Use when the guide → 샘플 → trip handoff feels wrong or the result quality misses the brief.</span></button>
         </div>
         <p class="feedback-inline-note">Active issue focus: <span class="feedback-context-accent" id="issueTypeSummary">General flow note</span> · <span id="issueTypeHint">Use when the page felt rough, unclear, or off-tone but nothing was fully broken.</span></p>
       </section>
@@ -113,7 +113,7 @@
         <div class="section-head compact"><div><span class="eyebrow">What helps most</span><h2 class="section-title">Best details to attach</h2><p class="section-desc">Short reports are fine. These are just the details that make fixes faster.</p></div></div>
         <div class="feedback-fast-grid">
           <article class="feedback-fast-card"><strong>Where it happened</strong><p>Name the page or city, and tell us whether it was a guide, 샘플 루트, result, share surface, or 보관함 moment.</p></article>
-          <article class="feedback-fast-card"><strong>What you expected</strong><p>One clean sentence is enough: where you thought the click, scroll, save, or route handoff should have gone instead.</p></article>
+          <article class="feedback-fast-card"><strong>What you expected</strong><p>One clean sentence is enough: where you thought the click, scroll, save, or 루트 handoff should have gone instead.</p></article>
           <article class="feedback-fast-card"><strong>Why it felt off</strong><p>Say whether it felt broken, unclear, too dense, too memo-like, off-brand, or simply harder to use than expected.</p></article>
         </div>
       </section>
@@ -134,14 +134,14 @@
 
       <section class="section info-card">
         <div class="feedback-mini-grid">
-          <article class="feedback-mini-card"><strong>Best from the live page</strong><p>Open this desk from the exact page that felt wrong so path, language, and city are already attached when you copy the block.</p></article>
+          <article class="feedback-mini-card"><strong>Best from the live page</strong><p>Open this 데스크 from the exact page that felt wrong so path, language, and city are already attached when you copy the block.</p></article>
           <article class="feedback-mini-card"><strong>Best after a release check</strong><p>Run release check first, then clear or attach that draft here so deploy checks and page-specific feedback stay together.</p></article>
         </div>
       </section>
 
       <section class="section footer-cta info-card">
         <h2 class="section-title">Feel the city. Then start the trip.</h2>
-        <p class="section-desc">Go back to the city desk, pick a route, and keep the whole editorial loop in one place.</p>
+        <p class="section-desc">Go back to the city 데스크, pick a 루트, and keep the whole editorial loop in one place.</p>
         <div class="cta-row cta-row-priority"><a class="primary-btn" href="../index.html">Start from home</a><a class="secondary-btn" href="../magazine/index.html">Read Magazine</a><a class="ghost-btn" href="../my-trips/index.html">Open 보관함</a></div>
       </section>
       <div class="footer">Ryokoplan</div>
@@ -178,7 +178,7 @@
         'broken-link': {
           label: 'Broken link or dead end',
           hint: 'Best for wrong destinations, blank screens, dead clicks, or loops that stop.',
-          checklist: ['Exactly what you clicked', 'Where it sent you instead', 'Whether this blocked the city → sample → trip loop completely']
+          checklist: ['Exactly what you clicked', 'Where it sent you instead', 'Whether this blocked the city → 샘플 → trip loop completely']
         },
         'copy-tone': {
           label: 'Copy / tone issue',
@@ -195,10 +195,10 @@
           hint: 'Best for 보관함, shared links, copied URLs, save state, or resume flow issues.',
           checklist: ['Whether you were saving, sharing, reopening, or importing', 'What was expected after the action', 'Whether the issue affected 보관함 or a shared-trip path']
         },
-        'route-output': {
-          label: 'Route output issue',
-          hint: 'Best for weak trip results, odd handoff from guide/sample, or route quality that missed the brief.',
-          checklist: ['Which city or sample you started from', 'What traveler context or mood you expected', 'How the result diverged from that brief']
+        '루트-output': {
+          label: '루트 output issue',
+          hint: 'Best for weak trip results, odd handoff from guide/샘플, or 루트 quality that missed the brief.',
+          checklist: ['Which city or 샘플 you started from', 'What traveler context or mood you expected', 'How the result diverged from that brief']
         }
       };
 
@@ -224,7 +224,7 @@
       function issueConfig(type){
         return issueMap[type] || issueMap.general;
       }
-      function templateBase(version='unknown', draftText=''){
+      function template기준(version='unknown', draftText=''){
         const issue = issueConfig(currentGuideType);
         const checklist = issue.checklist.map(item => `- ${item}`).join('\n');
         return `[Ryokoplan support note]\nGuide type: ${issue.label}\nSource page: ${sourcePage}\nCity: ${city || '-'}\nLanguage: ${lang}\nVersion: ${version}\nURL: ${pageUrl}\n\nWhat I expected:\n- \n\nWhat happened instead:\n- \n\nWhy it felt off / unclear:\n- \n\nBest detail to include:\n${checklist}\n\nScreenshot or extra note:\n- ` + (draftText ? `\n\n[Attached release-check draft]\n${draftText}` : '');
@@ -240,14 +240,14 @@
         history.replaceState({}, '', `${location.pathname}?${next.toString()}`);
         const summaryBits = [sourcePage, city ? 'city: ' + city : '', lang ? 'lang: ' + lang : '', 'issue: ' + issue.label].filter(Boolean).join(' · ');
         if (contextSummary) contextSummary.textContent = summaryBits || 'Open this page from anywhere in Ryokoplan and we will carry that page context here automatically.';
-        templateNode.value = templateBase(currentVersion, readReleaseDraft());
+        templateNode.value = template기준(currentVersion, readReleaseDraft());
       }
 
       if (pathNode) pathNode.textContent = pageUrl;
       if (langNode) langNode.textContent = lang;
       const draftText = readReleaseDraft();
       if (releaseDraftSummary) releaseDraftSummary.textContent = summarizeReleaseDraft(draftText);
-      templateNode.value = templateBase(currentVersion, draftText);
+      templateNode.value = template기준(currentVersion, draftText);
       syncGuideType();
 
       fetch('/version.json', { cache:'no-store' })
@@ -255,12 +255,12 @@
         .then(data => {
           currentVersion = data.release || data.version || 'unknown';
           if (versionNode) versionNode.textContent = currentVersion + (data.codename ? ' · ' + data.codename : '');
-          templateNode.value = templateBase(currentVersion, draftText);
+          templateNode.value = template기준(currentVersion, draftText);
         })
         .catch(() => {
           currentVersion = 'unknown';
           if (versionNode) versionNode.textContent = 'unknown';
-          templateNode.value = templateBase(currentVersion, draftText);
+          templateNode.value = template기준(currentVersion, draftText);
         });
 
       issueButtons.forEach(button => button.addEventListener('click', () => {
@@ -283,7 +283,7 @@
       document.getElementById('clearReleaseDraftBtn')?.addEventListener('click', () => {
         clearReleaseDraft();
         if (releaseDraftSummary) releaseDraftSummary.textContent = 'Release-check draft cleared on this browser.';
-        templateNode.value = templateBase(currentVersion, '');
+        templateNode.value = template기준(currentVersion, '');
       });
     })();
   </script>

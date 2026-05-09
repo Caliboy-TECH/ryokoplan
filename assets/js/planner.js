@@ -1,5 +1,5 @@
 window.RyokoPlanner = (() => {
-  const samplePlans = {
+  const 샘플Plans = {
     tokyo: {
       destination: 'Tokyo',
       duration: '3 Nights 4 Days',
@@ -64,8 +64,8 @@ window.RyokoPlanner = (() => {
       localTips: ['Some Seoul neighborhoods look close on the map but feel different in pace and timing.', 'For cleaner photo streets, late morning is often easier than peak afternoon.', 'Night views are better when paired with an earlier dinner reservation nearby.'],
       days: [
         { day: 1, title: 'Seongsu to riverside evening', intro: 'A stylish start with a neighborhood that feels current without being too complicated.', places: [
-          { name: 'Seongsu bakery or coffee stop', reason: 'Easy entry into the area and a strong mood-setter.' },
-          { name: 'Design and concept shops', reason: 'Gives the day texture without needing a rigid route.' },
+          { name: 'Seongsu bakery or coffee stop', reason: 'Easy 입구 into the area and a strong mood-setter.' },
+          { name: 'Design and concept shops', reason: 'Gives the day texture without needing a rigid 루트.' },
           { name: 'Riverside sunset stop', reason: 'Adds openness after tighter neighborhood streets.' }
         ], localTip: 'Popular Seongsu spots can build lines quickly on weekends, so earlier is better.' },
         { day: 2, title: 'Classic Seoul contrast day', intro: 'Mix historic texture with a grittier night district so the city feels layered, not one-note.', places: [
@@ -87,10 +87,10 @@ window.RyokoPlanner = (() => {
   const plannerDraftDismissKey = 'ryoko:planner-draft-dismissed:v111';
   const plannerDraftMaxAgeMs = 1000 * 60 * 60 * 24 * 7;
   let plannerDraftSaveTimer = null;
-  const latestRouteSessionKey = 'ryoko:planner-last-result:v112';
-  const latestRouteDismissKey = 'ryoko:planner-last-result-dismissed:v112';
-  const latestRouteMaxAgeMs = 1000 * 60 * 60 * 24 * 7;
-  let latestRouteCurrentSessionId = '';
+  const latest루트SessionKey = 'ryoko:planner-last-result:v112';
+  const latest루트DismissKey = 'ryoko:planner-last-result-dismissed:v112';
+  const latest루트MaxAgeMs = 1000 * 60 * 60 * 24 * 7;
+  let latest루트CurrentSessionId = '';
 
   function parseStoredJson(raw, fallback=null){
     try { return JSON.parse(raw); } catch { return fallback; }
@@ -129,13 +129,13 @@ window.RyokoPlanner = (() => {
   }
   function plannerDraftPayload(){
     const form = readForm();
-    const entry = plannerEntryParams();
+    const 입구 = planner입구Params();
     return {
       ...form,
-      entryKind: entry?.entryKind || '',
-      entryTitle: entry?.entryTitle || '',
-      entryCity: entry?.entryCity || form.destination || '',
-      entrySource: entry?.entrySource || '',
+      입구Kind: 입구?.입구Kind || '',
+      입구Title: 입구?.입구Title || '',
+      입구City: 입구?.입구City || form.destination || '',
+      입구Source: 입구?.입구Source || '',
       savedAt: new Date().toISOString()
     };
   }
@@ -169,9 +169,9 @@ window.RyokoPlanner = (() => {
   function plannerResumeState(){
     const hasTripQuery = new URLSearchParams(location.search).has('trip');
     const draft = readPlannerDraft();
-    const latest = readLatestRouteSession();
+    const latest = readLatest루트Session();
     const draftVisible = !!(draft && !plannerDraftIsDismissed(draft) && !hasTripQuery);
-    const latestVisible = !!(latest && !latestRouteIsDismissed(latest) && !(latest?.sessionId && latest.sessionId === latestRouteCurrentSessionId) && !hasTripQuery);
+    const latestVisible = !!(latest && !latest루트IsDismissed(latest) && !(latest?.sessionId && latest.sessionId === latest루트CurrentSessionId) && !hasTripQuery);
     const draftTs = draft?.savedAt ? new Date(draft.savedAt).getTime() : 0;
     const latestTs = latest?.savedAt ? new Date(latest.savedAt).getTime() : 0;
     const active = draftVisible && latestVisible ? (latestTs >= draftTs ? 'latest' : 'draft') : (draftVisible ? 'draft' : (latestVisible ? 'latest' : 'none'));
@@ -179,12 +179,12 @@ window.RyokoPlanner = (() => {
   }
 
   function plannerDraftSummary(item){
-    const title = item.destination ? `${item.destination} · ${item.duration || uiCopy('여정', 'route')}` : uiCopy('작성 중인 여정', 'Draft route', '下書きの旅程', '草稿旅程');
-    const context = item.entryKind === 'sample'
-      ? uiCopy('샘플에서 이어짐', 'Continues from a sample', 'サンプルから続く', '從 sample 延伸')
-      : item.entryKind === 'city'
-      ? uiCopy('도시 가이드에서 이어짐', 'Continues from a city guide', '都市ガイドから続く', '從城市指南延伸')
-      : uiCopy('직접 다듬던 리듬', 'A route you were shaping', '自分で整えていた流れ', '你剛剛在整理的路線');
+    const title = item.destination ? `${item.destination} · ${item.duration || uiCopy('여정', '루트')}` : uiCopy('작성 중인 여정', 'Draft 루트', '下書きの旅程', '草稿旅程');
+    const context = item.입구Kind === '샘플'
+      ? uiCopy('샘플에서 이어짐', 'Continues from a 샘플', 'サンプルから続く', '從 샘플 延伸')
+      : item.입구Kind === 'city'
+      ? uiCopy('도시 가이드에서 이어짐', 'Continues from a 도시 가이드', '都市ガイドから続く', '從城市指南延伸')
+      : uiCopy('직접 다듬던 리듬', 'A 루트 you were shaping', '自分で整えていた流れ', '你剛剛在整理的路線');
     const detail = [item.companion, item.style].filter(Boolean).join(' · ');
     return { title, context, detail };
   }
@@ -194,8 +194,8 @@ window.RyokoPlanner = (() => {
     if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(item);
     syncPlannerRecipe();
     renderPlannerDraftCard(true);
-    window.RyokoApp?.trackEvent?.('ryoko_planner_draft_restored', { destination: item.destination || '', entryKind: item.entryKind || '', traitsCount: Array.isArray(item.travelerTraits) ? item.travelerTraits.length : 0 });
-    showToast(uiCopy('작성 중이던 여정을 복구했어요.', 'Restored your draft route.', '下書きの旅程を復元しました。', '已恢復你剛剛編輯的草稿路線。'), 'success');
+    window.RyokoApp?.trackEvent?.('ryoko_planner_draft_restored', { destination: item.destination || '', 입구Kind: item.입구Kind || '', traitsCount: Array.isArray(item.travelerTraits) ? item.travelerTraits.length : 0 });
+    showToast(uiCopy('작성 중이던 여정을 복구했어요.', 'Restored your draft 루트.', '下書きの旅程を復元しました。', '已恢復你剛剛編輯的草稿路線。'), 'success');
   }
   function dismissPlannerDraft(){
     const item = readPlannerDraft();
@@ -280,23 +280,23 @@ window.RyokoPlanner = (() => {
   }
 
 
-  function clearLatestRouteSession(options={}){
-    localStorage.removeItem(latestRouteSessionKey);
-    if (!options.keepDismiss) localStorage.removeItem(latestRouteDismissKey);
-    const card = qs('plannerLatestRouteCard');
+  function clearLatest루트Session(options={}){
+    localStorage.removeItem(latest루트SessionKey);
+    if (!options.keepDismiss) localStorage.removeItem(latest루트DismissKey);
+    const card = qs('plannerLatest루트Card');
     if (card) card.classList.add('hidden');
   }
-  function readLatestRouteSession(){
-    const item = parseStoredJson(localStorage.getItem(latestRouteSessionKey) || 'null', null);
+  function readLatest루트Session(){
+    const item = parseStoredJson(localStorage.getItem(latest루트SessionKey) || 'null', null);
     if (!item || !item.savedAt || !item.tripPayload?.planData) return null;
     const age = Date.now() - new Date(item.savedAt).getTime();
-    if (!Number.isFinite(age) || age < 0 || age > latestRouteMaxAgeMs) {
-      clearLatestRouteSession();
+    if (!Number.isFinite(age) || age < 0 || age > latest루트MaxAgeMs) {
+      clearLatest루트Session();
       return null;
     }
     return item;
   }
-  function latestRouteAgeLabel(savedAt=''){
+  function latest루트AgeLabel(savedAt=''){
     if (!savedAt) return '';
     const diff = Date.now() - new Date(savedAt).getTime();
     if (!Number.isFinite(diff) || diff < 0) return '';
@@ -308,89 +308,89 @@ window.RyokoPlanner = (() => {
     const days = Math.floor(hours / 24);
     return uiCopy(`${days}일 전 결과`, `${days}d ago`, `${days}日前`, `${days} 天前`);
   }
-  function latestRouteIsDismissed(item){
+  function latest루트IsDismissed(item){
     if (!item?.savedAt) return false;
-    return localStorage.getItem(latestRouteDismissKey) === item.savedAt;
+    return localStorage.getItem(latest루트DismissKey) === item.savedAt;
   }
-  function latestRouteSummary(item){
+  function latest루트Summary(item){
     const payload = item?.tripPayload || {};
     const plan = payload.planData || {};
     const destination = payload.destination || plan.destination || '';
-    const title = payload.title || plan.title || (destination ? `${destination} route` : uiCopy('최근 결과', 'Recent route', '最近の結果', '最近結果'));
+    const title = payload.title || plan.title || (destination ? `${destination} 루트` : uiCopy('최근 결과', 'Recent 루트', '最近の結果', '最近結果'));
     const context = [payload.duration || plan.duration || '', payload.companion || plan.companion || '', plan.bestFor || ''].filter(Boolean).join(' · ');
     return {
       title,
       destination,
-      context: context || normalizeSummary(plan) || uiCopy('직전에 보던 route result를 다시 이어갈 수 있어요.', 'Pick up the route result you were just looking at.', 'さっき見ていた route result をそのまま再開できます。', '可以直接接回你剛剛看到的 route result。'),
+      context: context || normalizeSummary(plan) || uiCopy('직전에 보던 루트 result를 다시 이어갈 수 있어요.', 'Pick up the 루트 result you were just looking at.', 'さっき見ていた 루트 result をそのまま再開できます。', '可以直接接回你剛剛看到的 루트 result。'),
       note: normalizeSummary(plan) || '',
       plan
     };
   }
-  function ensureLatestRouteCard(){
-    let card = qs('plannerLatestRouteCard');
+  function ensureLatest루트Card(){
+    let card = qs('plannerLatest루트Card');
     if (card) return card;
     const helper = document.querySelector('.planner-helper-panel');
     const shell = document.querySelector('.planner-shell');
     if (!shell) return null;
     card = document.createElement('article');
-    card.id = 'plannerLatestRouteCard';
-    card.className = 'planner-latest-route-card info-card hidden';
+    card.id = 'plannerLatest루트Card';
+    card.className = 'planner-latest-루트-card info-card hidden';
     if (helper?.nextSibling) shell.insertBefore(card, helper.nextSibling);
     else if (helper) shell.appendChild(card);
     else shell.prepend(card);
     return card;
   }
-  function saveLatestRouteSession(source='route_result'){
+  function saveLatest루트Session(source='루트_result'){
     if (!window.currentTripPayload?.planData) return;
     const payload = { ...window.currentTripPayload };
-    const href = window.RyokoApp?.buildRouteResultHrefFromTrip?.(payload) || `${location.pathname}${location.search || ''}#resultTop`;
+    const href = window.RyokoApp?.build루트ResultHrefFromTrip?.(payload) || `${location.pathname}${location.search || ''}#resultTop`;
     const item = {
-      sessionId: `route_${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
+      sessionId: `루트_${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
       savedAt: new Date().toISOString(),
       source,
       href,
       tripPayload: payload
     };
-    localStorage.setItem(latestRouteSessionKey, JSON.stringify(item));
-    localStorage.removeItem(latestRouteDismissKey);
-    latestRouteCurrentSessionId = item.sessionId;
-    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_route_saved', { destination: payload.destination || payload.planData?.destination || '', source });
-    renderLatestRouteCard();
+    localStorage.setItem(latest루트SessionKey, JSON.stringify(item));
+    localStorage.removeItem(latest루트DismissKey);
+    latest루트CurrentSessionId = item.sessionId;
+    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_루트_saved', { destination: payload.destination || payload.planData?.destination || '', source });
+    renderLatest루트Card();
   }
-  function restoreLatestRouteSession(){
-    const item = readLatestRouteSession();
+  function restoreLatest루트Session(){
+    const item = readLatest루트Session();
     if (!item) return;
     const payload = item.tripPayload || {};
     if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(payload);
     if (payload.notes && qs('notes')) qs('notes').value = payload.notes;
     if (payload.planData) renderPlan(payload.planData);
-    latestRouteCurrentSessionId = item.sessionId || '';
-    renderLatestRouteCard();
+    latest루트CurrentSessionId = item.sessionId || '';
+    renderLatest루트Card();
     revealResult();
     smoothJump('resultTop');
-    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_route_restored', { destination: payload.destination || payload.planData?.destination || '' });
-    showToast(uiCopy('최근 route result를 다시 열었어요.', 'Reopened your latest route result.', '直前の route result を再度開きました。', '已重新打開你最近的 route result。'), 'success');
+    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_루트_restored', { destination: payload.destination || payload.planData?.destination || '' });
+    showToast(uiCopy('최근 여행 result를 다시 열었어요.', 'Reopened your latest 루트 result.', '直前の 루트 result を再度開きました。', '已重新打開你最近的 루트 result。'), 'success');
   }
-  function useLatestRouteAsBase(){
-    const item = readLatestRouteSession();
+  function useLatest루트As기준(){
+    const item = readLatest루트Session();
     if (!item) return;
     const payload = item.tripPayload || {};
     if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(payload);
     if (payload.notes && qs('notes')) qs('notes').value = payload.notes;
     syncPlannerRecipe();
-    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_route_used_as_base', { destination: payload.destination || payload.planData?.destination || '' });
-    showToast(uiCopy('최근 route를 새 베이스로 가져왔어요.', 'Loaded your latest route as a new base.', '最近の route を新しいベースとして読み込みました。', '已把最近的 route 當成新的 base。'), 'info');
+    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_루트_used_as_기준', { destination: payload.destination || payload.planData?.destination || '' });
+    showToast(uiCopy('최근 여행를 새 베이스로 가져왔어요.', 'Loaded your latest 루트 as a new 기준.', '最近の 루트 を新しいベースとして読み込みました。', '已把最近的 루트 當成新的 기준。'), 'info');
     document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
   }
-  function dismissLatestRouteSession(){
-    const item = readLatestRouteSession();
+  function dismissLatest루트Session(){
+    const item = readLatest루트Session();
     if (!item?.savedAt) return;
-    localStorage.setItem(latestRouteDismissKey, item.savedAt);
-    renderLatestRouteCard();
-    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_route_dismissed', { destination: item.tripPayload?.destination || item.tripPayload?.planData?.destination || '' });
+    localStorage.setItem(latest루트DismissKey, item.savedAt);
+    renderLatest루트Card();
+    window.RyokoApp?.trackEvent?.('ryoko_planner_latest_루트_dismissed', { destination: item.tripPayload?.destination || item.tripPayload?.planData?.destination || '' });
   }
-  function renderLatestRouteCard(forceVisible=false){
-    const card = ensureLatestRouteCard();
+  function renderLatest루트Card(forceVisible=false){
+    const card = ensureLatest루트Card();
     if (!card) return;
     const resumeState = plannerResumeState();
     const item = resumeState.latest;
@@ -400,32 +400,32 @@ window.RyokoPlanner = (() => {
       card.innerHTML = '';
       return;
     }
-    const summary = latestRouteSummary(item);
+    const summary = latest루트Summary(item);
     card.classList.remove('hidden');
     card.innerHTML = `
-      <div class="planner-latest-route-head">
+      <div class="planner-latest-루트-head">
         <div>
-          <span class="eyebrow">${uiCopy('Latest route', 'Latest route', 'Latest route', 'Latest route')}</span>
+          <span class="eyebrow">${uiCopy('Latest 루트', 'Latest 루트', 'Latest 루트', 'Latest 루트')}</span>
           <h3>${escapeHtml(summary.title)}</h3>
           <p>${escapeHtml(summary.context)}</p>
         </div>
-        <span class="planner-latest-route-age">${escapeHtml(latestRouteAgeLabel(item.savedAt))}</span>
+        <span class="planner-latest-루트-age">${escapeHtml(latest루트AgeLabel(item.savedAt))}</span>
       </div>
-      <div class="planner-latest-route-meta">
-        <span class="planner-latest-route-chip">${escapeHtml(summary.destination || uiCopy('Route result','Route result','route result','route result'))}</span>
-        ${summary.plan.tripMood ? `<span class="planner-latest-route-chip">${escapeHtml(textValue(summary.plan.tripMood,''))}</span>` : ''}
-        ${summary.plan.dayDensity ? `<span class="planner-latest-route-chip">${escapeHtml(textValue(summary.plan.dayDensity,''))}</span>` : ''}
-        ${summary.plan.budgetMode ? `<span class="planner-latest-route-chip">${escapeHtml(textValue(summary.plan.budgetMode,''))}</span>` : ''}
+      <div class="planner-latest-루트-meta">
+        <span class="planner-latest-루트-chip">${escapeHtml(summary.destination || uiCopy('루트 result','루트 result','루트 result','루트 result'))}</span>
+        ${summary.plan.tripMood ? `<span class="planner-latest-루트-chip">${escapeHtml(textValue(summary.plan.tripMood,''))}</span>` : ''}
+        ${summary.plan.dayDensity ? `<span class="planner-latest-루트-chip">${escapeHtml(textValue(summary.plan.dayDensity,''))}</span>` : ''}
+        ${summary.plan.budgetMode ? `<span class="planner-latest-루트-chip">${escapeHtml(textValue(summary.plan.budgetMode,''))}</span>` : ''}
       </div>
-      ${summary.note ? `<p class="planner-latest-route-note">${escapeHtml(summary.note)}</p>` : ''}
-      <div class="card-actions planner-latest-route-actions">
-        <button type="button" class="primary-btn" id="plannerLatestRouteResumeBtn">${uiCopy('최근 결과 다시 열기', 'Resume latest result', '最近の結果を再開', '繼續最近結果')}</button>
-        <button type="button" class="secondary-btn" id="plannerLatestRouteBaseBtn">${uiCopy('이 결과를 새 베이스로', 'Use as new base', 'この結果を新しいベースに', '把這個結果當成新 base')}</button>
-        <button type="button" class="ghost-btn" id="plannerLatestRouteHideBtn">${uiCopy('지금은 숨기기', 'Hide for now', '今は隠す', '先隱藏')}</button>
+      ${summary.note ? `<p class="planner-latest-루트-note">${escapeHtml(summary.note)}</p>` : ''}
+      <div class="card-actions planner-latest-루트-actions">
+        <button type="button" class="primary-btn" id="plannerLatest루트ResumeBtn">${uiCopy('최근 결과 다시 열기', 'Resume latest result', '最近の結果を再開', '繼續最近結果')}</button>
+        <button type="button" class="secondary-btn" id="plannerLatest루트기준Btn">${uiCopy('이 결과를 새 베이스로', 'Use as new 기준', 'この結果を新しいベースに', '把這個結果當成新 기준')}</button>
+        <button type="button" class="ghost-btn" id="plannerLatest루트HideBtn">${uiCopy('지금은 숨기기', 'Hide for now', '今は隠す', '先隱藏')}</button>
       </div>`;
-    qs('plannerLatestRouteResumeBtn')?.addEventListener('click', restoreLatestRouteSession);
-    qs('plannerLatestRouteBaseBtn')?.addEventListener('click', useLatestRouteAsBase);
-    qs('plannerLatestRouteHideBtn')?.addEventListener('click', dismissLatestRouteSession);
+    qs('plannerLatest루트ResumeBtn')?.addEventListener('click', restoreLatest루트Session);
+    qs('plannerLatest루트기준Btn')?.addEventListener('click', useLatest루트As기준);
+    qs('plannerLatest루트HideBtn')?.addEventListener('click', dismissLatest루트Session);
   }
 
   function qs(id){ return document.getElementById(id); }
@@ -447,27 +447,27 @@ window.RyokoPlanner = (() => {
       .replace(/'/g, '&#39;');
   }
 
-  function plannerEntryParams(){
+  function planner입구Params(){
     const params = new URLSearchParams(location.search);
-    const entryKind = String(params.get('entryKind') || '').trim();
-    const entryTitle = String(params.get('entryTitle') || '').trim();
-    const entryCity = String(params.get('entryCity') || params.get('destination') || '').trim();
-    const entrySource = String(params.get('entrySource') || '').trim();
-    const entryDuration = String(params.get('entryDuration') || '').trim();
-    const entryCompanion = String(params.get('entryCompanion') || '').trim();
-    const entryStyle = String(params.get('entryStyle') || '').trim();
-    const entryNotes = String(params.get('entryNotes') || '').trim();
-    const entryNeeds = String(params.get('entryNeeds') || '').split('|').map(item => String(item || '').trim()).filter(Boolean);
-    const entryLocalMode = params.get('entryLocalMode');
-    if (!entryKind && !entryTitle && !entryCity) return null;
-    return { entryKind, entryTitle, entryCity, entrySource, entryDuration, entryCompanion, entryStyle, entryNotes, entryNeeds, entryLocalMode: entryLocalMode === '1' ? true : entryLocalMode === '0' ? false : null };
+    const 입구Kind = String(params.get('입구Kind') || '').trim();
+    const 입구Title = String(params.get('입구Title') || '').trim();
+    const 입구City = String(params.get('입구City') || params.get('destination') || '').trim();
+    const 입구Source = String(params.get('입구Source') || '').trim();
+    const 입구Duration = String(params.get('입구Duration') || '').trim();
+    const 입구Companion = String(params.get('입구Companion') || '').trim();
+    const 입구Style = String(params.get('입구Style') || '').trim();
+    const 입구Notes = String(params.get('입구Notes') || '').trim();
+    const 입구Needs = String(params.get('입구Needs') || '').split('|').map(item => String(item || '').trim()).filter(Boolean);
+    const 입구LocalMode = params.get('입구LocalMode');
+    if (!입구Kind && !입구Title && !입구City) return null;
+    return { 입구Kind, 입구Title, 입구City, 입구Source, 입구Duration, 입구Companion, 입구Style, 입구Notes, 입구Needs, 입구LocalMode: 입구LocalMode === '1' ? true : 입구LocalMode === '0' ? false : null };
   }
 
-  const plannerEntryPresetProfiles = {
+  const planner입구PresetProfiles = {
     tokyo:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'balanced', style:'city highlights + hidden gems', notes:'Keep one iconic axis, then leave one calmer local pocket so Tokyo does not start too loud.', localMode:true },
     osaka:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'balanced', style:'food + local neighborhoods', notes:'Let the day revolve around two or three shorter meal scenes instead of one oversized checklist.', localMode:true },
     kyoto:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'slow + quiet', notes:'Protect the quiet windows first, then let one dusk walk carry the close.' },
-    fukuoka:{ tripMood:'balanced', dayDensity:'balanced', budgetMode:'smart', style:'food + local neighborhoods', notes:'Keep transfers short and let the meal rhythm carry the route.' },
+    fukuoka:{ tripMood:'balanced', dayDensity:'balanced', budgetMode:'smart', style:'food + local neighborhoods', notes:'Keep transfers short and let the meal rhythm carry the 루트.' },
     sapporo:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'slow + quiet', notes:'Keep the wider axis clean, then add one warmer pocket before night.', travelerTraits:['seniors'] },
     sendai:{ tripMood:'editorial', dayDensity:'light', budgetMode:'smart', style:'slow + quiet', notes:'Use one calm green line and one market pause instead of stacking too many central stops.' },
     okinawa:{ tripMood:'soft', dayDensity:'light', budgetMode:'balanced', style:'scenic + easy pace', notes:'Give the clearest hours to the coast and leave real rest in the middle of the day.' },
@@ -479,26 +479,26 @@ window.RyokoPlanner = (() => {
     hongkong:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'treat', style:'city highlights + hidden gems', notes:'Balance one strong vertical district with one breathing pocket before the night close.' },
     macau:{ tripMood:'editorial', dayDensity:'balanced', budgetMode:'treat', style:'city highlights + hidden gems', notes:'Keep the old lanes brief and clear, then leave one brighter night scene for contrast.', travelerTraits:['seniors'] }
   };
-  function plannerEntrySuggestedPreset(entry){
-    const slug = String(entry?.entryCity || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '');
-    const profile = plannerEntryPresetProfiles[slug] || { tripMood:'editorial', dayDensity:'balanced', budgetMode:'balanced', style:'' };
+  function planner입구SuggestedPreset(입구){
+    const slug = String(입구?.입구City || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '');
+    const profile = planner입구PresetProfiles[slug] || { tripMood:'editorial', dayDensity:'balanced', budgetMode:'balanced', style:'' };
     const preset = { ...profile };
-    if (entry?.entryKind === 'sample') {
+    if (입구?.입구Kind === '샘플') {
       preset.tripMood = 'editorial';
-    } else if (entry?.entryKind === 'route') {
+    } else if (입구?.입구Kind === '루트') {
       preset.tripMood = profile.tripMood || 'balanced';
       preset.dayDensity = profile.dayDensity || 'balanced';
     }
-    if (entry?.entryDuration) preset.duration = entry.entryDuration;
-    if (entry?.entryCompanion) preset.companion = entry.entryCompanion;
-    if (entry?.entryStyle) preset.style = entry.entryStyle;
-    if (entry?.entryNotes) preset.notes = entry.entryNotes;
-    if (Array.isArray(entry?.entryNeeds) && entry.entryNeeds.length) preset.travelerTraits = entry.entryNeeds;
-    if (typeof entry?.entryLocalMode === 'boolean') preset.localMode = entry.entryLocalMode;
+    if (입구?.입구Duration) preset.duration = 입구.입구Duration;
+    if (입구?.입구Companion) preset.companion = 입구.입구Companion;
+    if (입구?.입구Style) preset.style = 입구.입구Style;
+    if (입구?.입구Notes) preset.notes = 입구.입구Notes;
+    if (Array.isArray(입구?.입구Needs) && 입구.입구Needs.length) preset.travelerTraits = 입구.입구Needs;
+    if (typeof 입구?.입구LocalMode === 'boolean') preset.localMode = 입구.입구LocalMode;
     return preset;
   }
-  function plannerEntrySuggestedPresetCopy(entry){
-    const preset = plannerEntrySuggestedPreset(entry);
+  function planner입구SuggestedPresetCopy(입구){
+    const preset = planner입구SuggestedPreset(입구);
     const mood = prettyPillValue('tripMood', preset.tripMood || 'balanced');
     const density = prettyPillValue('dayDensity', preset.dayDensity || 'balanced');
     const budget = prettyPillValue('budgetMode', preset.budgetMode || 'balanced');
@@ -539,20 +539,20 @@ window.RyokoPlanner = (() => {
     }
     return {
       label:'Suggested handoff',
-      desc:`Start with ${mood} · ${density} · ${budget} so the route keeps carrying the context you just read.`,
+      desc:`Start with ${mood} · ${density} · ${budget} so the 루트 keeps carrying the context you just read.`,
       detail:[duration, companion, style].filter(Boolean).join(' · '),
       note:preset.notes || '',
       needsLabel: needs.length ? `Suggested traits · ${needs.join(' · ')}` : '',
       apply:'Apply suggested rhythm'
     };
   }
-  function applyPlannerEntrySuggestedPreset(entry){
-    const preset = plannerEntrySuggestedPreset(entry);
+  function applyPlanner입구SuggestedPreset(입구){
+    const preset = planner입구SuggestedPreset(입구);
     if (!preset) return;
     if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(preset);
-    window.RyokoApp?.trackEvent?.('ryoko_planner_entry_preset_applied', {
-      entryKind: entry?.entryKind || '',
-      entryCity: entry?.entryCity || '',
+    window.RyokoApp?.trackEvent?.('ryoko_planner_입구_preset_applied', {
+      입구Kind: 입구?.입구Kind || '',
+      입구City: 입구?.입구City || '',
       tripMood: preset.tripMood || '',
       dayDensity: preset.dayDensity || '',
       budgetMode: preset.budgetMode || '',
@@ -563,112 +563,112 @@ window.RyokoPlanner = (() => {
       localMode: typeof preset.localMode === 'boolean' ? String(preset.localMode) : ''
     });
   }
-  function plannerEntryContextCopy(entry){
-    const cityName = entry?.entryCity || 'Tokyo';
-    const title = entry?.entryTitle || cityName;
+  function planner입구ContextCopy(입구){
+    const cityName = 입구?.입구City || 'Tokyo';
+    const title = 입구?.입구Title || cityName;
     const copies = {
       city: {
-        ko:{ eyebrow:'시작 컨텍스트', title:`${cityName} city guide에서 바로 이어서 시작합니다.`, desc:`방금 읽은 도시 결을 그대로 가져와 ${cityName} route를 여는 흐름입니다.`, chip:'City guide' },
-        en:{ eyebrow:'Start context', title:`Starting straight from the ${cityName} city guide.`, desc:`Carry the city reading directly into a ${cityName} route instead of starting cold.`, chip:'City guide' },
-        ja:{ eyebrow:'開始コンテキスト', title:`${cityName} の city guide からそのまま始めます。`, desc:`いま読んだ都市の流れをそのまま ${cityName} の route に持ち込みます。`, chip:'City guide' },
-        zhHant:{ eyebrow:'開始脈絡', title:`直接從 ${cityName} city guide 接著開始。`, desc:`把剛剛讀到的城市節奏直接帶進 ${cityName} 的 route。`, chip:'City guide' }
+        ko:{ eyebrow:'시작 컨텍스트', title:`${cityName} 도시 가이드에서 바로 이어서 시작합니다.`, desc:`방금 읽은 도시 결을 그대로 가져와 ${cityName} 루트를 여는 흐름입니다.`, chip:'도시 가이드' },
+        en:{ eyebrow:'Start context', title:`Starting straight from the ${cityName} 도시 가이드.`, desc:`Carry the city reading directly into a ${cityName} 루트 instead of starting cold.`, chip:'도시 가이드' },
+        ja:{ eyebrow:'開始コンテキスト', title:`${cityName} の 도시 가이드 からそのまま始めます。`, desc:`いま読んだ都市の流れをそのまま ${cityName} の 루트 に持ち込みます。`, chip:'도시 가이드' },
+        zhHant:{ eyebrow:'開始脈絡', title:`直接從 ${cityName} 도시 가이드 接著開始。`, desc:`把剛剛讀到的城市節奏直接帶進 ${cityName} 的 루트。`, chip:'도시 가이드' }
       },
-      sample: {
-        ko:{ eyebrow:'시작 컨텍스트', title:`${title} sample을 바탕으로 route를 엽니다.`, desc:'샘플의 리듬을 그대로 들고 와서 출발점으로 삼을 수 있게 정리했습니다.', chip:'샘플 보기 route' },
-        en:{ eyebrow:'Start context', title:`Opening the route from the ${title} sample.`, desc:'This carries the sample rhythm forward so the route starts with a clearer shape.', chip:'샘플 보기 route' },
-        ja:{ eyebrow:'開始コンテキスト', title:`${title} sample を土台に route を開きます。`, desc:'sample のリズムをそのまま持ち込めるように整えています。', chip:'샘플 보기 route' },
-        zhHant:{ eyebrow:'開始脈絡', title:`以 ${title} sample 為基底打開 route。`, desc:'把 sample 的節奏直接帶進來，讓 route 一開始就更有形狀。', chip:'샘플 보기 route' }
+      샘플: {
+        ko:{ eyebrow:'시작 컨텍스트', title:`${title} 샘플을 바탕으로 루트를 엽니다.`, desc:'샘플의 리듬을 그대로 들고 와서 출발점으로 삼을 수 있게 정리했습니다.', chip:'샘플 루트' },
+        en:{ eyebrow:'Start context', title:`Opening the 루트 from the ${title} 샘플.`, desc:'This carries the 샘플 rhythm forward so the 루트 starts with a clearer shape.', chip:'샘플 루트' },
+        ja:{ eyebrow:'開始コンテキスト', title:`${title} 샘플 を土台に 루트 を開きます。`, desc:'샘플 のリズムをそのまま持ち込めるように整えています。', chip:'샘플 루트' },
+        zhHant:{ eyebrow:'開始脈絡', title:`以 ${title} 샘플 為基底打開 루트。`, desc:'把 샘플 的節奏直接帶進來，讓 루트 一開始就更有形狀。', chip:'샘플 루트' }
       },
-      route: {
-        ko:{ eyebrow:'시작 컨텍스트', title:`${title} route를 바탕으로 다시 시작합니다.`, desc:'방금 보던 route를 기준점으로 삼아 더 빠르게 다시 다듬을 수 있습니다.', chip:'Route base' },
-        en:{ eyebrow:'Start context', title:`Starting again from the ${title} route.`, desc:'Use the route you were just reading as a cleaner base for the next version.', chip:'Route base' },
-        ja:{ eyebrow:'開始コンテキスト', title:`${title} route を基準にもう一度始めます。`, desc:'さっき見ていた route をベースに、次の版をもっと速く整えられます。', chip:'Route base' },
-        zhHant:{ eyebrow:'開始脈絡', title:`以 ${title} route 為基準重新開始。`, desc:'把剛剛看的 route 當成基底，會更快整理出下一版。', chip:'Route base' }
+      루트: {
+        ko:{ eyebrow:'시작 컨텍스트', title:`${title} 루트를 바탕으로 다시 시작합니다.`, desc:'방금 보던 루트를 기준점으로 삼아 더 빠르게 다시 다듬을 수 있습니다.', chip:'시작 기준' },
+        en:{ eyebrow:'Start context', title:`Starting again from the ${title} 루트.`, desc:'Use the 루트 you were just reading as a cleaner 기준 for the next version.', chip:'시작 기준' },
+        ja:{ eyebrow:'開始コンテキスト', title:`${title} 루트 を基準にもう一度始めます。`, desc:'さっき見ていた 루트 をベースに、次の版をもっと速く整えられます。', chip:'시작 기준' },
+        zhHant:{ eyebrow:'開始脈絡', title:`以 ${title} 루트 為基準重新開始。`, desc:'把剛剛看的 루트 當成基底，會更快整理出下一版。', chip:'시작 기준' }
       },
       default: {
-        ko:{ eyebrow:'시작 컨텍스트', title:`${cityName}에서 route를 시작합니다.`, desc:'읽던 도시 맥락을 가져와 바로 이 시작점에 맞췄습니다.', chip:'Route start' },
-        en:{ eyebrow:'Start context', title:`Starting the route in ${cityName}.`, desc:'This keeps the city context close so the route does not begin cold.', chip:'Route start' },
-        ja:{ eyebrow:'開始コンテキスト', title:`${cityName} から route を始めます。`, desc:'読んでいた都市の文脈を近くに残したまま始められます。', chip:'Route start' },
-        zhHant:{ eyebrow:'開始脈絡', title:`從 ${cityName} 開始這條 route。`, desc:'把剛剛的城市脈絡留在附近，讓 route 不會從零開始。', chip:'Route start' }
+        ko:{ eyebrow:'시작 컨텍스트', title:`${cityName}에서 루트를 시작합니다.`, desc:'읽던 도시 맥락을 가져와 바로 이 시작점에 맞췄습니다.', chip:'루트 start' },
+        en:{ eyebrow:'Start context', title:`Starting the 루트 in ${cityName}.`, desc:'This keeps the city context close so the 루트 does not begin cold.', chip:'루트 start' },
+        ja:{ eyebrow:'開始コンテキスト', title:`${cityName} から 루트 を始めます。`, desc:'読んでいた都市の文脈を近くに残したまま始められます。', chip:'루트 start' },
+        zhHant:{ eyebrow:'開始脈絡', title:`從 ${cityName} 開始這條 루트。`, desc:'把剛剛的城市脈絡留在附近，讓 루트 不會從零開始。', chip:'루트 start' }
       }
     };
-    const group = copies[entry?.entryKind] || copies.default;
+    const group = copies[입구?.입구Kind] || copies.default;
     return group[window.RyokoApp?.lang || 'ko'] || group.en;
   }
-  function plannerEntryContextActions(entry){
-    const cityName = entry?.entryCity || '';
+  function planner입구ContextActions(입구){
+    const cityName = 입구?.입구City || '';
     const city = (window.RyokoApp?.getCityLoopData?.(cityName) || null);
     const guideHref = city ? window.RyokoApp.resolvePath(city.guide || `city/${String(cityName || '').toLowerCase()}.html`) : '#';
-    const sampleHref = city ? window.RyokoApp.resolvePath(city.example || 'example/tokyo-3n4d-first-trip.html') : '#';
+    const 샘플Href = city ? window.RyokoApp.resolvePath(city.example || 'example/tokyo-3n4d-first-trip.html') : '#';
     const latestTrip = (window.RyokoStorage?.getRecentTrips?.() || []).find(item => String(item.destination || '').toLowerCase() === String(cityName || '').toLowerCase());
-    const latestHref = latestTrip && window.RyokoApp?.buildRouteResultHrefFromTrip ? window.RyokoApp.buildRouteResultHrefFromTrip(latestTrip) : '';
+    const latestHref = latestTrip && window.RyokoApp?.build루트ResultHrefFromTrip ? window.RyokoApp.build루트ResultHrefFromTrip(latestTrip) : '';
     const lang = window.RyokoApp?.lang || 'ko';
     const t = {
-      reopenGuide: lang === 'ko' ? '도시 가이드 다시 보기' : lang === 'ja' ? '都市ガイドをもう一度開く' : lang === 'zhHant' ? '重新打開城市指南' : 'Reopen city guide',
-      reopen샘플 보기: lang === 'ko' ? '샘플 다시 읽기' : lang === 'ja' ? 'サンプルをもう一度読む' : lang === 'zhHant' ? '重新讀範例' : 'Reopen sample',
+      reopenGuide: lang === 'ko' ? '도시 가이드 다시 보기' : lang === 'ja' ? '都市ガイドをもう一度開く' : lang === 'zhHant' ? '重新打開城市指南' : 'Reopen 도시 가이드',
+      reopen샘플 보기: lang === 'ko' ? '샘플 다시 읽기' : lang === 'ja' ? 'サンプルをもう一度読む' : lang === 'zhHant' ? '重新讀範例' : 'Reopen 샘플',
       recentResult: lang === 'ko' ? '최근 result 열기' : lang === 'ja' ? '最近の result を開く' : lang === 'zhHant' ? '打開最近 result' : 'Open recent result',
-      routeStart: lang === 'ko' ? '이 route로 바로 시작' : lang === 'ja' ? 'この route から始める' : lang === 'zhHant' ? '從這條 route 開始' : 'Start from this route'
+      루트Start: lang === 'ko' ? '이 루트로 바로 시작' : lang === 'ja' ? 'この 루트 から始める' : lang === 'zhHant' ? '從這條 루트 開始' : 'Start from this 루트'
     };
-    if (entry?.entryKind === 'city') {
+    if (입구?.입구Kind === 'city') {
       return [
         guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'secondary-btn' } : null,
-        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopen샘플 보기, style: 'ghost-btn' } : null,
+        샘플Href && 샘플Href !== '#' ? { href: 샘플Href, label: t.reopen샘플 보기, style: 'ghost-btn' } : null,
         latestHref ? { href: latestHref, label: t.recentResult, style: 'ghost-btn' } : null
       ].filter(Boolean);
     }
-    if (entry?.entryKind === 'sample') {
+    if (입구?.입구Kind === '샘플') {
       return [
-        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopen샘플 보기, style: 'secondary-btn' } : null,
+        샘플Href && 샘플Href !== '#' ? { href: 샘플Href, label: t.reopen샘플 보기, style: 'secondary-btn' } : null,
         guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'ghost-btn' } : null,
         latestHref ? { href: latestHref, label: t.recentResult, style: 'ghost-btn' } : null
       ].filter(Boolean);
     }
-    if (entry?.entryKind === 'route') {
+    if (입구?.입구Kind === '루트') {
       return [
         latestHref ? { href: latestHref, label: t.recentResult, style: 'secondary-btn' } : null,
         guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'ghost-btn' } : null,
-        sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopen샘플 보기, style: 'ghost-btn' } : null
+        샘플Href && 샘플Href !== '#' ? { href: 샘플Href, label: t.reopen샘플 보기, style: 'ghost-btn' } : null
       ].filter(Boolean);
     }
     return [
       guideHref && guideHref !== '#' ? { href: guideHref, label: t.reopenGuide, style: 'secondary-btn' } : null,
-      sampleHref && sampleHref !== '#' ? { href: sampleHref, label: t.reopen샘플 보기, style: 'ghost-btn' } : null,
+      샘플Href && 샘플Href !== '#' ? { href: 샘플Href, label: t.reopen샘플 보기, style: 'ghost-btn' } : null,
       latestHref ? { href: latestHref, label: t.recentResult, style: 'ghost-btn' } : null
     ].filter(Boolean);
   }
-  function ensurePlannerEntryContext(){
+  function ensurePlanner입구Context(){
     const shell = document.querySelector('.planner-shell');
     if (!shell) return;
-    const entry = plannerEntryParams();
-    let node = qs('plannerEntryContext');
-    if (!entry || new URLSearchParams(location.search).has('trip')) {
+    const 입구 = planner입구Params();
+    let node = qs('planner입구Context');
+    if (!입구 || new URLSearchParams(location.search).has('trip')) {
       if (node) node.classList.add('hidden');
       return;
     }
     if (!node) {
       node = document.createElement('div');
-      node.id = 'plannerEntryContext';
-      node.className = 'planner-entry-context info-card';
+      node.id = 'planner입구Context';
+      node.className = 'planner-입구-context info-card';
       const anchor = document.querySelector('.planner-helper-panel') || shell.querySelector('.planner-onboarding-bar');
       if (anchor) anchor.insertAdjacentElement('afterend', node);
       else shell.prepend(node);
     }
-    const copy = plannerEntryContextCopy(entry);
-    const actions = plannerEntryContextActions(entry);
-    const preset = plannerEntrySuggestedPreset(entry);
-    const presetCopy = plannerEntrySuggestedPresetCopy(entry);
+    const copy = planner입구ContextCopy(입구);
+    const actions = planner입구ContextActions(입구);
+    const preset = planner입구SuggestedPreset(입구);
+    const presetCopy = planner입구SuggestedPresetCopy(입구);
     node.classList.remove('hidden');
-    node.innerHTML = `<div class="planner-entry-context-row"><div class="planner-entry-context-copy"><span class="eyebrow">${escapeHtml(copy.eyebrow)}</span><strong>${escapeHtml(copy.title)}</strong><p>${escapeHtml(copy.desc)}</p><div class="planner-entry-suggested"><div class="planner-entry-suggested-copy"><span class="planner-entry-suggested-label">${escapeHtml(presetCopy.label)}</span><p>${escapeHtml(presetCopy.desc)}</p>${presetCopy.detail ? `<div class="planner-entry-suggested-detail">${escapeHtml(presetCopy.detail)}</div>` : ''}${presetCopy.note ? `<div class="planner-entry-suggested-note">${escapeHtml(presetCopy.note)}</div>` : ''}${presetCopy.needsLabel ? `<div class="planner-entry-suggested-traits">${escapeHtml(presetCopy.needsLabel)}</div>` : ''}<div class="planner-entry-suggested-chips"><span class="planner-entry-context-chip warm">${escapeHtml(prettyPillValue('tripMood', preset.tripMood || 'balanced'))}</span><span class="planner-entry-context-chip muted">${escapeHtml(prettyPillValue('dayDensity', preset.dayDensity || 'balanced'))}</span><span class="planner-entry-context-chip muted">${escapeHtml(prettyPillValue('budgetMode', preset.budgetMode || 'balanced'))}</span></div></div><button class="soft-btn" type="button" id="plannerEntryPresetBtn">${escapeHtml(presetCopy.apply)}</button></div>${actions.length ? `<div class="planner-entry-context-actions">${actions.map(action => `<a class="${action.style}" href="${action.href}" data-entry-context-action="${escapeHtml(action.label)}">${escapeHtml(action.label)}</a>`).join('')}</div>` : ''}</div><div class="planner-entry-context-meta"><span class="planner-entry-context-chip">${escapeHtml(copy.chip)}</span>${entry.entryCity ? `<span class="planner-entry-context-chip muted">${escapeHtml(entry.entryCity)}</span>` : ''}</div></div>`;
-    node.querySelectorAll('[data-entry-context-action]').forEach(link => link.addEventListener('click', () => {
-      window.RyokoApp?.trackEvent?.('ryoko_planner_entry_context_action_clicked', {
-        entryKind: entry.entryKind || '',
-        entryCity: entry.entryCity || '',
-        actionLabel: link.dataset.entryContextAction || ''
+    node.innerHTML = `<div class="planner-입구-context-row"><div class="planner-입구-context-copy"><span class="eyebrow">${escapeHtml(copy.eyebrow)}</span><strong>${escapeHtml(copy.title)}</strong><p>${escapeHtml(copy.desc)}</p><div class="planner-입구-suggested"><div class="planner-입구-suggested-copy"><span class="planner-입구-suggested-label">${escapeHtml(presetCopy.label)}</span><p>${escapeHtml(presetCopy.desc)}</p>${presetCopy.detail ? `<div class="planner-입구-suggested-detail">${escapeHtml(presetCopy.detail)}</div>` : ''}${presetCopy.note ? `<div class="planner-입구-suggested-note">${escapeHtml(presetCopy.note)}</div>` : ''}${presetCopy.needsLabel ? `<div class="planner-입구-suggested-traits">${escapeHtml(presetCopy.needsLabel)}</div>` : ''}<div class="planner-입구-suggested-chips"><span class="planner-입구-context-chip warm">${escapeHtml(prettyPillValue('tripMood', preset.tripMood || 'balanced'))}</span><span class="planner-입구-context-chip muted">${escapeHtml(prettyPillValue('dayDensity', preset.dayDensity || 'balanced'))}</span><span class="planner-입구-context-chip muted">${escapeHtml(prettyPillValue('budgetMode', preset.budgetMode || 'balanced'))}</span></div></div><button class="soft-btn" type="button" id="planner입구PresetBtn">${escapeHtml(presetCopy.apply)}</button></div>${actions.length ? `<div class="planner-입구-context-actions">${actions.map(action => `<a class="${action.style}" href="${action.href}" data-입구-context-action="${escapeHtml(action.label)}">${escapeHtml(action.label)}</a>`).join('')}</div>` : ''}</div><div class="planner-입구-context-meta"><span class="planner-입구-context-chip">${escapeHtml(copy.chip)}</span>${입구.입구City ? `<span class="planner-입구-context-chip muted">${escapeHtml(입구.입구City)}</span>` : ''}</div></div>`;
+    node.querySelectorAll('[data-입구-context-action]').forEach(link => link.addEventListener('click', () => {
+      window.RyokoApp?.trackEvent?.('ryoko_planner_입구_context_action_clicked', {
+        입구Kind: 입구.입구Kind || '',
+        입구City: 입구.입구City || '',
+        actionLabel: link.dataset.입구ContextAction || ''
       });
     }));
-    qs('plannerEntryPresetBtn')?.addEventListener('click', () => {
-      applyPlannerEntrySuggestedPreset(entry);
-      showToast(uiCopy('추천 리듬을 적용했어요.','Applied the suggested route rhythm.'), 'info');
+    qs('planner입구PresetBtn')?.addEventListener('click', () => {
+      applyPlanner입구SuggestedPreset(입구);
+      showToast(uiCopy('추천 리듬을 적용했어요.','Applied the suggested 루트 rhythm.'), 'info');
     });
   }
   function budgetLabel(key){
@@ -735,13 +735,13 @@ function plannerFeedbackCopy(){
   const lang = window.RyokoApp?.lang || 'ko';
   return {
     loadingTitle: lang === 'ko' ? '도시 리듬을 읽는 중이에요' : lang === 'ja' ? '街のリズムを読んでいます' : lang === 'zhHant' ? '正在讀這座城市的節奏' : 'Reading the city rhythm',
-    loadingDesc: lang === 'ko' ? '조금 더 좋은 흐름으로 묶고 있어요.' : lang === 'ja' ? 'もう少し読みやすい流れに整えています。' : lang === 'zhHant' ? '正在整理成更順的路線節奏。' : 'Shaping the route into a cleaner flow.',
-    readyTitle: lang === 'ko' ? '루트가 준비됐어요' : lang === 'ja' ? 'ルートの準備ができました' : lang === 'zhHant' ? '路線已經準備好了' : 'Your route is ready',
+    loadingDesc: lang === 'ko' ? '조금 더 좋은 흐름으로 묶고 있어요.' : lang === 'ja' ? 'もう少し読みやすい流れに整えています。' : lang === 'zhHant' ? '正在整理成更順的路線節奏。' : 'Shaping the 루트 into a cleaner flow.',
+    readyTitle: lang === 'ko' ? '루트가 준비됐어요' : lang === 'ja' ? 'ルートの準備ができました' : lang === 'zhHant' ? '路線已經準備好了' : 'Your 루트 is ready',
     readyDesc: lang === 'ko' ? '결과 화면으로 바로 이어서 읽어보세요.' : lang === 'ja' ? 'このまま結果の流れを読んでください。' : lang === 'zhHant' ? '可以直接接著看結果頁了。' : 'You can move straight into the result now.',
-    fallbackTitle: lang === 'ko' ? '우선 샘플 리듬으로 이어둘게요' : lang === 'ja' ? '先にサンプルの流れでつないでおきます' : lang === 'zhHant' ? '先用 sample 節奏接上這條路線' : 'Using a sample rhythm for now',
-    fallbackDesc: lang === 'ko' ? '지금은 생성 응답이 불안정해서, 같은 도시의 샘플 톤으로 먼저 보여드렸어요.' : lang === 'ja' ? 'いまは生成応答が不安定だったため、同じ都市のサンプルのトーンで先に見せています。' : lang === 'zhHant' ? '目前生成回應不夠穩定，所以先用同城市的 sample tone 帶你往下走。' : 'The live response was unstable, so this opens with a sample tone from the same city first.',
-    offlineTitle: lang === 'ko' ? '오프라인 상태라 샘플 리듬으로 열었어요' : lang === 'ja' ? 'オフラインのためサンプルの流れで開きました' : lang === 'zhHant' ? '因為目前離線，所以先用 sample 節奏打開' : 'Opened with a sample rhythm while offline',
-    offlineDesc: lang === 'ko' ? '네트워크가 돌아오면 다시 시도해서 더 맞는 결과로 바꿀 수 있어요.' : lang === 'ja' ? 'ネットワークが戻ったら、もう一度試してより合う結果に整えられます。' : lang === 'zhHant' ? '等網路恢復後，可以再試一次換成更貼近的結果。' : 'Once the connection returns, retry and the route can be shaped into a better fit.',
+    fallbackTitle: lang === 'ko' ? '우선 샘플 리듬으로 이어둘게요' : lang === 'ja' ? '先にサンプルの流れでつないでおきます' : lang === 'zhHant' ? '先用 샘플 節奏接上這條路線' : 'Using a 샘플 rhythm for now',
+    fallbackDesc: lang === 'ko' ? '지금은 생성 응답이 불안정해서, 같은 도시의 샘플 톤으로 먼저 보여드렸어요.' : lang === 'ja' ? 'いまは生成応答が不安定だったため、同じ都市のサンプルのトーンで先に見せています。' : lang === 'zhHant' ? '目前生成回應不夠穩定，所以先用同城市的 샘플 tone 帶你往下走。' : 'The live response was unstable, so this opens with a 샘플 tone from the same city first.',
+    offlineTitle: lang === 'ko' ? '오프라인 상태라 샘플 리듬으로 열었어요' : lang === 'ja' ? 'オフラインのためサンプルの流れで開きました' : lang === 'zhHant' ? '因為目前離線，所以先用 샘플 節奏打開' : 'Opened with a 샘플 rhythm while offline',
+    offlineDesc: lang === 'ko' ? '네트워크가 돌아오면 다시 시도해서 더 맞는 결과로 바꿀 수 있어요.' : lang === 'ja' ? 'ネットワークが戻ったら、もう一度試してより合う結果に整えられます。' : lang === 'zhHant' ? '等網路恢復後，可以再試一次換成更貼近的結果。' : 'Once the connection returns, retry and the 루트 can be shaped into a better fit.',
     retry: lang === 'ko' ? '다시 시도' : lang === 'ja' ? 'もう一度試す' : lang === 'zhHant' ? '再試一次' : 'Retry',
     dismiss: lang === 'ko' ? '닫기' : lang === 'ja' ? '閉じる' : lang === 'zhHant' ? '關閉' : 'Dismiss'
   };
@@ -783,7 +783,7 @@ function setPlannerFeedback(mode='info', options={}){
   const desc = options.desc || (mode === 'loading' ? copy.loadingDesc : mode === 'success' ? copy.readyDesc : mode === 'offline' ? copy.offlineDesc : copy.fallbackDesc);
   panel.className = `planner-feedback-panel planner-feedback-${mode}`;
   panel.classList.remove('hidden');
-  panel.querySelector('.planner-feedback-kicker').textContent = options.kicker || (mode === 'loading' ? 'Route' : mode === 'success' ? 'Ready' : mode === 'offline' ? 'Offline' : 'Fallback');
+  panel.querySelector('.planner-feedback-kicker').textContent = options.kicker || (mode === 'loading' ? '루트' : mode === 'success' ? 'Ready' : mode === 'offline' ? 'Offline' : 'Fallback');
   panel.querySelector('.planner-feedback-title').textContent = title;
   panel.querySelector('.planner-feedback-desc').textContent = desc;
   const retry = panel.querySelector('.planner-feedback-retry');
@@ -844,7 +844,7 @@ function clearPlannerFeedback(){
     onScroll();
   }
   function updateStickyCopy(data){
-    if (qs('stickyTripTitle')) qs('stickyTripTitle').textContent = data.title || `${data.destination || 'City'} editorial route`;
+    if (qs('stickyTripTitle')) qs('stickyTripTitle').textContent = data.title || `${data.destination || 'City'} editorial 루트`;
     if (qs('stickyTripMeta')) qs('stickyTripMeta').textContent = [textValue(data.vibe,''), textValue(data.pace,'')].filter(Boolean).join(' · ') || uiCopy('개요 · 저장 · 공유 · PDF','Overview · save · share · PDF');
   }
   function updateActiveJumpChip(){
@@ -903,7 +903,7 @@ function clearPlannerFeedback(){
   }
   function updateShareStructuredData(data, canonicalHref, cleanUrl){
     const destination = textValue(data?.destination, '').trim();
-    const routeTitle = data?.title || destination || 'Ryokoplan route';
+    const 루트Title = data?.title || destination || 'Ryokoplan 루트';
     const description = normalizeSummary(data) || 'Read the city. Then build the trip.';
     const dayItems = (data?.days || []).map((day, dayIndex) => ({
       '@type':'ListItem',
@@ -938,21 +938,21 @@ function clearPlannerFeedback(){
           '@id':`${canonicalHref}#breadcrumb`,
           itemListElement:[
             { '@type':'ListItem', position:1, name:'Ryokoplan', item:'https://ryokoplan.com' },
-            { '@type':'ListItem', position:2, name: destination || 'Route', item: canonicalHref }
+            { '@type':'ListItem', position:2, name: destination || '루트', item: canonicalHref }
           ]
         },
         {
           '@type':'TouristDestination',
           '@id':`${canonicalHref}#destination`,
-          name: destination || 'East Asia city route',
+          name: destination || 'East Asia city 루트',
           url: canonicalHref,
           description,
           image:absoluteUrl(cityImageFor(destination || ''))
         },
         {
           '@type':'ItemList',
-          '@id':`${canonicalHref}#route-days`,
-          name:`${routeTitle} day flow`,
+          '@id':`${canonicalHref}#루트-days`,
+          name:`${루트Title} day flow`,
           itemListOrder:'https://schema.org/ItemListOrdered',
           numberOfItems:dayItems.length,
           itemListElement:dayItems
@@ -961,12 +961,12 @@ function clearPlannerFeedback(){
           '@type':'WebPage',
           '@id':`${cleanUrl}#webpage`,
           url: cleanUrl,
-          name:`${routeTitle} — Ryokoplan`,
+          name:`${루트Title} — Ryokoplan`,
           description,
           isPartOf:{'@id':'https://ryokoplan.com#website'},
           breadcrumb:{'@id':`${canonicalHref}#breadcrumb`},
           about:{'@id':`${canonicalHref}#destination`},
-          mainEntity:{'@id':`${canonicalHref}#route-days`},
+          mainEntity:{'@id':`${canonicalHref}#루트-days`},
           primaryImageOfPage:{'@type':'ImageObject', url:absoluteUrl('assets/images/brand/og-cover.png')}
         }
       ]
@@ -976,26 +976,26 @@ function clearPlannerFeedback(){
 
   function updateShareMeta(data){
     const destination = textValue(data?.destination, '').trim();
-    const routeTitle = data?.title || destination || 'Ryokoplan';
-    const title = destination ? `${destination} route — Ryokoplan` : `${routeTitle} — Ryokoplan`;
+    const 루트Title = data?.title || destination || 'Ryokoplan';
+    const title = destination ? `${destination} 루트 — Ryokoplan` : `${루트Title} — Ryokoplan`;
     const shareMetaMap = {
-      Tokyo:'A Tokyo route shaped around cleaner axes, softer resets, and a city-first reading order.',
-      Osaka:'An Osaka route shaped around compact meal rhythm, easier arcades, and one calmer pocket.',
-      Kyoto:'A Kyoto route built around quiet windows, slower pockets, and a cleaner editorial pace.',
-      Fukuoka:'A Fukuoka route shaped by compact food rhythm and short, readable movement.',
-      Sapporo:'A Sapporo route tuned around winter blocks, warm meals, and one shorter snow-lit close.',
-      Sendai:'A Sendai route built around green avenues, market pockets, and a calmer meal rhythm.',
-      Okinawa:'An Okinawa route shaped by one coast line, slower reset windows, and lighter island pacing.',
-      Seoul:'A Seoul route balancing stronger neighborhood contrast with a smoother city rhythm.',
-      Busan:'A Busan route built around coast timing, view pockets, and easier movement.',
-      Jeju:'A Jeju route tuned around drive reality, scenery windows, and softer rest-led movement.',
-      Gyeongju:'A Gyeongju route built around dusk heritage mood, hanok lanes, and lighter walking rhythm.',
-      Taipei:'A Taipei route tuned around night-food rhythm, layered alleys, and softer pacing.',
-      'Hong Kong':'A Hong Kong route tuned for harbor density, vertical contrast, and a cleaner night close.',
-      Macau:'A Macau route shaped around compact heritage lanes, quieter squares, and one short night close.'
+      Tokyo:'A Tokyo 루트 shaped around cleaner axes, softer resets, and a city-first reading order.',
+      Osaka:'An Osaka 루트 shaped around compact meal rhythm, easier arcades, and one calmer pocket.',
+      Kyoto:'A Kyoto 루트 built around quiet windows, slower pockets, and a cleaner editorial pace.',
+      Fukuoka:'A Fukuoka 루트 shaped by compact food rhythm and short, readable movement.',
+      Sapporo:'A Sapporo 루트 tuned around winter blocks, warm meals, and one shorter snow-lit close.',
+      Sendai:'A Sendai 루트 built around green avenues, market pockets, and a calmer meal rhythm.',
+      Okinawa:'An Okinawa 루트 shaped by one coast line, slower reset windows, and lighter island pacing.',
+      Seoul:'A Seoul 루트 balancing stronger neighborhood contrast with a smoother city rhythm.',
+      Busan:'A Busan 루트 built around coast timing, view pockets, and easier movement.',
+      Jeju:'A Jeju 루트 tuned around drive reality, scenery windows, and softer rest-led movement.',
+      Gyeongju:'A Gyeongju 루트 built around dusk heritage mood, hanok lanes, and lighter walking rhythm.',
+      Taipei:'A Taipei 루트 tuned around night-food rhythm, layered alleys, and softer pacing.',
+      'Hong Kong':'A Hong Kong 루트 tuned for harbor density, vertical contrast, and a cleaner night close.',
+      Macau:'A Macau 루트 shaped around compact heritage lanes, quieter squares, and one short night close.'
     };
     const desc = destination
-      ? (shareMetaMap[destination] || `${destination} in a city-first flow. Read the neighborhoods, compare the route, and shape the trip.`)
+      ? (shareMetaMap[destination] || `${destination} in a city-first flow. Read the neighborhoods, compare the 루트, and shape the trip.`)
       : (normalizeSummary(data) || 'Read the city. Then build the trip.');
     document.title = title;
     const pageUrl = new URL(location.href);
@@ -1016,8 +1016,8 @@ function clearPlannerFeedback(){
       'meta[name="twitter:title"]': title,
       'meta[name="twitter:description"]': desc,
       'meta[name="twitter:image"]': coverImage,
-      'meta[property="og:image:alt"]': destination ? `${destination} city-first route cover` : 'Ryokoplan city-first route cover',
-      'meta[name="twitter:image:alt"]': destination ? `${destination} city-first route cover` : 'Ryokoplan city-first route cover'
+      'meta[property="og:image:alt"]': destination ? `${destination} city-first 루트 cover` : 'Ryokoplan city-first 루트 cover',
+      'meta[name="twitter:image:alt"]': destination ? `${destination} city-first 루트 cover` : 'Ryokoplan city-first 루트 cover'
     };
     Object.entries(entries).forEach(([selector, value]) => {
       let node = document.querySelector(selector);
@@ -1154,63 +1154,63 @@ function clearPlannerFeedback(){
     return en;
   }
 
-  function priorityCityLoopNote(baseCity='', signals={}, context='result'){
-    const slug = String(baseCity || '').trim().toLowerCase();
+  function priorityCityLoopNote(기준City='', signals={}, context='result'){
+    const slug = String(기준City || '').trim().toLowerCase();
     const notes = {
       tokyo: {
         result: uiCopy('도쿄는 큰 장면을 더 늘리기보다, 축 하나를 더 깊게 읽을 때 결과가 훨씬 세련돼집니다.', 'Tokyo lands better when one axis owns the trip—Shibuya-Harajuku for lift, Asakusa-Ueno for first-trip clarity, or Kiyosumi-Ginza for polish—instead of forcing one more headline stop.', '東京は大きなスポットを足すより、ひとつの軸を深く読むほうが結果がずっと洗練されます。', '東京比起再加一個大景點，更適合把其中一條軸線讀深，整體會乾淨很多。'),
-        share: uiCopy('공유받은 도쿄 루트라면, 바로 다른 랜드마크를 더하기보다 한 축을 더 깊게 읽는 편이 좋습니다.', 'For a shared Tokyo route, sharpen one district line first, then choose whether the next move is charge, classic clarity, or a calmer design pocket.', '共有された東京ルートなら、別の名所を足す前にひとつの軸を深く読むほうが合います。', '如果這是一條分享來的東京路線，先把其中一條軸線讀深，比再疊一個地標更適合。'),
+        share: uiCopy('공유받은 도쿄 루트라면, 바로 다른 랜드마크를 더하기보다 한 축을 더 깊게 읽는 편이 좋습니다.', 'For a shared Tokyo 루트, sharpen one district line first, then choose whether the next move is charge, classic clarity, or a calmer design pocket.', '共有された東京ルートなら、別の名所を足す前にひとつの軸を深く読むほうが合います。', '如果這是一條分享來的東京路線，先把其中一條軸線讀深，比再疊一個地標更適合。'),
         guide: uiCopy('시부야-하라주쿠의 밀도, 아사쿠사-우에노의 고전축, 기요스미-긴자의 정돈된 결 중 하나를 더 깊게 읽어 보세요.', 'Choose one Tokyo line—Shibuya-Harajuku for charge, Asakusa-Ueno for first scenes, or Kiyosumi-Ginza for polish—and let that axis carry the next read.', '渋谷・原宿、浅草・上野、清澄・銀座のどれか一軸を選んで、もう少し深く読んでみてください。', '從 Shibuya-Harajuku、Asakusa-Ueno、Kiyosumi-Ginza 之中挑一條軸線，再往內讀深一點。')
       },
       kyoto: {
         result: uiCopy('교토는 더 넣기보다 덜 건드리는 쪽이 좋습니다. 다음 읽기는 속도보다 여백을 지키는 방향이 잘 맞습니다.', 'Kyoto improves when the next move protects stillness—one temple district, one river edge, one evening lane—instead of asking the city to perform again.', '京都は足すより、触りすぎないほうが合います。次の読み先も速度より余白を守る方向が向いています。', '京都通常不是靠加更多，而是靠保留留白。下一步也更適合守住安靜節奏。'),
-        share: uiCopy('공유받은 교토 루트라면, 비슷한 사찰 하나를 더하기보다 오후 여백 하나를 지키는 편이 더 좋습니다.', 'For a shared Kyoto route, guard one open afternoon and one softer dusk before adding another temple pin. That is where Kyoto starts to feel quietly luxurious.', '共有された京都ルートなら、寺をひとつ増やすより、午後の余白をひとつ守るほうがきれいです。', '如果是分享來的京都路線，比起再加一座寺，更適合先保住一段午後留白。'),
+        share: uiCopy('공유받은 교토 루트라면, 비슷한 사찰 하나를 더하기보다 오후 여백 하나를 지키는 편이 더 좋습니다.', 'For a shared Kyoto 루트, guard one open afternoon and one softer dusk before adding another temple pin. That is where Kyoto starts to feel quietly luxurious.', '共有された京都ルートなら、寺をひとつ増やすより、午後の余白をひとつ守るほうがきれいです。', '如果是分享來的京都路線，比起再加一座寺，更適合先保住一段午後留白。'),
         guide: uiCopy('교토는 히가시야마의 상징성, 가모가와의 여백, 서촌 쪽의 조용한 마감 중 어느 결을 남길지 먼저 정하세요.', 'Decide whether Kyoto should lean on Higashiyama symbolism, Kamo River breathing room, or a quieter western close, then let the rest stay secondary.', '京都では、東山の象徴性、鴨川の余白、西側の静かな締めのどれを残すかを先に決めると整います。', '先決定京都要保留的是東山的象徵性、鴨川的留白，還是西側安靜的收尾，會更順。')
       },
       seoul: {
         result: uiCopy('서울은 같은 날의 동네 대비가 결과를 바꿉니다. 강한 구역 하나와 느슨한 포켓 하나를 같이 보는 쪽이 좋습니다.', 'Seoul reads best when one sharp neighborhood—Seongsu, Euljiro, or Hannam—meets one looser pocket that lets the day breathe before night takes over.', 'ソウルは同じ日の街区コントラストで結果が変わります。強い地区とゆるいポケットをひとつずつ置くのがきれいです。', '首爾的結果很常被同一天裡的街區對比拉開。放一個強區域，再配一個鬆一點的 pocket 會更好。'),
-        share: uiCopy('공유받은 서울 루트라면, 카페 동선과 야간 구간을 같이 보고 동네 대비를 더 선명하게 만드는 편이 좋습니다.', 'For a shared Seoul route, sharpen the handoff between daytime café pockets and the late-night district instead of making every neighborhood peak at once.', '共有されたソウルルートなら、カフェの流れと夜の区間を一緒に見て、街区の対比をもう少し立てると合います。', '如果是分享來的首爾路線，建議把咖啡 pocket 和夜間段落一起看，讓街區對比更鮮明。'),
+        share: uiCopy('공유받은 서울 루트라면, 카페 동선과 야간 구간을 같이 보고 동네 대비를 더 선명하게 만드는 편이 좋습니다.', 'For a shared Seoul 루트, sharpen the handoff between daytime café pockets and the late-night district instead of making every neighborhood peak at once.', '共有されたソウルルートなら、カフェの流れと夜の区間を一緒に見て、街区の対比をもう少し立てると合います。', '如果是分享來的首爾路線，建議把咖啡 pocket 和夜間段落一起看，讓街區對比更鮮明。'),
         guide: uiCopy('성수-서울숲, 을지로-종로, 한남-이태원처럼 대비가 분명한 축을 한 번 더 읽어 보세요.', 'Re-read one Seoul contrast line—Seongsu-Seoul Forest, Euljiro-Jongno, or Hannam-Itaewon—and decide which side owns the day and which owns the close.', '聖水・ソウルの森、乙支路・鍾路、漢南・梨泰院のような対比の強い軸をもう一度読むと流れが見えます。', '再讀一次像 Seongsu-Seoul Forest、Euljiro-Jongno、Hannam-Itaewon 這種對比強的軸線，節奏會更清楚。')
       },
       busan: {
-        result: uiCopy('부산은 바다를 보는 시간대와 쉬는 창이 같이 잡혀야 좋습니다. 전망 하나와 느린 식사 하나를 같이 보세요.', 'Busan works best when the coast arrives at the right hour and one real rest window keeps the route from turning into slopes and transfers.', '釜山は海を見る時間帯と休む窓が一緒に取れているときがいちばんきれいです。', '釜山最適合把看海的時間帶和真正的休息窗口一起留住。'),
-        share: uiCopy('공유받은 부산 루트라면, 바다 장면을 더 늘리기보다 이동 부담 없는 전망 하나를 더 선명하게 남기는 편이 좋습니다.', 'For a shared Busan route, make one easy coast view memorable—Haeundae, Gwanganli, or Yeongdo—before adding another sea scene that steals energy.', '共有された釜山ルートなら、海の場面を増やすより、負担の少ない眺めをひとつ強く残すほうが合います。', '如果是分享來的釜山路線，比起再加更多海景，更適合把一個移動負擔低的 view 留得更清楚。'),
+        result: uiCopy('부산은 바다를 보는 시간대와 쉬는 창이 같이 잡혀야 좋습니다. 전망 하나와 느린 식사 하나를 같이 보세요.', 'Busan works best when the coast arrives at the right hour and one real rest window keeps the 루트 from turning into slopes and transfers.', '釜山は海を見る時間帯と休む窓が一緒に取れているときがいちばんきれいです。', '釜山最適合把看海的時間帶和真正的休息窗口一起留住。'),
+        share: uiCopy('공유받은 부산 루트라면, 바다 장면을 더 늘리기보다 이동 부담 없는 전망 하나를 더 선명하게 남기는 편이 좋습니다.', 'For a shared Busan 루트, make one easy coast view memorable—Haeundae, Gwanganli, or Yeongdo—before adding another sea scene that steals energy.', '共有された釜山ルートなら、海の場面を増やすより、負担の少ない眺めをひとつ強く残すほうが合います。', '如果是分享來的釜山路線，比起再加更多海景，更適合把一個移動負擔低的 view 留得更清楚。'),
         guide: uiCopy('영도·흰여울·해운대 중 지금 페이스에 맞는 해안 축 하나를 먼저 고르세요.', 'Pick one Busan coast axis—Yeongdo for texture, Huinnyeoul for a softer cliff edge, or Haeundae for cleaner ease—and let that mood set the rest of the pace.', '影島・白瀬・海雲台のうち、今のペースに合う海側の軸をひとつ先に選んでください。', '先從 Yeongdo、Huinnyeoul、Haeundae 裡挑一條符合你現在步調的海岸軸線。')
       },
       fukuoka: {
         result: uiCopy('후쿠오카는 더 많이 보기보다 meal rhythm을 지키는 쪽이 훨씬 좋습니다. 식사와 산책의 간격을 다시 보세요.', 'Fukuoka gets stronger when the meal rhythm stays intact—Tenjin, Hakata, Nakasu, one more coffee, one more bite—instead of turning the weekend into stop-counting.', '福岡は多く見るより、食のリズムを守るほうがずっと良くなります。食事と散歩の間隔を見直してください。', '福岡比起塞更多停點，更適合守住 meal rhythm。先把用餐與散步之間的間隔看順。'),
-        share: uiCopy('공유받은 후쿠오카 루트라면, 명소 하나보다 식사 타이밍 하나를 더 정확하게 잡는 편이 낫습니다.', 'For a shared Fukuoka route, refine one meal window and one walking pocket before adding another attraction. This city pays off through timing more than scale.', '共有された福岡ルートなら、名所を増やす前に食事のタイミングをひとつ整えるほうが合います。', '如果是分享來的福岡路線，先把其中一段用餐時段調準，比再加一個景點更適合。'),
+        share: uiCopy('공유받은 후쿠오카 루트라면, 명소 하나보다 식사 타이밍 하나를 더 정확하게 잡는 편이 낫습니다.', 'For a shared Fukuoka 루트, refine one meal window and one walking pocket before adding another attraction. This city pays off through timing more than scale.', '共有された福岡ルートなら、名所を増やす前に食事のタイミングをひとつ整えるほうが合います。', '如果是分享來的福岡路線，先把其中一段用餐時段調準，比再加一個景點更適合。'),
         guide: uiCopy('하카타·텐진·오호리 쪽에서 식사 리듬과 짧은 이동이 같이 되는 축을 다시 읽어 보세요.', 'Re-read the Hakata, Tenjin, and Ohori axis where short moves, coffee pockets, and meal timing still sit together. That is where Fukuoka feels exact.', '博多・天神・大濠の軸で、食事リズムと短い移動が一緒に成立する流れを見直してみてください。', '再讀一次 Hakata、Tenjin、Ohori 這條兼顧短移動與用餐節奏的軸線。')
       },
       taipei: {
         result: uiCopy('타이베이는 밤 공기와 먹는 리듬이 같이 움직일 때 좋습니다. 야시장 하나보다 동선 하나를 더 매끈하게 보세요.', 'Taipei lands best when the night air, side-street appetite, and one slower tea or dessert pocket move as one sequence.', '台北は夜の空気と食のリズムが一緒に動くときにいちばん良く見えます。', '台北最適合讓夜晚空氣和吃的節奏一起走，不一定是再多一個夜市。'),
-        share: uiCopy('공유받은 타이베이 루트라면, 야시장 개수보다 저녁 전후의 리듬을 더 매끈하게 정리하는 편이 좋습니다.', 'For a shared Taipei route, smooth the handoff from late afternoon into dinner and a second night pocket before adding another market.', '共有された台北ルートなら、夜市を増やすより夕食前後の流れをなめらかに整えるほうが合います。', '如果是分享來的台北路線，比起再加一個夜市，更適合先把晚餐前後的節奏整理順。'),
+        share: uiCopy('공유받은 타이베이 루트라면, 야시장 개수보다 저녁 전후의 리듬을 더 매끈하게 정리하는 편이 좋습니다.', 'For a shared Taipei 루트, smooth the handoff from late afternoon into dinner and a second night pocket before adding another market.', '共有された台北ルートなら、夜市を増やすより夕食前後の流れをなめらかに整えるほうが合います。', '如果是分享來的台北路線，比起再加一個夜市，更適合先把晚餐前後的節奏整理順。'),
         guide: uiCopy('융캉제·츠펑·시먼 중 어느 밤 결을 더 읽을지 먼저 정하면 타이베이가 훨씬 또렷해집니다.', 'Taipei gets clearer once you choose whether Yongkang opens softly, Chifeng adds texture, or Ximending carries the brighter late-night handoff.', '永康街・赤峰街・西門のどの夜の質感を主役にするかを先に決めると、台北がずっと明確になります。', '先決定要讓 Yongkang、Chifeng 還是 Ximending 帶出夜晚調性，台北就會清楚很多。')
       },
       hongkong: {
         result: uiCopy('홍콩은 압축된 수직감이 강해서, 한 구간씩 숨을 쉬게 남겨야 결과가 좋아집니다.', 'Hong Kong stays sharp when one compressed vertical stretch—Central slopes, Tsim Sha Tsui waterfront, or Wan Chai neon—meets one deliberate breathing pocket.', '香港は圧縮された縦の密度が強いので、一区間ずつ呼吸できる余白を残すと結果が良くなります。', '香港的垂直壓縮感很強，所以每一段之間都要留一個能喘口氣的 pocket。'),
-        share: uiCopy('공유받은 홍콩 루트라면, 한 장면을 더 세게 만들기보다 경사와 야경 사이에 숨 쉴 구간을 남겨 두세요.', 'For a shared Hong Kong route, keep one breathing pocket between the slope, harbor, and night view so the city stays cinematic instead of exhausting.', '共有された香港ルートなら、景色を強くするより、坂・夜景・港のあいだに呼吸できる区間を残すほうが合います。', '如果是分享來的香港路線，比起再加強一個場景，更適合在坡地、夜景與港灣之間留一段喘息。'),
+        share: uiCopy('공유받은 홍콩 루트라면, 한 장면을 더 세게 만들기보다 경사와 야경 사이에 숨 쉴 구간을 남겨 두세요.', 'For a shared Hong Kong 루트, keep one breathing pocket between the slope, harbor, and night view so the city stays cinematic instead of exhausting.', '共有された香港ルートなら、景色を強くするより、坂・夜景・港のあいだに呼吸できる区間を残すほうが合います。', '如果是分享來的香港路線，比起再加強一個場景，更適合在坡地、夜景與港灣之間留一段喘息。'),
         guide: uiCopy('센트럴·셩완, 침사추이, 완차이·코즈웨이베이 중 어느 수직 리듬을 먼저 읽을지 고르세요.', 'Choose whether Central-Sheung Wan should lead with vertical pressure, Tsim Sha Tsui with harbor clarity, or Wan Chai-Causeway Bay with late neon, then let the others stay in support.', 'セントラル・上環、尖沙咀、湾仔・銅鑼湾のどの縦のリズムを先に読むかを決めると整います。', '先決定 Central-Sheung Wan、Tsim Sha Tsui、Wan Chai-Causeway Bay 哪一條要帶出這座城市的垂直節奏。')
       }
     };
-    const entry = notes[slug];
-    if (!entry) return '';
-    if (signals?.tags?.includes('local-mode') && context !== 'share') return entry.guide || entry.result;
-    return entry[context] || entry.result || '';
+    const 입구 = notes[slug];
+    if (!입구) return '';
+    if (signals?.tags?.includes('local-mode') && context !== 'share') return 입구.guide || 입구.result;
+    return 입구[context] || 입구.result || '';
   }
   
   const priorityCityRefineMap = {
     tokyo:{
       ko:{district:'도쿄는 headline district만 따라가면 쉽게 피곤해집니다. Kiyosumi나 Jinbocho 같은 quieter layer를 중간에 끼우면 훨씬 더 오래 갑니다.', rhythm:[['Morning anchor','Asakusa나 Ueno처럼 이해가 쉬운 district로 열어두는 편이 가장 좋습니다.'],['Afternoon reset','Kiyosumi나 river edge 쪽으로 tempo를 낮추면 하루가 훨씬 덜 빽빽해집니다.'],['Night close','Kagurazaka나 조용한 dinner pocket으로 마감하면 도쿄가 훨씬 더 세련되게 남습니다.']], variants:[['Rainy version','실내성이 있는 museum / café pocket을 더 빨리 넣으세요.'],['Slower version','Shibuya나 Shinjuku보다 Kiyosumi·Jinbocho 비중을 늘리면 훨씬 부드러워집니다.'],['Night version','Omoide lane이나 late café처럼 압축된 밤 장면 하나만 두는 편이 좋습니다.']]},
-      en:{district:'Tokyo gets tiring when it stays only on headline districts. Add Kiyosumi or Jinbocho and the route immediately gains more control.', rhythm:[['Morning anchor','Open through a clear icon district like Asakusa or Ueno.'],['Afternoon reset','Let Kiyosumi or one river-edge pocket lower the tempo in the middle.'],['Night close','End with Kagurazaka or another quieter dinner pocket so Tokyo lands with more elegance.']], variants:[['Rainy version','Bring museum and café pockets forward much earlier.'],['Slower version','Shift weight from Shibuya/Shinjuku toward Kiyosumi and Jinbocho.'],['Night version','Keep only one compressed after-dark scene, like Omoide lane or a late café.']]}
+      en:{district:'Tokyo gets tiring when it stays only on headline districts. Add Kiyosumi or Jinbocho and the 루트 immediately gains more control.', rhythm:[['Morning anchor','Open through a clear icon district like Asakusa or Ueno.'],['Afternoon reset','Let Kiyosumi or one river-edge pocket lower the tempo in the middle.'],['Night close','End with Kagurazaka or another quieter dinner pocket so Tokyo lands with more elegance.']], variants:[['Rainy version','Bring museum and café pockets forward much earlier.'],['Slower version','Shift weight from Shibuya/Shinjuku toward Kiyosumi and Jinbocho.'],['Night version','Keep only one compressed after-dark scene, like Omoide lane or a late café.']]}
     },
     seoul:{
       ko:{district:'서울은 contrast가 강한 만큼 quieter district 하나가 꼭 필요합니다. Seochon이나 Jongno backstreet를 끼워 넣어야 도시가 더 오래 남습니다.', rhythm:[['Morning anchor','성수나 북촌처럼 이해가 쉬운 district로 여세요.'],['Afternoon reset','Seochon이나 quieter lane으로 한 번 숨을 고르면 서울의 밀도가 훨씬 정리됩니다.'],['Night close','을지로나 한남처럼 밤의 질감을 하나만 선명하게 두세요.']], variants:[['Rainy version','실내 밀도가 높은 북촌 edge나 을지로 pocket 쪽을 먼저 쓰는 편이 좋습니다.'],['Slower version','망원·서촌 비중을 늘리면 서울이 훨씬 덜 피곤해집니다.'],['Night version','이태원/을지로 late texture를 짧게 하나만 선명하게 남기는 편이 좋습니다.']]},
-      en:{district:'Seoul needs one quieter district to stop its contrast from getting too loud. Add Seochon or the Jongno backstreets and the route holds much longer.', rhythm:[['Morning anchor','Open through an easy district like Seongsu or Bukchon edge.'],['Afternoon reset','Let Seochon or another quieter lane absorb the middle of the day.'],['Night close','Keep one strong evening texture—Euljiro, Hannam, or a similar late district—and stop there.']], variants:[['Rainy version','Bring denser indoor pockets like Bukchon edge or Euljiro forward.'],['Slower version','Increase Mangwon and Seochon so Seoul stops feeling too hard-edged.'],['Night version','Use only one late texture, such as Itaewon or Euljiro, and keep it tight.']]}
+      en:{district:'Seoul needs one quieter district to stop its contrast from getting too loud. Add Seochon or the Jongno backstreets and the 루트 holds much longer.', rhythm:[['Morning anchor','Open through an easy district like Seongsu or Bukchon edge.'],['Afternoon reset','Let Seochon or another quieter lane absorb the middle of the day.'],['Night close','Keep one strong evening texture—Euljiro, Hannam, or a similar late district—and stop there.']], variants:[['Rainy version','Bring denser indoor pockets like Bukchon edge or Euljiro forward.'],['Slower version','Increase Mangwon and Seochon so Seoul stops feeling too hard-edged.'],['Night version','Use only one late texture, such as Itaewon or Euljiro, and keep it tight.']]}
     },
     kyoto:{
       ko:{district:'교토는 iconic frame 뒤에 quieter pocket을 붙일 때 cliché에서 벗어납니다. Okazaki, Nishijin, Kamo river edge 중 하나가 꼭 필요합니다.', rhythm:[['Morning anchor','Higashiyama처럼 iconic district는 이른 시간에 읽는 편이 훨씬 좋습니다.'],['Afternoon reset','Okazaki나 museum pocket으로 한 번 낮추면 교토가 훨씬 더 부드럽게 이어집니다.'],['Night close','Kamo river edge나 조용한 tea/dinner pocket으로 마감하세요.']], variants:[['Rainy version','museum pocket과 covered lane 비중을 늘리세요.'],['Slower version','Nishijin이나 river walk를 더 길게 두는 편이 좋습니다.'],['Night version','야경을 키우기보다 dusk walk와 조용한 dinner를 남기는 쪽이 맞습니다.']]},
-      en:{district:'Kyoto escapes cliché once one quieter pocket follows the iconic frame. Okazaki, Nishijin, or the Kamo river edge usually does the job.', rhythm:[['Morning anchor','Read iconic Kyoto early, while districts like Higashiyama are still clear.'],['Afternoon reset','Use Okazaki or another museum pocket to lower the middle of the day.'],['Night close','Close through the river edge or a quiet tea-and-dinner pocket.']], variants:[['Rainy version','Bring museums and covered lanes forward.'],['Slower version','Let Nishijin or one river walk hold more of the route.'],['Night version','Choose dusk walking and quiet dinner over a heavier night scene.']]}
+      en:{district:'Kyoto escapes cliché once one quieter pocket follows the iconic frame. Okazaki, Nishijin, or the Kamo river edge usually does the job.', rhythm:[['Morning anchor','Read iconic Kyoto early, while districts like Higashiyama are still clear.'],['Afternoon reset','Use Okazaki or another museum pocket to lower the middle of the day.'],['Night close','Close through the river edge or a quiet tea-and-dinner pocket.']], variants:[['Rainy version','Bring museums and covered lanes forward.'],['Slower version','Let Nishijin or one river walk hold more of the 루트.'],['Night version','Choose dusk walking and quiet dinner over a heavier night scene.']]}
     },
     taipei:{
       ko:{district:'타이베이는 food-first 뒤에 texture pocket이 붙을 때 훨씬 또렷해집니다. Chifeng, Dihua late, Treasure Hill 중 하나를 남겨두세요.', rhythm:[['Morning anchor','Yongkang이나 Dongmen처럼 meal rhythm이 쉬운 축으로 여세요.'],['Afternoon reset','Chifeng이나 Dihua 쪽에서 texture를 한 겹 넣으면 타이베이가 더 도시답게 남습니다.'],['Night close','night market 하나만 선명하게 두고 끝내는 편이 좋습니다.']], variants:[['Rainy version','bookshop/tea room과 covered lane 비중을 더 빠르게 올리세요.'],['Slower version','Treasure Hill이나 river pocket을 넣으면 appetite 중심에서 벗어납니다.'],['Night version','late dessert나 one market close만 두고 과하게 늘리지 않는 편이 좋습니다.']]},
@@ -1218,7 +1218,7 @@ function clearPlannerFeedback(){
     },
     hongkong:{
       ko:{district:'홍콩은 skyline 뒤에 slope street와 harbor edge를 붙일수록 훨씬 세련되게 남습니다. PMQ/Soho, Sheung Wan, West Kowloon을 적극적으로 쓰세요.', rhythm:[['Morning anchor','Central이나 ferry처럼 vertical/habor anchor로 여세요.'],['Afternoon reset','PMQ/Soho나 Sheung Wan backstreet로 한 번 tempo를 내려야 홍콩이 덜 피곤합니다.'],['Night close','Tsim Sha Tsui나 harbor edge에서 night glow를 하나만 남기세요.']], variants:[['Rainy version','mall보다 slope street와 café pocket을 섞어 밀도를 조절하세요.'],['Slower version','West Kowloon이나 Sheung Wan 쪽 비중을 늘리면 훨씬 더 세련됩니다.'],['Night version','skyline은 하나만 두고, 나머지는 harbor edge와 dessert pocket으로 마감하는 편이 좋습니다.']]},
-      en:{district:'Hong Kong reads with much more elegance when slope streets and the harbor edge temper the skyline pressure. Use PMQ/Soho, Sheung Wan, and West Kowloon actively.', rhythm:[['Morning anchor','Open through a vertical or harbor anchor like Central or the ferry.'],['Afternoon reset','Lower the middle through PMQ/Soho or the Sheung Wan backstreets.'],['Night close','Keep one clear harbor-side night scene and stop there.']], variants:[['Rainy version','Balance dense indoor areas with slope streets and café pockets.'],['Slower version','Increase West Kowloon or Sheung Wan for a more elegant pace.'],['Night version','Keep one skyline moment only, then let harbor edge and dessert pockets close the route.']]}
+      en:{district:'Hong Kong reads with much more elegance when slope streets and the harbor edge temper the skyline pressure. Use PMQ/Soho, Sheung Wan, and West Kowloon actively.', rhythm:[['Morning anchor','Open through a vertical or harbor anchor like Central or the ferry.'],['Afternoon reset','Lower the middle through PMQ/Soho or the Sheung Wan backstreets.'],['Night close','Keep one clear harbor-side night scene and stop there.']], variants:[['Rainy version','Balance dense indoor areas with slope streets and café pockets.'],['Slower version','Increase West Kowloon or Sheung Wan for a more elegant pace.'],['Night version','Keep one skyline moment only, then let harbor edge and dessert pockets close the 루트.']]}
     },
     busan:{
       ko:{district:'부산은 coast line 뒤에 harbor-side everyday texture를 넣을 때 훨씬 입체적으로 변합니다. Yeongdo, Bosu, Nampo 중 하나는 꼭 남겨두세요.', rhythm:[['Morning anchor','Haeundae나 coast line처럼 이해 쉬운 바다 축으로 여세요.'],['Afternoon reset','Yeongdo나 Bosu/Nampo로 넘어가면 postcard 느낌이 한 번 눌립니다.'],['Night close','Gwangalli나 quiet coast walk처럼 밤 장면 하나만 선명하게 남기세요.']], variants:[['Rainy version','indoor café pocket과 old lane 비중을 늘리세요.'],['Slower version','Yeongdo·old lane 비중을 늘리면 부산이 훨씬 덜 전형적으로 남습니다.'],['Night version','광안리나 quiet shore line 하나만 선명하게 두는 편이 좋습니다.']]},
@@ -1226,23 +1226,23 @@ function clearPlannerFeedback(){
     },
     fukuoka:{
       ko:{district:'후쿠오카는 food-first 뒤에 quiet local pocket을 붙일 때 훨씬 더 distinct하게 남습니다. Hakata Station side, Yakuin, Ohori edge를 적극적으로 쓰세요.', rhythm:[['Morning anchor','Hakata나 first meal pocket으로 간결하게 여세요.'],['Afternoon reset','Yakuin이나 café pocket으로 한 번 조용하게 낮추면 후쿠오카가 훨씬 local하게 보입니다.'],['Night close','yatai나 compact bar close처럼 작은 밤 장면 하나만 남기세요.']], variants:[['Rainy version','station side, indoor café, department pocket 비중을 높이세요.'],['Slower version','Ohori edge와 Yakuin 비중을 늘리면 훨씬 덜 바쁘게 남습니다.'],['Night version','yatai나 compact bar close 하나만 짧게 두는 편이 가장 좋습니다.']]},
-      en:{district:'Fukuoka becomes much more distinct when one quiet local pocket follows the food line. Keep Hakata Station side, Yakuin, or Ohori edge in play.', rhythm:[['Morning anchor','Open compactly through Hakata or a first-meal pocket.'],['Afternoon reset','Lower the middle through Yakuin or a café pocket so Fukuoka reads more local.'],['Night close','Keep one small after-dark scene—yatai or a compact bar close—and stop there.']], variants:[['Rainy version','Increase station-side, indoor café, and department-store pockets.'],['Slower version','Give more weight to Ohori edge and Yakuin for a calmer route.'],['Night version','One short yatai or compact bar close is usually enough.']]}
+      en:{district:'Fukuoka becomes much more distinct when one quiet local pocket follows the food line. Keep Hakata Station side, Yakuin, or Ohori edge in play.', rhythm:[['Morning anchor','Open compactly through Hakata or a first-meal pocket.'],['Afternoon reset','Lower the middle through Yakuin or a café pocket so Fukuoka reads more local.'],['Night close','Keep one small after-dark scene—yatai or a compact bar close—and stop there.']], variants:[['Rainy version','Increase station-side, indoor café, and department-store pockets.'],['Slower version','Give more weight to Ohori edge and Yakuin for a calmer 루트.'],['Night version','One short yatai or compact bar close is usually enough.']]}
     },
     osaka:{
-      ko:{district:'오사카는 headline spot보다 meal spacing과 아케이드 shelter가 route quality를 훨씬 더 크게 바꿉니다. Namba와 Umeda를 둘 다 세게 쓰기보다 one food core와 one slower west pocket을 나누는 편이 좋습니다.', rhythm:[['Morning anchor','Kuromon이나 Namba edge처럼 먹는 리듬이 쉬운 축으로 여는 편이 가장 안정적입니다.'],['Afternoon reset','Nakanoshima·Utsubo처럼 quieter west pocket이 들어가야 오사카가 덜 시끄럽고 더 세련되게 남습니다.'],['Night close','밤은 Dotonbori나 Umeda 중 한 축만 짧고 선명하게 두는 편이 좋습니다.']], variants:[['Rainy version','Arcade, depachika, indoor café pocket을 더 빨리 넣고 거리 비중을 줄이세요.'],['Slower version','Namba 비중을 줄이고 Nakanoshima나 Yodoyabashi 쪽 비중을 늘리면 훨씬 부드러워집니다.'],['Night version','도톤보리 전 구간을 길게 끌기보다 bright scene 하나와 late dessert 하나만 남기세요.']]},
+      ko:{district:'오사카는 headline spot보다 meal spacing과 아케이드 shelter가 루트 quality를 훨씬 더 크게 바꿉니다. Namba와 Umeda를 둘 다 세게 쓰기보다 one food core와 one slower west pocket을 나누는 편이 좋습니다.', rhythm:[['Morning anchor','Kuromon이나 Namba edge처럼 먹는 리듬이 쉬운 축으로 여는 편이 가장 안정적입니다.'],['Afternoon reset','Nakanoshima·Utsubo처럼 quieter west pocket이 들어가야 오사카가 덜 시끄럽고 더 세련되게 남습니다.'],['Night close','밤은 Dotonbori나 Umeda 중 한 축만 짧고 선명하게 두는 편이 좋습니다.']], variants:[['Rainy version','Arcade, depachika, indoor café pocket을 더 빨리 넣고 거리 비중을 줄이세요.'],['Slower version','Namba 비중을 줄이고 Nakanoshima나 Yodoyabashi 쪽 비중을 늘리면 훨씬 부드러워집니다.'],['Night version','도톤보리 전 구간을 길게 끌기보다 bright scene 하나와 late dessert 하나만 남기세요.']]},
       en:{district:'In Osaka, meal spacing and arcade shelter matter more than adding another headline spot. A food core plus one slower west-side pocket usually lands better than going equally hard on both Namba and Umeda.', rhythm:[['Morning anchor','Open through an easy food line such as Kuromon or the Namba edge.'],['Afternoon reset','A quieter west pocket like Nakanoshima or Utsubo keeps Osaka from feeling too loud for too long.'],['Night close','At night, go clear on either Dotonbori or Umeda, not both.']], variants:[['Rainy version','Bring arcades, depachika, and indoor café pockets forward much earlier.'],['Slower version','Reduce Namba weight and give more space to Nakanoshima or Yodoyabashi.'],['Night version','Keep one bright-night scene and one late dessert instead of stretching Dotonbori too far.']]}
     },
     sapporo:{
       ko:{district:'삿포로는 볼거리를 늘리기보다 wide axis와 warm pocket을 같이 두는 편이 훨씬 좋습니다. Odori의 넓이와 Susukino의 밤을 한 번에 다 세게 쓰기보다 midday heat pocket을 끼워 넣으세요.', rhythm:[['Morning anchor','오도리처럼 block structure가 잘 읽히는 축으로 열어야 도시가 가장 깨끗하게 자리 잡습니다.'],['Afternoon reset','카페나 warm meal pocket이 오후 한복판에 꼭 들어가야 겨울 도시 피로가 덜 쌓입니다.'],['Night close','밤은 스스키노 한 장면이나 전망 하나만 짧게 남기는 편이 좋습니다.']], variants:[['Rainy version','실내 전망, 지하 연결축, 아케이드 pocket을 더 많이 써서 block 이동을 짧게 유지하세요.'],['Slower version','마루야마나 quieter side를 늘리고 스스키노 비중을 줄이면 도시가 훨씬 더 부드럽게 남습니다.'],['Night version','긴 바 hopping보다 warm dinner와 night scene 하나만 선명하게 남기세요.']]},
-      en:{district:'Sapporo works better when a wide city axis and one warm pocket stay together. Instead of pushing Odori and Susukino equally hard, insert a midday heat-and-rest pocket.', rhythm:[['Morning anchor','Open through a block-readable line like Odori so the city settles in cleanly.'],['Afternoon reset','A café or warm-meal pocket in the middle protects the whole route in colder weather.'],['Night close','Keep only one Susukino or night-view scene short and vivid.']], variants:[['Rainy version','Use indoor views, underground links, and arcade pockets so block movement stays short.'],['Slower version','Increase Maruyama or another quieter side and reduce Susukino weight.'],['Night version','One warm dinner and one winter-night scene usually land better than a longer bar chain.']]}
+      en:{district:'Sapporo works better when a wide city axis and one warm pocket stay together. Instead of pushing Odori and Susukino equally hard, insert a midday heat-and-rest pocket.', rhythm:[['Morning anchor','Open through a block-readable line like Odori so the city settles in cleanly.'],['Afternoon reset','A café or warm-meal pocket in the middle protects the whole 루트 in colder weather.'],['Night close','Keep only one Susukino or night-view scene short and vivid.']], variants:[['Rainy version','Use indoor views, underground links, and arcade pockets so block movement stays short.'],['Slower version','Increase Maruyama or another quieter side and reduce Susukino weight.'],['Night version','One warm dinner and one winter-night scene usually land better than a longer bar chain.']]}
     },
     sendai:{
       ko:{district:'센다이는 큰 장면보다 calm axis 하나를 제대로 읽을 때 훨씬 더 도시답게 남습니다. 역권과 조젠지도리를 한 축으로 두고, market이나 green pocket 하나를 끼워 넣는 편이 좋습니다.', rhythm:[['Morning anchor','역권이나 arcade처럼 friction이 적은 중심 축으로 여는 편이 가장 쉽습니다.'],['Afternoon reset','조젠지도리나 market pocket이 midday에 들어가야 센다이가 통과지가 아니라 도시처럼 남습니다.'],['Night close','밤은 loud scene보다 quiet dinner close와 짧은 산책 하나로 닫는 편이 더 잘 맞습니다.']], variants:[['Rainy version','river나 큰 야외 장면 비중을 줄이고 arcade, market, café pocket으로 바로 전환하세요.'],['Slower version','조젠지도리나 quieter lane 하나만 길게 남기고 나머지는 식사와 pause로 두세요.'],['Night version','큰 야경보다 dinner close 하나만 선명하게 두어도 충분합니다.']]},
-      en:{district:'Sendai becomes much more like a real city when one calm axis is read properly. Keep the station side and Jozenji-dori on one line, then insert a market or green pocket.', rhythm:[['Morning anchor','Open through an easy central line such as the station side or the arcade.'],['Afternoon reset','Jozenji-dori or one market pocket in the middle keeps Sendai from feeling like a pass-through stop.'],['Night close','A quiet dinner close and one short walk usually suit the city better than forcing a louder night.']], variants:[['Rainy version','Reduce river or outdoor weight and pivot quickly into arcades, markets, and café pockets.'],['Slower version','Let one line such as Jozenji-dori hold more of the route and leave the rest as pauses.'],['Night version','A single dinner close already gives the night enough shape.']]}
+      en:{district:'Sendai becomes much more like a real city when one calm axis is read properly. Keep the station side and Jozenji-dori on one line, then insert a market or green pocket.', rhythm:[['Morning anchor','Open through an easy central line such as the station side or the arcade.'],['Afternoon reset','Jozenji-dori or one market pocket in the middle keeps Sendai from feeling like a pass-through stop.'],['Night close','A quiet dinner close and one short walk usually suit the city better than forcing a louder night.']], variants:[['Rainy version','Reduce river or outdoor weight and pivot quickly into arcades, markets, and café pockets.'],['Slower version','Let one line such as Jozenji-dori hold more of the 루트 and leave the rest as pauses.'],['Night version','A single dinner close already gives the night enough shape.']]}
     },
     okinawa:{
-      ko:{district:'오키나와는 beach count보다 drive pause가 중요합니다. coast line을 더 늘리기보다 one closer sea opener와 one soft dusk close를 남기는 편이 훨씬 좋습니다.', rhythm:[['Morning anchor','가까운 coast line 하나로 먼저 열어야 섬 리듬이 부드럽게 시작됩니다.'],['Afternoon reset','오후에는 beach 추가보다 café, resort, aquarium pocket 같은 pause가 route quality를 지켜 줍니다.'],['Night close','밤은 loud downtown보다 dusk sea와 quiet dinner close 쪽이 더 오래 남습니다.']], variants:[['Rainy version','비나 바람이 강하면 beach count를 빨리 줄이고 indoor fallback으로 pivot하세요.'],['Slower version','한쪽 해안만 깊게 읽고 나머지는 숙소 휴식과 늦은 점심으로 남기는 편이 좋습니다.'],['Night version','late-night city보다 dusk sea 하나를 길게 남기세요.']]},
-      en:{district:'In Okinawa, drive pauses matter more than beach count. Instead of extending the coast line further, keep one closer sea opener and one soft dusk close.', rhythm:[['Morning anchor','Open through one closer coast line so the island rhythm starts gently.'],['Afternoon reset','In the afternoon, a café, resort, or aquarium pocket protects the route better than one more beach.'],['Night close','A dusk sea scene and a quiet dinner usually stay longer than a louder downtown night.']], variants:[['Rainy version','When rain or strong wind hits, cut the beach count quickly and pivot indoors.'],['Slower version','Read one side of the coast more deeply and leave the rest for hotel resets and slower lunches.'],['Night version','Keep one longer dusk-sea scene instead of forcing late-night city energy.']]}
+      ko:{district:'오키나와는 beach count보다 drive pause가 중요합니다. coast line을 더 늘리기보다 one closer sea opener와 one soft dusk close를 남기는 편이 훨씬 좋습니다.', rhythm:[['Morning anchor','가까운 coast line 하나로 먼저 열어야 섬 리듬이 부드럽게 시작됩니다.'],['Afternoon reset','오후에는 beach 추가보다 café, resort, aquarium pocket 같은 pause가 루트 quality를 지켜 줍니다.'],['Night close','밤은 loud downtown보다 dusk sea와 quiet dinner close 쪽이 더 오래 남습니다.']], variants:[['Rainy version','비나 바람이 강하면 beach count를 빨리 줄이고 indoor fallback으로 pivot하세요.'],['Slower version','한쪽 해안만 깊게 읽고 나머지는 숙소 휴식과 늦은 점심으로 남기는 편이 좋습니다.'],['Night version','late-night city보다 dusk sea 하나를 길게 남기세요.']]},
+      en:{district:'In Okinawa, drive pauses matter more than beach count. Instead of extending the coast line further, keep one closer sea opener and one soft dusk close.', rhythm:[['Morning anchor','Open through one closer coast line so the island rhythm starts gently.'],['Afternoon reset','In the afternoon, a café, resort, or aquarium pocket protects the 루트 better than one more beach.'],['Night close','A dusk sea scene and a quiet dinner usually stay longer than a louder downtown night.']], variants:[['Rainy version','When rain or strong wind hits, cut the beach count quickly and pivot indoors.'],['Slower version','Read one side of the coast more deeply and leave the rest for hotel resets and slower lunches.'],['Night version','Keep one longer dusk-sea scene instead of forcing late-night city energy.']]}
     },
     jeju:{
       ko:{district:'제주는 coast line을 다 보려 하기보다 one west or east line을 깊게 읽는 편이 훨씬 좋습니다. 풍경 포인트 개수보다 café pause와 drive spacing이 더 중요합니다.', rhythm:[['Morning anchor','애월이나 성산처럼 장면이 쉬운 해안 축 하나로 여세요.'],['Afternoon reset','카페나 village pocket이 midday에 꼭 들어가야 제주가 단순 사진 sweep이 되지 않습니다.'],['Night close','밤은 늦은 이동보다 숙소 근처 dinner와 조용한 coast close가 더 잘 맞습니다.']], variants:[['Rainy version','wind/rain이 강하면 scenic drive를 줄이고 café, museum, hotel pause를 적극적으로 쓰세요.'],['Slower version','동/서 한 축만 남기고 나머지는 숙소 휴식과 늦은 lunch로 비워 두세요.'],['Night version','late-night drive보다 dusk coast와 quiet dinner close를 우선하세요.']]},
@@ -1259,10 +1259,10 @@ function clearPlannerFeedback(){
   };
 
   const priorityResultEditorialMap = {
-    osaka:{ ko:{title:'Food-first Osaka, but edited softly', why:'오사카는 명소 수보다 먹는 타이밍과 쉬는 구간이 더 중요합니다. 이번 결과는 food core를 살리면서도 과밀해지지 않게 조정하는 쪽이 잘 맞습니다.', bestFor:'짧은 일정에서도 먹고 걷고 쉬는 리듬을 분명하게 남기고 싶은 사람', rainy:'아케이드, depachika, indoor café pocket을 앞당기면 비 오는 날에도 리듬이 잘 유지됩니다.', slower:'Nakanoshima나 quieter west pocket 비중을 늘리면 훨씬 더 정돈된 오사카가 됩니다.', swap:'Namba와 Umeda를 둘 다 길게 끌기보다, 한쪽만 깊게 두고 다른 한쪽은 dinner close 정도로 남기세요.'}, en:{title:'Food-first Osaka, edited more softly', why:'In Osaka, meal timing and easier movement matter more than adding more headline spots. The cleaner move is to keep the food core vivid without letting the route get loud for too long.', bestFor:'Travelers who want clear food-and-walk rhythm on a short trip', rainy:'Pull arcade, depachika, and indoor café pockets forward on rainy days.', slower:'Increasing Nakanoshima or a quieter west-side pocket makes Osaka feel much more controlled.', swap:'Do not drag both Namba and Umeda equally deep; let one lead and leave the other as a dinner close.'}},
-    sapporo:{ ko:{title:'Winter-light Sapporo with a warmer middle', why:'삿포로는 넓은 축과 따뜻한 식사 pocket이 같이 있어야 겨울 도시 피로가 덜 쌓입니다. 이번 결과는 그 균형을 잡는 쪽이 핵심입니다.', bestFor:'짧은 겨울 도시 여행에서도 계절 공기와 식사 만족을 같이 남기고 싶은 사람', rainy:'실내 전망, 지하 연결축, 카페 pocket을 앞당기면 비나 눈에도 route quality가 유지됩니다.', slower:'마루야마나 quieter side를 늘리면 삿포로가 훨씬 더 부드럽고 차분하게 남습니다.', swap:'오도리와 스스키노를 둘 다 길게 끌기보다, 낮은 한 축 중심으로 두고 밤은 짧게 마감하세요.'}, en:{title:'Winter-light Sapporo with a warmer middle', why:'Sapporo lands best when a wide axis and one warm pocket stay together. The goal is not more stops, but cleaner seasonal control.', bestFor:'Travelers who want winter atmosphere without overloading movement', rainy:'Bring indoor views, underground links, and café pockets forward in rain or snow.', slower:'A quieter side like Maruyama softens the whole city beautifully.', swap:'Do not stretch both Odori and Susukino too far; keep the day centered and the night short.'}},
-    sendai:{ ko:{title:'Calmer Sendai, read as a city not a stopover', why:'센다이는 조용한 축 하나와 meal pocket 하나가 제대로 잡힐 때 도시 성격이 살아납니다. 이번 결과는 그 차분한 결을 지키는 쪽이 좋습니다.', bestFor:'빽빽한 체크리스트보다 차분한 도시 텍스처를 원하는 사람', rainy:'arcade, market, café pocket 위주로 재배치하면 우천일에도 무리 없이 읽힙니다.', slower:'조젠지도리 같은 한 축만 더 길게 두고 나머지는 pause로 남기세요.', swap:'강변/야외 구간을 억지로 늘리기보다 dinner close 하나를 더 단단하게 만드는 편이 낫습니다.'}, en:{title:'Calmer Sendai, read as a city not a stopover', why:'Sendai works when one calm line and one meal pocket are allowed to define the trip. It should feel grounded, not like a transit gap.', bestFor:'Travelers who want a quieter city texture instead of a packed checklist', rainy:'Rebuild around arcades, markets, and café pockets on rainy days.', slower:'Let a line like Jozenji-dori carry more of the route and leave the rest as pauses.', swap:'Instead of forcing more river or outdoor weight, strengthen one dinner close.'}},
-    okinawa:{ ko:{title:'Okinawa with fewer beaches and better pauses', why:'오키나와는 해변 개수보다 drive pause가 더 중요합니다. 이번 결과는 바다 장면을 남기되, 섬 리듬이 흐트러지지 않게 쉬는 구간을 같이 두는 쪽이 핵심입니다.', bestFor:'풍경은 충분히 보되 과로한 island sweep은 피하고 싶은 사람', rainy:'비나 강풍이 오면 beach count를 줄이고 café, resort, aquarium pocket으로 빨리 전환하세요.', slower:'한쪽 해안만 남기고 나머지는 숙소 휴식과 늦은 lunch로 비워 두면 훨씬 좋아집니다.', swap:'멀리 있는 해변 하나를 더 넣기보다, 가까운 coast line과 dusk close를 더 길게 가져가세요.'}, en:{title:'Okinawa with fewer beaches and better pauses', why:'In Okinawa, drive pauses matter more than one more beach. The route should keep the island rhythm intact while still leaving one strong sea scene.', bestFor:'Travelers who want scenery without turning the island into a rushed sweep', rainy:'Cut the beach count quickly and pivot into cafés, resort pockets, or aquariums in rain or wind.', slower:'Keep one side of the coast only and leave the rest for hotel resets and slower lunches.', swap:'Instead of chasing one more distant beach, lengthen the closer coast line and the dusk close.'}},
+    osaka:{ ko:{title:'Food-first Osaka, but edited softly', why:'오사카는 명소 수보다 먹는 타이밍과 쉬는 구간이 더 중요합니다. 이번 결과는 food core를 살리면서도 과밀해지지 않게 조정하는 쪽이 잘 맞습니다.', bestFor:'짧은 일정에서도 먹고 걷고 쉬는 리듬을 분명하게 남기고 싶은 사람', rainy:'아케이드, depachika, indoor café pocket을 앞당기면 비 오는 날에도 리듬이 잘 유지됩니다.', slower:'Nakanoshima나 quieter west pocket 비중을 늘리면 훨씬 더 정돈된 오사카가 됩니다.', swap:'Namba와 Umeda를 둘 다 길게 끌기보다, 한쪽만 깊게 두고 다른 한쪽은 dinner close 정도로 남기세요.'}, en:{title:'Food-first Osaka, edited more softly', why:'In Osaka, meal timing and easier movement matter more than adding more headline spots. The cleaner move is to keep the food core vivid without letting the 루트 get loud for too long.', bestFor:'Travelers who want clear food-and-walk rhythm on a short trip', rainy:'Pull arcade, depachika, and indoor café pockets forward on rainy days.', slower:'Increasing Nakanoshima or a quieter west-side pocket makes Osaka feel much more controlled.', swap:'Do not drag both Namba and Umeda equally deep; let one lead and leave the other as a dinner close.'}},
+    sapporo:{ ko:{title:'Winter-light Sapporo with a warmer middle', why:'삿포로는 넓은 축과 따뜻한 식사 pocket이 같이 있어야 겨울 도시 피로가 덜 쌓입니다. 이번 결과는 그 균형을 잡는 쪽이 핵심입니다.', bestFor:'짧은 겨울 도시 여행에서도 계절 공기와 식사 만족을 같이 남기고 싶은 사람', rainy:'실내 전망, 지하 연결축, 카페 pocket을 앞당기면 비나 눈에도 루트 quality가 유지됩니다.', slower:'마루야마나 quieter side를 늘리면 삿포로가 훨씬 더 부드럽고 차분하게 남습니다.', swap:'오도리와 스스키노를 둘 다 길게 끌기보다, 낮은 한 축 중심으로 두고 밤은 짧게 마감하세요.'}, en:{title:'Winter-light Sapporo with a warmer middle', why:'Sapporo lands best when a wide axis and one warm pocket stay together. The goal is not more stops, but cleaner seasonal control.', bestFor:'Travelers who want winter atmosphere without overloading movement', rainy:'Bring indoor views, underground links, and café pockets forward in rain or snow.', slower:'A quieter side like Maruyama softens the whole city beautifully.', swap:'Do not stretch both Odori and Susukino too far; keep the day centered and the night short.'}},
+    sendai:{ ko:{title:'Calmer Sendai, read as a city not a stopover', why:'센다이는 조용한 축 하나와 meal pocket 하나가 제대로 잡힐 때 도시 성격이 살아납니다. 이번 결과는 그 차분한 결을 지키는 쪽이 좋습니다.', bestFor:'빽빽한 체크리스트보다 차분한 도시 텍스처를 원하는 사람', rainy:'arcade, market, café pocket 위주로 재배치하면 우천일에도 무리 없이 읽힙니다.', slower:'조젠지도리 같은 한 축만 더 길게 두고 나머지는 pause로 남기세요.', swap:'강변/야외 구간을 억지로 늘리기보다 dinner close 하나를 더 단단하게 만드는 편이 낫습니다.'}, en:{title:'Calmer Sendai, read as a city not a stopover', why:'Sendai works when one calm line and one meal pocket are allowed to define the trip. It should feel grounded, not like a transit gap.', bestFor:'Travelers who want a quieter city texture instead of a packed checklist', rainy:'Rebuild around arcades, markets, and café pockets on rainy days.', slower:'Let a line like Jozenji-dori carry more of the 루트 and leave the rest as pauses.', swap:'Instead of forcing more river or outdoor weight, strengthen one dinner close.'}},
+    okinawa:{ ko:{title:'Okinawa with fewer beaches and better pauses', why:'오키나와는 해변 개수보다 drive pause가 더 중요합니다. 이번 결과는 바다 장면을 남기되, 섬 리듬이 흐트러지지 않게 쉬는 구간을 같이 두는 쪽이 핵심입니다.', bestFor:'풍경은 충분히 보되 과로한 island sweep은 피하고 싶은 사람', rainy:'비나 강풍이 오면 beach count를 줄이고 café, resort, aquarium pocket으로 빨리 전환하세요.', slower:'한쪽 해안만 남기고 나머지는 숙소 휴식과 늦은 lunch로 비워 두면 훨씬 좋아집니다.', swap:'멀리 있는 해변 하나를 더 넣기보다, 가까운 coast line과 dusk close를 더 길게 가져가세요.'}, en:{title:'Okinawa with fewer beaches and better pauses', why:'In Okinawa, drive pauses matter more than one more beach. The 루트 should keep the island rhythm intact while still leaving one strong sea scene.', bestFor:'Travelers who want scenery without turning the island into a rushed sweep', rainy:'Cut the beach count quickly and pivot into cafés, resort pockets, or aquariums in rain or wind.', slower:'Keep one side of the coast only and leave the rest for hotel resets and slower lunches.', swap:'Instead of chasing one more distant beach, lengthen the closer coast line and the dusk close.'}},
     jeju:{ ko:{title:'Jeju with one coast line held more deeply', why:'제주는 동서 전체를 다 잡으려 하기보다 한 축만 더 깊게 남길 때 훨씬 더 좋아집니다. 이번 결과도 drive spacing과 café pause가 핵심입니다.', bestFor:'풍경과 휴식의 밸런스를 원하고, 이동 피로를 줄이고 싶은 사람', rainy:'바람이나 비가 강하면 scenic drive를 줄이고 café, museum, hotel pause를 앞당기세요.', slower:'동/서 한 축만 남기고 나머지를 과감히 비우면 훨씬 더 제주답게 남습니다.', swap:'풍경 포인트 하나를 더 넣기보다, 숙소 근처 dinner close와 coast pause를 더 단단하게 만드세요.'}, en:{title:'Jeju with one coast line held more deeply', why:'Jeju improves when one coast line is read more deeply instead of trying to cover both east and west. Drive spacing and café pauses matter most here.', bestFor:'Travelers who want a better scenery-rest balance with less fatigue', rainy:'Bring cafés, museums, and hotel pauses forward when wind or rain rises.', slower:'Keep only one east or west axis and leave the rest open.', swap:'Instead of adding one more scenic point, strengthen the nearby dinner close and coast pause.'}},
     gyeongju:{ ko:{title:'Gyeongju with dusk and quiet lanes protected', why:'경주는 유산 개수보다 dusk와 lane rhythm을 남기는 쪽이 훨씬 더 강합니다. 이번 결과도 그 느린 템포를 지키는 방향이 맞습니다.', bestFor:'역사 도시를 체크리스트보다 장면과 템포로 읽고 싶은 사람', rainy:'hanok café, museum, dessert pocket 위주로 돌리면 우천일에도 무리 없이 유지됩니다.', slower:'유적 개수를 줄이고 한 축의 산책 밀도를 높이면 훨씬 더 좋습니다.', swap:'황리단길 전체를 길게 끌기보다 dusk walk 하나와 quiet dinner 하나를 더 선명하게 남기세요.'}, en:{title:'Gyeongju with dusk and quiet lanes protected', why:'Gyeongju lands better through dusk and lane rhythm than through a higher heritage count. The stronger move is to protect the slower tempo.', bestFor:'Travelers who want to read a heritage city through scene and pace, not only checklist value', rainy:'Hanok cafés, museums, and dessert pockets make much better rainy-day pivots.', slower:'Reduce the heritage count and let one walkable axis carry more weight.', swap:'Instead of stretching the whole Hwangnidan-gil side, make one dusk walk and one quiet dinner much clearer.'}},
     macau:{ ko:{title:'Compact Macau with one cleaner day-night contrast', why:'마카오는 scale을 믿을수록 좋아집니다. 이번 결과는 old core와 bright side를 둘 다 세게 끌기보다, bridge pocket을 두고 contrast만 선명하게 남기는 편이 맞습니다.', bestFor:'짧은 일정에서도 유산과 밤 장면을 둘 다 보고 싶은 사람', rainy:'heritage walk를 짧게 줄이고 tea room, dessert, indoor resort pocket을 빨리 쓰는 편이 좋습니다.', slower:'Senado와 Taipa를 둘 다 깊게 끌지 말고 한 축만 리드하게 두세요.', swap:'여러 bright scene보다 Cotai one bright close 하나가 훨씬 더 세련됩니다.'}, en:{title:'Compact Macau with one cleaner day-night contrast', why:'Macau gets better when you trust its scale. Instead of dragging both the old core and the bright side, keep one bridge pocket and let the contrast stay clean.', bestFor:'Travelers who want both heritage and night tone on a shorter trip', rainy:'Shorten the heritage walk and pivot quickly into tea rooms, desserts, and resort-style indoor pockets.', slower:'Do not go deep on both Senado and Taipa; let one axis lead.', swap:'One bright Cotai close is usually much more elegant than several competing night scenes.'}}
@@ -1272,8 +1272,8 @@ function clearPlannerFeedback(){
     osaka:{ ko:['교토처럼 quieter city를 붙이면 대비가 훨씬 또렷해집니다.','후쿠오카처럼 compact food city를 이어 읽으면 meal rhythm 비교가 잘 됩니다.'], en:['Branch into Kyoto when you want a quieter contrast after Osaka.','Branch into Fukuoka when you want to compare compact food-city rhythm.']},
     sapporo:{ ko:['센다이를 이어 읽으면 차분한 북쪽 도시 결이 더 넓게 보입니다.','도쿄로 넘어가면 같은 일본 안에서도 밀도 차이가 더 선명해집니다.'], en:['Continue with Sendai for a calmer north-city contrast.','Jump to Tokyo when you want the density difference inside Japan to feel sharper.']},
     sendai:{ ko:['삿포로를 같이 보면 계절감 있는 일본 도시 결이 더 넓어집니다.','서울을 붙이면 calm axis와 fast city contrast가 분명해집니다.'], en:['Pair it with Sapporo for a wider read on softer Japanese city rhythm.','Pair it with Seoul when you want a calm-versus-fast city contrast.']},
-    okinawa:{ ko:['타이베이를 이어 읽으면 섬 공기와 야간 도시 리듬의 차이가 더 재미있게 보입니다.','제주를 붙이면 동아시아 island route를 비교하기 좋습니다.'], en:['Continue with Taipei for a sharper contrast between island air and night-city rhythm.','Pair it with Jeju when you want an East Asia island-route comparison.']},
-    jeju:{ ko:['부산을 이어 읽으면 바다 도시와 섬 route의 차이가 분명해집니다.','경주를 붙이면 느린 한국 trip 축이 더 풍부해집니다.'], en:['Continue with Busan for a cleaner coast-city versus island contrast.','Pair it with Gyeongju to widen the slower Korea-trip axis.']},
+    okinawa:{ ko:['타이베이를 이어 읽으면 섬 공기와 야간 도시 리듬의 차이가 더 재미있게 보입니다.','제주를 붙이면 동아시아 island 루트를 비교하기 좋습니다.'], en:['Continue with Taipei for a sharper contrast between island air and night-city rhythm.','Pair it with Jeju when you want an East Asia island-루트 comparison.']},
+    jeju:{ ko:['부산을 이어 읽으면 바다 도시와 섬 루트의 차이가 분명해집니다.','경주를 붙이면 느린 한국 trip 축이 더 풍부해집니다.'], en:['Continue with Busan for a cleaner coast-city versus island contrast.','Pair it with Gyeongju to widen the slower Korea-trip axis.']},
     gyeongju:{ ko:['교토를 이어 읽으면 heritage city의 quiet rhythm 비교가 잘 됩니다.','부산을 붙이면 역사 도시와 coast city 대비가 더 선명해집니다.'], en:['Continue with Kyoto for a strong quiet-heritage city comparison.','Pair it with Busan when you want the heritage-versus-coast contrast to stand out.']},
     macau:{ ko:['홍콩을 이어 읽으면 vertical harbor night와 compact heritage night의 차이가 또렷해집니다.','타이파이/타이베이 쪽으로 가지를 치면 greater China night rhythm을 더 넓게 읽을 수 있습니다.'], en:['Continue with Hong Kong for a sharper contrast between vertical harbor nights and compact heritage nights.','Branch into Taipei when you want to widen the Greater China night-rhythm read.']}
   };
@@ -1302,7 +1302,7 @@ function clearPlannerFeedback(){
       "factBest": "Travelers who want clear food-walk-rest rhythm on a shorter trip",
       "editorNote": "This version keeps Osaka from overheating by letting one axis carry the food energy while another stays softer and more breathable.",
       "visualTitle": "Osaka food-core edit",
-      "visualDesc": "Instead of adding more headline spots, this route keeps the food axis and the reset pocket visible together.",
+      "visualDesc": "Instead of adding more headline spots, this 루트 keeps the food axis and the reset pocket visible together.",
       "visualKicker": "Food-led city edit"
     }
   },
@@ -1328,7 +1328,7 @@ function clearPlannerFeedback(){
       "factBest": "Travelers who want seasonal atmosphere without piling on winter fatigue",
       "editorNote": "This version keeps Sapporo from turning into a cold-weather checklist by alternating the open winter line with warmer meal and indoor pockets.",
       "visualTitle": "Sapporo winter-light flow",
-      "visualDesc": "The route keeps cold air, indoor links, and one warm meal pocket readable on the same page.",
+      "visualDesc": "The 루트 keeps cold air, indoor links, and one warm meal pocket readable on the same page.",
       "visualKicker": "Winter city edit"
     }
   },
@@ -1354,7 +1354,7 @@ function clearPlannerFeedback(){
       "factBest": "Travelers who want city texture to linger longer than checklist density",
       "editorNote": "This version keeps Sendai grounded by letting one calm line and one meal pocket define the city from start to finish.",
       "visualTitle": "Sendai calm-city flow",
-      "visualDesc": "The route closes through a green axis, a market pause, and one quieter dinner rhythm.",
+      "visualDesc": "The 루트 closes through a green axis, a market pause, and one quieter dinner rhythm.",
       "visualKicker": "Calm city edit"
     }
   },
@@ -1380,7 +1380,7 @@ function clearPlannerFeedback(){
       "factBest": "Travelers who want scenery without turning the island into a rushed sweep",
       "editorNote": "This version avoids beach-list logic by letting the sea opener, the resort pause, and the softer dusk close protect the island rhythm.",
       "visualTitle": "Okinawa sea-reset flow",
-      "visualDesc": "The route keeps the sea vivid while making the drive and reset windows readable too.",
+      "visualDesc": "The 루트 keeps the sea vivid while making the drive and reset windows readable too.",
       "visualKicker": "Island reset edit"
     }
   },
@@ -1406,7 +1406,7 @@ function clearPlannerFeedback(){
       "factBest": "Travelers who want a better scenery-rest balance with less movement fatigue",
       "editorNote": "This version keeps Jeju from feeling too spread out by reading one coast line more deeply and leaving more room for pauses.",
       "visualTitle": "Jeju one-coast edit",
-      "visualDesc": "The route deepens one coast axis and leaves the rest more open and breathable.",
+      "visualDesc": "The 루트 deepens one coast axis and leaves the rest more open and breathable.",
       "visualKicker": "Soft coast edit"
     }
   },
@@ -1432,7 +1432,7 @@ function clearPlannerFeedback(){
       "factBest": "Travelers who want to read a heritage city through scene and tempo",
       "editorNote": "This version avoids checklist pressure by letting dusk and quieter lanes tie the whole city together more elegantly.",
       "visualTitle": "Gyeongju dusk-heritage flow",
-      "visualDesc": "The route is shaped so dusk and quiet lanes stay in memory longer than the raw heritage count.",
+      "visualDesc": "The 루트 is shaped so dusk and quiet lanes stay in memory longer than the raw heritage count.",
       "visualKicker": "Heritage dusk edit"
     }
   },
@@ -1455,7 +1455,7 @@ function clearPlannerFeedback(){
       "coverNote": "This Macau result keeps the old core and the bright side from competing by holding only the day-night contrast clearly.",
       "factRhythm": "Compact old core with one bright close",
       "factShape": "An old-core walk · a bridge pocket · one bright night finish",
-      "factBest": "Travelers who want both heritage and night tone on a shorter route",
+      "factBest": "Travelers who want both heritage and night tone on a shorter 루트",
       "editorNote": "This version trusts Macau’s scale. It does not drag both the old core and the bright side too far, and leaves the contrast clear instead.",
       "visualTitle": "Macau compact contrast flow",
       "visualDesc": "A shorter old-core walk and one bright close keep the contrast elegant instead of noisy.",
@@ -1483,7 +1483,7 @@ function clearPlannerFeedback(){
     "en": [
       {
         "kicker": "Food axis",
-        "text": "Let one food core such as Namba carry the day, then use the rest of the route as softer resets."
+        "text": "Let one food core such as Namba carry the day, then use the rest of the 루트 as softer resets."
       },
       {
         "kicker": "Reset pocket",
@@ -1563,7 +1563,7 @@ function clearPlannerFeedback(){
       },
       {
         "kicker": "Drive pause",
-        "text": "오키나와는 drive spacing이 route quality를 크게 좌우합니다."
+        "text": "오키나와는 drive spacing이 루트 quality를 크게 좌우합니다."
       },
       {
         "kicker": "Soft dusk",
@@ -1577,7 +1577,7 @@ function clearPlannerFeedback(){
       },
       {
         "kicker": "Drive pause",
-        "text": "In Okinawa, drive spacing changes the quality of the whole route."
+        "text": "In Okinawa, drive spacing changes the quality of the whole 루트."
       },
       {
         "kicker": "Soft dusk",
@@ -1597,7 +1597,7 @@ function clearPlannerFeedback(){
       },
       {
         "kicker": "Local close",
-        "text": "숙소 근처 dinner close를 단단하게 남겨야 route가 덜 흩어집니다."
+        "text": "숙소 근처 dinner close를 단단하게 남겨야 루트가 덜 흩어집니다."
       }
     ],
     "en": [
@@ -1611,7 +1611,7 @@ function clearPlannerFeedback(){
       },
       {
         "kicker": "Local close",
-        "text": "A stronger dinner close near the stay keeps the route from scattering."
+        "text": "A stronger dinner close near the stay keeps the 루트 from scattering."
       }
     ]
   },
@@ -1633,7 +1633,7 @@ function clearPlannerFeedback(){
     "en": [
       {
         "kicker": "Dusk first",
-        "text": "Gyeongju’s heritage texture deepens once dusk becomes part of the route."
+        "text": "Gyeongju’s heritage texture deepens once dusk becomes part of the 루트."
       },
       {
         "kicker": "Lane rhythm",
@@ -1682,9 +1682,9 @@ function clearPlannerFeedback(){
     "ko": {
       "coverTitle": "오사카 food-core cover",
       "coverText": "이번 결과는 오사카를 attraction list가 아니라 meal rhythm이 보이는 도시로 다시 읽게 만드는 cover입니다.",
-      "routeTitle": "한 축은 loud, 한 축은 softer",
-      "routeText": "food core 뒤에 quieter west pocket을 넣어 route가 과열되지 않게 잡았습니다.",
-      "packageTitle": "왜 이 route가 오래 가는지",
+      "루트Title": "한 축은 loud, 한 축은 softer",
+      "루트Text": "food core 뒤에 quieter west pocket을 넣어 루트가 과열되지 않게 잡았습니다.",
+      "packageTitle": "왜 이 루트가 오래 가는지",
       "packageText": "오사카는 더 많이 넣을수록 좋아지는 도시가 아니라, meal spacing과 night close를 더 정확히 잡을수록 좋아집니다.",
       "branchTitle": "교토 또는 후쿠오카로 이어 읽기",
       "branchText": "quiet contrast가 필요하면 Kyoto, compact food rhythm 비교가 필요하면 Fukuoka 쪽으로 가지를 치는 편이 자연스럽습니다."
@@ -1692,9 +1692,9 @@ function clearPlannerFeedback(){
     "en": {
       "coverTitle": "Osaka food-core cover",
       "coverText": "This cover reframes Osaka as a city of meal rhythm rather than a simple attraction list.",
-      "routeTitle": "One louder axis, one softer line",
-      "routeText": "A quieter west-side pocket is placed behind the food core so the route does not overheat.",
-      "packageTitle": "Why this route holds",
+      "루트Title": "One louder axis, one softer line",
+      "루트Text": "A quieter west-side pocket is placed behind the food core so the 루트 does not overheat.",
+      "packageTitle": "Why this 루트 holds",
       "packageText": "Osaka gets stronger when meal spacing and the night close are tuned more carefully, not when more stops are added.",
       "branchTitle": "Continue into Kyoto or Fukuoka",
       "branchText": "Branch into Kyoto for quieter contrast, or into Fukuoka to compare a more compact food-city rhythm."
@@ -1704,20 +1704,20 @@ function clearPlannerFeedback(){
     "ko": {
       "coverTitle": "삿포로 winter-light cover",
       "coverText": "이 cover는 삿포로를 눈 구경 도시가 아니라 cold air와 warm pocket이 번갈아 나오는 도시로 읽게 만듭니다.",
-      "routeTitle": "차가운 축과 따뜻한 pocket",
-      "routeText": "넓은 바깥 축 뒤에 실내 연결과 warm meal pocket을 넣어 겨울 리듬을 정리했습니다.",
-      "packageTitle": "왜 이 route가 겨울에 강한지",
-      "packageText": "겨울 도시는 stop 수보다 회복 구간 배치가 더 중요합니다. 이 route는 그 간격을 먼저 잡았습니다.",
+      "루트Title": "차가운 축과 따뜻한 pocket",
+      "루트Text": "넓은 바깥 축 뒤에 실내 연결과 warm meal pocket을 넣어 겨울 리듬을 정리했습니다.",
+      "packageTitle": "왜 이 루트가 겨울에 강한지",
+      "packageText": "겨울 도시는 stop 수보다 회복 구간 배치가 더 중요합니다. 이 루트는 그 간격을 먼저 잡았습니다.",
       "branchTitle": "센다이 또는 도쿄로 이어 읽기",
       "branchText": "부드러운 북쪽 축을 더 읽고 싶다면 Sendai, 밀도 차이를 크게 보고 싶다면 Tokyo로 이어가면 좋습니다."
     },
     "en": {
       "coverTitle": "Sapporo winter-light cover",
       "coverText": "This cover reads Sapporo through cold air and warm pockets rather than as a snow-spot list.",
-      "routeTitle": "Cold lines and warm pockets",
-      "routeText": "The wider outdoor axis is balanced by indoor links and one warm meal pocket.",
+      "루트Title": "Cold lines and warm pockets",
+      "루트Text": "The wider outdoor axis is balanced by indoor links and one warm meal pocket.",
       "packageTitle": "왜 이 흐름이 좋아요 in winter",
-      "packageText": "In a winter city, recovery windows matter more than one extra stop. This route is built around that spacing.",
+      "packageText": "In a winter city, recovery windows matter more than one extra stop. This 루트 is built around that spacing.",
       "branchTitle": "Continue into Sendai or Tokyo",
       "branchText": "Move into Sendai for a softer northern read, or Tokyo if you want the density contrast to sharpen."
     }
@@ -1726,9 +1726,9 @@ function clearPlannerFeedback(){
     "ko": {
       "coverTitle": "센다이 calm-city cover",
       "coverText": "이 cover는 센다이를 transit gap이 아니라 calm axis가 있는 도시로 다시 읽게 만듭니다.",
-      "routeTitle": "green axis와 meal pocket",
-      "routeText": "조젠지도리 같은 calm line과 시장/아케이드 pocket이 같이 있어야 센다이가 살아납니다.",
-      "packageTitle": "왜 이 route가 stopover처럼 안 보이는지",
+      "루트Title": "green axis와 meal pocket",
+      "루트Text": "조젠지도리 같은 calm line과 시장/아케이드 pocket이 같이 있어야 센다이가 살아납니다.",
+      "packageTitle": "왜 이 루트가 stopover처럼 안 보이는지",
       "packageText": "센다이는 하나의 강한 축과 하나의 meal pocket만 정확해도 도시 성격이 분명해집니다.",
       "branchTitle": "삿포로 또는 서울로 이어 읽기",
       "branchText": "부드러운 북쪽 도시 결을 넓히려면 Sapporo, calm-versus-fast contrast를 보려면 Seoul이 잘 붙습니다."
@@ -1736,8 +1736,8 @@ function clearPlannerFeedback(){
     "en": {
       "coverTitle": "Sendai calm-city cover",
       "coverText": "This cover reframes Sendai as a city with a calm axis, not just a stopover gap.",
-      "routeTitle": "A green line and one meal pocket",
-      "routeText": "A calm line like Jozenji-dori and a market pocket help Sendai hold together.",
+      "루트Title": "A green line and one meal pocket",
+      "루트Text": "A calm line like Jozenji-dori and a market pocket help Sendai hold together.",
       "packageTitle": "Why this does not feel like a stopover",
       "packageText": "In Sendai, one strong axis and one meal pocket are often enough to make the city feel complete.",
       "branchTitle": "Continue into Sapporo or Seoul",
@@ -1748,31 +1748,31 @@ function clearPlannerFeedback(){
     "ko": {
       "coverTitle": "오키나와 sea-reset cover",
       "coverText": "이 cover는 오키나와를 beach count보다 sea opener와 pause spacing으로 읽게 만드는 버전입니다.",
-      "routeTitle": "바다 뒤에 쉬는 구간을 남기기",
-      "routeText": "sea scene은 유지하되 drive pause와 resort pocket을 같이 남겨 섬 리듬을 지켰습니다.",
-      "packageTitle": "왜 이 route가 덜 피곤한지",
+      "루트Title": "바다 뒤에 쉬는 구간을 남기기",
+      "루트Text": "sea scene은 유지하되 drive pause와 resort pocket을 같이 남겨 섬 리듬을 지켰습니다.",
+      "packageTitle": "왜 이 루트가 덜 피곤한지",
       "packageText": "오키나와는 한 장면을 더 보는 것보다, 멀어지는 이동을 하나 덜어내는 편이 더 큰 차이를 만듭니다.",
       "branchTitle": "제주 또는 타이베이로 이어 읽기",
-      "branchText": "다른 island route를 보고 싶다면 Jeju, sea air와 city night contrast를 보고 싶다면 Taipei가 잘 붙습니다."
+      "branchText": "다른 island 루트를 보고 싶다면 Jeju, sea air와 city night contrast를 보고 싶다면 Taipei가 잘 붙습니다."
     },
     "en": {
       "coverTitle": "Okinawa sea-reset cover",
       "coverText": "This cover reads Okinawa through sea openings and pause spacing rather than a higher beach count.",
-      "routeTitle": "Leave rest behind the sea scenes",
-      "routeText": "The sea stays vivid, but the drive pause and resort pocket keep the island rhythm protected.",
-      "packageTitle": "Why this route feels lighter",
+      "루트Title": "Leave rest behind the sea scenes",
+      "루트Text": "The sea stays vivid, but the drive pause and resort pocket keep the island rhythm protected.",
+      "packageTitle": "Why this 루트 feels lighter",
       "packageText": "In Okinawa, removing one longer movement often changes the day more than adding one more scenic point.",
       "branchTitle": "Continue into Jeju or Taipei",
-      "branchText": "Choose Jeju for another island route, or Taipei if you want a sea-air versus night-city contrast."
+      "branchText": "Choose Jeju for another island 루트, or Taipei if you want a sea-air versus night-city contrast."
     }
   },
   "jeju": {
     "ko": {
       "coverTitle": "제주 one-coast cover",
       "coverText": "이 cover는 제주를 넓게 훑는 도시가 아니라 한 coast line을 더 깊게 남기는 도시로 다시 읽게 만듭니다.",
-      "routeTitle": "한쪽 해안축을 더 깊게",
-      "routeText": "한 coast line에 무게를 두고 café pause와 dinner close로 route를 단단하게 잡았습니다.",
-      "packageTitle": "왜 이 route가 더 제주답게 남는지",
+      "루트Title": "한쪽 해안축을 더 깊게",
+      "루트Text": "한 coast line에 무게를 두고 café pause와 dinner close로 루트를 단단하게 잡았습니다.",
+      "packageTitle": "왜 이 루트가 더 제주답게 남는지",
       "packageText": "제주는 더 많이 보는 것보다 한쪽 해안의 tempo를 더 깊게 읽을 때 훨씬 더 또렷하게 남습니다.",
       "branchTitle": "부산 또는 경주로 이어 읽기",
       "branchText": "coast city contrast를 보고 싶다면 Busan, 느린 한국 trip 축을 넓히고 싶다면 Gyeongju가 잘 붙습니다."
@@ -1780,8 +1780,8 @@ function clearPlannerFeedback(){
     "en": {
       "coverTitle": "Jeju one-coast cover",
       "coverText": "This cover reframes Jeju around one deeper coast line instead of a wider island sweep.",
-      "routeTitle": "Read one coast more deeply",
-      "routeText": "The route stays tighter by giving more weight to one coast axis, café pauses, and a dinner close.",
+      "루트Title": "Read one coast more deeply",
+      "루트Text": "The 루트 stays tighter by giving more weight to one coast axis, café pauses, and a dinner close.",
       "packageTitle": "Why this feels more like Jeju",
       "packageText": "Jeju usually lingers more clearly when one coast tempo is read deeply instead of everything being covered more widely.",
       "branchTitle": "Continue into Busan or Gyeongju",
@@ -1792,9 +1792,9 @@ function clearPlannerFeedback(){
     "ko": {
       "coverTitle": "경주 dusk-heritage cover",
       "coverText": "이 cover는 경주를 heritage count보다 dusk와 lane rhythm으로 먼저 읽게 만드는 버전입니다.",
-      "routeTitle": "유산 뒤에 lane과 dusk를 남기기",
-      "routeText": "유적 수를 더하는 대신, quiet lane과 dusk walk가 도시 전체를 묶도록 정리했습니다.",
-      "packageTitle": "왜 이 route가 더 오래 남는지",
+      "루트Title": "유산 뒤에 lane과 dusk를 남기기",
+      "루트Text": "유적 수를 더하는 대신, quiet lane과 dusk walk가 도시 전체를 묶도록 정리했습니다.",
+      "packageTitle": "왜 이 루트가 더 오래 남는지",
       "packageText": "경주는 볼거리의 개수보다 느린 템포와 해 질 무렵의 장면을 어떻게 남기느냐가 더 중요합니다.",
       "branchTitle": "교토 또는 부산으로 이어 읽기",
       "branchText": "quiet heritage city 비교가 필요하면 Kyoto, 역사 도시와 coast city 대비가 필요하면 Busan이 잘 붙습니다."
@@ -1802,9 +1802,9 @@ function clearPlannerFeedback(){
     "en": {
       "coverTitle": "Gyeongju dusk-heritage cover",
       "coverText": "This cover reads Gyeongju through dusk and lane rhythm before a raw heritage count.",
-      "routeTitle": "Keep dusk and lanes behind the heritage axis",
-      "routeText": "Instead of adding more sites, the route lets quiet lanes and a dusk walk hold the city together.",
-      "packageTitle": "Why this route lingers longer",
+      "루트Title": "Keep dusk and lanes behind the heritage axis",
+      "루트Text": "Instead of adding more sites, the 루트 lets quiet lanes and a dusk walk hold the city together.",
+      "packageTitle": "Why this 루트 lingers longer",
       "packageText": "In Gyeongju, slower tempo and dusk scenes matter more than a higher sightseeing count.",
       "branchTitle": "Continue into Kyoto or Busan",
       "branchText": "Choose Kyoto for a quieter heritage-city comparison, or Busan for a heritage-versus-coast contrast."
@@ -1814,9 +1814,9 @@ function clearPlannerFeedback(){
     "ko": {
       "coverTitle": "마카오 compact-contrast cover",
       "coverText": "이 cover는 마카오를 old core와 bright side가 싸우지 않도록 compact contrast로 읽게 만듭니다.",
-      "routeTitle": "짧은 old core, 짧은 bright close",
-      "routeText": "heritage walk와 night close를 둘 다 짧고 분명하게 두어 도시 scale을 믿는 쪽으로 정리했습니다.",
-      "packageTitle": "왜 이 route가 더 세련되게 남는지",
+      "루트Title": "짧은 old core, 짧은 bright close",
+      "루트Text": "heritage walk와 night close를 둘 다 짧고 분명하게 두어 도시 scale을 믿는 쪽으로 정리했습니다.",
+      "packageTitle": "왜 이 루트가 더 세련되게 남는지",
       "packageText": "마카오는 양쪽을 다 길게 끄는 순간 contrast가 흐려집니다. bridge pocket 하나와 one bright close가 핵심입니다.",
       "branchTitle": "홍콩 또는 타이베이로 이어 읽기",
       "branchText": "vertical harbor night contrast를 보고 싶다면 Hong Kong, greater China night rhythm을 넓히고 싶다면 Taipei가 자연스럽습니다."
@@ -1824,9 +1824,9 @@ function clearPlannerFeedback(){
     "en": {
       "coverTitle": "Macau compact-contrast cover",
       "coverText": "This cover keeps Macau elegant by reading it as compact contrast instead of letting the old core and bright side compete.",
-      "routeTitle": "A short old core and a short bright close",
-      "routeText": "The route trusts Macau’s scale by keeping both the heritage walk and the night close short and clear.",
-      "packageTitle": "Why this route feels more controlled",
+      "루트Title": "A short old core and a short bright close",
+      "루트Text": "The 루트 trusts Macau’s scale by keeping both the heritage walk and the night close short and clear.",
+      "packageTitle": "Why this 루트 feels more controlled",
       "packageText": "Macau loses elegance when both sides are stretched too far. One bridge pocket and one bright close are usually enough.",
       "branchTitle": "Continue into Hong Kong or Taipei",
       "branchText": "Choose Hong Kong for a vertical harbor-night contrast, or Taipei to widen the Greater China night rhythm."
@@ -1835,7 +1835,7 @@ function clearPlannerFeedback(){
 };
 
 
-const priorityCityEntryMap = {
+const priorityCity입구Map = {
     tokyo:{
       ko:{visitTitle:'Visit split', first:['First-time','Asakusa → Ueno → Kiyosumi','읽기 쉬운 축부터 quiet pocket으로 마감하세요.'], second:['Second-time','Kiyosumi → Jinbocho → Kagurazaka','두 번째라면 재질과 저녁 결이 더 오래 남습니다.'], entries:[['Classic first read','Asakusa → Ueno → Kiyosumi'],['Design-soft read','Daikanyama → Nakameguro → Shibuya late'],['Night-led read','Shinjuku side → Omoide lane → late café']]},
       en:{visitTitle:'Visit split', first:['First-time','Asakusa → Ueno → Kiyosumi','Readable icons first, then one quieter pocket to close the day.'], second:['Second-time','Kiyosumi → Jinbocho → Kagurazaka','On a return trip, let texture and dinner rhythm carry the memory.'], entries:[['Classic first read','Asakusa → Ueno → Kiyosumi'],['Design-soft read','Daikanyama → Nakameguro → Shibuya late'],['Night-led read','Shinjuku side → Omoide lane → late café']]}
@@ -1866,7 +1866,7 @@ const priorityCityEntryMap = {
     }
   };
   
-  const priorityCityEntryIntlOverrides = {
+  const priorityCity입구IntlOverrides = {
     ja:{
       tokyo:{visitTitle:'訪問分岐', first:['初回向け','浅草 → 上野 → 清澄','わかりやすい景色から入り、最後に静かなポケットを一つ置くと安定します。'], second:['二回目向け','清澄 → 神保町 → 神楽坂','二度目なら質感と本、夕食のリズムが長く残ります。'], entries:[['王道の最初の一線','浅草 → 上野 → 清澄'],['デザイン寄りの入り方','代官山 → 中目黒 → 渋谷レイト'],['夜から入る線','新宿サイド → 思い出横丁 → レイトカフェ']]},
       seoul:{visitTitle:'訪問分岐', first:['初回向け','聖水 → 乙支路 → 西村','強いコントラストの線のあとに静かな街区を一つ置いてください。'], second:['二回目向け','望遠 → 西村 → 乙支路レイト','暮らしの手触りが前に出る線の方が再訪には合います。'], entries:[['コントラストの入口','聖水 → ソウルの森 → 乙支路'],['ローカル寄りの入口','西村 → 北村の端 → 鍾路ディナー'],['夜を重く置く入口','漢南 → 梨泰院 → 乙支路レイト']]},
@@ -1887,64 +1887,64 @@ const priorityCityEntryMap = {
     }
   };
 
-  function mergeEntryPack(base = {}, override = {}){
+  function merge입구Pack(기준 = {}, override = {}){
     return {
-      ...base,
+      ...기준,
       ...override,
-      first: override.first || base.first,
-      second: override.second || base.second,
-      entries: override.entries || base.entries
+      first: override.first || 기준.first,
+      second: override.second || 기준.second,
+      entries: override.entries || 기준.entries
     };
   }
 
 
-  const secondaryCityThinEntryMap = {
+  const secondaryCityThin입구Map = {
     osaka:{ko:{visitTitle:'Visit lens', first:['First trip','Namba → Dotonbori','식사 라인과 밤 장면 하나만 선명하게.'], second:['Return trip','Nakanoshima → Utsubo','재방문이면 quieter west pocket이 좋습니다.'], entries:[['Food-first','Namba → Dotonbori'],['Softer','Nakanoshima → Utsubo']]}, en:{visitTitle:'Visit lens', first:['First trip','Namba → Dotonbori','Keep one meal line and one late scene clear.'], second:['Return trip','Nakanoshima → Utsubo','A quieter west-side pocket often lands better on a return.'], entries:[['Food-first','Namba → Dotonbori'],['Softer','Nakanoshima → Utsubo']]}}
     ,sapporo:{ko:{visitTitle:'Visit lens', first:['First trip','Odori → Susukino','중심 축을 짧고 분명하게.'], second:['Return trip','Maruyama → café pocket','조금 더 느린 pocket이 좋습니다.'], entries:[['Central','Odori → Susukino'],['Soft','Maruyama → café pocket']]}, en:{visitTitle:'Visit lens', first:['First trip','Odori → Susukino','Keep the central line short and readable.'], second:['Return trip','Maruyama → café pocket','A softer neighborhood layer often lands better on a return.'], entries:[['Central','Odori → Susukino'],['Soft','Maruyama → café pocket']]}}
     ,sendai:{ko:{visitTitle:'Visit lens', first:['First trip','Station → arcade','중심 축부터 가볍게.'], second:['Return trip','Jozenji-dori → river edge','조용한 북측 pace가 더 잘 남습니다.'], entries:[['Centre','Station → arcade'],['Calm','Jozenji-dori → river edge']]}, en:{visitTitle:'Visit lens', first:['First trip','Station → arcade','Open through the clearest central line first.'], second:['Return trip','Jozenji-dori → river edge','A slower north-side rhythm often lands better on a return.'], entries:[['Centre','Station → arcade'],['Calm','Jozenji-dori → river edge']]}}
     ,okinawa:{ko:{visitTitle:'Visit lens', first:['First trip','Coast drive → beach stop','바다 축을 먼저.'], second:['Return trip','Yomitan → slower dusk','느린 pocket이 더 좋습니다.'], entries:[['Coast','Coast drive → beach'],['Slow','Yomitan → dusk']]}, en:{visitTitle:'Visit lens', first:['First trip','Coast drive → beach stop','Open through the sea line first.'], second:['Return trip','Yomitan → slower dusk','A slower local pocket often lands better.'], entries:[['Coast','Coast drive → beach'],['Slow','Yomitan → dusk']]}}
     ,jeju:{ko:{visitTitle:'Visit lens', first:['First trip','Aewol → coast café','해안 결을 하나만 선명하게.'], second:['Return trip','village pocket → slower west','느린 리셋이 더 중요합니다.'], entries:[['Coast','Aewol → coast café'],['Reset','village pocket → west']]}, en:{visitTitle:'Visit lens', first:['First trip','Aewol → coast café','Keep one coast line vivid.'], second:['Return trip','village pocket → slower west','A slower reset often matters more.'], entries:[['Coast','Aewol → coast café'],['Reset','village pocket → west']]}}
     ,gyeongju:{ko:{visitTitle:'Visit lens', first:['First trip','Daereungwon → museum edge','유산 축부터 가볍게.'], second:['Return trip','Hwangnidan-gil → quiet lane','조용한 lane rhythm이 더 좋습니다.'], entries:[['Heritage','Daereungwon → museum edge'],['Quiet','Hwangnidan-gil → lane walk']]}, en:{visitTitle:'Visit lens', first:['First trip','Daereungwon → museum edge','Open through the clearest heritage line.'], second:['Return trip','Hwangnidan-gil → quiet lane','Quieter lanes usually carry more memory.'], entries:[['Heritage','Daereungwon → museum edge'],['Quiet','Hwangnidan-gil → lane walk']]}}
-    ,macau:{ko:{visitTitle:'Visit lens', first:['First trip','Ruins edge → Senado','old lane과 밤 장면 하나만.'], second:['Return trip','Taipa → softer lane','조금 더 compact한 축이 좋습니다.'], entries:[['Old-lane','Ruins edge → Senado'],['Taipa','Taipa → softer lane']]}, en:{visitTitle:'Visit lens', first:['First trip','Ruins edge → Senado','Keep one old-lane line vivid.'], second:['Return trip','Taipa → softer lane','A looser Taipa route often lands better.'], entries:[['Old-lane','Ruins edge → Senado'],['Taipa','Taipa → softer lane']]}}
+    ,macau:{ko:{visitTitle:'Visit lens', first:['First trip','Ruins edge → Senado','old lane과 밤 장면 하나만.'], second:['Return trip','Taipa → softer lane','조금 더 compact한 축이 좋습니다.'], entries:[['Old-lane','Ruins edge → Senado'],['Taipa','Taipa → softer lane']]}, en:{visitTitle:'Visit lens', first:['First trip','Ruins edge → Senado','Keep one old-lane line vivid.'], second:['Return trip','Taipa → softer lane','A looser Taipa 루트 often lands better.'], entries:[['Old-lane','Ruins edge → Senado'],['Taipa','Taipa → softer lane']]}}
   };
 
-function getPriorityEntryPack(city=''){
+function getPriority입구Pack(city=''){
     const slug = String(city || '').trim().toLowerCase();
-    const entry = priorityCityEntryMap[slug] || secondaryCityThinEntryMap[slug];
-    if (!entry) return null;
+    const 입구 = priorityCity입구Map[slug] || secondaryCityThin입구Map[slug];
+    if (!입구) return null;
     const lang = window.RyokoApp?.lang || 'ko';
-    return entry[lang] || entry.en || entry.ko;
+    return 입구[lang] || 입구.en || 입구.ko;
   }
 
-  function renderEntryRouteMiniBlock(city='', mode='default'){
-    const pack = getPriorityEntryPack(city);
+  function render입구루트MiniBlock(city='', mode='default'){
+    const pack = getPriority입구Pack(city);
     if (!pack) return '';
     const compact = mode === 'compact';
-    return `<div class="entry-mini-block ${compact ? 'entry-mini-block-compact' : ''}">
-      <div class="entry-mini-head"><strong>${pack.visitTitle || uiCopy('Visit lens','Visit lens','訪問レンズ','造訪視角')}</strong></div>
-      <div class="entry-mini-row">
-        <span class="entry-mini-label">${pack.first?.[0] || uiCopy('First trip','First trip','初回','初訪')}</span>
-        <span class="entry-mini-value">${pack.first?.[1] || ''}</span>
+    return `<div class="입구-mini-block ${compact ? '입구-mini-block-compact' : ''}">
+      <div class="입구-mini-head"><strong>${pack.visitTitle || uiCopy('Visit lens','Visit lens','訪問レンズ','造訪視角')}</strong></div>
+      <div class="입구-mini-row">
+        <span class="입구-mini-label">${pack.first?.[0] || uiCopy('First trip','First trip','初回','初訪')}</span>
+        <span class="입구-mini-value">${pack.first?.[1] || ''}</span>
       </div>
-      <div class="entry-mini-row">
-        <span class="entry-mini-label">${pack.second?.[0] || uiCopy('Return trip','Return trip','再訪','再訪')}</span>
-        <span class="entry-mini-value">${pack.second?.[1] || ''}</span>
+      <div class="입구-mini-row">
+        <span class="입구-mini-label">${pack.second?.[0] || uiCopy('Return trip','Return trip','再訪','再訪')}</span>
+        <span class="입구-mini-value">${pack.second?.[1] || ''}</span>
       </div>
-      <div class="entry-mini-route-list">${(pack.entries || []).slice(0, compact ? 2 : 3).map(item => `<span class="entry-mini-chip">${item[0]} · ${item[1]}</span>`).join('')}</div>
+      <div class="입구-mini-루트-list">${(pack.entries || []).slice(0, compact ? 2 : 3).map(item => `<span class="입구-mini-chip">${item[0]} · ${item[1]}</span>`).join('')}</div>
     </div>`;
   }
 function getPriorityRefinePack(city=''){
     const slug = String(city || '').trim().toLowerCase();
-    const entry = priorityCityRefineMap[slug];
-    if (!entry) return null;
+    const 입구 = priorityCityRefineMap[slug];
+    if (!입구) return null;
     const lang = window.RyokoApp?.lang || 'ko';
-    return entry[lang] || entry.en || entry.ko;
+    return 입구[lang] || 입구.en || 입구.ko;
   }
 
-  function summarizeRouteShape(data){
+  function summarize루트Shape(data){
     const days = Array.isArray(data.days) ? data.days.length : 0;
     const placeCount = (data.days || []).reduce((acc, day) => acc + normalizePlaces(day).length, 0);
-    if (!days) return 'A compact route with one clear anchor per day';
+    if (!days) return 'A compact 루트 with one clear anchor per day';
     if (days <= 2) return `${days} focused day${days > 1 ? 's' : ''} with ${placeCount || 'a few'} easy stops`;
     if (days <= 4) return `${days} editorial days with clear anchors and softer pockets`;
     return `${days} days layered with readable movement and lighter resets`;
@@ -1958,82 +1958,82 @@ function getPriorityRefinePack(city=''){
     if (lang === 'ko') return `${opening}에서 시작해 전체 리듬이 무리 없이 자리 잡고, ${ending.replace(/\.$/, '')} 쪽으로 마무리되도록 정리했습니다.`;
     if (lang === 'ja') return `${opening}から入り、全体の流れが無理なく整い、${ending.replace(/\.$/, '')}ように編集しています。`;
     if (lang === 'zhHant') return `從${opening.replace(/。$/, '')}開始，讓整體節奏自然站穩，最後再以${ending.replace(/。$/, '')}的方式收尾。`;
-    return `${opening} so the route settles in smoothly, and ${ending.toLowerCase()} instead of feeling overloaded.`;
+    return `${opening} so the 루트 settles in smoothly, and ${ending.toLowerCase()} instead of feeling overloaded.`;
   }
 
   function resultCopy(){
     return {
-      signalTitle: uiCopy('지금 리듬에 더 잘 맞는 베이스', 'Better bases for this rhythm', 'この流れに合う次のベース', '更適合這個節奏的下一個起點'),
-      signalDesc: uiCopy('비, 부모님 동행, 늦은 밤, 푸드 중심 같은 신호를 기준으로 다음 베이스를 다시 고를 수 있게 묶었습니다.', 'Grouped around signals like rain, parents, late nights, or food-led pacing so the next base feels more intentional.', '雨・親との同行・深夜の流れ・食重視などの条件から、次のベースを選び直しやすくまとめました。', '以雨天、與父母同行、夜晚節奏、以美食為主等訊號重新整理，讓下一個 base 更好選。'),
+      signalTitle: uiCopy('지금 리듬에 더 잘 맞는 베이스', 'Better 기준s for this rhythm', 'この流れに合う次のベース', '更適合這個節奏的下一個起點'),
+      signalDesc: uiCopy('비, 부모님 동행, 늦은 밤, 푸드 중심 같은 신호를 기준으로 다음 베이스를 다시 고를 수 있게 묶었습니다.', 'Grouped around signals like rain, parents, late nights, or food-led pacing so the next 기준 feels more intentional.', '雨・親との同行・深夜の流れ・食重視などの条件から、次のベースを選び直しやすくまとめました。', '以雨天、與父母同行、夜晚節奏、以美食為主等訊號重新整理，讓下一個 기준 更好選。'),
       signalEyebrow: uiCopy('Signal-aware picks','Signal-aware picks','Signal-aware picks','Signal-aware picks'),
-      cityGuide: uiCopy('도시 가이드','City guide','城市ガイド','城市指南'),
-      sampleRoute: uiCopy('샘플 루트','샘플 보기 route','範例路線','示範路線'),
+      cityGuide: uiCopy('도시 가이드','도시 가이드','城市ガイド','城市指南'),
+      샘플루트: uiCopy('샘플 루트','샘플 루트','範例路線','示範路線'),
       nextLoopEyebrow: uiCopy('다음 액션 루프','Next step loop','次のアクションループ','下一步循環'),
-      nextLoopTitle: uiCopy('한 번의 결과에서 끝내지 마세요', 'Keep the route moving after this result', 'この結果で止めずに、次へつなげましょう', '別停在這一次的結果，讓路線繼續往下走'),
-      nextLoopDesc: uiCopy('연결된 도시를 더 읽고, 저장한 루트를 다시 열고, 샘플 루트까지 이어서 볼 수 있게 정리했습니다.', 'Read a related city, reopen a saved route, or move into a sample route to keep the Ryokoplan flow going.', 'つながる都市を読み、保存したルートを開き直し、サンプルルートへ続けられるように整えています。', '你可以繼續讀相關城市、重新打開已存路線，或接著看示範路線，讓 Ryokoplan 的流動不中斷。'),
+      nextLoopTitle: uiCopy('한 번의 결과에서 끝내지 마세요', 'Keep the 루트 moving after this result', 'この結果で止めずに、次へつなげましょう', '別停在這一次的結果，讓路線繼續往下走'),
+      nextLoopDesc: uiCopy('연결된 도시를 더 읽고, 저장한 루트를 다시 열고, 샘플 루트까지 이어서 볼 수 있게 정리했습니다.', 'Read a related city, reopen a saved 루트, or move into a 샘플 루트 to keep the Ryokoplan flow going.', 'つながる都市を読み、保存したルートを開き直し、サンプルルートへ続けられるように整えています。', '你可以繼續讀相關城市、重新打開已存路線，或接著看示範路線，讓 Ryokoplan 的流動不中斷。'),
       keepLoop: uiCopy('다음 루프로','Keep the loop going','次のループへ','接著往下一個循環'),
-      openRecent: uiCopy('최근 루트 열기','Open recent route','最近のルートを開く','打開最近路線'),
-      openTrips: uiCopy('My Trips 열기','Open My Trips','My Trips を開く','打開 My Trips'),
+      openRecent: uiCopy('최근 여행 열기','Open recent 루트','最近のルートを開く','打開最近路線'),
+      openTrips: uiCopy('보관함 열기','Open 보관함','보관함 を開く','打開 보관함'),
       openVault: uiCopy('저장 루프 열기','Open saved loop','保存ループを開く','打開已存循環'),
       vaultStep: uiCopy('저장 루프','Saved loop','保存ループ','已存循環'),
-      vaultTitle: uiCopy('My Trips에 남기기', 'Keep it in My Trips', 'My Trips に残す', '存進 My Trips'),
+      vaultTitle: uiCopy('보관함에 남기기', 'Keep it in 보관함', '보관함 に残す', '存進 보관함'),
       vaultDesc: uiCopy('결과를 저장하고 나중에 다시 꺼내보면 같은 도시 결을 더 쉽게 이어갈 수 있습니다.', 'Save the result so the same city logic is easier to reopen later.', '結果を保存しておくと、同じ都市の流れをあとで開き直しやすくなります。', '先把結果存起來，之後會更容易接回同一座城市的脈絡。'),
       readGuide: uiCopy('도시 가이드 읽기','도시 읽기','ガイドを読む','閱讀指南'),
-      routeNote: uiCopy('비주얼 루트 노트', 'Visual route notes', 'ビジュアルルートノート', '視覺路線筆記'),
-      routeNoteDesc: uiCopy('도시 커버, 이번 루트의 분위기, 그리고 다음으로 가지를 칠 수 있는 도시까지 한 번에 보여줍니다.', 'A city cover, one route mood frame, and one next branch keep the result from reading like a plain checklist.', '都市カバー、今回のルートの空気、次に枝分かれできる都市まで、一度に読めるように見せます。', '把城市封面、這次路線的氣氛，以及下一個可延伸的城市，一次整理給你看。'),
-      sampleRead: uiCopy('샘플 보기', 'Read sample route', 'サンプルを見る', '查看範例'),
-      plannerBase: uiCopy('루트 베이스', 'Route base', 'ルートのベース', '路線 base'),
+      루트Note: uiCopy('비주얼 루트 노트', 'Visual 루트 notes', 'ビジュアルルートノート', '視覺路線筆記'),
+      루트NoteDesc: uiCopy('도시 커버, 이번 루트의 분위기, 그리고 다음으로 가지를 칠 수 있는 도시까지 한 번에 보여줍니다.', 'A city cover, one 루트 mood frame, and one next branch keep the result from reading like a plain checklist.', '都市カバー、今回のルートの空気、次に枝分かれできる都市まで、一度に読めるように見せます。', '把城市封面、這次路線的氣氛，以及下一個可延伸的城市，一次整理給你看。'),
+      샘플Read: uiCopy('샘플 보기', 'Read 샘플 루트', 'サンプルを見る', '查看範例'),
+      planner기준: uiCopy('여행 기준', '시작 기준', 'ルートのベース', '路線 기준'),
       nextCity: uiCopy('다음 도시', 'Next city', '次の都市', '下一座城市'),
       sharedKicker: uiCopy('공유받은 일정','Shared trip','共有ルート','分享行程'),
-      sharedTitle: uiCopy('공유된 루트에서 바로 시작했어요', 'You started from a shared route', '共有ルートからこの旅を始めました', '你是從分享路線開始這段旅程的'),
-      sharedDesc: uiCopy('공유 링크로 들어온 일정입니다. 그대로 저장하거나, 내 취향에 맞게 다시 다듬을 수 있어요.', 'This route came in through a shared link. Keep it, save it, or reshape it into your own version.', '共有リンクから開いたルートです。このまま保存しても、自分の旅に合わせて整え直しても大丈夫です。', '這條路線是從分享連結打開的。你可以直接保存，也可以依自己的節奏重新整理。'),
+      sharedTitle: uiCopy('공유된 루트에서 바로 시작했어요', 'You started from a shared 루트', '共有ルートからこの旅を始めました', '你是從分享路線開始這段旅程的'),
+      sharedDesc: uiCopy('공유 링크로 들어온 일정입니다. 그대로 저장하거나, 내 취향에 맞게 다시 다듬을 수 있어요.', 'This 루트 came in through a shared link. Keep it, save it, or reshape it into your own version.', '共有リンクから開いたルートです。このまま保存しても、自分の旅に合わせて整え直しても大丈夫です。', '這條路線是從分享連結打開的。你可以直接保存，也可以依自己的節奏重新整理。'),
       openGuide: uiCopy('도시 가이드 보기','도시 읽기','ガイドを見る','查看指南'),
       saveTrip: uiCopy('여정 저장','Save Trip','旅程を保存','保存旅程'),
-      useThisRoute: uiCopy('이 루트로 시작','Use this route','このルートを使う','使用這條路線'),
-      routeLoopEyebrow: uiCopy('루트 루프','Route loop','ルートループ','路線循環'),
-      routeLoopTitle: uiCopy('atlas에서 저장 루프까지, 흐름 전체를 다시 이어가세요', 'Keep the full flow moving from atlas to your saved loop', 'atlas から保存ループまで、この流れをもう一度つなげましょう', '從 atlas 到已存循環，讓整個流程再次接起來'),
-      routeLoopDesc: uiCopy('지금 결과를 끝으로 두지 않고, city atlas·도시 가이드·sample route·route desk·My Trips를 다시 오가며 다음 루트를 더 쉽게 남길 수 있게 묶었습니다.', 'Do not stop at this result. Move back through the city atlas, city guide, sample route, route desk, and My Trips so the next version is easier to keep and reopen.', 'この結果で止まらず、city atlas・都市ガイド・sample route・route desk・My Trips を行き来しながら、次のルートをもっと残しやすく整えられるようにつなげています。', '別停在這個結果。你可以回到 city atlas、城市指南、sample route、route desk 與 My Trips 之間來回，讓下一版更容易被保存與重開。'),
+      useThis루트: uiCopy('이 흐름으로 시작','Use this 루트','このルートを使う','使用這條路線'),
+      루트LoopEyebrow: uiCopy('루트 루프','루트 loop','ルートループ','路線循環'),
+      루트LoopTitle: uiCopy('atlas에서 저장 루프까지, 흐름 전체를 다시 이어가세요', 'Keep the full flow moving from atlas to your saved loop', 'atlas から保存ループまで、この流れをもう一度つなげましょう', '從 atlas 到已存循環，讓整個流程再次接起來'),
+      루트LoopDesc: uiCopy('지금 결과를 끝으로 두지 않고, city atlas·도시 가이드·샘플 루트·루트 데스크·보관함를 다시 오가며 다음 루트를 더 쉽게 남길 수 있게 묶었습니다.', 'Do not stop at this result. Move back through the city atlas, 도시 가이드, 샘플 루트, 루트 데스크, and 보관함 so the next version is easier to keep and reopen.', 'この結果で止まらず、city atlas・都市ガイド・샘플 루트・루트 데스크・보관함 を行き来しながら、次のルートをもっと残しやすく整えられるようにつなげています。', '別停在這個結果。你可以回到 city atlas、城市指南、샘플 루트、루트 데스크 與 보관함 之間來回，讓下一版更容易被保存與重開。'),
       atlas: uiCopy('atlas', 'Atlas', 'atlas', 'atlas'),
       neighborhoods: uiCopy('동네 픽', 'Neighborhood picks', '近所のピック', '鄰里精選'),
-      routeResult: uiCopy('현재 결과', 'Current result', '今の結果', '目前結果'),
+      루트Result: uiCopy('현재 결과', 'Current result', '今の結果', '目前結果'),
       backToAtlas: uiCopy('atlas로 돌아가기', 'Back to atlas', 'atlas に戻る', '回到 atlas'),
-      readCityLayer: uiCopy('도시 결 더 읽기', 'Read city guide layer', '都市の層を読む', '繼續讀城市層次'),
+      readCityLayer: uiCopy('도시 결 더 읽기', 'Read 도시 가이드 layer', '都市の層を読む', '繼續讀城市層次'),
       compareExample: uiCopy('샘플과 비교하기', 'Compare example', 'サンプルと比べる', '對照範例'),
-      tunePlanner: uiCopy('이 루트 더 다듬기', 'Refine this route', 'このルートを整える', '微調這條路線'),
+      tunePlanner: uiCopy('이 루트 더 다듬기', 'Refine this 루트', 'このルートを整える', '微調這條路線'),
       continueResult: uiCopy('결과로 돌아오기', 'Return to result', '結果へ戻る', '回到結果'),
       matchingTitle: uiCopy('이 결과와 잘 붙는 다음 읽기', 'What fits this result next', 'この結果に続けて読みたいもの', '最適合接著讀的下一步'),
-      matchingDesc: uiCopy('같은 도시의 guide와 example, 그리고 비슷한 결의 도시를 함께 보여줘 다음 클릭이 자연스럽게 이어지게 했습니다.', 'A matching city guide, example, and a related city sit together here so the next click feels obvious.', '同じ都市の guide と example、そして近いトーンの都市を並べて、次のクリックが自然につながるようにしました。', '把同城市的 guide 與 example，加上調性相近的城市放在一起，讓下一次點擊更自然。'),
+      matchingDesc: uiCopy('같은 도시의 guide와 example, 그리고 비슷한 결의 도시를 함께 보여줘 다음 클릭이 자연스럽게 이어지게 했습니다.', 'A matching 도시 가이드, example, and a related city sit together here so the next click feels obvious.', '同じ都市の guide と example、そして近いトーンの都市を並べて、次のクリックが自然につながるようにしました。', '把同城市的 guide 與 example，加上調性相近的城市放在一起，讓下一次點擊更自然。'),
       matchingEyebrow: uiCopy('추천 흐름', 'Suggested next reads', 'おすすめの流れ', '推薦流程'),
-      sameCityGuideDesc: uiCopy('결과에 쓰인 동네 결을 도시 가이드에서 더 깊게 읽습니다.', 'Read the same neighborhood logic in the city guide with more depth.', 'この結果で使った近所のロジックを、都市ガイドでもっと深く読めます。', '把這次結果用到的鄰里邏輯，在城市指南裡讀得更深。'),
-      sameCityExampleDesc: uiCopy('같은 도시의 샘플과 나란히 놓고 속도나 톤 차이를 비교합니다.', 'Put this beside a sample of the same city and compare the pace or tone.', '同じ都市のサンプルと並べて、速度感やトーンの違いを比べられます。', '把它和同城市範例並排比較，看看節奏和調性的差異。'),
-      neighborhoodDesc: uiCopy('가이드 안의 동네 픽에서 어디를 더 깊게 읽을지 바로 이어집니다.', 'Jump straight into the neighborhood picks inside the city guide.', '都市ガイド内の近所のピックへ、そのまま続けて読めます。', '可直接接到城市指南裡的鄰里精選，決定下一步往哪裡讀。'),
-      relatedCityDesc: uiCopy('비슷한 결을 가진 다른 도시로 가지를 치며 다음 루트를 넓혀 봅니다.', 'Branch into a related city when you want the next route to keep a similar tone.', '近いトーンの別都市へ枝分かれして、次のルートを広げられます。', '當你想讓下一條路線保留相近調性時，可以延伸到相關城市。')
+      sameCityGuideDesc: uiCopy('결과에 쓰인 동네 결을 도시 가이드에서 더 깊게 읽습니다.', 'Read the same neighborhood logic in the 도시 가이드 with more depth.', 'この結果で使った近所のロジックを、都市ガイドでもっと深く読めます。', '把這次結果用到的鄰里邏輯，在城市指南裡讀得更深。'),
+      sameCityExampleDesc: uiCopy('같은 도시의 샘플과 나란히 놓고 속도나 톤 차이를 비교합니다.', 'Put this beside a 샘플 of the same city and compare the pace or tone.', '同じ都市のサンプルと並べて、速度感やトーンの違いを比べられます。', '把它和同城市範例並排比較，看看節奏和調性的差異。'),
+      neighborhoodDesc: uiCopy('가이드 안의 동네 픽에서 어디를 더 깊게 읽을지 바로 이어집니다.', 'Jump straight into the neighborhood picks inside the 도시 가이드.', '都市ガイド内の近所のピックへ、そのまま続けて読めます。', '可直接接到城市指南裡的鄰里精選，決定下一步往哪裡讀。'),
+      relatedCityDesc: uiCopy('비슷한 결을 가진 다른 도시로 가지를 치며 다음 루트를 넓혀 봅니다.', 'Branch into a related city when you want the next 루트 to keep a similar tone.', '近いトーンの別都市へ枝分かれして、次のルートを広げられます。', '當你想讓下一條路線保留相近調性時，可以延伸到相關城市。')
     };
   }
 
 
   function getPriorityResultHeroPack(city=''){
     const slug = String(city || '').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-    const entry = priorityResultHeroPackMap[slug];
-    if (!entry) return null;
+    const 입구 = priorityResultHeroPackMap[slug];
+    if (!입구) return null;
     const lang = window.RyokoApp?.lang || 'ko';
-    return entry[lang] || entry.en || entry.ko || null;
+    return 입구[lang] || 입구.en || 입구.ko || null;
   }
 
   function getPriorityResultMicroBriefPack(city=''){
     const slug = String(city || '').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-    const entry = priorityResultMicroBriefMap[slug];
-    if (!entry) return null;
+    const 입구 = priorityResultMicroBriefMap[slug];
+    if (!입구) return null;
     const lang = window.RyokoApp?.lang || 'ko';
-    return entry[lang] || entry.en || entry.ko || null;
+    return 입구[lang] || 입구.en || 입구.ko || null;
   }
 
   function getPriorityResultVisualStoryPack(city=''){
     const slug = String(city || '').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-    const entry = priorityResultVisualStoryMap[slug];
-    if (!entry) return null;
+    const 입구 = priorityResultVisualStoryMap[slug];
+    if (!입구) return null;
     const lang = window.RyokoApp?.lang || 'ko';
-    return entry[lang] || entry.en || entry.ko || null;
+    return 입구[lang] || 입구.en || 입구.ko || null;
   }
 
 
@@ -2080,7 +2080,7 @@ function getPriorityRefinePack(city=''){
       ],
       en:[
         { title:'A first day that settles downtown quietly', intro:'Ease into Sendai through the station and arcade axis, then close the first evening quietly so the calm tone arrives early.', localTip:'Sendai works better when the first day stabilizes downtown rhythm instead of chasing too many headline stops.' },
-        { title:'A day held together by one green line and a market pause', intro:'Read one green line such as Jozenji-dori more deeply, then hold the day together with a market pocket and a slower meal.', localTip:'When rain comes in, increase the arcade and café share instead of leaning harder on the river route.' },
+        { title:'A day held together by one green line and a market pause', intro:'Read one green line such as Jozenji-dori more deeply, then hold the day together with a market pocket and a slower meal.', localTip:'When rain comes in, increase the arcade and café share instead of leaning harder on the river 루트.' },
         { title:'A final day shaped by one soft neighborhood and coffee', intro:'Leave one softer neighborhood and a short coffee stop for the final hours instead of forcing one more headline scene.', localTip:'Before departure, starting station-side logistics earlier usually protects the city impression more than squeezing in one last detour.' }
       ]
     },
@@ -2093,7 +2093,7 @@ function getPriorityRefinePack(city=''){
       ],
       en:[
         { title:'An arrival day built on one coast and real rest', intro:'On arrival day, keep only one coast scene plus real rest so you adjust to the island tempo before trying to cover it.', localTip:'One nearby coast line and an early dinner usually work better than touching several beaches immediately.' },
-        { title:'A sea day that gives the clearest hours to the coast', intro:'Give the clearest hours to the sea, then reduce transfer count so Okinawa’s color and wind stay in the route longer.', localTip:'On brighter days, cutting midday moves and shifting weight toward dusk sea often makes the island feel much more itself.' },
+        { title:'A sea day that gives the clearest hours to the coast', intro:'Give the clearest hours to the sea, then reduce transfer count so Okinawa’s color and wind stay in the 루트 longer.', localTip:'On brighter days, cutting midday moves and shifting weight toward dusk sea often makes the island feel much more itself.' },
         { title:'A drive day anchored by lunch and a resort pause', intro:'Do not let the drive become the whole day; anchor it with one long lunch and a resort pause so the sea-reset structure holds.', localTip:'If rain or wind rises, cut beach count quickly and expand cafés or resort pockets instead.' },
         { title:'A final day that leaves only one last view', intro:'Close with brunch or one short sea scene only, then leave gently enough that the island air still lingers.', localTip:'On departure day, one last airport-side view often works better than trying to force one more big loop.' }
       ]
@@ -2138,10 +2138,10 @@ function getPriorityRefinePack(city=''){
 
   function getPriorityResultDayPack(destination=''){
     const slug = String(destination || '').trim().toLowerCase();
-    const entry = priorityResultDayPolishMap[slug];
-    if (!entry) return [];
+    const 입구 = priorityResultDayPolishMap[slug];
+    if (!입구) return [];
     const lang = window.RyokoApp?.lang || 'ko';
-    return entry[lang] || entry.en || [];
+    return 입구[lang] || 입구.en || [];
   }
 
   function applyPriorityResultDayPolish(data){
@@ -2165,22 +2165,22 @@ function getPriorityRefinePack(city=''){
   function getSeasonalResultFeature(destination=''){
     const slug = String(destination||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
     const map = {
-      tokyo:{ ko:{title:'계절보다 시간대를 먼저 잡는 도쿄 베이스', desc:'맑은 오전 앵커, 비 오는 날의 실내 전환, 늦은 밤 회복 구간을 같이 두는 편이 도쿄를 더 읽기 쉽게 만듭니다.', chips:['Morning anchor','Rainy indoor swap','Late-night recovery']}, en:{title:'A Tokyo base shaped by time windows before the season', desc:'Tokyo usually gets easier when clear mornings, rainy indoor pivots, and late-night recovery are all considered together.', chips:['Morning anchor','Rainy indoor swap','Late-night recovery']}},
-      seoul:{ ko:{title:'서울은 계절보다 동네 조합과 우천 대응이 더 중요합니다', desc:'비 오는 날과 주말 혼잡을 고려한 실내 연결, 늦은 밤 사회적 리듬, 부모님용 easy pace가 모두 다른 route를 만듭니다.', chips:['Indoor chain','Weekend crowd swap','Late-night city edit']}, en:{title:'In Seoul, neighborhood mix and weather response matter more than the season tag', desc:'Rain plans, weekend crowd swaps, late-night social rhythm, and easier family pacing all produce different versions of Seoul.', chips:['Indoor chain','Weekend crowd swap','Late-night city edit']}},
+      tokyo:{ ko:{title:'계절보다 시간대를 먼저 잡는 도쿄 베이스', desc:'맑은 오전 앵커, 비 오는 날의 실내 전환, 늦은 밤 회복 구간을 같이 두는 편이 도쿄를 더 읽기 쉽게 만듭니다.', chips:['Morning anchor','Rainy indoor swap','Late-night recovery']}, en:{title:'A Tokyo 기준 shaped by time windows before the season', desc:'Tokyo usually gets easier when clear mornings, rainy indoor pivots, and late-night recovery are all considered together.', chips:['Morning anchor','Rainy indoor swap','Late-night recovery']}},
+      seoul:{ ko:{title:'서울은 계절보다 동네 조합과 우천 대응이 더 중요합니다', desc:'비 오는 날과 주말 혼잡을 고려한 실내 연결, 늦은 밤 사회적 리듬, 부모님용 easy pace가 모두 다른 루트를 만듭니다.', chips:['Indoor chain','Weekend crowd swap','Late-night city edit']}, en:{title:'In Seoul, neighborhood mix and weather response matter more than the season tag', desc:'Rain plans, weekend crowd swaps, late-night social rhythm, and easier family pacing all produce different versions of Seoul.', chips:['Indoor chain','Weekend crowd swap','Late-night city edit']}},
       busan:{ ko:{title:'부산은 바다를 읽는 시간대가 결과를 바꿉니다', desc:'여름엔 해 질 무렵 coast line이 강하고, 흐린 날은 실내 전망과 카페가 fallback이 됩니다.', chips:['Coast at dusk','Gray-day fallback','Easy family pacing']}, en:{title:'In Busan, the coast timing changes the whole result', desc:'Summer evenings open the coast up, while gray days usually work better with indoor views and café-led fallback.', chips:['Coast at dusk','Gray-day fallback','Easy family pacing']}},
-      kyoto:{ ko:{title:'교토는 quiet window를 먼저 지키는 쪽이 좋습니다', desc:'성수기보다 이른 오전과 비워둔 오후가 route 만족도를 더 크게 좌우합니다.', chips:['Early quiet window','Rainy tea-room day','Soft dusk walk']}, en:{title:'Kyoto works best when the quiet window is protected first', desc:'Early mornings and open afternoons usually matter more than the peak-season label itself.', chips:['Early quiet window','Rainy tea-room day','Soft dusk walk']}},
+      kyoto:{ ko:{title:'교토는 quiet window를 먼저 지키는 쪽이 좋습니다', desc:'성수기보다 이른 오전과 비워둔 오후가 루트 만족도를 더 크게 좌우합니다.', chips:['Early quiet window','Rainy tea-room day','Soft dusk walk']}, en:{title:'Kyoto works best when the quiet window is protected first', desc:'Early mornings and open afternoons usually matter more than the peak-season label itself.', chips:['Early quiet window','Rainy tea-room day','Soft dusk walk']}},
       jeju:{ ko:{title:'제주는 날씨와 바람을 같이 보는 편이 좋습니다', desc:'맑은 날 scenic drive를 길게 쓰고, 비나 바람이 강하면 café-led fallback으로 무게를 옮기는 쪽이 안정적입니다.', chips:['Wind-aware drives','Rainy café pivot','Soft coast line']}, en:{title:'Jeju gets better when weather and wind are read together', desc:'Stretch scenic drives on clear days, then shift weight toward café-led fallback when rain or wind rises.', chips:['Wind-aware drives','Rainy café pivot','Soft coast line']}},
-      fukuoka:{ ko:{title:'후쿠오카는 계절이 달라도 compact route가 강합니다', desc:'도심 코어를 짧게 잡고 meal rhythm을 유지하면 우천일과 더위에도 만족도가 크게 무너지지 않습니다.', chips:['Compact core','Meal rhythm','Rain-proof center']}, en:{title:'Fukuoka stays strong when the route remains compact', desc:'A shorter city core with stable meal rhythm usually holds up well through rain or heat.', chips:['Compact core','Meal rhythm','Rain-proof center']}},
-      osaka:{ ko:{title:'오사카는 season보다 meal spacing이 먼저입니다', desc:'아케이드와 실내 구간을 잘 섞으면 비 오는 날에도 리듬이 무너지지 않고, 저녁 무드도 더 쉽게 살릴 수 있습니다.', chips:['Arcade shelter','Food spacing','Easy night close']}, en:{title:'In Osaka, meal spacing comes before the seasonal label', desc:'Arcades and indoor stretches protect the route on rainy days and keep the evening rhythm easier to hold.', chips:['Arcade shelter','Food spacing','Easy night close']}},
+      fukuoka:{ ko:{title:'후쿠오카는 계절이 달라도 compact 루트가 강합니다', desc:'도심 코어를 짧게 잡고 meal rhythm을 유지하면 우천일과 더위에도 만족도가 크게 무너지지 않습니다.', chips:['Compact core','Meal rhythm','Rain-proof center']}, en:{title:'Fukuoka stays strong when the 루트 remains compact', desc:'A shorter city core with stable meal rhythm usually holds up well through rain or heat.', chips:['Compact core','Meal rhythm','Rain-proof center']}},
+      osaka:{ ko:{title:'오사카는 season보다 meal spacing이 먼저입니다', desc:'아케이드와 실내 구간을 잘 섞으면 비 오는 날에도 리듬이 무너지지 않고, 저녁 무드도 더 쉽게 살릴 수 있습니다.', chips:['Arcade shelter','Food spacing','Easy night close']}, en:{title:'In Osaka, meal spacing comes before the seasonal label', desc:'Arcades and indoor stretches protect the 루트 on rainy days and keep the evening rhythm easier to hold.', chips:['Arcade shelter','Food spacing','Easy night close']}},
       sapporo:{ ko:{title:'삿포로는 차가운 공기와 따뜻한 pocket을 같이 봐야 좋습니다', desc:'넓은 축, 실내 연결, 따뜻한 한 끼가 같이 있어야 겨울 도시 리듬이 무너지지 않습니다.', chips:['Winter width','Warm pocket','Short night glow']}, en:{title:'Sapporo works best when cold air and warm pockets are read together', desc:'A wider axis, one indoor link, and one warm meal usually keep the winter-city rhythm intact.', chips:['Winter width','Warm pocket','Short night glow']}},
       sendai:{ ko:{title:'센다이는 계절보다 calm axis가 더 중요합니다', desc:'녹음길, market pocket, quiet dinner close가 같이 있어야 이 도시의 장점이 살아납니다.', chips:['Calm axis','Market pocket','Quiet dinner close']}, en:{title:'In Sendai, the calm axis matters more than the season label', desc:'A green avenue, one market pocket, and a quieter dinner close usually bring the city out best.', chips:['Calm axis','Market pocket','Quiet dinner close']}},
-      okinawa:{ ko:{title:'오키나와는 날씨보다 바다와 pause를 같이 읽는 편이 좋습니다', desc:'wind, rain, sea, resort pause를 함께 봐야 섬 route가 무너지지 않습니다.', chips:['Sea opener','Drive pause','Soft dusk close']}, en:{title:'Okinawa works better when sea scenes and pauses are read together', desc:'Reading wind, rain, sea, and resort pauses together usually keeps the island route cleaner.', chips:['Sea opener','Drive pause','Soft dusk close']}},
-      gyeongju:{ ko:{title:'경주는 dusk를 넣어야 계절감이 깊어집니다', desc:'한옥과 유적의 질감은 해 질 무렵에 더 선명해지고, 비 오는 날엔 hanok/café fallback이 route를 살려줍니다.', chips:['Dusk heritage mood','Hanok fallback','Slow evening close']}, en:{title:'Gyeongju deepens when dusk is part of the route', desc:'Heritage texture sharpens toward dusk, and rainy hanok/café fallback keeps the day intact.', chips:['Dusk heritage mood','Hanok fallback','Slow evening close']}},
+      okinawa:{ ko:{title:'오키나와는 날씨보다 바다와 pause를 같이 읽는 편이 좋습니다', desc:'wind, rain, sea, resort pause를 함께 봐야 섬 루트가 무너지지 않습니다.', chips:['Sea opener','Drive pause','Soft dusk close']}, en:{title:'Okinawa works better when sea scenes and pauses are read together', desc:'Reading wind, rain, sea, and resort pauses together usually keeps the island 루트 cleaner.', chips:['Sea opener','Drive pause','Soft dusk close']}},
+      gyeongju:{ ko:{title:'경주는 dusk를 넣어야 계절감이 깊어집니다', desc:'한옥과 유적의 질감은 해 질 무렵에 더 선명해지고, 비 오는 날엔 hanok/café fallback이 루트를 살려줍니다.', chips:['Dusk heritage mood','Hanok fallback','Slow evening close']}, en:{title:'Gyeongju deepens when dusk is part of the 루트', desc:'Heritage texture sharpens toward dusk, and rainy hanok/café fallback keeps the day intact.', chips:['Dusk heritage mood','Hanok fallback','Slow evening close']}},
       macau:{ ko:{title:'마카오는 짧은 축과 day-night contrast가 핵심입니다', desc:'old core, Taipa bridge pocket, bright close를 짧고 분명하게 두는 편이 가장 좋습니다.', chips:['Old-core walk','Bridge pocket','Bright night close']}, en:{title:'Macau works through short axes and day-night contrast', desc:'The city lands best when the old core, Taipa bridge pocket, and one bright close stay short and clear.', chips:['Old-core walk','Bridge pocket','Bright night close']}}
     };
-    const entry = map[slug] || map.seoul;
+    const 입구 = map[slug] || map.seoul;
     const langKey = (window.RyokoApp?.lang || 'ko') === 'ko' ? 'ko' : 'en';
-    return entry[langKey] || entry.en;
+    return 입구[langKey] || 입구.en;
   }
 
   function renderEditorialHero(data){
@@ -2198,18 +2198,18 @@ function getPriorityRefinePack(city=''){
     const visualKicker = qs('resultVisualKicker');
     const voice = window.RyokoApp?.getCityVoice?.(destination);
     const heroPack = getPriorityResultHeroPack(destination);
-    if (eyebrow) eyebrow.textContent = heroPack?.eyebrow || uiCopy(`${destination} 루트 노트`, `${destination} route note`);
+    if (eyebrow) eyebrow.textContent = heroPack?.eyebrow || uiCopy(`${destination} 루트 노트`, `${destination} 루트 note`);
     if (coverMeta) coverMeta.textContent = heroPack?.coverMeta || uiCopy(`${destination} 플래너 에디트`, `${destination} planner edit`);
     if (coverNote) coverNote.textContent = heroPack?.coverNote || uiCopy(`${destination} 결과도 홈과 매거진에서 쓰는 같은 커버 규칙으로 읽히게 정리했습니다.`, `${destination} results now follow the same cover framing used on the home and magazine pages.`);
     if (rhythm) rhythm.textContent = heroPack?.factRhythm || textValue(data.pace, 'Balanced city pacing');
-    if (shape) shape.textContent = heroPack?.factShape || summarizeRouteShape(data);
-    if (best) best.textContent = heroPack?.factBest || textValue(data.bestFor, 'Travelers who want a smoother route');
+    if (shape) shape.textContent = heroPack?.factShape || summarize루트Shape(data);
+    if (best) best.textContent = heroPack?.factBest || textValue(data.bestFor, 'Travelers who want a smoother 루트');
     if (note) note.textContent = heroPack?.editorNote || buildEditorNote(data);
     if (visual) {
       visual.style.backgroundImage = `linear-gradient(180deg, rgba(17,27,45,0.08) 0%, rgba(17,27,45,0.58) 100%), url("${cityImageFor(destination)}")`;
     }
     if (visualTitle) visualTitle.textContent = heroPack?.visualTitle || voice?.strap || uiCopy(`${destination} 에디토리얼 플로우`, `${destination} editorial flow`);
-    if (visualDesc) visualDesc.textContent = heroPack?.visualDesc || textValue(data.summary, 'Built like a readable magazine route instead of a crowded checklist.');
+    if (visualDesc) visualDesc.textContent = heroPack?.visualDesc || textValue(data.summary, 'Built like a readable magazine 루트 instead of a crowded checklist.');
     if (visualKicker) visualKicker.textContent = heroPack?.visualKicker || voice?.mood || textValue(data.vibe, 'City cover');
   }
   function buildMicroBrief(data){
@@ -2249,7 +2249,7 @@ function getPriorityRefinePack(city=''){
     const eyebrow = qs('dayRailEyebrow');
     const title = qs('dayRailTitle');
     if (!rail) return;
-    if (eyebrow) eyebrow.textContent = uiCopy('루트 리듬', 'Route rhythm');
+    if (eyebrow) eyebrow.textContent = uiCopy('루트 리듬', '루트 rhythm');
     if (title) title.textContent = uiCopy('하루씩 가볍게 이동하면서 읽어보세요', 'Jump through the trip one day at a time');
     rail.innerHTML = (data.days || []).map((day, idx) => {
       const places = normalizePlaces(day);
@@ -2257,7 +2257,7 @@ function getPriorityRefinePack(city=''){
       return `
         <button class="day-rail-chip${idx === 0 ? ' is-active' : ''}" data-day-jump="${target}">
           <span class="day-rail-kicker">${escapeHtml(getDayLabel(day.day || idx + 1))}</span>
-          <strong>${escapeHtml(textValue(day.title, uiCopy('하루 일정', 'Day route')))}</strong>
+          <strong>${escapeHtml(textValue(day.title, uiCopy('하루 일정', 'Day 루트')))}</strong>
           <small>${escapeHtml(String(places.length || 0))} ${uiCopy('곳', 'stops')}</small>
         </button>`;
     }).join('');
@@ -2323,10 +2323,10 @@ function getPriorityRefinePack(city=''){
     const budget = data.budgetBreakdown || {};
     const entries = Array.isArray(budget) ? budget.map(x => [x.category, x.amount]) : Object.entries(budget);
     qs('budgetSummary').textContent = textValue(data.budgetSummary, window.RyokoApp.t('planner.budgetSummaryFallback') || '');
-    qs('budgetList').innerHTML = (entries.length ? entries : Object.entries(samplePlans.tokyo.budgetBreakdown)).map(([k,v]) => `<div class="budget-card-line"><strong>${budgetLabel(k)}</strong><span>${v}</span></div>`).join('');
+    qs('budgetList').innerHTML = (entries.length ? entries : Object.entries(샘플Plans.tokyo.budgetBreakdown)).map(([k,v]) => `<div class="budget-card-line"><strong>${budgetLabel(k)}</strong><span>${v}</span></div>`).join('');
   }
   function renderTips(data){
-    const tips = Array.isArray(data.localTips) && data.localTips.length ? data.localTips : samplePlans.tokyo.localTips;
+    const tips = Array.isArray(data.localTips) && data.localTips.length ? data.localTips : 샘플Plans.tokyo.localTips;
     qs('localTipsList').innerHTML = tips.map(item => `<div class="tip-card-line"><span class="tip-icon">i</span><div class="tip-text">${item}</div></div>`).join('');
   }
 
@@ -2403,12 +2403,12 @@ function getPriorityRefinePack(city=''){
     if (signals.paceKey === 'full' && /(fast|social|food|harbor|night)/.test(vibe)) score += 1;
     return score;
   }
-  function rerankRecommendations(recs, signals, baseCity=''){
+  function rerankRecommendations(recs, signals, 기준City=''){
     return [...(recs || [])].sort((a,b) => {
       const acity = a.preset?.destination || '';
       const bcity = b.preset?.destination || '';
-      const av = String(acity).toLowerCase() === String(baseCity || '').toLowerCase() ? 3 : 0;
-      const bv = String(bcity).toLowerCase() === String(baseCity || '').toLowerCase() ? 3 : 0;
+      const av = String(acity).toLowerCase() === String(기준City || '').toLowerCase() ? 3 : 0;
+      const bv = String(bcity).toLowerCase() === String(기준City || '').toLowerCase() ? 3 : 0;
       const atags = (a.tags || []).map(t => String(t).toLowerCase());
       const btags = (b.tags || []).map(t => String(t).toLowerCase());
       const ascore = av + scoreCityForSignals(window.RyokoApp.getCityLoopData(acity) || {name:acity,vibe:''}, signals)
@@ -2428,23 +2428,23 @@ function getPriorityRefinePack(city=''){
       return bscore - ascore;
     });
   }
-  function sortRelatedCities(baseCity, signals){
-    return window.RyokoApp.getRelatedCities(baseCity).slice().sort((a,b) => scoreCityForSignals(b, signals) - scoreCityForSignals(a, signals));
+  function sortRelatedCities(기준City, signals){
+    return window.RyokoApp.getRelatedCities(기준City).slice().sort((a,b) => scoreCityForSignals(b, signals) - scoreCityForSignals(a, signals));
   }
-  function adaptiveNudgeCopy(baseCity, signals){
-    const city = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity };
-    const cityNote = priorityCityLoopNote(baseCity, signals, 'result');
+  function adaptiveNudgeCopy(기준City, signals){
+    const city = window.RyokoApp.getCityLoopData(기준City) || { name: 기준City };
+    const cityNote = priorityCityLoopNote(기준City, signals, 'result');
     if (cityNote) return cityNote;
-    if (signals.tags.includes('coast')) return uiCopy('해안선과 전망 포켓이 있는 흐름을 먼저 다시 읽어 보세요.', 'Re-open the route through coast lines and view pockets first.', '海沿いと眺めのポケットがある流れから読み直すのがおすすめです。', '先回到有海岸線與視野口袋的節奏去讀會更順。');
+    if (signals.tags.includes('coast')) return uiCopy('해안선과 전망 포켓이 있는 흐름을 먼저 다시 읽어 보세요.', 'Re-open the 루트 through coast lines and view pockets first.', '海沿いと眺めのポケットがある流れから読み直すのがおすすめです。', '先回到有海岸線與視野口袋的節奏去讀會更順。');
     if (signals.tags.includes('food-led')) return uiCopy('식사 타이밍이 루트를 만드는 도시일수록, example와 guide를 같이 보면 밀도가 더 정확해집니다.', 'When meal timing shapes the city, reading the guide beside the example makes the density easier to tune.', '食のタイミングが街を作る都市ほど、guide と example を並べると密度を整えやすくなります。', '當用餐節奏會決定整座城市時，把 guide 和 example 並著看會更容易調整密度。');
     if (signals.tags.includes('late-night')) return uiCopy('밤 장면이 중요한 결과라면, 늦은 시간대가 강한 도시 가지를 먼저 열어 보세요.', 'If the night close matters here, open the stronger late-night branch first.', '夜の締めが大事な結果なら、深夜の強い枝から先に開くと流れが整います。', '如果這次重點是夜晚收尾，先打開夜間氣氛更強的分支會更順。');
     if (signals.tags.includes('soft-reset') || signals.paceKey === 'light') return uiCopy('지금 결과는 많이 넣기보다 여백을 살리는 쪽이 잘 맞습니다.', 'This result works better when the next read protects space instead of adding more stops.', 'この結果は、詰め足すより余白を守る読み方のほうが合います。', '這次結果更適合保留留白，而不是再往裡塞更多停點。');
     if (signals.localMode) return uiCopy(`${city.name}의 로컬 결을 더 읽어야 다음 루프가 더 자연스럽습니다.`, `Reading ${city.name} through more local pockets will make the next loop feel cleaner.`, `${city.name} のローカルな層をもう少し読むと、次のループが自然になります。`, `把 ${city.name} 的在地層次再多讀一點，下一輪會更自然。`);
-    return uiCopy('같은 도시의 guide와 example를 한 번 더 비교한 뒤, 다음 도시로 가지를 치는 편이 좋습니다.', 'Compare the same-city guide and example once more before branching into the next city.', '同じ都市の guide と example をもう一度見比べてから、次の都市へ枝分かれするのがおすすめです。', '先再比對一次同城市的 guide 與 example，再延伸到下一座城市會更順。');
+    return uiCopy('같은 도시의 guide와 example를 한 번 더 비교한 뒤, 다음 도시로 가지를 치는 편이 좋습니다.', 'Compare the same-도시 가이드 and example once more before branching into the next city.', '同じ都市の guide と example をもう一度見比べてから、次の都市へ枝分かれするのがおすすめです。', '先再比對一次同城市的 guide 與 example，再延伸到下一座城市會更順。');
   }
 
-  function sharedProductContextMarkup(baseCity, payload){
-    const cityName = String(baseCity || payload?.destination || '').trim();
+  function sharedProductContextMarkup(기준City, payload){
+    const cityName = String(기준City || payload?.destination || '').trim();
     const saved = (window.RyokoStorage.getSavedTrips?.() || []).filter(item => String(item.destination || '').toLowerCase() === cityName.toLowerCase());
     const recent = (window.RyokoStorage.getRecentTrips?.() || []).filter(item => String(item.destination || '').toLowerCase() === cityName.toLowerCase());
     const shared = (window.RyokoStorage.getSharedTrips?.() || []).filter(item => String(item.destination || '').toLowerCase() === cityName.toLowerCase());
@@ -2456,16 +2456,16 @@ function getPriorityRefinePack(city=''){
     const exampleHref = city ? window.RyokoApp.resolvePath(city.example || city.guide || 'magazine/index.html') : window.RyokoApp.navHref('magazine');
     const total = saved.length + recent.length + shared.length;
     const collectionDesc = total
-      ? uiCopy(`${cityName} 관련 저장/최근/공유 흐름 ${total}개가 쌓여 있습니다.`, `${total} saved, recent, or shared routes already sit around ${cityName}.`, `${cityName} まわりには保存・最近・共有の流れが ${total} 件あります。`, `${cityName} 周邊已累積 ${total} 筆已存、最近或分享的路線。`)
-      : uiCopy(`${cityName}는 이 공유 루트를 첫 저장 컬렉션으로 삼기 좋습니다.`, `This shared route can become the first saved collection for ${cityName}.`, `${cityName} では、この共有ルートが最初の保存コレクションになります。`, `這條分享路線很適合成為 ${cityName} 的第一個保存收藏。`);
+      ? uiCopy(`${cityName} 관련 저장/최근/공유 흐름 ${total}개가 쌓여 있습니다.`, `${total} saved, recent, or shared 루트s already sit around ${cityName}.`, `${cityName} まわりには保存・最近・共有の流れが ${total} 件あります。`, `${cityName} 周邊已累積 ${total} 筆已存、最近或分享的路線。`)
+      : uiCopy(`${cityName}는 이 공유 루트를 첫 저장 컬렉션으로 삼기 좋습니다.`, `This shared 루트 can become the first saved collection for ${cityName}.`, `${cityName} では、この共有ルートが最初の保存コレクションになります。`, `這條分享路線很適合成為 ${cityName} 的第一個保存收藏。`);
     const continueDesc = latest
       ? uiCopy(`${latest.title || cityName}와 나란히 두고 비교하면 다음 수정이 훨씬 빨라집니다.`, `Keeping this beside ${latest.title || cityName} makes the next edit easier to judge.`, `${latest.title || cityName} と並べると、次の調整がぐっとしやすくなります。`, `把它和 ${latest.title || cityName} 並排看，下一次微調會更容易。`)
-      : uiCopy(`도시 가이드와 샘플을 먼저 읽고, 그다음 이 공유 루트를 저장 컬렉션으로 남겨 보세요.`, `Read the city guide and sample first, then keep this shared route as a saved collection.`, `先に都市ガイドとサンプルを読み、この共有ルートを保存コレクションとして残してみてください。`, `先讀城市指南和範例，再把這條分享路線留下成為你的收藏。`);
+      : uiCopy(`도시 가이드와 샘플을 먼저 읽고, 그다음 이 공유 루트를 저장 컬렉션으로 남겨 보세요.`, `Read the 도시 가이드 and 샘플 first, then keep this shared 루트 as a saved collection.`, `先に都市ガイドとサンプルを読み、この共有ルートを保存コレクションとして残してみてください。`, `先讀城市指南和範例，再把這條分享路線留下成為你的收藏。`);
     return `
       <div class="shared-product-grid">
         <article class="shared-product-card info-card">
           <span class="eyebrow">${uiCopy('저장 컬렉션','Saved collection','保存コレクション','已存收藏')}</span>
-          <h4>${uiCopy('이 도시를 보관하는 기준점', 'A cleaner city base', 'この都市を保管する基準点', '保留這座城市的基準點')}</h4>
+          <h4>${uiCopy('이 도시를 보관하는 기준점', 'A cleaner city 기준', 'この都市を保管する基準点', '保留這座城市的基準點')}</h4>
           <p>${collectionDesc}</p>
           <div class="trip-chip-row">
             <span class="trip-mini-chip">${saved.length} ${uiCopy('저장','saved','保存','已存')}</span>
@@ -2473,8 +2473,8 @@ function getPriorityRefinePack(city=''){
             <span class="trip-mini-chip">${shared.length} ${uiCopy('공유','shared','共有','分享')}</span>
           </div>
           <div class="card-actions">
-            <a class="soft-btn" href="${window.RyokoApp.navHref('trips')}">${uiCopy('My Trips 보기','Open My Trips','My Trips を開く','打開 My Trips')}</a>
-            <a class="ghost-btn" href="${guideHref}">${uiCopy('도시 가이드','City guide','都市ガイド','城市指南')}</a>
+            <a class="soft-btn" href="${window.RyokoApp.navHref('trips')}">${uiCopy('보관함 보기','Open 보관함','보관함 を開く','打開 보관함')}</a>
+            <a class="ghost-btn" href="${guideHref}">${uiCopy('도시 가이드','도시 가이드','都市ガイド','城市指南')}</a>
             <a class="ghost-btn" href="${articleHref}">${uiCopy('아티클 깊이','Article depth','article depth','article depth')}</a>
           </div>
         </article>
@@ -2482,40 +2482,40 @@ function getPriorityRefinePack(city=''){
           <span class="eyebrow">${uiCopy('이어 읽기','Continue reading','続けて読む','接續閱讀')}</span>
           <h4>${uiCopy('다음 클릭을 더 자연스럽게', 'Where to reopen next', '次のクリックを自然にする', '讓下一次點擊更自然')}</h4>
           <p>${continueDesc}</p>
-          ${renderEntryRouteMiniBlock(baseCity, 'compact')}
+          ${render입구루트MiniBlock(기준City, 'compact')}
           <div class="card-actions">
-            <a class="primary-btn" href="${latestHref}">${latest ? uiCopy('최근 루트 열기','Open recent route','最近のルートを開く','打開最近路線') : uiCopy('이 루트 저장','Save this route','このルートを保存','保存這條路線')}</a>
-            <a class="secondary-btn" href="${exampleHref}">${uiCopy('샘플 비교','Compare sample','サンプル比較','對照範例')}</a>
+            <a class="primary-btn" href="${latestHref}">${latest ? uiCopy('최근 여행 열기','Open recent 루트','最近のルートを開く','打開最近路線') : uiCopy('이 루트 저장','Save this 루트','このルートを保存','保存這條路線')}</a>
+            <a class="secondary-btn" href="${exampleHref}">${uiCopy('샘플 비교','Compare 샘플','サンプル比較','對照範例')}</a>
             <a class="ghost-btn" href="${articleHref}">${uiCopy('아티클 깊이','Article depth','article depth','article depth')}</a>
           </div>
         </article>
       </div>`;
   }
 
-  function sharedLoopMarkup(baseCity, signals){
-    const city = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, guide:'magazine/index.html', example:'magazine/index.html', image: cityImageFor(baseCity), vibe:'' };
-    const related = sortRelatedCities(baseCity, signals)[0] || city;
+  function sharedLoopMarkup(기준City, signals){
+    const city = window.RyokoApp.getCityLoopData(기준City) || { name: 기준City, guide:'magazine/index.html', example:'magazine/index.html', image: cityImageFor(기준City), vibe:'' };
+    const related = sortRelatedCities(기준City, signals)[0] || city;
     const guideHref = window.RyokoApp.resolvePath(city.guide || 'magazine/index.html') + '#city-neighborhoods';
     const exampleHref = window.RyokoApp.resolvePath(city.example || city.guide || 'magazine/index.html');
     const tripsHref = window.RyokoApp.navHref('trips');
-    const plannerHref = `${location.pathname}?destination=${encodeURIComponent(baseCity)}#plannerForm`;
+    const plannerHref = `${location.pathname}?destination=${encodeURIComponent(기준City)}#plannerForm`;
     return `
       <div class="shared-loop-shell">
         <div class="shared-loop-head">
           <span class="eyebrow">${uiCopy('shared → saved loop','Shared → saved loop','shared → saved loop','shared → saved loop')}</span>
           <strong>${uiCopy('공유 링크를 미리보기에서 끝내지 말고, 저장 루프로 넘기세요','Move a shared link into the saved loop instead of stopping at the preview','共有リンクをプレビューで止めず、保存ループへ渡しましょう','不要停在分享預覽，請把它送進已存循環')}</strong>
         </div>
-        <p class="card-copy">${priorityCityLoopNote(baseCity, signals, 'share') || adaptiveNudgeCopy(baseCity, signals)}</p>
+        <p class="card-copy">${priorityCityLoopNote(기준City, signals, 'share') || adaptiveNudgeCopy(기준City, signals)}</p>
         <div class="loop-stage-grid loop-stage-grid-compact">
-          <article class="loop-stage-card loop-stage-city"><span class="loop-stage-step">01</span><span class="mini-label">Shared</span><strong>${uiCopy('공유 루트 열기','Open shared route','共有ルートを開く','打開分享路線')}</strong><p>${uiCopy('원본 맥락을 먼저 읽습니다.','Start with the original context.','元の文脈を先に読みます。','先讀原本的脈絡。')}</p></article>
-          <a class="loop-stage-card loop-stage-planner" href="${tripsHref}"><span class="loop-stage-step">02</span><span class="mini-label">Vault</span><strong>${uiCopy('My Trips에 남기기','Keep it in My Trips','My Trips に残す','存進 My Trips')}</strong><p>${uiCopy('나중에 다시 열 수 있는 저장 루프로 넘깁니다.','Move it into a saved loop you can reopen later.','あとで開き直せる保存ループへ渡します。','把它送進之後可以再打開的已存循環。')}</p></a>
+          <article class="loop-stage-card loop-stage-city"><span class="loop-stage-step">01</span><span class="mini-label">Shared</span><strong>${uiCopy('공유 루트 열기','Open shared 루트','共有ルートを開く','打開分享路線')}</strong><p>${uiCopy('원본 맥락을 먼저 읽습니다.','Start with the original context.','元の文脈を先に読みます。','先讀原本的脈絡。')}</p></article>
+          <a class="loop-stage-card loop-stage-planner" href="${tripsHref}"><span class="loop-stage-step">02</span><span class="mini-label">Vault</span><strong>${uiCopy('보관함에 남기기','Keep it in 보관함','보관함 に残す','存進 보관함')}</strong><p>${uiCopy('나중에 다시 열 수 있는 저장 루프로 넘깁니다.','Move it into a saved loop you can reopen later.','あとで開き直せる保存ループへ渡します。','把它送進之後可以再打開的已存循環。')}</p></a>
           <a class="loop-stage-card loop-stage-city" href="${guideHref}"><span class="loop-stage-step">03</span><span class="mini-label">City</span><strong>${uiCopy('동네 결 다시 읽기','Re-read the neighborhood layer','近所の層を読み直す','重讀鄰里層次')}</strong><p>${uiCopy('이 링크가 기대는 도시 결을 더 선명하게 만듭니다.','Clarify the city logic this shared link depends on.','このリンクが寄りかかる都市のロジックをはっきりさせます。','把這條分享路線依靠的城市邏輯讀得更清楚。')}</p></a>
-          <a class="loop-stage-card loop-stage-example" href="${exampleHref}"><span class="loop-stage-step">04</span><span class="mini-label">Example</span><strong>${uiCopy('샘플과 속도 비교','Compare against the sample','サンプルと速度を比べる','和範例比較節奏')}</strong><p>${uiCopy('같은 도시의 기본 샘플과 밀도를 나란히 봅니다.','Put it beside the city sample and compare density.','同じ都市のサンプルと密度を見比べます。','和同城市 sample 並排比較密度。')}</p></a>
+          <a class="loop-stage-card loop-stage-example" href="${exampleHref}"><span class="loop-stage-step">04</span><span class="mini-label">Example</span><strong>${uiCopy('샘플과 속도 비교','Compare against the 샘플','サンプルと速度を比べる','和範例比較節奏')}</strong><p>${uiCopy('같은 도시의 기본 샘플과 밀도를 나란히 봅니다.','Put it beside the city 샘플 and compare density.','同じ都市のサンプルと密度を見比べます。','和同城市 샘플 並排比較密度。')}</p></a>
           <a class="loop-stage-card loop-stage-result" href="${window.RyokoApp.resolvePath(related.guide || city.guide)}"><span class="loop-stage-step">05</span><span class="mini-label">Next</span><strong>${related.name}</strong><p>${uiCopy('비슷한 결의 다음 도시 가지를 엽니다.','Open the next city branch with a matching tone.','近いトーンの次都市ブランチを開きます。','打開調性相近的下一座城市分支。')}</p></a>
         </div>
         <div class="card-actions shared-loop-actions">
-          <a class="primary-btn" href="${tripsHref}">${uiCopy('My Trips로 넘기기','Send to My Trips','My Trips へ渡す','送進 My Trips')}</a>
-          <a class="secondary-btn" href="${plannerHref}">${uiCopy('이 루트 다듬기','Refine this route','このルートを整える','微調這條路線')}</a>
+          <a class="primary-btn" href="${tripsHref}">${uiCopy('보관함로 넘기기','Send to 보관함','보관함 へ渡す','送進 보관함')}</a>
+          <a class="secondary-btn" href="${plannerHref}">${uiCopy('이 루트 다듬기','Refine this 루트','このルートを整える','微調這條路線')}</a>
           <a class="ghost-btn" href="${guideHref}">${uiCopy('도시 가이드 읽기','도시 읽기','ガイドを読む','閱讀指南')}</a>
         </div>
       </div>`;
@@ -2525,42 +2525,42 @@ function getPriorityRefinePack(city=''){
     const node = qs('resultVisualStoryGrid');
     if (!node) return;
     const copy = resultCopy();
-    const baseCity = textValue(data.destination, readForm().destination || 'Tokyo');
-    const current = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, country:'', guide:'magazine/', example:'magazine/', image: cityImageFor(baseCity), vibe:'editorial route' };
-    const related = window.RyokoApp.getRelatedCities(baseCity)[0] || current;
+    const 기준City = textValue(data.destination, readForm().destination || 'Tokyo');
+    const current = window.RyokoApp.getCityLoopData(기준City) || { name: 기준City, country:'', guide:'magazine/', example:'magazine/', image: cityImageFor(기준City), vibe:'editorial 루트' };
+    const related = window.RyokoApp.getRelatedCities(기준City)[0] || current;
     const dayOne = data.days?.[0] || {};
     const dayOnePlaces = normalizePlaces(dayOne).slice(0,3).map(place => place.name).join(' · ');
     const title = qs('visualStoryTitle');
     const desc = qs('visualStoryDesc');
     const eyebrow = qs('visualStoryEyebrow');
-    if (eyebrow) eyebrow.textContent = copy.routeNote;
+    if (eyebrow) eyebrow.textContent = copy.루트Note;
     if (title) title.textContent = uiCopy('결과를 기사형 패키지처럼 읽게 만듭니다', 'See the result like an editorial package', '結果を小さなエディトリアルパッケージのように読めるようにします', '讓這份結果像一個小型 editorial package 一樣被閱讀');
-    if (desc) desc.textContent = copy.routeNoteDesc;
-    const seasonal = getSeasonalResultFeature(baseCity);
-    const storyPack = getPriorityResultVisualStoryPack(baseCity);
+    if (desc) desc.textContent = copy.루트NoteDesc;
+    const seasonal = getSeasonalResultFeature(기준City);
+    const storyPack = getPriorityResultVisualStoryPack(기준City);
     const cards = [
       {
         kicker: copy.cityCover,
         title: storyPack?.coverTitle || `${current.name}`,
-        text: storyPack?.coverText || textValue(data.summary, uiCopy('이 여정의 전체 리듬을 먼저 잡아주는 대표 컷입니다.', 'This is the cover frame that sets the route tone first.')),
-        image: window.RyokoApp.resolvePath(current.image || cityImageFor(baseCity)),
-        actionLabel: uiCopy('도시 가이드', 'City guide', '都市ガイド', '城市指南'),
+        text: storyPack?.coverText || textValue(data.summary, uiCopy('이 여정의 전체 리듬을 먼저 잡아주는 대표 컷입니다.', 'This is the cover frame that sets the 루트 tone first.')),
+        image: window.RyokoApp.resolvePath(current.image || cityImageFor(기준City)),
+        actionLabel: uiCopy('도시 가이드', '도시 가이드', '都市ガイド', '城市指南'),
         actionHref: window.RyokoApp.resolvePath(current.guide)
       },
       {
-        kicker: copy.routeMood,
-        title: storyPack?.routeTitle || textValue(dayOne.title, uiCopy('첫날의 리듬', 'Opening rhythm')),
-        text: storyPack?.routeText || dayOnePlaces || uiCopy('첫날은 강한 앵커와 부드러운 포켓을 섞어 과밀하지 않게 시작합니다.', 'Day one mixes one anchor and softer pockets so the route opens cleanly.'),
-        image: window.RyokoApp.resolvePath(exampleImageFor(baseCity)),
-        actionLabel: copy.sampleRead,
+        kicker: copy.루트Mood,
+        title: storyPack?.루트Title || textValue(dayOne.title, uiCopy('첫날의 리듬', 'Opening rhythm')),
+        text: storyPack?.루트Text || dayOnePlaces || uiCopy('첫날은 강한 앵커와 부드러운 포켓을 섞어 과밀하지 않게 시작합니다.', 'Day one mixes one anchor and softer pockets so the 루트 opens cleanly.'),
+        image: window.RyokoApp.resolvePath(exampleImageFor(기준City)),
+        actionLabel: copy.샘플Read,
         actionHref: window.RyokoApp.resolvePath(current.example)
       },
       {
-        kicker: storyPack ? uiCopy('루트 패키지', 'Route package', 'ルートパッケージ', '路線套組') : uiCopy('시즌 노트', 'Seasonal note', '季節ノート', '季節筆記'),
+        kicker: storyPack ? uiCopy('루트 패키지', '루트 package', 'ルートパッケージ', '路線套組') : uiCopy('시즌 노트', 'Seasonal note', '季節ノート', '季節筆記'),
         title: storyPack?.packageTitle || seasonal.title,
         text: storyPack?.packageText || seasonal.desc,
-        image: window.RyokoApp.resolvePath(current.image || cityImageFor(baseCity)),
-        actionLabel: copy.plannerBase,
+        image: window.RyokoApp.resolvePath(current.image || cityImageFor(기준City)),
+        actionLabel: copy.planner기준,
         actionHref: '#plannerForm'
       },
       {
@@ -2589,41 +2589,41 @@ function getPriorityRefinePack(city=''){
     const node = qs('resultLoopSection');
     if (!node) return;
     const copy = resultCopy();
-    const baseCity = textValue(data.destination, readForm().destination || 'Tokyo');
-    const current = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, country:'', guide:'magazine/index.html', example:'magazine/index.html', image: cityImageFor(baseCity), vibe:'' };
+    const 기준City = textValue(data.destination, readForm().destination || 'Tokyo');
+    const current = window.RyokoApp.getCityLoopData(기준City) || { name: 기준City, country:'', guide:'magazine/index.html', example:'magazine/index.html', image: cityImageFor(기준City), vibe:'' };
     const signals = getResultSignals(data);
-    const related = sortRelatedCities(baseCity, signals).slice(0, 2);
+    const related = sortRelatedCities(기준City, signals).slice(0, 2);
     const atlasHref = window.RyokoApp.resolvePath('magazine/index.html#cityAtlas');
     const cityGuideHref = window.RyokoApp.resolvePath((current.guide || 'magazine/index.html')) + '#city-neighborhoods';
     const exampleHref = window.RyokoApp.resolvePath(current.example || current.guide || 'magazine/index.html');
-    const plannerHref = `${location.pathname}?destination=${encodeURIComponent(baseCity)}#plannerForm`;
+    const plannerHref = `${location.pathname}?destination=${encodeURIComponent(기준City)}#plannerForm`;
     const tripsHref = window.RyokoApp.navHref('trips');
     const resultHref = '#resultTop';
     const stages = [
       { step:'01', label:copy.atlas, title: uiCopy(`${current.name}를 atlas에서 다시 읽기`, `Re-read ${current.name} in the atlas`, `${current.name} を atlas で読み直す`, `回到 atlas 重讀 ${current.name}`), desc: copy.backToAtlas, href: atlasHref, cls:'atlas' },
-      { step:'02', label:copy.cityGuide, title: uiCopy(`${current.name} city guide`, `${current.name} city guide`, `${current.name} 都市ガイド`, `${current.name} 城市指南`), desc: copy.sameCityGuideDesc, href: cityGuideHref, cls:'city' },
-      { step:'03', label:copy.sampleRoute, title: uiCopy(`${current.name} sample route`, `${current.name} sample route`, `${current.name} サンプルルート`, `${current.name} 範例路線`), desc: copy.sameCityExampleDesc, href: exampleHref, cls:'example' },
-      { step:'04', label:copy.plannerBase, title: uiCopy(`${current.name} route desk`, `${current.name} route desk`, `${current.name} route desk`, `${current.name} route desk`), desc: copy.tunePlanner, href: plannerHref, cls:'planner' },
+      { step:'02', label:copy.cityGuide, title: uiCopy(`${current.name} 도시 가이드`, `${current.name} 도시 가이드`, `${current.name} 都市ガイド`, `${current.name} 城市指南`), desc: copy.sameCityGuideDesc, href: cityGuideHref, cls:'city' },
+      { step:'03', label:copy.샘플루트, title: uiCopy(`${current.name} 샘플 루트`, `${current.name} 샘플 루트`, `${current.name} サンプルルート`, `${current.name} 範例路線`), desc: copy.sameCityExampleDesc, href: exampleHref, cls:'example' },
+      { step:'04', label:copy.planner기준, title: uiCopy(`${current.name} 루트 데스크`, `${current.name} 루트 데스크`, `${current.name} 루트 데스크`, `${current.name} 루트 데스크`), desc: copy.tunePlanner, href: plannerHref, cls:'planner' },
       { step:'05', label:copy.vaultStep, title: copy.vaultTitle, desc: copy.vaultDesc, href: tripsHref, cls:'city' },
-      { step:'06', label:copy.routeResult, title: uiCopy('지금 보고 있는 결과', 'The result you are reading now', '今読んでいる結果', '你現在正在看的結果'), desc: copy.continueResult, href: resultHref, cls:'result' }
+      { step:'06', label:copy.루트Result, title: uiCopy('지금 보고 있는 결과', 'The result you are reading now', '今読んでいる結果', '你現在正在看的結果'), desc: copy.continueResult, href: resultHref, cls:'result' }
     ];
     const stageCards = stages.map((item, idx) => {
       const body = `<span class="loop-stage-step">${item.step}</span><span class="mini-label">${escapeHtml(item.label)}</span><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.desc)}</p>`;
       return idx === stages.length - 1
-        ? `<article class="loop-stage-card is-current loop-stage-${item.cls}">${body}<span class="loop-stage-current">${escapeHtml(copy.routeResult)}</span></article>`
+        ? `<article class="loop-stage-card is-current loop-stage-${item.cls}">${body}<span class="loop-stage-current">${escapeHtml(copy.루트Result)}</span></article>`
         : `<a class="loop-stage-card loop-stage-${item.cls}" href="${item.href}">${body}</a>`;
     }).join('');
     const matching = [
-      { eyebrow:copy.cityGuide, title: uiCopy(`${current.name} guide`, `${current.name} guide`, `${current.name} ガイド`, `${current.name} 指南`), desc: priorityCityLoopNote(baseCity, signals, 'guide') || copy.sameCityGuideDesc, href: cityGuideHref, soft:copy.readCityLayer },
-      { eyebrow:copy.sampleRoute, title: uiCopy(`${current.name} example`, `${current.name} example`, `${current.name} サンプル`, `${current.name} 範例`), desc: uiCopy(`${current.name}의 현재 결을 sample route와 나란히 두고, 강한 구간과 느슨한 구간이 어디서 갈리는지 비교합니다.`, `Set this beside the ${current.name} sample and compare where the stronger and softer sections split apart.`, `${current.name} の現在のトーンを sample route と並べ、強い区間とゆるい区間がどこで分かれるかを見比べます。`, `把現在這條 ${current.name} 路線和 sample route 並排，看看強區段與鬆區段在哪裡分開。`), href: exampleHref, soft:copy.compareExample },
-      { eyebrow:copy.neighborhoods, title: uiCopy(`${current.name} neighborhood picks`, `${current.name} neighborhood picks`, `${current.name} 近所のピック`, `${current.name} 鄰里精選`), desc: priorityCityLoopNote(baseCity, signals, 'guide') || copy.neighborhoodDesc, href: cityGuideHref, soft:copy.neighborhoods },
+      { eyebrow:copy.cityGuide, title: uiCopy(`${current.name} guide`, `${current.name} guide`, `${current.name} ガイド`, `${current.name} 指南`), desc: priorityCityLoopNote(기준City, signals, 'guide') || copy.sameCityGuideDesc, href: cityGuideHref, soft:copy.readCityLayer },
+      { eyebrow:copy.샘플루트, title: uiCopy(`${current.name} example`, `${current.name} example`, `${current.name} サンプル`, `${current.name} 範例`), desc: uiCopy(`${current.name}의 현재 결을 샘플 루트와 나란히 두고, 강한 구간과 느슨한 구간이 어디서 갈리는지 비교합니다.`, `Set this beside the ${current.name} 샘플 and compare where the stronger and softer sections split apart.`, `${current.name} の現在のトーンを 샘플 루트 と並べ、強い区間とゆるい区間がどこで分かれるかを見比べます。`, `把現在這條 ${current.name} 路線和 샘플 루트 並排，看看強區段與鬆區段在哪裡分開。`), href: exampleHref, soft:copy.compareExample },
+      { eyebrow:copy.neighborhoods, title: uiCopy(`${current.name} neighborhood picks`, `${current.name} neighborhood picks`, `${current.name} 近所のピック`, `${current.name} 鄰里精選`), desc: priorityCityLoopNote(기준City, signals, 'guide') || copy.neighborhoodDesc, href: cityGuideHref, soft:copy.neighborhoods },
     ].concat(related.map(city => ({ eyebrow:copy.nextCity, title:city.name, desc:copy.relatedCityDesc, href:window.RyokoApp.resolvePath(city.guide), soft:copy.readGuide, vibe:city.vibe || '' })));
     node.innerHTML = `
       <div class="section-head">
         <div>
-          <span class="eyebrow">${copy.routeLoopEyebrow}</span>
-          <h2 class="section-title">${copy.routeLoopTitle}</h2>
-          <p class="section-desc">${copy.routeLoopDesc}</p>
+          <span class="eyebrow">${copy.루트LoopEyebrow}</span>
+          <h2 class="section-title">${copy.루트LoopTitle}</h2>
+          <p class="section-desc">${copy.루트LoopDesc}</p>
         </div>
       </div>
       <div class="loop-stage-grid">${stageCards}</div>
@@ -2631,7 +2631,7 @@ function getPriorityRefinePack(city=''){
         <div class="loop-feature-copy">
           <span class="eyebrow">${copy.matchingEyebrow}</span>
           <h3>${copy.matchingTitle}</h3>
-          <p>${copy.matchingDesc}</p><p class="section-desc">${adaptiveNudgeCopy(baseCity, signals)}</p>
+          <p>${copy.matchingDesc}</p><p class="section-desc">${adaptiveNudgeCopy(기준City, signals)}</p>
           <div class="result-vault-note">
             <strong>${copy.vaultTitle}</strong>
             <span>${copy.vaultDesc}</span>
@@ -2682,13 +2682,13 @@ function getPriorityRefinePack(city=''){
       </div>
       <div class="loop-grid">${recs.map(item => `
         <article class="loop-card info-card">
-          <div class="loop-card-top"><span class="eyebrow">${escapeHtml(item.preset?.destination || item.slug || 'Base')}</span><span class="loop-card-vibe">${escapeHtml((item.tags || []).slice(0,2).join(' · '))}</span></div>
-          <h3>${escapeHtml(textValue(item.title, item.slug || 'Base'))}</h3>
+          <div class="loop-card-top"><span class="eyebrow">${escapeHtml(item.preset?.destination || item.slug || '기준')}</span><span class="loop-card-vibe">${escapeHtml((item.tags || []).slice(0,2).join(' · '))}</span></div>
+          <h3>${escapeHtml(textValue(item.title, item.slug || '기준'))}</h3>
           <p>${escapeHtml(textValue(item.desc, ''))}</p>
           <div class="card-actions">
-            <a class="soft-btn" href="${item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-guide">${copy.cityGuide}</a>
-            <a class="ghost-btn" href="${item.example || item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-sample">${copy.sampleRoute}</a>
-            <a class="secondary-btn" href="${location.pathname}?destination=${encodeURIComponent(item.preset?.destination || '')}#plannerForm" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || 'Base')}" data-signal-source="result-signal-planner">${copy.plannerBase}</a>
+            <a class="soft-btn" href="${item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || '기준')}" data-signal-source="result-signal-guide">${copy.cityGuide}</a>
+            <a class="ghost-btn" href="${item.example || item.guide || '#'}" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || '기준')}" data-signal-source="result-signal-샘플">${copy.샘플루트}</a>
+            <a class="secondary-btn" href="${location.pathname}?destination=${encodeURIComponent(item.preset?.destination || '')}#plannerForm" data-signal-tags="${(item.tags || []).join('|')}" data-signal-city="${item.preset?.destination || ''}" data-signal-title="${textValue(item.title, item.slug || '기준')}" data-signal-source="result-signal-planner">${copy.planner기준}</a>
           </div>
         </article>`).join('')}</div>`;
     window.RyokoApp?.recordSignalInteraction && node.querySelectorAll('[data-signal-tags]').forEach(el => {
@@ -2712,16 +2712,16 @@ function getPriorityRefinePack(city=''){
     if (!pack) { node.innerHTML=''; node.classList.add('hidden'); return; }
     node.classList.remove('hidden');
     const copy = {
-      eyebrow: uiCopy('루트 정교화', 'Route refinement', 'ルートの精緻化', '路線微調整'),
+      eyebrow: uiCopy('루트 정교화', '루트 refinement', 'ルートの精緻化', '路線微調整'),
       title: uiCopy('지금 결과를 더 좋게 읽는 세 가지 축', 'Three cleaner ways to tune this result', 'この結果をもっと良く読む三つの軸', '把這次結果讀得更準的三個方向'),
-      desc: uiCopy('district deeper note, day rhythm, 그리고 rainy / slower / night 변주를 한 번에 붙였습니다.', 'District depth, day rhythm, and rainy / slower / night switches now sit together here so the route reads less like output and more like an edited city package.', 'エリアの読みどころ、一日のリズム、rainy / slower / night の切り替えをここにまとめました。', '把區域延伸筆記、一日節奏與 rainy / slower / night 變奏一起收進這裡。'),
+      desc: uiCopy('district deeper note, day rhythm, 그리고 rainy / slower / night 변주를 한 번에 붙였습니다.', 'District depth, day rhythm, and rainy / slower / night switches now sit together here so the 루트 reads less like output and more like an edited city package.', 'エリアの読みどころ、一日のリズム、rainy / slower / night の切り替えをここにまとめました。', '把區域延伸筆記、一日節奏與 rainy / slower / night 變奏一起收進這裡。'),
       district: uiCopy('District deeper note','District deeper note','エリアの読みどころ','區域延伸筆記'),
       rhythm: uiCopy('Day rhythm','Day rhythm','一日のリズム','一日節奏'),
       variants: uiCopy('Quick variants','Quick variants','すぐ切り替え','快速變奏'),
       visit: uiCopy('Visit split','Visit split','訪問の分岐','造訪分流'),
-      entry: uiCopy('Entry routes','Entry routes','入口ルート','入口路線')
+      입구: uiCopy('입구 루트s','입구 루트s','入口ルート','入口路線')
     };
-    const entryPack = getPriorityEntryPack(textValue(data.destination, readForm().destination || ''));
+    const 입구Pack = getPriority입구Pack(textValue(data.destination, readForm().destination || ''));
     const editorial = priorityResultEditorialMap[String(textValue(data.destination, readForm().destination || '')).trim().toLowerCase()];
     const editorialPack = editorial ? (editorial[window.RyokoApp?.lang || 'ko'] || editorial.en || editorial.ko) : null;
     node.innerHTML = `
@@ -2736,8 +2736,8 @@ function getPriorityRefinePack(city=''){
         <article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.district}</span></div><p>${pack.district}</p></article>
         <article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.rhythm}</span></div>${pack.rhythm.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>
         <article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.variants}</span></div>${pack.variants.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>
-        ${entryPack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.visit}</span></div><div class="summary-line editorial-line"><strong>${entryPack.first[0]}</strong><span>${entryPack.first[1]} — ${entryPack.first[2]}</span></div><div class="summary-line editorial-line"><strong>${entryPack.second[0]}</strong><span>${entryPack.second[1]} — ${entryPack.second[2]}</span></div></article>` : ''}
-        ${entryPack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.entry}</span></div>${entryPack.entries.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>` : ''}
+        ${입구Pack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.visit}</span></div><div class="summary-line editorial-line"><strong>${입구Pack.first[0]}</strong><span>${입구Pack.first[1]} — ${입구Pack.first[2]}</span></div><div class="summary-line editorial-line"><strong>${입구Pack.second[0]}</strong><span>${입구Pack.second[1]} — ${입구Pack.second[2]}</span></div></article>` : ''}
+        ${입구Pack ? `<article class="loop-card info-card"><div class="loop-card-top"><span class="eyebrow">${copy.입구}</span></div>${입구Pack.entries.map(item => `<div class="summary-line editorial-line"><strong>${item[0]}</strong><span>${item[1]}</span></div>`).join('')}</article>` : ''}
       </div>
       ${editorialPack ? (() => {
         const insightLabels = {
@@ -2748,7 +2748,7 @@ function getPriorityRefinePack(city=''){
           swap: uiCopy('One thing to swap', 'One thing to swap', 'ひとつ替えるなら', '可以替換的一件事'),
           keep: uiCopy('Keep this note', 'Keep this note', 'このメモを残す', '保存這則筆記'),
           adapt: uiCopy('Weather pivot', 'Weather pivot', '天気で切り替え', '天氣替代'),
-          edit: uiCopy('Route edit', 'Route edit', 'ルート編集', '路線編輯'),
+          edit: uiCopy('루트 edit', '루트 edit', 'ルート編集', '路線編輯'),
           continue: uiCopy('Continue with', 'Continue with', '続けて読む', '延伸閱讀')
         };
         const insightCards = [
@@ -2768,8 +2768,8 @@ function getPriorityRefinePack(city=''){
         </article>` : '';
         return `<div class="result-insight-pack">
           <div class="result-insight-pack-head">
-            <span class="eyebrow">${uiCopy('저장용 루트 메모', 'Route notes worth saving', '保存したいルートメモ', '值得保存的路線筆記')}</span>
-            <h3>${uiCopy('이 결과를 다시 볼 이유를 먼저 정리했습니다', 'The reasons to keep this route are now easier to scan', 'この結果を見返す理由を先に整理しました', '先整理好這份結果值得回看的理由')}</h3>
+            <span class="eyebrow">${uiCopy('저장용 루트 메모', '루트 notes worth saving', '保存したいルートメモ', '值得保存的路線筆記')}</span>
+            <h3>${uiCopy('이 결과를 다시 볼 이유를 먼저 정리했습니다', 'The reasons to keep this 루트 are now easier to scan', 'この結果を見返す理由を先に整理しました', '先整理好這份結果值得回看的理由')}</h3>
             <p>${uiCopy('비 오는 날, 느린 하루, 교체할 한 지점까지 한 화면에서 읽히도록 정리했습니다.', 'Rain, slower pace, and the one smart swap are framed as a compact editorial card set.', '雨の日、ゆっくりした日、替えるべき一点まで一画面で読めるように整理しました。', '把雨天、慢節奏與一個替換點整理成一組 editorial card。')}</p>
           </div>
           <div class="result-editorial-memo-grid">
@@ -2788,18 +2788,18 @@ function getPriorityRefinePack(city=''){
   function renderLoopSection(data){
     const node = qs('resultLoopSection');
     if (!node) return;
-    const baseCity = textValue(data.destination, readForm().destination || 'Tokyo');
-    const current = window.RyokoApp.getCityLoopData(baseCity) || { name: baseCity, guide:'magazine/', example:'magazine/' };
-    const related = window.RyokoApp.getRelatedCities(baseCity).slice(0, 3);
-    const recent = (window.RyokoStorage.getRecentTrips?.() || []).filter(item => String(item.destination || '').toLowerCase() !== String(baseCity).toLowerCase()).slice(0, 1);
+    const 기준City = textValue(data.destination, readForm().destination || 'Tokyo');
+    const current = window.RyokoApp.getCityLoopData(기준City) || { name: 기준City, guide:'magazine/', example:'magazine/' };
+    const related = window.RyokoApp.getRelatedCities(기준City).slice(0, 3);
+    const recent = (window.RyokoStorage.getRecentTrips?.() || []).filter(item => String(item.destination || '').toLowerCase() !== String(기준City).toLowerCase()).slice(0, 1);
     const relatedCards = related.map(city => `
       <article class="loop-card info-card">
         <div class="loop-card-top"><span class="eyebrow">${escapeHtml(city.country)}</span><span class="loop-card-vibe">${escapeHtml(city.vibe)}</span></div>
         <h3>${escapeHtml(city.name)}</h3>
-        <p>${uiCopy('도시 가이드로 먼저 읽고, 그 무드를 더 차분한 루트로 바꿔보세요.', 'Start from the city guide, then turn that mood into a calmer, cleaner route.', 'まず都市ガイドを読み、その空気をより落ち着いたルートへ整えてみてください。', '先從城市指南讀起，再把那個氣氛整理成更安穩的路線。')}</p>
+        <p>${uiCopy('도시 가이드로 먼저 읽고, 그 무드를 더 차분한 루트로 바꿔보세요.', 'Start from the 도시 가이드, then turn that mood into a calmer, cleaner 루트.', 'まず都市ガイドを読み、その空気をより落ち着いたルートへ整えてみてください。', '先從城市指南讀起，再把那個氣氛整理成更安穩的路線。')}</p>
         <div class="card-actions">
           <a class="soft-btn" href="${window.RyokoApp.resolvePath(city.guide)}">${copy.cityGuide}</a>
-          <a class="ghost-btn" href="${window.RyokoApp.resolvePath(city.example)}">${copy.sampleRoute}</a>
+          <a class="ghost-btn" href="${window.RyokoApp.resolvePath(city.example)}">${copy.샘플루트}</a>
         </div>
       </article>`).join('');
     const continueCard = recent[0] ? `
@@ -2817,8 +2817,8 @@ function getPriorityRefinePack(city=''){
       <article class="loop-feature info-card">
         <div class="loop-feature-copy">
           <span class="eyebrow">${copy.keepLoop}</span>
-          <h3>${uiCopy(`${current.name}를 더 읽고 이 루트를 저장하세요`, `Read ${current.name} deeper, then save the route`)}</h3>
-          <p>${uiCopy('도시 가이드로 무드를 더 선명하게 만든 뒤, 이 플랜을 My Trips에 남겨두면 다음 탐색이 더 쉬워집니다.', 'Use the city guide to sharpen the vibe, keep this plan in My Trips, and come back with stronger context next time.')}</p>
+          <h3>${uiCopy(`${current.name}를 더 읽고 이 루트를 저장하세요`, `Read ${current.name} deeper, then save the 루트`)}</h3>
+          <p>${uiCopy('도시 가이드로 무드를 더 선명하게 만든 뒤, 이 플랜을 보관함에 남겨두면 다음 탐색이 더 쉬워집니다.', 'Use the 도시 가이드 to sharpen the vibe, keep this plan in 보관함, and come back with stronger context next time.')}</p>
           <div class="card-actions">
             <a class="primary-btn" href="${window.RyokoApp.resolvePath(current.guide)}">${copy.readGuide}</a>
             <a class="secondary-btn" href="${window.RyokoApp.navHref('trips')}">${copy.openTrips}</a>
@@ -2838,7 +2838,7 @@ function getPriorityRefinePack(city=''){
   }
 
   function renderChecklist(data){
-    const checklist = (data.checklist || []).length ? data.checklist : samplePlans.tokyo.checklist;
+    const checklist = (data.checklist || []).length ? data.checklist : 샘플Plans.tokyo.checklist;
     qs('checklistList').innerHTML = checklist.map(item => `<div class="check-item"><span class="check-icon">✓</span><div class="check-text">${item}</div></div>`).join('');
   }
   function setText(id, value){
@@ -2849,7 +2849,7 @@ function getPriorityRefinePack(city=''){
     const destination = textValue(data?.destination, readForm().destination || 'this city');
     return {
       eyebrow: uiCopy('저장 / 공유 패키지','Save / Share package','保存 / 共有パッケージ','保存 / 分享套組'),
-      title: uiCopy('이 결과를 여행 카드처럼 남기세요','Turn this route into a trip card','この結果を旅カードとして残す','把這個結果留下成旅行卡片'),
+      title: uiCopy('이 결과를 여행 카드처럼 남기세요','Turn this 루트 into a trip card','この結果を旅カードとして残す','把這個結果留下成旅行卡片'),
       desc: uiCopy(
         `${destination} 루트를 저장하고, 링크로 보내고, PDF처럼 조용히 읽을 수 있게 묶었습니다.`,
         `Save ${destination}, send a clean link, or open a calmer PDF-style copy for travel day.`,
@@ -2857,13 +2857,13 @@ function getPriorityRefinePack(city=''){
         `把 ${destination} 路線保存、分享成乾淨連結，或打開成適合旅行當天閱讀的 PDF 版。`
       ),
       saveStep: uiCopy('01 · 저장','01 · Save','01 · 保存','01 · 保存'),
-      saveTitle: uiCopy('My Trips에 보관','Keep it in My Trips','My Trips に保存','存進 My Trips'),
+      saveTitle: uiCopy('보관함에 보관','Keep it in 보관함','보관함 に保存','存進 보관함'),
       saveDesc: uiCopy('같은 도시 결을 나중에 다시 열고, 다음 버전으로 이어가기 쉽게 남깁니다.','Reopen this same city rhythm later instead of starting again from a blank planner.','同じ都市の流れをあとで開き直し、空白のプランナーから始め直さずに済みます。','之後可重開同一座城市的節奏，不用再從空白規劃器開始。'),
-      saveBtn: uiCopy('이 루트 저장','Save this route','このルートを保存','保存這條路線'),
+      saveBtn: uiCopy('이 루트 저장','Save this 루트','このルートを保存','保存這條路線'),
       savedBtn: uiCopy('저장됨','Saved','保存済み','已保存'),
       shareStep: uiCopy('02 · 공유','02 · Share','02 · 共有','02 · 分享'),
       shareTitle: uiCopy('읽기 좋은 링크로 보내기','Send it as a readable link','読みやすいリンクで送る','以易讀連結分享'),
-      shareDesc: uiCopy('커버, 루트 리듬, 하루별 흐름이 같이 남는 공유 링크로 전달합니다.','The shared link keeps the cover, route rhythm, and day-by-day logic together.','共有リンクにはカバー、ルートの流れ、日ごとの構成が一緒に残ります。','分享連結會保留封面、路線節奏與每日邏輯。'),
+      shareDesc: uiCopy('커버, 루트 리듬, 하루별 흐름이 같이 남는 공유 링크로 전달합니다.','The shared link keeps the cover, 루트 rhythm, and day-by-day logic together.','共有リンクにはカバー、ルートの流れ、日ごとの構成が一緒に残ります。','分享連結會保留封面、路線節奏與每日邏輯。'),
       shareBtn: uiCopy('링크 공유','Copy / share link','リンクを共有','複製 / 分享連結'),
       pdfStep: uiCopy('03 · PDF','03 · Export','03 · PDF','03 · 匯出'),
       pdfTitle: uiCopy('여행 당일용으로 열기','Make it print-ready','印刷用に開く','打開列印版'),
@@ -2907,7 +2907,7 @@ function getPriorityRefinePack(city=''){
 
     data = applyPriorityResultDayPolish(data);
     window.__RYOKO_LAST_RESULT__ = data;
-    qs('resultTitle').textContent = data.title || `${data.destination} editorial route`;
+    qs('resultTitle').textContent = data.title || `${data.destination} editorial 루트`;
     qs('resultSummary').textContent = normalizeSummary(data);
     renderMeta(data);
     renderEditorialHero(data);
@@ -2927,16 +2927,16 @@ function getPriorityRefinePack(city=''){
     window.currentTripPayload = { ...readForm(), planData:data, title:data.title || data.destination };
     const recentTrip = { ...window.currentTripPayload, destination:data.destination || readForm().destination };
     window.RyokoStorage.addRecentTrip(recentTrip);
-    const routeHref = window.RyokoApp?.buildRouteResultHrefFromTrip?.(recentTrip) || `${location.pathname}${location.search || ''}#resultTop`;
-    window.RyokoApp?.saveReadingHistory?.({ kind:'route', city:data.destination || readForm().destination || '', title:data.title || `${data.destination || readForm().destination || 'City'} editorial route`, href: routeHref, sourcePage:'route', summary: normalizeSummary(data) });
-    renderLatestRouteCard();
+    const 루트Href = window.RyokoApp?.build루트ResultHrefFromTrip?.(recentTrip) || `${location.pathname}${location.search || ''}#resultTop`;
+    window.RyokoApp?.saveReadingHistory?.({ kind:'루트', city:data.destination || readForm().destination || '', title:data.title || `${data.destination || readForm().destination || 'City'} editorial 루트`, href: 루트Href, sourcePage:'루트', summary: normalizeSummary(data) });
+    renderLatest루트Card();
   }
 
 async function generate(forcedPayload=null){
   const payload = forcedPayload || readForm();
   if (!payload.destination) { showToast(uiCopy('도시를 먼저 선택해 주세요.','Choose a city first.'), 'warn'); return; }
   lastGeneratePayload = { ...payload };
-  window.RyokoApp?.trackEvent?.('ryoko_route_generate_started', {
+  window.RyokoApp?.trackEvent?.('ryoko_루트_generate_started', {
     destination: payload.destination,
     duration: payload.duration || '',
     companion: payload.companion || '',
@@ -2950,29 +2950,29 @@ async function generate(forcedPayload=null){
     if (!res.ok) throw new Error(`API failed:${res.status}`);
     const data = await res.json();
     renderPlan(data);
-    saveLatestRouteSession('generate_success');
+    saveLatest루트Session('generate_success');
     setPlannerFeedback('success');
     revealResult();
     showToast(uiCopy('여정을 준비했어요.','Your trip is ready.'), 'success');
-    window.RyokoApp?.trackEvent?.('ryoko_route_generate_succeeded', {
+    window.RyokoApp?.trackEvent?.('ryoko_루트_generate_succeeded', {
       destination: payload.destination,
       usedFallback: false,
       dayCount: Array.isArray(data.days) ? data.days.length : 0
     });
   } catch (e) {
-    const fallback = samplePlans[payload.destination.toLowerCase()] || samplePlans.tokyo;
+    const fallback = 샘플Plans[payload.destination.toLowerCase()] || 샘플Plans.tokyo;
     renderPlan({...fallback, destination: payload.destination || fallback.destination});
-    saveLatestRouteSession(navigator.onLine === false ? 'generate_offline_fallback' : 'generate_fallback');
+    saveLatest루트Session(navigator.onLine === false ? 'generate_offline_fallback' : 'generate_fallback');
     const offline = navigator.onLine === false;
     setPlannerFeedback(offline ? 'offline' : 'fallback', { retry:true });
     revealResult();
     showToast(
       offline
-        ? uiCopy('오프라인이라 샘플 리듬으로 먼저 열었어요.','Opened a sample rhythm while offline.')
-        : uiCopy('샘플 리듬으로 먼저 보여드릴게요.','Loaded a sample route as a fallback.'),
+        ? uiCopy('오프라인이라 샘플 리듬으로 먼저 열었어요.','Opened a 샘플 rhythm while offline.')
+        : uiCopy('샘플 리듬으로 먼저 보여드릴게요.','Loaded a 샘플 루트 as a fallback.'),
       'info'
     );
-    window.RyokoApp?.trackEvent?.('ryoko_route_generate_fallback', {
+    window.RyokoApp?.trackEvent?.('ryoko_루트_generate_fallback', {
       destination: payload.destination,
       offline,
       error: String(e && e.message || 'fallback')
@@ -2982,14 +2982,14 @@ async function generate(forcedPayload=null){
   }
 }
 function useExample(key='tokyo'){
-    const plan = samplePlans[key] || samplePlans.tokyo;
-    window.RyokoApp?.trackEvent?.('ryoko_sample_loaded', { destination: plan.destination || key, source: 'planner_example_button' });
+    const plan = 샘플Plans[key] || 샘플Plans.tokyo;
+    window.RyokoApp?.trackEvent?.('ryoko_샘플_loaded', { destination: plan.destination || key, source: 'planner_example_button' });
     qs('destination').value = plan.destination;
     qs('notes').value = normalizeSummary(plan);
     renderPlan(plan);
-    saveLatestRouteSession('sample_button');
+    saveLatest루트Session('샘플_button');
     revealResult();
-    showToast(uiCopy('샘플 루트를 불러왔어요.','샘플 보기 route loaded.'), 'info');
+    showToast(uiCopy('샘플 루트를 불러왔어요.','샘플 루트 loaded.'), 'info');
   }
   function startFromCurrentResult(){
     const current = window.currentTripPayload?.planData || window.__RYOKO_LAST_RESULT__;
@@ -3016,7 +3016,7 @@ function useExample(key='tokyo'){
     syncPlannerRecipe();
     document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
     qs('destination')?.focus({ preventScroll:true });
-    showToast(uiCopy('지금 보고 있는 루트에서 바로 이어갈게요.','Starting from the route already on screen.'), 'info');
+    showToast(uiCopy('지금 보고 있는 루트에서 바로 이어갈게요.','Starting from the 루트 already on screen.'), 'info');
   }
   function saveCurrentTrip(){
     if (!window.currentTripPayload) return showToast(uiCopy('먼저 여정을 만들어 주세요.','Generate a trip first.'), 'warn');
@@ -3032,8 +3032,8 @@ function useExample(key='tokyo'){
     const data = window.currentTripPayload.planData || {};
     const shareText = [textValue(data.summary, ''), textValue(data.bestFor, '')].filter(Boolean).join(' · ');
     const shareData = {
-      title: window.currentTripPayload.title || 'Ryokoplan route',
-      text: shareText || `${window.currentTripPayload.destination} route from Ryokoplan`,
+      title: window.currentTripPayload.title || 'Ryokoplan 루트',
+      text: shareText || `${window.currentTripPayload.destination} 루트 from Ryokoplan`,
       url
     };
     if (navigator.share) {
@@ -3065,7 +3065,7 @@ function useExample(key='tokyo'){
       pace: uiCopy('페이스','Pace','節奏','步調'),
       bestFor: uiCopy('잘 맞는 여행자','Best for','向いている旅','最適合'),
       quickRhythm: uiCopy('리듬','Rhythm','流れ','節奏'),
-      quickShape: uiCopy('루트 구조','Route shape','ルート構成','路線結構'),
+      quickShape: uiCopy('루트 구조','루트 shape','ルート構成','路線結構'),
       quickWorks: uiCopy('잘 맞는 타입','Works best for','合う旅のタイプ','適合的旅人'),
       editorsTake: uiCopy('편집 메모','Editorial note','編集ノート','編輯筆記'),
       dayByDay: uiCopy('하루별 흐름','Day by day','日ごとの流れ','每日節奏'),
@@ -3073,21 +3073,21 @@ function useExample(key='tokyo'){
       budget: uiCopy('예산','Budget','予算','預算'),
       checklist: uiCopy('체크리스트','Checklist','チェックリスト','旅行清單'),
       cityCover: uiCopy('도시 커버','City cover','シティカバー','城市封面'),
-      routeMood: uiCopy('루트 무드','Route mood','ルートムード','路線氛圍'),
+      루트Mood: uiCopy('루트 무드','루트 mood','ルートムード','路線氛圍'),
       nextBranch: uiCopy('다음 가지','Next branch','次の分岐','下一個分支'),
       localTip: uiCopy('현지 팁','Local tip','現地メモ','在地筆記'),
       generatedOn: uiCopy('생성일','Generated on','作成日','生成日期'),
       classicRouting: uiCopy('관광객 모드','Classic routing','定番ルート','經典路線'),
       localModeOn: uiCopy('현지인 모드','Local mode on','ローカルモード','在地模式'),
       cityCoverText: uiCopy('이 여정 전체의 톤을 먼저 잡아주는 커버 컷입니다.','The cover frame that sets the tone of this itinerary first.','この旅全体のトーンを最初に決めるカバーフレームです。','這是先替整段旅程定下基調的封面畫面。'),
-      routeMoodText: uiCopy('첫날의 리듬과 주요 앵커를 한 번에 읽을 수 있게 정리한 비주얼 노트입니다.','A visual note that lets you read day-one rhythm and key anchors at a glance.','初日の流れと主要アンカーをひと目で読めるように整えたビジュアルノートです。','整理成一眼就能看懂第一天節奏與關鍵 anchor 的視覺筆記。'),
+      루트MoodText: uiCopy('첫날의 리듬과 주요 앵커를 한 번에 읽을 수 있게 정리한 비주얼 노트입니다.','A visual note that lets you read day-one rhythm and key anchors at a glance.','初日の流れと主要アンカーをひと目で読めるように整えたビジュアルノートです。','整理成一眼就能看懂第一天節奏與關鍵 anchor 的視覺筆記。'),
       nextBranchText: uiCopy('다음 도시로 자연스럽게 이어질 수 있는 추천 가지입니다.','A natural next-city branch to keep the read-and-save loop moving.','読みと保存の流れを保ったまま次の都市へつなげる分岐です。','這是一個能讓閱讀與保存循環自然延續到下一座城市的分支。'),
       visualStory: uiCopy('비주얼 스토리','Visual story','ビジュアルストーリー','視覺故事'),
-      visualStoryDesc: uiCopy('도시 커버, 이번 루트의 분위기, 그리고 다음 도시까지 한 번에 읽을 수 있는 PDF용 스토리 패키지입니다.','A PDF-ready story package that keeps the city cover, current route mood, and next branch on one spread.','都市カバー、今回のルートの空気、次の都市までを一度に読める PDF 用ストーリーパッケージです。','把城市封面、這次路線的氣氛與下一個城市分支整合在同一頁的 PDF 故事包。')
+      visualStoryDesc: uiCopy('도시 커버, 이번 루트의 분위기, 그리고 다음 도시까지 한 번에 읽을 수 있는 PDF용 스토리 패키지입니다.','A PDF-ready story package that keeps the city cover, current 루트 mood, and next branch on one spread.','都市カバー、今回のルートの空気、次の都市までを一度に読める PDF 用ストーリーパッケージです。','把城市封面、這次路線的氣氛與下一個城市分支整合在同一頁的 PDF 故事包。')
     };
     const rawDestination = window.currentTripPayload.destination || data.destination || 'Trip';
     const destination = escapeHtml(rawDestination);
-    const title = escapeHtml(data.title || `${rawDestination} editorial route`);
+    const title = escapeHtml(data.title || `${rawDestination} editorial 루트`);
     const summary = escapeHtml(normalizeSummary(data));
     const budgetSummary = escapeHtml(textValue(data.budgetSummary, ''));
     const signature = [
@@ -3100,7 +3100,7 @@ function useExample(key='tokyo'){
     const generatedAt = new Date().toLocaleDateString(localeMap[lang] || 'en-US', { year:'numeric', month:'long', day:'numeric' });
     const quickFacts = [
       { label: copy.quickRhythm, value: textValue(data.pace, '-') },
-      { label: copy.quickShape, value: summarizeRouteShape(data) },
+      { label: copy.quickShape, value: summarize루트Shape(data) },
       { label: copy.quickWorks, value: textValue(data.bestFor, '-') }
     ].map(item => `<div class="meta-card quick"><span class="meta-label">${escapeHtml(item.label)}</span><strong>${escapeHtml(item.value)}</strong></div>`).join('');
     const metaCards = [
@@ -3110,16 +3110,16 @@ function useExample(key='tokyo'){
     ].map(item => `<div class="meta-card"><span class="meta-label">${escapeHtml(item.label)}</span><strong>${escapeHtml(item.value)}</strong></div>`).join('');
     const editorNote = escapeHtml(buildEditorNote(data));
     const coverImage = window.RyokoApp.resolvePath(cityImageFor(rawDestination));
-    const routeMoodImage = window.RyokoApp.resolvePath(exampleImageFor(rawDestination));
-    const related = window.RyokoApp.getRelatedCities(rawDestination)[0] || window.RyokoApp.getCityLoopData(rawDestination) || { name: rawDestination, image: cityImageFor(rawDestination), vibe:'editorial route' };
+    const 루트MoodImage = window.RyokoApp.resolvePath(exampleImageFor(rawDestination));
+    const related = window.RyokoApp.getRelatedCities(rawDestination)[0] || window.RyokoApp.getCityLoopData(rawDestination) || { name: rawDestination, image: cityImageFor(rawDestination), vibe:'editorial 루트' };
     const relatedName = textValue(related.name, rawDestination);
     const relatedImage = window.RyokoApp.resolvePath(related.image || cityImageFor(relatedName));
     const dayOne = data.days?.[0] || {};
     const dayOnePlaces = normalizePlaces(dayOne).slice(0,3).map(place => place.name).join(' · ');
     const visualCards = [
       { kicker: copy.cityCover, title: rawDestination, text: textValue(data.summary, copy.cityCoverText), image: coverImage },
-      { kicker: copy.routeMood, title: textValue(dayOne.title, uiCopy('첫날의 리듬', 'Opening rhythm', '一日目のリズム', '第一天的節奏')), text: dayOnePlaces || copy.routeMoodText, image: routeMoodImage },
-      { kicker: copy.nextBranch, title: uiCopy(`${relatedName}까지 이어보기`, `Branch into ${relatedName}`, `${relatedName}へ続ける`, `延伸到 ${relatedName}`), text: uiCopy(`${textValue(related.vibe, 'editorial route')} 톤의 도시로 다음 탐색을 이어갈 수 있습니다.`, `This ${textValue(related.vibe, 'editorial route')} city is the cleanest next branch from here if you want the next read to feel related, not random.`, `${textValue(related.vibe, 'editorial route')}の空気を持つ都市へ、そのまま次の探索をつなげられます。`, `這座帶有 ${textValue(related.vibe, 'editorial route')} 氛圍的城市，最適合作為下一段延伸。`), image: relatedImage }
+      { kicker: copy.루트Mood, title: textValue(dayOne.title, uiCopy('첫날의 리듬', 'Opening rhythm', '一日目のリズム', '第一天的節奏')), text: dayOnePlaces || copy.루트MoodText, image: 루트MoodImage },
+      { kicker: copy.nextBranch, title: uiCopy(`${relatedName}까지 이어보기`, `Branch into ${relatedName}`, `${relatedName}へ続ける`, `延伸到 ${relatedName}`), text: uiCopy(`${textValue(related.vibe, 'editorial 루트')} 톤의 도시로 다음 탐색을 이어갈 수 있습니다.`, `This ${textValue(related.vibe, 'editorial 루트')} city is the cleanest next branch from here if you want the next read to feel related, not random.`, `${textValue(related.vibe, 'editorial 루트')}の空気を持つ都市へ、そのまま次の探索をつなげられます。`, `這座帶有 ${textValue(related.vibe, 'editorial 루트')} 氛圍的城市，最適合作為下一段延伸。`), image: relatedImage }
     ].map(card => `
       <article class="story-card">
         <div class="story-image" style="background-image:linear-gradient(180deg, rgba(17,27,45,0.08), rgba(17,27,45,0.58)), url('${card.image}')"></div>
@@ -3153,7 +3153,7 @@ function useExample(key='tokyo'){
     }).join('');
     const budgetRows = (Array.isArray(data.budgetBreakdown) ? data.budgetBreakdown.map(x => [x.category, x.amount]) : Object.entries(data.budgetBreakdown || {}))
       .map(([k,v])=>`<div class="budget-row"><span>${escapeHtml(budgetLabel(k))}</span><strong>${escapeHtml(v)}</strong></div>`).join('');
-    const tipsSource = (data.localTips || []).length ? data.localTips : [uiCopy('이동 사이에 15분 정도의 여백을 남겨두면 전체 리듬이 훨씬 좋아집니다.', 'Leave a 15-minute pocket between anchors to keep the route feeling light.', '移動のあいだに15分ほどの余白を残すと、全体のテンポがぐっと整います。', '在各個停點之間留出約 15 分鐘的空白，整體節奏會更輕盈。')];
+    const tipsSource = (data.localTips || []).length ? data.localTips : [uiCopy('이동 사이에 15분 정도의 여백을 남겨두면 전체 리듬이 훨씬 좋아집니다.', 'Leave a 15-minute pocket between anchors to keep the 루트 feeling light.', '移動のあいだに15分ほどの余白を残すと、全体のテンポがぐっと整います。', '在各個停點之間留出約 15 分鐘的空白，整體節奏會更輕盈。')];
     const checklistSource = (data.checklist || []).length ? data.checklist : [uiCopy('교통/영업시간을 마지막으로 한 번 더 확인하세요.', 'Do one last check on transport timing and opening hours.', '交通と営業時間を最後にもう一度確認してください。', '最後再確認一次交通時間與營業資訊。')];
     const tipsHtml = tipsSource.map(i => `<div class="list-row"><span class="dot">•</span><span>${escapeHtml(i)}</span></div>`).join('');
     const checklistHtml = checklistSource.map(i => `<div class="list-row"><span class="dot">✓</span><span>${escapeHtml(i)}</span></div>`).join('');
@@ -3283,7 +3283,7 @@ function useExample(key='tokyo'){
       desc: copy.sharedDesc,
       openGuide: copy.openGuide,
       save: copy.saveTrip,
-      duplicate: copy.useThisRoute,
+      duplicate: copy.useThis루트,
       source: uiCopy('공유 루트 컨텍스트','Shared trip context','共有ルートの文脈','分享路線脈絡')
     };
   }
@@ -3297,8 +3297,8 @@ function useExample(key='tokyo'){
     }
     const copy = sharedBannerCopy();
     const data = payload.planData || payload;
-    const baseCity = payload.destination || data.destination || '';
-    const city = window.RyokoApp.getCityLoopData(baseCity) || null;
+    const 기준City = payload.destination || data.destination || '';
+    const city = window.RyokoApp.getCityLoopData(기준City) || null;
     const guideHref = city ? window.RyokoApp.resolvePath(city.guide) + '#city-neighborhoods' : window.RyokoApp.navHref('magazine');
     const chips = [payload.destination || data.destination, payload.duration || data.duration, payload.companion || data.companion, data.vibe, data.pace].filter(Boolean).slice(0,5)
       .map(value => `<span class="trip-mini-chip">${escapeHtml(value)}</span>`).join('');
@@ -3316,8 +3316,8 @@ function useExample(key='tokyo'){
         <span>${copy.source}</span>
         <strong>${escapeHtml(data.bestFor || payload.notes || '')}</strong>
       </div>
-      ${sharedLoopMarkup(baseCity || textValue(data.destination,''), signals)}
-      ${sharedProductContextMarkup(baseCity || textValue(data.destination,''), payload)}
+      ${sharedLoopMarkup(기준City || textValue(data.destination,''), signals)}
+      ${sharedProductContextMarkup(기준City || textValue(data.destination,''), payload)}
       <div class="card-actions">
         <button class="secondary-btn" id="sharedBannerSaveBtn">${copy.save}</button>
         <button class="ghost-btn" id="sharedBannerDuplicateBtn">${copy.duplicate}</button>
@@ -3337,20 +3337,20 @@ function useExample(key='tokyo'){
       };
       if (window.RyokoApp?.applyPlannerPreset) window.RyokoApp.applyPlannerPreset(formPayload);
       document.querySelector('.planner-shell')?.scrollIntoView({ behavior:'smooth', block:'start' });
-      showToast(uiCopy('이 공유 루트를 바탕으로 다시 시작해요.','Starting from this shared route.'), 'info');
+      showToast(uiCopy('이 공유 루트를 바탕으로 다시 시작해요.','Starting from this shared 루트.'), 'info');
     });
   }
 
   function applyPresetFromQuery(){
     const params = new URLSearchParams(location.search);
     const destination = params.get('destination');
-    const entry = plannerEntryParams();
+    const 입구 = planner입구Params();
     if (destination && qs('destination')) qs('destination').value = destination;
-    if (entry && !params.get('trip')) {
-      applyPlannerEntrySuggestedPreset(entry);
+    if (입구 && !params.get('trip')) {
+      applyPlanner입구SuggestedPreset(입구);
       queuePlannerDraftSave();
     }
-    ensurePlannerEntryContext();
+    ensurePlanner입구Context();
   }
 
   function loadSharedTrip(){
@@ -3368,25 +3368,25 @@ function useExample(key='tokyo'){
     if (payload.budgetMode) document.querySelectorAll('[data-pill-group="budgetMode"]').forEach(btn => btn.classList.toggle('active', btn.dataset.pillValue === payload.budgetMode));
     renderPlan(payload.planData || payload);
     window.RyokoStorage.addSharedTrip(payload);
-    saveLatestRouteSession('shared_trip');
+    saveLatest루트Session('shared_trip');
     renderPlannerDraftCard();
-    renderLatestRouteCard();
+    renderLatest루트Card();
   }
   function init(){
     if (!document.body.dataset.page || document.body.dataset.page !== 'planner') return;
     refreshOptions();
     bindPlannerDraftAutosave();
     renderPlannerDraftCard();
-    renderLatestRouteCard();
+    renderLatest루트Card();
     bindSelectionChips();
     applyPresetFromQuery();
     window.addEventListener('ryoko:langchange', () => {
       refreshOptions();
       const existing = window.__RYOKO_LAST_RESULT__;
       if (existing) renderPlan(existing);
-      ensurePlannerEntryContext();
+      ensurePlanner입구Context();
       renderPlannerDraftCard();
-      renderLatestRouteCard();
+      renderLatest루트Card();
     });
     qs('localToggle').addEventListener('click', () => qs('localToggle').classList.toggle('on'));
     qs('submitBtn').addEventListener('click', generate);
@@ -3397,9 +3397,9 @@ function useExample(key='tokyo'){
     window.addEventListener('offline', () => { if (window.currentTripPayload) setPlannerFeedback('offline'); });
     window.addEventListener('online', () => { const panel = qs('plannerFeedbackPanel'); if (panel && panel.classList.contains('planner-feedback-offline')) panel.classList.add('hidden'); });
     window.addEventListener('storage', event => {
-      if ([latestRouteSessionKey, latestRouteDismissKey, plannerDraftKey, plannerDraftDismissKey].includes(event.key)) {
+      if ([latest루트SessionKey, latest루트DismissKey, plannerDraftKey, plannerDraftDismissKey].includes(event.key)) {
         renderPlannerDraftCard();
-        renderLatestRouteCard();
+        renderLatest루트Card();
       }
     });
     qs('saveTripBtn').addEventListener('click', saveCurrentTrip);
@@ -3414,7 +3414,7 @@ function useExample(key='tokyo'){
     qs('stickyShareBtn')?.addEventListener('click', shareCurrentTrip);
     qs('stickyPdfBtn')?.addEventListener('click', savePdf);
     loadSharedTrip();
-    if (!window.currentTripPayload) renderPlan(samplePlans.tokyo);
+    if (!window.currentTripPayload) renderPlan(샘플Plans.tokyo);
   }
   return { init, renderPlan, plannerResumeState };
 })();
@@ -3431,7 +3431,7 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
     var aria = (el.getAttribute('aria-label') || '').toLowerCase();
     var data = ((el.getAttribute('data-action') || '') + ' ' + (el.getAttribute('data-planner-action') || '')).toLowerCase();
     var joined = text + ' ' + aria + ' ' + data;
-    return joined.indexOf('이 리듬으로 시작') !== -1 || joined.indexOf('일정 생성') !== -1 || joined.indexOf('route start') !== -1 || joined.indexOf('start this') !== -1 || joined.indexOf('build route') !== -1 || joined.indexOf('generate') !== -1 || joined.indexOf('루트 시작') !== -1;
+    return joined.indexOf('이 리듬으로 시작') !== -1 || joined.indexOf('일정 생성') !== -1 || joined.indexOf('루트 start') !== -1 || joined.indexOf('start this') !== -1 || joined.indexOf('build 루트') !== -1 || joined.indexOf('generate') !== -1 || joined.indexOf('여행 시작') !== -1;
   }
   function findPlannerForm(){
     return document.querySelector('form[data-planner-form], form#plannerForm, form.planner-form, form[action*="planner"]') || document.querySelector('main form') || document.querySelector('form');
@@ -3455,7 +3455,7 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
 })();
 
 
-/* v204 planner generation fail-safe: stronger mobile route creation recovery */
+/* v204 planner generation fail-safe: stronger mobile 루트 creation recovery */
 (function(){
   if (window.__ryokoPlannerGenerationFailsafeV204) return;
   window.__ryokoPlannerGenerationFailsafeV204 = true;
@@ -3472,10 +3472,10 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
     return (
       joined.indexOf('이 리듬으로 시작') !== -1 ||
       joined.indexOf('이 도시부터 시작') !== -1 ||
-      joined.indexOf('루트 시작') !== -1 ||
+      joined.indexOf('여행 시작') !== -1 ||
       joined.indexOf('일정 생성') !== -1 ||
       joined.indexOf('여행 만들') !== -1 ||
-      (joined.indexOf('route') !== -1 && (joined.indexOf('start') !== -1 || joined.indexOf('build') !== -1 || joined.indexOf('generate') !== -1))
+      (joined.indexOf('루트') !== -1 && (joined.indexOf('start') !== -1 || joined.indexOf('build') !== -1 || joined.indexOf('generate') !== -1))
     );
   }
 
@@ -3491,11 +3491,11 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
     var selectors = [
       '[data-action="generate"]',
       '[data-planner-action="generate"]',
-      '[data-action="build-route"]',
-      '[data-planner-action="build-route"]',
-      '#generateRoute',
+      '[data-action="build-루트"]',
+      '[data-planner-action="build-루트"]',
+      '#generate루트',
       '#generateItinerary',
-      '.generate-route',
+      '.generate-루트',
       '.planner-submit'
     ];
     for (var i = 0; i < selectors.length; i++){
@@ -3522,7 +3522,7 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
   }
 
   function callKnownGenerators(){
-    var names = ['generateItinerary','generateRoute','buildRoute','createRoute','renderResult','renderPlannerResult'];
+    var names = ['generateItinerary','generate루트','build루트','create루트','renderResult','renderPlannerResult'];
     for (var i = 0; i < names.length; i++){
       try {
         if (typeof window[names[i]] === 'function') {
@@ -3535,7 +3535,7 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
   }
 
   function nudgeResultArea(){
-    var result = document.querySelector('#result, #results, [data-result], [data-planner-result], .planner-result, .result-card, .route-result');
+    var result = document.querySelector('#result, #results, [data-result], [data-planner-result], .planner-result, .result-card, .루트-result');
     if (result) {
       try { result.scrollIntoView({ behavior:'smooth', block:'start' }); } catch(e) { result.scrollIntoView(); }
       return true;
@@ -3558,7 +3558,7 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
     var clicked = event.target && event.target.closest ? event.target.closest('button, a, [role="button"], input[type="button"], input[type="submit"]') : null;
     if (!clicked || !isPlannerCTA(clicked)) return;
 
-    var beforeResult = document.querySelector('#result, #results, [data-result], [data-planner-result], .planner-result, .result-card, .route-result');
+    var beforeResult = document.querySelector('#result, #results, [data-result], [data-planner-result], .planner-result, .result-card, .루트-result');
 
     var nativeBtn = findNativeGeneratorButton(clicked);
     if (nativeBtn) {
@@ -3632,7 +3632,7 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
       var activeCity = qs('[data-city].is-active, [data-city][aria-pressed="true"], .city-chip.is-active, .city-card.is-active');
       if (activeCity) city = (activeCity.getAttribute('data-city') || activeCity.textContent || '').trim();
     }
-    var mood = getSelectedText(['[data-mood-group]', '.mood-options', '.planner-mood', '.route-desk'], '균형형');
+    var mood = getSelectedText(['[data-mood-group]', '.mood-options', '.planner-mood', '.루트-데스크'], '균형형');
     var density = getSelectedText(['[data-density-group]', '.density-options', '.planner-density'], '균형형');
     var budget = getSelectedText(['[data-budget-group]', '.budget-options', '.planner-budget'], '밸런스');
     if (!city || city.length > 40) city = 'Tokyo';
@@ -3687,7 +3687,7 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
 
     return '<section class="v207-result-card" data-v206-generated-result data-v207-generated-result>' +
       '<div class="v207-result-cover">' +
-      '  <span>Ryokoplan route</span>' +
+      '  <span>Ryokoplan 루트</span>' +
       '  <strong>' + cityKo + '의 하루 흐름</strong>' +
       '  <p>도시를 먼저 읽고, 이동이 자연스럽게 이어지는 순서로 정리했어요.</p>' +
       '</div>' +
@@ -3730,7 +3730,7 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
   }
 
   function hasResultAppeared(){
-    return !!qs('[data-v206-generated-result], .result-card, .route-result, [data-generated-result], [data-planner-result] .day-card, .itinerary-card');
+    return !!qs('[data-v206-generated-result], .result-card, .루트-result, [data-generated-result], [data-planner-result] .day-card, .itinerary-card');
   }
 
   function isCTA(el){
@@ -3738,11 +3738,11 @@ window.addEventListener('DOMContentLoaded', () => window.RyokoPlanner.init());
     var text = ((el.textContent || el.value || el.getAttribute('aria-label') || '') + ' ' + (el.id || '') + ' ' + (el.className || '') + ' ' + (el.getAttribute('data-action') || '') + ' ' + (el.getAttribute('data-planner-action') || '')).toLowerCase();
     return text.indexOf('이 리듬으로 시작') !== -1 ||
            text.indexOf('이 도시부터 시작') !== -1 ||
-           text.indexOf('루트 시작') !== -1 ||
+           text.indexOf('여행 시작') !== -1 ||
            text.indexOf('일정 생성') !== -1 ||
            text.indexOf('start with') !== -1 ||
            text.indexOf('generate') !== -1 ||
-           text.indexOf('build route') !== -1;
+           text.indexOf('build 루트') !== -1;
   }
 
   document.addEventListener('click', function(e){

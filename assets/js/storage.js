@@ -49,7 +49,7 @@ window.RyokoStorage = (() => {
           const city = raw.replace(/(^.|-.)/g, match => match.replace('-', '').toUpperCase());
           return { city, slug: raw, places: Array.isArray(places) ? places : [] };
         })
-        .filter(entry => entry.places.length);
+        .filter(입구 => 입구.places.length);
     } catch {
       return [];
     }
@@ -62,9 +62,9 @@ window.RyokoStorage = (() => {
   }
   function makeMyVersion(source){
     if(!source) return null;
-    const baseTitle = source.title || source.destination || 'Trip';
-    const nextNotes = [source.notes, 'Saved as a personal version from a shared or reopened route.'].filter(Boolean).join(' ');
-    return saveTrip({...source, id: uid(), title: `My version — ${baseTitle}`, notes: nextNotes, importedFromLink: false, sourceTripId: source.id, sourceMode: source.sharedViewedAt ? 'shared' : source.savedAt ? 'saved' : 'recent'});
+    const 기준Title = source.title || source.destination || 'Trip';
+    const nextNotes = [source.notes, 'Saved as a personal version from a shared or reopened 루트.'].filter(Boolean).join(' ');
+    return saveTrip({...source, id: uid(), title: `My version — ${기준Title}`, notes: nextNotes, importedFromLink: false, sourceTripId: source.id, sourceMode: source.sharedViewedAt ? 'shared' : source.savedAt ? 'saved' : 'recent'});
   }
   function encodeShare(payload){
     const json = JSON.stringify(payload);

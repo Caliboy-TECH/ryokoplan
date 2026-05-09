@@ -1,17 +1,17 @@
 {
-  "version": "v211",
-  "codename": "mobile-overlap-fix",
-  "headline": "Fixed the mobile overlap where photo grids covered the start/how-to text section.",
-  "focus": "Separate photo grids and guide/start sections on mobile so text no longer sits on top of images.",
-  "source": "ryokoplan_v209_soft_hero_copy.zip",
+  "version": "v212",
+  "codename": "korean-copy-cleanup",
+  "headline": "Cleaned mixed-language Korean UI copy and softened public mobile labels.",
+  "focus": "Reduce awkward Route/Sample/Base/Desk mixed copy on Korean screens while preserving v211 mobile overlap fixes.",
+  "source": "ryokoplan_v211_mobile_overlap_fix_REUPLOAD.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Reset mobile photo-grid overlap behavior.",
-    "Forced start/how-to sections to clear below image grids.",
-    "Added safer z-index and spacing for guide cards below photo collages.",
-    "Softened the '시작하는 법' copy into a more natural travel-entry phrase."
+    "Replaced visible mixed-language labels such as Route, Sample, Base, Desk with softer Korean-facing copy.",
+    "Kept v211 mobile overlap spacing and popup removal.",
+    "Added mobile text wrapping safeguards for Korean labels and cards.",
+    "No new feature added."
   ],
-  "release": "v211",
-  "status": "mobile-layout-hotfix"
+  "release": "v212",
+  "status": "copy-polish"
 }

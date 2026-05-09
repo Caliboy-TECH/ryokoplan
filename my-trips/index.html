@@ -70,9 +70,9 @@
               <strong id="sharedCountHero" class="trip-firstfold-value">0</strong>
             </article>
           </div>
-          <div class="trip-firstfold-links" aria-label="Quick re-entry">
+          <div class="trip-firstfold-links" aria-label="Quick re-입구">
             <a class="trip-firstfold-link" href="#continueCard" data-lang-ko="최근 이어보기" data-lang-en="Resume latest" data-lang-ja="直近を再開" data-lang-zhhant="接著看最近路線">최근 이어보기</a>
-            <a class="trip-firstfold-link" href="#savedSection" data-lang-ko="저장 루트" data-lang-en="Saved routes" data-lang-ja="保存ルート" data-lang-zhhant="已存路線">저장 루트</a>
+            <a class="trip-firstfold-link" href="#savedSection" data-lang-ko="저장 루트" data-lang-en="Saved 루트s" data-lang-ja="保存ルート" data-lang-zhhant="已存路線">저장 루트</a>
             <button type="button" id="focusSharedImportBtn" class="trip-firstfold-link" data-lang-ko="공유 링크" data-lang-en="Import shared" data-lang-ja="共有リンク" data-lang-zhhant="匯入分享">공유 링크</button>
           </div>
         </div>
@@ -131,7 +131,7 @@
             <h2 id="tripLibraryShelfTitle" class="section-title" data-lang-ko="저장·최근·공유 여정을 한눈에 다시 열기" data-lang-en="Reopen saved, recent, and shared trips at a glance" data-lang-ja="保存・最近・共有の旅程を一目で開き直す" data-lang-zhhant="一眼重開已存、最近與分享行程">저장·최근·공유 여정을 한눈에 다시 열기</h2>
             <p class="section-desc" data-lang-ko="보관함의 첫 화면을 단순 목록이 아니라, 다시 꺼내 읽는 여행 매거진 shelf처럼 정리합니다." data-lang-en="보관함 now behaves less like a list and more like a magazine shelf you can reopen." data-lang-ja="보관함 をただのリストではなく、開き直せる旅マガジンの shelf のように整えます。" data-lang-zhhant="보관함 不只是清單，而是可以重新打開閱讀的旅行雜誌 shelf。">보관함의 첫 화면을 단순 목록이 아니라, 다시 꺼내 읽는 여행 매거진 shelf처럼 정리합니다.</p>
           </div>
-          <a class="soft-btn trip-library-planner" href="../index.html#planner-start" data-nav="planner" data-lang-ko="새 베이스 만들기" data-lang-en="Build a new base" data-lang-ja="新しいベースを作る" data-lang-zhhant="建立新底稿">새 베이스 만들기</a>
+          <a class="soft-btn trip-library-planner" href="../index.html#planner-start" data-nav="planner" data-lang-ko="새 베이스 만들기" data-lang-en="Build a new 기준" data-lang-ja="新しいベースを作る" data-lang-zhhant="建立新底稿">새 베이스 만들기</a>
         </div>
         <div id="tripLibraryShelf" class="trip-library-grid"></div>
       </section>
@@ -140,65 +140,65 @@
         <article class="collection-card info-card trip-archive-card">
           <span class="collection-kicker" data-lang-ko="저장한 장소" data-lang-en="Saved places" data-lang-ja="保存した場所" data-lang-zhhant="已存地點">저장한 장소</span>
           <h3 data-lang-ko="여정에서 저장한 장소를 다시 읽기" data-lang-en="Places you marked along the way" data-lang-ja="旅の途中で保存した場所をもう一度読む" data-lang-zhhant="重新讀你旅途中存下的地點">여정에서 저장한 장소를 다시 읽기</h3>
-          <p data-lang-ko="루트 화면에서 눌렀던 하트가 여기 모여, 보관함가 진짜 여행 아카이브처럼 보이게 됩니다." data-lang-en="Hearts from route pages collect here, so 보관함 feels more like a real travel archive." data-lang-ja="ルート画面で付けたハートがここに集まり、보관함 が本当の旅のアーカイブのように見えてきます。" data-lang-zhhant="你在路線頁面裡按過的愛心會聚在這裡，讓 보관함 更像真正的旅行檔案庫。">루트 화면에서 눌렀던 하트가 여기 모여, 보관함가 진짜 여행 아카이브처럼 보이게 됩니다.</p>
+          <p data-lang-ko="루트 화면에서 눌렀던 하트가 여기 모여, 보관함가 진짜 여행 아카이브처럼 보이게 됩니다." data-lang-en="Hearts from 루트 pages collect here, so 보관함 feels more like a real travel archive." data-lang-ja="ルート画面で付けたハートがここに集まり、보관함 が本当の旅のアーカイブのように見えてきます。" data-lang-zhhant="你在路線頁面裡按過的愛心會聚在這裡，讓 보관함 更像真正的旅行檔案庫。">루트 화면에서 눌렀던 하트가 여기 모여, 보관함가 진짜 여행 아카이브처럼 보이게 됩니다.</p>
           <div id="savedPlacesCollections" class="trip-archive-collections"></div>
         </article>
         <article class="collection-card info-card trip-archive-card">
-          <span class="collection-kicker" data-lang-ko="저장한 루트" data-lang-en="Saved routes" data-lang-ja="保存したルート" data-lang-zhhant="已存路線">저장한 루트</span>
-          <h3 data-lang-ko="도시별로 쌓이는 루트 컬렉션" data-lang-en="Route collections by city" data-lang-ja="都市ごとに積み上がるルートコレクション" data-lang-zhhant="依城市累積的路線收藏">도시별로 쌓이는 루트 컬렉션</h3>
-          <p data-lang-ko="도시별로 루트를 다시 묶고, 어떤 흐름이 잘 맞았는지 비교한 뒤 가장 좋은 베이스를 다시 열 수 있습니다." data-lang-en="Group repeat plans by city, compare route shapes, and reopen the strongest base when you need it again." data-lang-ja="都市ごとにルートを束ね直し、どの流れが自分に合っていたか比べたうえで、最適なベースをまた開けます。" data-lang-zhhant="把重複走過的路線依城市重新整理，比較哪種節奏最適合你，再把最強的底稿重新打開。">도시별로 루트를 다시 묶고, 어떤 흐름이 잘 맞았는지 비교한 뒤 가장 좋은 베이스를 다시 열 수 있습니다.</p>
-          <div id="savedRouteCollections" class="trip-archive-collections"></div>
+          <span class="collection-kicker" data-lang-ko="저장한 루트" data-lang-en="Saved 루트s" data-lang-ja="保存したルート" data-lang-zhhant="已存路線">저장한 루트</span>
+          <h3 data-lang-ko="도시별로 쌓이는 여행 컬렉션" data-lang-en="루트 collections by city" data-lang-ja="都市ごとに積み上がるルートコレクション" data-lang-zhhant="依城市累積的路線收藏">도시별로 쌓이는 여행 컬렉션</h3>
+          <p data-lang-ko="도시별로 루트를 다시 묶고, 어떤 흐름이 잘 맞았는지 비교한 뒤 가장 좋은 베이스를 다시 열 수 있습니다." data-lang-en="Group repeat plans by city, compare 루트 shapes, and reopen the strongest 기준 when you need it again." data-lang-ja="都市ごとにルートを束ね直し、どの流れが自分に合っていたか比べたうえで、最適なベースをまた開けます。" data-lang-zhhant="把重複走過的路線依城市重新整理，比較哪種節奏最適合你，再把最強的底稿重新打開。">도시별로 루트를 다시 묶고, 어떤 흐름이 잘 맞았는지 비교한 뒤 가장 좋은 베이스를 다시 열 수 있습니다.</p>
+          <div id="saved루트Collections" class="trip-archive-collections"></div>
         </article>
       </section>
 
 
 
-      <section class="section public-route-desk">
+      <section class="section public-루트-데스크">
         <div class="section-head">
           <div>
-            <span class="eyebrow" data-lang-ko="퍼블릭 루트 데스크" data-lang-en="Public route desk" data-lang-ja="公開ルートデスク" data-lang-zhhant="公開路線桌">퍼블릭 루트 데스크</span>
-            <h2 class="section-title" data-lang-ko="에디터 픽과 공개 샘플을 내 루프로 끌어오기" data-lang-en="Pull editor picks and public samples into your own loop" data-lang-ja="エディターピックと公開サンプルを自分のループへ引き込む" data-lang-zhhant="把編輯精選與公開範例拉進你的旅程循環">에디터 픽과 공개 샘플을 내 루프로 끌어오기</h2>
-            <p class="section-desc" data-lang-ko="샘플을 읽고 바로 저장해, 내 기준의 다음 버전으로 이어가세요." data-lang-en="Read the sample, save it quickly, then turn it into your own next version." data-lang-ja="サンプルを読んだらすぐ保存して、自分基準の次の版へつなげてください。" data-lang-zhhant="看完範例後先快速存下，再接成符合你節奏的下一版。">샘플을 읽고 바로 저장해, 내 기준의 다음 버전으로 이어가세요.</p>
+            <span class="eyebrow" data-lang-ko="퍼블릭 루트 데스크" data-lang-en="Public 루트 데스크" data-lang-ja="公開ルートデスク" data-lang-zhhant="公開路線桌">퍼블릭 루트 데스크</span>
+            <h2 class="section-title" data-lang-ko="에디터 픽과 공개 샘플을 내 루프로 끌어오기" data-lang-en="Pull editor picks and public 샘플s into your own loop" data-lang-ja="エディターピックと公開サンプルを自分のループへ引き込む" data-lang-zhhant="把編輯精選與公開範例拉進你的旅程循環">에디터 픽과 공개 샘플을 내 루프로 끌어오기</h2>
+            <p class="section-desc" data-lang-ko="샘플을 읽고 바로 저장해, 내 기준의 다음 버전으로 이어가세요." data-lang-en="Read the 샘플, save it quickly, then turn it into your own next version." data-lang-ja="サンプルを読んだらすぐ保存して、自分基準の次の版へつなげてください。" data-lang-zhhant="看完範例後先快速存下，再接成符合你節奏的下一版。">샘플을 읽고 바로 저장해, 내 기준의 다음 버전으로 이어가세요.</p>
           </div>
         </div>
-        <div id="publicRouteDesk" class="public-route-grid"></div>
+        <div id="public루트데스크" class="public-루트-grid"></div>
       </section>
 
-      <section class="section route-club-section">
+      <section class="section 루트-club-section">
         <div class="section-head">
           <div>
-            <span class="eyebrow" data-lang-ko="트렌딩 루트 클럽" data-lang-en="Trending route club" data-lang-ja="トレンドルートクラブ" data-lang-zhhant="熱門路線俱樂部">트렌딩 루트 클럽</span>
-            <h2 class="section-title" data-lang-ko="비슷한 취향의 공개 베이스를 한 번 더 고르기" data-lang-en="Pick another public base with a similar travel shape" data-lang-ja="近い好みの公開ベースをもう一つ選ぶ" data-lang-zhhant="再挑一個相近口味的公開底稿">비슷한 취향의 공개 베이스를 한 번 더 고르기</h2>
-            <p class="section-desc" data-lang-ko="맞는 공개 루트에서 비슷한 도시와 샘플로 바로 확장하세요." data-lang-en="Move from one strong public route into similar cities and sample shapes." data-lang-ja="合う公開ルートから、近い都市やサンプルへすぐ広げられます。" data-lang-zhhant="從合適的公開路線，立刻延伸到相近城市與範例。">맞는 공개 루트에서 비슷한 도시와 샘플로 바로 확장하세요.</p>
+            <span class="eyebrow" data-lang-ko="트렌딩 루트 클럽" data-lang-en="Trending 루트 club" data-lang-ja="トレンドルートクラブ" data-lang-zhhant="熱門路線俱樂部">트렌딩 루트 클럽</span>
+            <h2 class="section-title" data-lang-ko="비슷한 취향의 공개 베이스를 한 번 더 고르기" data-lang-en="Pick another public 기준 with a similar travel shape" data-lang-ja="近い好みの公開ベースをもう一つ選ぶ" data-lang-zhhant="再挑一個相近口味的公開底稿">비슷한 취향의 공개 베이스를 한 번 더 고르기</h2>
+            <p class="section-desc" data-lang-ko="맞는 공개 루트에서 비슷한 도시와 샘플로 바로 확장하세요." data-lang-en="Move from one strong public 루트 into similar cities and 샘플 shapes." data-lang-ja="合う公開ルートから、近い都市やサンプルへすぐ広げられます。" data-lang-zhhant="從合適的公開路線，立刻延伸到相近城市與範例。">맞는 공개 루트에서 비슷한 도시와 샘플로 바로 확장하세요.</p>
           </div>
         </div>
-        <div id="routeClubGrid" class="public-route-grid"></div>
+        <div id="루트ClubGrid" class="public-루트-grid"></div>
       </section>
 
       <section class="section operating-edit-section">
         <div class="section-head">
           <div>
             <span class="eyebrow" data-lang-ko="운영형 에디트" data-lang-en="Operating edits" data-lang-ja="運用エディット" data-lang-zhhant="營運編輯">운영형 에디트</span>
-            <h2 class="section-title" data-lang-ko="시즌·주말·동행 기준으로 다음 베이스 고르기" data-lang-en="Choose the next base by season, weekend shape, or companion" data-lang-ja="季節・週末・同行者から次のベースを選ぶ" data-lang-zhhant="依季節、週末形狀與同行對象挑下一個底稿">시즌·주말·동행 기준으로 다음 베이스 고르기</h2>
+            <h2 class="section-title" data-lang-ko="시즌·주말·동행 기준으로 다음 베이스 고르기" data-lang-en="Choose the next 기준 by season, weekend shape, or companion" data-lang-ja="季節・週末・同行者から次のベースを選ぶ" data-lang-zhhant="依季節、週末形狀與同行對象挑下一個底稿">시즌·주말·동행 기준으로 다음 베이스 고르기</h2>
             <p class="section-desc" data-lang-ko="자주 쓰는 관점을 컬렉션으로 정리해 다음 시작을 더 빠르게 만듭니다." data-lang-en="Keep common travel modes in reusable collections so the next start feels faster." data-lang-ja="よく使う視点をコレクション化して、次の出発をもっと速くします。" data-lang-zhhant="把常用旅行視角整理成收藏，讓下一次開始更快。">자주 쓰는 관점을 컬렉션으로 정리해 다음 시작을 더 빠르게 만듭니다.</p>
           </div>
         </div>
-        <div id="operatingEditDesk" class="operating-edit-grid"></div>
+        <div id="operatingEdit데스크" class="operating-edit-grid"></div>
       </section>
 
       <section class="section collection-lab-section">
         <div class="section-head">
           <div>
             <span class="eyebrow" data-lang-ko="도시 컬렉션" data-lang-en="City collections" data-lang-ja="都市コレクション" data-lang-zhhant="城市收藏">도시 컬렉션</span>
-            <h2 class="section-title" data-lang-ko="저장된 여정을 도시 단위로 다시 읽기" data-lang-en="Read your saved routes city by city" data-lang-ja="保存した旅程を都市単位で読み直す" data-lang-zhhant="以城市單位重新讀你的已存旅程">저장된 여정을 도시 단위로 다시 읽기</h2>
-            <p class="section-desc" data-lang-ko="저장·최근·공유 루트를 도시별로 묶어, 다시 시작할 때 바로 꺼낼 수 있게 합니다." data-lang-en="Group saved, recent, and shared routes by city so the next restart feels immediate." data-lang-ja="保存・最近・共有ルートを都市ごとに束ね、次に始める時すぐ開けるようにします。" data-lang-zhhant="把已存、最近與分享路線依城市整理，讓下次重開更直接。">저장·최근·공유 루트를 도시별로 묶어, 다시 시작할 때 바로 꺼낼 수 있게 합니다.</p>
+            <h2 class="section-title" data-lang-ko="저장된 여정을 도시 단위로 다시 읽기" data-lang-en="Read your saved 루트s city by city" data-lang-ja="保存した旅程を都市単位で読み直す" data-lang-zhhant="以城市單位重新讀你的已存旅程">저장된 여정을 도시 단위로 다시 읽기</h2>
+            <p class="section-desc" data-lang-ko="저장·최근·공유 루트를 도시별로 묶어, 다시 시작할 때 바로 꺼낼 수 있게 합니다." data-lang-en="Group saved, recent, and shared 루트s by city so the next restart feels immediate." data-lang-ja="保存・最近・共有ルートを都市ごとに束ね、次に始める時すぐ開けるようにします。" data-lang-zhhant="把已存、最近與分享路線依城市整理，讓下次重開更直接。">저장·최근·공유 루트를 도시별로 묶어, 다시 시작할 때 바로 꺼낼 수 있게 합니다.</p>
           </div>
         </div>
         <div id="cityCollectionsGrid" class="city-collections-grid"></div>
       </section>
 
-      <section class="section expansion-front-section" id="expansionTripsDeskSection">
-        <div id="expansionTripsDeskRoot"></div>
+      <section class="section expansion-front-section" id="expansionTrips데스크Section">
+        <div id="expansionTrips데스크Root"></div>
       </section>
 
       <section class="section">
@@ -263,7 +263,7 @@
           <div>
             <span class="eyebrow" data-lang-ko="추천 루프" data-lang-en="Recommendation loop" data-lang-ja="おすすめループ" data-lang-zhhant="推薦循環">추천 루프</span>
             <h2 class="section-title" data-lang-ko="저장한 여정을 다음 읽기로 이어가기" data-lang-en="Turn saved trips into your next read" data-lang-ja="保存した旅程を次に読む都市へつなげる" data-lang-zhhant="把已存旅程接到下一個想讀的城市">저장한 여정을 다음 읽기로 이어가기</h2>
-            <p class="section-desc" data-lang-ko="보관함는 끝점이 아니라 다시 열고, 다시 읽고, 다음 도시로 이어지는 출발점입니다." data-lang-en="보관함 is not the end. Reopen the route, read again, and branch into the next city." data-lang-ja="보관함 は終点ではなく、開き直し、読み直し、次の都市へつながる出発点です。" data-lang-zhhant="보관함 不是終點，而是重開、重讀、再接到下一座城市的起點。">보관함는 끝점이 아니라 다시 열고, 다시 읽고, 다음 도시로 이어지는 출발점입니다.</p>
+            <p class="section-desc" data-lang-ko="보관함는 끝점이 아니라 다시 열고, 다시 읽고, 다음 도시로 이어지는 출발점입니다." data-lang-en="보관함 is not the end. Reopen the 루트, read again, and branch into the next city." data-lang-ja="보관함 は終点ではなく、開き直し、読み直し、次の都市へつながる出発点です。" data-lang-zhhant="보관함 不是終點，而是重開、重讀、再接到下一座城市的起點。">보관함는 끝점이 아니라 다시 열고, 다시 읽고, 다음 도시로 이어지는 출발점입니다.</p>
           </div>
         </div>
         <div class="trip-loop-grid">
@@ -312,7 +312,7 @@
           continueDesc: '가장 최근에 열어본 여정부터 바로 이어서 볼 수 있어요.',
           noContinue: '아직 이어볼 여정이 없어요',
           noContinueDesc: '플래너에서 첫 일정을 만들거나, 공유 링크를 열어보세요.',
-          useAsBase: '이 일정으로 이어가기',
+          useAs기준: '이 일정으로 이어가기',
           saveAsMine: '내 여정에 저장',
           remove: '제거',
           imported: '공유 링크를 보관함에 추가했어요.',
@@ -329,7 +329,7 @@
           searchPH: '도시명이나 제목으로 검색',
           importedLabel: '직접 가져온 링크',
           continueMeta: '가장 최근에 다시 본 일정',
-          tripBase: '이 일정으로 새 여행 시작',
+          trip기준: '이 일정으로 새 여행 시작',
           tripSaved: '저장한 내 여정',
           tripRecent: '최근 본 흐름',
           tripShared: '공유받은 일정',
@@ -339,9 +339,9 @@
           makeMyVersion: '내 버전 만들기',
           cityCollectionsEmptyTitle: '아직 도시 컬렉션이 없어요',
           cityCollectionsEmptyDesc: '저장하거나 공유받은 여정이 쌓이면 도시별 컬렉션이 여기 모입니다.',
-          collectionRoutes: '개 루트',
+          collection루트s: '개 루트',
           collectionPlaces: '개 장소 저장',
-          collectionOpen: '최근 루트 열기',
+          collectionOpen: '최근 여행 열기',
           collectionGuide: '도시 가이드',
           collectionExample: '샘플 루트',
           collectionMixed: '저장/최근/공유가 함께 쌓인 아카이브',
@@ -350,34 +350,34 @@
           collectionRecentHeavy: '최근 열어본 루트가 많은 도시',
           continueReading: '이어 읽기',
           collectionLayer: '도시 레이어 읽기',
-          publicDeskLabel: '퍼블릭 루트 데스크',
-          publicDeskPick: '에디터 픽',
-          publicDeskSave: '내 루트로 저장',
-          publicDeskOpen: '샘플 열기',
-          publicDeskPlan: '플래너로 이어가기',
-          publicDeskSaved: '샘플 루트를 보관함에 저장했어요.',
-          publicDeskIntro: '공개 샘플에서 바로 내 버전으로 이어지는 큐레이션 허브',
-          publicDeskWeekend: '주말용 베이스',
-          publicDeskSlow: '슬로우 무드',
-          publicDeskFamily: '가족 동선',
-          publicDeskFood: '푸드 중심',
+          public데스크Label: '퍼블릭 루트 데스크',
+          public데스크Pick: '에디터 픽',
+          public데스크Save: '내 루트로 저장',
+          public데스크Open: '샘플 열기',
+          public데스크Plan: '플래너로 이어가기',
+          public데스크Saved: '샘플 루트를 보관함에 저장했어요.',
+          public데스크Intro: '샘플을 보고 내 여행으로 이어가는 보관함',
+          public데스크Weekend: '주말용 베이스',
+          public데스크Slow: '슬로우 무드',
+          public데스크Family: '가족 동선',
+          public데스크Food: '푸드 중심',
           editSave: '베이스 저장',
           editOpen: '루트 보기',
           editGuide: '가이드 보기',
           editSaved: '에디토리얼 베이스를 보관함에 저장했어요.',
-          routeClubTitle: '트렌딩 루트 클럽',
-          routeClubLabel: '지금 많이 저장되는 결',
-          routeClubSave: '내 버전으로 저장',
-          routeClubOpen: '관련 샘플 보기',
-          routeClubGuide: '관련 도시 읽기',
-          routeClubSaved: '트렌딩 루트를 내 버전으로 저장했어요.'
+          루트ClubTitle: '트렌딩 루트 클럽',
+          루트ClubLabel: '지금 많이 저장되는 결',
+          루트ClubSave: '내 버전으로 저장',
+          루트ClubOpen: '관련 샘플 보기',
+          루트ClubGuide: '관련 도시 읽기',
+          루트ClubSaved: '트렌딩 루트를 내 버전으로 저장했어요.'
         },
         en: {
           continueTitle: 'Continue your trip flow',
           continueDesc: 'Jump back into the last trip you opened or shaped.',
           noContinue: 'No trip to continue yet',
           noContinueDesc: 'Create your first plan or import a shared Ryokoplan link.',
-          useAsBase: 'Continue this trip',
+          useAs기준: 'Continue this trip',
           saveAsMine: 'Save to 보관함',
           remove: 'Remove',
           imported: 'Shared trip added to 보관함.',
@@ -394,7 +394,7 @@
           searchPH: 'Search by city or title',
           importedLabel: 'Imported link',
           continueMeta: 'Most recent trip to reopen',
-          tripBase: 'Use this trip as a new base',
+          trip기준: 'Use this trip as a new 기준',
           tripSaved: 'Saved to 보관함',
           tripRecent: 'Recently opened',
           tripShared: 'Shared itinerary',
@@ -404,47 +404,47 @@
           makeMyVersion: 'Make my version',
           cityCollectionsEmptyTitle: 'No city collections yet',
           cityCollectionsEmptyDesc: 'As saved, recent, and shared trips build up, city collections will appear here automatically.',
-          collectionRoutes: 'routes',
+          collection루트s: '루트s',
           collectionPlaces: 'saved places',
-          collectionOpen: 'Open latest',
-          collectionGuide: 'City guide',
-          collectionExample: '샘플 보기 route',
-          collectionMixed: 'A mixed archive of saved, recent, and shared routes',
-          collectionSavedOnly: 'Mostly built from your saved routes',
+          collectionOpen: '최근 여행 열기',
+          collectionGuide: '도시 가이드',
+          collectionExample: '샘플 루트',
+          collectionMixed: 'A mixed archive of saved, recent, and shared 루트s',
+          collectionSavedOnly: 'Mostly built from your saved 루트s',
           collectionSharedHeavy: 'A city with a stronger shared-trip mix',
           collectionRecentHeavy: 'A city you reopened often recently',
           continueReading: 'Continue reading',
-          collectionLayer: 'City guide layer',
-          publicDeskLabel: 'Public route desk',
-          publicDeskPick: 'Editor pick',
-          publicDeskSave: 'Save to 보관함',
-          publicDeskOpen: '샘플 보기',
-          publicDeskPlan: 'Continue this route',
-          publicDeskSaved: '샘플 보기 route saved to 보관함.',
-          publicDeskIntro: 'A curated hub where public samples can become your next trip base.',
-          publicDeskWeekend: 'Weekend base',
-          publicDeskSlow: 'Slow mood',
-          publicDeskFamily: 'Family pacing',
-          publicDeskFood: 'Food-led',
-          editSave: 'Save base',
-          editOpen: 'Open route',
+          collectionLayer: '도시 가이드 layer',
+          public데스크Label: 'Public 루트 데스크',
+          public데스크Pick: 'Editor pick',
+          public데스크Save: 'Save to 보관함',
+          public데스크Open: '샘플 보기',
+          public데스크Plan: '이 흐름 이어가기',
+          public데스크Saved: '샘플 루트 saved to 보관함.',
+          public데스크Intro: 'A curated hub where public 샘플s can become your next trip 기준.',
+          public데스크Weekend: 'Weekend 기준',
+          public데스크Slow: 'Slow mood',
+          public데스크Family: 'Family pacing',
+          public데스크Food: 'Food-led',
+          editSave: 'Save 기준',
+          editOpen: 'Open 루트',
           editGuide: '도시 읽기',
-          editSaved: 'Editorial base saved to 보관함.',
-          routeClubTitle: 'Trending route club',
-          routeClubLabel: 'A shape people keep saving now',
-          routeClubSave: 'Save my version',
-          routeClubOpen: 'Open related sample',
-          routeClubGuide: 'Read related city',
-          routeClubSaved: 'Trending route saved as your own version.',
+          editSaved: 'Editorial 기준 saved to 보관함.',
+          루트ClubTitle: 'Trending 루트 club',
+          루트ClubLabel: 'A shape people keep saving now',
+          루트ClubSave: 'Save my version',
+          루트ClubOpen: 'Open related 샘플',
+          루트ClubGuide: 'Read related city',
+          루트ClubSaved: 'Trending 루트 saved as your own version.',
           loopEmptyEyebrow: 'No saved loop yet',
           loopEmptyTitle: 'Build one trip, then the loop gets smarter',
           loopEmptyDesc: 'Once you save or reopen a trip, 보관함 can recommend which guide or 샘플 루트 to open next.',
-          loopOpen플래너: 'Start a new route',
+          loopOpen플래너: 'Start a new 루트',
           loopReadMagazine: 'Read Magazine',
           loopGoodStart: 'Good starting points',
           loopTokyoGuide: 'Tokyo guide',
-          loopTokyoGuideDesc: 'Fast city, strong first route, and lots of branching options.',
-          loopBusan샘플 보기: 'Busan sample',
+          loopTokyoGuideDesc: 'Fast city, strong first 루트, and lots of branching options.',
+          loopBusan샘플 보기: 'Busan 샘플',
           loopBusan샘플 보기Desc: 'Good for scenic pacing and mixed-age travel.',
           loopVaultEyebrow: 'From your vault',
           loopVaultTitle: 'can lead the next step too'
@@ -454,7 +454,7 @@
           continueDesc: '最後に開いた旅程からそのまま戻れます。',
           noContinue: 'まだ続きから開く旅がありません',
           noContinueDesc: '最初の旅程を作るか、共有リンクを取り込んでください。',
-          useAsBase: 'この旅程から続ける',
+          useAs기준: 'この旅程から続ける',
           saveAsMine: '보관함 に保存',
           remove: '削除',
           imported: '共有リンクを 보관함 に追加しました。',
@@ -471,7 +471,7 @@
           searchPH: '都市名またはタイトルで検索',
           importedLabel: '取り込んだリンク',
           continueMeta: '最後に見直した旅程',
-          tripBase: 'この旅程を新しいベースにする',
+          trip기준: 'この旅程を新しいベースにする',
           tripSaved: '保存した旅程',
           tripRecent: '最近開いた旅程',
           tripShared: '共有された旅程',
@@ -481,7 +481,7 @@
           makeMyVersion: '自分版を作る',
           cityCollectionsEmptyTitle: 'まだ都市コレクションがありません',
           cityCollectionsEmptyDesc: '保存や共有された旅程が増えると、都市ごとのコレクションがここにまとまります。',
-          collectionRoutes: '件のルート',
+          collection루트s: '件のルート',
           collectionPlaces: '件の保存スポット',
           collectionOpen: '最新ルートを開く',
           collectionGuide: '都市ガイド',
@@ -492,27 +492,27 @@
           collectionRecentHeavy: '最近よく開き直した都市',
           continueReading: '続けて読む',
           collectionLayer: '都市の層を読む',
-          publicDeskLabel: '公開ルートデスク',
-          publicDeskPick: 'エディターピック',
-          publicDeskSave: '보관함 に保存',
-          publicDeskOpen: 'サンプルを開く',
-          publicDeskPlan: 'この流れへつなぐ',
-          publicDeskSaved: 'サンプルルートを 보관함 に保存しました。',
-          publicDeskIntro: '公開サンプルから自分の次の旅へつながるキュレーションハブ',
-          publicDeskWeekend: '週末ベース',
-          publicDeskSlow: 'スロームード',
-          publicDeskFamily: '家族ペース',
-          publicDeskFood: '食中心',
+          public데스크Label: '公開ルートデスク',
+          public데스크Pick: 'エディターピック',
+          public데스크Save: '보관함 に保存',
+          public데스크Open: 'サンプルを開く',
+          public데스크Plan: 'この流れへつなぐ',
+          public데스크Saved: 'サンプルルートを 보관함 に保存しました。',
+          public데스크Intro: '公開サンプルから自分の次の旅へつながるキュレーションハブ',
+          public데스크Weekend: '週末ベース',
+          public데스크Slow: 'スロームード',
+          public데스크Family: '家族ペース',
+          public데스크Food: '食中心',
           editSave: 'ベースを保存',
           editOpen: 'ルートを見る',
           editGuide: 'ガイドを見る',
           editSaved: 'エディトリアルベースを 보관함 に保存しました。',
-          routeClubTitle: 'トレンドルートクラブ',
-          routeClubLabel: '今よく保存されている形',
-          routeClubSave: '自分版として保存',
-          routeClubOpen: '関連サンプルを見る',
-          routeClubGuide: '関連都市を読む',
-          routeClubSaved: 'トレンドルートを自分版として保存しました。',
+          루트ClubTitle: 'トレンドルートクラブ',
+          루트ClubLabel: '今よく保存されている形',
+          루트ClubSave: '自分版として保存',
+          루트ClubOpen: '関連サンプルを見る',
+          루트ClubGuide: '関連都市を読む',
+          루트ClubSaved: 'トレンドルートを自分版として保存しました。',
           loopEmptyEyebrow: 'まだ保存ループがありません',
           loopEmptyTitle: '一つ旅程を作ると、次の流れがもっと見えやすくなります',
           loopEmptyDesc: '旅程を保存したり再度開いたりすると、보관함 が次に読むガイドやサンプルルートを提案できます。',
@@ -531,7 +531,7 @@
           continueDesc: '可以直接回到你最後打開的那份旅程。',
           noContinue: '還沒有可以接著看的旅程',
           noContinueDesc: '先建立第一個行程，或匯入分享連結。',
-          useAsBase: '從這份旅程接著走',
+          useAs기준: '從這份旅程接著走',
           saveAsMine: '存到 보관함',
           remove: '移除',
           imported: '已把分享行程加入 보관함。',
@@ -548,7 +548,7 @@
           searchPH: '用城市或標題搜尋',
           importedLabel: '匯入的連結',
           continueMeta: '最近重新打開的旅程',
-          tripBase: '把這份旅程當作新底稿',
+          trip기준: '把這份旅程當作新底稿',
           tripSaved: '已存到 보관함',
           tripRecent: '最近打開',
           tripShared: '分享行程',
@@ -558,7 +558,7 @@
           makeMyVersion: '做成我的版本',
           cityCollectionsEmptyTitle: '還沒有城市收藏',
           cityCollectionsEmptyDesc: '當已保存、最近與分享旅程慢慢累積後，城市收藏會自動出現在這裡。',
-          collectionRoutes: '條路線',
+          collection루트s: '條路線',
           collectionPlaces: '個已存地點',
           collectionOpen: '打開最新路線',
           collectionGuide: '城市指南',
@@ -569,66 +569,66 @@
           collectionRecentHeavy: '最近常重新打開的城市',
           continueReading: '接續閱讀',
           collectionLayer: '繼續讀城市層次',
-          publicDeskLabel: '公開路線桌',
-          publicDeskPick: '編輯精選',
-          publicDeskSave: '存到 보관함',
-          publicDeskOpen: '打開範例',
-          publicDeskPlan: '接到這條路線',
-          publicDeskSaved: '已把範例路線存到 보관함。',
-          publicDeskIntro: '讓公開範例直接變成下一份旅程底稿的策展區',
-          publicDeskWeekend: '週末底稿',
-          publicDeskSlow: '慢節奏',
-          publicDeskFamily: '家庭動線',
-          publicDeskFood: '美食導向',
+          public데스크Label: '公開路線桌',
+          public데스크Pick: '編輯精選',
+          public데스크Save: '存到 보관함',
+          public데스크Open: '打開範例',
+          public데스크Plan: '接到這條路線',
+          public데스크Saved: '已把範例路線存到 보관함。',
+          public데스크Intro: '讓公開範例直接變成下一份旅程底稿的策展區',
+          public데스크Weekend: '週末底稿',
+          public데스크Slow: '慢節奏',
+          public데스크Family: '家庭動線',
+          public데스크Food: '美食導向',
           editSave: '保存底稿',
           editOpen: '看路線',
           editGuide: '看指南',
           editSaved: '已把編輯底稿存到 보관함。',
-          routeClubTitle: '熱門路線俱樂部',
-          routeClubLabel: '現在很多人正在保存的形狀',
-          routeClubSave: '存成我的版本',
-          routeClubOpen: '看相關範例',
-          routeClubGuide: '讀相關城市',
-          routeClubSaved: '已把熱門路線存成你的版本。'
+          루트ClubTitle: '熱門路線俱樂部',
+          루트ClubLabel: '現在很多人正在保存的形狀',
+          루트ClubSave: '存成我的版本',
+          루트ClubOpen: '看相關範例',
+          루트ClubGuide: '讀相關城市',
+          루트ClubSaved: '已把熱門路線存成你的版本。'
         }
       };
       let activeCollection = 'all';
       let activeModeFilter = 'all';
 
-      const publicRouteDesk = [
+      const public루트데스크 = [
         {
-          key:'tokyo-first', city:'Tokyo', titleKo:'Tokyo first trip base', titleEn:'Tokyo first trip base', badgeKey:'publicDeskWeekend', image:'../assets/images/examples/tokyo-first-trip.jpg', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
-          summaryKo:'처음 가는 도쿄를 과열되지 않게 시작하기 좋은 공개 베이스입니다.', summaryEn:'A public base for first-time Tokyo that stays strong without overheating the pace.',
+          key:'tokyo-first', city:'Tokyo', titleKo:'Tokyo first trip 기준', titleEn:'Tokyo first trip 기준', badgeKey:'public데스크Weekend', image:'../assets/images/examples/tokyo-first-trip.jpg', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
+          summaryKo:'처음 가는 도쿄를 과열되지 않게 시작하기 좋은 공개 베이스입니다.', summaryEn:'A public 기준 for first-time Tokyo that stays strong without overheating the pace.',
           duration:'3N4D', companionKo:'커플/친구', companionEn:'Couple / Friends', vibeKo:'도시 밀도', vibeEn:'City density', bestKo:'첫 여행, 쇼핑, 밤 리듬', bestEn:'First trip, shopping, night rhythm'
         },
         {
-          key:'kyoto-slow', city:'Kyoto', titleKo:'Kyoto slow reset', titleEn:'Kyoto slow reset', badgeKey:'publicDeskSlow', image:'../assets/images/examples/kyoto-slow.jpg', guide:'../city/kyoto.html', example:'../example/kyoto-2n3d-slow-trip.html',
-          summaryKo:'많이 넣지 않고 교토의 여백을 살리는 공개 샘플입니다.', summaryEn:'A public sample that protects Kyoto by leaving real space in the route.',
+          key:'kyoto-slow', city:'Kyoto', titleKo:'Kyoto slow reset', titleEn:'Kyoto slow reset', badgeKey:'public데스크Slow', image:'../assets/images/examples/kyoto-slow.jpg', guide:'../city/kyoto.html', example:'../example/kyoto-2n3d-slow-trip.html',
+          summaryKo:'많이 넣지 않고 교토의 여백을 살리는 공개 샘플입니다.', summaryEn:'A public 샘플 that protects Kyoto by leaving real space in the 루트.',
           duration:'2N3D', companionKo:'혼자/커플', companionEn:'Solo / Couple', vibeKo:'조용한 무드', vibeEn:'Quiet mood', bestKo:'슬로우 트립, 오전 사원', bestEn:'Slow trip, temple mornings'
         },
         {
-          key:'busan-parents', city:'Busan', titleKo:'Busan scenic family route', titleEn:'Busan scenic family route', badgeKey:'publicDeskFamily', image:'../assets/images/examples/busan-parents.jpg', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
-          summaryKo:'부모님과도 무리 없이 갈 수 있는 부산 scenic 루트 베이스입니다.', summaryEn:'A scenic Busan base that works gently for mixed-age or parent trips.',
+          key:'busan-parents', city:'Busan', titleKo:'Busan scenic family 루트', titleEn:'Busan scenic family 루트', badgeKey:'public데스크Family', image:'../assets/images/examples/busan-parents.jpg', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
+          summaryKo:'부모님과도 무리 없이 갈 수 있는 부산 scenic 여행 기준입니다.', summaryEn:'A scenic Busan 기준 that works gently for mixed-age or parent trips.',
           duration:'2N3D', companionKo:'가족/부모님', companionEn:'Family / Parents', vibeKo:'시닉 리듬', vibeEn:'Scenic rhythm', bestKo:'전망, 식사, 완만한 템포', bestEn:'Views, meals, softer tempo'
         },
         {
-          key:'fukuoka-food', city:'Fukuoka', titleKo:'Fukuoka food weekend', titleEn:'Fukuoka food weekend', badgeKey:'publicDeskFood', image:'../assets/images/examples/fukuoka-food.jpg', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
-          summaryKo:'짧은 일정에서 식사 리듬을 가장 잘 살리는 공개 샘플입니다.', summaryEn:'A compact public sample built around the strongest food rhythm for a short stay.',
+          key:'fukuoka-food', city:'Fukuoka', titleKo:'Fukuoka food weekend', titleEn:'Fukuoka food weekend', badgeKey:'public데스크Food', image:'../assets/images/examples/fukuoka-food.jpg', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
+          summaryKo:'짧은 일정에서 식사 리듬을 가장 잘 살리는 공개 샘플입니다.', summaryEn:'A compact public 샘플 built around the strongest food rhythm for a short stay.',
           duration:'2N3D', companionKo:'친구/혼자', companionEn:'Friends / Solo', vibeKo:'푸드 리듬', vibeEn:'Food rhythm', bestKo:'짧은 일본, 컴팩트 이동', bestEn:'Short Japan, compact moves'
         },
         {
-          key:'seoul-rainy', city:'Seoul', titleKo:'Seoul rainy-day fallback', titleEn:'Seoul rainy-day fallback', badgeKey:'publicDeskSlow', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
-          summaryKo:'비가 오거나 컨디션이 애매할 때도 동네 리듬을 망치지 않는 서울용 공개 베이스입니다.', summaryEn:'A Seoul public base that still holds shape when the weather turns or energy drops.',
+          key:'seoul-rainy', city:'Seoul', titleKo:'Seoul rainy-day fallback', titleEn:'Seoul rainy-day fallback', badgeKey:'public데스크Slow', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
+          summaryKo:'비가 오거나 컨디션이 애매할 때도 동네 리듬을 망치지 않는 서울용 공개 베이스입니다.', summaryEn:'A Seoul public 기준 that still holds shape when the weather turns or energy drops.',
           duration:'2N3D', companionKo:'혼자/친구', companionEn:'Solo / Friends', vibeKo:'레인 스왑', vibeEn:'Rain swap', bestKo:'비 오는 날, 동네 이동', bestEn:'Rainy day, neighborhood flow'
         },
         {
-          key:'jeju-soft-drive', city:'Jeju', titleKo:'Jeju soft drive base', titleEn:'Jeju soft drive base', badgeKey:'publicDeskFamily', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../example/jeju-2n3d-slow-reset.html',
-          summaryKo:'제주의 이동 현실을 반영해서 과속하지 않는 드라이브형 공개 베이스입니다.', summaryEn:'A gentler Jeju base that respects drive time, open space, and lower route density.',
+          key:'jeju-soft-drive', city:'Jeju', titleKo:'Jeju soft drive 기준', titleEn:'Jeju soft drive 기준', badgeKey:'public데스크Family', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../example/jeju-2n3d-slow-reset.html',
+          summaryKo:'제주의 이동 현실을 반영해서 과속하지 않는 드라이브형 공개 베이스입니다.', summaryEn:'A gentler Jeju 기준 that respects drive time, open space, and lower 루트 density.',
           duration:'2N3D', companionKo:'가족/커플', companionEn:'Family / Couple', vibeKo:'드라이브 리듬', vibeEn:'Drive rhythm', bestKo:'제주 초행, 느린 일정', bestEn:'First Jeju, slower pace'
         }
       ];
 
-      const routeClubDesk = [
+      const 루트Club데스크 = [
         {
           key:'tokyo-to-seoul-night', source:'Tokyo', city:'Seoul', titleKo:'도쿄 다음엔 서울 나이트 리듬', titleEn:'Seoul after Tokyo night rhythm', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
           summaryKo:'도쿄의 밀도와 밤 리듬이 맞았다면, 다음 분기로는 서울의 동네 대비와 늦은 저녁 템포가 잘 이어집니다.',
@@ -644,13 +644,13 @@
         {
           key:'busan-to-jeju-soft', source:'Busan', city:'Jeju', titleKo:'부산 다음엔 제주 소프트 드라이브', titleEn:'Soft Jeju drive after Busan', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../example/jeju-2n3d-slow-reset.html',
           summaryKo:'부산에서 전망과 완만한 템포가 잘 맞았다면, 제주는 더 느슨한 드라이브형 분기로 잘 이어집니다.',
-          summaryEn:'If Busan worked for views and a softer tempo, Jeju is the next branch for a more open drive-based route.',
+          summaryEn:'If Busan worked for views and a softer tempo, Jeju is the next branch for a more open drive-기준d 루트.',
           chipsKo:['코스트', '드라이브', '가벼운 분기'], chipsEn:['Coast', 'Drive', 'Softer branch'], duration:'2N3D'
         },
         {
           key:'fukuoka-to-osaka-food', source:'Fukuoka', city:'Osaka', titleKo:'후쿠오카 다음엔 오사카 푸드 업시프트', titleEn:'Food upshift to Osaka after Fukuoka', image:'../assets/images/cities/osaka.jpg', guide:'../city/osaka.html', example:'../example/osaka-2n3d-food-trip.html',
           summaryKo:'짧은 후쿠오카 푸드 리듬이 좋았다면, 오사카는 더 진한 식사 동선과 에너지를 주는 다음 샘플입니다.',
-          summaryEn:'If Fukuoka worked as a compact food rhythm, Osaka is the next sample for heavier meal sequencing and more energy.',
+          summaryEn:'If Fukuoka worked as a compact food rhythm, Osaka is the next 샘플 for heavier meal sequencing and more energy.',
           chipsKo:['푸드', '업시프트', '주말'], chipsEn:['Food-led', 'Upshift', 'Weekend'], duration:'2N3D'
         }
       ];
@@ -658,42 +658,42 @@
       const operatingEdits = [
         {
           key:'spring-soft-seoul', city:'Seoul', titleKo:'봄 주말 서울 소프트 에디트', titleEn:'Soft Seoul spring weekend', labelKo:'시즌 에디트', labelEn:'Seasonal edit', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
-          summaryKo:'벚꽃 시즌처럼 사람이 많을 때도 리듬을 망치지 않게, 동네 조합과 시간대를 부드럽게 잡은 베이스입니다.', summaryEn:'A softer Seoul base that protects pacing during crowded spring windows by leaning on neighborhood rhythm and timing.',
+          summaryKo:'벚꽃 시즌처럼 사람이 많을 때도 리듬을 망치지 않게, 동네 조합과 시간대를 부드럽게 잡은 베이스입니다.', summaryEn:'A softer Seoul 기준 that protects pacing during crowded spring windows by leaning on neighborhood rhythm and timing.',
           chipsKo:['봄 창', '동네 조합', '저녁 무드'], chipsEn:['Spring window', 'Neighborhood pairings', 'Evening mood'], duration:'2N3D', companionKo:'커플/친구', companionEn:'Couple / Friends'
         },
         {
-          key:'tokyo-weekend-dense', city:'Tokyo', titleKo:'도쿄 주말 고밀도 베이스', titleEn:'Tokyo dense weekend base', labelKo:'주말 에디트', labelEn:'Weekend edit', image:'../assets/images/cities/tokyo.jpg', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
-          summaryKo:'시간이 짧아도 밀도를 살리고 싶을 때 쓰는 주말형 도쿄 베이스입니다. 축을 나눠 과열만 막습니다.', summaryEn:'A short-window Tokyo base for travelers who still want density, without turning the route into a blur.',
+          key:'tokyo-weekend-dense', city:'Tokyo', titleKo:'도쿄 주말 고밀도 베이스', titleEn:'Tokyo dense weekend 기준', labelKo:'주말 에디트', labelEn:'Weekend edit', image:'../assets/images/cities/tokyo.jpg', guide:'../city/tokyo.html', example:'../example/tokyo-3n4d-first-trip.html',
+          summaryKo:'시간이 짧아도 밀도를 살리고 싶을 때 쓰는 주말형 도쿄 베이스입니다. 축을 나눠 과열만 막습니다.', summaryEn:'A short-window Tokyo 기준 for travelers who still want density, without turning the 루트 into a blur.',
           chipsKo:['주말', '밀도', '축 나누기'], chipsEn:['Weekend', 'Density', 'Axis split'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
         },
         {
           key:'busan-parents-soft', city:'Busan', titleKo:'부모님과 가는 부산 소프트 루트', titleEn:'Soft Busan with parents', labelKo:'동행 에디트', labelEn:'Companion edit', image:'../assets/images/cities/busan.jpg', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
-          summaryKo:'전망과 식사는 살리고 피로 누적은 줄이는 부모님 동행용 베이스입니다.', summaryEn:'A parent-friendly Busan base that keeps the views and meals while protecting energy.',
+          summaryKo:'전망과 식사는 살리고 피로 누적은 줄이는 부모님 동행용 베이스입니다.', summaryEn:'A parent-friendly Busan 기준 that keeps the views and meals while protecting energy.',
           chipsKo:['부모님', '전망', '피로 조절'], chipsEn:['Parents', 'Views', 'Fatigue control'], duration:'2N3D', companionKo:'가족/부모님', companionEn:'Family / Parents'
         },
         {
           key:'kyoto-solo-quiet', city:'Kyoto', titleKo:'교토 솔로 콰이어트 윈도우', titleEn:'Quiet Kyoto for solo time', labelKo:'솔로 에디트', labelEn:'Solo edit', image:'../assets/images/cities/kyoto.jpg', guide:'../city/kyoto.html', example:'../example/kyoto-2n3d-slow-trip.html',
-          summaryKo:'혼자일 때 교토를 과하게 쓰지 않고, 오전과 저녁의 조용한 시간을 중심으로 읽는 베이스입니다.', summaryEn:'A solo Kyoto base built around quieter morning and evening windows instead of trying to do too much.',
+          summaryKo:'혼자일 때 교토를 과하게 쓰지 않고, 오전과 저녁의 조용한 시간을 중심으로 읽는 베이스입니다.', summaryEn:'A solo Kyoto 기준 built around quieter morning and evening windows instead of trying to do too much.',
           chipsKo:['혼자', '조용한 시간', '슬로우'], chipsEn:['Solo', 'Quiet windows', 'Slow'], duration:'2N3D', companionKo:'혼자', companionEn:'Solo'
         },
         {
           key:'fukuoka-friends-food', city:'Fukuoka', titleKo:'후쿠오카 친구 푸드 위켄드', titleEn:'Fukuoka food weekend with friends', labelKo:'프렌즈 에디트', labelEn:'Friends edit', image:'../assets/images/cities/fukuoka.jpg', guide:'../city/fukuoka.html', example:'../example/fukuoka-2n3d-food-trip.html',
-          summaryKo:'짧게 가도 식사 타이밍이 무너지지 않게, 친구와 쓰기 좋은 푸드 중심 베이스입니다.', summaryEn:'A friend-ready Fukuoka base built around food timing that still works on a short weekend.',
+          summaryKo:'짧게 가도 식사 타이밍이 무너지지 않게, 친구와 쓰기 좋은 푸드 중심 베이스입니다.', summaryEn:'A friend-ready Fukuoka 기준 built around food timing that still works on a short weekend.',
           chipsKo:['친구', '푸드', '짧은 일본'], chipsEn:['Friends', 'Food', 'Short Japan'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
         },
         {
           key:'busan-summer-coast', city:'Busan', titleKo:'부산 서머 코스트 에디트', titleEn:'Busan summer coast edit', labelKo:'시즌 에디트', labelEn:'Seasonal edit', image:'../assets/images/cities/busan.jpg', guide:'../city/busan.html', example:'../example/busan-2n3d-with-parents.html',
-          summaryKo:'여름 부산에서 바다를 많이 넣되 이동 과열은 막는 coast 중심 베이스입니다.', summaryEn:'A summer Busan base that lets the coast lead without overheating the route.',
+          summaryKo:'여름 부산에서 바다를 많이 넣되 이동 과열은 막는 coast 중심 베이스입니다.', summaryEn:'A summer Busan 기준 that lets the coast lead without overheating the 루트.',
           chipsKo:['여름', '코스트', '오후 전망'], chipsEn:['Summer', 'Coast', 'Late-day views'], duration:'2N3D', companionKo:'친구/커플', companionEn:'Friends / Couple'
         },
         {
           key:'seoul-late-night-friends', city:'Seoul', titleKo:'서울 프렌즈 레이트나이트 에디트', titleEn:'Seoul late-night friends edit', labelKo:'프렌즈 에디트', labelEn:'Friends edit', image:'../assets/images/cities/seoul.jpg', guide:'../city/seoul.html', example:'../example/seoul-2n3d-city-vibes.html',
-          summaryKo:'밤 리듬을 살리되 다음날이 무너지지 않게 조절한 서울 친구 여행 베이스입니다.', summaryEn:'A Seoul friends base that keeps the late-night rhythm without ruining the next day.',
+          summaryKo:'밤 리듬을 살리되 다음날이 무너지지 않게 조절한 서울 친구 여행 베이스입니다.', summaryEn:'A Seoul friends 기준 that keeps the late-night rhythm without ruining the next day.',
           chipsKo:['친구', '밤 리듬', '다음날 보호'], chipsEn:['Friends', 'Night rhythm', 'Protect next day'], duration:'2N3D', companionKo:'친구', companionEn:'Friends'
         },
         {
           key:'jeju-parents-easy', city:'Jeju', titleKo:'제주 부모님 이지 페이스', titleEn:'Jeju easy pace with parents', labelKo:'동행 에디트', labelEn:'Companion edit', image:'../assets/images/cities/jeju.jpg', guide:'../city/jeju.html', example:'../example/jeju-2n3d-slow-reset.html',
-          summaryKo:'운전과 풍경, 식사 리듬을 무리 없이 맞춘 부모님 동행용 제주 베이스입니다.', summaryEn:'A Jeju parent-friendly base built around easy drive logic, view windows, and meal rhythm.',
+          summaryKo:'운전과 풍경, 식사 리듬을 무리 없이 맞춘 부모님 동행용 제주 베이스입니다.', summaryEn:'A Jeju parent-friendly 기준 built around easy drive logic, view windows, and meal rhythm.',
           chipsKo:['부모님', '드라이브', '쉬운 페이스'], chipsEn:['Parents', 'Drive', 'Easy pace'], duration:'2N3D', companionKo:'가족/부모님', companionEn:'Family / Parents'
         }
       ];
@@ -706,31 +706,31 @@
 
       function expansionTripsCopy(){
         return window.RyokoApp.lang === 'ko' ? {
-          eyebrow:'Expansion trip vault', title:'확장 도시도 이제 보관함 안에서 다시 꺼내 읽습니다', desc:'release 도시 다음 레이어였던 expansion 도시들을, 저장·최근·공유 흐름 기준으로 다시 묶어 다음 시작점처럼 보이게 정리했습니다.', leadTitle:'확장 도시를 보관하고 다시 여는 제품형 shelf', leadDesc:'Osaka는 food-led compact base로, Sapporo는 seasonal city base로, Macau는 short-night heritage base로 다시 열립니다.', note:'확장 도시도 저장·최근·공유 흐름 안에서 보이면 release 다음 클릭이 더 자연스럽게 이어집니다.', quickLabel:'지금 상태', city:'도시 보기', sample:'샘플 보기', open:'최근 루트', publicBase:'퍼블릭 베이스', saved:'저장', recent:'최근', shared:'공유', none:'아직 쌓인 루트 없음', region:{japan:['Japan expansion desk','food / weather / calm north / island reset 축으로 다시 읽습니다.'], korea:['Korea expansion desk','Jeju와 Gyeongju는 scenic / heritage 루프 안에서 다시 열립니다.'], greater:['Greater China branch','Macau는 Hong Kong / Taipei 다음 분기로 짧고 선명하게 보관됩니다.']}}
+          eyebrow:'Expansion trip vault', title:'확장 도시도 이제 보관함 안에서 다시 꺼내 읽습니다', desc:'release 도시 다음 레이어였던 expansion 도시들을, 저장·최근·공유 흐름 기준으로 다시 묶어 다음 시작점처럼 보이게 정리했습니다.', leadTitle:'확장 도시를 보관하고 다시 여는 제품형 shelf', leadDesc:'Osaka는 food-led compact 기준로, Sapporo는 seasonal city 기준로, Macau는 short-night heritage 기준로 다시 열립니다.', note:'확장 도시도 저장·최근·공유 흐름 안에서 보이면 release 다음 클릭이 더 자연스럽게 이어집니다.', quickLabel:'지금 상태', city:'도시 보기', 샘플:'샘플 보기', open:'최근 여행', public기준:'퍼블릭 베이스', saved:'저장', recent:'최근', shared:'공유', none:'아직 쌓인 루트 없음', region:{japan:['Japan expansion 데스크','food / weather / calm north / island reset 축으로 다시 읽습니다.'], korea:['Korea expansion 데스크','Jeju와 Gyeongju는 scenic / heritage 루프 안에서 다시 열립니다.'], greater:['Greater China branch','Macau는 Hong Kong / Taipei 다음 분기로 짧고 선명하게 보관됩니다.']}}
           : window.RyokoApp.lang === 'ja' ? {
-          eyebrow:'Expansion trip vault', title:'expansion 都市も 보관함 の中でまた開けるようにします', desc:'release の次の層だった expansion 都市を、保存・最近・共有の流れでまとめ直し、次の出発点として見えるようにしました。', leadTitle:'expansion 都市を保管してまた開く shelf', leadDesc:'Osaka は food-led compact base、Sapporo は seasonal city base、Macau は short-night heritage base として再び開きます。', note:'expansion 都市も保存・最近・共有の流れで見えると、release の次のクリックがずっと自然になります。', quickLabel:'現在の状態', city:'都市を見る', sample:'サンプルを見る', open:'最近のルート', publicBase:'公開ベース', saved:'保存', recent:'最近', shared:'共有', none:'まだ蓄積されたルートはありません', region:{japan:['Japan expansion desk','food / weather / calm north / island reset の軸で読み直します。'], korea:['Korea expansion desk','Jeju と Gyeongju は scenic / heritage ループの中で再び開きます。'], greater:['Greater China branch','Macau は Hong Kong / Taipei の次の分岐として短く鮮明に保管されます。']}}
+          eyebrow:'Expansion trip vault', title:'expansion 都市も 보관함 の中でまた開けるようにします', desc:'release の次の層だった expansion 都市を、保存・最近・共有の流れでまとめ直し、次の出発点として見えるようにしました。', leadTitle:'expansion 都市を保管してまた開く shelf', leadDesc:'Osaka は food-led compact 기준、Sapporo は seasonal city 기준、Macau は short-night heritage 기준 として再び開きます。', note:'expansion 都市も保存・最近・共有の流れで見えると、release の次のクリックがずっと自然になります。', quickLabel:'現在の状態', city:'都市を見る', 샘플:'サンプルを見る', open:'最近のルート', public기준:'公開ベース', saved:'保存', recent:'最近', shared:'共有', none:'まだ蓄積されたルートはありません', region:{japan:['Japan expansion 데스크','food / weather / calm north / island reset の軸で読み直します。'], korea:['Korea expansion 데스크','Jeju と Gyeongju は scenic / heritage ループの中で再び開きます。'], greater:['Greater China branch','Macau は Hong Kong / Taipei の次の分岐として短く鮮明に保管されます。']}}
           : window.RyokoApp.lang === 'zhHant' ? {
-          eyebrow:'Expansion trip vault', title:'現在也能在 보관함 裡重新打開 expansion 城市', desc:'把原本屬於 release 之後那一層的 expansion 城市，依已存、最近、分享三種流動重新整理成下一個起點。', leadTitle:'把 expansion 城市存下並重新打開的 shelf', leadDesc:'Osaka 會以 food-led compact base 重新打開，Sapporo 會以 seasonal city base 重新打開，Macau 則是 short-night heritage base。', note:'當 expansion 城市也能在已存、最近、分享流裡被看見，release 之後的下一次點擊就會自然很多。', quickLabel:'目前狀態', city:'讀城市', sample:'看 sample', open:'最近路線', publicBase:'公開 base', saved:'已存', recent:'最近', shared:'分享', none:'還沒有累積路線', region:{japan:['Japan expansion desk','重新以 food / weather / calm north / island reset 四條線來讀。'], korea:['Korea expansion desk','Jeju 與 Gyeongju 會在 scenic / heritage 迴圈裡重新打開。'], greater:['Greater China branch','Macau 會作為 Hong Kong / Taipei 之後短而清楚的下一個分支被保留下來。']}}
+          eyebrow:'Expansion trip vault', title:'現在也能在 보관함 裡重新打開 expansion 城市', desc:'把原本屬於 release 之後那一層的 expansion 城市，依已存、最近、分享三種流動重新整理成下一個起點。', leadTitle:'把 expansion 城市存下並重新打開的 shelf', leadDesc:'Osaka 會以 food-led compact 기준 重新打開，Sapporo 會以 seasonal city 기준 重新打開，Macau 則是 short-night heritage 기준。', note:'當 expansion 城市也能在已存、最近、分享流裡被看見，release 之後的下一次點擊就會自然很多。', quickLabel:'目前狀態', city:'讀城市', 샘플:'看 샘플', open:'最近路線', public기준:'公開 기준', saved:'已存', recent:'最近', shared:'分享', none:'還沒有累積路線', region:{japan:['Japan expansion 데스크','重新以 food / weather / calm north / island reset 四條線來讀。'], korea:['Korea expansion 데스크','Jeju 與 Gyeongju 會在 scenic / heritage 迴圈裡重新打開。'], greater:['Greater China branch','Macau 會作為 Hong Kong / Taipei 之後短而清楚的下一個分支被保留下來。']}}
           : {
-          eyebrow:'Expansion trip vault', title:'Expansion cities now reopen from inside 보관함 too', desc:'The expansion layer after the release cities is regrouped through saved, recent, and shared flows so it feels like a real next starting point.', leadTitle:'A product shelf for reopening the expansion layer', leadDesc:'Osaka returns as a food-led compact base, Sapporo as a seasonal city base, and Macau as a short-night heritage base.', note:'Once expansion cities become visible through saved, recent, and shared flows, the click after the release layer stops feeling random.', quickLabel:'Current status', city:'Read city', sample:'Read sample', open:'Open recent route', publicBase:'Public base', saved:'saved', recent:'recent', shared:'shared', none:'No route stack yet', region:{japan:['Japan expansion desk','Reopen these through food, weather, north-side calm, and island reset.'], korea:['Korea expansion desk','Jeju and Gyeongju now sit inside scenic and heritage loops.'], greater:['Greater China branch','Macau is kept as a short, clear branch after Hong Kong and Taipei.']}}
+          eyebrow:'Expansion trip vault', title:'Expansion cities now reopen from inside 보관함 too', desc:'The expansion layer after the release cities is regrouped through saved, recent, and shared flows so it feels like a real next starting point.', leadTitle:'A product shelf for reopening the expansion layer', leadDesc:'Osaka returns as a food-led compact 기준, Sapporo as a seasonal city 기준, and Macau as a short-night heritage 기준.', note:'Once expansion cities become visible through saved, recent, and shared flows, the click after the release layer stops feeling random.', quickLabel:'Current status', city:'도시 읽기', 샘플:'Read 샘플', open:'Open recent 루트', public기준:'Public 기준', saved:'saved', recent:'recent', shared:'shared', none:'No 루트 stack yet', region:{japan:['Japan expansion 데스크','Reopen these through food, weather, north-side calm, and island reset.'], korea:['Korea expansion 데스크','Jeju and Gyeongju now sit inside scenic and heritage loops.'], greater:['Greater China branch','Macau is kept as a short, clear branch after Hong Kong and Taipei.']}}
       }
 
       function expansionCityFallback(city){
         const map = {
           Osaka:'Compact food-led city that gets stronger once one meal line and one calmer pocket stay together.',
-          Sapporo:'A seasonal north-city base that works better when blocks stay shorter and one warm close carries the night.',
-          Sendai:'A calmer city base where green avenues, market pockets, and a quieter dinner close matter more than speed.',
-          Okinawa:'An island reset base that opens through one coast line, then protects slower pockets and hotel recovery.',
-          Jeju:'A scenic drive base that works best when route shape, weather, and rest windows matter more than stop count.',
-          Gyeongju:'A softer heritage base that reads better through dusk, hanok lanes, and a lighter walking rhythm.',
-          Macau:'A compact heritage-night base that gets clearer when old lanes and one short night scene stay separated.'
+          Sapporo:'A seasonal north-city 기준 that works better when blocks stay shorter and one warm close carries the night.',
+          Sendai:'A calmer city 기준 where green avenues, market pockets, and a quieter dinner close matter more than speed.',
+          Okinawa:'An island reset 기준 that opens through one coast line, then protects slower pockets and hotel recovery.',
+          Jeju:'A scenic drive 기준 that works best when 루트 shape, weather, and rest windows matter more than stop count.',
+          Gyeongju:'A softer heritage 기준 that reads better through dusk, hanok lanes, and a lighter walking rhythm.',
+          Macau:'A compact heritage-night 기준 that gets clearer when old lanes and one short night scene stay separated.'
         };
-        return map[city] || 'A city base worth saving, reopening, and branching from later.';
+        return map[city] || 'A city 기준 worth saving, reopening, and branching from later.';
       }
 
-      function renderExpansionTripsDesk(saved, recent, shared){
-        const node = $('expansionTripsDeskRoot');
-        const section = $('expansionTripsDeskSection');
+      function renderExpansionTrips데스크(saved, recent, shared){
+        const node = $('expansionTrips데스크Root');
+        const section = $('expansionTrips데스크Section');
         if (!node || !section) return;
         const copy = expansionTripsCopy();
         const all = [...saved, ...recent, ...shared];
@@ -748,21 +748,21 @@
           if (groups.saved.length) statusChips.push(`${groups.saved.length} ${copy.saved}`);
           if (groups.recent.length) statusChips.push(`${groups.recent.length} ${copy.recent}`);
           if (groups.shared.length) statusChips.push(`${groups.shared.length} ${copy.shared}`);
-          if (!statusChips.length) statusChips.push(copy.publicBase);
+          if (!statusChips.length) statusChips.push(copy.public기준);
           const desc = latest ? (getMetaSummary(latest) || cityLoopBranchNote(city) || expansionCityFallback(city)) : (cityLoopBranchNote(city) || expansionCityFallback(city));
           const actionHref = latest ? shareUrl(latest) : `../${loop.example || loop.guide}`;
-          const actionLabel = latest ? copy.open : copy.sample;
+          const actionLabel = latest ? copy.open : copy.샘플;
           return `
             <article class="expansion-front-city-card">
-              <div class="expansion-front-city-top"><strong>${city}</strong><span class="expansion-front-city-vibe">${loop.vibe || copy.publicBase}</span></div>
+              <div class="expansion-front-city-top"><strong>${city}</strong><span class="expansion-front-city-vibe">${loop.vibe || copy.public기준}</span></div>
               <p>${desc}</p>
               <div class="trip-chip-row">${statusChips.map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}</div>
               ${rhythmMarkup(city, 'trip-rhythm-inline-soft')}
-              ${visitEntryMarkup(city, 'trip-entry-inline-soft')}
+              ${visit입구Markup(city, 'trip-입구-inline-soft')}
               <div class="expansion-front-city-actions">
                 <a class="soft-btn" href="${actionHref}">${actionLabel}</a>
                 <a class="ghost-btn" href="../${loop.guide}">${copy.city}</a>
-                <a class="ghost-btn" href="../${loop.example || loop.guide}">${copy.sample}</a>
+                <a class="ghost-btn" href="../${loop.example || loop.guide}">${copy.샘플}</a>
               </div>
             </article>`;
         };
@@ -782,7 +782,7 @@
               <div class="expansion-front-pill-row">
                 <span class="expansion-front-pill">Saved / Recent / Shared</span>
                 <span class="expansion-front-pill">City-first continuation</span>
-                <span class="expansion-front-pill">Canonical sample links</span>
+                <span class="expansion-front-pill">Canonical 샘플 links</span>
               </div>
               <div class="expansion-front-note">${copy.note}</div>
             </article>
@@ -859,7 +859,7 @@
               <h3 class="card-title">${item.title || item.destination || 'Trip'}</h3>
               <div class="trip-chip-row">${chips}</div>
               ${rhythmMarkup(item.destination)}
-              ${visitEntryMarkup(item.destination)}
+              ${visit입구Markup(item.destination)}
               <p class="card-copy clamp-3">${getMetaSummary(item)}</p>
               <div class="trip-card-footer-note">${meta.bestFor || item.notes || ''}</div>
               <div class="card-actions trip-card-actions">
@@ -894,11 +894,11 @@
             <p class="section-desc">${meta.summary || latest.notes || copy.continueDesc}</p>
             <div class="trip-chip-row">${[latest.destination, latest.duration, latest.companion, meta.vibe].filter(Boolean).map(v => `<span class="trip-mini-chip">${v}</span>`).join('')}</div>
             ${rhythmMarkup(latest.destination, 'trip-rhythm-inline-soft')}
-            ${visitEntryMarkup(latest.destination, 'trip-entry-inline-soft')}
+            ${visit입구Markup(latest.destination, 'trip-입구-inline-soft')}
             <div class="hero-actions">
-              <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAsBase}</a>
-              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || 'City guide layer'}</a>
-              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).example || (window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionExample || '샘플 보기 route'}</a>
+              <a class="primary-btn" href="${shareUrl(latest)}">${copy.useAs기준}</a>
+              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionLayer || '도시 가이드 layer'}</a>
+              <a class="soft-btn" href="../${(window.RyokoApp.getCityLoopData(latest.destination)||{}).example || (window.RyokoApp.getCityLoopData(latest.destination)||{}).guide || `city/${String(latest.destination||'').toLowerCase()}.html`}">${copy.collectionExample || '샘플 루트'}</a>
               <a class="ghost-btn" href="${articleHrefForCity(latest.destination)}">${articleLabel()}</a>
               <button class="secondary-btn" data-copy="${latest.id}">${window.RyokoApp.t('trips.tripShare')}</button>
             </div>
@@ -924,133 +924,133 @@
         }));
       }
 
-      function publicRoutePayload(entry){
+      function public루트Payload(입구){
         const isKo = window.RyokoApp.lang === 'ko';
         const now = new Date().toISOString();
         return {
-          id: `public_${entry.key}_${Date.now()}`,
-          destination: entry.city,
-          title: isKo ? entry.titleKo : entry.titleEn,
-          duration: entry.duration,
-          companion: isKo ? entry.companionKo : entry.companionEn,
-          notes: isKo ? entry.summaryKo : entry.summaryEn,
+          id: `public_${입구.key}_${Date.now()}`,
+          destination: 입구.city,
+          title: isKo ? 입구.titleKo : 입구.titleEn,
+          duration: 입구.duration,
+          companion: isKo ? 입구.companionKo : 입구.companionEn,
+          notes: isKo ? 입구.summaryKo : 입구.summaryEn,
           createdAt: now,
           planData: {
-            summary: isKo ? entry.summaryKo : entry.summaryEn,
-            vibe: isKo ? entry.vibeKo : entry.vibeEn,
-            bestFor: isKo ? entry.bestKo : entry.bestEn
+            summary: isKo ? 입구.summaryKo : 입구.summaryEn,
+            vibe: isKo ? 입구.vibeKo : 입구.vibeEn,
+            bestFor: isKo ? 입구.bestKo : 입구.bestEn
           }
         };
       }
 
-      function renderPublicRouteDesk(){
-        const target = $('publicRouteDesk');
+      function renderPublic루트데스크(){
+        const target = $('public루트데스크');
         if (!target) return;
         const copy = langCopy();
         const isKo = window.RyokoApp.lang === 'ko';
-        target.innerHTML = publicRouteDesk.map(entry => `
-          <article class="public-route-card info-card">
-            <div class="public-route-media"><img src="${entry.image}" alt="${entry.city}"></div>
-            <div class="public-route-body">
+        target.innerHTML = public루트데스크.map(입구 => `
+          <article class="public-루트-card info-card">
+            <div class="public-루트-media"><img src="${입구.image}" alt="${입구.city}"></div>
+            <div class="public-루트-body">
               <div class="trip-card-topline">
-                <div class="meta">${copy.publicDeskPick}</div>
-                <div class="trip-card-date">${copy[entry.badgeKey] || ''}</div>
+                <div class="meta">${copy.public데스크Pick}</div>
+                <div class="trip-card-date">${copy[입구.badgeKey] || ''}</div>
               </div>
-              <h3 class="card-title">${isKo ? entry.titleKo : entry.titleEn}</h3>
-              <p class="card-copy">${isKo ? entry.summaryKo : entry.summaryEn}</p>
+              <h3 class="card-title">${isKo ? 입구.titleKo : 입구.titleEn}</h3>
+              <p class="card-copy">${isKo ? 입구.summaryKo : 입구.summaryEn}</p>
               <div class="trip-chip-row">
-                <span class="trip-mini-chip">${entry.city}</span>
-                <span class="trip-mini-chip">${entry.duration}</span>
-                <span class="trip-mini-chip">${isKo ? entry.vibeKo : entry.vibeEn}</span>
-                <span class="trip-mini-chip">${isKo ? entry.bestKo : entry.bestEn}</span>
+                <span class="trip-mini-chip">${입구.city}</span>
+                <span class="trip-mini-chip">${입구.duration}</span>
+                <span class="trip-mini-chip">${isKo ? 입구.vibeKo : 입구.vibeEn}</span>
+                <span class="trip-mini-chip">${isKo ? 입구.bestKo : 입구.bestEn}</span>
               </div>
-              <div class="card-actions public-route-actions">
-                <a class="soft-btn" href="${entry.example}">${copy.publicDeskOpen}</a>
-                <a class="ghost-btn" href="../?destination=${encodeURIComponent(entry.city)}">${copy.publicDeskPlan}</a>
-                <button class="primary-btn" data-save-public="${entry.key}">${copy.publicDeskSave}</button>
+              <div class="card-actions public-루트-actions">
+                <a class="soft-btn" href="${입구.example}">${copy.public데스크Open}</a>
+                <a class="ghost-btn" href="../?destination=${encodeURIComponent(입구.city)}">${copy.public데스크Plan}</a>
+                <button class="primary-btn" data-save-public="${입구.key}">${copy.public데스크Save}</button>
               </div>
             </div>
           </article>`).join('');
       }
 
-      function routeClubPayload(entry){
+      function 루트ClubPayload(입구){
         const isKo = window.RyokoApp.lang === 'ko';
         return {
-          id: `club_${entry.key}_${Date.now()}`,
-          destination: entry.city,
-          title: isKo ? `My version — ${entry.titleKo}` : `My version — ${entry.titleEn}`,
-          duration: entry.duration,
+          id: `club_${입구.key}_${Date.now()}`,
+          destination: 입구.city,
+          title: isKo ? `My version — ${입구.titleKo}` : `My version — ${입구.titleEn}`,
+          duration: 입구.duration,
           companion: isKo ? '혼자/친구' : 'Solo / Friends',
-          notes: isKo ? entry.summaryKo : entry.summaryEn,
+          notes: isKo ? 입구.summaryKo : 입구.summaryEn,
           createdAt: new Date().toISOString(),
           planData: {
-            summary: isKo ? entry.summaryKo : entry.summaryEn,
-            vibe: (isKo ? entry.chipsKo : entry.chipsEn).slice(0,2).join(' · '),
-            bestFor: (isKo ? entry.chipsKo : entry.chipsEn).join(' · ')
+            summary: isKo ? 입구.summaryKo : 입구.summaryEn,
+            vibe: (isKo ? 입구.chipsKo : 입구.chipsEn).slice(0,2).join(' · '),
+            bestFor: (isKo ? 입구.chipsKo : 입구.chipsEn).join(' · ')
           }
         };
       }
 
-      function operatingEditPayload(entry){
+      function operatingEditPayload(입구){
         const isKo = window.RyokoApp.lang === 'ko';
         return {
-          id: `edit_${entry.key}_${Date.now()}`,
-          destination: entry.city,
-          title: isKo ? entry.titleKo : entry.titleEn,
-          duration: entry.duration,
-          companion: isKo ? entry.companionKo : entry.companionEn,
-          notes: isKo ? entry.summaryKo : entry.summaryEn,
+          id: `edit_${입구.key}_${Date.now()}`,
+          destination: 입구.city,
+          title: isKo ? 입구.titleKo : 입구.titleEn,
+          duration: 입구.duration,
+          companion: isKo ? 입구.companionKo : 입구.companionEn,
+          notes: isKo ? 입구.summaryKo : 입구.summaryEn,
           createdAt: new Date().toISOString(),
           planData: {
-            summary: isKo ? entry.summaryKo : entry.summaryEn,
-            vibe: (isKo ? entry.chipsKo : entry.chipsEn).slice(0,2).join(' · '),
-            bestFor: (isKo ? entry.chipsKo : entry.chipsEn).join(' · ')
+            summary: isKo ? 입구.summaryKo : 입구.summaryEn,
+            vibe: (isKo ? 입구.chipsKo : 입구.chipsEn).slice(0,2).join(' · '),
+            bestFor: (isKo ? 입구.chipsKo : 입구.chipsEn).join(' · ')
           }
         };
       }
 
-      function renderRouteClub(){
-        const target = $('routeClubGrid');
+      function render루트Club(){
+        const target = $('루트ClubGrid');
         if (!target) return;
         const isKo = window.RyokoApp.lang === 'ko';
         const copy = langCopy();
-        target.innerHTML = routeClubDesk.map(entry => `
-          <article class="public-route-card info-card route-club-card">
-            <div class="public-route-media"><img src="${entry.image}" alt="${entry.city}"></div>
-            <div class="public-route-body">
-              <div class="trip-card-topline"><div class="meta">${copy.routeClubLabel}</div><div class="trip-card-date">${entry.source} → ${entry.city}</div></div>
-              <h3 class="card-title">${isKo ? entry.titleKo : entry.titleEn}</h3>
-              <p class="card-copy">${isKo ? entry.summaryKo : entry.summaryEn}</p>
-              <div class="trip-chip-row">${(isKo ? entry.chipsKo : entry.chipsEn).map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}<span class="trip-mini-chip">${entry.duration}</span></div>
-              <div class="card-actions public-route-actions">
-                <a class="soft-btn" href="${entry.example}">${copy.routeClubOpen}</a>
-                <a class="ghost-btn" href="${entry.guide}">${copy.routeClubGuide}</a>
-                <button class="primary-btn" data-save-club="${entry.key}">${copy.routeClubSave}</button>
+        target.innerHTML = 루트Club데스크.map(입구 => `
+          <article class="public-루트-card info-card 루트-club-card">
+            <div class="public-루트-media"><img src="${입구.image}" alt="${입구.city}"></div>
+            <div class="public-루트-body">
+              <div class="trip-card-topline"><div class="meta">${copy.루트ClubLabel}</div><div class="trip-card-date">${입구.source} → ${입구.city}</div></div>
+              <h3 class="card-title">${isKo ? 입구.titleKo : 입구.titleEn}</h3>
+              <p class="card-copy">${isKo ? 입구.summaryKo : 입구.summaryEn}</p>
+              <div class="trip-chip-row">${(isKo ? 입구.chipsKo : 입구.chipsEn).map(ch => `<span class="trip-mini-chip">${ch}</span>`).join('')}<span class="trip-mini-chip">${입구.duration}</span></div>
+              <div class="card-actions public-루트-actions">
+                <a class="soft-btn" href="${입구.example}">${copy.루트ClubOpen}</a>
+                <a class="ghost-btn" href="${입구.guide}">${copy.루트ClubGuide}</a>
+                <button class="primary-btn" data-save-club="${입구.key}">${copy.루트ClubSave}</button>
               </div>
             </div>
           </article>`).join('');
       }
 
       function renderOperatingEdits(){
-        const target = $('operatingEditDesk');
+        const target = $('operatingEdit데스크');
         if (!target) return;
         const isKo = window.RyokoApp.lang === 'ko';
         const copy = langCopy();
-        target.innerHTML = operatingEdits.map(entry => `
+        target.innerHTML = operatingEdits.map(입구 => `
           <article class="operating-edit-card info-card">
-            <div class="operating-edit-media"><img src="${entry.image}" alt="${entry.city}"></div>
+            <div class="operating-edit-media"><img src="${입구.image}" alt="${입구.city}"></div>
             <div class="operating-edit-body">
               <div class="operating-edit-topline">
-                <span class="collection-kicker">${isKo ? entry.labelKo : entry.labelEn}</span>
-                <span class="trip-card-date">${entry.city} · ${entry.duration}</span>
+                <span class="collection-kicker">${isKo ? 입구.labelKo : 입구.labelEn}</span>
+                <span class="trip-card-date">${입구.city} · ${입구.duration}</span>
               </div>
-              <h3>${isKo ? entry.titleKo : entry.titleEn}</h3>
-              <p>${isKo ? entry.summaryKo : entry.summaryEn}</p>
-              <div class="trip-chip-row">${(isKo ? entry.chipsKo : entry.chipsEn).map(chip => `<span class="trip-mini-chip">${chip}</span>`).join('')}</div>
+              <h3>${isKo ? 입구.titleKo : 입구.titleEn}</h3>
+              <p>${isKo ? 입구.summaryKo : 입구.summaryEn}</p>
+              <div class="trip-chip-row">${(isKo ? 입구.chipsKo : 입구.chipsEn).map(chip => `<span class="trip-mini-chip">${chip}</span>`).join('')}</div>
               <div class="operating-edit-actions card-actions">
-                <a class="soft-btn" href="${entry.example}">${copy.editOpen}</a>
-                <a class="ghost-btn" href="${entry.guide}">${copy.editGuide}</a>
-                <button class="primary-btn" data-save-edit="${entry.key}">${copy.editSave}</button>
+                <a class="soft-btn" href="${입구.example}">${copy.editOpen}</a>
+                <a class="ghost-btn" href="${입구.guide}">${copy.editGuide}</a>
+                <button class="primary-btn" data-save-edit="${입구.key}">${copy.editSave}</button>
               </div>
             </div>
           </article>`).join('');
@@ -1060,27 +1060,27 @@
         const lang = window.RyokoApp.lang;
         if (lang === 'ko') return {
           saved:['저장한 여정','다시 열 가치가 있는 내 루트','저장한 루트 열기','새 루트 만들기','아직 저장한 여정이 없습니다','Result에서 저장하면 여기에 가장 먼저 보입니다.'],
-          recent:['최근 본 흐름','방금 만든 계획으로 빠르게 복귀','최근 루트 열기','플래너로 돌아가기','아직 최근 흐름이 없습니다','도시를 고르고 첫 루트를 만들면 여기에 이어보기 카드가 생깁니다.'],
+          recent:['최근 본 흐름','방금 만든 계획으로 빠르게 복귀','최근 여행 열기','플래너로 돌아가기','아직 최근 흐름이 없습니다','도시를 고르고 첫 루트를 만들면 여기에 이어보기 카드가 생깁니다.'],
           shared:['공유받은 여정','받은 링크를 내 여행 베이스로 보관','공유 루트 열기','링크 가져오기','아직 공유받은 여정이 없습니다','공유 링크를 붙여넣으면 나중에 다시 꺼내볼 수 있습니다.'],
-          updated:'마지막 업데이트', emptyCity:'Ryokoplan', viewGuide:'도시 읽기', sample:'샘플 보기'
+          updated:'마지막 업데이트', emptyCity:'Ryokoplan', viewGuide:'도시 읽기', 샘플:'샘플 보기'
         };
         if (lang === 'ja') return {
           saved:['保存した旅程','また開く価値のある自分のルート','保存ルートを開く','新しいルートを作る','まだ保存した旅程がありません','Result で保存すると、ここに最初に表示されます。'],
           recent:['最近見た流れ','作ったばかりの計画へすぐ戻る','最近のルートを開く','플래너へ戻る','まだ最近の流れがありません','都市を選んで最初のルートを作ると、ここに続きのカードが生まれます。'],
           shared:['共有された旅程','受け取ったリンクを自分の旅ベースとして保管','共有ルートを開く','リンクを取り込む','まだ共有された旅程がありません','共有リンクを貼り付けると、あとでまた開けます。'],
-          updated:'最終更新', emptyCity:'Ryokoplan', viewGuide:'都市を読む', sample:'サンプルを見る'
+          updated:'最終更新', emptyCity:'Ryokoplan', viewGuide:'都市を読む', 샘플:'サンプルを見る'
         };
         if (lang === 'zhHant') return {
           saved:['已存行程','值得重新打開的我的路線','打開已存路線','建立新路線','還沒有已存行程','在 Result 頁存下後，會先出現在這裡。'],
           recent:['最近瀏覽','快速回到剛建立的計畫','打開最近路線','回到 플래너','還沒有最近流程','選一座城市並建立第一條路線後，這裡會出現接續卡片。'],
           shared:['分享行程','把收到的連結保存成自己的旅行底稿','打開分享路線','匯入連結','還沒有分享行程','貼上分享連結後，之後可以在這裡重新打開。'],
-          updated:'最後更新', emptyCity:'Ryokoplan', viewGuide:'讀城市', sample:'看範例'
+          updated:'最後更新', emptyCity:'Ryokoplan', viewGuide:'讀城市', 샘플:'看範例'
         };
         return {
-          saved:['Saved trips','Your routes worth reopening','Open saved route','Build new route','No saved trip yet','Save a Result and it will appear here first.'],
-          recent:['Recent flow','Return quickly to the plan you just shaped','Open recent route','Back to 플래너','No recent flow yet','Choose a city and create your first route to build a resume card here.'],
-          shared:['Shared trips','Keep received links as your own travel bases','Open shared route','Import link','No shared trip yet','Paste a shared link and you can reopen it here later.'],
-          updated:'Last updated', emptyCity:'Ryokoplan', viewGuide:'Read city', sample:'샘플 보기 route'
+          saved:['Saved trips','Your 루트s worth reopening','Open saved 루트','Build new 루트','No saved trip yet','Save a Result and it will appear here first.'],
+          recent:['Recent flow','Return quickly to the plan you just shaped','Open recent 루트','Back to 플래너','No recent flow yet','Choose a city and create your first 루트 to build a resume card here.'],
+          shared:['Shared trips','Keep received links as your own travel 기준s','Open shared 루트','Import link','No shared trip yet','Paste a shared link and you can reopen it here later.'],
+          updated:'Last updated', emptyCity:'Ryokoplan', viewGuide:'도시 읽기', 샘플:'샘플 루트'
         };
       }
       function renderLibraryShelf(saved, recent, shared){
@@ -1113,7 +1113,7 @@
               <div class="trip-library-actions">
                 <a class="primary-btn" href="${primaryHref}">${item ? text[2] : text[3]}</a>
                 ${item ? `<a class="soft-btn" href="../${loop.guide || `city/${cityKey}.html`}">${copy.viewGuide}</a>` : `<a class="soft-btn" href="${row.actionAnchor}">${text[0]}</a>`}
-                ${item && loop.example ? `<a class="ghost-btn" href="../${loop.example}">${copy.sample}</a>` : ''}
+                ${item && loop.example ? `<a class="ghost-btn" href="../${loop.example}">${copy.샘플}</a>` : ''}
               </div>
             </div>
           </article>`;
@@ -1125,21 +1125,21 @@
         if (!target) return;
         const collections = (window.RyokoStorage.getSavedPlaceCollections?.() || []).sort((a, b) => b.places.length - a.places.length || String(a.city || '').localeCompare(String(b.city || '')));
         if (!collections.length) {
-          target.innerHTML = `<div class="trip-archive-empty"><strong>No saved places yet</strong><span>Tap hearts across route pages and your place archive will start to build itself.</span></div>`;
+          target.innerHTML = `<div class="trip-archive-empty"><strong>No saved places yet</strong><span>Tap hearts across 루트 pages and your place archive will start to build itself.</span></div>`;
           return;
         }
-        target.innerHTML = collections.slice(0, 6).map(entry => `
+        target.innerHTML = collections.slice(0, 6).map(입구 => `
           <article class="trip-archive-line">
             <div class="trip-archive-topline">
-              <strong>${entry.city}</strong>
-              <span>${entry.places.length} saved</span>
+              <strong>${입구.city}</strong>
+              <span>${입구.places.length} saved</span>
             </div>
-            <div class="trip-chip-row">${entry.places.slice(0,5).map(place => `<span class="trip-mini-chip">${place}</span>`).join('')}</div>
-            <a class="soft-btn" href="../?destination=${encodeURIComponent(entry.city)}">Plan from ${entry.city}</a>
+            <div class="trip-chip-row">${입구.places.slice(0,5).map(place => `<span class="trip-mini-chip">${place}</span>`).join('')}</div>
+            <a class="soft-btn" href="../?destination=${encodeURIComponent(입구.city)}">Plan from ${입구.city}</a>
           </article>`).join('');
       }
-      function renderSavedRouteArchive(saved, recent, shared){
-        const target = $('savedRouteCollections');
+      function renderSaved루트Archive(saved, recent, shared){
+        const target = $('saved루트Collections');
         if (!target) return;
         const groups = [...saved, ...recent, ...shared].reduce((acc, item) => {
           const city = String(item.destination || 'Other').trim() || 'Other';
@@ -1148,22 +1148,22 @@
         }, {});
         const rows = Object.entries(groups).sort((a,b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
         if (!rows.length) {
-          target.innerHTML = `<div class="trip-archive-empty"><strong>No route archive yet</strong><span>Save or reopen a trip and city collections will appear here automatically.</span></div>`;
+          target.innerHTML = `<div class="trip-archive-empty"><strong>No 루트 archive yet</strong><span>Save or reopen a trip and city collections will appear here automatically.</span></div>`;
           return;
         }
         target.innerHTML = rows.slice(0, 6).map(([city, items]) => {
           const latest = sortItems(items)[0];
-          const label = latest?.planData?.vibe || latest?.duration || 'Route base';
+          const label = latest?.planData?.vibe || latest?.duration || '시작 기준';
           const loop = window.RyokoApp.getCityLoopData(city) || {};
           return `
             <article class="trip-archive-line">
               <div class="trip-archive-topline">
                 <strong>${city}</strong>
-                <span>${items.length} route${items.length > 1 ? 's' : ''}</span>
+                <span>${items.length} 루트${items.length > 1 ? 's' : ''}</span>
               </div>
-              <p class="trip-archive-copy">${getMetaSummary(latest) || 'A reusable route base for this city.'}</p>
+              <p class="trip-archive-copy">${getMetaSummary(latest) || 'A reusable 시작 기준 for this city.'}</p>
               <div class="trip-chip-row">${items.slice(0,4).map(item => `<span class="trip-mini-chip">${item.title || label}</span>`).join('')}</div>
-              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">Open latest</a><a class="ghost-btn" href="../${loop.guide || `city/${city.toLowerCase()}.html`}">City guide</a><a class="ghost-btn" href="../${loop.example || loop.guide || `city/${city.toLowerCase()}.html`}">샘플 보기</a></div>
+              <div class="card-actions"><a class="soft-btn" href="${shareUrl(latest)}">최근 여행 열기</a><a class="ghost-btn" href="../${loop.guide || `city/${city.toLowerCase()}.html`}">도시 가이드</a><a class="ghost-btn" href="../${loop.example || loop.guide || `city/${city.toLowerCase()}.html`}">샘플 보기</a></div>
             </article>`;
         }).join('');
       }
@@ -1182,8 +1182,8 @@
         const target = $('cityCollectionsGrid');
         if (!target) return;
         const all = [...saved, ...recent, ...shared];
-        const placeCollections = (window.RyokoStorage.getSavedPlaceCollections?.() || []).reduce((acc, entry) => {
-          acc[String(entry.city || '').trim().toLowerCase()] = entry.places || [];
+        const placeCollections = (window.RyokoStorage.getSavedPlaceCollections?.() || []).reduce((acc, 입구) => {
+          acc[String(입구.city || '').trim().toLowerCase()] = 입구.places || [];
           return acc;
         }, {});
         const groups = all.reduce((acc, item) => {
@@ -1207,7 +1207,7 @@
             <article class="city-collection-card info-card">
               <div class="city-collection-cover"><img src="${imgMap[city] || '../assets/images/hero/planner-preview.jpg'}" alt="${city}"></div>
               <div class="city-collection-body">
-                <div class="trip-card-topline"><div class="meta">${city}</div><div class="trip-card-date">${items.length} ${langCopy().collectionRoutes}</div></div>
+                <div class="trip-card-topline"><div class="meta">${city}</div><div class="trip-card-date">${items.length} ${langCopy().collection루트s}</div></div>
                 <h3 class="card-title">${latest?.title || city}</h3>
                 <p class="card-copy">${collectionNote(items)}</p>
                 <div class="trip-chip-row">
@@ -1215,7 +1215,7 @@
                   ${places.length ? `<span class="trip-mini-chip">${places.length} ${langCopy().collectionPlaces}</span>` : ''}
                 </div>
                 ${rhythmMarkup(city, 'trip-rhythm-inline-soft')}
-                ${visitEntryMarkup(city, 'trip-entry-inline-soft')}
+                ${visit입구Markup(city, 'trip-입구-inline-soft')}
                 <div class="city-collection-stack">
                   <div class="city-collection-snippet"><strong>${latest?.title || city}</strong><span>${getMetaSummary(latest) || ''}</span></div>
                   ${places.length ? `<div class="city-collection-places">${places.slice(0,4).map(place => `<span class="trip-mini-chip">${place}</span>`).join('')}</div>` : ''}
@@ -1302,7 +1302,7 @@
           },
           Seoul: {
             ko:'서울은 동네 대비를 더 읽을수록 저장한 루트가 선명해집니다. 강한 구역과 느슨한 포켓을 같이 보세요.',
-            en:'Seoul gets clearer when the saved route keeps one stronger district beside one looser pocket.',
+            en:'Seoul gets clearer when the saved 루트 keeps one stronger district beside one looser pocket.',
             ja:'ソウルは強い地区とゆるいポケットを一緒に見るほど、保存したルートがはっきりします。',
             zhHant:'首爾在一個強區域旁邊留一個鬆一點的 pocket 時，保存下來的路線會更清楚。'
           },
@@ -1320,7 +1320,7 @@
           },
           Taipei: {
             ko:'타이베이는 밤 공기와 식사 리듬을 같이 읽을수록 저장한 루트가 더 살아납니다.',
-            en:'Taipei becomes more alive when the saved route keeps the night air and food rhythm together.',
+            en:'Taipei becomes more alive when the saved 루트 keeps the night air and food rhythm together.',
             ja:'台北は夜の空気と食のリズムを一緒に読むほど、保存したルートが生きてきます。',
             zhHant:'台北在把夜晚空氣和吃的節奏一起讀進去時，保存下來的路線會更有生命。'
           },
@@ -1332,13 +1332,13 @@
           },
           Osaka: {
             ko:'오사카는 많이 넣기보다 식사 리듬과 한 번의 quieter pocket을 같이 남길 때 저장한 루트가 훨씬 잘 남습니다.',
-            en:'Osaka usually keeps its value longer when the saved route protects meal rhythm plus one quieter pocket.',
+            en:'Osaka usually keeps its value longer when the saved 루트 protects meal rhythm plus one quieter pocket.',
             ja:'大阪は食のリズムと静かなポケットをひとつ残すほうが、保存したルートが長く生きます。',
             zhHant:'大阪比較適合把吃的節奏和一個安靜 pocket 一起保住，保存下來的路線會更耐用。'
           },
           Sapporo: {
             ko:'삿포로는 블록 수를 줄이고 따뜻한 식사와 짧은 밤 장면 하나를 남길 때 다시 열어보기 좋은 베이스가 됩니다.',
-            en:'Sapporo becomes a better reopenable base when wide blocks are reduced and one warm meal plus one short night scene carry the trip.',
+            en:'Sapporo becomes a better reopenable 기준 when wide blocks are reduced and one warm meal plus one short night scene carry the trip.',
             ja:'札幌は歩くブロック数を減らし、温かい食事と短い夜景を一つ残すほうが、また開きやすいベースになります。',
             zhHant:'札幌更適合減少大區塊步行，留下一頓溫暖晚餐和一個短夜景，之後也更容易重新打開。'
           },
@@ -1356,7 +1356,7 @@
           },
           Jeju: {
             ko:'제주는 stop 수보다 이동과 날씨 대응이 중요해서, 풍경 창과 쉬는 시간을 같이 남길수록 저장한 루트가 더 강해집니다.',
-            en:'Jeju usually gets stronger when the saved route protects scenery windows and recovery time rather than adding more stops.',
+            en:'Jeju usually gets stronger when the saved 루트 protects scenery windows and recovery time rather than adding more stops.',
             ja:'済州はスポット数より移動と天気対応が重要なので、景色の窓と休む時間を残すほど保存したルートが強くなります。',
             zhHant:'濟州比起再加停點，更適合保留風景窗口和休息時間，這樣保存下來的路線會更強。'
           },
@@ -1373,9 +1373,9 @@
             zhHant:'Macau 比較適合把老街和短夜景收尾分開保留，這樣不論保存或延伸到下一分支都更順。'
           }
         };
-        const entry = map[city];
-        if (!entry) return '';
-        return entry[lang] || entry.en;
+        const 입구 = map[city];
+        if (!입구) return '';
+        return 입구[lang] || 입구.en;
       }
       function tripLoopUi(){
         return window.RyokoApp.lang === 'ko' ? {
@@ -1388,8 +1388,8 @@
           eyebrow:'city-first loop', title:'從已保存的路線，挑下一步要讀哪座城市', related:'適合延伸的下一個分支', sameGuide:'同城市 guide', sameExample:'同城市 example', neighborhood:'讀鄰里精選', planAgain:'再微調一次', branchNote:'以這次保存路線的調性為準，先把同城市讀得更深，再一起打開下一座城市分支。',
           whySame:'把同城市的鄰里層次再讀深一點。', whyExample:'比較範例路線與現在節奏的密度差。', whyNeighborhood:'重新看一次支撐這條路線的鄰里邏輯。', whyBranch:'自然延伸到調性相近的下一座城市。'
         } : {
-          eyebrow:'city-first loop', title:'Use your saved route to choose the next city read', related:'Next branches that fit this tone', sameGuide:'Same-city guide', sameExample:'Same-city example', neighborhood:'Read neighborhood picks', planAgain:'Tune it again', branchNote:'Use the tone of this saved route to reopen the same city more deeply, then branch into the next fitting city.',
-          whySame:'Read the same city through a deeper neighborhood layer.', whyExample:'Compare your current density against the example route.', whyNeighborhood:'Re-open the neighborhood logic supporting this route.', whyBranch:'Branch naturally into a city with a matching tone.'
+          eyebrow:'city-first loop', title:'Use your saved 루트 to choose the next city read', related:'Next branches that fit this tone', sameGuide:'Same-도시 가이드', sameExample:'Same-city example', neighborhood:'Read neighborhood picks', planAgain:'Tune it again', branchNote:'Use the tone of this saved 루트 to reopen the same city more deeply, then branch into the next fitting city.',
+          whySame:'Read the same city through a deeper neighborhood layer.', whyExample:'Compare your current density against the example 루트.', whyNeighborhood:'Re-open the neighborhood logic supporting this 루트.', whyBranch:'Branch naturally into a city with a matching tone.'
         };
       }
       function tripSignals(item){
@@ -1448,7 +1448,7 @@
               <span class="trip-mini-chip">${meta.tips} tips</span>
             </div>
             ${rhythmMarkup(item.destination, 'trip-rhythm-inline-soft')}
-            ${visitEntryMarkup(item.destination, 'trip-entry-inline-soft')}
+            ${visit입구Markup(item.destination, 'trip-입구-inline-soft')}
             <div class="shared-spotlight-note">
               <strong>${stageTitle}</strong>
               <span>${cityLoopBranchNote(item.destination) || (item.importedFromLink ? 'It came in through a shared link, so saving it here keeps the city loop easy to reopen later.' : 'Shared trips get stronger when you can save them, compare them, and branch into your own city-first version.')}</span>
@@ -1456,7 +1456,7 @@
             <div class="loop-stage-grid loop-stage-grid-compact loop-stage-grid-trips">
               <article class="loop-stage-card loop-stage-city"><span class="loop-stage-step">01</span><span class="mini-label">Shared</span><strong>${lang === 'ko' ? '공유 링크 읽기' : lang === 'ja' ? '共有リンクを読む' : lang === 'zhHant' ? '閱讀分享連結' : 'Read shared link'}</strong><p>${lang === 'ko' ? '원본 컨텍스트를 먼저 확인합니다.' : lang === 'ja' ? '元の文脈を先に確認します。' : lang === 'zhHant' ? '先確認原始脈絡。' : 'Start with the original context.'}</p></article>
               <button class="loop-stage-card loop-stage-planner loop-stage-card-button" type="button" data-save="${item.id}"><span class="loop-stage-step">02</span><span class="mini-label">Vault</span><strong>${lang === 'ko' ? '보관함에 저장' : lang === 'ja' ? '보관함 に保存' : lang === 'zhHant' ? '存進 보관함' : 'Save to 보관함'}</strong><p>${lang === 'ko' ? '나중에 다시 열 수 있는 내 흐름으로 넘깁니다.' : lang === 'ja' ? 'あとで開き直せる自分の流れへ渡します。' : lang === 'zhHant' ? '把它送進之後可再打開的個人循環。' : 'Move it into a loop you can reopen later.'}</p></button>
-              <button class="loop-stage-card loop-stage-example loop-stage-card-button" type="button" data-my-version="${item.id}"><span class="loop-stage-step">03</span><span class="mini-label">Version</span><strong>${lang === 'ko' ? '내 버전 만들기' : lang === 'ja' ? '自分版にする' : lang === 'zhHant' ? '做成我的版本' : 'Make my version'}</strong><p>${lang === 'ko' ? '공유 루트를 내 취향의 출발점으로 바꿉니다.' : lang === 'ja' ? '共有ルートを自分の出発点へ変えます。' : lang === 'zhHant' ? '把分享路線改成你的起點版本。' : 'Turn the shared route into your own base.'}</p></button>
+              <button class="loop-stage-card loop-stage-example loop-stage-card-button" type="button" data-my-version="${item.id}"><span class="loop-stage-step">03</span><span class="mini-label">Version</span><strong>${lang === 'ko' ? '내 버전 만들기' : lang === 'ja' ? '自分版にする' : lang === 'zhHant' ? '做成我的版本' : 'Make my version'}</strong><p>${lang === 'ko' ? '공유 루트를 내 취향의 출발점으로 바꿉니다.' : lang === 'ja' ? '共有ルートを自分の出発点へ変えます。' : lang === 'zhHant' ? '把分享路線改成你的起點版本。' : 'Turn the shared 루트 into your own 기준.'}</p></button>
               <a class="loop-stage-card loop-stage-result" href="../${city.guide}"><span class="loop-stage-step">04</span><span class="mini-label">City</span><strong>${lang === 'ko' ? `${city.name} 다시 읽기` : lang === 'ja' ? `${city.name} を読み直す` : lang === 'zhHant' ? `重讀 ${city.name}` : `Re-read ${city.name}`}</strong><p>${lang === 'ko' ? '같은 도시 결을 다시 붙여 맥락을 선명하게 만듭니다.' : lang === 'ja' ? '同じ都市の層をもう一度つなぎ、文脈をはっきりさせます。' : lang === 'zhHant' ? '重新接回同城市層次，讓脈絡更清楚。' : 'Reconnect the same city layer so the context feels clearer.'}</p></a>
             </div>
             <div class="card-actions">
@@ -1465,7 +1465,7 @@
               <button class="soft-btn" data-save="${item.id}">${langCopy().saveAsMine}</button>
               <button class="ghost-btn" data-my-version="${item.id}">${langCopy().makeMyVersion}</button>
               <a class="soft-btn" href="../${city.guide}">Read ${city.name}</a>
-              <a class="ghost-btn" href="../${city.example || city.guide}">Read sample</a>
+              <a class="ghost-btn" href="../${city.example || city.guide}">Read 샘플</a>
             </div>
           </div>`;
       }
@@ -1474,40 +1474,40 @@
         if (lang === 'ko') return {
           open:'저장한 여행 카드 열기', save:'내 여행으로 저장', duplicate:'내 버전 만들기', read:'도시 읽기', snapshot:'보관 카드 요약', days:'일수', tips:'팁', checklist:'체크', updated:'업데이트',
           insight:'저장할 이유', why:'왜 이 흐름이 좋아요', rain:'비가 오면', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'다음 읽기 가지',
-          emptyDay:'아직 day preview가 없습니다.', emptyTip:'아직 저장된 local tip이 없습니다.', sample:'샘플 보기 route', compare:'샘플과 밀도 차이를 비교해 보세요.', imported:'공유받은 여행이 이제 내 보관함 안에서 다시 열립니다.', vaulted:'이 여행은 보관함 안에 저장되어 다시 열고, 다듬고, 공유할 수 있습니다.',
+          emptyDay:'아직 day preview가 없습니다.', emptyTip:'아직 저장된 local tip이 없습니다.', 샘플:'샘플 루트', compare:'샘플과 밀도 차이를 비교해 보세요.', imported:'공유받은 여행이 이제 내 보관함 안에서 다시 열립니다.', vaulted:'이 여행은 보관함 안에 저장되어 다시 열고, 다듬고, 공유할 수 있습니다.',
           package:'Saved 저장하기 좋은 여행 흐름', packageDesc:'이 카드는 단순 일정표가 아니라 다시 읽고 수정하고 공유할 수 있는 도시별 여행 베이스입니다.', next:'Next action'
         };
         if (lang === 'ja') return {
           open:'保存した旅カードを開く', save:'自分の旅に保存', duplicate:'自分版を作る', read:'都市を読む', snapshot:'保存カードの要約', days:'日数', tips:'ヒント', checklist:'チェック', updated:'更新',
           insight:'保存する理由', why:'왜 이 흐름이 좋아요', rain:'비가 오면', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'次に読む枝',
-          emptyDay:'まだ day preview はありません。', emptyTip:'まだ local tip は保存されていません。', sample:'샘플 보기 route', compare:'サンプルと密度の差を比べてください。', imported:'共有された旅程を自分の保存棚で開き直せます。', vaulted:'この旅は 보관함 に保存され、開き直し・調整・共有ができます。',
+          emptyDay:'まだ day preview はありません。', emptyTip:'まだ local tip は保存されていません。', 샘플:'샘플 루트', compare:'サンプルと密度の差を比べてください。', imported:'共有された旅程を自分の保存棚で開き直せます。', vaulted:'この旅は 보관함 に保存され、開き直し・調整・共有ができます。',
           package:'Saved 저장하기 좋은 여행 흐름', packageDesc:'このカードは単なる旅程表ではなく、読み直し、調整し、共有できる都市別の旅ベースです。', next:'Next action'
         };
         if (lang === 'zhHant') return {
           open:'打開已存旅行卡', save:'存成我的旅程', duplicate:'建立我的版本', read:'讀城市', snapshot:'保存卡摘要', days:'天數', tips:'提示', checklist:'清單', updated:'更新',
           insight:'值得保存的理由', why:'왜 이 흐름이 좋아요', rain:'비가 오면', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'下一個閱讀分支',
-          emptyDay:'目前還沒有 day preview。', emptyTip:'目前還沒有保存 local tip。', sample:'샘플 보기 route', compare:'把它和 sample 的節奏密度比較看看。', imported:'收到的分享旅程現在可以在你的保存庫重新打開。', vaulted:'這趟旅程已在 보관함 裡，可重新打開、微調與分享。',
+          emptyDay:'目前還沒有 day preview。', emptyTip:'目前還沒有保存 local tip。', 샘플:'샘플 루트', compare:'把它和 샘플 的節奏密度比較看看。', imported:'收到的分享旅程現在可以在你的保存庫重新打開。', vaulted:'這趟旅程已在 보관함 裡，可重新打開、微調與分享。',
           package:'Saved 저장하기 좋은 여행 흐름', packageDesc:'這張卡不是單純行程表，而是可以重讀、修改、分享的城市旅行底稿。', next:'Next action'
         };
         return {
           open:'Open saved trip card', save:'Save to 보관함', duplicate:'Make my version', read:'Read the city', snapshot:'Saved card snapshot', days:'Days', tips:'Tips', checklist:'Checklist', updated:'Updated',
           insight:'Why it is worth saving', why:'왜 이 흐름이 좋아요', rain:'비가 오면', slow:'If you want a slower day', swap:'One thing to swap', preview:'Day rhythm preview', local:'Local notes', branch:'Next reading branches',
-          emptyDay:'No day preview available yet.', emptyTip:'No extra local tips stored on this trip yet.', sample:'샘플 보기 route', compare:'Use the sample to compare pace against this saved trip.', imported:'This shared itinerary can now reopen inside your own trip vault.', vaulted:'This trip already lives inside 보관함, so it is easy to reopen, tune, or share.',
-          package:'Saved 저장하기 좋은 여행 흐름', packageDesc:'This card is not just an itinerary. It is a reusable city base you can reread, tune, and share.', next:'Next action'
+          emptyDay:'No day preview available yet.', emptyTip:'No extra local tips stored on this trip yet.', 샘플:'샘플 루트', compare:'Use the 샘플 to compare pace against this saved trip.', imported:'This shared itinerary can now reopen inside your own trip vault.', vaulted:'This trip already lives inside 보관함, so it is easy to reopen, tune, or share.',
+          package:'Saved 저장하기 좋은 여행 흐름', packageDesc:'This card is not just an itinerary. It is a reusable city 기준 you can reread, tune, and share.', next:'Next action'
         };
       }
       function storedInsightCards(item){
         const ui = detailUiCopy();
         const data = item.planData || {};
-        const routeNote = cityLoopBranchNote(item.destination) || getMetaSummary(item) || ui.packageDesc;
+        const 루트Note = cityLoopBranchNote(item.destination) || getMetaSummary(item) || ui.packageDesc;
         const rain = data.rainNote || data.ifRain || data.rainyDay || data.weatherNote || '';
         const slow = data.slowerDay || data.slowNote || data.paceNote || '';
         const swap = data.swap || data.oneThingToSwap || data.swapNote || '';
         const rows = [
-          ['01', ui.why, routeNote],
-          ['02', ui.rain, rain || routeNote],
-          ['03', ui.slow, slow || (data.pace ? data.pace + ' · ' + routeNote : routeNote)],
-          ['04', ui.swap, swap || (data.bestFor || data.vibe || routeNote)]
+          ['01', ui.why, 루트Note],
+          ['02', ui.rain, rain || 루트Note],
+          ['03', ui.slow, slow || (data.pace ? data.pace + ' · ' + 루트Note : 루트Note)],
+          ['04', ui.swap, swap || (data.bestFor || data.vibe || 루트Note)]
         ];
         return '<div class="stored-insight-grid">' + rows.map(row => '<article class="stored-insight-card"><span>' + row[0] + '</span><strong>' + row[1] + '</strong><p>' + row[2] + '</p></article>').join('') + '</div>';
       }
@@ -1523,7 +1523,7 @@
         const ui = detailUiCopy();
         const raw = Array.isArray(data.checklist) ? data.checklist.slice(0,5) : [];
         if (!raw.length) return '';
-        return '<div class="stored-checklist"><strong>' + ui.next + '</strong>' + raw.map(entry => '<span>' + entry + '</span>').join('') + '</div>';
+        return '<div class="stored-checklist"><strong>' + ui.next + '</strong>' + raw.map(입구 => '<span>' + 입구 + '</span>').join('') + '</div>';
       }
       function openDetailModal(item, mode){
         const modal = $('tripDetailModal');
@@ -1560,7 +1560,7 @@
           <div class="trip-detail-grid stored-trip-grid">
             <article class="info-card trip-detail-panel stored-trip-panel wide"><h3>${ui.preview}</h3><div class="trip-detail-day-list">${storedDayPreview(days)}</div>${storedChecklist(data)}</article>
             <article class="info-card trip-detail-panel stored-trip-panel"><h3>${ui.local}</h3>${tips ? `<ul class="trip-detail-list">${tips}</ul>` : `<p class="card-copy">${ui.emptyTip}</p>`}</article>
-            <article class="info-card trip-detail-panel stored-trip-panel"><h3>${ui.branch}</h3><div class="trip-detail-branch-list"><a class="trip-detail-branch" href="../${city.example || city.guide}"><strong>${city.name} · ${ui.sample}</strong><span>${ui.compare}</span></a>${related.map(rel => `<a class="trip-detail-branch" href="../${rel.guide}"><strong>${rel.name}</strong><span>${rel.vibe} · ${cityLoopBranchNote(rel.name) || 'A fitting next city read.'}</span></a>`).join('')}</div></article>
+            <article class="info-card trip-detail-panel stored-trip-panel"><h3>${ui.branch}</h3><div class="trip-detail-branch-list"><a class="trip-detail-branch" href="../${city.example || city.guide}"><strong>${city.name} · ${ui.샘플}</strong><span>${ui.compare}</span></a>${related.map(rel => `<a class="trip-detail-branch" href="../${rel.guide}"><strong>${rel.name}</strong><span>${rel.vibe} · ${cityLoopBranchNote(rel.name) || 'A fitting next city read.'}</span></a>`).join('')}</div></article>
           </div>`;
         modal.classList.remove('hidden');
         modal.setAttribute('aria-hidden', 'false');
@@ -1615,29 +1615,29 @@
           msg.textContent = langCopy().linkCopied;
         }));
         document.querySelectorAll('[data-save-public]').forEach(btn => btn.addEventListener('click', () => {
-          const entry = publicRouteDesk.find(x => x.key === btn.dataset.savePublic);
-          if (!entry) return;
-          window.RyokoStorage.saveTrip(publicRoutePayload(entry));
+          const 입구 = public루트데스크.find(x => x.key === btn.dataset.savePublic);
+          if (!입구) return;
+          window.RyokoStorage.saveTrip(public루트Payload(입구));
           const msg = $('sharedImportMessage');
-          msg.textContent = langCopy().publicDeskSaved;
+          msg.textContent = langCopy().public데스크Saved;
           activeTab('saved');
           render();
         }));
         document.querySelectorAll('[data-save-edit]').forEach(btn => btn.addEventListener('click', () => {
-          const entry = operatingEdits.find(x => x.key === btn.dataset.saveEdit);
-          if (!entry) return;
-          window.RyokoStorage.saveTrip(operatingEditPayload(entry));
+          const 입구 = operatingEdits.find(x => x.key === btn.dataset.saveEdit);
+          if (!입구) return;
+          window.RyokoStorage.saveTrip(operatingEditPayload(입구));
           const msg = $('sharedImportMessage');
           msg.textContent = langCopy().editSaved;
           activeTab('saved');
           render();
         }));
         document.querySelectorAll('[data-save-club]').forEach(btn => btn.addEventListener('click', () => {
-          const entry = routeClubDesk.find(x => x.key === btn.dataset.saveClub);
-          if (!entry) return;
-          window.RyokoStorage.saveTrip(routeClubPayload(entry));
+          const 입구 = 루트Club데스크.find(x => x.key === btn.dataset.saveClub);
+          if (!입구) return;
+          window.RyokoStorage.saveTrip(루트ClubPayload(입구));
           const msg = $('sharedImportMessage');
-          msg.textContent = langCopy().routeClubSaved;
+          msg.textContent = langCopy().루트ClubSaved;
           activeTab('saved');
           render();
         }));
@@ -1668,13 +1668,13 @@
           main.innerHTML = `
             <span class="eyebrow">${langCopy().loopEmptyEyebrow || "No saved loop yet"}</span>
             <h3>${langCopy().loopEmptyTitle || "Build one trip, then the loop gets smarter"}</h3>
-            <p>${langCopy().loopEmptyDesc || "Save or reopen one trip, and 보관함 can suggest the next guide, sample, and entry route."}</p>
-            <div class="card-actions"><a class="primary-btn" href="../index.html#planner-start">${langCopy().loopOpen플래너 || "Start a new route"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
+            <p>${langCopy().loopEmptyDesc || "Save or reopen one trip, and 보관함 can suggest the next guide, 샘플, and 입구 루트."}</p>
+            <div class="card-actions"><a class="primary-btn" href="../index.html#planner-start">${langCopy().loopOpen플래너 || "Start a new 루트"}</a><a class="secondary-btn" href="../magazine/index.html">${langCopy().loopReadMagazine || "Read Magazine"}</a></div>`;
           side.innerHTML = `
             <h3>${langCopy().loopGoodStart || "Good starting points"}</h3>
             <div class="trip-loop-list">
-              <article><h4>${langCopy().loopTokyoGuide || "Tokyo guide"}</h4><p>${langCopy().loopTokyoGuideDesc || "Fast city, strong first route, and lots of branching options."}</p></article>
-              <article><h4>${langCopy().loopBusan샘플 보기 || "Busan sample"}</h4><p>${langCopy().loopBusan샘플 보기Desc || "Good for scenic pacing and mixed-age travel."}</p></article>
+              <article><h4>${langCopy().loopTokyoGuide || "Tokyo guide"}</h4><p>${langCopy().loopTokyoGuideDesc || "Fast city, strong first 루트, and lots of branching options."}</p></article>
+              <article><h4>${langCopy().loopBusan샘플 보기 || "Busan 샘플"}</h4><p>${langCopy().loopBusan샘플 보기Desc || "Good for scenic pacing and mixed-age travel."}</p></article>
             </div>`;
           return;
         }
@@ -1687,16 +1687,16 @@
           <h3>${current.name} · ${ui.title}</h3>
           <p>${summary}</p>
           <div class="loop-stage-grid loop-stage-grid-compact loop-stage-grid-trips">
-            <article class="loop-stage-card loop-stage-planner"><span class="loop-stage-step">01</span><span class="mini-label">Vault</span><strong>${lang === 'ko' ? '저장 루트 다시 열기' : lang === 'ja' ? '保存ルートを開き直す' : lang === 'zhHant' ? '重新打開已存路線' : 'Reopen saved route'}</strong><p>${lang === 'ko' ? '지금 보관된 흐름을 다시 기준점으로 잡습니다.' : lang === 'ja' ? '今保管している流れを基準点に戻します。' : lang === 'zhHant' ? '先回到目前保管的這條流。' : 'Use the route in your vault as the base again.'}</p></article>
+            <article class="loop-stage-card loop-stage-planner"><span class="loop-stage-step">01</span><span class="mini-label">Vault</span><strong>${lang === 'ko' ? '저장 루트 다시 열기' : lang === 'ja' ? '保存ルートを開き直す' : lang === 'zhHant' ? '重新打開已存路線' : 'Reopen saved 루트'}</strong><p>${lang === 'ko' ? '지금 보관된 흐름을 다시 기준점으로 잡습니다.' : lang === 'ja' ? '今保管している流れを基準点に戻します。' : lang === 'zhHant' ? '先回到目前保管的這條流。' : 'Use the 루트 in your vault as the 기준 again.'}</p></article>
             <a class="loop-stage-card loop-stage-city" href="../${current.guide}"><span class="loop-stage-step">02</span><span class="mini-label">City</span><strong>${lang === 'ko' ? '같은 도시 더 읽기' : lang === 'ja' ? '同じ都市を深く読む' : lang === 'zhHant' ? '再讀同一座城市' : 'Read the same city deeper'}</strong><p>${lang === 'ko' ? '도시 결을 다시 붙여 맥락을 더 또렷하게 만듭니다.' : lang === 'ja' ? '都市の層をつなぎ直して文脈をはっきりさせます。' : lang === 'zhHant' ? '重新接回城市層次，讓脈絡更清楚。' : 'Reconnect the city layer so the context sharpens again.'}</p></a>
-            <a class="loop-stage-card loop-stage-example" href="../${current.example}"><span class="loop-stage-step">03</span><span class="mini-label">Example</span><strong>${lang === 'ko' ? '샘플과 밀도 비교' : lang === 'ja' ? 'サンプルと密度を比べる' : lang === 'zhHant' ? '和範例比較密度' : 'Compare with the sample'}</strong><p>${lang === 'ko' ? '같은 도시의 기본 sample과 속도를 나란히 봅니다.' : lang === 'ja' ? '同じ都市の sample と速度感を見比べます。' : lang === 'zhHant' ? '把同城市 sample 和速度並排比對。' : 'Put the city sample beside it and compare pace.'}</p></a>
-            <a class="loop-stage-card loop-stage-result" href="../?destination=${encodeURIComponent(current.name)}"><span class="loop-stage-step">04</span><span class="mini-label">플래너</span><strong>${lang === 'ko' ? '다음 버전 정리' : lang === 'ja' ? '次の版を整える' : lang === 'zhHant' ? '整理下一版' : 'Shape the next version'}</strong><p>${lang === 'ko' ? '같은 도시 결을 유지한 채 다시 route를 다듬습니다.' : lang === 'ja' ? '同じ都市トーンを保ったまま route を整えます。' : lang === 'zhHant' ? '保留同城市調性，重整下一版 route。' : 'Refine the route while keeping the same city tone.'}</p></a>
+            <a class="loop-stage-card loop-stage-example" href="../${current.example}"><span class="loop-stage-step">03</span><span class="mini-label">Example</span><strong>${lang === 'ko' ? '샘플과 밀도 비교' : lang === 'ja' ? 'サンプルと密度を比べる' : lang === 'zhHant' ? '和範例比較密度' : 'Compare with the 샘플'}</strong><p>${lang === 'ko' ? '같은 도시의 기본 샘플과 속도를 나란히 봅니다.' : lang === 'ja' ? '同じ都市の 샘플 と速度感を見比べます。' : lang === 'zhHant' ? '把同城市 샘플 和速度並排比對。' : 'Put the city 샘플 beside it and compare pace.'}</p></a>
+            <a class="loop-stage-card loop-stage-result" href="../?destination=${encodeURIComponent(current.name)}"><span class="loop-stage-step">04</span><span class="mini-label">플래너</span><strong>${lang === 'ko' ? '다음 버전 정리' : lang === 'ja' ? '次の版を整える' : lang === 'zhHant' ? '整理下一版' : 'Shape the next version'}</strong><p>${lang === 'ko' ? '같은 도시 결을 유지한 채 다시 루트를 다듬습니다.' : lang === 'ja' ? '同じ都市トーンを保ったまま 루트 を整えます。' : lang === 'zhHant' ? '保留同城市調性，重整下一版 루트。' : 'Refine the 루트 while keeping the same city tone.'}</p></a>
           </div>
           <div class="trip-loop-destinations">
             <span class="trip-loop-chip">${current.name}</span>
             ${related.map(city => `<span class="trip-loop-chip">${city.name}</span>`).join('')}
           </div>
-          ${visitEntryMarkup(anchor.destination, 'trip-entry-inline-soft')}
+          ${visit입구Markup(anchor.destination, 'trip-입구-inline-soft')}
           <div class="trip-loop-list">
             <article>
               <h4>${ui.sameGuide}</h4>
@@ -1721,7 +1721,7 @@
         side.innerHTML = `
           <span class="eyebrow">${ui.related}</span>
           <h3>${current.name}</h3>
-          ${visitEntryMarkup(anchor.destination)}
+          ${visit입구Markup(anchor.destination)}
           <div class="trip-loop-list">
             ${related.map(city => `
               <article>
@@ -1769,11 +1769,11 @@
         renderCollections(saved, recent, shared);
         renderLibraryShelf(saved, recent, shared);
         renderSavedPlacesArchive();
-        renderSavedRouteArchive(saved, recent, shared);
-        renderPublicRouteDesk();
-        renderRouteClub();
+        renderSaved루트Archive(saved, recent, shared);
+        renderPublic루트데스크();
+        render루트Club();
         renderOperatingEdits();
-        renderExpansionTripsDesk(saved, recent, shared);
+        renderExpansionTrips데스크(saved, recent, shared);
         renderSharedSpotlight(shared);
         renderTripLoop(saved, recent, shared);
         renderCityCollections(saved, recent, shared);

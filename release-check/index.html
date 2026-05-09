@@ -26,12 +26,12 @@
     .release-kv .info-card{padding:16px}
     .release-kv strong{display:block;color:#15273a;font-size:13px;margin-bottom:4px}
     .release-kv span{color:#667085;font-size:14px;line-height:1.45}
-    .release-route-list,.release-check-list,.diagnostic-list{display:grid;gap:10px;margin-top:14px}
-    .release-route-item,.release-check-item,.diagnostic-item{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:18px;background:#fcfaf6;border:1px solid #ede6db}
-    .release-route-item .soft-btn,.release-route-item .ghost-btn{white-space:nowrap}
-    .release-route-copy{flex:1 1 auto}
-    .release-route-copy strong,.release-check-item strong,.diagnostic-item strong{display:block;color:#15273a;font-size:14px;margin-bottom:4px}
-    .release-route-copy p,.release-check-item p,.diagnostic-item p{margin:0;color:#667085;font-size:13px;line-height:1.5}
+    .release-루트-list,.release-check-list,.diagnostic-list{display:grid;gap:10px;margin-top:14px}
+    .release-루트-item,.release-check-item,.diagnostic-item{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:18px;background:#fcfaf6;border:1px solid #ede6db}
+    .release-루트-item .soft-btn,.release-루트-item .ghost-btn{white-space:nowrap}
+    .release-루트-copy{flex:1 1 auto}
+    .release-루트-copy strong,.release-check-item strong,.diagnostic-item strong{display:block;color:#15273a;font-size:14px;margin-bottom:4px}
+    .release-루트-copy p,.release-check-item p,.diagnostic-item p{margin:0;color:#667085;font-size:13px;line-height:1.5}
     .release-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
     .release-status{display:flex;align-items:center;gap:8px;font-weight:700;color:#15273a}
     .release-status-dot{width:10px;height:10px;border-radius:999px;background:#d0d5dd;display:inline-block}
@@ -73,7 +73,7 @@
               <span class="release-pill">Noindex</span>
             </div>
             <h1 class="release-check-title">Ryokoplan release sign-off</h1>
-            <p class="release-check-copy">Use this page after deploy to confirm the active build and quickly open the main product routes. This pass now reflects the v199 public surface cleanup: one focused mobile click-through, version confirmation, language comfort, share/save loop verification, and a clear decision on whether the build is ready to share.</p>
+            <p class="release-check-copy">Use this page after deploy to confirm the active build and quickly open the main product 루트s. This pass now reflects the v199 public surface cleanup: one focused mobile click-through, version confirmation, language comfort, share/save loop verification, and a clear decision on whether the build is ready to share.</p>
           </div>
           <div id="onlineStatus" class="release-status"><span class="release-status-dot"></span><span>Checking connection…</span></div>
         </div>
@@ -98,16 +98,16 @@
           <a class="ghost-btn" href="../whats-new/index.html" target="_blank" rel="noopener">Open Build notes</a>
           <button class="ghost-btn" id="clearLocalBtn" type="button">Clear local trip data</button>
           <button class="ghost-btn" id="copyReleaseReportTopBtn" type="button">Copy release report</button>
-          <button class="ghost-btn" id="openFeedbackDeskTopBtn" type="button">Send note</button>
+          <button class="ghost-btn" id="openFeedback데스크TopBtn" type="button">Send note</button>
           <button class="ghost-btn" id="resetBetaNoticeTopBtn" type="button">Reset beta notice</button>
           <button class="ghost-btn" id="resetFirstRunGuideTopBtn" type="button">Reset first-run guide</button>
           <button class="ghost-btn" id="resetStartPathTopBtn" type="button">Reset start-path memory</button>
           <button class="ghost-btn" id="resetReadingHistoryTopBtn" type="button">Reset reading history</button>
           <button class="ghost-btn" id="reset플래너DraftTopBtn" type="button">Reset planner draft</button>
-          <button class="ghost-btn" id="resetLatestRouteTopBtn" type="button">Reset latest route</button>
+          <button class="ghost-btn" id="resetLatest루트TopBtn" type="button">Reset latest 루트</button>
           <button class="ghost-btn" id="reset플래너ResumeTopBtn" type="button">Reset planner resume state</button>
           <button class="ghost-btn" id="resetQuickResumeTopBtn" type="button">Reset quick resume</button>
-          <button class="ghost-btn" id="resetEntryAssistTopBtn" type="button">Reset entry assist state</button>
+          <button class="ghost-btn" id="reset입구AssistTopBtn" type="button">Reset 입구 assist state</button>
         </div>
         <p class="release-inline-note">Tip: open this page after each upload and make sure the release value matches the zip you just deployed before sharing the build.</p>
         <section class="release-check-card" style="margin-top:18px">
@@ -117,12 +117,12 @@
           <div class="launch-acceptance-grid">
             <article class="launch-acceptance-card"><span class="mini-step">01</span><strong>Confirm build</strong><p><code>/version.json</code> should show v199 before judging any screen.</p></article>
             <article class="launch-acceptance-card"><span class="mini-step">02</span><strong>Read a city</strong><p>Home → Magazine → Kyoto or Tokyo should feel like editorial travel reading, not a dashboard.</p></article>
-            <article class="launch-acceptance-card"><span class="mini-step">03</span><strong>Build a route</strong><p>샘플 보기 → 플래너 → Result should create a route card that feels worth saving.</p></article>
+            <article class="launch-acceptance-card"><span class="mini-step">03</span><strong>Build a 루트</strong><p>샘플 보기 → 플래너 → Result should create a 루트 card that feels worth saving.</p></article>
             <article class="launch-acceptance-card"><span class="mini-step">04</span><strong>Save and return</strong><p>Save → 보관함 should reopen as a stored 저장하기 좋은 여행 흐름, not a plain list.</p></article>
           </div>
           <div class="release-actions">
             <a class="primary-btn" href="../magazine/index.html" target="_blank" rel="noopener">Start live QA at Magazine</a>
-            <a class="secondary-btn" href="../example/kyoto-2n3d-slow-trip.html" target="_blank" rel="noopener">Open Kyoto sample</a>
+            <a class="secondary-btn" href="../example/kyoto-2n3d-slow-trip.html" target="_blank" rel="noopener">Open Kyoto 샘플</a>
             <a class="ghost-btn" href="../my-trips/index.html" target="_blank" rel="noopener">Open 보관함</a>
           </div>
         </section>
@@ -147,43 +147,43 @@
 
       <div class="release-check-grid" style="margin-top:18px;">
         <section class="release-check-card">
-          <span class="eyebrow">Key routes</span>
+          <span class="eyebrow">Key 루트s</span>
           <h2 class="section-title" style="margin-top:8px;">Core loop links</h2>
-          <div class="release-route-list">
-            <div class="release-route-item">
-              <div class="release-route-copy"><strong>Home</strong><p>Confirm hero, hierarchy band, city atlas entry, the first city-to-route CTA, and that the floating utility stays hidden until it is actually useful.</p></div>
+          <div class="release-루트-list">
+            <div class="release-루트-item">
+              <div class="release-루트-copy"><strong>Home</strong><p>Confirm hero, hierarchy band, city atlas 입구, the first city-to-루트 CTA, and that the floating utility stays hidden until it is actually useful.</p></div>
               <a class="soft-btn" href="../" target="_blank" rel="noopener">Open</a>
             </div>
-            <div class="release-route-item">
-              <div class="release-route-copy"><strong>Magazine</strong><p>Check taxonomy band, atlas filters, release/expansion layers, article entry flow, and the utility swap/compact state plus smart visibility in the first fold.</p></div>
+            <div class="release-루트-item">
+              <div class="release-루트-copy"><strong>Magazine</strong><p>Check taxonomy band, atlas filters, release/expansion layers, article 입구 flow, and the utility swap/compact state plus smart visibility in the first fold.</p></div>
               <a class="soft-btn" href="../magazine/" target="_blank" rel="noopener">Open</a>
             </div>
-            <div class="release-route-item">
-              <div class="release-route-copy"><strong>City guide</strong><p>Use Tokyo as the baseline guide and verify the tone band, quicknav, and route handoff.</p></div>
+            <div class="release-루트-item">
+              <div class="release-루트-copy"><strong>도시 가이드</strong><p>Use Tokyo as the 기준line guide and verify the tone band, quicknav, and 루트 handoff.</p></div>
               <a class="soft-btn" href="../city/tokyo.html" target="_blank" rel="noopener">Open</a>
             </div>
-            <div class="release-route-item">
-              <div class="release-route-copy"><strong>샘플 보기 route</strong><p>Open one canonical sample and confirm the opener band plus route-start CTA.</p></div>
+            <div class="release-루트-item">
+              <div class="release-루트-copy"><strong>샘플 루트</strong><p>Open one canonical 샘플 and confirm the opener band plus 루트-start CTA.</p></div>
               <a class="soft-btn" href="../example/tokyo-3n4d-first-trip.html" target="_blank" rel="noopener">Open</a>
             </div>
-            <div class="release-route-item">
-              <div class="release-route-copy"><strong>Route start</strong><p>Jump directly into the route builder and confirm the core form loads with no missing helper errors.</p></div>
+            <div class="release-루트-item">
+              <div class="release-루트-copy"><strong>루트 start</strong><p>Jump directly into the 루트 builder and confirm the core form loads with no missing helper errors.</p></div>
               <a class="soft-btn" href="../#planner-start" target="_blank" rel="noopener">Open</a>
             </div>
-            <div class="release-route-item">
-              <div class="release-route-copy"><strong>보관함</strong><p>Verify saved/recent/shared shelves, expansion desk, route reopen actions, and that the floating utility stays out of the way until scrolling warrants it.</p></div>
+            <div class="release-루트-item">
+              <div class="release-루트-copy"><strong>보관함</strong><p>Verify saved/recent/shared shelves, expansion 데스크, 루트 reopen actions, and that the floating utility stays out of the way until scrolling warrants it.</p></div>
               <a class="soft-btn" href="../my-trips/" target="_blank" rel="noopener">Open</a>
             </div>
-            <div class="release-route-item">
-              <div class="release-route-copy"><strong>Campaign entry links</strong><p>Use one promo-style deep link to confirm the campaign entry bar, city/sample/route handoff, and tracking-friendly start flow.</p></div>
+            <div class="release-루트-item">
+              <div class="release-루트-copy"><strong>Campaign 입구 links</strong><p>Use one promo-style deep link to confirm the campaign 입구 bar, city/샘플/루트 handoff, and tracking-friendly start flow.</p></div>
               <div class="release-actions" style="margin-top:0;">
                 <a class="ghost-btn" href="../?campaign=beta-tokyo&start=city&city=Tokyo" target="_blank" rel="noopener">Tokyo city</a>
-                <a class="ghost-btn" href="../magazine/?campaign=beta-seoul&start=sample&city=Seoul" target="_blank" rel="noopener">Seoul sample</a>
-                <a class="ghost-btn" href="../?campaign=beta-osaka&start=route&city=Osaka" target="_blank" rel="noopener">Osaka route</a>
+                <a class="ghost-btn" href="../magazine/?campaign=beta-seoul&start=샘플&city=Seoul" target="_blank" rel="noopener">Seoul 샘플</a>
+                <a class="ghost-btn" href="../?campaign=beta-osaka&start=루트&city=Osaka" target="_blank" rel="noopener">Osaka 루트</a>
               </div>
             </div>
-            <div class="release-route-item">
-              <div class="release-route-copy"><strong>Trust pages</strong><p>Open privacy, terms, contact, and Build notes to confirm legal footer links and no broken styles.</p></div>
+            <div class="release-루트-item">
+              <div class="release-루트-copy"><strong>Trust pages</strong><p>Open privacy, terms, contact, and Build notes to confirm legal footer links and no broken styles.</p></div>
               <div class="release-actions" style="margin-top:0;">
                 <a class="ghost-btn" href="../privacy/" target="_blank" rel="noopener">Privacy</a>
                 <a class="ghost-btn" href="../terms/" target="_blank" rel="noopener">Terms</a>
@@ -200,9 +200,9 @@
             <h2 class="section-title" style="margin-top:8px;">Final sign-off comfort check</h2>
             <div class="release-check-list">
               <label class="release-check-item"><input type="checkbox" data-check="home"> <div><strong>Home reads correctly</strong><p>Hero, hierarchy band, atlas, and primary city-start CTA all render correctly.</p></div></label>
-              <label class="release-check-item"><input type="checkbox" data-check="magazine"> <div><strong>Magazine reads correctly</strong><p>Taxonomy, article cards, and atlas filters feel intact on desktop and mobile.</p></div></label>
-              <label class="release-check-item"><input type="checkbox" data-check="city-sample"> <div><strong>City → sample flow works</strong><p>Open a city, then a sample, then continue toward a route without broken links.</p></div></label>
-              <label class="release-check-item"><input type="checkbox" data-check="generate"> <div><strong>Route generate/fallback feedback works</strong><p>Button busy state, feedback panel, fallback explanation, and retry all look like product UI.</p></div></label>
+              <label class="release-check-item"><input type="checkbox" data-check="magazine"> <div><strong>Magazine reads correctly</strong><p>Taxonomy, article cards, and atlas filters feel intact on 데스크top and mobile.</p></div></label>
+              <label class="release-check-item"><input type="checkbox" data-check="city-샘플"> <div><strong>City → 샘플 flow works</strong><p>Open a city, then a 샘플, then continue toward a 루트 without broken links.</p></div></label>
+              <label class="release-check-item"><input type="checkbox" data-check="generate"> <div><strong>루트 generate/fallback feedback works</strong><p>Button busy state, feedback panel, fallback explanation, and retry all look like product UI.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="share-save"> <div><strong>Share / save / 보관함 loop works</strong><p>Saved and recent trips reopen, and share links look reasonable.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="pdf-mobile"> <div><strong>PDF / multilingual / small-screen comfort pass</strong><p>Open PDF once, switch KR / EN / JP / 繁體 once, then do one small-screen pass on Magazine, City, Result, Share, and 보관함. Confirm CTA buttons remain tappable, long labels wrap cleanly, and bottom dock spacing does not cover content.</p></div></label>
               <label class="release-check-item"><input type="checkbox" data-check="pwa"> <div><strong>PWA install / offline basics pass</strong><p>Check service worker registration, make sure install is available on a supported browser, and open the offline fallback once if needed.</p></div></label>
@@ -237,16 +237,16 @@
               <button class="ghost-btn" id="copySmokeBtn" type="button">Copy smoke results</button>
               <button class="ghost-btn" id="copyReleaseReportBtn" type="button">Copy release report</button>
               <button class="ghost-btn" id="reset플래너DraftBtn" type="button">Reset planner draft</button>
-              <button class="ghost-btn" id="resetLatestRouteBtn" type="button">Reset latest route</button>
+              <button class="ghost-btn" id="resetLatest루트Btn" type="button">Reset latest 루트</button>
               <button class="ghost-btn" id="reset플래너ResumeBtn" type="button">Reset planner resume state</button>
-              <button class="ghost-btn" id="openFeedbackDeskBtn" type="button">Send note</button>
+              <button class="ghost-btn" id="openFeedback데스크Btn" type="button">Send note</button>
             </div>
           </section>
 
           <section class="release-check-card">
             <span class="eyebrow">Telemetry inspector</span>
             <h2 class="section-title" style="margin-top:8px;">Recent launch events</h2>
-            <p class="release-check-copy">Events are stored locally on this browser after you interact with the live site. Use this to confirm page views, route generation, save/share actions, install signals, and fallback events without opening DevTools.</p>
+            <p class="release-check-copy">Events are stored locally on this browser after you interact with the live site. Use this to confirm page views, 루트 generation, save/share actions, install signals, and fallback events without opening DevTools.</p>
             <div class="release-kv" style="margin-top:14px;">
               <article class="info-card">
                 <strong>Event count</strong>
@@ -263,7 +263,7 @@
               <button class="ghost-btn" id="copyTelemetryBtn" type="button">Copy telemetry</button>
               <button class="ghost-btn" id="clearTelemetryBtn" type="button">Clear telemetry</button>
             </div>
-            <p class="release-inline-note">Tip: open the home page, generate one route, save once, share once, then come back here and confirm those events appear in the log.</p>
+            <p class="release-inline-note">Tip: open the home page, generate one 루트, save once, share once, then come back here and confirm those events appear in the log.</p>
           </section>
         </div>
       </div>
@@ -280,8 +280,8 @@
     const readingHistoryDismissKey = 'ryoko:reading-history-dismissed:v104';
     const plannerDraftKey = 'ryoko:planner-draft:v111';
     const plannerDraftDismissKey = 'ryoko:planner-draft-dismissed:v111';
-    const latestRouteSessionKey = 'ryoko:planner-last-result:v112';
-    const latestRouteDismissKey = 'ryoko:planner-last-result-dismissed:v112';
+    const latest루트SessionKey = 'ryoko:planner-last-result:v112';
+    const latest루트DismissKey = 'ryoko:planner-last-result-dismissed:v112';
     const startPathRecallDismissKey = 'ryoko:start-path-recall-dismissed:v102';
     const checkboxes = Array.from(document.querySelectorAll('[data-check]'));
     const telemetryStorageKey = 'ryoko:launch-event-log:v1';
@@ -351,12 +351,12 @@
       updateReleaseReportPreview();
     }
 
-    function resetLatestRoute(){
+    function resetLatest루트(){
       try {
-        localStorage.removeItem(latestRouteSessionKey);
-        localStorage.removeItem(latestRouteDismissKey);
+        localStorage.removeItem(latest루트SessionKey);
+        localStorage.removeItem(latest루트DismissKey);
       } catch {}
-      alert('Latest route session reset for this browser.');
+      alert('Latest 루트 session reset for this browser.');
       updateReleaseReportPreview();
     }
 
@@ -364,14 +364,14 @@
       try {
         localStorage.removeItem(plannerDraftKey);
         localStorage.removeItem(plannerDraftDismissKey);
-        localStorage.removeItem(latestRouteSessionKey);
-        localStorage.removeItem(latestRouteDismissKey);
+        localStorage.removeItem(latest루트SessionKey);
+        localStorage.removeItem(latest루트DismissKey);
       } catch {}
       alert('플래너 resume state reset for this browser.');
       updateReleaseReportPreview();
     }
 
-    function resetEntryAssistState(){
+    function reset입구AssistState(){
       try {
         localStorage.removeItem(betaDismissKey);
         localStorage.removeItem(firstRunGuideKey);
@@ -380,10 +380,10 @@
         localStorage.removeItem(quickResumeDismissKey);
         localStorage.removeItem(readingHistoryKey);
         localStorage.removeItem(readingHistoryDismissKey);
-        localStorage.removeItem(latestRouteSessionKey);
-        localStorage.removeItem(latestRouteDismissKey);
+        localStorage.removeItem(latest루트SessionKey);
+        localStorage.removeItem(latest루트DismissKey);
       } catch {}
-      alert('Entry assist state reset for this browser. Reload home or magazine to test the full first-run flow again.');
+      alert('입구 assist state reset for this browser. Reload home or magazine to test the full first-run flow again.');
       updateReleaseReportPreview();
     }
 
@@ -400,8 +400,8 @@
       try {
         localStorage.removeItem(readingHistoryKey);
         localStorage.removeItem(readingHistoryDismissKey);
-        localStorage.removeItem(latestRouteSessionKey);
-        localStorage.removeItem(latestRouteDismissKey);
+        localStorage.removeItem(latest루트SessionKey);
+        localStorage.removeItem(latest루트DismissKey);
       } catch {}
       alert('Reading history reset for this browser.');
       updateReleaseReportPreview();
@@ -607,10 +607,10 @@
           name: 'core loop extension-safe links',
           run: async () => {
             const city = await fetch('../city/tokyo.html', { cache:'no-store' });
-            const sample = await fetch('../example/tokyo-3n4d-first-trip.html', { cache:'no-store' });
-            return city.ok && sample.ok
-              ? { status:'pass', detail:'Canonical city and sample HTML routes resolve with explicit .html paths.' }
-              : { status:'fail', detail:'Canonical city or sample explicit HTML path did not resolve cleanly.' };
+            const 샘플 = await fetch('../example/tokyo-3n4d-first-trip.html', { cache:'no-store' });
+            return city.ok && 샘플.ok
+              ? { status:'pass', detail:'Canonical city and 샘플 HTML 루트s resolve with explicit .html paths.' }
+              : { status:'fail', detail:'Canonical city or 샘플 explicit HTML path did not resolve cleanly.' };
           }
         },
         {
@@ -704,11 +704,11 @@
           }
         },
         {
-          name: 'City guide shell',
+          name: '도시 가이드 shell',
           run: async () => {
             const text = await fetchText('../city/tokyo.html');
             const ok = /data-city-slug="tokyo"/i.test(text) && /id="cityPageRoot"/i.test(text);
-            return ok ? { status:'pass', detail:'Tokyo city guide shell and cityPageRoot are present through the explicit .html route.' } : { status:'fail', detail:'Tokyo city guide did not expose the expected city root markers.' };
+            return ok ? { status:'pass', detail:'Tokyo 도시 가이드 shell and cityPageRoot are present through the explicit .html 루트.' } : { status:'fail', detail:'Tokyo 도시 가이드 did not expose the expected city root markers.' };
           }
         },
         {
@@ -716,7 +716,7 @@
           run: async () => {
             const text = await fetchText('../example/tokyo-3n4d-first-trip.html');
             const ok = /data-example-slug="tokyo-3n4d-first-trip"/i.test(text) && /id="examplePageRoot"/i.test(text);
-            return ok ? { status:'pass', detail:'Canonical sample shell and example root are present through the explicit .html route.' } : { status:'fail', detail:'샘플 보기 shell loaded, but expected example markers were not found.' };
+            return ok ? { status:'pass', detail:'Canonical 샘플 shell and example root are present through the explicit .html 루트.' } : { status:'fail', detail:'샘플 보기 shell loaded, but expected example markers were not found.' };
           }
         },
         {
@@ -803,16 +803,16 @@
         readingHistoryDismissed: localStorage.getItem(readingHistoryDismissKey) === '1',
         plannerDraft: (() => { try { return JSON.parse(localStorage.getItem(plannerDraftKey) || 'null'); } catch { return null; } })(),
         plannerDraftDismissed: !!localStorage.getItem(plannerDraftDismissKey),
-        latestRouteSession: (() => { try { return JSON.parse(localStorage.getItem(latestRouteSessionKey) || 'null'); } catch { return null; } })(),
-        latestRouteDismissed: !!localStorage.getItem(latestRouteDismissKey),
-        latestRouteFresh: (() => { try { const item = JSON.parse(localStorage.getItem(latestRouteSessionKey) || 'null'); return !!(item && isFresh(item.savedAt, readingHistoryMaxAgeMs)); } catch { return false; } })(),
-        latestRouteAgeDays: (() => { try { const item = JSON.parse(localStorage.getItem(latestRouteSessionKey) || 'null'); return ageInDays(item && item.savedAt); } catch { return null; } })(),
+        latest루트Session: (() => { try { return JSON.parse(localStorage.getItem(latest루트SessionKey) || 'null'); } catch { return null; } })(),
+        latest루트Dismissed: !!localStorage.getItem(latest루트DismissKey),
+        latest루트Fresh: (() => { try { const item = JSON.parse(localStorage.getItem(latest루트SessionKey) || 'null'); return !!(item && isFresh(item.savedAt, readingHistoryMaxAgeMs)); } catch { return false; } })(),
+        latest루트AgeDays: (() => { try { const item = JSON.parse(localStorage.getItem(latest루트SessionKey) || 'null'); return ageInDays(item && item.savedAt); } catch { return null; } })(),
         plannerResumePriority: (() => {
           try {
             const draft = JSON.parse(localStorage.getItem(plannerDraftKey) || 'null');
-            const latest = JSON.parse(localStorage.getItem(latestRouteSessionKey) || 'null');
+            const latest = JSON.parse(localStorage.getItem(latest루트SessionKey) || 'null');
             const draftDismissed = !!(draft && draft.savedAt && localStorage.getItem(plannerDraftDismissKey) === draft.savedAt);
-            const latestDismissed = !!(latest && latest.savedAt && localStorage.getItem(latestRouteDismissKey) === latest.savedAt);
+            const latestDismissed = !!(latest && latest.savedAt && localStorage.getItem(latest루트DismissKey) === latest.savedAt);
             const draftFresh = !!(draft && isFresh(draft.savedAt, readingHistoryMaxAgeMs));
             const latestFresh = !!(latest && isFresh(latest.savedAt, readingHistoryMaxAgeMs));
             if (draftFresh && !draftDismissed && latestFresh && !latestDismissed) return new Date(latest.savedAt).getTime() >= new Date(draft.savedAt).getTime() ? 'latest' : 'draft';
@@ -823,7 +823,7 @@
             return 'none';
           }
         })(),
-        entryAssistPriority: (() => {
+        입구AssistPriority: (() => {
           try {
             if (localStorage.getItem(firstRunGuideKey) !== '1') return 'first-run-guide';
             const readingItem = JSON.parse(localStorage.getItem(readingHistoryKey) || 'null');
@@ -936,7 +936,7 @@
       }
     }
 
-    function openFeedbackDesk(){
+    function openFeedback데스크(){
       saveReleaseDraft();
       const params = new URLSearchParams({
         sourcePage: 'release-check',
@@ -957,20 +957,20 @@
     document.getElementById('copyReleaseReportTopBtn').addEventListener('click', copyReleaseReport);
     document.getElementById('copyLaunchVerdictBtn').addEventListener('click', copyLaunchVerdict);
     document.getElementById('copySupportPacketBtn').addEventListener('click', copySupportPacket);
-    document.getElementById('openFeedbackDeskBtn').addEventListener('click', openFeedbackDesk);
-    document.getElementById('openFeedbackDeskTopBtn').addEventListener('click', openFeedbackDesk);
+    document.getElementById('openFeedback데스크Btn').addEventListener('click', openFeedback데스크);
+    document.getElementById('openFeedback데스크TopBtn').addEventListener('click', openFeedback데스크);
     document.getElementById('resetBetaNoticeTopBtn').addEventListener('click', resetBetaNotice);
     document.getElementById('reset플래너DraftTopBtn').addEventListener('click', reset플래너Draft);
     document.getElementById('reset플래너DraftBtn').addEventListener('click', reset플래너Draft);
-    document.getElementById('resetLatestRouteTopBtn').addEventListener('click', resetLatestRoute);
-    document.getElementById('resetLatestRouteBtn').addEventListener('click', resetLatestRoute);
+    document.getElementById('resetLatest루트TopBtn').addEventListener('click', resetLatest루트);
+    document.getElementById('resetLatest루트Btn').addEventListener('click', resetLatest루트);
     document.getElementById('reset플래너ResumeTopBtn').addEventListener('click', reset플래너Resume);
     document.getElementById('reset플래너ResumeBtn').addEventListener('click', reset플래너Resume);
     document.getElementById('resetFirstRunGuideTopBtn').addEventListener('click', resetFirstRunGuide);
     document.getElementById('resetStartPathTopBtn').addEventListener('click', resetStartPathMemory);
     document.getElementById('resetReadingHistoryTopBtn').addEventListener('click', resetReadingHistory);
     document.getElementById('resetQuickResumeTopBtn').addEventListener('click', resetQuickResume);
-    document.getElementById('resetEntryAssistTopBtn').addEventListener('click', resetEntryAssistState);
+    document.getElementById('reset입구AssistTopBtn').addEventListener('click', reset입구AssistState);
     document.getElementById('reloadTelemetryBtn').addEventListener('click', renderTelemetry);
     document.getElementById('copyTelemetryBtn').addEventListener('click', copyTelemetry);
     document.getElementById('clearTelemetryBtn').addEventListener('click', clearTelemetry);
@@ -983,7 +983,7 @@
     window.addEventListener('online', renderOnlineStatus);
     window.addEventListener('offline', renderOnlineStatus);
     window.addEventListener('storage', event => {
-      if ([telemetryStorageKey, storageKey, startPathMemoryKey, startPathRecallDismissKey, quickResumeDismissKey, readingHistoryKey, readingHistoryDismissKey, plannerDraftKey, plannerDraftDismissKey, latestRouteSessionKey, latestRouteDismissKey, betaDismissKey, firstRunGuideKey].includes(event.key)) {
+      if ([telemetryStorageKey, storageKey, startPathMemoryKey, startPathRecallDismissKey, quickResumeDismissKey, readingHistoryKey, readingHistoryDismissKey, plannerDraftKey, plannerDraftDismissKey, latest루트SessionKey, latest루트DismissKey, betaDismissKey, firstRunGuideKey].includes(event.key)) {
         loadChecks();
         renderTelemetry();
         updateReleaseReportPreview();

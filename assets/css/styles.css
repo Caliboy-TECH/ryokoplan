@@ -8358,3 +8358,41 @@ body[data-page="whats-new"] .mobile-dock{
 
   body{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))!important;}
 }
+
+/* v212 Korean copy cleanup: keep labels readable and less broken on mobile */
+@media (max-width: 767px){
+  .meta,
+  .eyebrow,
+  .kicker,
+  .collection-kicker,
+  .section-kicker,
+  .chip,
+  .tag,
+  .soft-btn,
+  .ghost-btn,
+  .secondary-btn,
+  .primary-btn{
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+  }
+
+  .editorial-card p,
+  .guide-card p,
+  .entry-card p,
+  .route-entry-card p,
+  .city-card p,
+  .magazine-card p{
+    word-break:keep-all!important;
+    line-height:1.62!important;
+  }
+
+  .editorial-card h2,
+  .guide-card h2,
+  .entry-card h2,
+  .route-entry-card h2,
+  .city-card h2,
+  .magazine-card h2{
+    word-break:keep-all!important;
+    line-height:1.18!important;
+  }
+}
