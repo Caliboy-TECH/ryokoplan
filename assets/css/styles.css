@@ -8396,3 +8396,129 @@ body[data-page="whats-new"] .mobile-dock{
     line-height:1.18!important;
   }
 }
+
+/* v213 mobile dock safe-area stabilization */
+@media (max-width: 767px){
+  :root{
+    --ryoko-mobile-dock-height: 118px;
+    --ryoko-browser-safe-bottom: 92px;
+    --ryoko-total-safe-bottom: calc(var(--ryoko-mobile-dock-height) + var(--ryoko-browser-safe-bottom) + env(safe-area-inset-bottom, 0px));
+  }
+
+  body{
+    padding-bottom:var(--ryoko-total-safe-bottom)!important;
+    min-height:100svh!important;
+  }
+
+  main,
+  .page-shell,
+  .app-shell,
+  .planner-shell,
+  .magazine-shell,
+  .city-shell,
+  .content-shell{
+    padding-bottom:calc(var(--ryoko-total-safe-bottom) + 24px)!important;
+  }
+
+  .mobile-dock,
+  .bottom-dock,
+  .app-dock{
+    position:fixed!important;
+    left:50%!important;
+    right:auto!important;
+    bottom:calc(74px + env(safe-area-inset-bottom, 0px))!important;
+    transform:translateX(-50%)!important;
+    width:min(90vw, 400px)!important;
+    max-width:400px!important;
+    min-height:86px!important;
+    z-index:1200!important;
+    display:grid!important;
+    grid-template-columns:repeat(3, minmax(0, 1fr))!important;
+    align-items:center!important;
+    justify-items:center!important;
+    gap:0!important;
+    padding:10px 12px!important;
+    box-sizing:border-box!important;
+    border-radius:28px!important;
+    background:rgba(255,251,245,.92)!important;
+    backdrop-filter:blur(18px)!important;
+  }
+
+  .mobile-dock a,
+  .mobile-dock button,
+  .bottom-dock a,
+  .bottom-dock button,
+  .app-dock a,
+  .app-dock button{
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+    gap:5px!important;
+    margin:0!important;
+    padding:8px 4px!important;
+    box-sizing:border-box!important;
+  }
+
+  .mobile-dock .is-active,
+  .bottom-dock .is-active,
+  .app-dock .is-active{
+    border-radius:22px!important;
+  }
+
+  .mobile-dock span,
+  .mobile-dock small,
+  .bottom-dock span,
+  .bottom-dock small,
+  .app-dock span,
+  .app-dock small{
+    white-space:nowrap!important;
+    line-height:1.15!important;
+  }
+
+  .v206-result-card,
+  .v207-result-card,
+  [data-v206-generated-result],
+  [data-v207-generated-result],
+  .planner-result,
+  .route-result,
+  [data-planner-result],
+  [data-result]{
+    margin-bottom:calc(var(--ryoko-total-safe-bottom) + 48px)!important;
+    scroll-margin-bottom:var(--ryoko-total-safe-bottom)!important;
+  }
+
+  .city-cover-grid,
+  .magazine-photo-grid,
+  .cover-grid,
+  .photo-grid,
+  .home-photo-grid,
+  .editorial-photo-grid,
+  [class*="photo-grid"],
+  [class*="cover-grid"]{
+    margin-bottom:42px!important;
+  }
+
+  section:last-of-type,
+  article:last-of-type,
+  .editorial-card:last-of-type,
+  .guide-card:last-of-type,
+  .entry-card:last-of-type,
+  .city-card:last-of-type,
+  .magazine-card:last-of-type{
+    margin-bottom:calc(var(--ryoko-total-safe-bottom) + 36px)!important;
+  }
+}
+
+/* When Safari collapses the address bar, keep the dock from jumping too high on taller screens. */
+@media (max-width: 767px) and (min-height: 760px){
+  .mobile-dock,
+  .bottom-dock,
+  .app-dock{
+    bottom:calc(64px + env(safe-area-inset-bottom, 0px))!important;
+  }
+}

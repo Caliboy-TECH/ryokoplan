@@ -1,17 +1,17 @@
 {
-  "version": "v212",
-  "codename": "korean-copy-cleanup",
-  "headline": "Cleaned mixed-language Korean UI copy and softened public mobile labels.",
-  "focus": "Reduce awkward Route/Sample/Base/Desk mixed copy on Korean screens while preserving v211 mobile overlap fixes.",
-  "source": "ryokoplan_v211_mobile_overlap_fix_REUPLOAD.zip",
+  "version": "v213",
+  "codename": "mobile-dock-safe-area",
+  "headline": "Stabilized the mobile bottom dock so it covers less content on iPhone Safari.",
+  "focus": "Improve bottom dock placement, safe-area padding, and final-section spacing on mobile.",
+  "source": "ryokoplan_v212_korean_copy_cleanup.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Replaced visible mixed-language labels such as Route, Sample, Base, Desk with softer Korean-facing copy.",
-    "Kept v211 mobile overlap spacing and popup removal.",
-    "Added mobile text wrapping safeguards for Korean labels and cards.",
-    "No new feature added."
+    "Added stronger safe-area padding for iPhone Safari browser bars.",
+    "Rebalanced the bottom dock width, bottom offset, and inner tab spacing.",
+    "Added extra bottom margin to generated results and final cards.",
+    "Preserved v212 Korean copy cleanup and v211 overlap fix."
   ],
-  "release": "v212",
-  "status": "copy-polish"
+  "release": "v213",
+  "status": "mobile-dock-hotfix"
 }
