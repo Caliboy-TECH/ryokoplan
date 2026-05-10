@@ -8754,3 +8754,175 @@ body[data-page="whats-new"] .mobile-dock{
   }
 }
 
+
+
+/* v216 desktop planner layout fix */
+@media (min-width: 1024px){
+  body[data-page="planner"] .container{
+    max-width:1180px!important;
+    width:min(1180px, calc(100vw - 96px))!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  body[data-page="planner"] .page{
+    width:100%!important;
+  }
+
+  body[data-page="planner"] .planner-grid{
+    display:grid!important;
+    grid-template-columns:minmax(520px, 1.06fr) minmax(420px, .94fr)!important;
+    gap:28px!important;
+    align-items:start!important;
+    width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  body[data-page="planner"] .planner-shell,
+  body[data-page="planner"] .planner-card,
+  body[data-page="planner"] .planner-panel{
+    max-width:none!important;
+    width:100%!important;
+  }
+
+  body[data-page="planner"] .planner-route-desk{
+    display:grid!important;
+    grid-template-columns:minmax(0, .95fr) minmax(360px, 1.05fr)!important;
+    gap:22px!important;
+    align-items:stretch!important;
+    width:100%!important;
+    padding:20px!important;
+  }
+
+  body[data-page="planner"] .route-desk-copy{
+    min-width:0!important;
+  }
+
+  body[data-page="planner"] .route-desk-copy h2{
+    max-width:11.5em!important;
+    font-size:clamp(30px, 2.7vw, 42px)!important;
+    line-height:1.04!important;
+    word-break:keep-all!important;
+  }
+
+  body[data-page="planner"] .route-desk-copy p{
+    max-width:44ch!important;
+    font-size:15px!important;
+    line-height:1.68!important;
+    word-break:keep-all!important;
+  }
+
+  body[data-page="planner"] .route-desk-card-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2, minmax(160px, 1fr))!important;
+    gap:14px!important;
+    min-width:0!important;
+  }
+
+  body[data-page="planner"] .route-desk-card{
+    min-width:0!important;
+    min-height:184px!important;
+    border-radius:24px!important;
+  }
+
+  body[data-page="planner"] .route-desk-card-body{
+    left:16px!important;
+    right:16px!important;
+    bottom:16px!important;
+  }
+
+  body[data-page="planner"] .route-desk-card strong{
+    font-size:18px!important;
+    line-height:1.12!important;
+    letter-spacing:-.035em!important;
+    word-break:keep-all!important;
+  }
+
+  body[data-page="planner"] .route-desk-card small,
+  body[data-page="planner"] .route-desk-card em{
+    white-space:normal!important;
+    word-break:keep-all!important;
+  }
+
+  body[data-page="planner"] .result-hero-editorial{
+    display:grid!important;
+    grid-template-columns:minmax(0, .82fr) minmax(420px, 1.18fr)!important;
+    gap:24px!important;
+    align-items:stretch!important;
+  }
+
+  body[data-page="planner"] .result-editorial-visual{
+    min-height:520px!important;
+    border-radius:28px!important;
+  }
+
+  body[data-page="planner"] .result-quickfacts{
+    display:grid!important;
+    grid-template-columns:repeat(3, minmax(0, 1fr))!important;
+    gap:12px!important;
+  }
+
+  body[data-page="planner"] .result-fact-card{
+    min-width:0!important;
+    padding:16px!important;
+  }
+
+  body[data-page="planner"] .result-fact-card strong{
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+    font-size:14px!important;
+    line-height:1.5!important;
+  }
+
+  body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home{
+    grid-template-columns:minmax(0, 1fr) minmax(0, 1fr)!important;
+    gap:24px!important;
+    width:100%!important;
+  }
+
+  body[data-page="planner"] .hero.hero-magazine .cover-copy-column,
+  body[data-page="planner"] .hero.hero-magazine .cover-visual-column{
+    width:100%!important;
+    max-width:none!important;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1240px){
+  body[data-page="planner"] .container{
+    width:min(1040px, calc(100vw - 64px))!important;
+  }
+
+  body[data-page="planner"] .planner-grid{
+    grid-template-columns:1fr!important;
+    gap:22px!important;
+  }
+
+  body[data-page="planner"] .planner-route-desk{
+    grid-template-columns:1fr!important;
+  }
+
+  body[data-page="planner"] .route-desk-card-grid{
+    grid-template-columns:repeat(2, minmax(0, 1fr))!important;
+  }
+
+  body[data-page="planner"] .result-hero-editorial{
+    grid-template-columns:1fr!important;
+  }
+
+  body[data-page="planner"] .result-editorial-visual{
+    min-height:420px!important;
+  }
+}
+
+@media (min-width: 1440px){
+  body[data-page="planner"] .container{
+    max-width:1240px!important;
+    width:min(1240px, calc(100vw - 140px))!important;
+  }
+
+  body[data-page="planner"] .planner-grid{
+    grid-template-columns:minmax(620px, 1.08fr) minmax(470px, .92fr)!important;
+  }
+}
+

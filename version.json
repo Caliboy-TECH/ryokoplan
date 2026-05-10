@@ -1,17 +1,18 @@
 {
-  "version": "v215",
-  "codename": "desktop-home-symmetry-copy-cleanup",
-  "headline": "Desktop homepage symmetry fix and class-name recovery for the editorial home surface.",
-  "focus": "Repair broken homepage class names and rebalance desktop home layout.",
-  "source": "ryokoplan_v214_mobile_whitespace_regression_hotfix.zip",
+  "version": "v216",
+  "codename": "desktop-planner-layout-fix",
+  "headline": "Fixed the actual desktop planner surface: centered layout, wider right column, and safer two-column behavior.",
+  "focus": "Address the PC screenshot issue where the planner surface stayed left-weighted and the right column collapsed too narrow.",
+  "source": "ryokoplan_v215_desktop_home_symmetry_copy_cleanup.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Recovered broken homepage class names so existing CSS applies again.",
-    "Rebalanced desktop hero, cover desk, story ribbon, and launch cards.",
-    "Converted stacked hierarchy cards into a clear 3-column desktop grid.",
-    "Cleaned a few visible mixed-language home copy strings."
+    "Centered the planner page container on desktop.",
+    "Rebalanced planner/input and preview/result columns.",
+    "Prevented right-side route/result cards from collapsing into narrow vertical text strips.",
+    "Added mid-desktop fallback to one-column layout when the two-column layout would be cramped.",
+    "Cleaned a few visible Korean planner copy issues."
   ],
-  "release": "v215",
-  "status": "desktop-polish"
+  "release": "v216",
+  "status": "desktop-planner-hotfix"
 }
