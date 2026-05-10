@@ -1,17 +1,17 @@
 {
-  "version": "v214",
-  "codename": "mobile-whitespace-regression-hotfix",
-  "headline": "Removed the oversized blank gaps introduced by the v213 mobile safe-area patch.",
-  "focus": "Fix mobile whitespace regression while keeping the bottom dock usable on iPhone Safari.",
-  "source": "ryokoplan_v213_mobile_dock_safe_area.zip",
+  "version": "v215",
+  "codename": "desktop-home-symmetry-copy-cleanup",
+  "headline": "Desktop homepage symmetry fix and class-name recovery for the editorial home surface.",
+  "focus": "Repair broken homepage class names and rebalance desktop home layout.",
+  "source": "ryokoplan_v214_mobile_whitespace_regression_hotfix.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Removed giant bottom spacing from generic article:last-of-type mobile rules.",
-    "Moved safe-area breathing room back to the page level instead of inner cards.",
-    "Kept bottom dock stability while trimming excess internal whitespace.",
-    "Included a tiny homepage Korean copy cleanup."
+    "Recovered broken homepage class names so existing CSS applies again.",
+    "Rebalanced desktop hero, cover desk, story ribbon, and launch cards.",
+    "Converted stacked hierarchy cards into a clear 3-column desktop grid.",
+    "Cleaned a few visible mixed-language home copy strings."
   ],
-  "release": "v214",
-  "status": "mobile-hotfix"
+  "release": "v215",
+  "status": "desktop-polish"
 }

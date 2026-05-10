@@ -8632,3 +8632,125 @@ body[data-page="whats-new"] .mobile-dock{
   }
 }
 
+
+
+/* v215 desktop homepage symmetry + class recovery polish */
+@media (min-width: 1024px){
+  .hero.hero-magazine.cover-system-shell-home{
+    grid-template-columns:minmax(0, 1fr) minmax(0, 1fr)!important;
+    align-items:stretch!important;
+    gap:18px!important;
+  }
+
+  .hero.hero-magazine.cover-system-shell-home .cover-copy-column,
+  .hero.hero-magazine.cover-system-shell-home .cover-visual-column{
+    min-height:100%!important;
+  }
+
+  .hero.hero-magazine.cover-system-shell-home .cover-copy-column{
+    display:grid!important;
+    align-content:start!important;
+  }
+
+  .hero.hero-magazine.cover-system-shell-home .cover-visual-column{
+    display:grid!important;
+    align-content:stretch!important;
+  }
+
+  .hero.hero-magazine.cover-system-shell-home .hero-visual-grid{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    align-items:stretch!important;
+    height:100%!important;
+  }
+
+  .hero.hero-magazine.cover-system-shell-home .hero-visual-main,
+  .hero.hero-magazine.cover-system-shell-home .hero-visual-sub{
+    min-height:100%!important;
+    height:100%!important;
+  }
+
+  .hero.hero-magazine.cover-system-shell-home .route-card.editorial-badge{
+    right:18px!important;
+    left:auto!important;
+    bottom:18px!important;
+    max-width:320px!important;
+  }
+
+  .home-cover-desk .cover-desk-grid{
+    grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr)!important;
+    align-items:stretch!important;
+    gap:18px!important;
+  }
+
+  .home-cover-desk .cover-desk-side{
+    display:grid!important;
+    grid-template-rows:minmax(0,1fr) minmax(0,1fr)!important;
+    gap:18px!important;
+  }
+
+  .home-cover-desk .cover-story-card-large{
+    min-height:420px!important;
+  }
+
+  .home-cover-desk .cover-story-card-compact,
+  .home-cover-desk .dispatch-card{
+    min-height:201px!important;
+  }
+
+  .hero-hierarchy-grid{
+    display:grid!important;
+    grid-template-columns:repeat(3, minmax(0, 1fr))!important;
+    align-items:stretch!important;
+    gap:14px!important;
+  }
+
+  .hero-hierarchy-card{
+    min-height:164px!important;
+  }
+
+  .launch-growth-grid{
+    grid-template-columns:repeat(3, minmax(0, 1fr))!important;
+    align-items:stretch!important;
+  }
+
+  .launch-growth-card{
+    min-height:192px!important;
+  }
+
+  .section.top-story-ribbon{
+    display:grid!important;
+    grid-template-columns:repeat(2, minmax(0,1fr))!important;
+    gap:16px!important;
+    align-items:stretch!important;
+  }
+
+  .section.top-story-ribbon .top-story-card{
+    min-height:126px!important;
+  }
+
+  .section-title,
+  .hero.hero-magazine h1{
+    text-wrap:balance!important;
+  }
+}
+
+/* keep desktop hero text from looking oversized / ad-like */
+@media (min-width: 1024px) and (max-width: 1399px){
+  .hero.hero-magazine.cover-system-shell-home h1{
+    font-size:clamp(54px, 4.6vw, 72px)!important;
+    line-height:.98!important;
+    max-width:8.4ch!important;
+  }
+  .hero.hero-magazine.cover-system-shell-home p{
+    max-width:40ch!important;
+  }
+}
+
+/* safer tablet collapse */
+@media (max-width: 1023px){
+  .hero-hierarchy-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+  }
+}
+
