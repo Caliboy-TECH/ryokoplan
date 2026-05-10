@@ -1,17 +1,17 @@
 {
-  "version": "v213",
-  "codename": "mobile-dock-safe-area",
-  "headline": "Stabilized the mobile bottom dock so it covers less content on iPhone Safari.",
-  "focus": "Improve bottom dock placement, safe-area padding, and final-section spacing on mobile.",
-  "source": "ryokoplan_v212_korean_copy_cleanup.zip",
+  "version": "v214",
+  "codename": "mobile-whitespace-regression-hotfix",
+  "headline": "Removed the oversized blank gaps introduced by the v213 mobile safe-area patch.",
+  "focus": "Fix mobile whitespace regression while keeping the bottom dock usable on iPhone Safari.",
+  "source": "ryokoplan_v213_mobile_dock_safe_area.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Added stronger safe-area padding for iPhone Safari browser bars.",
-    "Rebalanced the bottom dock width, bottom offset, and inner tab spacing.",
-    "Added extra bottom margin to generated results and final cards.",
-    "Preserved v212 Korean copy cleanup and v211 overlap fix."
+    "Removed giant bottom spacing from generic article:last-of-type mobile rules.",
+    "Moved safe-area breathing room back to the page level instead of inner cards.",
+    "Kept bottom dock stability while trimming excess internal whitespace.",
+    "Included a tiny homepage Korean copy cleanup."
   ],
-  "release": "v213",
-  "status": "mobile-dock-hotfix"
+  "release": "v214",
+  "status": "mobile-hotfix"
 }

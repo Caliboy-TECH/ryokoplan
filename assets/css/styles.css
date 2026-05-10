@@ -8522,3 +8522,113 @@ body[data-page="whats-new"] .mobile-dock{
     bottom:calc(64px + env(safe-area-inset-bottom, 0px))!important;
   }
 }
+
+
+/* v214 whitespace regression hotfix
+   Fixes oversized blank gaps introduced by broad mobile safe-area rules in v213. */
+@media (max-width: 767px){
+  :root{
+    --ryoko-mobile-dock-height-v214: 114px;
+    --ryoko-browser-safe-bottom-v214: 78px;
+    --ryoko-total-safe-bottom-v214: calc(var(--ryoko-mobile-dock-height-v214) + var(--ryoko-browser-safe-bottom-v214) + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Keep safe-area clearance on the page, not inside every card/shell */
+  body{
+    padding-bottom:var(--ryoko-total-safe-bottom-v214)!important;
+    min-height:100svh!important;
+  }
+  .page{
+    padding-bottom:calc(var(--ryoko-total-safe-bottom-v214) + 24px)!important;
+  }
+
+  /* Undo over-broad inner padding from v213 */
+  main,
+  .page-shell,
+  .app-shell,
+  .magazine-shell,
+  .city-shell,
+  .content-shell{
+    padding-bottom:0!important;
+  }
+
+  .planner-shell{
+    padding-bottom:18px!important;
+  }
+
+  /* The biggest regression: every last article/card was receiving giant bottom spacing */
+  article:last-of-type,
+  .editorial-card:last-of-type,
+  .guide-card:last-of-type,
+  .entry-card:last-of-type,
+  .city-card:last-of-type,
+  .magazine-card:last-of-type{
+    margin-bottom:0!important;
+  }
+
+  /* Only the final page section should keep extra breathing room above Safari UI */
+  .page > section:last-of-type{
+    margin-bottom:calc(var(--ryoko-total-safe-bottom-v214) + 12px)!important;
+  }
+
+  /* Keep internal grids/cards tight again */
+  .launch-growth-grid,
+  .cover-story-grid,
+  .mini-editorial-grid,
+  .brand-manifesto-grid,
+  .cover-데스크-grid,
+  .cover-데스크-side,
+  .home-editorial-grid,
+  .hero-visual-grid,
+  .route-strip-grid,
+  .city-grid,
+  .samples-grid,
+  .tips-grid,
+  .trips-grid,
+  .story-grid,
+  .loop-grid,
+  .trip-loop-grid{
+    margin-top:0!important;
+    margin-bottom:0!important;
+    position:static!important;
+    z-index:auto!important;
+    clear:none!important;
+    background:transparent!important;
+  }
+
+  /* Remove unintended large gaps inside feature rows */
+  .launch-growth-card,
+  .cover-story-line,
+  .mini-editorial-card,
+  .brand-manifesto-card,
+  .brand-manifesto-note,
+  .route-strip-card,
+  .info-card,
+  .editorial-panel{
+    margin-bottom:0!important;
+  }
+
+  /* Keep the dock stable, but slightly lighter than v213 */
+  .mobile-dock,
+  .bottom-dock,
+  .app-dock{
+    bottom:calc(62px + env(safe-area-inset-bottom, 0px))!important;
+    width:min(90vw, 392px)!important;
+    max-width:392px!important;
+    min-height:84px!important;
+  }
+
+  /* Result clearance still needed, but only for actual result blocks */
+  .v206-result-card,
+  .v207-result-card,
+  [data-v206-generated-result],
+  [data-v207-generated-result],
+  .planner-result,
+  .route-result,
+  [data-planner-result],
+  [data-result]{
+    margin-bottom:calc(var(--ryoko-total-safe-bottom-v214) + 24px)!important;
+    scroll-margin-bottom:var(--ryoko-total-safe-bottom-v214)!important;
+  }
+}
+
