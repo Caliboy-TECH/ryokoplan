@@ -1,17 +1,17 @@
 {
-  "version": "v218",
-  "codename": "language-toggle-restore",
-  "headline": "Restored KR / EN / JP / Traditional Chinese language switching.",
-  "focus": "Repair language toggle behavior without touching the v217 layout fixes.",
-  "source": "ryokoplan_v217_mobile_overlap_real_fix.zip",
+  "version": "v219",
+  "codename": "language-pc-typography-hardfix",
+  "headline": "Hard-fixed language switching and tightened desktop Korean typography.",
+  "focus": "Load a final language controller after all scripts and improve PC headline/card spacing.",
+  "source": "ryokoplan_v218_language_toggle_restore.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Added a robust language-switching fallback for data-lang and data-t content.",
-    "Ensured language buttons expose data-lang values where missing.",
-    "Persisted selected language in localStorage.",
-    "Kept v217 mobile overlap and desktop alignment fixes."
+    "Added assets/js/language-v219.js and loaded it last on every HTML page.",
+    "Language buttons now normalize KR/EN/JP/Traditional Chinese and switch data-lang/data-t content.",
+    "Selected language persists in localStorage.",
+    "Desktop Korean headline/card letter spacing and line rhythm tightened."
   ],
-  "release": "v218",
-  "status": "language-hotfix"
+  "release": "v219",
+  "status": "language-desktop-hotfix"
 }

@@ -9074,3 +9074,77 @@ body[data-page="whats-new"] .mobile-dock{
   border-color:rgba(255,116,72,.42)!important;
   color:#152334!important;
 }
+
+/* v219 PC typography + language active state */
+@media (min-width: 1024px){
+  body[data-page="planner"] .page > .container{
+    max-width:1160px!important;
+    width:min(1160px, calc(100vw - 96px))!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home h1,
+  body[data-page="planner"] .hero-title-split{
+    font-size:clamp(52px, 4.2vw, 66px)!important;
+    line-height:1.05!important;
+    letter-spacing:-0.055em!important;
+    max-width:9.8ch!important;
+    word-spacing:0!important;
+    text-wrap:balance!important;
+  }
+
+  body[data-page="planner"] .hero-title-split span{
+    display:block!important;
+  }
+
+  body[data-page="planner"] .section-title,
+  body[data-page="planner"] h2{
+    letter-spacing:-0.045em!important;
+    line-height:1.16!important;
+    word-spacing:0!important;
+    word-break:keep-all!important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-band-home .section-title{
+    font-size:clamp(30px, 2.35vw, 42px)!important;
+    max-width:18ch!important;
+  }
+
+  body[data-page="planner"] p,
+  body[data-page="planner"] .section-desc,
+  body[data-page="planner"] .hero-hierarchy-card p{
+    letter-spacing:-0.01em!important;
+    word-spacing:0!important;
+    line-height:1.62!important;
+    word-break:keep-all!important;
+  }
+
+  body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home{
+    grid-template-columns:minmax(0, .98fr) minmax(0, 1.02fr)!important;
+    gap:22px!important;
+    align-items:stretch!important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-grid{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:14px!important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-card strong{
+    font-size:18px!important;
+    letter-spacing:-0.035em!important;
+    line-height:1.25!important;
+    word-break:keep-all!important;
+  }
+}
+
+.lang-btn.is-active,
+.lang-btn.active,
+[data-lang-switch].is-active,
+[data-lang-button].is-active{
+  background:rgba(255,116,72,.12)!important;
+  border-color:rgba(255,116,72,.42)!important;
+  color:#152334!important;
+}
