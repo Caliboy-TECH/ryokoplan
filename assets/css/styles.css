@@ -8926,3 +8926,141 @@ body[data-page="whats-new"] .mobile-dock{
   }
 }
 
+
+
+/* v217 real mobile overlap fix + clearer desktop home alignment */
+
+/* 1) MOBILE: remove the duplicate image-heavy home cover block that keeps colliding
+   with the "여행 시작하기" section. The mobile home should be simple:
+   hero -> hierarchy cards -> rest. */
+@media (max-width: 767px){
+  body[data-page="planner"] .home-cover-desk,
+  body[data-page="planner"] .top-story-ribbon{
+    display:none !important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-band-home{
+    display:block !important;
+    clear:both !important;
+    margin-top:18px !important;
+    padding-top:0 !important;
+    position:relative !important;
+    z-index:2 !important;
+    background:transparent !important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-band-home .section-head,
+  body[data-page="planner"] .hero-hierarchy-band-home .hero-hierarchy-grid,
+  body[data-page="planner"] .hero-hierarchy-band-home .hero-hierarchy-card{
+    position:relative !important;
+    inset:auto !important;
+    transform:none !important;
+    z-index:auto !important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-band-home .section-title{
+    font-size:clamp(22px, 7.2vw, 30px) !important;
+    line-height:1.15 !important;
+    letter-spacing:-.045em !important;
+    margin:0 0 8px !important;
+    word-break:keep-all !important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-band-home .section-desc{
+    font-size:14px !important;
+    line-height:1.55 !important;
+    word-break:keep-all !important;
+    margin:0 !important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-grid{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:12px !important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-card{
+    border-radius:22px !important;
+    padding:16px 15px 15px !important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-card strong{
+    font-size:17px !important;
+    line-height:1.28 !important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-card p{
+    font-size:13px !important;
+    line-height:1.56 !important;
+  }
+}
+
+/* 2) DESKTOP HOME: make the first-screen structure read more clearly and centered. */
+@media (min-width: 1024px){
+  body[data-page="planner"] .page > .container{
+    max-width:1180px !important;
+    width:min(1180px, calc(100vw - 72px)) !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+
+  body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home{
+    grid-template-columns:minmax(0, 1.02fr) minmax(0, .98fr) !important;
+    gap:22px !important;
+    align-items:stretch !important;
+  }
+
+  body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home .cover-copy-column,
+  body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home .cover-visual-column{
+    min-width:0 !important;
+    max-width:none !important;
+  }
+
+  body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home h1{
+    max-width:8.2ch !important;
+    font-size:clamp(58px, 4.8vw, 74px) !important;
+    line-height:.99 !important;
+  }
+
+  body[data-page="planner"] .hero.hero-magazine.cover-system-shell-home p{
+    max-width:40ch !important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-band-home{
+    margin-top:20px !important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-grid{
+    display:grid !important;
+    grid-template-columns:repeat(3, minmax(0,1fr)) !important;
+    gap:16px !important;
+    align-items:stretch !important;
+  }
+
+  body[data-page="planner"] .hero-hierarchy-card{
+    min-height:176px !important;
+  }
+
+  body[data-page="planner"] .home-cover-desk{
+    margin-top:24px !important;
+  }
+
+  body[data-page="planner"] .home-cover-desk .cover-desk-grid{
+    grid-template-columns:minmax(0, 1.12fr) minmax(0, .88fr) !important;
+    gap:18px !important;
+    align-items:stretch !important;
+  }
+
+  body[data-page="planner"] .home-cover-desk .cover-desk-side{
+    display:grid !important;
+    grid-template-rows:minmax(0,1fr) minmax(0,1fr) !important;
+    gap:18px !important;
+  }
+
+  body[data-page="planner"] .top-story-ribbon{
+    display:grid !important;
+    grid-template-columns:repeat(2, minmax(0,1fr)) !important;
+    gap:14px !important;
+  }
+}
+

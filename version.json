@@ -1,18 +1,17 @@
 {
-  "version": "v216",
-  "codename": "desktop-planner-layout-fix",
-  "headline": "Fixed the actual desktop planner surface: centered layout, wider right column, and safer two-column behavior.",
-  "focus": "Address the PC screenshot issue where the planner surface stayed left-weighted and the right column collapsed too narrow.",
-  "source": "ryokoplan_v215_desktop_home_symmetry_copy_cleanup.zip",
+  "version": "v217",
+  "codename": "mobile-overlap-real-fix",
+  "headline": "Removed the mobile home overlap source and tightened desktop home alignment.",
+  "focus": "Hide the duplicate mobile home cover block that collides with hierarchy content; keep desktop home cleaner and more centered.",
+  "source": "ryokoplan_v216_desktop_planner_layout_fix.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "Centered the planner page container on desktop.",
-    "Rebalanced planner/input and preview/result columns.",
-    "Prevented right-side route/result cards from collapsing into narrow vertical text strips.",
-    "Added mid-desktop fallback to one-column layout when the two-column layout would be cramped.",
-    "Cleaned a few visible Korean planner copy issues."
+    "On mobile planner home, hide home-cover-desk and top-story-ribbon to stop image/text collisions.",
+    "Keep hero -> hierarchy -> rest as a clean vertical flow.",
+    "Strengthened desktop home hero/hierarchy/cover-desk alignment.",
+    "Bumped service worker cache version."
   ],
-  "release": "v216",
-  "status": "desktop-planner-hotfix"
+  "release": "v217",
+  "status": "mobile-hotfix"
 }
