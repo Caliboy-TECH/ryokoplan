@@ -1,17 +1,17 @@
 {
-  "version": "v217",
-  "codename": "mobile-overlap-real-fix",
-  "headline": "Removed the mobile home overlap source and tightened desktop home alignment.",
-  "focus": "Hide the duplicate mobile home cover block that collides with hierarchy content; keep desktop home cleaner and more centered.",
-  "source": "ryokoplan_v216_desktop_planner_layout_fix.zip",
+  "version": "v218",
+  "codename": "language-toggle-restore",
+  "headline": "Restored KR / EN / JP / Traditional Chinese language switching.",
+  "focus": "Repair language toggle behavior without touching the v217 layout fixes.",
+  "source": "ryokoplan_v217_mobile_overlap_real_fix.zip",
   "uploadProfile": "github-web-under-100-files",
   "updatedAt": "2026-05-02",
   "notes": [
-    "On mobile planner home, hide home-cover-desk and top-story-ribbon to stop image/text collisions.",
-    "Keep hero -> hierarchy -> rest as a clean vertical flow.",
-    "Strengthened desktop home hero/hierarchy/cover-desk alignment.",
-    "Bumped service worker cache version."
+    "Added a robust language-switching fallback for data-lang and data-t content.",
+    "Ensured language buttons expose data-lang values where missing.",
+    "Persisted selected language in localStorage.",
+    "Kept v217 mobile overlap and desktop alignment fixes."
   ],
-  "release": "v217",
-  "status": "mobile-hotfix"
+  "release": "v218",
+  "status": "language-hotfix"
 }

@@ -6751,3 +6751,120 @@ function renderTripsSeasonal데스크(){
   return { t, setLanguage, applyTranslations, bindLanguageButtons, initCommon, initMagazine, cityCardTemplate, getCityLoopData, getRelatedCities, getCityVoice, slugifyCity, resolvePath, apply플래너Preset, getSignalRecommendations, detectSignalTags, recordSignalInteraction, getTopSignalTags, trackEvent, readReadingHistory, saveReadingHistory: writeReadingHistory, clearReadingHistory, build루트ResultHrefFromTrip, get lang(){return lang;}, pathRoot, navHref };
 })();
 window.addEventListener('DOMContentLoaded', () => { window.RyokoApp.initCommon(); window.RyokoApp.initMagazine(); });
+
+
+/* v218 language toggle restore */
+(function(){
+  if (window.__ryokoV218LanguageToggleRestore) return;
+  window.__ryokoV218LanguageToggleRestore = true;
+
+  var LANGS = ['ko','en','ja','zhhant'];
+  var STORAGE_KEY = 'ryokoplan:lang';
+
+  function normalizeLang(raw){
+    raw = String(raw || '').toLowerCase().trim();
+    if (raw === 'kr' || raw === 'ko-kr' || raw === 'kor') return 'ko';
+    if (raw === 'jp' || raw === 'ja-jp' || raw === 'jpn') return 'ja';
+    if (raw === 'zh' || raw === 'zh-tw' || raw === 'tw' || raw === 'hant') return 'zhhant';
+    if (raw.indexOf('繁') !== -1 || raw.indexOf('體') !== -1) return 'zhhant';
+    if (raw === 'english') return 'en';
+    return LANGS.indexOf(raw) >= 0 ? raw : 'ko';
+  }
+
+  function getDictionary(){
+    return window.RYOKO_I18N || window.RYOKOPLAN_I18N || window.i18n || window.translations || {};
+  }
+
+  function lookupKey(dict, lang, key){
+    if (!dict || !key) return '';
+    try {
+      if (dict[lang] && Object.prototype.hasOwnProperty.call(dict[lang], key)) return dict[lang][key];
+      if (dict[key] && typeof dict[key] === 'object' && Object.prototype.hasOwnProperty.call(dict[key], lang)) return dict[key][lang];
+    } catch(e){}
+    return '';
+  }
+
+  function setHtml(el, value){
+    if (value === undefined || value === null || value === '') return;
+    if (String(value).indexOf('<') !== -1 || String(value).indexOf('&') !== -1) el.innerHTML = value;
+    else el.textContent = value;
+  }
+
+  function applyDataLang(lang){
+    var attr = 'data-lang-' + lang;
+    document.querySelectorAll('[data-lang-ko], [data-lang-en], [data-lang-ja], [data-lang-zhhant]').forEach(function(el){
+      var value = el.getAttribute(attr);
+      if (value === null && lang === 'zhhant') value = el.getAttribute('data-lang-zh');
+      if (value === null) value = el.getAttribute('data-lang-ko');
+      setHtml(el, value);
+    });
+  }
+
+  function applyDataT(lang){
+    var dict = getDictionary();
+    document.querySelectorAll('[data-t]').forEach(function(el){
+      var key = el.getAttribute('data-t');
+      var value = lookupKey(dict, lang, key);
+      if (!value && lang !== 'ko') value = lookupKey(dict, 'ko', key);
+      if (value) setHtml(el, value);
+    });
+  }
+
+  function updateButtons(lang){
+    document.querySelectorAll('.lang-btn, [data-lang-switch], [data-lang-button], button[data-lang], a[data-lang]').forEach(function(btn){
+      var bLang = normalizeLang(btn.getAttribute('data-lang') || btn.getAttribute('data-locale') || btn.textContent);
+      var active = bLang === lang;
+      btn.classList.toggle('active', active);
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  }
+
+  function setLanguage(lang){
+    lang = normalizeLang(lang);
+    document.documentElement.lang = lang === 'zhhant' ? 'zh-Hant' : (lang === 'ja' ? 'ja' : lang);
+    document.documentElement.setAttribute('data-lang', lang);
+    if (document.body) document.body.setAttribute('data-lang', lang);
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch(e){}
+    try { localStorage.setItem('ryoko-lang', lang); } catch(e){}
+    try { localStorage.setItem('ryokoplan_lang', lang); } catch(e){}
+    applyDataLang(lang);
+    applyDataT(lang);
+    updateButtons(lang);
+  }
+
+  function langFromButton(btn){
+    var direct = btn.getAttribute('data-lang') || btn.getAttribute('data-locale') || btn.getAttribute('data-value') || '';
+    if (direct) return normalizeLang(direct);
+    var text = (btn.textContent || '').trim();
+    if (/^KR$/i.test(text)) return 'ko';
+    if (/^EN$/i.test(text)) return 'en';
+    if (/^JP$/i.test(text)) return 'ja';
+    if (text.indexOf('繁') !== -1 || text.indexOf('體') !== -1) return 'zhhant';
+    return normalizeLang(text);
+  }
+
+  document.addEventListener('click', function(event){
+    var btn = event.target && event.target.closest ? event.target.closest('.lang-btn, [data-lang-switch], [data-lang-button], button[data-lang], a[data-lang]') : null;
+    if (!btn) return;
+    var lang = langFromButton(btn);
+    if (LANGS.indexOf(lang) === -1) return;
+    event.preventDefault();
+    event.stopPropagation();
+    setLanguage(lang);
+  }, true);
+
+  window.ryokoSetLanguage = setLanguage;
+  window.setRyokoplanLanguage = setLanguage;
+  window.applyLanguage = setLanguage;
+
+  function init(){
+    var saved = '';
+    try { saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('ryoko-lang') || localStorage.getItem('ryokoplan_lang') || ''; } catch(e){}
+    var htmlLang = document.documentElement.getAttribute('data-lang') || document.documentElement.lang || '';
+    setLanguage(normalizeLang(saved || htmlLang || 'ko'));
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
